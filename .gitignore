@@ -1,0 +1,31 @@
+# Python files
+*.log
+*.pot
+*.pyc
+*.pyo
+
+# Django specific
+collected-static/*
+media/*
+*.sqlite
+*.sqlite-journal
+local_settings.py
+
+# IDE specific
+*.komodoproject
+*.project
+*.pydevproject
+*.kate-swp
+*.sublime-*
+*.swp
+
+# Virtual env
+.v_env/*
+
+# OS specific
+*.DS_Store
+nohup.out
+
+# Coverage
+.coverage
+htmlcov/*
