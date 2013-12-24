@@ -1,0 +1,11 @@
+language: python
+python: "2.7"
+env:
+  - DB=sqlite
+  - DB=postgres
+install:
+  - if [ $DB = 'postgres' ]; then psql -c 'create database corporate;' -U postgres; fi
+  - if [ $DB = 'sqlite' ]; then sed -i '/psycopg2/d' requirements.txt; fi
+  - pip install -r requirements.txt --use-mirrors
+script: 
+  ./manage.py test kingdom mission title internal event bargain reporting
