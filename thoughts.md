@@ -1,8 +1,6 @@
-Corporate Game Manhattan.
+# Corporate Game Manhattan.
 
-## Étude de cas.
-Réduire les concepts au maximum...
-
+## Concepts
 ### Ordres disponibles
 * Acheter un point d'influence corpo
 * Acheter une part
@@ -98,8 +96,7 @@ Holds datas for a game
     - content
     - author
     - public?
-* MessageRecipient
-    - ->Player
+    - M2M Player
 * Order
     - signal::pre_display
     - -> Player
