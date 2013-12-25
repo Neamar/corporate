@@ -108,21 +108,48 @@ Holds datas for a game
     - -> Player
     - -> Game
     - turn
-    - static::Priority
 
-#### Engine submodule
-##### Corporation
-Depends on : []
+### Engine submodules
+#### engine.corporations
+Base models for everything corporation related.
+
+Depends on: []
+
+Models:
 * CorporationDefinition
     - name
     - description
 * Corporation
     - -> CorporationDefinition
-* CorporationAsset
-    - ->corporation
-    - turn
+    - assets
+
+Views:
+* /corporations/corporation/:id 
+
+#### engine.corporations.orders
+Basic Orders issued around corporations : buy share, vote, speculate
+
+Depends on: ['corporations']
 * BuyShareOrder
     - -> corporation
 * VoteOrder
     - -> corporation+
     - -> corporation-
+* SpeculationOrder
+    - -> VoteOrder
+    - Rank+
+    - Rank-
+
+#### engine.corporations.assets_history
+Store the corporation assets turn by turn, to display stocks graphs.
+
+Depends on: ['corporations']
+* CorporationAsset
+    - ->corporation
+    - assets
+    - turn
+
+Views :
+* /corporations/market
+
+####
