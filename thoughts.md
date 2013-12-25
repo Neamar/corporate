@@ -52,14 +52,14 @@ Réduire les concepts au maximum...
             * Échec : ∅
             * Interception : ∅ [feedback]
             * Capture : ∅ [feedback++]
-5. La main du marché (+1|-1 * 2)
+4. La main du marché (+1|-1 * 2)
 5. Calcul des nouveaux actifs
-5. Effets premiers / derniers
-5. Gain spéculation : 100k * spéculation réussie
-5. Distribution des dividendes
+6. Effets premiers / derniers
+7. Gain spéculation : 100k * spéculation réussie
+8. Distribution des dividendes
     - Les parts achetées ce tour-ci ne comptent pas, sauf pour les tours 1 et 2
     - 50 * actifs * nbparts * (1.25 si corpo première) * (0.75 si corpo dernière) * (1.1 si citoyenneté corpo)
-5. Achat d'influence corporatiste
+9. Achat d'influence corporatiste
 
 ### Feedbacks
 * Global
@@ -101,24 +101,34 @@ Holds datas for a game
 * MessageRecipient
     - ->Player
 * Order
+    - signal::pre_display
     - -> Player
     - -> Game
     - turn
-    - canBeCreated():bool
     - getForm():Form
 
 #### Module architecture
-Engine modules can be standard Django apps, with models and views. To use as a module, call `engine.registerModule(taskBuilder, orders, views)`, where:
+Engine modules can be standard Django apps, with models and views. To use as a module, call `engine.registerModule(taskBuilder, orders, views, setup)`, where:
 
 * `taskBuilder` is a function which will be called with the current game, and must returns a list of ResolveTasks to handle resolution
 * `orders` is a list of Orders to register
 * `views` is a dict whose keys are regexp and values associated functions. If a conflict occurs between multiple apps, the last entry prevails.
+* `setup` is a function to call on game initialisation
 
 ### Engine modules
+
+#### engine.influence
+Player level of influence
+
+Models:
+* Player monkeypatch
+    - influence
+
+Resolution:
+* (90) Buying influence
+
 #### engine.corporations
 Base models for everything corporation related.
-
-Depends on: []
 
 Models:
 * CorporationDefinition
@@ -128,13 +138,13 @@ Models:
     - -> CorporationDefinition
     - assets
 
+Setup: create corporations for this game
+
 Views:
 * /corporations/corporation/:id : corporation details
 
 #### engine.corporations.orders
 Basic Orders issued around corporations : buy share, vote, speculate
-
-Depends on: ['corporations']
 
 Models:
 * BuyShareOrder
@@ -147,10 +157,14 @@ Models:
     - Rank+
     - Rank-
 
+Resolution:
+* (0) BuyShareOrder
+* (10) VoteOrder
+* (70) SpeculationOrder
+* (80) DividendDistribution
+
 #### engine.corporations.assets_history
 Store the corporation assets turn by turn, to display stocks graphs.
-
-Depends on: ['corporations']
 
 Models:
 * CorporationAsset
@@ -158,13 +172,14 @@ Models:
     - assets
     - turn
 
+Resolution:
+* (100) RegisterAssets
+
 Views :
 * /corporations/market
 
 #### engine.corporations.invisible_hand
 Invisible market hand.
 
-Depends on: ['corporations']
-
-
-#### engine.runs
+Resolution:
+* (40) InvisibleHand
