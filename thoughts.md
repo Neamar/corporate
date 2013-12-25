@@ -35,13 +35,9 @@ Réduire les concepts au maximum...
         + Corpo hôte
 
 ## Phase de résolution
-Signals sent :
-1. pre_resolve
-2. post_resolve
-
-* Achat de parts
-* Votes : + 1 / -1 par vote 
-* Runs
+1. Achat de parts
+2. Votes : + 1 / -1 par vote 
+3. Runs
     - Runs de protection : par corpo, triées par %
     - Autres runs, triées par % :
         + Tester réussite, tester protection
@@ -56,14 +52,14 @@ Signals sent :
             * Échec : ∅
             * Interception : ∅ [feedback]
             * Capture : ∅ [feedback++]
-* La main du marché (+1|-1 * 2)
-* Calcul des nouveaux actifs
-* Effets premiers / derniers
-* Gain spéculation : 100k * spéculation réussie
-* Distribution des dividendes
+5. La main du marché (+1|-1 * 2)
+5. Calcul des nouveaux actifs
+5. Effets premiers / derniers
+5. Gain spéculation : 100k * spéculation réussie
+5. Distribution des dividendes
     - Les parts achetées ce tour-ci ne comptent pas, sauf pour les tours 1 et 2
     - 50 * actifs * nbparts * (1.25 si corpo première) * (0.75 si corpo dernière) * (1.1 si citoyenneté corpo)
-* Achat d'influence corporatiste
+5. Achat d'influence corporatiste
 
 ### Feedbacks
 * Global
@@ -139,6 +135,8 @@ Views:
 Basic Orders issued around corporations : buy share, vote, speculate
 
 Depends on: ['corporations']
+
+Models:
 * BuyShareOrder
     - -> corporation
 * VoteOrder
@@ -153,6 +151,8 @@ Depends on: ['corporations']
 Store the corporation assets turn by turn, to display stocks graphs.
 
 Depends on: ['corporations']
+
+Models:
 * CorporationAsset
     - ->corporation
     - assets
@@ -160,3 +160,11 @@ Depends on: ['corporations']
 
 Views :
 * /corporations/market
+
+#### engine.corporations.invisible_hand
+Invisible market hand.
+
+Depends on: ['corporations']
+
+
+#### engine.runs
