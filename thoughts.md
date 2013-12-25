@@ -108,8 +108,17 @@ Holds datas for a game
     - -> Player
     - -> Game
     - turn
+    - canBeCreated():bool
+    - getForm():Form
 
-### Engine submodules
+#### Module architecture
+Engine modules can be standard Django apps, with models and views. To use as a module, call `engine.registerModule(taskBuilder, orders, views)`, where:
+
+* `taskBuilder` is a function which will be called with the current game, and must returns a list of ResolveTasks to handle resolution
+* `orders` is a list of Orders to register
+* `views` is a dict whose keys are regexp and values associated functions. If a conflict occurs between multiple apps, the last entry prevails.
+
+### Engine modules
 #### engine.corporations
 Base models for everything corporation related.
 
@@ -124,7 +133,7 @@ Models:
     - assets
 
 Views:
-* /corporations/corporation/:id 
+* /corporations/corporation/:id : corporation details
 
 #### engine.corporations.orders
 Basic Orders issued around corporations : buy share, vote, speculate
@@ -151,5 +160,3 @@ Depends on: ['corporations']
 
 Views :
 * /corporations/market
-
-####
