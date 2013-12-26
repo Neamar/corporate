@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from engine.models import Game, Player
-from engine.modules import __orders_list
+from engine.modules import orders_list
 
 
 def index(request, game_id):

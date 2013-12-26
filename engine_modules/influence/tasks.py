@@ -1,5 +1,4 @@
 from engine.tasks import ResolutionTask
-from engine_modules.influence.models import BuyInfluenceOrder
 
 
 class BuyInfluenceTask(ResolutionTask):
@@ -12,7 +11,6 @@ class BuyInfluenceTask(ResolutionTask):
 		"""
 		Retrieve all BuyInfluenceOrder
 		"""
-		pass
+		print "Wooog."
 
-
-__tasks__ = (BuyInfluenceTask,)
+tasks = (BuyInfluenceTask,)

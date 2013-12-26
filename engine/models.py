@@ -2,17 +2,26 @@ from django.db import models
 from datetime import datetime
 from django.conf import settings
 
+
 class Game(models.Model):
 	city = models.CharField(max_length=50)
 	current_turn = models.PositiveSmallIntegerField(default=1)
 	total_turn = models.PositiveSmallIntegerField()
 	started = models.DateTimeField(default=datetime.now)
 
+
 	def resolve_current_turn(self):
 		"""
 		Resolve all orders for this turn, increment current_turn by 1.
 		"""
-		pass
+		from engine.modules import tasks_list
+		print tasks_list
+		for task in tasks_list:
+			t = task()
+			t.run(self)
+
+		self.current_turn += 1
+		# self.save()
 
 	def __unicode__(self):
 		return "Corporate Game: %s" % self.city

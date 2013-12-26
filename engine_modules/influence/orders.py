@@ -8,4 +8,4 @@ class BuyInfluenceOrder(Order):
 	pass
 
 
-__orders__ = (BuyInfluenceOrder,)
+orders = (BuyInfluenceOrder,)
