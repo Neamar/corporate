@@ -20,6 +20,6 @@ admin.site.register(Message, MessageAdmin)
 
 
 class OrderAdmin(admin.ModelAdmin):
-	list_display = ('player', 'turn')
+	list_display = ('type', 'player', 'turn')
 	ordering=('player',)
 admin.site.register(Order, OrderAdmin)

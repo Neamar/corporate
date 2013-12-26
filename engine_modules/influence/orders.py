@@ -5,9 +5,7 @@ class BuyInfluenceOrder(Order):
 	"""
 	Order to increase Player Influence
 	"""
-	def save(self):
-		self.type = "BuyInfluenceOrder"
-		super(BuyInfluenceOrder, self).save()
+	pass
 
 
 __orders__ = (BuyInfluenceOrder,)

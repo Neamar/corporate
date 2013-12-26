@@ -37,11 +37,24 @@ class Message(models.Model):
 
 class Order(models.Model):
 	player = models.ForeignKey(Player)
-	turn = models.PositiveSmallIntegerField()
+	turn = models.PositiveSmallIntegerField(blank=True)
 	type = models.CharField(max_length=50, blank=True, editable=False)
 
+	def save(self):
+		# Save the current type to inflate later
+		if self.__class__.__name__ == "Order":
+			raise Exception("You can't save raw Order, only subclasses")
+
+		self.type = self.__class__.__name__
+
+		# Turn default values is game current_turn
+		if not self.turn:
+			self.turn = self.player.game.current_turn
+
+		super(Order, self).save()
+
 	def __unicode__(self):
-		return "Order for %s, turn %s" % (self.player, self.turn)
+		return "%s for %s, turn %s" % (self.type, self.player, self.turn)
 
 
 from engine.modules import *
