@@ -1,6 +1,5 @@
 from django.db import models
 from datetime import datetime
-from config.lib.models import NamedModel
 from django.contrib.auth.models import User
 
 
@@ -9,9 +8,10 @@ class Game(models.Model):
 	total_turn = models.PositiveIntegerField()
 	started = DateTimeField(default=datetime.now)
 
-class Player(NamedModel):
+class Player(models.Model):
 	user = models.ForeignKey(User)
 	game = models.ForeignKey(Game)
+	name = models.CharField(max_length=64)
 
 
 class Message(models.Model):
