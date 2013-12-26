@@ -3,8 +3,8 @@ from datetime import datetime
 from django.conf import settings
 
 class Game(models.Model):
-	current_turn = models.PositiveIntegerField(default=1)
-	total_turn = models.PositiveIntegerField()
+	current_turn = models.PositiveSmallIntegerField(default=1)
+	total_turn = models.PositiveSmallIntegerField()
 	started = models.DateTimeField(default=datetime.now)
 
 class Player(models.Model):
@@ -22,4 +22,4 @@ class Message(models.Model):
 
 class Order(models.Model):
 	player = models.ForeignKey(Player)
-	turn = models.PositiveIntegerField()
+	turn = models.PositiveSmallIntegerField()
