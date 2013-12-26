@@ -1,4 +1,5 @@
 from engine.tasks import ResolutionTask
+from engine_modules.influence.orders import BuyInfluenceOrder
 
 
 class BuyInfluenceTask(ResolutionTask):
@@ -11,6 +12,8 @@ class BuyInfluenceTask(ResolutionTask):
 		"""
 		Retrieve all BuyInfluenceOrder
 		"""
-		print "Wooog."
+		BuyInfluenceOrder.objects.filter(player__game=game, turn=game.current_turn)
+
+
 
 tasks = (BuyInfluenceTask,)

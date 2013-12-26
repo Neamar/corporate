@@ -15,13 +15,12 @@ class Game(models.Model):
 		Resolve all orders for this turn, increment current_turn by 1.
 		"""
 		from engine.modules import tasks_list
-		print tasks_list
 		for task in tasks_list:
 			t = task()
 			t.run(self)
 
 		self.current_turn += 1
-		# self.save()
+		self.save()
 
 	def __unicode__(self):
 		return "Corporate Game: %s" % self.city
