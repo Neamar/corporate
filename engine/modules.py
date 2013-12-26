@@ -1,54 +1,41 @@
-
+from django.conf import settings
+import importlib
 
 """
 List of tasks to call for each game resolution
 """
-tasks_list = []
+__tasks_list = []
 
 """
 List of available orders
 """
-orders_list = []
+__orders_list = []
 
 """
 List of function to call to setup a new game
 """
-setups_list = []
+__setups_list = []
 
-"""
-List of custom urls
-"""
-views_list = {}
 
-class ResolutionTask:
+def try_import(file, name, default=None):
 	"""
-	A task to call during resolution
+	Try to import some name from some file,
+	Returns default on failure
 	"""
 
-	priority = 0
-	name = ""
+	try:
+		app = importlib.import_module(file)
+		return getattr(app, name)
+	except ImportError:
+		return default
+	except AttributeError:
+		return default
 
+for app in settings.INSTALLED_APPS:
+	# Only scan engine_modules app
+	if 'engine_modules.' not in app:
+		continue
 
-	def run(self, game):
-		raise Exception("Abstract call.")
-
-
-def register_module(tasks=[], orders=[], views={}, setup=None):
-	"""
-	Register a new module for use in the game.
-	tasks_list is an array of ResolutionTask subclasses
-	views is a dict whose keys are regexp and values associated functions. If a conflict occurs between multiple apps, the last entry prevails.
-	setup is a function to call on game initialisation
-	"""
-	global tasks_list, orders_list, setups_list, views_list
-	
-	if tasks:
-		tasks_list.append(tasks)
-
-	if setup:
-		setups_list.append(setup)
-
-	orders_list += orders
-	views_list.update(views)
-
-
+	__setups_list += try_import("%s.setup" % app, '__setups__', [])
+	__orders_list += try_import("%s.orders" % app, '__orders__', [])
+	__tasks_list += try_import("%s.tasks" % app, '__tasks__', [])

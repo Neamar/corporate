@@ -1,4 +1,4 @@
-from engine.modules import register_module, ResolutionTask
+from engine.tasks import ResolutionTask
 from engine_modules.influence.models import BuyInfluenceOrder
 
 
@@ -14,7 +14,5 @@ class BuyInfluenceTask(ResolutionTask):
 		"""
 		pass
 
-register_module(
-	tasks=[BuyInfluenceTask()],
-	orders=[BuyInfluenceOrder],
-)
+
+__tasks__ = (BuyInfluenceTask,)

@@ -23,3 +23,6 @@ class Message(models.Model):
 class Order(models.Model):
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField()
+
+
+from engine.modules import *

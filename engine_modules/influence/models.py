@@ -1,5 +1,5 @@
 from django.db import models
-from engine.models import Player, Order
+from engine.models import Player
 
 
 class PlayerInfluence(models.Model):
@@ -7,7 +7,5 @@ class PlayerInfluence(models.Model):
 	level = models.PositiveSmallIntegerField()
 
 
-class BuyInfluenceOrder(Order):
-	pass
-
+from engine_modules.influence.orders import *
 from engine_modules.influence.tasks import *
