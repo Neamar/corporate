@@ -140,6 +140,8 @@ Models:
 * Influence
     - -> Player
     - level
+* BuyInfluenceOrder
+    - -> Player
 
 Resolution:
 * (90) Buying influence

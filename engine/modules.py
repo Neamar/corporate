@@ -1,7 +1,7 @@
 
 
 """
-List of task builder to call before each game resolution
+List of tasks to call for each game resolution
 """
 tasks_list = []
 
@@ -27,21 +27,23 @@ class ResolutionTask:
 
 	priority = 0
 	name = ""
-	task = lambda game: game
 
 
-def registerModule(task_builder=None, orders=[], views={}, setup=None):
+	def run(self, game):
+		raise Exception("Abstract call.")
+
+
+def register_module(tasks=[], orders=[], views={}, setup=None):
 	"""
 	Register a new module for use in the game.
-	taskBuilder is a function to retrieve a list of tasks items for resolution
-	orders is a list of new orders to add
+	tasks_list is an array of ResolutionTask subclasses
 	views is a dict whose keys are regexp and values associated functions. If a conflict occurs between multiple apps, the last entry prevails.
 	setup is a function to call on game initialisation
 	"""
 	global tasks_list, orders_list, setups_list, views_list
 	
-	if task_builder:
-		tasks_list.append(task_builder)
+	if tasks:
+		tasks_list.append(tasks)
 
 	if setup:
 		setups_list.append(setup)
