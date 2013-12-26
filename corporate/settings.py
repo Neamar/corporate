@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'website',
     'engine',
+    'engine_modules.influence',
 )
 
 MIDDLEWARE_CLASSES = (
