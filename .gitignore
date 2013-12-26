@@ -29,3 +29,6 @@ nohup.out
 # Coverage
 .coverage
 htmlcov/*
+
+# Project specific
+*.sqlite3
