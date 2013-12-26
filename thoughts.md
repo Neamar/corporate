@@ -10,6 +10,8 @@
     - Paramètre :
         + Corpo+
         + Corpo-
+* Spéculation
+    - Paramètre :
         + Rang Corpo+
         + Rang Corpo-
 * Run de Protection
@@ -76,14 +78,21 @@
 ### Website
 Holds global datas
 
+Models:
 * User
     - mail
     - phone
     - image
 
+Views:
+* /login
+* /
+* /game/new
+
 ### Engine
 Holds datas for a game
 
+Models:
 * Game
     - current_turn
     - total_turn
@@ -91,6 +100,7 @@ Holds datas for a game
     - -> User
     - -> Game
     - Name
+    - money
 * Message
     - title
     - content
@@ -102,7 +112,16 @@ Holds datas for a game
     - -> Player
     - -> Game
     - turn
-    - getForm():Form
+    - getForm()
+    - getCost()
+
+Views:
+* /game/:game/players
+* /game/:game/orders
+* /game/:game/orders/new/:order
+* /game/:game/orders/:order_id
+* /game/:game/orders/:order_id/delete
+* /game/:game/messages
 
 #### Module architecture
 Engine modules can be standard Django apps, with models and views. To use as a module, call `engine.registerModule(taskBuilder, orders, views, setup)`, where:
@@ -118,8 +137,9 @@ Engine modules can be standard Django apps, with models and views. To use as a m
 Player level of influence
 
 Models:
-* Player monkeypatch
-    - influence
+* Influence
+    - -> Player
+    - level
 
 Resolution:
 * (90) Buying influence
@@ -133,12 +153,13 @@ Models:
     - description
 * Corporation
     - -> CorporationDefinition
+    - -> Game
     - assets
 
-Setup: create corporations for this game
+Setup: create corporations for this game, define initial shares
 
 Views:
-* /corporations/corporation/:id : corporation details
+* /game/:game/corporations/corporation/:id : corporation details
 
 #### engine.corporations.orders
 Basic Orders issued around corporations : buy share, vote, speculate
@@ -180,3 +201,29 @@ Invisible market hand.
 
 Resolution:
 * (40) InvisibleHand
+
+#### engine.corporations.citizenship
+Deal with corporation citizenship
+
+Models:
+* Citizenship
+    - -> Corporation
+* CitizenshipOrder
+    - -> Corporation
+
+Resolution:
+* (90) SwitchCitizenship
+
+#### engine.corporations.effects
+Apply first / last effects
+
+Models:
+* CorporationEffect
+    - -> Corporation
+    - onFirst
+    - onFirstDescription
+    - onLast
+    - onLastDescription
+
+Resolution
+* (60) FirstLastEffect

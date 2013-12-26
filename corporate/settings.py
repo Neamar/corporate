@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'website',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -50,6 +51,10 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'corporate.urls'
 
 WSGI_APPLICATION = 'corporate.wsgi.application'
+
+
+# settings.py
+AUTH_USER_MODEL = 'website.User'
 
 
 # Database
