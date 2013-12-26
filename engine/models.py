@@ -1,15 +1,14 @@
 from django.db import models
 from datetime import datetime
-from django.contrib.auth.models import User
-
+from django.conf import settings
 
 class Game(models.Model):
 	current_turn = models.PositiveIntegerField(default=1)
 	total_turn = models.PositiveIntegerField()
-	started = DateTimeField(default=datetime.now)
+	started = models.DateTimeField(default=datetime.now)
 
 class Player(models.Model):
-	user = models.ForeignKey(User)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	game = models.ForeignKey(Game)
 	name = models.CharField(max_length=64)
 
@@ -19,7 +18,7 @@ class Message(models.Model):
 	content = models.TextField(blank=True)
 	author = models.ForeignKey(Player)
 	public = models.BooleanField(default=False)
-	recipient_set = ManyToManyField('Player')
+	recipient_set = models.ManyToManyField('Player', related_name="+")
 
 class Order(models.Model):
 	player = models.ForeignKey(Player)
