@@ -12,7 +12,10 @@ class BuyInfluenceTask(ResolutionTask):
 		"""
 		Retrieve all BuyInfluenceOrder
 		"""
-		BuyInfluenceOrder.objects.filter(player__game=game, turn=game.current_turn)
+		buy_influence_orders = BuyInfluenceOrder.objects.filter(player__game=game, turn=game.current_turn)
+
+		for buy_influence_order in buy_influence_orders:
+			buy_influence_order.resolve()			
 
 
 

@@ -30,6 +30,7 @@ class Player(models.Model):
 	name = models.CharField(max_length=64)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	game = models.ForeignKey(Game)
+	money = models.PositiveIntegerField()
 
 	def get_current_orders(self):
 		"""
@@ -66,6 +67,12 @@ class Order(models.Model):
 			self.turn = self.player.game.current_turn
 
 		super(Order, self).save()
+
+	def resolve(self):
+		raise Exception("Abstract call.")
+
+	def getCost(self):
+		return 0
 
 	def __unicode__(self):
 		return "%s for %s, turn %s" % (self.type, self.player, self.turn)
