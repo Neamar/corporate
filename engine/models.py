@@ -21,7 +21,7 @@ class Player(models.Model):
 		"""
 		Returns the list of order for this turn
 		"""
-		return self.order_set.filter(turn=self.game.current_turn + 1)
+		return self.order_set.filter(turn=self.game.current_turn)
 
 	def __unicode__(self):
 		return self.name
