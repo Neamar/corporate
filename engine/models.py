@@ -8,6 +8,12 @@ class Game(models.Model):
 	total_turn = models.PositiveSmallIntegerField()
 	started = models.DateTimeField(default=datetime.now)
 
+	def resolve_current_turn(self):
+		"""
+		Resolve all orders for this turn, increment current_turn by 1.
+		"""
+		pass
+
 	def __unicode__(self):
 		return "Corporate Game: %s" % self.city
 

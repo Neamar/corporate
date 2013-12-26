@@ -3,6 +3,7 @@ from django.shortcuts import render
 from engine.models import Game, Player
 from engine.modules import __orders_list
 
+
 def index(request, game_id):
 	player = Player.objects.get(game=game_id, user=request.user)
 
