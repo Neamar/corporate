@@ -40,5 +40,8 @@ for app in settings.INSTALLED_APPS:
 	orders_list += try_import("%s.orders" % app, 'orders', [])
 	tasks_list += try_import("%s.tasks" % app, 'tasks', [])
 
+	# Autoload signals as a convenience
+	try_import("%s.signals" % app, 'none')
+
 # Sort tasks in place, by priority
 tasks_list.sort(key=lambda t: t.priority)

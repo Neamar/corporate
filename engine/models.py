@@ -2,6 +2,8 @@ from django.db import models
 from datetime import datetime
 from django.conf import settings
 
+from engine.signals import validate_order
+
 
 class Game(models.Model):
 	city = models.CharField(max_length=50)
@@ -59,14 +61,17 @@ class Order(models.Model):
 		# Save the current type to inflate later
 		if self.__class__.__name__ == "Order":
 			raise Exception("You can't save raw Order, only subclasses")
-
 		self.type = self.__class__.__name__
-
 		# Turn default values is game current_turn
 		if not self.turn:
 			self.turn = self.player.game.current_turn
 
+
 		super(Order, self).save()
+
+	def clean(self):
+		print "CLEAN"
+		validate_order.send(sender=self.__class__, instance=self)
 
 	def resolve(self):
 		raise Exception("Abstract call.")
