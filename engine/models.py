@@ -17,6 +17,11 @@ class Player(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	game = models.ForeignKey(Game)
 
+	def get_current_orders(self):
+		"""
+		Returns the list of order for this turn
+		"""
+		return self.order_set.filter(turn=self.game.current_turn + 1)
 
 	def __unicode__(self):
 		return self.name

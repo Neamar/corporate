@@ -1,11 +1,18 @@
 from django.shortcuts import render
 
-from engine.models import Game
+from engine.models import Game, Player
 from engine.modules import __orders_list
 
 def index(request, game_id):
-	orders = __orders_list
-	return render(request, 'game/index.html', {"orders": orders})
+	player = Player.objects.get(game=game_id, user=request.user)
+
+	ret = {
+		"available_orders": __orders_list,
+		"orders": player.get_current_orders(),
+		"game": player.game,
+	}
+	
+	return render(request, 'game/index.html', ret)
 
 
 def players(request, game_id):
