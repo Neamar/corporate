@@ -1,9 +1,13 @@
 from django.shortcuts import render
 
+from engine.models import Game
+from engine.modules import __orders_list
 
 def index(request, game_id):
-	return render(request, 'game/index.html', {})
+	orders = __orders_list
+	return render(request, 'game/index.html', {"orders": orders})
 
 
 def players(request, game_id):
-	return render(request, 'game/players.html', {})
+	g = Game.objects.get(pk=game_id)
+	return render(request, 'game/players.html', {"players": g.player_set.all()})
