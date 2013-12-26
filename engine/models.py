@@ -38,6 +38,10 @@ class Message(models.Model):
 class Order(models.Model):
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField()
+	type = models.CharField(max_length=50, blank=True, editable=False)
+
+	def __unicode__(self):
+		return "Order for %s, turn %s" % (self.player, self.turn)
 
 
 from engine.modules import *
