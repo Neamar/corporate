@@ -2,7 +2,8 @@ from engine.testcases import EngineTestCase
 from engine.models import Game
 from engine.dispatchs import post_create
 
-class ModelTest(EngineTestCase):
+
+class SignalTest(EngineTestCase):
 	"""
 	Unit tests for engine models
 	"""

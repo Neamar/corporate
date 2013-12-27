@@ -8,4 +8,4 @@ class ResolutionTask:
 
 
 	def run(self, game):
-		raise Exception("Abstract call.")
+		raise NotImplementedError("Abstract call.")

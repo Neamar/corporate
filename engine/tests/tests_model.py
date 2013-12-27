@@ -1,8 +1,10 @@
 from django.db import IntegrityError
+from django.core.exceptions import ValidationError
 
 from engine.testcases import EngineTestCase
 from engine.models import Game, Player, Message, Order
 from website.models import User
+
 
 class ModelTest(EngineTestCase):
 	"""
@@ -10,7 +12,7 @@ class ModelTest(EngineTestCase):
 	"""
 	def test_game_turns(self):
 		"""
-		Check is current_turn can't be greater than total_turn
+		Check if current_turn can't be greater than total_turn
 		"""
 
 		self.g.current_turn = 11
@@ -88,6 +90,14 @@ class ModelTest(EngineTestCase):
 		self.g.save()
 
 		self.assertEqual([o2], list(self.p.get_current_orders()))
+
+	def test_order_save_is_abstract(self):
+		"""
+		Check a raw Order can't be created
+		"""
+
+		o = Order(player=self.p)
+		self.assertRaises(ValidationError, o.clean)
 
 	def test_order_save_autoset_turn(self):
 		"""

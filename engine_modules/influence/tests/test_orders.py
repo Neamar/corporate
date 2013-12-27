@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+
 from engine.testcases import EngineTestCase
 from engine_modules.influence.orders import BuyInfluenceOrder
 
@@ -28,3 +30,18 @@ class OrdersTest(EngineTestCase):
 		self.o.resolve()
 
 		self.assertEqual(self.reload(self.p).influence.level, 2)
+
+	def test_cant_create_order_without_money(self):
+		"""
+		Order can't be created without enough money
+		"""
+		self.p.money = 0
+		self.p.save()
+
+		self.o.delete()
+		
+		o = BuyInfluenceOrder(
+			player=self.p
+		)
+
+		self.assertRaises(ValidationError, o.clean)

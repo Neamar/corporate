@@ -1,10 +1,9 @@
 from django.db import IntegrityError
 
 from engine.testcases import EngineTestCase
-from engine.models import Game, Player, Message, Order
-from website.models import User
 
-class ModelTest(EngineTestCase):
+
+class DispatchTest(EngineTestCase):
 	"""
 	Unit tests for engine models
 	"""
