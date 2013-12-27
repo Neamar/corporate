@@ -28,5 +28,6 @@ admin.site.register(Message, MessageAdmin)
 
 class OrderAdmin(admin.ModelAdmin):
 	list_display = ('type', 'player', 'turn')
+	readonly_fields=('turn',)
 	ordering=('player',)
 admin.site.register(Order, OrderAdmin)

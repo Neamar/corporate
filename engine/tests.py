@@ -1,4 +1,5 @@
 from django.test import TestCase
+
 from engine.models import Game, Player, Message, Order
 from django.db import IntegrityError
 
