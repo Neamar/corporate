@@ -125,7 +125,7 @@ class ModelTest(EngineTestCase):
 
 	def test_order_creation_during_another_turn(self):
 		"""
-		Check if an order can't be created at another turn
+		Can't create an order pointing to another turn than the current one
 		"""
 
 		o = Order(player=self.p, turn=2)
@@ -135,10 +135,10 @@ class ModelTest(EngineTestCase):
 
 	def test_order_modification_during_another_turn(self):
 		"""
-		Check if an order can't be modified at another turn
+		Can't modify the turn from an existing order
 		"""
 		
-		o = Order(player=self.p, turn=1)
+		o = Order(player=self.p)
 		o.save()
 
 		o.turn = 2
@@ -172,7 +172,7 @@ class ModelTest(EngineTestCase):
 			class Meta:
 				proxy = True
 			def get_cost(self):
-				return 1000000
+				return self.player.money
 
 		o = SomeOrder(
 			player=self.p
