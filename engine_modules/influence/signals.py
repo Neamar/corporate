@@ -10,12 +10,13 @@ from engine_modules.influence.orders import BuyInfluenceOrder
 
 
 @receiver(validate_order, sender=BuyInfluenceOrder)
-def buy_influence_order_require_money(sender, instance, **kwargs):
+def only_one_influence_per_turn(sender, instance, **kwargs):
 	"""
-	Check player has enough money for this order
+	You can't buy more than one influence per turn
+	This is kinda like some "unique_together" constraint, except on inherited models.
 	"""
-	if instance.get_cost() + instance.player.get_current_orders_cost() > instance.player.money:
-		raise OrderNotAvailable("Pas assez d'argent pour lancer cet ordre.")
+	if BuyInfluenceOrder.objects.filter(player=instance.player, turn=instance.player.game.current_turn).exists():
+		raise OrderNotAvailable("Impossible d'acheter de l'influence deux fois par tour.")
 
 
 @receiver(post_create, sender=Player)
