@@ -1,7 +1,7 @@
 from django.test import TestCase
-
 from engine.models import Game, Player, Message, Order
 from django.db import IntegrityError
+from website.models import User
 
 class ModelTest(TestCase):
 	"""
@@ -42,5 +42,28 @@ class ModelTest(TestCase):
 		m2 = Message(title="titre1", author= self.p)
 		m2.save()
 		
-
 		self.assertRaises(IntegrityError, lambda: m2.recipient_set.add(p3))
+
+	def test_no_two_layer_from_same_user_in_game(self):
+		"""
+		Check if a user can't have 2 players in the same game
+		"""
+		u = User(username="haha", email="azre@fer.fr")
+		u.save()
+
+		self.p.user = u
+		self.p.save()
+
+		p2 = Player(user=u, game=self.g)
+		self.assertRaises(IntegrityError, p2.save)
+
+	def test_resolve_current_turn_updates_current_turn_value(self):
+		self.g.current_turn=1
+		self.g.save()
+
+		o = Order(player=self.p, turn=1)
+		o.save()
+
+		self.g.resolve_current_turn()
+
+		self.assertEqual(self.g.current_turn, 2)
