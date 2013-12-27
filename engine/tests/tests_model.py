@@ -166,22 +166,22 @@ class ModelTest(EngineTestCase):
 
 	def test_cant_create_order_without_money_for_other_order(self):
 		"""
-		Order can't be created without enough money
+		Order can't be created without enough money to cover for existing orders
 		"""
-		class SomeOrder(Order):
+		class SomeOtherOrder(Order):
 			class Meta:
 				proxy = True
 			def get_cost(self):
 				return self.player.money
 
-		o = SomeOrder(
+		o = SomeOtherOrder(
 			player=self.p
 		)
 		# Should not raise any exception
 		o.clean()
 		o.save()
 
-		o2 = SomeOrder(
+		o2 = SomeOtherOrder(
 			player=self.p
 		)
 		# But you can't stack them
