@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+
 from engine.dispatchs import validate_order
 from engine.exceptions import OrderNotAvailable
 from engine.models import Player
-
 from engine_modules.influence.models import Influence
 from engine_modules.influence.orders import BuyInfluenceOrder
 
