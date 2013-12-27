@@ -6,7 +6,7 @@ class TaskTest(EngineTestCase):
 	"""
 	Unit tests for invisible_hand task
 	"""
-	def test_invisible_hand(self):
+	def test_invisible_hand_with_two_corpo(self):
 		bc = BaseCorporation(name="bc1")
 		bc.save()
 
@@ -22,7 +22,19 @@ class TaskTest(EngineTestCase):
 		InvisibleHand.run(self.g)
 		c = c.reload()
 		c2 = c2.reload()
-		
+
 		self.assertNotEqual(c.assets, 10)
 		self.assertNotEqual(c2.assets, 15)
 		self.assertEqual(c.assets + c2.assets, 25)
+
+	def test_invisible_hand_with_one_corpo(self):
+		bc = BaseCorporation(name="bc1")
+		bc.save()
+
+		c = Corporation(base_corporation=bc, game=self.g, assets=10)
+		c.save()
+
+		InvisibleHand.run(self.g)
+		c = c.reload()
+
+		self.assertEqual(c.assets, 11)
