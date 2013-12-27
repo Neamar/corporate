@@ -23,4 +23,12 @@ class OrdersTest(TestCase):
 		"""
 		The new player should have influence of 1
 		"""
-		self.assertEqual(self.p.influence.level, 1)
+		initial_money = 1000000
+		self.p.money = initial_money
+		self.p.save()
+		self.p.influence.level = 1
+		self.p.influence.save()
+
+		self.g.resolve_current_turn()
+
+		self.assertEqual(Player.objects.get(pk=self.p.pk).money, initial_money - BuyInfluenceOrder.BASE_COST * 2)

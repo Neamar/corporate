@@ -5,10 +5,10 @@ class BuyInfluenceOrder(Order):
 	"""
 	Order to increase Player Influence
 	"""
-	INFLUENCE_COST = 50
+	BASE_COST = 50
 
 	def get_cost(self):
-		return 50 * self.player.influence.level
+		return BuyInfluenceOrder.BASE_COST * (self.player.influence.level + 1)
 
 	def resolve(self):
 		# Pay.
