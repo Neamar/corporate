@@ -48,6 +48,7 @@ class Player(models.Model):
 	def __unicode__(self):
 		return self.name
 
+
 class Message(models.Model):
 	title = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
