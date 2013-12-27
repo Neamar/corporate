@@ -4,6 +4,9 @@ from django.db import IntegrityError
 
 
 class ModelTest(TestCase):
+	"""
+	Unit tests for engine models
+	"""
 	def setUp(self):
 		self.g = Game(total_turn=10)
 		self.g.save()

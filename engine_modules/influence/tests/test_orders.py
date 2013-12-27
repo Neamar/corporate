@@ -1,16 +1,25 @@
 from django.test import TestCase
-from engine.models import Game, Player, Message, Order
 from django.db import IntegrityError
 
+from engine.models import Game, Player
+from engine_modules.influences.orders import BuyInfluenceOrder
 
-class ModelTest(TestCase):
+
+class BuyInfluenceOrderTest(TestCase):
+	"""
+	Unit tests for engine models
+	"""
 	def setUp(self):
 		self.g = Game(total_turn=10)
 		self.g.save()
 		self.p = Player(game=self.g)
 		self.p.save()
+		self.o = BuyInfluenceOrder(
+			player=self.p
+		)
+		self.o.save()
 
-	def test_influence_auto_created(self):
+	def test_order_cost_money(self):
 		"""
 		The new player should have influence of 1
 		"""
