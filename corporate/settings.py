@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'engine',
     'engine_modules.influence',
     'engine_modules.corporation',
+    'engine_modules.invisible_hand',
     'engine_modules.share',
 )
 

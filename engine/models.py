@@ -43,7 +43,7 @@ class Player(models.Model):
 		return self.order_set.filter(turn=self.game.current_turn)
 
 	def get_current_orders_cost(self):
-		return sum([order.get_cost() for order in self.get_current_orders()])
+		return sum([order.cost for order in self.get_current_orders()])
 
 	def __unicode__(self):
 		return self.name
@@ -59,7 +59,8 @@ class Message(models.Model):
 
 class Order(models.Model):
 	player = models.ForeignKey(Player)
-	turn = models.PositiveSmallIntegerField(blank=True)
+	turn = models.PositiveSmallIntegerField(editable=False)
+	cost = models.PositiveSmallIntegerField(editable=False)
 	type = models.CharField(max_length=50, blank=True, editable=False)
 
 	def save(self):
@@ -68,6 +69,9 @@ class Order(models.Model):
 		# Turn default values is game current_turn
 		if not self.turn:
 			self.turn = self.player.game.current_turn
+
+		if not self.cost:
+			self.cost = self.get_cost()
 
 
 		super(Order, self).save()

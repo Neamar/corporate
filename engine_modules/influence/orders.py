@@ -5,6 +5,7 @@ class BuyInfluenceOrder(Order):
 	"""
 	Order to increase Player Influence
 	"""
+
 	BASE_COST = 50
 
 	def get_cost(self):

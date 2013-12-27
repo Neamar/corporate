@@ -125,7 +125,7 @@ class ModelTest(EngineTestCase):
 
 	def test_order_creation_during_another_turn(self):
 		"""
-		Check if an order can't be created at another turn
+		Can't create an order pointing to another turn than the current one
 		"""
 
 		o = Order(player=self.p, turn=2)
@@ -135,13 +135,66 @@ class ModelTest(EngineTestCase):
 
 	def test_order_modification_during_another_turn(self):
 		"""
-		Check if an order can't be modified at another turn
+		Can't modify the turn from an existing order
 		"""
 		
-		o = Order(player=self.p, turn=1)
+		o = Order(player=self.p)
 		o.save()
 
 		o.turn = 2
 
 		self.assertRaises(IntegrityError, o.save)
 
+	def test_cant_create_order_without_money(self):
+		"""
+		Order can't be created without enough money
+		"""
+		class SomeOrder(Order):
+			class Meta:
+				proxy = True
+			def get_cost(self):
+				return 1
+
+		self.p.money = 0
+		self.p.save()
+		
+		o = SomeOrder(
+			player=self.p
+		)
+
+		self.assertRaises(ValidationError, o.clean)
+
+	def test_cant_create_order_without_money_for_other_order(self):
+		"""
+		Order can't be created without enough money to cover for existing orders
+		"""
+		class SomeOtherOrder(Order):
+			class Meta:
+				proxy = True
+			def get_cost(self):
+				return self.player.money
+
+		o = SomeOtherOrder(
+			player=self.p
+		)
+		# Should not raise any exception
+		o.clean()
+		o.save()
+
+		o2 = SomeOtherOrder(
+			player=self.p
+		)
+		# But you can't stack them
+		self.assertRaises(ValidationError, o2.clean)
+
+	def test_money_cant_be_negative(self):
+		"""
+		Check if money can't be test_money_cant_be_negative
+		"""
+
+		self.p.money = 100
+		self.p.save()
+
+		self.p.money -= 120
+
+		self.assertRaises(IntegrityError, self.p.save)

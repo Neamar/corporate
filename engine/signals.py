@@ -1,6 +1,9 @@
 from django.db.models.signals import pre_save, post_save, m2m_changed
 from django.dispatch import receiver
 from django.db import IntegrityError
+
+from engine.exceptions import OrderNotAvailable
+from engine.dispatchs import validate_order
 from engine.models import Game, Player, Message, Order
 from engine.dispatchs import post_create
 
@@ -40,3 +43,21 @@ def check_order_created_modifed_only_at_current_turn(sender, instance, **kwargs)
 	"""
 	if instance.turn != instance.player.game.current_turn:
 		raise IntegrityError("can't create or modify for another turn than current one")
+
+
+@receiver(pre_save, sender=Player)
+def check_money_cant_be_negative(sender, instance, **kwargs):
+	"""
+	Players can't have negative money
+	"""
+	if instance.money < 0:
+		raise IntegrityError("money can't be negative")
+
+
+@receiver(validate_order)
+def buy_order_require_money(sender, instance, **kwargs):
+	"""
+	Check player has enough money for this order
+	"""
+	if instance.get_cost() + instance.player.get_current_orders_cost() > instance.player.money:
+		raise OrderNotAvailable("Pas assez d'argent pour lancer cet ordre.")
