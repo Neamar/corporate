@@ -1,7 +1,20 @@
-from django.db.models.signals import pre_save,m2m_changed
+from django.db.models.signals import pre_save, post_save, m2m_changed
 from django.dispatch import receiver
 from django.db import IntegrityError
 from engine.models import Game, Player, Message, Order
+from engine.dispatchs import post_create
+
+
+@receiver(post_save)
+def send_post_create_signal(sender, instance, created, **kwargs):
+	"""
+	Send signal post_create when a model is created
+	"""
+
+	if created:
+		del kwargs['signal']
+		post_create.send(sender=sender, instance=instance, **kwargs)
+
 
 @receiver(pre_save, sender=Game)
 def check_current_turn_less_or_equal_total_turn(sender, instance, **kwargs):

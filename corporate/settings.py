@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'website',
     'engine_modules.influence',
+    'engine_modules.corporation',
     'engine',
 )
 
