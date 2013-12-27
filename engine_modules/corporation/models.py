@@ -21,3 +21,9 @@ class Corporation(models.Model):
 	base_corporation = models.ForeignKey(BaseCorporation)
 	game = models.ForeignKey(Game)
 	assets = models.PositiveSmallIntegerField()
+
+
+# TODO: move dat.
+def get_ordered_corporations(self):
+	return self.corporation_set.order_by('-assets')
+Game.get_ordered_corporations = get_ordered_corporations
