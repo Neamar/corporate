@@ -40,6 +40,6 @@ class ModelTest(TestCase):
 
 		m2 = Message(title="titre1", author= self.p)
 		m2.save()
-		m2.recipient_set.add(p3)
+		
 
-		self.assertRaises(IntegrityError, m2.save)
+		self.assertRaises(IntegrityError, lambda: m2.recipient_set.add(p3))
