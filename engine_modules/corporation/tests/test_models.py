@@ -16,3 +16,13 @@ class ModelTest(EngineTestCase):
 		corporations = Corporation.objects.all()
 		self.assertEqual(len(corporations), 1)
 		self.assertEqual(corporations[0].base_corporation, self.bc)
+
+	def test_corporation_deleted_when_asset_drops_below_zero(self):
+		"""
+		Corporation should have been created alongside the game
+		"""
+		c = Corporation.objects.all()[0]
+		c.assets = -1
+		c.save()
+
+		self.assertRaises(Corporation.DoesNotExist, lambda: self.reload(c))

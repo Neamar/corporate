@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 from engine.dispatchs import post_create
 
@@ -18,3 +19,12 @@ def auto_create_corporation(sender, instance, **kwargs):
 			game=instance,
 			assets=10
 		).save()
+
+
+@receiver(post_save, sender=Corporation)
+def crash_corporation_without_assets(sender, instance, **kwargs):
+	"""
+	A corporation without any assets gets deleted
+	"""
+	if instance.assets <= 0:
+		instance.delete()
