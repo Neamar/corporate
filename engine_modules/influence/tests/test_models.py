@@ -1,18 +1,7 @@
-from django.test import TestCase
-from engine.models import Game, Player, Message, Order
-from django.db import IntegrityError
+from engine.testcases import EngineTestCase
 
 
-class ModelTest(TestCase):
-	"""
-	Unit tests for engine models
-	"""
-	def setUp(self):
-		self.g = Game(total_turn=10)
-		self.g.save()
-		self.p = Player(game=self.g)
-		self.p.save()
-
+class ModelTest(EngineTestCase):
 	def test_influence_auto_created(self):
 		"""
 		The new player should have influence of 1
