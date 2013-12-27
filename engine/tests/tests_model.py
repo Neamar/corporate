@@ -145,6 +145,48 @@ class ModelTest(EngineTestCase):
 
 		self.assertRaises(IntegrityError, o.save)
 
+	def test_cant_create_order_without_money(self):
+		"""
+		Order can't be created without enough money
+		"""
+		class SomeOrder(Order):
+			class Meta:
+				proxy = True
+			def get_cost(self):
+				return 1
+
+		self.p.money = 0
+		self.p.save()
+		
+		o = SomeOrder(
+			player=self.p
+		)
+
+		self.assertRaises(ValidationError, o.clean)
+
+	def test_cant_create_order_without_money_for_other_order(self):
+		"""
+		Order can't be created without enough money
+		"""
+		class SomeOrder(Order):
+			class Meta:
+				proxy = True
+			def get_cost(self):
+				return 1000000
+
+		o = SomeOrder(
+			player=self.p
+		)
+		# Should not raise any exception
+		o.clean()
+		o.save()
+
+		o2 = SomeOrder(
+			player=self.p
+		)
+		# But you can't stack them
+		self.assertRaises(ValidationError, o2.clean)
+
 	def test_money_cant_be_negative(self):
 		"""
 		Check if money can't be test_money_cant_be_negative

@@ -31,24 +31,9 @@ class OrdersTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.p).influence.level, 2)
 
-	def test_cant_create_order_without_money(self):
-		"""
-		Order can't be created without enough money
-		"""
-		self.p.money = 0
-		self.p.save()
-
-		self.o.delete()
-		
-		o = BuyInfluenceOrder(
-			player=self.p
-		)
-
-		self.assertRaises(ValidationError, o.clean)
-
 	def test_cant_create_order_twice(self):
 		"""
-		Order can't be created without enough money
+		Order can't be created twice
 		"""	
 		o2 = BuyInfluenceOrder(
 			player=self.p
