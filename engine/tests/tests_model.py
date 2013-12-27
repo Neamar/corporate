@@ -1,18 +1,13 @@
-from django.test import TestCase
-from engine.models import Game, Player, Message, Order
 from django.db import IntegrityError
+
+from engine.testcases import EngineTestCase
+from engine.models import Game, Player, Message, Order
 from website.models import User
 
-class ModelTest(TestCase):
+class ModelTest(EngineTestCase):
 	"""
 	Unit tests for engine models
 	"""
-	def setUp(self):
-		self.g = Game(total_turn=10)
-		self.g.save()
-		self.p = Player(game=self.g)
-		self.p.save()
-
 	def test_game_turns(self):
 		"""
 		Check is current_turn can't be greater than total_turn
