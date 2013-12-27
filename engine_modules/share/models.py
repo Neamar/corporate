@@ -1,4 +1,6 @@
 from django.db import models
+from engine_modules.corporation.models import Corporation
+from engine.models import Player
 
 
 class Share(models.Model):

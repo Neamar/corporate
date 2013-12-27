@@ -1,7 +1,8 @@
 from django.db import models
 
 from engine.models import Order
-from engine_modules.corporation.models import Corporation, Share
+from engine_modules.corporation.models import Corporation
+from engine_modules.share.models import Share
 
 
 class BuyShareOrder(Order):

@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from engine.dispatchs import post_create
 
 from engine.models import Game
-from engine_modules.corporation.models import BaseCorporation, Corporation, Share
+from engine_modules.corporation.models import BaseCorporation, Corporation
 
 
 @receiver(post_create, sender=Game)
@@ -28,12 +28,3 @@ def crash_corporation_without_assets(sender, instance, **kwargs):
 	"""
 	if instance.assets <= 0:
 		instance.delete()
-
-
-@receiver(post_create, sender=Share)
-def set_share_turn(sender, instance, **kwargs):
-	"""
-	Automatically set share turn to current game turn
-	"""
-	instance.turn = instance.player.game.current_turn
-	instance.save()
