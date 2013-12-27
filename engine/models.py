@@ -29,6 +29,9 @@ class Game(models.Model):
 
 
 class Player(models.Model):
+	class Meta:
+		unique_together = (("game", "user"),)
+
 	name = models.CharField(max_length=64)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	game = models.ForeignKey(Game)
