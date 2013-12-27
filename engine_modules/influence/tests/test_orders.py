@@ -1,20 +1,13 @@
-from django.test import TestCase
-from django.db import IntegrityError
-
-from engine.models import Game, Player
+from engine.testcases import EngineTestCase
 from engine_modules.influence.orders import BuyInfluenceOrder
 
 
-class OrdersTest(TestCase):
+class OrdersTest(EngineTestCase):
 	"""
 	Unit tests for engine models
 	"""
 	def setUp(self):
-		self.initial_money = 1000000
-		self.g = Game(total_turn=10)
-		self.g.save()
-		self.p = Player(game=self.g, money=self.initial_money)
-		self.p.save()
+		super(OrdersTest, self).setUp()
 		self.o = BuyInfluenceOrder(
 			player=self.p
 		)
@@ -26,7 +19,7 @@ class OrdersTest(TestCase):
 		"""
 		self.g.resolve_current_turn()
 
-		self.assertEqual(Player.objects.get(pk=self.p.pk).money, self.initial_money - BuyInfluenceOrder.BASE_COST * 2)
+		self.assertEqual(self.reload(self.p).money, self.initial_money - BuyInfluenceOrder.BASE_COST * 2)
 
 	def test_order_increment_influence(self):
 		"""
@@ -34,4 +27,4 @@ class OrdersTest(TestCase):
 		"""
 		self.g.resolve_current_turn()
 
-		self.assertEqual(Player.objects.get(pk=self.p.pk).influence.level, 2)
+		self.assertEqual(self.reload(self.p).influence.level, 2)
