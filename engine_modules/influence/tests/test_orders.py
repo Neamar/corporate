@@ -17,7 +17,7 @@ class OrdersTest(EngineTestCase):
 		"""
 		The new player should have influence of 1
 		"""
-		self.g.resolve_current_turn()
+		self.o.resolve()
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money - BuyInfluenceOrder.BASE_COST * 2)
 
@@ -25,6 +25,6 @@ class OrdersTest(EngineTestCase):
 		"""
 		The new player should have influence of 1
 		"""
-		self.g.resolve_current_turn()
+		self.o.resolve()
 
 		self.assertEqual(self.reload(self.p).influence.level, 2)

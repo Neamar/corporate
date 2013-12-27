@@ -127,9 +127,8 @@ Views:
 Engine modules are standard Django apps, in the `engine_modules` folder.
 
 They can implement:
-* `tasks.py` : `__all__` can include a list of tasks to instanciate and run at each resolution
-* `orders.py` : `__all__` can include a list of Orders (models) available to the player
-* `setup.py` : `__all__` can include a list of functions to call when creating a new game.
+* `tasks.py` : `tasks` can include a list of tasks to instanciate and run at each resolution
+* `orders.py` : `orders` can include a list of Orders (models) available to the player
 
 ### Engine modules
 
