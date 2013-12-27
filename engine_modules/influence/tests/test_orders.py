@@ -2,10 +2,10 @@ from django.test import TestCase
 from django.db import IntegrityError
 
 from engine.models import Game, Player
-from engine_modules.influences.orders import BuyInfluenceOrder
+from engine_modules.influence.orders import BuyInfluenceOrder
 
 
-class BuyInfluenceOrderTest(TestCase):
+class OrdersTest(TestCase):
 	"""
 	Unit tests for engine models
 	"""
