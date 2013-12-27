@@ -40,6 +40,9 @@ class Player(models.Model):
 		"""
 		return self.order_set.filter(turn=self.game.current_turn)
 
+	def get_current_orders_cost(self):
+		return sum([order.get_cost() for order in self.get_current_orders()])
+
 	def __unicode__(self):
 		return self.name
 
@@ -76,7 +79,7 @@ class Order(models.Model):
 	def resolve(self):
 		raise Exception("Abstract call.")
 
-	def getCost(self):
+	def get_cost(self):
 		return 0
 
 	def __unicode__(self):

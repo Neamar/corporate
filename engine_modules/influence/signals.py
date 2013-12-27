@@ -11,6 +11,5 @@ def buy_influence_order_require_money(sender, instance, **kwargs):
 	"""
 	Check player has enough money for this order
 	"""
-	print "Checking", instance.player
-	if instance.getCost() > instance.player.money:
+	if instance.get_cost() + instance.player.get_current_orders_cost() > instance.player.money:
 		raise OrderNotAvailable("Pas assez d'argent pour lancer cet ordre.")
