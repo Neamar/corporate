@@ -12,7 +12,7 @@ class ModelTest(EngineTestCase):
 
 	def test_share_creation_automatically_set_turn(self):
 		"""
-		Corporation should have been created alongside the game
+		Share should be created at current turn
 		"""
 		s = Share(
 			corporation=self.g.corporation_set.get(base_corporation=self.bc),
