@@ -1,6 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.invisible_hand import InvisibleHand
-from engine_modules.corporation import Corporation, BaseCorporation
+from engine_modules.corporation.models import Corporation, BaseCorporation
 
 class TaskTest(EngineTestCase):
 	"""
@@ -19,9 +18,10 @@ class TaskTest(EngineTestCase):
 		c2 = Corporation(base_corporation=bc2, game=self.g, assets=15)
 		c2.save()
 
-		InvisibleHand.run(self.g)
-		c = c.reload()
-		c2 = c2.reload()
+		self.g.resolve_current_turn()
+
+		c = self.reload(c)
+		c2 = self.reload(c2)
 
 		self.assertNotEqual(c.assets, 10)
 		self.assertNotEqual(c2.assets, 15)
@@ -34,7 +34,8 @@ class TaskTest(EngineTestCase):
 		c = Corporation(base_corporation=bc, game=self.g, assets=10)
 		c.save()
 
-		InvisibleHand.run(self.g)
-		c = c.reload()
+		self.g.resolve_current_turn()
+
+		c = self.reload(c)
 
 		self.assertEqual(c.assets, 11)

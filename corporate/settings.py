@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'website',
     'engine_modules.influence',
     'engine_modules.corporation',
+    'engine_modules.invisible_hand',
     'engine',
 )
 
