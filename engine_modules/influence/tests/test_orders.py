@@ -45,3 +45,13 @@ class OrdersTest(EngineTestCase):
 		)
 
 		self.assertRaises(ValidationError, o.clean)
+
+	def test_cant_create_order_twice(self):
+		"""
+		Order can't be created without enough money
+		"""	
+		o2 = BuyInfluenceOrder(
+			player=self.p
+		)
+
+		self.assertRaises(ValidationError, o2.clean)
