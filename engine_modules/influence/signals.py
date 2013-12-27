@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from engine.signals import validate_order
+from engine.dispatchs import validate_order
 from django.dispatch import receiver
 from engine.exceptions import OrderNotAvailable
 

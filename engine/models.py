@@ -1,16 +1,14 @@
 from django.db import models
-from datetime import datetime
 from django.conf import settings
 
-from engine.signals import validate_order
+from engine.dispatchs import validate_order
 
 
 class Game(models.Model):
 	city = models.CharField(max_length=50)
 	current_turn = models.PositiveSmallIntegerField(default=1)
 	total_turn = models.PositiveSmallIntegerField()
-	started = models.DateTimeField(default=datetime.now)
-
+	started = models.DateTimeField(auto_now_add=True)
 
 	def resolve_current_turn(self):
 		"""
@@ -33,9 +31,9 @@ class Player(models.Model):
 		unique_together = (("game", "user"),)
 
 	name = models.CharField(max_length=64)
-	user = models.ForeignKey(settings.AUTH_USER_MODEL)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
 	game = models.ForeignKey(Game)
-	money = models.PositiveIntegerField()
+	money = models.PositiveIntegerField(default=0)
 
 	def get_current_orders(self):
 		"""
@@ -48,7 +46,6 @@ class Player(models.Model):
 
 	def __unicode__(self):
 		return self.name
-
 
 class Message(models.Model):
 	title = models.CharField(max_length=256)
@@ -90,3 +87,4 @@ class Order(models.Model):
 
 
 from engine.modules import *
+from engine.signals import *
