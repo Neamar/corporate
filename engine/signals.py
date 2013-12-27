@@ -40,3 +40,12 @@ def check_order_created_modifed_only_at_current_turn(sender, instance, **kwargs)
 	"""
 	if instance.turn != instance.player.game.current_turn:
 		raise IntegrityError("can't create or modify for another turn than current one")
+
+
+@receiver(pre_save, sender=Player)
+def check_money_cant_be_negative(sender, instance, **kwargs):
+	"""
+	Players can't have negative money
+	"""
+	if instance.money < 0:
+		raise IntegrityError("money can't be negative")

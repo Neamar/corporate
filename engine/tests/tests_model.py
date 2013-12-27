@@ -145,3 +145,14 @@ class ModelTest(EngineTestCase):
 
 		self.assertRaises(IntegrityError, o.save)
 
+	def test_money_cant_be_negative(self):
+		"""
+		Check if money can't be test_money_cant_be_negative
+		"""
+
+		self.p.money = 100
+		self.p.save()
+
+		self.p.money -= 120
+
+		self.assertRaises(IntegrityError, self.p.save)
