@@ -11,11 +11,6 @@ List of available orders
 """
 orders_list = []
 
-"""
-List of function to call to setup a new game
-"""
-setups_list = []
-
 
 def try_import(package, name, default=None):
 	"""
@@ -36,7 +31,6 @@ for app in settings.INSTALLED_APPS:
 	if 'engine_modules.' not in app:
 		continue
 
-	# setups_list += try_import("%s.setup" % app, 'setups', [])
 	orders_list += try_import("%s.orders" % app, 'orders', [])
 	tasks_list += try_import("%s.tasks" % app, 'tasks', [])
 
