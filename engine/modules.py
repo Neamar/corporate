@@ -1,7 +1,8 @@
-
+from django.conf import settings
+import importlib
 
 """
-List of task builder to call before each game resolution
+List of tasks to call for each game resolution
 """
 tasks_list = []
 
@@ -15,38 +16,32 @@ List of function to call to setup a new game
 """
 setups_list = []
 
-"""
-List of custom urls
-"""
-views_list = {}
 
-class ResolutionTask:
+def try_import(package, name, default=None):
 	"""
-	A task to call during resolution
+	Try to import some name from some file,
+	Returns default on failure
 	"""
 
-	priority = 0
-	name = ""
-	task = lambda game: game
+	try:
+		app = importlib.import_module(package)
+		return getattr(app, name)
+	except ImportError:
+		return default
+	except AttributeError:
+		return default
 
+for app in settings.INSTALLED_APPS:
+	# Only scan engine_modules app
+	if 'engine_modules.' not in app:
+		continue
 
-def registerModule(task_builder=None, orders=[], views={}, setup=None):
-	"""
-	Register a new module for use in the game.
-	taskBuilder is a function to retrieve a list of tasks items for resolution
-	orders is a list of new orders to add
-	views is a dict whose keys are regexp and values associated functions. If a conflict occurs between multiple apps, the last entry prevails.
-	setup is a function to call on game initialisation
-	"""
-	global tasks_list, orders_list, setups_list, views_list
-	
-	if task_builder:
-		tasks_list.append(task_builder)
+	# setups_list += try_import("%s.setup" % app, 'setups', [])
+	orders_list += try_import("%s.orders" % app, 'orders', [])
+	tasks_list += try_import("%s.tasks" % app, 'tasks', [])
 
-	if setup:
-		setups_list.append(setup)
+	# Autoload signals as a convenience
+	try_import("%s.signals" % app, 'none')
 
-	orders_list += orders
-	views_list.update(views)
-
-
+# Sort tasks in place, by priority
+tasks_list.sort(key=lambda t: t.priority)

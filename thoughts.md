@@ -124,12 +124,12 @@ Views:
 * /game/:game/messages
 
 #### Module architecture
-Engine modules can be standard Django apps, with models and views. To use as a module, call `engine.registerModule(taskBuilder, orders, views, setup)`, where:
+Engine modules are standard Django apps, in the `engine_modules` folder.
 
-* `taskBuilder` is a function which will be called with the current game, and must returns a list of ResolveTasks to handle resolution
-* `orders` is a list of Orders to register
-* `views` is a dict whose keys are regexp and values associated functions. If a conflict occurs between multiple apps, the last entry prevails.
-* `setup` is a function to call on game initialisation
+They can implement:
+* `tasks.py` : `__all__` can include a list of tasks to instanciate and run at each resolution
+* `orders.py` : `__all__` can include a list of Orders (models) available to the player
+* `setup.py` : `__all__` can include a list of functions to call when creating a new game.
 
 ### Engine modules
 
@@ -140,6 +140,8 @@ Models:
 * Influence
     - -> Player
     - level
+* BuyInfluenceOrder
+    - -> Player
 
 Resolution:
 * (90) Buying influence

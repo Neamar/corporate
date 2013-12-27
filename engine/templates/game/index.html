@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} {{ game }} {% endblock title %}
+
+{% block content %}
+<h1>{{ game }}</h1>
+
+<h2>Orders</h2>
+<ul>
+{% for order in orders %}
+	<li>{{ order }}</li>
+{% endfor %}
+</ul>
+
+<a href="">Add new order...</a>
+
+{% endblock %}
