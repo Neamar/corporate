@@ -1,7 +1,7 @@
 from django.db.models.signals import pre_save, post_save, m2m_changed
 from django.dispatch import receiver
 from django.db import IntegrityError
-from engine.models import Game, Player, Message
+from engine.models import Game, Player, Message, Order
 from engine.dispatchs import post_create
 
 
@@ -21,7 +21,6 @@ def check_current_turn_less_or_equal_total_turn(sender, instance, **kwargs):
 	"""
 	Can't save a Game with a current turn > total_turn
 	"""
-
 	if instance.current_turn > instance.total_turn:
 		raise IntegrityError("current turn is greater than total turn")
 
@@ -32,3 +31,12 @@ def check_player_is_in_the_same_game_than_author(sender, instance, action, **kwa
 		for player in  kwargs['pk_set']:
 			if instance.author.game != Player.objects.get(pk=player).game:
 				raise IntegrityError("the player is not in the same game than the author")
+
+
+@receiver(pre_save, sender=Order)
+def check_order_created_modifed_only_at_current_turn(sender, instance, **kwargs):
+	"""
+	Order can't be created / modified for another turn than current one
+	"""
+	if instance.turn != instance.player.game.current_turn:
+		raise IntegrityError("can't create or modify for another turn than current one")
