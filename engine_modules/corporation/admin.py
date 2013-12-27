@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from engine_modules.corporation.models import BaseCorporation, Corporation, Share
+from engine_modules.corporation.models import BaseCorporation, Corporation
 
 
 class BaseCorporationAdmin(admin.ModelAdmin):
@@ -14,9 +14,3 @@ class CorporationAdmin(admin.ModelAdmin):
 	def name(self, instance):
 		return instance.base_corporation.name
 admin.site.register(Corporation, CorporationAdmin)
-
-
-class ShareAdmin(admin.ModelAdmin):
-	list_display = ('corporation', 'player', 'turn')
-	readonly_fields = ('turn')
-admin.site.register(Share, ShareAdmin)
