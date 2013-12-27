@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
+from django.db import IntegrityError
 
 from engine.dispatchs import validate_order
 from engine.exceptions import OrderNotAvailable
@@ -24,3 +25,12 @@ def set_share_turn(sender, instance, **kwargs):
 	"""
 	if not instance.pk:
 		instance.turn = instance.player.game.current_turn
+
+
+@receiver(pre_save, sender=Share)
+def check_share_integrity(sender, instance, **kwargs):
+	"""
+	Check games matches
+	"""
+	if instance.player.game != instance.corporation.game:
+		raise IntegrityError("Player and Corporation game does not match.")

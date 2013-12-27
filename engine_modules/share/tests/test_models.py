@@ -1,4 +1,7 @@
+from django.db import IntegrityError
+
 from engine.testcases import EngineTestCase
+from engine.models import Game
 from engine_modules.corporation.models import BaseCorporation, Corporation
 from engine_modules.share.models import Share
 
@@ -21,3 +24,17 @@ class ModelTest(EngineTestCase):
 		s.save()
 
 		self.assertEqual(s.turn, self.g.current_turn)
+
+	def test_share_integrity(self):
+		"""
+		Share corporation must be part of the same game as the player
+		"""
+		g2 = Game(total_turn=10)
+		g2.save()
+
+		s = Share(
+			corporation=g2.corporation_set.get(base_corporation=self.bc),
+			player=self.p
+		)
+		
+		self.assertRaises(IntegrityError, s.save)
