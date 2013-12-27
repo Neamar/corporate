@@ -12,6 +12,7 @@ class ModelTest(EngineTestCase):
 		"""
 		Check is current_turn can't be greater than total_turn
 		"""
+
 		self.g.current_turn = 11
 		self.assertRaises(IntegrityError, self.g.save)
 
@@ -39,10 +40,11 @@ class ModelTest(EngineTestCase):
 		
 		self.assertRaises(IntegrityError, lambda: m2.recipient_set.add(p3))
 
-	def test_no_two_layer_from_same_user_in_game(self):
+	def test_no_two_player_from_same_user_in_game(self):
 		"""
 		Check if a user can't have 2 players in the same game
 		"""
+
 		u = User(username="haha", email="azre@fer.fr")
 		u.save()
 
@@ -56,6 +58,7 @@ class ModelTest(EngineTestCase):
 		"""
 		Check if the current turn is incremented
 		"""
+
 		self.g.current_turn=1
 		self.g.save()
 
@@ -67,22 +70,21 @@ class ModelTest(EngineTestCase):
 		"""
 		Check if get_current_orders return only current orders
 		"""
-		self.g.current_turn=1
-		self.g.save()
+
 		o = Order(player=self.p)
 		o.save()
 
-		self.g.current_turn=2
+		self.g.current_turn = 2
 		self.g.save()
 		o2 = Order(player=self.p)
 		o2.save()
 
-		self.g.current_turn=3
+		self.g.current_turn = 3
 		self.g.save()
 		o3 = Order(player=self.p)
 		o3.save()
 
-		self.g.current_turn=2
+		self.g.current_turn = 2
 		self.g.save()
 
 		self.assertEqual([o2], list(self.p.get_current_orders()))
@@ -91,8 +93,6 @@ class ModelTest(EngineTestCase):
 		"""
 		Check is save() autoset the right turn
 		"""
-		self.g.current_turn=1
-		self.g.save()
 
 		o = Order(player=self.p)
 		o.save()
@@ -103,6 +103,7 @@ class ModelTest(EngineTestCase):
 		"""
 		Check if save() autoset the right type
 		"""
+
 		class TestOrder(Order):
 			class Meta:
 				proxy = True
@@ -116,8 +117,6 @@ class ModelTest(EngineTestCase):
 		"""
 		Check if an order can't be created at another turn
 		"""
-		self.g.current_turn=1
-		self.g.save()
 
 		o = Order(player=self.p, turn=2)
 
@@ -128,9 +127,7 @@ class ModelTest(EngineTestCase):
 		"""
 		Check if an order can't be modified at another turn
 		"""
-		self.g.current_turn=1
-		self.g.save()
-
+		
 		o = Order(player=self.p, turn=1)
 		o.save()
 

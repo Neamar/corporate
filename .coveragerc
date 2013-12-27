@@ -1,0 +1,2 @@
+[report]
+omit = */migrations/*,*/admin.py,.v_env/*,*virtualenv*
