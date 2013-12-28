@@ -1,5 +1,5 @@
 from engine.tasks import ResolutionTask
-from engine_modules.influence.orders import BuyInfluenceOrder
+from engine_modules.influence.models import BuyInfluenceOrder
 
 
 class BuyInfluenceTask(ResolutionTask):

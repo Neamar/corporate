@@ -5,8 +5,7 @@ from django.db import IntegrityError
 
 from engine.dispatchs import validate_order
 from engine.exceptions import OrderNotAvailable
-from engine_modules.share.models import Share
-from engine_modules.share.orders import BuyShareOrder
+from engine_modules.share.models import Share, BuyShareOrder
 
 
 @receiver(validate_order, sender=BuyShareOrder)

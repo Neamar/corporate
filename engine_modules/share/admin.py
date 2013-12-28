@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from engine_modules.share.models import Share
-from engine_modules.share.orders import BuyShareOrder
+from engine_modules.share.models import Share, BuyShareOrder
 
 
 class ShareAdmin(admin.ModelAdmin):

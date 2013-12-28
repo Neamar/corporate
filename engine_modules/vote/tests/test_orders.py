@@ -1,7 +1,8 @@
 from engine.testcases import EngineTestCase
 from engine.exceptions import OrderNotAvailable
 from engine_modules.corporation.models import BaseCorporation, Corporation
-from engine_modules.vote.orders import VoteOrder
+from engine_modules.vote.models import VoteOrder
+
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):

@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.influence.orders import BuyInfluenceOrder
+from engine_modules.influence.models import BuyInfluenceOrder
 
 
 class TasksTest(EngineTestCase):

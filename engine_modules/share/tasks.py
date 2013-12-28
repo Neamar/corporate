@@ -1,6 +1,5 @@
 from engine.tasks import ResolutionTask
-from engine_modules.share.orders import BuyShareOrder
-from engine_modules.share.models import Share
+from engine_modules.share.models import Share, BuyShareOrder
 
 
 class BuyShareTask(ResolutionTask):

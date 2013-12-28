@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.citizenship.orders import CitizenShipOrder
+from engine_modules.citizenship.models import CitizenShipOrder
 from engine_modules.corporation.models import BaseCorporation, Corporation
 
 

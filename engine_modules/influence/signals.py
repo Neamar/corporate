@@ -4,8 +4,7 @@ from django.dispatch import receiver
 from engine.dispatchs import validate_order, post_create
 from engine.exceptions import OrderNotAvailable
 from engine.models import Player
-from engine_modules.influence.models import Influence
-from engine_modules.influence.orders import BuyInfluenceOrder
+from engine_modules.influence.models import Influence, BuyInfluenceOrder
 
 
 @receiver(validate_order, sender=BuyInfluenceOrder)

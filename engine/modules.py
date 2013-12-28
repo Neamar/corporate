@@ -31,7 +31,7 @@ for app in settings.INSTALLED_APPS:
 	if 'engine_modules.' not in app:
 		continue
 
-	orders_list += try_import("%s.orders" % app, 'orders', [])
+	orders_list += try_import("%s.models" % app, 'orders', [])
 	tasks_list += try_import("%s.tasks" % app, 'tasks', [])
 
 	# Autoload signals as a convenience

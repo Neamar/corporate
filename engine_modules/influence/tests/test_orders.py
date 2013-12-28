@@ -1,7 +1,7 @@
 from engine.exceptions import OrderNotAvailable
 
 from engine.testcases import EngineTestCase
-from engine_modules.influence.orders import BuyInfluenceOrder
+from engine_modules.influence.models import BuyInfluenceOrder
 
 
 class OrdersTest(EngineTestCase):

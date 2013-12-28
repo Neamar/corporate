@@ -1,7 +1,6 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation
-from engine_modules.share.models import Share
-from engine_modules.share.orders import BuyShareOrder
+from engine_modules.share.models import Share, BuyShareOrder
 from engine_modules.share.tasks import DividendTask
 
 

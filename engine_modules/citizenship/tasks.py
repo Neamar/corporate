@@ -1,5 +1,6 @@
 from engine.tasks import ResolutionTask
-from engine_modules.citizenship.orders import CitizenShipOrder
+from engine_modules.citizenship.models import CitizenShipOrder
+
 
 class CitizenshipTask(ResolutionTask):
 	"""

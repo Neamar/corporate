@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 from engine.dispatchs import validate_order
 from engine.exceptions import OrderNotAvailable
-from engine_modules.vote.orders import VoteOrder
+from engine_modules.vote.models import VoteOrder
 
 @receiver(validate_order, sender=VoteOrder)
 def limit_buy_share_by_influence(sender, instance, **kwargs):

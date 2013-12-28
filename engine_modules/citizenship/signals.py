@@ -4,8 +4,7 @@ from django.dispatch import receiver
 from engine.dispatchs import post_create, validate_order
 from engine.exceptions import OrderNotAvailable
 
-from engine_modules.citizenship.models import CitizenShip
-from engine_modules.citizenship.orders import CitizenShipOrder
+from engine_modules.citizenship.models import CitizenShip, CitizenShipOrder
 from engine.models import Player
 
 
