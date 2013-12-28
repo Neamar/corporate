@@ -6,7 +6,7 @@ class BuyInfluenceTask(ResolutionTask):
 	"""
 	Buy new Influence level
 	"""
-	resolution_order = 90
+	resolution_order = 900
 
 	def run(self, game):
 		"""

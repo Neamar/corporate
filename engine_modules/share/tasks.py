@@ -28,7 +28,7 @@ class DividendTask(ResolutionTask):
 	LAST_BONUS = 0.75
 	CITIZENSHIP_BONUS = 0.75
 
-	resolution_order = 80
+	resolution_order = 800
 
 	def run(self, game):
 		"""

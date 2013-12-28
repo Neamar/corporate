@@ -4,7 +4,7 @@ class InvisibleHandTask(ResolutionTask):
 	"""
 	Give +1 and -1 asset to two corporation
 	"""
-	resolution_order = 40
+	resolution_order = 400
 
 	def run(self, game):
 		corpos = game.corporation_set.all().order_by('?')[0:2]
