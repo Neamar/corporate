@@ -1,5 +1,6 @@
 from engine.tasks import ResolutionTask
-from engine_modules.influence.share import BuyShareOrder
+from engine_modules.share.orders import BuyShareOrder
+from engine_modules.share.models import Share
 
 
 class BuyShareTask(ResolutionTask):
@@ -23,6 +24,8 @@ class DividendTask(ResolutionTask):
 	"""
 	It's time to get money!
 	"""
+	SHARE_BASE_VALUE = 50
+
 	priority = 80
 
 	def run(self, game):
@@ -30,19 +33,19 @@ class DividendTask(ResolutionTask):
 		Retrieve all Share from all players
 		TODO: megaoptimize queries
 		"""
-		shares = game.share_set.all()
+		shares = Share.objects.filter(player__game=game)
 		ordered_corporations = game.get_ordered_corporations()
 
 		for share in shares:
 			# Dont give dividends for share bought this turn, unless we're in turn 1 or 2
 			if share.turn < game.current_turn or game.current_turn < 2:
-				dividend = 50 * share.corporation.assets
+				dividend = self.SHARE_BASE_VALUE * share.corporation.assets
 				if share.corporation == ordered_corporations[0]:
 					dividend *= 1.25
 				if share.corporation == ordered_corporations[-1]:
 					dividend *= 0.75
 
-				share.player.money += dividend
+				share.player.money += int(dividend)
 				share.player.save()
 
 tasks = (BuyShareTask, DividendTask)
