@@ -1,22 +1,13 @@
-from engine.tasks import ResolutionTask
+from engine.tasks import ResolutionTask, OrderResolutionTask
 from engine_modules.share.models import Share, BuyShareOrder
 
 
-class BuyShareTask(ResolutionTask):
+class BuyShareTask(OrderResolutionTask):
 	"""
 	Buy new Influence level
 	"""
 	resolution_order = 0
-
-	def run(self, game):
-		"""
-		Retrieve all BuyShareOrder and resolve them
-		TODO: factor out
-		"""
-		buy_share_orders = BuyShareOrder.objects.filter(player__game=game, turn=game.current_turn)
-
-		for buy_share_order in buy_share_orders:
-			buy_share_order.resolve()			
+	ORDER_TYPE = BuyShareOrder	
 
 
 class DividendTask(ResolutionTask):

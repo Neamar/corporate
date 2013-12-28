@@ -1,21 +1,13 @@
-from engine.tasks import ResolutionTask
+from engine.tasks import OrderResolutionTask
 from engine_modules.influence.models import BuyInfluenceOrder
 
 
-class BuyInfluenceTask(ResolutionTask):
+class BuyInfluenceTask(OrderResolutionTask):
 	"""
 	Buy new Influence level
 	"""
 	resolution_order = 900
-
-	def run(self, game):
-		"""
-		Retrieve all BuyInfluenceOrder and resolve them
-		"""
-		buy_influence_orders = BuyInfluenceOrder.objects.filter(player__game=game, turn=game.current_turn)
-
-		for buy_influence_order in buy_influence_orders:
-			buy_influence_order.resolve()			
+	ORDER_TYPE = BuyInfluenceOrder
 
 
 

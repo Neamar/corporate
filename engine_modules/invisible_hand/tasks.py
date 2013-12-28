@@ -8,9 +8,13 @@ class InvisibleHandTask(ResolutionTask):
 
 	def run(self, game):
 		corpos = game.corporation_set.all().order_by('?')[0:2]
+
+		# Probably a test, but may happen in some situations
 		if len(corpos) == 0:
 			return
+
 		corpos[0].assets += 1
+
 		if len(corpos) >= 2:
 			corpos[1].assets -= 1
 		[corpo.save() for corpo in corpos]
