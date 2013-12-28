@@ -30,6 +30,7 @@ class TaskTest(EngineTestCase):
 		self.assertEqual(self.c.assets + self.c2.assets, 25)
 
 	def test_invisible_hand_with_one_corporation(self):
+		self.c2.delete()
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.c).assets, 11)
