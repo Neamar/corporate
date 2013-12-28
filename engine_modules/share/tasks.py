@@ -6,7 +6,7 @@ class BuyShareTask(ResolutionTask):
 	"""
 	Buy new Influence level
 	"""
-	priority = 0
+	resolution_order = 0
 
 	def run(self, game):
 		"""
@@ -28,7 +28,7 @@ class DividendTask(ResolutionTask):
 	LAST_BONUS = 0.75
 	CITIZENSHIP_BONUS = 0.75
 
-	priority = 80
+	resolution_order = 80
 
 	def run(self, game):
 		"""

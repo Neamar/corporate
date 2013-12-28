@@ -6,7 +6,7 @@ class CitizenshipTask(ResolutionTask):
 	"""
 	Update player citizenship
 	"""
-	priority = 90
+	resolution_order = 90
 
 	def run(self, game):
 		"""

@@ -3,7 +3,7 @@ class ResolutionTask:
 	A task to call during resolution
 	"""
 
-	priority = 0
+	resolution_order = 0
 	name = ""
 
 
