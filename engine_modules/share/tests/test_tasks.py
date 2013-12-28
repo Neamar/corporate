@@ -28,6 +28,13 @@ class TasksTest(EngineTestCase):
 		)
 		self.o.save()
 
+		self.g.resolve_current_turn()
+
+		self.assertEqual(len(Share.objects.all()), 1)
+		self.assertEqual(Share.objects.get(pk=1).player, self.p)
+		self.assertEqual(Share.objects.get(pk=1).corporation, self.c)
+		self.assertEqual(Share.objects.get(pk=1).turn, self.g.current_turn - 1)
+
 
 	def test_dividend_task_applied(self):
 		"""
