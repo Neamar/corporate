@@ -226,5 +226,26 @@ Models:
     - onLast
     - onLastDescription
 
-Resolution
+Resolution:
 * (60) FirstLastEffect
+
+#### engine.runs
+* Run
+    - 30% bonus
+    - price
+
+#### engine.corporation_runs
+Base application for everything run related.
+
+Models:
+* ProtectionRunOrder
+    - ->protected_corporation
+* SabotageRunOrder
+    - ->sabotaged_corporation
+* DatastealRunOrder
+    - ->stolen_corporation
+    - ->stealer_corporation
+
+Resolution:
+* (30) ProtectionRun
+* (35) SabotageRun / DatastealRun
