@@ -27,6 +27,7 @@ class DividendTask(ResolutionTask):
 	SHARE_BASE_VALUE = 50
 	FIRST_BONUS = 1.25
 	LAST_BONUS = 0.75
+	CITIZENSHIP_BONUS = 0.75
 
 	priority = 80
 
@@ -46,6 +47,8 @@ class DividendTask(ResolutionTask):
 					dividend *= self.FIRST_BONUS
 				if share.corporation == ordered_corporations[-1]:
 					dividend *= self.LAST_BONUS
+				if share.player.citizenship.corporation == share.corporation:
+					dividend *= self.CITIZENSHIP_BONUS
 
 				share.player.money += int(dividend)
 				share.player.save()
