@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
 
-
 from engine.dispatchs import validate_order, post_create
 from engine.exceptions import OrderNotAvailable
 from engine.models import Player
