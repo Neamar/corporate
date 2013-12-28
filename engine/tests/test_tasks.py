@@ -1,6 +1,8 @@
 from django.test import TestCase
 
 from engine.tasks import ResolutionTask
+
+
 class TaskTest(TestCase):
 	def test_task_run_is_abstract(self):
 		"""

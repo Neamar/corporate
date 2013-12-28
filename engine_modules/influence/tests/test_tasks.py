@@ -13,14 +13,17 @@ class TasksTest(EngineTestCase):
 		)
 		self.o.save()
 
-	def test_tasks_applied(self):
+	def test_task_applied(self):
 		"""
 		The new player should have influence of 1 after turn resolution
 		"""
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.p).influence.level, 2)
 
-		# Check order is only applied on current turn
-		# TODO: factor out on OrderTask
+	def test_task_applied_once(self):
+		self.g.current_turn += 1
+		self.g.save()
+
+		# Check order is only applied on creation turn
 		self.g.resolve_current_turn()
-		self.assertEqual(self.reload(self.p).influence.level, 2)
+		self.assertEqual(self.reload(self.p).influence.level, 1)
