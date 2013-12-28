@@ -13,7 +13,6 @@ def send_post_create_signal(sender, instance, created, **kwargs):
 	"""
 	Send signal post_create when a model is created
 	"""
-
 	if created:
 		del kwargs['signal']
 		post_create.send(sender=sender, instance=instance, **kwargs)

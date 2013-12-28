@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 
 from engine.testcases import EngineTestCase
 from engine_modules.citizenship.models import CitizenShipOrder
-from engine_modules.corporation.models import BaseCorporation, Corporation
+from engine_modules.corporation.models import BaseCorporation
 
 
 class OrdersTest(EngineTestCase):
@@ -15,7 +15,7 @@ class OrdersTest(EngineTestCase):
 
 		super(OrdersTest, self).setUp()
 
-		self.c = Corporation.objects.get(base_corporation=self.bc)
+		self.c = self.g.corporation_set.get(base_corporation=self.bc)
 
 		self.o = CitizenShipOrder(
 			player=self.p,
