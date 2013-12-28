@@ -82,7 +82,7 @@ class Order(models.Model):
 		validate_order.send(sender=self.__class__, instance=self)
 
 	def resolve(self):
-		raise Exception("Abstract call.")
+		raise NotImplementedError("Abstract call.")
 
 	def get_cost(self):
 		return 0

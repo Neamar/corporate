@@ -2,7 +2,7 @@ from django.db import IntegrityError
 
 from engine.testcases import EngineTestCase
 from engine.models import Game
-from engine_modules.corporation.models import BaseCorporation, Corporation
+from engine_modules.corporation.models import BaseCorporation
 from engine_modules.share.models import Share
 
 
@@ -24,6 +24,22 @@ class ModelTest(EngineTestCase):
 		s.save()
 
 		self.assertEqual(s.turn, self.g.current_turn)
+
+	def test_share_cant_be_updated(self):
+		"""
+		Share should be created at current turn
+		"""
+		s = Share(
+			corporation=self.g.corporation_set.get(base_corporation=self.bc),
+			player=self.p
+		)
+		s.save()
+
+		self.g.current_turn += 1
+		self.g.save()
+
+
+		self.assertRaises(IntegrityError, s.save)
 
 	def test_share_integrity(self):
 		"""
