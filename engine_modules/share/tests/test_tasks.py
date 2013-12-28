@@ -19,15 +19,15 @@ class TasksTest(EngineTestCase):
 
 		super(TasksTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation=self.bc)
-		self.c.assets -= 2
-		self.c.save()
+		self.last_corporation = self.g.corporation_set.get(base_corporation=self.bc)
+		self.last_corporation.assets -= 3
+		self.last_corporation.save()
 
-		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
+		self.medium_corporation = self.g.corporation_set.get(base_corporation=self.bc2)
 		
-		self.c3 = self.g.corporation_set.get(base_corporation=self.bc3)
-		self.c3.assets += 2
-		self.c3.save()
+		self.first_corporation = self.g.corporation_set.get(base_corporation=self.bc3)
+		self.first_corporation.assets += 3
+		self.first_corporation.save()
 
 	def test_buy_task_applied(self):
 		"""
@@ -35,7 +35,7 @@ class TasksTest(EngineTestCase):
 		"""
 		self.o = BuyShareOrder(
 			player=self.p,
-			corporation=self.c
+			corporation=self.last_corporation
 		)
 		self.o.save()
 
@@ -43,7 +43,7 @@ class TasksTest(EngineTestCase):
 
 		self.assertEqual(len(Share.objects.all()), 1)
 		self.assertEqual(Share.objects.get(pk=1).player, self.p)
-		self.assertEqual(Share.objects.get(pk=1).corporation, self.c)
+		self.assertEqual(Share.objects.get(pk=1).corporation, self.last_corporation)
 		self.assertEqual(Share.objects.get(pk=1).turn, self.g.current_turn - 1)
 
 
@@ -54,7 +54,7 @@ class TasksTest(EngineTestCase):
 		# We have one share
 		self.s = Share(
 			player=self.p,
-			corporation=self.c2
+			corporation=self.medium_corporation
 		)
 		self.s.save()
 		self.g.current_turn = 5
@@ -63,7 +63,7 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 
 		# We expect dividend on this share
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.c2).assets
+		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
@@ -74,7 +74,7 @@ class TasksTest(EngineTestCase):
 		# We have one share
 		self.s = Share(
 			player=self.p,
-			corporation=self.c3
+			corporation=self.first_corporation
 		)
 		self.s.save()
 
@@ -83,7 +83,7 @@ class TasksTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 		# We expect dividend on this share, taking into account the fact that this corporation is the first.
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.c3).assets * DividendTask.FIRST_BONUS
+		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.first_corporation).assets * DividendTask.FIRST_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
@@ -95,7 +95,7 @@ class TasksTest(EngineTestCase):
 		# We have one share
 		self.s = Share(
 			player=self.p,
-			corporation=self.c
+			corporation=self.last_corporation
 		)
 		self.s.save()
 
@@ -104,6 +104,6 @@ class TasksTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 		# We expect dividend on this share, taking into account the fact that this corporation is the last.
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.c).assets * DividendTask.LAST_BONUS
+		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.last_corporation).assets * DividendTask.LAST_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
