@@ -1,4 +1,4 @@
-from django.core.exceptions import ValidationError
+from engine.exceptions import OrderNotAvailable
 
 from engine.testcases import EngineTestCase
 from engine_modules.influence.orders import BuyInfluenceOrder
@@ -13,6 +13,7 @@ class OrdersTest(EngineTestCase):
 		self.o = BuyInfluenceOrder(
 			player=self.p
 		)
+		self.o.clean()
 		self.o.save()
 
 	def test_order_cost_money(self):
@@ -39,4 +40,4 @@ class OrdersTest(EngineTestCase):
 			player=self.p
 		)
 
-		self.assertRaises(ValidationError, o2.clean)
+		self.assertRaises(OrderNotAvailable, o2.clean)

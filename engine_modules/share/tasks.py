@@ -25,6 +25,9 @@ class DividendTask(ResolutionTask):
 	It's time to get money!
 	"""
 	SHARE_BASE_VALUE = 50
+	FIRST_BONUS = 1.25
+	LAST_BONUS = 0.75
+	CITIZENSHIP_BONUS = 0.75
 
 	priority = 80
 
@@ -41,9 +44,11 @@ class DividendTask(ResolutionTask):
 			if share.turn < game.current_turn or game.current_turn < 2:
 				dividend = self.SHARE_BASE_VALUE * share.corporation.assets
 				if share.corporation == ordered_corporations[0]:
-					dividend *= 1.25
+					dividend *= self.FIRST_BONUS
 				if share.corporation == ordered_corporations[-1]:
-					dividend *= 0.75
+					dividend *= self.LAST_BONUS
+				if share.player.citizenship.corporation == share.corporation:
+					dividend *= self.CITIZENSHIP_BONUS
 
 				share.player.money += int(dividend)
 				share.player.save()

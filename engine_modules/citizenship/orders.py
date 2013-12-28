@@ -4,7 +4,7 @@ from engine_modules.corporation.models import Corporation
 
 class CitizenShipOrder(Order):
 	"""
-	Order to be a Citizen
+	Order to become citizen from a new corporation
 	"""
 	corporation = models.ForeignKey(Corporation)
 
