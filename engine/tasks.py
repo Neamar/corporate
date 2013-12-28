@@ -3,9 +3,7 @@ class ResolutionTask:
 	A task to call during resolution
 	"""
 
-	resolution_order = 0
-	name = ""
-
+	RESOLUTION_ORDER = 0
 
 	def run(self, game):
 		raise NotImplementedError("Abstract call.")

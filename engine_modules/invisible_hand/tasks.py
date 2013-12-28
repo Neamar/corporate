@@ -4,7 +4,7 @@ class InvisibleHandTask(ResolutionTask):
 	"""
 	Give +1 and -1 asset to two corporation
 	"""
-	resolution_order = 400
+	RESOLUTION_ORDER = 400
 
 	def run(self, game):
 		# Invisible hand can be disabled, for instance to ease testing

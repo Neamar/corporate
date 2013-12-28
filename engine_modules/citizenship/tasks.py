@@ -6,7 +6,7 @@ class CitizenshipTask(OrderResolutionTask):
 	"""
 	Update player citizenship
 	"""
-	resolution_order = 900
+	RESOLUTION_ORDER = 900
 	ORDER_TYPE = CitizenShipOrder
 
 
