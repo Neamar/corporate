@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'engine_modules.corporation',
     'engine_modules.invisible_hand',
     'engine_modules.vote',
+    'engine_modules.citizenship',
     'engine',
 )
 
