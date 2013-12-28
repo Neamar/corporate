@@ -4,4 +4,4 @@ from engine_modules.corporation.models import Corporation
 
 class CitizenShip(models.Model):
 	player = models.OneToOneField(Player)
-	corporation = models.ForeignKey(Corporation)
+	corporation = models.ForeignKey(Corporation, null=True)
