@@ -91,13 +91,21 @@ class ModelTest(EngineTestCase):
 
 		self.assertEqual([o2], list(self.p.get_current_orders()))
 
-	def test_order_save_is_abstract(self):
+	def test_order_clean_is_abstract(self):
 		"""
 		Check a raw Order can't be created
 		"""
 
 		o = Order(player=self.p)
 		self.assertRaises(ValidationError, o.clean)
+
+	def test_order_resolve_is_abstract(self):
+		"""
+		Check a raw Order can't be created
+		"""
+
+		o = Order(player=self.p)
+		self.assertRaises(NotImplementedError, o.resolve)
 
 	def test_order_save_autoset_turn(self):
 		"""

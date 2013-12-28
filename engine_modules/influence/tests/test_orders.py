@@ -13,6 +13,7 @@ class OrdersTest(EngineTestCase):
 		self.o = BuyInfluenceOrder(
 			player=self.p
 		)
+		self.o.clean()
 		self.o.save()
 
 	def test_order_cost_money(self):

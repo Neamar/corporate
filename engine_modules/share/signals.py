@@ -25,6 +25,8 @@ def set_share_turn(sender, instance, **kwargs):
 	"""
 	if not instance.pk:
 		instance.turn = instance.player.game.current_turn
+	else:
+		raise IntegrityError("Can't update share.")
 
 
 @receiver(pre_save, sender=Share)
