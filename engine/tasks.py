@@ -9,3 +9,8 @@ class ResolutionTask:
 
 	def run(self, game):
 		raise NotImplementedError("Abstract call.")
+
+
+class OrderResolutionTask
+	"""
+	A task to resolve some orders

@@ -91,5 +91,8 @@ class Order(models.Model):
 		return "%s for %s, turn %s" % (self.type, self.player, self.turn)
 
 
+# Import datas for all engine_modules
 from engine.modules import *
+
+# Import signals
 from engine.signals import *

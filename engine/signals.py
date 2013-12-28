@@ -33,7 +33,7 @@ def check_player_is_in_the_same_game_than_author(sender, instance, action, **kwa
 	if action == "pre_add":
 		for player in  kwargs['pk_set']:
 			if instance.author.game != Player.objects.get(pk=player).game:
-				raise IntegrityError("the player is not in the same game than the author")
+				raise IntegrityError("The player is not in the same game than the author.")
 
 
 @receiver(pre_save, sender=Order)
@@ -42,7 +42,7 @@ def check_order_created_modifed_only_at_current_turn(sender, instance, **kwargs)
 	Order can't be created / modified for another turn than current one
 	"""
 	if instance.turn != instance.player.game.current_turn:
-		raise IntegrityError("can't create or modify for another turn than current one")
+		raise IntegrityError("Can't create or modify for another turn than current one.")
 
 
 @receiver(pre_save, sender=Player)
@@ -51,7 +51,7 @@ def check_money_cant_be_negative(sender, instance, **kwargs):
 	Players can't have negative money
 	"""
 	if instance.money < 0:
-		raise IntegrityError("money can't be negative")
+		raise IntegrityError("Money can't be negative.")
 
 
 @receiver(validate_order)
