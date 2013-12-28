@@ -21,5 +21,6 @@ class TasksTest(EngineTestCase):
 		self.assertEqual(self.reload(self.p).influence.level, 2)
 
 		# Check order is only applied on current turn
+		# TODO: factor out on OrderTask
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.p).influence.level, 2)
