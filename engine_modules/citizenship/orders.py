@@ -10,6 +10,6 @@ class CitizenShipOrder(Order):
 
 	def resolve(self):
 		self.player.citizenship.corporation = self.corporation
-		self.player.save()
+		self.player.citizenship.save()
 
 orders = (CitizenShipOrder,)

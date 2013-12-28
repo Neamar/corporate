@@ -16,15 +16,22 @@ class OrdersTest(EngineTestCase):
 		super(OrdersTest, self).setUp()
 
 		self.c = Corporation.objects.get(base_corporation=self.bc)
-		self.c.assets = 10
-		self.c.save()
 
 		self.o = CitizenShipOrder(
 			player=self.p,
 			corporation=self.c
 		)
+		self.o.clean()
 		self.o.save()
 
+	def test_citizenship_is_affected(self):
+		"""
+		Check if the citizenship is created
+		"""
+		self.o.resolve()
+
+		self.assertEqual(self.reload(self.p).citizenship.corporation, self.c)
+		
 	def test_cant_create_order_twice(self):
 		"""
 		Order can't be created twice

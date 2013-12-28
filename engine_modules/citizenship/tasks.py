@@ -13,7 +13,7 @@ class CitizenshipTask(ResolutionTask):
 		"""
 		citizen_ship_orders = CitizenShipOrder.objects.filter(player__game=game, turn=game.current_turn)
 		for citizen_ship_order in citizen_ship_orders:
-			citizen_ship_orders.resolve()
+			citizen_ship_order.resolve()
 
 
 tasks = (CitizenshipTask,)
