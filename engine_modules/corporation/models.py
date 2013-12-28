@@ -1,6 +1,6 @@
 from django.db import models
 
-from engine.models import Game, Player
+from engine.models import Game
 
 
 class BaseCorporation(models.Model):

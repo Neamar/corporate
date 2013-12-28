@@ -7,7 +7,7 @@ class BuyShareTask(OrderResolutionTask):
 	Buy new Influence level
 	"""
 	resolution_order = 0
-	ORDER_TYPE = BuyShareOrder	
+	ORDER_TYPE = BuyShareOrder
 
 
 class DividendTask(ResolutionTask):

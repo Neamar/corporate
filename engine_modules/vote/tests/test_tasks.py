@@ -1,10 +1,8 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation
+from engine_modules.vote.models import VoteOrder
 
 class TaskTest(EngineTestCase):
-	"""
-	Unit tests for invisible_hand task
-	"""
 	def setUp(self):
 		self.bc = BaseCorporation(name="bc1")
 		self.bc.save()
@@ -17,19 +15,21 @@ class TaskTest(EngineTestCase):
 		self.c = self.g.corporation_set.get(base_corporation=self.bc)
 		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
 
-	def test_invisible_hand_with_two_corpo(self):
-		self.c2.assets = 15
-		self.c2.save()
+		self.v = VoteOrder(
+			player=self.p,
+			corporation_up=self.c,
+			corporation_down=self.c2
+		)
+		self.v.save()
+
+		# Disable invisible_hand for reliable results
+		self.g.disable_invisible_hand = True
+
+	def test_vote(self):
 		self.g.resolve_current_turn()
 
 		self.c = self.reload(self.c)
 		self.c2 = self.reload(self.c2)
 
-		self.assertNotEqual(self.c.assets, 10)
-		self.assertNotEqual(self.c2.assets, 15)
-		self.assertEqual(self.c.assets + self.c2.assets, 25)
-
-	def test_invisible_hand_with_one_corpo(self):
-		self.g.resolve_current_turn()
-
-		self.assertEqual(self.reload(self.c).assets, 11)
+		self.assertEqual(self.c.assets, 11)
+		self.assertEqual(self.c2.assets, 9)
