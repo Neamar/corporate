@@ -1,6 +1,6 @@
 from django.db import models
 
-from engine.models import Game
+from engine.models import Game, Player
 
 
 class BaseCorporation(models.Model):
@@ -21,3 +21,11 @@ class Corporation(models.Model):
 	base_corporation = models.ForeignKey(BaseCorporation)
 	game = models.ForeignKey(Game)
 	assets = models.PositiveSmallIntegerField()
+
+	def __unicode__(self):
+		return "%s (%s)" % (self.base_corporation.name, self.game)
+
+# TODO: move dat.
+def get_ordered_corporations(self):
+	return list(self.corporation_set.order_by('-assets'))
+Game.get_ordered_corporations = get_ordered_corporations

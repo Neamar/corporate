@@ -19,7 +19,7 @@ class ModelTest(EngineTestCase):
 
 	def test_corporation_deleted_when_asset_drops_below_zero(self):
 		"""
-		Corporation should have been created alongside the game
+		Corporation should crash when their assets drops below 0
 		"""
 		c = Corporation.objects.all()[0]
 		c.assets = -1

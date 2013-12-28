@@ -17,7 +17,7 @@ class OrdersTest(EngineTestCase):
 
 	def test_order_cost_money(self):
 		"""
-		The new player should have influence of 1
+		Money should be reduced
 		"""
 		self.o.resolve()
 
@@ -25,7 +25,7 @@ class OrdersTest(EngineTestCase):
 
 	def test_order_increment_influence(self):
 		"""
-		The new player should have influence of 1
+		Order should increment influence
 		"""
 		self.o.resolve()
 
