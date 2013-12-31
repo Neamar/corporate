@@ -15,6 +15,11 @@ class Game(models.Model):
 		"""
 		Resolve all orders for this turn, increment current_turn by 1.
 		"""
+
+		# First step: build a message containing order list.
+		for player in self.player_set.all():
+			player.build_order_message()
+
 		from engine.modules import tasks_list
 		for task in tasks_list:
 			t = task()
@@ -43,7 +48,25 @@ class Player(models.Model):
 		return self.order_set.filter(turn=self.game.current_turn)
 
 	def get_current_orders_cost(self):
+		"""
+		Get ths cost for all orders on this turn
+		"""
 		return sum([order.cost for order in self.get_current_orders()])
+
+	def build_order_message(self):
+		"""
+		Retrieve all orders for this turn, and build a message to remember them.
+		"""
+		orders = self.order_set.all()
+		message = "# Ordres de %s pour le tour %s\n\n" % (self.name, self.game.current_turn)
+		for order in orders:
+			# Retrieve associated order:
+			details = getattr(order, order.type.lower())
+			message += "* %s\n" % details.description()
+
+		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
+
+		return message
 
 	def __unicode__(self):
 		return self.name
@@ -65,7 +88,9 @@ class Order(models.Model):
 
 	def save(self):
 		# Save the current type to inflate later
-		self.type = '%s.%s' % (self._meta.app_label, self._meta.object_name)
+		# self.type = '%s.%s' % (self._meta.app_label, self._meta.object_name)
+		self.type = self._meta.object_name
+
 		# Turn default values is game current_turn
 		if not self.turn:
 			self.turn = self.player.game.current_turn
@@ -82,6 +107,9 @@ class Order(models.Model):
 		validate_order.send(sender=self.__class__, instance=self)
 
 	def resolve(self):
+		"""
+		Resolve the order now
+		"""
 		raise NotImplementedError("Abstract call.")
 
 	def get_cost(self):
@@ -90,6 +118,11 @@ class Order(models.Model):
 	def __unicode__(self):
 		return "%s for %s, turn %s" % (self.type, self.player, self.turn)
 
+	def description(self):
+		"""
+		Should return a full description of the order
+		"""
+		raise NotImplementedError("Abstract call.")
 
 # Import datas for all engine_modules
 from engine.modules import *

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from engine.models import Player, Order
 from engine_modules.corporation.models import Corporation
@@ -33,6 +34,9 @@ class BuyShareOrder(Order):
 			corporation=self.corporation,
 			player=self.player
 		).save()
+
+	def description(self):
+		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)
 
 
 orders = (BuyShareOrder,)

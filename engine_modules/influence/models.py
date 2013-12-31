@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from engine.models import Player, Order
 
@@ -28,6 +29,9 @@ class BuyInfluenceOrder(Order):
 		# Increase player influence by one
 		self.player.influence.level += 1
 		self.player.influence.save()
+
+	def description(self):
+		return u"Augmenter mon influence corporatiste à %s" % (self.player.influence.level + 1)
 
 
 orders = (BuyInfluenceOrder,)
