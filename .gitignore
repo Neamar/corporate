@@ -25,6 +25,7 @@ local_settings.py
 # OS specific
 *.DS_Store
 nohup.out
+.directory
 
 # Coverage
 .coverage
