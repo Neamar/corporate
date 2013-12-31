@@ -61,11 +61,11 @@ class Order(models.Model):
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField(editable=False)
 	cost = models.PositiveSmallIntegerField(editable=False)
-	type = models.CharField(max_length=50, blank=True, editable=False)
+	type = models.CharField(max_length=80, blank=True, editable=False)
 
 	def save(self):
 		# Save the current type to inflate later
-		self.type = self.__class__.__name__
+		self.type = '%s.%s' % (self._meta.app_label, self._meta.object_name)
 		# Turn default values is game current_turn
 		if not self.turn:
 			self.turn = self.player.game.current_turn

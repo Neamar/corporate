@@ -129,7 +129,7 @@ class ModelTest(EngineTestCase):
 		o = TestOrder(player=self.p)
 		o.save()
 
-		self.assertEqual(o.type, "TestOrder")
+		self.assertEqual(o.type, "tests.TestOrder")
 
 	def test_order_creation_during_another_turn(self):
 		"""
