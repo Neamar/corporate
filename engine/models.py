@@ -94,7 +94,11 @@ class Player(models.Model):
 		for message in messages:
 			resolution_message += "* Titre : %s\nMessage : %s\n\n" % (message.title, message.content)
 
-		return resolution_message
+		m = Message(author=None, content=resolution_message, title="# Message de fin de tour")
+		m.save()
+		m.recipient_set.add(self)
+
+		return m
 
 	def __unicode__(self):
 		return self.name
