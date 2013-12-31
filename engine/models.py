@@ -42,6 +42,16 @@ class Player(models.Model):
 	game = models.ForeignKey(Game)
 	money = models.PositiveIntegerField(default=0)
 
+	def add_message(self, **kwargs):
+		"""
+		Send a message to the player
+		"""
+		m = Message.objects.create(**kwargs)
+		m.save()
+		m.recipient_set.add(self)
+
+		return m
+
 	def get_current_orders(self):
 		"""
 		Returns the list of order for this turn
@@ -67,13 +77,11 @@ class Player(models.Model):
 
 		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
 
-		m = Message(
+		m = self.add_message(
 			title="Ordres pour le tour %s" % self.game.current_turn,
 			content=message,
 			author=None,
 		)
-		m.save()
-		m.recipient_set.add(self)
 		
 		return m
 
