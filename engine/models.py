@@ -77,13 +77,12 @@ class Player(models.Model):
 
 		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
 
-		m = self.add_message(
+		return self.add_message(
 			title="Ordres pour le tour %s" % self.game.current_turn,
 			content=message,
 			author=None,
+			flag=Message.ORDER
 		)
-		
-		return m
 
 	def build_resolution_message(self):
 		"""
@@ -94,27 +93,29 @@ class Player(models.Model):
 		for message in messages:
 			resolution_message += "* Titre : %s\nMessage : %s\n\n" % (message.title, message.content)
 
-		m = Message(author=None, content=resolution_message, title="# Message de fin de tour")
-		m.save()
-		m.recipient_set.add(self)
-
-		return m
+		return self.add_message(
+			title="Message de fin de tour",
+			content=resolution_message,
+			author=None,
+			flag=Message.RESOLUTION
+		)
 
 	def __unicode__(self):
 		return self.name
 
 
 class Message(models.Model):
+	ORDER = 'OR'
+	PRIVATE_MESSAGE = 'PM'
+	RESOLUTION = 'RS'
+	NOTE = 'NO'
+
 	MESSAGE_CHOICES = (
 		('OR', 'Order'),
 		('PM', 'Private Message'),
 		('RS', 'Resolution Sheet'),
 		('NO', 'Note'),
 	)
-	ORDER = 'OR'
-	PRIVATE_MESSAGE = 'PM'
-	RESOLUTON_SHEET = 'RS'
-	NOTE = 'NO'
 
 	title = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
