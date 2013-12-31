@@ -16,6 +16,10 @@ class Game(models.Model):
 		Resolve all orders for this turn, increment current_turn by 1.
 		"""
 
+		# First step: build a message containing order list.
+		for player in self.player_set.all():
+			player.build_order_message()
+
 		from engine.modules import tasks_list
 		for task in tasks_list:
 			t = task()
@@ -48,6 +52,21 @@ class Player(models.Model):
 		Get ths cost for all orders on this turn
 		"""
 		return sum([order.cost for order in self.get_current_orders()])
+
+	def build_order_message(self):
+		"""
+		Retrieve all orders for this turn, and build a message to remember them.
+		"""
+		orders = self.order_set.all()
+		message = "# Ordres de %s pour le tour %s\n\n" % (self.name, self.game.current_turn)
+		for order in orders:
+			# Retrieve associated order:
+			details = getattr(order, order.type.lower())
+			message += "* %s\n" % details.description()
+
+		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
+
+		return message
 
 	def __unicode__(self):
 		return self.name
