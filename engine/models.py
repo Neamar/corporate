@@ -52,7 +52,7 @@ class Player(models.Model):
 class Message(models.Model):
 	title = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
-	author = models.ForeignKey(Player)
+	author = models.ForeignKey(Player, null=True)
 	public = models.BooleanField(default=False)
 	recipient_set = models.ManyToManyField('Player', related_name="+")
 

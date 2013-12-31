@@ -31,7 +31,7 @@ def check_current_turn_less_or_equal_total_turn(sender, instance, **kwargs):
 def check_player_is_in_the_same_game_than_author(sender, instance, action, **kwargs):
 	if action == "pre_add":
 		for player in  kwargs['pk_set']:
-			if instance.author.game != Player.objects.get(pk=player).game:
+			if instance.author.game != Player.objects.get(pk=player).game and instance.author.game is not None:
 				raise IntegrityError("The player is not in the same game than the author.")
 
 
