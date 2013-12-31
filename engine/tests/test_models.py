@@ -107,6 +107,14 @@ class ModelTest(EngineTestCase):
 		o = Order(player=self.p)
 		self.assertRaises(NotImplementedError, o.resolve)
 
+	def test_order_description_is_abstract(self):
+		"""
+		Check a raw Order can't be created
+		"""
+
+		o = Order(player=self.p)
+		self.assertRaises(NotImplementedError, o.description)
+
 	def test_order_save_autoset_turn(self):
 		"""
 		Check is save() autoset the right turn
@@ -129,7 +137,7 @@ class ModelTest(EngineTestCase):
 		o = TestOrder(player=self.p)
 		o.save()
 
-		self.assertEqual(o.type, "tests.TestOrder")
+		self.assertEqual(o.type, "TestOrder")
 
 	def test_order_creation_during_another_turn(self):
 		"""

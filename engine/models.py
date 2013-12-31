@@ -15,6 +15,7 @@ class Game(models.Model):
 		"""
 		Resolve all orders for this turn, increment current_turn by 1.
 		"""
+
 		from engine.modules import tasks_list
 		for task in tasks_list:
 			t = task()
@@ -43,6 +44,9 @@ class Player(models.Model):
 		return self.order_set.filter(turn=self.game.current_turn)
 
 	def get_current_orders_cost(self):
+		"""
+		Get ths cost for all orders on this turn
+		"""
 		return sum([order.cost for order in self.get_current_orders()])
 
 	def __unicode__(self):
@@ -65,7 +69,9 @@ class Order(models.Model):
 
 	def save(self):
 		# Save the current type to inflate later
-		self.type = '%s.%s' % (self._meta.app_label, self._meta.object_name)
+		# self.type = '%s.%s' % (self._meta.app_label, self._meta.object_name)
+		self.type = self._meta.object_name
+
 		# Turn default values is game current_turn
 		if not self.turn:
 			self.turn = self.player.game.current_turn
@@ -82,6 +88,9 @@ class Order(models.Model):
 		validate_order.send(sender=self.__class__, instance=self)
 
 	def resolve(self):
+		"""
+		Resolve the order now
+		"""
 		raise NotImplementedError("Abstract call.")
 
 	def get_cost(self):
@@ -90,6 +99,11 @@ class Order(models.Model):
 	def __unicode__(self):
 		return "%s for %s, turn %s" % (self.type, self.player, self.turn)
 
+	def description(self):
+		"""
+		Should return a full description of the order
+		"""
+		raise NotImplementedError("Abstract call.")
 
 # Import datas for all engine_modules
 from engine.modules import *
