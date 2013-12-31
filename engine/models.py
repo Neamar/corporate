@@ -66,7 +66,15 @@ class Player(models.Model):
 
 		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
 
-		return message
+		m = Message(
+			title="Ordres pour le tour %s" % self.game.current_turn,
+			content=message,
+			author=None,
+		)
+		m.save()
+		m.recipient_set.add(self)
+		
+		return m
 
 	def __unicode__(self):
 		return self.name
