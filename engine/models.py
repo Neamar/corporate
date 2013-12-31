@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -68,16 +69,39 @@ class Player(models.Model):
 
 		return message
 
+	def build_resolution_message(self):
+		"""
+		Retrieve all notes, and build a message to remember them.
+		"""
+		messages = Message.objects.filter(flag=Message.NOTE, recipient_set=self)
+		resolution_message = "# Message de fin de tour"
+		for message in messages:
+			resolution_message += "* Titre : %s\nMessage : %s\n\n" % (message.title, message.content)
+
+		return resolution_message
+
 	def __unicode__(self):
 		return self.name
 
 
 class Message(models.Model):
+	MESSAGE_CHOICES = (
+		('OR', 'Order'),
+		('PM', 'Private Message'),
+		('RS', 'Resolution Sheet'),
+		('NO', 'Note'),
+	)
+	ORDER = 'OR'
+	PRIVATE_MESSAGE = 'PM'
+	RESOLUTON_SHEET = 'RS'
+	NOTE = 'NO'
+
 	title = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
 	author = models.ForeignKey(Player, null=True)
 	public = models.BooleanField(default=False)
 	recipient_set = models.ManyToManyField('Player', related_name="+")
+	flag = models.CharField(max_length=2, choices=MESSAGE_CHOICES)
 
 
 class Order(models.Model):
