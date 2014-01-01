@@ -5,9 +5,6 @@ from engine_modules.influence.models import BuyInfluenceOrder
 
 
 class OrdersTest(EngineTestCase):
-	"""
-	Unit tests for engine models
-	"""
 	def setUp(self):
 		super(OrdersTest, self).setUp()
 		self.o = BuyInfluenceOrder(
