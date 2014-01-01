@@ -1,5 +1,6 @@
 from engine.testcases import EngineTestCase
 from engine_modules.run.models import RunOrder
+from engine.exceptions import OrderNotAvailable
 
 
 class OrdersTest(EngineTestCase):
@@ -11,13 +12,16 @@ class OrdersTest(EngineTestCase):
 		self.o.clean()
 		self.o.save()
 
+	def test_resolve_successful_abstract(self):
+		self.assertRaises(NotImplementedError, self.o.resolve_successful)
+
 	def test_order_cost_money(self):
 		"""
 		Money should be reduced
 		"""
 		def resolve(o):
 			"""
-			Resolve run o, without NotImplementedError
+			Resolve run o, without NotImplementedError (we don't care about this, that's not waht we want to test)
 			"""
 			try:
 				o.resolve()
@@ -46,3 +50,23 @@ class OrdersTest(EngineTestCase):
 
 		self.o.additional_percents = 10
 		self.assertEqual(self.o.get_success_probability(), 90)
+
+	def test_only_influence_run_has_bonus(self):
+		"""
+		Influence bonus can only be given to as much run as your current influence level
+		"""
+
+		self.o.has_influence_bonus = True
+		self.o.save()
+
+		o2 = RunOrder(
+			player=self.p,
+			has_influence_bonus=True
+		)
+		self.assertRaises(OrderNotAvailable, o2.clean)
+
+		self.p.influence.level = 2
+		self.p.influence.save()
+
+		# assertNoRaises
+		o2.clean()
