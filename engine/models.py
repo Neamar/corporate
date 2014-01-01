@@ -60,7 +60,7 @@ class Player(models.Model):
 
 	def get_current_orders_cost(self):
 		"""
-		Get ths cost for all orders on this turn
+		Get the cost for all orders on this turn
 		"""
 		return sum([order.cost for order in self.get_current_orders()])
 
@@ -128,7 +128,7 @@ class Message(models.Model):
 class Order(models.Model):
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField(editable=False)
-	cost = models.PositiveSmallIntegerField(editable=False)
+	cost = models.PositiveSmallIntegerField(editable=False) # TODO : recompute from inheritance
 	type = models.CharField(max_length=80, blank=True, editable=False)
 
 	def save(self):
