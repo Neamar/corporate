@@ -26,8 +26,32 @@ class Game(models.Model):
 			t = task()
 			t.run(self)
 
+		self.build_global_resolution_message()
 		self.current_turn += 1
 		self.save()
+
+	def build_global_resolution_message(self):
+		"""
+		Build the message to sent to all the players.
+		"""
+		messages = Message.objects.filter(flag=Message.GLOBAL_NOTE).order_by('title')
+		resolution_message = u"### Résolution du tour %s ###" % self.current_turn
+		past_title=""
+		for message in messages:
+			current_title=message.title
+			if current_title==past_title:
+				resolution_message += u"%s\n" % message.content
+			else:
+				resolution_message += u"\n[b]%s[/b]\n%s\n" % (message.title, message.content) #Change Bold title if this isn't right
+			past_title=current_title
+		m=Message.objects.create(
+			title="Informations publiques du tour %s" % self.current_turn,
+			content=resolution_message,
+			author=None,
+			flag=Message.GLOBAL_RESOLUTION)
+		m.save()
+		# ajouter tous les joueurs du jeu comme destinataires, n'a pas l'air de marcher : m.recipient_set.add(Player.objects.filter(game=self))
+		return m
 
 	def __unicode__(self):
 		return "Corporate Game: %s" % self.city
@@ -104,10 +128,10 @@ class Player(models.Model):
 			if current_title==past_title:
 				resolution_message += u"%s\n" % message.content
 			else:
-				resolution_message += u"\n[b]%s[/b]\n%s\n" % (message.title, message.content) #Change Bold titile if this isn't right
+				resolution_message += u"\n[b]%s[/b]\n%s\n" % (message.title, message.content) #Change Bold title if this isn't right
 			past_title=current_title
 		return self.add_message(
-			title="Résolution du tour %s" % self.game.current_turn,
+			title="Informations personnelles du tour %s" % self.game.current_turn,
 			content=resolution_message,
 			author=None,
 			flag=Message.RESOLUTION
@@ -121,12 +145,16 @@ class Message(models.Model):
 	ORDER = 'OR'
 	PRIVATE_MESSAGE = 'PM'
 	RESOLUTION = 'RS'
+	GLOBAL_NOTE = 'GN'
+	GLOBAL_RESOLUTION = 'GR'
 	NOTE = 'NO'
 
 	MESSAGE_CHOICES = (
 		('OR', 'Order'),
 		('PM', 'Private Message'),
 		('RS', 'Resolution Sheet'),
+		('GR', 'Global Resolution'),
+		('GN', 'Global Note'),
 		('NO', 'Note'),
 	)
 
