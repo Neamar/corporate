@@ -17,6 +17,11 @@ class CitizenShipOrder(Order):
 	def resolve(self):
 		self.player.citizenship.corporation = self.corporation
 		self.player.citizenship.save()
+		
+		# Send a note for final message
+		title=u"Citoyenneté"
+		content=u"Vous êtes désormais citoyen de la mégacorporation %s." % self.corporation
+		self.player.add_note(title=title, content=content)
 
 	def description(self):
 		return u"Récupérer la nationalité corporatiste %s" % self.corporation.base_corporation.name
