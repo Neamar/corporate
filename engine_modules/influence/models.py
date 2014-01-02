@@ -33,7 +33,7 @@ class BuyInfluenceOrder(Order):
 		
 		# Send a note for final message
 		title=u"Influence"
-		content=u"Votre Influence dans le milieu corporatiste monte à %s." % self.player.influence.level
+		content=u"Votre Influence dans le milieu corporatiste monte à %i." % self.player.influence.level
 		self.player.add_note(title=title, content=content)
 
 	def description(self):
