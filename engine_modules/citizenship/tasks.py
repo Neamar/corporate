@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from engine.tasks import OrderResolutionTask
+from engine.models import Message
 from engine_modules.citizenship.models import CitizenShipOrder
 
 
@@ -14,6 +15,7 @@ class CitizenshipTask(OrderResolutionTask):
 		"""
 		Send a note for final message
 		"""
-		self.player.add_note(u"Citoyenneté", u"Vous êtes désormais citoyen de la mégacorporation %s." % self.ORDER_TYPE.corporation)
+		m=Message(title=u"Citoyenneté", content=u"Vous êtes désormais citoyen de la mégacorporation %s." % self.ORDER_TYPE.corporation).save()
+		self.player.add_note(m)
 
 tasks = (CitizenshipTask,)
