@@ -52,6 +52,14 @@ class Player(models.Model):
 
 		return m
 
+	def add_note(self, **kwargs):
+		"""
+		Create a note for the player
+		"""
+		m = self.add_message(flag=Message.NOTE, author=None, **kwargs)
+
+		return m
+
 	def get_current_orders(self):
 		"""
 		Returns the list of order for this turn
