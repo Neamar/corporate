@@ -23,7 +23,4 @@ class InvisibleHandTask(ResolutionTask):
 			corpos[1].assets -= 1
 		[corpo.save() for corpo in corpos]
 
-
-
-tasks = (InvisibleHandTask,)		
-
+tasks = (InvisibleHandTask,)

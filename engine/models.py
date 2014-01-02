@@ -50,7 +50,16 @@ class Game(models.Model):
 			author=None,
 			flag=Message.GLOBAL_RESOLUTION)
 		m.save()
-		# ajouter tous les joueurs du jeu comme destinataires, n'a pas l'air de marcher : m.recipient_set.add(Player.objects.filter(game=self))
+		for player in Player.objects.filter(game=self):
+		  m.recipient_set.add(player)
+		return m
+
+	def add_global_note(self, **kwargs):
+		"""
+		Create a note for the global resolution message
+		"""
+		m = Message.objects.create(flag=Message.GLOBAL_NOTE, author=None, **kwargs)
+		m.save()
 		return m
 
 	def __unicode__(self):

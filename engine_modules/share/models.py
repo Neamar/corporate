@@ -39,10 +39,13 @@ class BuyShareOrder(Order):
 		title=u"Parts"
 		nb_shares=self.player.share_set.filter(corporation=self.corporation).count()
 		if nb_shares==1:
-		  content=u"Vous avez achetés votre première part dans la corporation %s." % self.corporation.base_corporation.name
+		  content=u"Vous avez acheté votre première part dans %s." % self.corporation.base_corporation.name
+		  global_content=u"%s a acheté sa première part dans %s." % (self.player, self.corporation.base_corporation.name)
 		else:
-			content=u"Vous avez achetés votre %ieme part dans la corporation %s." %(nb_shares, self.corporation)
+			content=u"Vous avez acheté votre %ieme part dans %s." %(nb_shares, self.corporation)
+			global_content=u"%s a acheté sa %ieme part dans %s." %(self.player,nb_shares, self.corporation)
 		self.player.add_note(title=title, content=content)
+		self.player.game.add_global_note(title=title, content=global_content)
 
 	def description(self):
 		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)
