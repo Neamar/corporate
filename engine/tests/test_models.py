@@ -230,3 +230,7 @@ class ModelTest(EngineTestCase):
 		self.assertTrue("influence" in m.content)
 		self.assertTrue(str(self.p.money) in m.content)
 		self.assertIsNone(m.author)
+
+	def test_add_note(self):
+		m = self.p.add_note(title="titre", content="coucou")
+		self.assertEqual(m.flag, Message.NOTE)
