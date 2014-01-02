@@ -35,6 +35,15 @@ class BuyShareOrder(Order):
 			player=self.player
 		).save()
 
+		# Send a note for final message
+		title=u"Parts"
+		nb_shares=self.corporation.assets
+		if nb_shares==1:
+		  content=u"Vous avez achetés votre première part dans la corporation %s." % self.corporation.base_corporation.name
+		else:
+			content=u"Vous avez achetés votre %ieme part dans la corporation %s." %(nb_shares, self.corporation)
+		self.player.add_note(title=title, content=content)
+
 	def description(self):
 		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)
 
