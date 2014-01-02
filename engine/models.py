@@ -96,13 +96,18 @@ class Player(models.Model):
 		"""
 		Retrieve all notes, and build a message to remember them.
 		"""
-		messages = Message.objects.filter(flag=Message.NOTE, recipient_set=self)
-		resolution_message = "# Message de fin de tour"
+		messages = Message.objects.filter(flag=Message.NOTE, recipient_set=self).order_by('title')
+		resolution_message = u"### Résolution du tour %s ###" % self.game.current_turn
+		past_title=""
 		for message in messages:
-			resolution_message += "* Titre : %s\nMessage : %s\n\n" % (message.title, message.content)
-
+			current_title=message.title
+			if current_title==past_title:
+				resolution_message += u"%s\n" % message.content
+			else:
+				resolution_message += u"\n[b]%s[/b]\n%s\n" % (message.title, message.content) #Change Bold titile if this isn't right
+			past_title=current_title
 		return self.add_message(
-			title="Message de fin de tour",
+			title="Résolution du tour %s" % self.game.current_turn,
 			content=resolution_message,
 			author=None,
 			flag=Message.RESOLUTION
