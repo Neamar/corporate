@@ -37,7 +37,7 @@ class BuyShareOrder(Order):
 
 		# Send a note for final message
 		title=u"Parts"
-		nb_shares=self.corporation.assets
+		nb_shares=self.player.share_set.filter(corporation=self.corporation).count()
 		if nb_shares==1:
 		  content=u"Vous avez achetés votre première part dans la corporation %s." % self.corporation.base_corporation.name
 		else:
