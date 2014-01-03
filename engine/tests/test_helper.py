@@ -50,8 +50,7 @@ class ModelTest(EngineTestCase):
 			title="test",
 			recipient_set=g.player_set.all()
 			)
-		expected_text="Opening\n## T1\n* C1\n* C2\n\n## T2\n* C3\nEnding"
-		self.assertEquals(m.content,expected_text)
+		self.assertEquals(m.content,"Opening\n## T1\n* C1\n* C2\n\n## T2\n* C3\nEnding")
 
 	def test_message_building_delivery(self):
 		"""
@@ -89,9 +88,9 @@ class ModelTest(EngineTestCase):
 			title="test",
 			recipient_set=[p2]
 			)
-		p2_only_receive_one_message=(Message.objects.filter(recipient_set=p2).exclude(flag=Message.NOTE).count()==1)
-		p2_reveive_message_T2=(Message.objects.filter(recipient_set=p2).exclude(flag=Message.NOTE)[0].content=="\n## T2\n* C2\n")
-		p1_receive_zero_message=(Message.objects.filter(recipient_set=p1).exclude(flag=Message.NOTE).count()==0)
-		validate_test=p2_only_receive_one_message and p2_reveive_message_T2 and p1_receive_zero_message
-
-		self.assertEqual(validate_test, True)
+		#p2_only_receive_one_message
+		self.assertEqual(Message.objects.filter(recipient_set=p2).exclude(flag=Message.NOTE).count(),1)
+		#p2_reveive_message_T2
+		self.assertEqual(Message.objects.filter(recipient_set=p2).exclude(flag=Message.NOTE)[0].content,"\n## T2\n* C2\n")
+		#p1_receive_zero_message
+		self.assertEqual(Message.objects.filter(recipient_set=p1).exclude(flag=Message.NOTE).count(),0)
