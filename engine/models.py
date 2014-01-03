@@ -144,6 +144,7 @@ class Message(models.Model):
 	GLOBAL_NOTE = 'GN'
 	GLOBAL_RESOLUTION = 'GR'
 	NOTE = 'NO'
+	RUN = 'RU'
 
 	MESSAGE_CHOICES = (
 		('OR', 'Order'),
@@ -152,6 +153,7 @@ class Message(models.Model):
 		('GR', 'Global Resolution'),
 		('GN', 'Global Note'),
 		('NO', 'Note'),
+		('RU', 'Run')
 	)
 
 	title = models.CharField(max_length=256)
