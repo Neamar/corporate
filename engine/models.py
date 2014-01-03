@@ -129,7 +129,7 @@ class Player(models.Model):
 		"""
 		Retrieve all notes, and build a message to remember them.
 		"""
-		messages = Message.objects.filter(flag=Message.NOTE, recipient_set=self).order_by('title')
+		messages = self.message_set.filter(flag=Message.NOTE).order_by('title')
 		resolution_message = u"### Résolution du tour %s ###" % self.game.current_turn
 		past_title=""
 		for message in messages:
@@ -169,9 +169,9 @@ class Message(models.Model):
 
 	title = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
-	author = models.ForeignKey(Player, null=True)
+	author = models.ForeignKey(Player, null=True, related_name="+")
 	public = models.BooleanField(default=False)
-	recipient_set = models.ManyToManyField('Player', related_name="+")
+	recipient_set = models.ManyToManyField('Player')
 	flag = models.CharField(max_length=2, choices=MESSAGE_CHOICES)
 
 
