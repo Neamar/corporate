@@ -37,7 +37,7 @@ class Game(models.Model):
 		from engine import helper
 		m=helper.build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,
-			note_type=Message.GLOBAL_NOTE,
+			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
 			opening=u"### Résolution du tour %s ###\n\n" % self.current_turn,
 			ending='',
 			title="Informations publiques du tour %s" % self.current_turn,
@@ -120,15 +120,15 @@ class Player(models.Model):
 		"""
 		Retrieve all notes, and build a message to remember them.
 		"""
+
 		from engine import helper
-		m=helper.build_message_from_notes(
+		m = helper.build_message_from_notes(
 			message_type=Message.RESOLUTION,
-			note_type=Message.NOTE,
+			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
 			opening=u"### Résolution du tour %s ###\n\n" % self.game.current_turn,
 			ending='',
 			title="Informations personnelles du tour %s" % self.game.current_turn,
-			recipient_set=self,
-			player=self
+			recipient_set=[self]
 			)
 		return m
 
@@ -156,9 +156,9 @@ class Message(models.Model):
 
 	title = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
-	author = models.ForeignKey(Player, null=True)
+	author = models.ForeignKey(Player, null=True, related_name="+")
 	public = models.BooleanField(default=False)
-	recipient_set = models.ManyToManyField('Player', related_name="+")
+	recipient_set = models.ManyToManyField('Player')
 	flag = models.CharField(max_length=2, choices=MESSAGE_CHOICES)
 
 

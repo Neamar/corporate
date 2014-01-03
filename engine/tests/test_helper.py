@@ -44,7 +44,7 @@ class ModelTest(EngineTestCase):
 		ending="Ending"
 		m=helper.build_message_from_notes(
 			message_type=Message.RESOLUTION,
-			note_type=Message.NOTE,
+			notes=Message.objects.filter(flag=Message.NOTE),
 			opening=opening,
 			ending=ending,
 			title="test",
@@ -69,30 +69,29 @@ class ModelTest(EngineTestCase):
 		u2.save()
 		p2=Player(user=u2,game=g)
 		p2.save()
-		m=Message.objects.create(
+		n1=Message.objects.create(
 			title="T1",
 			content="C1",
 			author=None,
 			flag=Message.NOTE)
-		m.save()
-		m.recipient_set.add(p1)
-		m=Message.objects.create(
+		n1.save()
+		n1.recipient_set.add(p1)
+		n2=Message.objects.create(
 			title="T2",
 			content="C2",
 			author=None,
 			flag=Message.NOTE)
-		m.save()
-		m.recipient_set.add(p2)
-		m=helper.build_message_from_notes(
+		n2.save()
+		n2.recipient_set.add(p2)
+		helper.build_message_from_notes(
 			message_type=Message.RESOLUTION,
-			note_type=Message.NOTE,
+			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=p2),
 			title="test",
-			To=[p2],
-			recipient_set=p2
+			recipient_set=[p2]
 			)
-		p2_only_receive_one_message=(Message.objects.filter(recipient_set=p2).count()==1)
-		p2_reveive_message_T2=(Message.objects.filter(recipient_set=p2)[0].content=="T2")
-		p1_receive_zero_message=(Message.objects.filter(recipient_set=p1).count()==0)
+		p2_only_receive_one_message=(Message.objects.filter(recipient_set=p2).exclude(flag=Message.NOTE).count()==1)
+		p2_reveive_message_T2=(Message.objects.filter(recipient_set=p2).exclude(flag=Message.NOTE)[0].content=="\n## T2\n* C2\n")
+		p1_receive_zero_message=(Message.objects.filter(recipient_set=p1).exclude(flag=Message.NOTE).count()==0)
 		validate_test=p2_only_receive_one_message and p2_reveive_message_T2 and p1_receive_zero_message
 
 		self.assertEqual(validate_test, True)
