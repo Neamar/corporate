@@ -23,7 +23,7 @@ class CitizenShipOrder(Order):
 		content=u"Vous êtes désormais citoyen de la mégacorporation %s." % self.corporation
 		global_content=u"%s est maintenant citoyen de la mégacorporation %s" % (self.player, self.corporation)
 		self.player.add_note(title=title, content=content)
-		self.player.game.add_global_note(title=title, content=global_content)
+		self.player.game.add_note(title=title, content=global_content)
 
 	def description(self):
 		return u"Récupérer la nationalité corporatiste %s" % self.corporation.base_corporation.name
