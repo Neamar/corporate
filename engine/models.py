@@ -34,8 +34,8 @@ class Game(models.Model):
 		"""
 		Build the message to sent to all the players.
 		"""
-		
-		m=build_message_from_notes(
+		from engine import helper
+		m=helper.build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,
 			note_type=Message.GLOBAL_NOTE,
 			opening=u"### Résolution du tour %s ###\n\n" % self.current_turn,
@@ -120,22 +120,18 @@ class Player(models.Model):
 		"""
 		Retrieve all notes, and build a message to remember them.
 		"""
-		messages = Message.objects.filter(flag=Message.NOTE, recipient_set=self).order_by('title')
-		resolution_message = u"### Résolution du tour %s ###" % self.game.current_turn
-		past_title=""
-		for message in messages:
-			current_title=message.title
-			if current_title==past_title:
-				resolution_message += u"%s\n" % message.content
-			else:
-				resolution_message += u"\n[b]%s[/b]\n%s\n" % (message.title, message.content) #Change Bold title if this isn't right
-			past_title=current_title
-		return self.add_message(
+		from engine import helper
+		m=helper.build_message_from_notes(
+			message_type=Message.RESOLUTION,
+			note_type=Message.NOTE,
+			opening=u"### Résolution du tour %s ###\n\n" % self.game.current_turn,
+			ending='',
 			title="Informations personnelles du tour %s" % self.game.current_turn,
-			content=resolution_message,
-			author=None,
-			flag=Message.RESOLUTION
-		)
+			recipient_set=self,
+			player=self
+			)
+		return m
+
 
 	def __unicode__(self):
 		return self.name
