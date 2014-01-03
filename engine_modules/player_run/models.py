@@ -4,7 +4,7 @@ from engine.models import Player, Message
 
 
 class InformationRunOrder(RunOrder):
-	target = models.ForeingKey(Player)
+	target = models.ForeignKey(Player)
 
 	def resolve_successful(self):
 		target_orders = Message.objects.filter(recipient_set=self.target, flag=Message.ORDER).order_by('pk')[-1]
