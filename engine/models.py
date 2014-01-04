@@ -26,7 +26,6 @@ class Game(models.Model):
 			t = task()
 			t.run(self)
 
-		self.build_resolution_message()
 		self.current_turn += 1
 		self.save()
 
@@ -35,6 +34,7 @@ class Game(models.Model):
 		Build the message to sent to all the players.
 		"""
 		from engine import helper
+
 		m=helper.build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,
 			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
