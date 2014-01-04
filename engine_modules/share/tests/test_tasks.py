@@ -5,9 +5,6 @@ from engine_modules.share.tasks import DividendTask
 
 
 class TasksTest(EngineTestCase):
-	"""
-	Unit tests for engine models
-	"""
 	def setUp(self):
 		self.bc = BaseCorporation(name="NC&T", description="Reckless")
 		self.bc.save()

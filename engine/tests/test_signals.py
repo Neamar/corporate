@@ -4,9 +4,6 @@ from engine.dispatchs import post_create
 
 
 class SignalTest(EngineTestCase):
-	"""
-	Unit tests for engine models
-	"""
 	def test_post_create_signal(self):
 		"""
 		Check is current_turn can't be greater than total_turn

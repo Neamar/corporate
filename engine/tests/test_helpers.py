@@ -4,9 +4,6 @@ from engine.models import Message, Player
 
 
 class ModelTest(EngineTestCase):
-	"""
-	Unit tests for engine models
-	"""
 	def test_message_building_content(self):
 		"""
 		Check if the content is built properly
