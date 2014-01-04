@@ -39,6 +39,7 @@ class SendMessageToPlayersTask(ResolutionTask):
 		for player in players:
 			player.build_resolution_message()
 
+
 class SendGlobalMessageTask(ResolutionTask):
 	"""
 	At the end of the turn, send a message on what happened this turn
