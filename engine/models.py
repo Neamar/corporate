@@ -50,7 +50,6 @@ class Game(models.Model):
 		Create a note, to be used later for the global resolution message
 		"""
 		m = Message.objects.create(flag=Message.GLOBAL_NOTE, author=None, **kwargs)
-		m.save()
 		return m
 
 	def __unicode__(self):
