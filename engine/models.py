@@ -34,8 +34,8 @@ class Game(models.Model):
 		"""
 		Build the message to sent to all the players.
 		"""
-		from engine import helper
-		m=helper.build_message_from_notes(
+		from engine.helpers import build_message_from_notes
+		m = build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,
 			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
 			opening=u"### Résolution du tour %s ###\n\n" % self.current_turn,
@@ -121,8 +121,8 @@ class Player(models.Model):
 		Retrieve all notes, and build a message to remember them.
 		"""
 
-		from engine import helper
-		m = helper.build_message_from_notes(
+		from engine.helpers import build_message_from_notes
+		m = build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
 			opening=u"### Résolution du tour %s ###\n\n" % self.game.current_turn,
