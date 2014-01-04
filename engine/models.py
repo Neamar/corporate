@@ -140,20 +140,20 @@ class Player(models.Model):
 
 
 class Message(models.Model):
-	ORDER = 'OR'
+	ORDER = 'ORD'
 	PRIVATE_MESSAGE = 'PM'
-	RESOLUTION = 'RS'
-	GLOBAL_NOTE = 'GN'
-	GLOBAL_RESOLUTION = 'GR'
+	RESOLUTION = 'RE'
+	GLOBAL_RESOLUTION = 'GRE'
 	NOTE = 'NO'
+	GLOBAL_NOTE = 'GN'
 
 	MESSAGE_CHOICES = (
-		('OR', 'Order'),
-		('PM', 'Private Message'),
-		('RS', 'Resolution Sheet'),
-		('GR', 'Global Resolution'),
-		('GN', 'Global Note'),
-		('NO', 'Note'),
+		(ORDER, 'Order'),
+		(PRIVATE_MESSAGE, 'Private Message'),
+		(RESOLUTION, 'Resolution'),
+		(GLOBAL_RESOLUTION, 'Global Resolution'),
+		(NOTE, 'Note'),
+		(GLOBAL_NOTE, 'Global Note'),
 	)
 
 	title = models.CharField(max_length=256)
@@ -161,7 +161,7 @@ class Message(models.Model):
 	author = models.ForeignKey(Player, null=True, related_name="+")
 	public = models.BooleanField(default=False)
 	recipient_set = models.ManyToManyField('Player')
-	flag = models.CharField(max_length=2, choices=MESSAGE_CHOICES)
+	flag = models.CharField(max_length=3, choices=MESSAGE_CHOICES)
 
 
 class Order(models.Model):
