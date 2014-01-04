@@ -77,8 +77,9 @@ class SabotageOrder(RunOrder):
 		title=u"Run de Sabotage"
 		content=u"La tentative de votre équipe pour saboter %s a échoué" %(self.sabotaged_corporation.base_corporation.name)
 		self.player.add_note(title=title, content=content)
-
-	# The one who ordered the run should probably be made aware if his team got captured
+	"""
+	The one who ordered the run should probably be made aware if his team got captured
+	"""
 	def resolve_capture(self):
 
 		#Send a note for final message

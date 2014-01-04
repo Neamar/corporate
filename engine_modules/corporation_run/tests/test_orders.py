@@ -7,65 +7,62 @@ class RunOrdersTest(OrdersTest):
 	def setUp(self):
 		super(RunOrdersTest, self).setUp()
 		
-		self.DSO = DataStealOrder(
+		self.dso = DataStealOrder(
 			player=self.p,
 			stealer_corporation=self.c,
 			stolen_corporation=self.c2
 		)
-		self.DSO.clean()
-		self.DSO.save()
+		self.dso.clean()
+		self.dso.save()
 
-		self.PO = ProtectionOrder(
+		self.po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c
 		)
-		self.PO.clean()
-		self.PO.save()
+		self.po.clean()
+		self.po.save()
 
-		self.SO = SabotageOrder(
+		self.so = SabotageOrder(
 			player=self.p,
 			sabotaged_corporation = self.c
 		)
-		self.SO.clean()
-		self.SO.save()
+		self.so.clean()
+		self.so.save()
+	"""
+	Datasteal benefits the stealer 1 asset without costing the stolen
+	"""
+	def test_datasteal_success(self):
 
-	# Datasteal benefits the stealer 1 asset without costing the stolen
-	def test_DataSteal_successful(self):
+		begin_assets_stealer = self.dso.stealer_corporation.assets
+		begin_assets_stolen = self.dso.stolen_corporation.assets
 
-		begin_assets_stealer = self.DSO.stealer_corporation.assets
-		begin_assets_stolen = self.DSO.stolen_corporation.assets
+		self.dso.resolve_successful()
 
-		self.DSO.resolve_successful()
+		self.assertEqual(self.reload(self.dso).stealer_corporation.assets, begin_assets_stealer + 1)
+		self.assertEqual(self.reload(self.dso).stolen_corporation.assets, begin_assets_stolen)		
+	def test_datasteal_failure(self):
 
-		self.assertEqual(self.DSO.stealer_corporation.assets, begin_assets_stealer + 1)
-		self.assertEqual(self.DSO.stolen_corporation.assets, begin_assets_stolen)		
-		self.DSO.clean()
+		begin_assets_stealer = self.dso.stealer_corporation.assets
+		begin_assets_stolen = self.dso.stolen_corporation.assets
 
-	def test_DataSteal_failure(self):
+		self.dso.resolve_failure()
 
-		begin_assets_stealer = self.DSO.stealer_corporation.assets
-		begin_assets_stolen = self.DSO.stolen_corporation.assets
+		self.assertEqual(self.reload(self.dso).stealer_corporation.assets, begin_assets_stealer)
+		self.assertEqual(self.reload(self.dso).stolen_corporation.assets, begin_assets_stolen)		
+	"""
+	Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
+	"""
+	def test_sabotage_successful(self):
 
-		self.DSO.resolve_failure()
+		begin_assets = self.so.sabotaged_corporation.assets
 
-		self.assertEqual(self.DSO.stealer_corporation.assets, begin_assets_stealer)
-		self.assertEqual(self.DSO.stolen_corporation.assets, begin_assets_stolen)		
-		self.DSO.clean()
+		self.so.resolve_successful()
 
-	# Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
-	def test_Sabotage_successful(self):
+		self.assertEqual(self.reload(self.so).sabotaged_corporation.assets, begin_assets - 2)
 
-		begin_assets = self.SO.sabotaged_corporation.assets
+	def test_sabotage_failure(self):
 
-		self.SO.resolve_successful()
+		begin_assets = self.so.sabotaged_corporation.assets
 
-		self.assertEqual(self.SO.sabotaged_corporation.assets, begin_assets - 2)
-		self.SO.clean()
-
-	def test_Sabotage_failure(self):
-
-		begin_assets = self.SO.sabotaged_corporation.assets
-
-		self.SO.resolve_failure()
-		self.assertEqual(self.SO.sabotaged_corporation.assets, begin_assets)
-		self.SO.clean()
+		self.so.resolve_failure()
+		self.assertEqual(self.reload(self.so).sabotaged_corporation.assets, begin_assets)
