@@ -232,5 +232,9 @@ class ModelTest(EngineTestCase):
 		self.assertIsNone(m.author)
 
 	def test_add_note(self):
+		"""
+		Check add_note on Player
+		"""
 		m = self.p.add_note(title="titre", content="coucou")
 		self.assertEqual(m.flag, Message.NOTE)
+		self.assertEqual(m.recipient_set.all()[0], self.p)
