@@ -47,7 +47,7 @@ class Game(models.Model):
 
 	def add_note(self, **kwargs):
 		"""
-		Create a note for the global resolution message
+		Create a note, to be used later for the global resolution message
 		"""
 		m = Message.objects.create(flag=Message.GLOBAL_NOTE, author=None, **kwargs)
 		m.save()
@@ -118,20 +118,19 @@ class Player(models.Model):
 
 	def build_resolution_message(self):
 		"""
-		Retrieve all notes, and build a message to remember them.
+		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
 
 		from engine.helpers import build_message_from_notes
 		m = build_message_from_notes(
 			message_type=Message.RESOLUTION,
-			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
-			opening=u"### Résolution du tour %s ###\n\n" % self.game.current_turn,
+			notes=Message.objects.filter(flag=Message.NOTE, recipient_set=self),
+			opening=u"# Résolution du tour %s ###\n\n" % self.game.current_turn,
 			ending='',
 			title="Informations personnelles du tour %s" % self.game.current_turn,
 			recipient_set=[self]
 			)
 		return m
-
 
 	def __unicode__(self):
 		return self.name
