@@ -44,6 +44,29 @@ class ModelTest(EngineTestCase):
 
 		self.assertEqual(self.g.current_turn, 2)
 
+	def test_game_add_note(self):
+		"""
+		Check add_note on Game
+		"""
+		m = self.g.add_note(title="title", content="something")
+		self.assertEqual(m.flag, Message.GLOBAL_NOTE)
+
+	def test_game_build_resolution_message(self):
+		"""
+		Check build_resolution_message on Game
+		"""
+
+		p2 = Player(game=self.g)
+		p2.save()
+
+		self.g.add_note(title="title", content="something")
+
+		m = self.g.build_resolution_message()
+		self.assertEqual(m.flag, Message.GLOBAL_RESOLUTION)
+		self.assertEqual(len(m.recipient_set.all()), 2)
+		self.assertTrue(self.p in m.recipient_set.all())
+		self.assertTrue(p2 in m.recipient_set.all())
+
 	def test_order_clean_is_abstract(self):
 		"""
 		Check a raw Order can't be created
@@ -231,6 +254,20 @@ class ModelTest(EngineTestCase):
 		self.assertTrue(str(self.p.money) in m.content)
 		self.assertIsNone(m.author)
 
-	def test_add_note(self):
-		m = self.p.add_note(title="titre", content="coucou")
+	def test_player_add_note(self):
+		"""
+		Check add_note on Player
+		"""
+		m = self.p.add_note(title="title", content="something")
 		self.assertEqual(m.flag, Message.NOTE)
+
+	def test_player_build_resolution_message(self):
+		"""
+		Check build_resolution_message on Player
+		"""
+		self.p.add_note(title="title", content="something")
+
+		m = self.p.build_resolution_message()
+		self.assertEqual(m.flag, Message.RESOLUTION)
+		self.assertEqual(len(m.recipient_set.all()), 1)
+		self.assertTrue(self.p in m.recipient_set.all())

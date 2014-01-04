@@ -5,9 +5,6 @@ from engine_modules.corporation.models import Corporation, BaseCorporation
 
 
 class OrdersTest(EngineTestCase):
-	"""
-	Unit tests for engine models
-	"""
 	def setUp(self):
 		bc = BaseCorporation(name="bc1")
 		bc.save()

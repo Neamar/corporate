@@ -33,24 +33,25 @@ class Game(models.Model):
 		"""
 		Build the message to sent to all the players.
 		"""
-		from engine import helper
+		from engine.helpers import build_message_from_notes
 
-		m=helper.build_message_from_notes(
+
+		notes = Message.objects.filter(flag=Message.NOTE,recipient_set=self)
+
+		m = build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,
-			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
-			opening=u"### Résolution du tour %s ###\n\n" % self.current_turn,
-			ending='',
+			notes=notes,
+			opening=u"# Résolution du tour %s\n\n" % self.current_turn,
 			title="Informations publiques du tour %s" % self.current_turn,
-			recipient_set=self.player_set.all()
 			)
+		m.recipient_set = self.player_set.all()
 		return m
 
 	def add_note(self, **kwargs):
 		"""
-		Create a note for the global resolution message
+		Create a note, to be used later for the resolution message
 		"""
 		m = Message.objects.create(flag=Message.GLOBAL_NOTE, author=None, **kwargs)
-		m.save()
 		return m
 
 	def __unicode__(self):
@@ -118,40 +119,40 @@ class Player(models.Model):
 
 	def build_resolution_message(self):
 		"""
-		Retrieve all notes, and build a message to remember them.
+		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
 
-		from engine import helper
-		m = helper.build_message_from_notes(
-			message_type=Message.RESOLUTION,
-			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
-			opening=u"### Résolution du tour %s ###\n\n" % self.game.current_turn,
-			ending='',
-			title="Informations personnelles du tour %s" % self.game.current_turn,
-			recipient_set=[self]
-			)
-		return m
+		from engine.helpers import build_message_from_notes
 
+		notes = Message.objects.filter(flag=Message.NOTE, recipient_set=self)
+		m = build_message_from_notes(
+			message_type=Message.RESOLUTION,
+			notes=notes,
+			opening=u"# Résolution du tour %s\n\n" % self.game.current_turn,
+			title="Informations personnelles du tour %s" % self.game.current_turn,
+		)
+		m.recipient_set.add(self)
+		return m
 
 	def __unicode__(self):
 		return self.name
 
 
 class Message(models.Model):
-	ORDER = 'OR'
+	ORDER = 'ORD'
 	PRIVATE_MESSAGE = 'PM'
-	RESOLUTION = 'RS'
-	GLOBAL_NOTE = 'GN'
-	GLOBAL_RESOLUTION = 'GR'
+	RESOLUTION = 'RE'
+	GLOBAL_RESOLUTION = 'GRE'
 	NOTE = 'NO'
+	GLOBAL_NOTE = 'GN'
 
 	MESSAGE_CHOICES = (
-		('OR', 'Order'),
-		('PM', 'Private Message'),
-		('RS', 'Resolution Sheet'),
-		('GR', 'Global Resolution'),
-		('GN', 'Global Note'),
-		('NO', 'Note'),
+		(ORDER, 'Order'),
+		(PRIVATE_MESSAGE, 'Private Message'),
+		(RESOLUTION, 'Resolution'),
+		(GLOBAL_RESOLUTION, 'Global Resolution'),
+		(NOTE, 'Note'),
+		(GLOBAL_NOTE, 'Global Note'),
 	)
 
 	title = models.CharField(max_length=256)
@@ -159,7 +160,7 @@ class Message(models.Model):
 	author = models.ForeignKey(Player, null=True, related_name="+")
 	public = models.BooleanField(default=False)
 	recipient_set = models.ManyToManyField('Player')
-	flag = models.CharField(max_length=2, choices=MESSAGE_CHOICES)
+	flag = models.CharField(max_length=3, choices=MESSAGE_CHOICES)
 
 
 class Order(models.Model):

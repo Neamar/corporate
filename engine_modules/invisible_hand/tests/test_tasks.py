@@ -2,9 +2,6 @@ from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation
 
 class TaskTest(EngineTestCase):
-	"""
-	Unit tests for invisible_hand task
-	"""
 	def setUp(self):
 		self.bc = BaseCorporation(name="bc1")
 		self.bc.save()
