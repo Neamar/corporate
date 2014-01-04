@@ -77,8 +77,8 @@ class ModelTest(EngineTestCase):
 		)
 
 		#p2_only receives one message
-		self.assertEqual(Message.objects.filter(recipient_set=p2).exclude(flag=Message.NOTE).count(), 1)
+		self.assertEqual(Message.objects.filter(recipient_set=p2).count(), 1)
 		#p2 receive message T2
-		self.assertEqual(Message.objects.filter(recipient_set=p2).exclude(flag=Message.NOTE)[0].content, "\n## T2\n* C2\n")
+		self.assertEqual(Message.objects.filter(recipient_set=p2)[0].content, "\n## T2\n* C2\n")
 		#p1 receive no message
-		self.assertEqual(Message.objects.filter(recipient_set=p1).exclude(flag=Message.NOTE).count(), 0)
+		self.assertEqual(Message.objects.filter(recipient_set=self.p).exclude(flag=Message.NOTE).count(), 0)
