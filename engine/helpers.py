@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from engine.models import Message
 
-def build_message_from_notes(message_type, notes, title, recipient_set, opening='', ending=''):
+def build_message_from_notes(message_type, notes, title, recipient_set, opening="", ending=""):
 	"""
 	Generate from QuerySet notes a message, aggregating by notes titles. Will also remove notes from DB.
 	With notes title T1 and content C1, note T1 C2 and T2 C3 final message will be (markdown):

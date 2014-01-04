@@ -47,7 +47,7 @@ class Game(models.Model):
 
 	def add_note(self, **kwargs):
 		"""
-		Create a note, to be used later for the global resolution message
+		Create a note, to be used later for the resolution message
 		"""
 		m = Message.objects.create(flag=Message.GLOBAL_NOTE, author=None, **kwargs)
 		return m

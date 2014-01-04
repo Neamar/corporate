@@ -1,7 +1,6 @@
 from engine.testcases import EngineTestCase
 from engine import helpers
-from engine.models import Message,Player,Game
-from website.models import User
+from engine.models import Message, Player
 
 
 class ModelTest(EngineTestCase):
