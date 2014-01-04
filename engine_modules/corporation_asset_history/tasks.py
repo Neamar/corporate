@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from engine.tasks import ResolutionTask
-from engine_modules.corporation.models import Corporation,Player
+from engine_modules.corporation.models import Corporation
+from engine.models import Player
 from engine_modules.corporation_asset_history.models import AssetHistory
+
+
 
 class SaveTurnHistoryTask(ResolutionTask):
 	"""
@@ -10,7 +13,6 @@ class SaveTurnHistoryTask(ResolutionTask):
 	RESOLUTION_ORDER = 1000
 
 	def run(self, game):
-		print "trololo"
 		corporations = Corporation.objects.filter(game=game)
 		turn=game.current_turn
 		for corporation in corporations:
@@ -46,11 +48,14 @@ class SendGlobalMessageTask(ResolutionTask):
 		"""
 		Sent the general message to all the players
 		"""
-				#Ajout d'une note Construction du classement des corpo avec delta du tour précédent.
+		#Ajout d'une note Construction du classement des corpo avec delta du tour précédent.
 		classement=""
-		corporations = Corporation.objects.filter(game=game).order_by['-assets']
+		corporations = Corporation.objects.filter(game=game).order_by('-assets')
 		for corporation in corporations:
-			classement+="- %s : %s (%s)\n" % (corporation.base_corporation.name,corporation.assets,AssetHistory.objects.get(corporation=corporation,turn=(game.current_turn-1)).assets)
+			classement+="\n- %s : %s" % (corporation.base_corporation.name,corporation.assets)
+			#add delta only if the corpo did exists the previous turn
+			if AssetHistory.objects.filter(corporation=corporation,turn=(game.current_turn-1)).count()>0:
+				classement+= " (%s)" % AssetHistory.objects.get(corporation=corporation,turn=(game.current_turn-1)).assets
 		game.add_note(title="Classement corporatiste", content=classement)
 
 		game.build_resolution_message()

@@ -32,9 +32,9 @@ class TasksTest(EngineTestCase):
 		The game should have all the corporation assets saved at the end of the turn
 		"""
 		nb_corporation=Corporation.objects.filter(game=self.g).count()
-		self.g.current_turn = 5
+		self.g.current_turn = 1
 		self.g.save()
 		self.g.resolve_current_turn()
-		nb_corporation_saved=AssetHistory.objects.all().count()
+		nb_corporation_saved=AssetHistory.objects.filter(turn=1).count()
 		self.assertEqual(nb_corporation,nb_corporation_saved)
 
