@@ -50,12 +50,14 @@ class SendGlobalMessageTask(ResolutionTask):
 		"""
 		#Ajout d'une note Construction du classement des corpo avec delta du tour précédent.
 		classement=""
+		position=1
 		corporations = Corporation.objects.filter(game=game).order_by('-assets')
 		for corporation in corporations:
-			classement+="\n- %s : %s" % (corporation.base_corporation.name,corporation.assets)
+			classement+="\n%s- %s : %s" % (position, corporation.base_corporation.name,corporation.assets)
 			#add delta only if the corpo did exists the previous turn
 			if AssetHistory.objects.filter(corporation=corporation,turn=(game.current_turn-1)).count()>0:
 				classement+= " (%s)" % AssetHistory.objects.get(corporation=corporation,turn=(game.current_turn-1)).assets
+			position+=1
 		game.add_note(title="Classement corporatiste", content=classement)
 
 		game.build_resolution_message()
