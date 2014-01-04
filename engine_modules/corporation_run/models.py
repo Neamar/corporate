@@ -5,14 +5,14 @@ from random import randint
 
 from engine.models import Order
 from engine_modules.run.models import RunOrder
-from engine_modeules.corporation.models import Corporation
+from engine_modules.corporation.models import Corporation
 
 class DataStealOrder(RunOrder):
 	"""
 	Model for DataSteal Runs
 	"""
-	stolen_corporation = models.ForeignKey(Corporation)	
-	stealer_corporation = models.ForeignKey(Corporation)	
+	stolen_corporation = models.ForeignKey(Corporation, related_name="+")	
+	stealer_corporation = models.ForeignKey(Corporation, related_name="+")	
 
 	def resolve_successful(self):
 	
@@ -43,12 +43,12 @@ class ProtectionOrder(RunOrder):
 	"""
 	Model for Protection Runs
 	"""
-	protected_corporation = models.ForeignKey(Corporation)
+	protected_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve_successful(self):
-
+		pass
 	def resolve_failure(self):
-
+		pass
 	def description(self):
 		return u"Envoyer une équipe protéger les intérêts de %s" %(self.protected_corporation.base_corporation.name)
 
@@ -56,7 +56,7 @@ class SabotageOrder(RunOrder):
 	"""
 	Model for Sabotage Runs
 	"""
-	sabotaged_corporation = models.ForeignKey(Corporation)	
+	sabotaged_corporation = models.ForeignKey(Corporation, related_name="+")	
 
 	def resolve_successful(self):
 

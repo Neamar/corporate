@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'engine_modules.citizenship',
     'engine_modules.share',
     'engine_modules.run',
+    'engine_modules.corporation_run',
 )
 
 MIDDLEWARE_CLASSES = (
