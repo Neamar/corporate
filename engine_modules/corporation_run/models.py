@@ -15,6 +15,9 @@ class DataStealOrder(RunOrder):
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")	
 
 	def resolve_successful(self):
+
+		self.stealer_corporation.assets += 1
+		self.stealer_corporation.save()
 	
 		#Send a note for final message 
 		title=u"Run de Datasteal"
@@ -59,6 +62,9 @@ class SabotageOrder(RunOrder):
 	sabotaged_corporation = models.ForeignKey(Corporation, related_name="+")	
 
 	def resolve_successful(self):
+
+		self.sabotaged_corporation.assets -= 2
+		self.sabotaged_corporation.save()
 
 		#Send a note for final message 
 		title=u"Run de Sabotage"
