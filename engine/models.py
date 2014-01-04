@@ -35,11 +35,14 @@ class Game(models.Model):
 		Build the message to sent to all the players.
 		"""
 		from engine.helpers import build_message_from_notes
+
+
+		notes = Message.objects.filter(flag=Message.NOTE,recipient_set=self)
+
 		m = build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,
-			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
-			opening=u"### Résolution du tour %s ###\n\n" % self.current_turn,
-			ending='',
+			notes=notes,
+			opening=u"# Résolution du tour %s\n\n" % self.current_turn,
 			title="Informations publiques du tour %s" % self.current_turn,
 			recipient_set=self.player_set.all()
 			)
@@ -121,11 +124,12 @@ class Player(models.Model):
 		"""
 
 		from engine.helpers import build_message_from_notes
+
+		notes = Message.objects.filter(flag=Message.NOTE, recipient_set=self)
 		m = build_message_from_notes(
 			message_type=Message.RESOLUTION,
-			notes=Message.objects.filter(flag=Message.NOTE, recipient_set=self),
-			opening=u"# Résolution du tour %s ###\n\n" % self.game.current_turn,
-			ending='',
+			notes=notes,
+			opening=u"# Résolution du tour %s\n\n" % self.game.current_turn,
 			title="Informations personnelles du tour %s" % self.game.current_turn,
 			recipient_set=[self]
 			)
