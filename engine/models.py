@@ -26,40 +26,30 @@ class Game(models.Model):
 			t = task()
 			t.run(self)
 
-		self.build_global_resolution_message()
+		self.build_resolution_message()
 		self.current_turn += 1
 		self.save()
 
-	def build_global_resolution_message(self):
+	def build_resolution_message(self):
 		"""
 		Build the message to sent to all the players.
 		"""
-		messages = Message.objects.filter(flag=Message.GLOBAL_NOTE).order_by('title')
-		resolution_message = u"### Résolution du tour %s ###" % self.current_turn
-		past_title=""
-		for message in messages:
-			current_title=message.title
-			if current_title==past_title:
-				resolution_message += u"%s\n" % message.content
-			else:
-				resolution_message += u"\n[b]%s[/b]\n%s\n" % (message.title, message.content) #Change Bold title if this isn't right
-			past_title=current_title
-		m=Message.objects.create(
+		from engine.helpers import build_message_from_notes
+		m = build_message_from_notes(
+			message_type=Message.GLOBAL_RESOLUTION,
+			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
+			opening=u"### Résolution du tour %s ###\n\n" % self.current_turn,
+			ending='',
 			title="Informations publiques du tour %s" % self.current_turn,
-			content=resolution_message,
-			author=None,
-			flag=Message.GLOBAL_RESOLUTION)
-		m.save()
-		for player in Player.objects.filter(game=self):
-		  m.recipient_set.add(player)
+			recipient_set=self.player_set.all()
+			)
 		return m
 
-	def add_global_note(self, **kwargs):
+	def add_note(self, **kwargs):
 		"""
-		Create a note for the global resolution message
+		Create a note, to be used later for the resolution message
 		"""
 		m = Message.objects.create(flag=Message.GLOBAL_NOTE, author=None, **kwargs)
-		m.save()
 		return m
 
 	def __unicode__(self):
@@ -127,24 +117,19 @@ class Player(models.Model):
 
 	def build_resolution_message(self):
 		"""
-		Retrieve all notes, and build a message to remember them.
+		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
-		messages = self.message_set.filter(flag=Message.NOTE).order_by('title')
-		resolution_message = u"### Résolution du tour %s ###" % self.game.current_turn
-		past_title=""
-		for message in messages:
-			current_title=message.title
-			if current_title==past_title:
-				resolution_message += u"%s\n" % message.content
-			else:
-				resolution_message += u"\n[b]%s[/b]\n%s\n" % (message.title, message.content) #Change Bold title if this isn't right
-			past_title=current_title
-		return self.add_message(
+
+		from engine.helpers import build_message_from_notes
+		m = build_message_from_notes(
+			message_type=Message.RESOLUTION,
+			notes=Message.objects.filter(flag=Message.NOTE, recipient_set=self),
+			opening=u"# Résolution du tour %s ###\n\n" % self.game.current_turn,
+			ending='',
 			title="Informations personnelles du tour %s" % self.game.current_turn,
-			content=resolution_message,
-			author=None,
-			flag=Message.RESOLUTION
-		)
+			recipient_set=[self]
+			)
+		return m
 
 	def __unicode__(self):
 		return self.name
