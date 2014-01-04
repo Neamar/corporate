@@ -44,8 +44,8 @@ class Game(models.Model):
 			notes=notes,
 			opening=u"# Résolution du tour %s\n\n" % self.current_turn,
 			title="Informations publiques du tour %s" % self.current_turn,
-			recipient_set=self.player_set.all()
 			)
+		m.recipient_set = self.player_set.all()
 		return m
 
 	def add_note(self, **kwargs):
@@ -131,8 +131,8 @@ class Player(models.Model):
 			notes=notes,
 			opening=u"# Résolution du tour %s\n\n" % self.game.current_turn,
 			title="Informations personnelles du tour %s" % self.game.current_turn,
-			recipient_set=[self]
-			)
+		)
+		m.recipient_set.add(self)
 		return m
 
 	def __unicode__(self):
