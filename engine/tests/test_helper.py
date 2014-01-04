@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine import helper
+from engine import helpers
 from engine.models import Message,Player,Game
 from website.models import User
 
@@ -42,7 +42,7 @@ class ModelTest(EngineTestCase):
 
 		opening="Opening"
 		ending="Ending"
-		m=helper.build_message_from_notes(
+		m=helpers.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=Message.objects.filter(flag=Message.NOTE),
 			opening=opening,
@@ -82,7 +82,7 @@ class ModelTest(EngineTestCase):
 			flag=Message.NOTE)
 		n2.save()
 		n2.recipient_set.add(p2)
-		helper.build_message_from_notes(
+		helpers.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=p2),
 			title="test",
