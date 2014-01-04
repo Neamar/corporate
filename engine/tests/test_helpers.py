@@ -33,7 +33,7 @@ class ModelTest(EngineTestCase):
 
 		opening="Opening"
 		ending="Ending"
-		m=helpers.build_message_from_notes(
+		m = helpers.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=Message.objects.filter(flag=Message.NOTE),
 			opening=opening,
@@ -42,7 +42,18 @@ class ModelTest(EngineTestCase):
 			recipient_set=self.g.player_set.all()
 		)
 
-		self.assertEquals(m.content,"Opening\n## T1\n* C1\n* C2\n\n## T2\n* C3\nEnding")
+		expected = """Opening
+
+## T1
+* C1
+* C2
+
+## T2
+* C3
+
+Ending
+"""
+		self.assertEquals(m.content, expected)
 
 	def test_message_building_delivery(self):
 		"""
@@ -76,9 +87,30 @@ class ModelTest(EngineTestCase):
 			recipient_set=[p2]
 		)
 
-		#p2_only receives one message
+		# p2_only receives one message
 		self.assertEqual(Message.objects.filter(recipient_set=p2).count(), 1)
-		#p2 receive message T2
-		self.assertEqual(Message.objects.filter(recipient_set=p2)[0].content, "\n## T2\n* C2\n")
-		#p1 receive no message
+		# p2 receive message T2
+		self.assertTrue("## T2\n* C2" in Message.objects.filter(recipient_set=p2)[0].content)
+		# p1 receive no message
 		self.assertEqual(Message.objects.filter(recipient_set=self.p).exclude(flag=Message.NOTE).count(), 0)
+
+	def test_notes_removed(self):
+		"""
+		Notes should be removed after aggregation
+		"""
+		# n2 has been removed
+		Message.objects.create(
+			title="T1",
+			content="C1",
+			author=None,
+			flag=Message.NOTE
+		)
+
+		helpers.build_message_from_notes(
+			message_type=Message.RESOLUTION,
+			notes=Message.objects.filter(flag=Message.NOTE),
+			title="test",
+			recipient_set=self.g.player_set.all()
+		)
+
+		self.assertEqual(Message.objects.filter(flag=Message.NOTE).count(), 0)		

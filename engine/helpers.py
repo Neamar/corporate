@@ -15,7 +15,7 @@ def build_message_from_notes(message_type, notes, title, recipient_set, opening=
 	"""
 
 	notes = notes.order_by('title')
-	resolution_message = opening
+	resolution_message = opening + "\n"
 	last_title = ""
 
 	for note in notes:
@@ -24,7 +24,7 @@ def build_message_from_notes(message_type, notes, title, recipient_set, opening=
 		resolution_message += u"* %s\n" % note.content
 		last_title = note.title
 
-	resolution_message += ending
+	resolution_message += "\n" + ending + "\n"
 
 	m = Message.objects.create(
 		title=title,
