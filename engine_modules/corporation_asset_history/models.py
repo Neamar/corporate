@@ -3,6 +3,10 @@ from engine_modules.corporation.models import Corporation
 
 
 class AssetHistory(models.Model):
+	"""
+	Store corporation assets, turn by turn
+	"""
+
 	class Meta:
 		unique_together = (("corporation","turn"),)
 
