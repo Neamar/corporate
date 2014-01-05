@@ -36,8 +36,6 @@ class RunOrder(Order):
 		self.player.money -= self.get_cost()
 		self.player.save()
 		
-		print "Proba: " + str(self.get_success_probability)
-		print "Proba: " + str(self.get_success_probability())
 		if self.is_successful():
 			# added return in order to know whether the Run has succeeded 
 			# important for example for Protection Runs

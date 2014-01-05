@@ -29,12 +29,19 @@ class RunOrdersTest(EngineTestCase):
 		self.c3.save()
 
 		self.dso = DataStealOrder(
-			player=self.p,
 			stealer_corporation=self.c2,
+			player=self.p,
 			target_corporation=self.c
 		)
 		self.dso.clean()
 		self.dso.save()
+
+		self.dso2 = DataStealOrder(
+			stealer_corporation=self.c3,
+			player=self.p,
+			target_corporation=self.c
+		)
+		self.dso2.save()
 
 		self.po = ProtectionOrder(
 			player=self.p,
@@ -99,16 +106,14 @@ class RunOrdersTest(EngineTestCase):
 		Only the first successful DataSteal on a same corporation can benefit someone
 		The others succeed, but the clients do not profit from them
 		"""
-
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
 		self.dso.additional_percents=10
 		self.dso.resolve()
-		self.dso.clean()
 
-		self.dso.additional_percents=10
-		self.dso.resolve()
+		self.dso2.additional_percents=10
+		self.dso2.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
 	
 	def test_so_po(self):
@@ -116,8 +121,6 @@ class RunOrdersTest(EngineTestCase):
 		Test that the Protection cancels the Sabotage
 		"""
 
-		print "\n"+"-"*80
-		print "test_so_po"
 		begin_assets = self.so.target_corporation.assets
 
 		self.po.additional_percents=10
@@ -127,7 +130,7 @@ class RunOrdersTest(EngineTestCase):
 		self.assertEqual(self.so.get_success_probability(), 100)
 		self.assertEqual(self.po.get_success_probability(), 100)
 		self.so.resolve()
-		print "\n"+"-"*80
+
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
 
 	def test_so_po_so(self):
@@ -153,15 +156,6 @@ class RunOrdersTest(EngineTestCase):
 		should succeed and benefit the client while the third succeeds without benefits
 		"""
 
-		print "\n"+"-"*80
-		print "test_dso_po_dso_dso"
-		self.dso2 = DataStealOrder(
-			player=self.p,
-			stealer_corporation=self.c3,
-			target_corporation=self.c
-		)
-		self.dso2.save()
-
 		begin_assets_stealer1 = self.dso.stealer_corporation.assets
 		begin_assets_stealer2 = self.dso2.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
@@ -175,8 +169,8 @@ class RunOrdersTest(EngineTestCase):
 		self.dso.clean()
 		self.dso.additional_percents=10
 		self.dso.resolve()
-		print "\n"+"-"*80
 
 		# This test was failing because the multiple dso limit was not yet implemented
-		#self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer1)
+		# The line beneath tests two aspects, if it fails, test_multiple datasteals should too
+		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer1)
 		self.assertEqual(self.reload(self.dso2.stealer_corporation).assets, begin_assets_stealer2 + 1)

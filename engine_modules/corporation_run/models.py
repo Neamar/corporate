@@ -74,18 +74,42 @@ class DataStealOrder(OffensiveRunOrder):
 	"""
 	Model for DataSteal Runs
 	"""
-	has_succeeded = False
+	has_succeeded = models.BooleanField(default=False)
+	# Same as OffensiveRunOrder.target_corporation, but we have to put it here to be able to
+	# backtrace the relation only to DataSteals and not all Offensive Runs
+	stolen_corporation = models.ForeignKey(Corporation, related_name="thieves", null=True, blank=True)
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")	
 
-	def resolve_success(self):
-		
-		self.stealer_corporation.assets += 1
-		self.stealer_corporation.save()
+	# This is kind of a complicated hack, but it is necessary for the same reason stolen_corporation is
+	# It makes creating DataSteals a bit easier (no duplication of info between stolen_corporation and target_corporation at creation)
+	def __init__(self, *args, **kwargs):
+		if "stealer_corporation" in kwargs.keys():
+			stealer_corporation = kwargs.pop("stealer_corporation")
+			super(DataStealOrder, self).__init__(*args, **kwargs)
+			self.stolen_corporation = self.target_corporation
+			self.stealer_corporation = stealer_corporation
+		else:
+			super(DataStealOrder, self).__init__(*args, **kwargs)
 
-		# Send a note for final message 
-		title=u"Run de Datasteal"
-		content=u"Votre équipe a réussi à voler des données de %s pour le compte de %s" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		self.player.add_note(title=title, content=content)
+	def resolve_success(self):
+		thief = self.target_corporation.thieves.filter(has_succeeded=True)
+		if len(thief) != 0:
+			# Send a note for final message 
+			title=u"Run de Datasteal"
+			content=u"Votre équipe s'est introduite chez %s mais n'a pas trouvé de donées intéressantes pour %s" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			self.player.add_note(title=title, content=content)
+			
+		else:
+			self.has_succeeded = True
+			self.save()
+			self.stealer_corporation.assets += 1
+			self.stealer_corporation.save()
+
+			# Send a note for final message 
+			title=u"Run de Datasteal"
+			content=u"Votre équipe a réussi à voler des données de %s pour le compte de %s" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			self.player.add_note(title=title, content=content)
+		return True
 
 	def resolve_fail(self):
 		
@@ -129,7 +153,6 @@ class ProtectionOrder(RunOrder):
 	def resolve_successful(self):
 		self.done = True
 		self.save()
-		print "\nProtection Run should have succeeded"
 
 		return True
 
@@ -139,7 +162,6 @@ class ProtectionOrder(RunOrder):
 		# and still distinguish between failed and successful Runs 
 		# It will not, however, let you distinguish them after the turn has ended
 		self.done = False
-		print "\nProtection Run should have failed"
 
 		return False
 
@@ -160,8 +182,6 @@ class SabotageOrder(OffensiveRunOrder):
 		title=u"Run de Sabotage"
 		content=u"Votre équipe a réussi à saboter les opérations de %s" %(self.target_corporation.base_corporation.name)
 		self.player.add_note(title=title, content=content)
-		print "Sabotage Content : "
-		print content
 
 	def resolve_fail(self):
 		
@@ -169,8 +189,6 @@ class SabotageOrder(OffensiveRunOrder):
 		title=u"Run de Sabotage"
 		content=u"La tentative de votre équipe pour saboter %s a échoué" %(self.target_corporation.base_corporation.name)
 		self.player.add_note(title=title, content=content)
-		print "Sabotage Content : "
-		print content
 
 	def resolve_interception(self, po):
 
@@ -183,8 +201,6 @@ class SabotageOrder(OffensiveRunOrder):
 		title=u"Run de Protection"
 		content=u"Votre équipe a réussi à protéger %s d'une tentative de DataSteal. L'équipe adverse a cependant réussi à s'enfuir" %(po.protected_corporation)
 		po.player.add_note(title=title, content=content)
-		print "Sabotage Content : "
-		print content
 	
 	def resolve_capture(self, po):
 
@@ -197,8 +213,6 @@ class SabotageOrder(OffensiveRunOrder):
 		title=u"Run de Protection"
 		content=u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative de Sabotage sur %s. L'équipe adverse a cependant réussi à s'enfuir" %(self.player.name, po.protected_corporation.base_corporation.name)
 		po.player.add_note(title=title, content=content)
-		print "Sabotage Content : "
-		print content
 		
 	def description(self):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s" %(self.target_corporation.base_corporation.name)
