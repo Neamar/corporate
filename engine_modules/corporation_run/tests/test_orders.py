@@ -2,6 +2,7 @@ from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder
 from engine.exceptions import OrderNotAvailable
 from engine_modules.corporation.models import BaseCorporation, Corporation
+from engine_modules.corporation_run.tasks import OffensiveRunTask
 
 class RunOrdersTest(EngineTestCase):
 	def setUp(self):
@@ -65,6 +66,9 @@ class RunOrdersTest(EngineTestCase):
 		self.so.save()
 
 		self.p.money = 100000
+		self.p.save()
+
+		self.t = OffensiveRunTask()
 
 	def test_datasteal_success(self):
 		"""
@@ -204,7 +208,7 @@ class RunOrdersTest(EngineTestCase):
 
 	def test_protection_ascending_probability(self):
 		"""
-		Test that the Protection Runs are sorted from lowest to highest probability of succes
+		Test that Protection Runs are resolved from lowest to highest success probability
 		In this case, for testing purposes, the Protection Run with 100 should be
 		the one that succeeds, not the one with 200
 		"""
@@ -218,3 +222,23 @@ class RunOrdersTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.po).done, True)
 		self.assertEqual(self.reload(self.po2).done, False)
+
+	def test_offensive_runs_descending_probability(self):
+		"""
+		Test that Offensive Runs are resolved from highest to lowest success probability
+		In this case, the Datasteal with 200 should be the one that fails (because of 
+		the Protection) and the Sabotage with 100 should succeed
+		"""
+
+		begin_stealer_assets = self.dso.stealer_corporation.assets
+		begin_sabotaged_assets = self.so.target_corporation.assets
+
+		self.po.additional_percents=10
+		self.po.save()
+		self.dso.additional_percents=20
+		self.dso.save()
+		self.so.additional_percents=10
+
+		self.assertEqual(self.dso2.get_success_probability(), 0)
+		self.assertEqual(self.po2.get_success_probability(), 0)
+		self.t.run(self.g)
