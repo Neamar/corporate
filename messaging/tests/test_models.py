@@ -40,24 +40,21 @@ class ModelTest(EngineTestCase):
 		Note.objects.create(
 			category="T1",
 			content="C1",
-			is_global=False
 		)
 		Note.objects.create(
 			category="T2",
 			content="C3",
-			is_global=False
 		)
 		Note.objects.create(
 			category="T1",
 			content="C2",
-			is_global=False
 		)
 
 		opening="Opening"
 		ending="Ending"
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
-			notes=Note.objects.filter(is_global=False),
+			notes=Note.objects.all(),
 			opening=opening,
 			ending=ending,
 			title="test",
@@ -84,13 +81,12 @@ Ending
 		Note.objects.create(
 			category="T1",
 			content="C1",
-			is_global=False
 		)
 
 		Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
-			notes=Note.objects.filter(is_global=False),
+			notes=Note.objects.all(),
 			title="test",
 		)
 
-		self.assertEqual(Note.objects.filter(is_global=False).count(), 0)		
+		self.assertEqual(Note.objects.all().count(), 0)		

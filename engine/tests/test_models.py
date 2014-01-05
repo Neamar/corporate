@@ -49,8 +49,14 @@ class ModelTest(EngineTestCase):
 		"""
 		Check add_note on Game
 		"""
+		u = User(username="haha", email="azre@fer.fr")
+		u.save()
+
+		p2 = Player(user=u, game=self.g, name="hahaha")
+		p2.save()
+
 		n = self.g.add_note(category="category", content="something")
-		self.assertTrue(n.is_global)
+		self.assertEqual(list(n.recipient_set.all()), [self.p, p2])
 
 	def test_game_build_resolution_message(self):
 		"""
@@ -64,7 +70,7 @@ class ModelTest(EngineTestCase):
 
 		m = self.g.build_resolution_message()
 		self.assertEqual(m.flag, Message.GLOBAL_RESOLUTION)
-		self.assertEqual(len(m.recipient_set.all()), 2)
+		self.assertEqual(m.recipient_set.count(), 2)
 		self.assertTrue(self.p in m.recipient_set.all())
 		self.assertTrue(p2 in m.recipient_set.all())
 
@@ -237,7 +243,7 @@ class ModelTest(EngineTestCase):
 		"""
 
 		n = self.p.add_note(category="category", content="something")
-		self.assertFalse(n.is_global)
+		self.assertEqual(list(n.recipient_set.all()), [self.p])
 
 	def test_player_build_resolution_message(self):
 		"""

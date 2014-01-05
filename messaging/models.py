@@ -62,9 +62,7 @@ class Message(models.Model):
 class Note(models.Model):
 	category = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
-	public = models.BooleanField(default=False)
 	recipient_set = models.ManyToManyField('engine.Player')
-	is_global = models.BooleanField()
 
 
 # Import signals

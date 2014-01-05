@@ -34,7 +34,7 @@ class Game(models.Model):
 		"""
 		Build the message to sent to all the players.
 		"""
-		notes = Note.objects.filter(is_global=False,recipient_set=self)
+		notes = Note.objects.filter(recipient_set=self)
 
 		m = Message.build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,
@@ -49,7 +49,8 @@ class Game(models.Model):
 		"""
 		Create a note, to be used later for the resolution message
 		"""
-		m = Note.objects.create(is_global=True, **kwargs)
+		m = Note.objects.create(**kwargs)
+		m.recipient_set = self.player_set.all()
 		return m
 
 	def __unicode__(self):
@@ -79,7 +80,7 @@ class Player(models.Model):
 		"""
 		Create a note for the player
 		"""
-		n = Note.objects.create(is_global=False, **kwargs)
+		n = Note.objects.create(**kwargs)
 		n.save()
 		n.recipient_set.add(self)
 
@@ -121,7 +122,7 @@ class Player(models.Model):
 		"""
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
-		notes = Note.objects.filter(is_global=False, recipient_set=self)
+		notes = Note.objects.filter(recipient_set=self)
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=notes,
