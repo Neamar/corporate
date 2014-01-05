@@ -1,6 +1,7 @@
 from django.db import models
 from engine_modules.run.models import RunOrder
-from engine.models import Player, Message
+from engine.models import Player
+from messaging.models import Message
 
 
 class InformationRunOrder(RunOrder):
