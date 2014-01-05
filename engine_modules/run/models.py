@@ -36,10 +36,14 @@ class RunOrder(Order):
 		self.player.money -= self.get_cost()
 		self.player.save()
 		
+		print "Proba: " + str(self.get_success_probability)
+		print "Proba: " + str(self.get_success_probability())
 		if self.is_successful():
-			self.resolve_successful()
+			# added return in order to know whether the Run has succeeded 
+			# important for example for Protection Runs
+			return self.resolve_successful()
 		else:
-			self.resolve_failure()
+			return self.resolve_failure()
 
 	def resolve_successful(self):
 		"""
