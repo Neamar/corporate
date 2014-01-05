@@ -3,7 +3,7 @@ from engine_modules.corporation.models import BaseCorporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 
 
-class TasksTest(EngineTestCase):
+class ModelsTest(EngineTestCase):
 	"""
 	Unit tests for engine models
 	"""
@@ -15,7 +15,7 @@ class TasksTest(EngineTestCase):
 		self.bc3 = BaseCorporation(name="Ares", description="Ruthless")
 		self.bc3.save()
 
-		super(TasksTest, self).setUp()
+		super(ModelsTest, self).setUp()
 
 	def test_assets_saved_on_init(self):
 		"""

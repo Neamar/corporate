@@ -35,8 +35,8 @@ class Game(models.Model):
 		Build the message to sent to all the players.
 		"""
 		from engine.helpers import build_message_from_notes
-		# DAFUK ?
-		notes = Message.objects.filter(flag=Message.NOTE, recipient_set=self)
+
+		notes = Message.objects.filter(flag=Message.NOTE, recipient_set=self.player_set.all())
 
 		m = build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,

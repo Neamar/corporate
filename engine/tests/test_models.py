@@ -63,7 +63,7 @@ class ModelTest(EngineTestCase):
 
 		m = self.g.build_resolution_message()
 		self.assertEqual(m.flag, Message.GLOBAL_RESOLUTION)
-		self.assertEqual(m.recipient_set.allcpunt(), 2)
+		self.assertEqual(m.recipient_set.count(), 2)
 		self.assertTrue(self.p in m.recipient_set.all())
 		self.assertTrue(p2 in m.recipient_set.all())
 
