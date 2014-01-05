@@ -1,10 +1,10 @@
-from django.db.models.signals import pre_save, post_save, m2m_changed
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.db import IntegrityError
 
 from engine.exceptions import OrderNotAvailable
 from engine.dispatchs import validate_order
-from engine.models import Game, Player, Message, Order
+from engine.models import Game, Player, Order
 from engine.dispatchs import post_create
 
 
@@ -25,14 +25,6 @@ def check_current_turn_less_or_equal_total_turn(sender, instance, **kwargs):
 	"""
 	if instance.current_turn > instance.total_turn:
 		raise IntegrityError("current turn is greater than total turn")
-
-
-@receiver(m2m_changed, sender=Message.recipient_set.through)
-def check_player_is_in_the_same_game_than_author(sender, instance, action, **kwargs):
-	if action == "pre_add":
-		for player in  kwargs['pk_set']:
-			if instance.author is not None and instance.author.game != Player.objects.get(pk=player).game:
-				raise IntegrityError("The player is not in the same game than the author.")
 
 
 @receiver(pre_save, sender=Order)

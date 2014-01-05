@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
-
+from messaging.models import Message
 
 class Game(models.Model):
 	city = models.CharField(max_length=50)
@@ -137,31 +137,6 @@ class Player(models.Model):
 
 	def __unicode__(self):
 		return self.name
-
-
-class Message(models.Model):
-	ORDER = 'ORD'
-	PRIVATE_MESSAGE = 'PM'
-	RESOLUTION = 'RE'
-	GLOBAL_RESOLUTION = 'GRE'
-	NOTE = 'NO'
-	GLOBAL_NOTE = 'GN'
-
-	MESSAGE_CHOICES = (
-		(ORDER, 'Order'),
-		(PRIVATE_MESSAGE, 'Private Message'),
-		(RESOLUTION, 'Resolution'),
-		(GLOBAL_RESOLUTION, 'Global Resolution'),
-		(NOTE, 'Note'),
-		(GLOBAL_NOTE, 'Global Note'),
-	)
-
-	title = models.CharField(max_length=256)
-	content = models.TextField(blank=True)
-	author = models.ForeignKey(Player, null=True, related_name="+")
-	public = models.BooleanField(default=False)
-	recipient_set = models.ManyToManyField('Player')
-	flag = models.CharField(max_length=3, choices=MESSAGE_CHOICES)
 
 
 class Order(models.Model):

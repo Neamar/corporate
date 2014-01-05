@@ -1,9 +1,37 @@
+from django.db import IntegrityError
+
 from engine.testcases import EngineTestCase
-from engine import helpers
-from engine.models import Message, Player
+from engine.models import Game, Player, Message
 
 
 class ModelTest(EngineTestCase):
+	"""
+	Unit tests for engine models
+	"""
+	def test_message_author_game_equals_player_game(self):
+		"""
+		Check if author's game = player's game
+		"""
+
+		p2 = Player(game=self.g)
+		p2.save()
+
+		g2 = Game(total_turn=20)
+		g2.save()
+
+		p3 = Player(game=g2)
+		p3.save()
+
+		m = Message(title="titre", author=self.p)
+		m.save()
+		m.recipient_set.add(p2)
+		m.save()
+
+		m2 = Message(title="titre1", author= self.p)
+		m2.save()
+		
+		self.assertRaises(IntegrityError, lambda: m2.recipient_set.add(p3))
+
 	def test_message_building_content(self):
 		"""
 		Check if the content is built properly
@@ -29,7 +57,7 @@ class ModelTest(EngineTestCase):
 
 		opening="Opening"
 		ending="Ending"
-		m = helpers.build_message_from_notes(
+		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=Message.objects.filter(flag=Message.NOTE),
 			opening=opening,
@@ -62,7 +90,7 @@ Ending
 			flag=Message.NOTE
 		)
 
-		helpers.build_message_from_notes(
+		Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=Message.objects.filter(flag=Message.NOTE),
 			title="test",
