@@ -39,7 +39,7 @@ class Game(models.Model):
 		notes = Note.objects.filter(recipient_set=self)
 
 		m = Message.build_message_from_notes(
-			message_type=Message.GLOBAL_RESOLUTION,
+			message_type=Message.RESOLUTION,
 			notes=notes,
 			opening=u"# Résolution du tour %s\n\n" % self.current_turn,
 			title="Informations publiques du tour %s" % self.current_turn,
