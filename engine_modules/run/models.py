@@ -24,7 +24,7 @@ class RunOrder(Order):
 			proba += 30
 		proba += self.additional_percents * 10
 
-		return min(90, proba)
+		return proba
 
 	def is_successful(self):
 		"""
