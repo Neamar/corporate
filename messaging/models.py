@@ -1,21 +1,19 @@
 from django.db import models
 
 
+
 class Message(models.Model):
 	ORDER = 'ORD'
 	PRIVATE_MESSAGE = 'PM'
 	RESOLUTION = 'RE'
 	GLOBAL_RESOLUTION = 'GRE'
-	NOTE = 'NO'
-	GLOBAL_NOTE = 'GN'
+
 
 	MESSAGE_CHOICES = (
 		(ORDER, 'Order'),
 		(PRIVATE_MESSAGE, 'Private Message'),
 		(RESOLUTION, 'Resolution'),
 		(GLOBAL_RESOLUTION, 'Global Resolution'),
-		(NOTE, 'Note'),
-		(GLOBAL_NOTE, 'Global Note'),
 	)
 
 	title = models.CharField(max_length=256)
@@ -25,7 +23,7 @@ class Message(models.Model):
 	recipient_set = models.ManyToManyField('engine.Player')
 	flag = models.CharField(max_length=3, choices=MESSAGE_CHOICES)
 
-	@staticmethod
+
 	def build_message_from_notes(message_type, notes, title, opening="", ending=""):
 		"""
 		Generate from QuerySet notes a message, aggregating by notes titles. Will also remove notes from DB.
@@ -61,6 +59,21 @@ class Message(models.Model):
 		notes.delete()
 
 		return m
+
+class Note(models.Model):
+	NOTE = 'NO'
+	GLOBAL_NOTE = 'GN'
+	NOTE_CHOICES=(
+		(NOTE, 'Note'),
+		(GLOBAL_NOTE, 'Global Note'),		
+	)
+
+	title = models.CharField(max_length=256)
+	content = models.TextField(blank=True)
+	public = models.BooleanField(default=False)
+	recipient_set = models.ManyToManyField('engine.Player')
+	flag = models.CharField(max_length=3, choices=NOTE_CHOICES)
+
 
 
 # Import signals
