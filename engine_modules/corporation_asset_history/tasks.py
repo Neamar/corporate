@@ -19,7 +19,7 @@ class SaveTurnHistoryTask(ResolutionTask):
 			ah.save()
 
 
-class SendGlobalMessageTask(ResolutionTask):
+class BuildCorporationClassementNoteTask(ResolutionTask):
 	"""
 	At the end of the turn, sent a message on what happend this turn
 	"""
@@ -36,11 +36,8 @@ class SendGlobalMessageTask(ResolutionTask):
 		position=1
 		corporations = Corporation.objects.filter(game=game).order_by('-assets')
 		for corporation in corporations:
-			classement+="\n%s- %s : %s" % (position, corporation.base_corporation.name,corporation.assets)
-			#add delta only if the corpo did exists the previous turn
-			if AssetHistory.objects.filter(corporation=corporation,turn=(game.current_turn-1)).count()>0:
-				classement+= " (%s)" % AssetHistory.objects.get(corporation=corporation,turn=(game.current_turn-1)).assets
+			classement+="\n%s- %s : %s  (%s)" % (position, corporation.base_corporation.name,corporation.assets, AssetHistory.objects.get(corporation=corporation,turn=(game.current_turn-1)).assets)
 			position+=1
 		game.add_note(title="Classement corporatiste", content=classement)
 
-tasks = (SaveTurnHistoryTask, SendGlobalMessageTask)
+tasks = (SaveTurnHistoryTask, BuildCorporationClassementNoteTask)

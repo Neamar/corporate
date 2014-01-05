@@ -56,10 +56,13 @@ class TasksTest(EngineTestCase):
 			corporation=self.medium_corporation
 		)
 		self.s.save()
-		self.g.current_turn = 5
-		self.g.save()
-
+		#Turn 5
 		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+
+		
 
 		# We expect dividend on this share
 		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets
@@ -77,8 +80,11 @@ class TasksTest(EngineTestCase):
 		)
 		self.s.save()
 
-		self.g.current_turn = 5
-		self.g.save()
+		#turn 5
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
 
 		self.g.resolve_current_turn()
 		# We expect dividend on this share, taking into account the fact that this corporation is the first.
@@ -97,9 +103,11 @@ class TasksTest(EngineTestCase):
 			corporation=self.last_corporation
 		)
 		self.s.save()
-
-		self.g.current_turn = 5
-		self.g.save()
+		#turn 5
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
 
 		self.g.resolve_current_turn()
 		# We expect dividend on this share, taking into account the fact that this corporation is the last.
@@ -119,9 +127,12 @@ class TasksTest(EngineTestCase):
 		self.s.save()
 		self.p.citizenship.corporation = self.medium_corporation
 		self.p.citizenship.save()
-
-		self.g.current_turn = 5
-		self.g.save()
+		
+		#turn 5
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
 
 		self.g.resolve_current_turn()
 
