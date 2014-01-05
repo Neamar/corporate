@@ -20,12 +20,6 @@ class PlayerAdmin(admin.ModelAdmin):
 admin.site.register(Player, PlayerAdmin)
 
 
-class MessageAdmin(admin.ModelAdmin):
-	list_display = ('author', 'title', 'public', 'content')
-	ordering=('author',)
-admin.site.register(Message, MessageAdmin)
-
-
 class OrderAdmin(admin.ModelAdmin):
 	list_display = ('type', 'player', 'turn')
 	readonly_fields=('turn',)
