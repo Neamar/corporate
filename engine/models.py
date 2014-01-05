@@ -83,7 +83,6 @@ class Player(models.Model):
 		"""
 		Create a note for the player
 		"""
-		print self.game.current_turn
 		n = Note.objects.create(turn=self.game.current_turn, **kwargs)
 		n.save()
 		n.recipient_set.add(self)
@@ -110,7 +109,12 @@ class Player(models.Model):
 		message = "# Ordres de %s pour le tour %s\n\n" % (self.name, self.game.current_turn)
 		for order in orders:
 			# Retrieve associated order:
-			details = getattr(order, order.type.lower())
+			try:
+				details = getattr(order, order.type.lower())
+			except AttributeError:
+				# TODO : CHANGE DAT SHIT
+				details = getattr(order.runorder, order.type.lower())
+
 			message += "* %s\n" % details.description()
 
 		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
