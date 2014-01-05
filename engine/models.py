@@ -26,6 +26,14 @@ class Game(models.Model):
 			t = task()
 			t.run(self)
 
+		#Sent the private resolution message to each players
+		players=Player.objects.filter(game=self)
+		for player in players:
+			player.build_resolution_message()
+
+		#Sent the general message to all the players
+		self.build_resolution_message()
+
 		self.current_turn += 1
 		self.save()
 
