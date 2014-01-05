@@ -50,7 +50,7 @@ class ModelTest(EngineTestCase):
 		Check add_note on Game
 		"""
 		n = self.g.add_note(title="title", content="something")
-		self.assertTrue(n.isglobal)
+		self.assertTrue(n.is_global)
 
 	def test_game_build_resolution_message(self):
 		"""
@@ -237,7 +237,7 @@ class ModelTest(EngineTestCase):
 		"""
 
 		n = self.p.add_note(title="title", content="something")
-		self.assertFalse(n.isglobal)
+		self.assertFalse(n.is_global)
 
 	def test_player_build_resolution_message(self):
 		"""

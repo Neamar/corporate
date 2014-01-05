@@ -64,7 +64,7 @@ class Note(models.Model):
 	content = models.TextField(blank=True)
 	public = models.BooleanField(default=False)
 	recipient_set = models.ManyToManyField('engine.Player')
-	isglobal = models.BooleanField()
+	is_global = models.BooleanField()
 
 
 # Import signals
