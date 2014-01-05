@@ -5,6 +5,10 @@ from engine_modules.player_run.models import InformationRunOrder
 
 class ModelTest(EngineTestCase):
 	def test_information_run_success(self):
+		"""
+		Check we get a message with target player order
+		"""
+		
 		from engine_modules.influence.models import BuyInfluenceOrder
 
 		o = BuyInfluenceOrder(
