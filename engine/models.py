@@ -26,7 +26,9 @@ class Game(models.Model):
 			t = task()
 			t.run(self)
 
-		self.build_resolution_message()
+		for player in self.player_set.all():
+			player.build_resolution_message()
+
 		self.current_turn += 1
 		self.save()
 
@@ -41,6 +43,7 @@ class Game(models.Model):
 			notes=notes,
 			opening=u"# Résolution du tour %s\n\n" % self.current_turn,
 			title="Informations publiques du tour %s" % self.current_turn,
+			turn = self.current_turn
 			)
 		m.recipient_set = self.player_set.all()
 		return m
@@ -49,7 +52,7 @@ class Game(models.Model):
 		"""
 		Create a note, to be used later for the resolution message
 		"""
-		m = Note.objects.create(**kwargs)
+		m = Note.objects.create(turn = self.current_turn,**kwargs)
 		m.recipient_set = self.player_set.all()
 		return m
 
@@ -70,7 +73,7 @@ class Player(models.Model):
 		"""
 		Send a message to the player
 		"""
-		m = Message.objects.create(**kwargs)
+		m = Message.objects.create(turn=self.game.current_turn, **kwargs)
 		m.save()
 		m.recipient_set.add(self)
 
@@ -80,7 +83,7 @@ class Player(models.Model):
 		"""
 		Create a note for the player
 		"""
-		n = Note.objects.create(**kwargs)
+		n = Note.objects.create(turn=self.game.current_turn, **kwargs)
 		n.save()
 		n.recipient_set.add(self)
 
@@ -112,22 +115,23 @@ class Player(models.Model):
 		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
 
 		return self.add_message(
-			title="Ordres pour le tour %s" % self.game.current_turn,
+			title="Ordres du tour",
 			content=message,
 			author=None,
-			flag=Message.ORDER
+			flag=Message.ORDER,
 		)
 
 	def build_resolution_message(self):
 		"""
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
-		notes = Note.objects.filter(recipient_set=self)
+		notes = Note.objects.filter(recipient_set=self, turn=self.game.current_turn)
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=notes,
 			opening=u"# Résolution du tour %s\n\n" % self.game.current_turn,
 			title="Informations personnelles du tour %s" % self.game.current_turn,
+			turn=self.game.current_turn
 		)
 		m.recipient_set.add(self)
 		return m

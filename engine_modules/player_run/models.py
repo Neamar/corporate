@@ -14,5 +14,5 @@ class InformationRunOrder(RunOrder):
 			title="Run d'information sur %s, tour %s" % (self.target, self.player.game.current_turn),
 			content=target_orders.content,
 			author=None,
-			flag=Message.PRIVATE_MESSAGE
+			flag=Message.PRIVATE_MESSAGE,
 		)

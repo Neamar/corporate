@@ -21,9 +21,10 @@ class Message(models.Model):
 	author = models.ForeignKey('engine.Player', null=True, related_name="+")
 	recipient_set = models.ManyToManyField('engine.Player')
 	flag = models.CharField(max_length=3, choices=MESSAGE_CHOICES)
+	turn = models.PositiveSmallIntegerField()
 
 	@staticmethod
-	def build_message_from_notes(message_type, notes, title, opening="", ending=""):
+	def build_message_from_notes(message_type, notes, title, turn, opening="", ending=""):
 		"""
 		Generate from QuerySet notes a message, aggregating by notes titles. Will also remove notes from DB.
 		With notes category T1 and content C1, note T1 C2 and T2 C3 final message will be (markdown):
@@ -52,7 +53,9 @@ class Message(models.Model):
 			title=title,
 			content=resolution_message,
 			author=None,
-			flag=message_type)
+			flag=message_type,
+			turn=turn
+		)
 
 		# Remove notes once consumed
 		notes.delete()
@@ -64,6 +67,8 @@ class Note(models.Model):
 	category = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
 	recipient_set = models.ManyToManyField('engine.Player')
+	turn = models.PositiveSmallIntegerField()
+
 
 
 # Import signals

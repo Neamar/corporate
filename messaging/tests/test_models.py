@@ -23,12 +23,12 @@ class ModelTest(EngineTestCase):
 		p3 = Player(game=g2)
 		p3.save()
 
-		m = Message(title="titre", author=self.p)
+		m = Message(title="titre", author=self.p, turn=self.g.current_turn)
 		m.save()
 		m.recipient_set.add(p2)
 		m.save()
 
-		m2 = Message(title="titre1", author= self.p)
+		m2 = Message(title="titre1", author= self.p, turn=self.g.current_turn)
 		m2.save()
 		
 		self.assertRaises(IntegrityError, lambda: m2.recipient_set.add(p3))
@@ -40,14 +40,17 @@ class ModelTest(EngineTestCase):
 		Note.objects.create(
 			category="T1",
 			content="C1",
+			turn=self.g.current_turn
 		)
 		Note.objects.create(
 			category="T2",
 			content="C3",
+			turn=self.g.current_turn
 		)
 		Note.objects.create(
 			category="T1",
 			content="C2",
+			turn=self.g.current_turn
 		)
 
 		opening="Opening"
@@ -58,6 +61,7 @@ class ModelTest(EngineTestCase):
 			opening=opening,
 			ending=ending,
 			title="test",
+			turn=self.g.current_turn
 		)
 
 		expected = """Opening
@@ -81,12 +85,14 @@ Ending
 		Note.objects.create(
 			category="T1",
 			content="C1",
+			turn=self.g.current_turn
 		)
 
 		Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=Note.objects.all(),
 			title="test",
+			turn=self.g.current_turn
 		)
 
 		self.assertEqual(Note.objects.all().count(), 0)		
