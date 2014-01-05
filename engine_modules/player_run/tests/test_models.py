@@ -14,7 +14,9 @@ class TaskTest(EngineTestCase):
 			player=self.p
 		)
 		o.save()
+
 		self.g.resolve_current_turn()
+		
 		m = self.p.message_set.filter(flag=Message.ORDER)[0]
 
 		p2 = Player(game=self.g)
@@ -26,4 +28,5 @@ class TaskTest(EngineTestCase):
 		)
 		o2.save()
 		o2.resolve_successful()
+
 		self.assertTrue(m.content in p2.message_set.all()[0].content)
