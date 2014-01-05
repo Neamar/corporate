@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from engine.tasks import ResolutionTask
 from engine_modules.corporation.models import Corporation
-from engine.models import Player
 from engine_modules.corporation_asset_history.models import AssetHistory
 
 
@@ -20,24 +19,6 @@ class SaveTurnHistoryTask(ResolutionTask):
 				assets=corporation.assets,
 				turn=game.current_turn)
 			ah.save()
-
-
-class SendMessageToPlayersTask(ResolutionTask):
-	"""
-	At the end of the turn, send a message on what happened this turn
-	"""
-
-	RESOLUTION_ORDER = 1100
-
-	def run(self, game):
-
-		"""
-		Send the private resolution message to each player
-		"""
-
-		players = Player.objects.filter(game=game)
-		for player in players:
-			player.build_resolution_message()
 
 
 class SendGlobalMessageTask(ResolutionTask):
@@ -64,6 +45,4 @@ class SendGlobalMessageTask(ResolutionTask):
 			position += 1
 		game.add_note(title="Classement corporatiste", content=classement)
 
-		game.build_resolution_message()
-
-tasks = (SaveTurnHistoryTask, SendMessageToPlayersTask, SendGlobalMessageTask)
+tasks = (SaveTurnHistoryTask, SendGlobalMessageTask)

@@ -26,6 +26,7 @@ class Game(models.Model):
 			t = task()
 			t.run(self)
 
+		self.build_resolution_message()
 		self.current_turn += 1
 		self.save()
 
@@ -34,9 +35,8 @@ class Game(models.Model):
 		Build the message to sent to all the players.
 		"""
 		from engine.helpers import build_message_from_notes
-
-
-		notes = Message.objects.filter(flag=Message.NOTE,recipient_set=self)
+		# DAFUK ?
+		notes = Message.objects.filter(flag=Message.NOTE, recipient_set=self)
 
 		m = build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,
