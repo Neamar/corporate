@@ -59,6 +59,7 @@ class Message(models.Model):
 
 		return m
 
+
 class Note(models.Model):
 	category = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
