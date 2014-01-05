@@ -83,6 +83,7 @@ class Player(models.Model):
 		"""
 		Create a note for the player
 		"""
+		print self.game.current_turn
 		n = Note.objects.create(turn=self.game.current_turn, **kwargs)
 		n.save()
 		n.recipient_set.add(self)
