@@ -146,6 +146,7 @@ class Message(models.Model):
 	GLOBAL_RESOLUTION = 'GRE'
 	NOTE = 'NO'
 	GLOBAL_NOTE = 'GN'
+	RUN = 'RU'
 
 	MESSAGE_CHOICES = (
 		(ORDER, 'Order'),
@@ -154,6 +155,7 @@ class Message(models.Model):
 		(GLOBAL_RESOLUTION, 'Global Resolution'),
 		(NOTE, 'Note'),
 		(GLOBAL_NOTE, 'Global Note'),
+		(RUN, 'Global Note'),
 	)
 
 	title = models.CharField(max_length=256)
@@ -207,6 +209,7 @@ class Order(models.Model):
 		Should return a full description of the order
 		"""
 		raise NotImplementedError("Abstract call.")
+
 
 # Import datas for all engine_modules
 from engine.modules import *
