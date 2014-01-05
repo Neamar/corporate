@@ -48,8 +48,9 @@ class OrdersTest(EngineTestCase):
 		self.o.additional_percents = 2
 		self.assertEqual(self.o.get_success_probability(), 50)
 
-		self.o.additional_percents = 10
-		self.assertEqual(self.o.get_success_probability(), 90)
+		# We can have 100% probability, but only in test env.
+		self.o.additional_percents = 7
+		self.assertEqual(self.o.get_success_probability(), 100)
 
 	def test_only_influence_run_has_bonus(self):
 		"""
@@ -70,3 +71,17 @@ class OrdersTest(EngineTestCase):
 
 		# assertNoRaises
 		o2.clean()
+
+	def test_no_more_than_90(self):
+		"""
+		User can't have more than 90% chance of success
+		"""
+
+		self.o.has_influence_bonus = True
+		self.o.additional_percents = 7
+
+		self.assertRaises(OrderNotAvailable, self.o.clean)
+
+		self.o.has_influence_bonus = False
+		# assertNoRaises
+		self.o.clean()
