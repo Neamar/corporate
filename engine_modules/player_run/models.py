@@ -7,7 +7,8 @@ class InformationRunOrder(RunOrder):
 	target = models.ForeignKey(Player)
 
 	def resolve_successful(self):
-		target_orders = list(Message.objects.filter(recipient_set=self.target, flag=Message.ORDER).order_by('pk'))[-1]
+		target_orders = self.target.message_set.filter(flag=Message.ORDER).order_by('-pk')[0]
+
 		self.player.add_message(
 			title="Run d'information sur %s, tour %s" % (self.target, self.player.game.current_turn),
 			content=target_orders.content,
