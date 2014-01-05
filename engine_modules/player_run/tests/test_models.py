@@ -1,12 +1,9 @@
 from engine.testcases import EngineTestCase
-from engine_modules.player_run.models import InformationRunOrder
 from engine.models import Player, Message
+from engine.exceptions import OrderNotAvailable
+from engine_modules.player_run.models import InformationRunOrder
 
-class TaskTest(EngineTestCase):
-	"""
-	Unit tests for Player's runs
-	"""
-
+class ModelTest(EngineTestCase):
 	def test_information_run_success(self):
 		from engine_modules.influence.models import BuyInfluenceOrder
 
@@ -30,3 +27,13 @@ class TaskTest(EngineTestCase):
 		o2.resolve_successful()
 
 		self.assertTrue(m.content in p2.message_set.all()[0].content)
+
+	def test_information_run_cant_target_self(self):
+		"""
+		Check if a Johnson can't target himself
+		"""
+		o = InformationRunOrder(
+			target=self.p,
+			player=self.p,
+		)
+		self.assertRaises(OrderNotAvailable, o.save)
