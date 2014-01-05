@@ -14,5 +14,3 @@ class InformationRunOrder(RunOrder):
 			author=None,
 			flag=Message.RUN
 		)
-
-
