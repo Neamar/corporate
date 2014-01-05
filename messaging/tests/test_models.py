@@ -1,7 +1,8 @@
 from django.db import IntegrityError
 
 from engine.testcases import EngineTestCase
-from engine.models import Game, Player, Message
+from engine.models import Game, Player
+from messaging.models import Message, Note
 
 
 class ModelTest(EngineTestCase):
@@ -36,30 +37,27 @@ class ModelTest(EngineTestCase):
 		"""
 		Check if the content is built properly
 		"""
-		Message.objects.create(
+		Note.objects.create(
 			title="T1",
 			content="C1",
-			author=None,
-			flag=Message.NOTE
+			isglobal=False
 		)
-		Message.objects.create(
+		Note.objects.create(
 			title="T2",
 			content="C3",
-			author=None,
-			flag=Message.NOTE
+			isglobal=False
 		)
-		Message.objects.create(
+		Note.objects.create(
 			title="T1",
 			content="C2",
-			author=None,
-			flag=Message.NOTE
+			isglobal=False
 		)
 
 		opening="Opening"
 		ending="Ending"
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
-			notes=Message.objects.filter(flag=Message.NOTE),
+			notes=Note.objects.filter(isglobal=False),
 			opening=opening,
 			ending=ending,
 			title="test",
@@ -83,17 +81,16 @@ Ending
 		Notes should be removed after aggregation
 		"""
 		# n2 has been removed
-		Message.objects.create(
+		Note.objects.create(
 			title="T1",
 			content="C1",
-			author=None,
-			flag=Message.NOTE
+			isglobal=False
 		)
 
 		Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
-			notes=Message.objects.filter(flag=Message.NOTE),
+			notes=Note.objects.filter(isglobal=False),
 			title="test",
 		)
 
-		self.assertEqual(Message.objects.filter(flag=Message.NOTE).count(), 0)		
+		self.assertEqual(Note.objects.filter(isglobal=False).count(), 0)		

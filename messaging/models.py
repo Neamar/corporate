@@ -19,11 +19,10 @@ class Message(models.Model):
 	title = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
 	author = models.ForeignKey('engine.Player', null=True, related_name="+")
-	public = models.BooleanField(default=False)
 	recipient_set = models.ManyToManyField('engine.Player')
 	flag = models.CharField(max_length=3, choices=MESSAGE_CHOICES)
 
-
+	@staticmethod
 	def build_message_from_notes(message_type, notes, title, opening="", ending=""):
 		"""
 		Generate from QuerySet notes a message, aggregating by notes titles. Will also remove notes from DB.
@@ -61,19 +60,11 @@ class Message(models.Model):
 		return m
 
 class Note(models.Model):
-	NOTE = 'NO'
-	GLOBAL_NOTE = 'GN'
-	NOTE_CHOICES=(
-		(NOTE, 'Note'),
-		(GLOBAL_NOTE, 'Global Note'),		
-	)
-
 	title = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
 	public = models.BooleanField(default=False)
 	recipient_set = models.ManyToManyField('engine.Player')
-	flag = models.CharField(max_length=3, choices=NOTE_CHOICES)
-
+	isglobal = models.BooleanField()
 
 
 # Import signals

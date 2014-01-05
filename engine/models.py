@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
-from messaging.models import Message
+from messaging.models import Message, Note
 
 class Game(models.Model):
 	city = models.CharField(max_length=50)
@@ -34,12 +34,9 @@ class Game(models.Model):
 		"""
 		Build the message to sent to all the players.
 		"""
-		from engine.helpers import build_message_from_notes
+		notes = Note.objects.filter(isglobal=False,recipient_set=self)
 
-
-		notes = Message.objects.filter(flag=Message.NOTE,recipient_set=self)
-
-		m = build_message_from_notes(
+		m = Message.build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,
 			notes=notes,
 			opening=u"# Résolution du tour %s\n\n" % self.current_turn,
@@ -52,7 +49,7 @@ class Game(models.Model):
 		"""
 		Create a note, to be used later for the resolution message
 		"""
-		m = Message.objects.create(flag=Message.GLOBAL_NOTE, author=None, **kwargs)
+		m = Note.objects.create(isglobal=True, **kwargs)
 		return m
 
 	def __unicode__(self):
@@ -82,9 +79,11 @@ class Player(models.Model):
 		"""
 		Create a note for the player
 		"""
-		m = self.add_message(flag=Message.NOTE, author=None, **kwargs)
+		n = Note.objects.create(isglobal=False, **kwargs)
+		n.save()
+		n.recipient_set.add(self)
 
-		return m
+		return n
 
 	def get_current_orders(self):
 		"""
@@ -122,11 +121,8 @@ class Player(models.Model):
 		"""
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
-
-		from engine.helpers import build_message_from_notes
-
-		notes = Message.objects.filter(flag=Message.NOTE, recipient_set=self)
-		m = build_message_from_notes(
+		notes = Note.objects.filter(isglobal=False, recipient_set=self)
+		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=notes,
 			opening=u"# Résolution du tour %s\n\n" % self.game.current_turn,
