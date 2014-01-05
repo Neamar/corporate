@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 from engine.testcases import EngineTestCase
 from engine.models import Player, Order
-from messaging.models import Message, Note
+from messaging.models import Message
 from website.models import User
 
 
@@ -49,7 +49,7 @@ class ModelTest(EngineTestCase):
 		"""
 		Check add_note on Game
 		"""
-		n = self.g.add_note(title="title", content="something")
+		n = self.g.add_note(category="category", content="something")
 		self.assertTrue(n.is_global)
 
 	def test_game_build_resolution_message(self):
@@ -60,7 +60,7 @@ class ModelTest(EngineTestCase):
 		p2 = Player(game=self.g)
 		p2.save()
 
-		self.g.add_note(title="title", content="something")
+		self.g.add_note(category="category", content="something")
 
 		m = self.g.build_resolution_message()
 		self.assertEqual(m.flag, Message.GLOBAL_RESOLUTION)
@@ -236,7 +236,7 @@ class ModelTest(EngineTestCase):
 		Check add_note on Player
 		"""
 
-		n = self.p.add_note(title="title", content="something")
+		n = self.p.add_note(category="category", content="something")
 		self.assertFalse(n.is_global)
 
 	def test_player_build_resolution_message(self):
@@ -244,9 +244,9 @@ class ModelTest(EngineTestCase):
 		Check build_resolution_message on Player
 		"""
 
-		self.p.add_note(title="title", content="something")
+		self.p.add_note(category="category", content="something")
 
 		m = self.p.build_resolution_message()
 		self.assertEqual(m.flag, Message.RESOLUTION)
-		self.assertEqual(len(m.recipient_set.all()), 1)
+		self.assertEqual(m.recipient_set.count(), 1)
 		self.assertTrue(self.p in m.recipient_set.all())

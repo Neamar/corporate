@@ -38,17 +38,17 @@ class ModelTest(EngineTestCase):
 		Check if the content is built properly
 		"""
 		Note.objects.create(
-			title="T1",
+			category="T1",
 			content="C1",
 			is_global=False
 		)
 		Note.objects.create(
-			title="T2",
+			category="T2",
 			content="C3",
 			is_global=False
 		)
 		Note.objects.create(
-			title="T1",
+			category="T1",
 			content="C2",
 			is_global=False
 		)
@@ -82,7 +82,7 @@ Ending
 		"""
 		# n2 has been removed
 		Note.objects.create(
-			title="T1",
+			category="T1",
 			content="C1",
 			is_global=False
 		)

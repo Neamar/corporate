@@ -26,7 +26,7 @@ class Message(models.Model):
 	def build_message_from_notes(message_type, notes, title, opening="", ending=""):
 		"""
 		Generate from QuerySet notes a message, aggregating by notes titles. Will also remove notes from DB.
-		With notes title T1 and content C1, note T1 C2 and T2 C3 final message will be (markdown):
+		With notes category T1 and content C1, note T1 C2 and T2 C3 final message will be (markdown):
 
 		## T1
 		* C1
@@ -36,15 +36,15 @@ class Message(models.Model):
 		* C3
 		"""
 
-		notes = notes.order_by('title')
+		notes = notes.order_by('category')
 		resolution_message = opening + "\n"
 		last_title = ""
 
 		for note in notes:
-			if note.title != last_title:
-				resolution_message += u"\n## %s\n" % note.title
+			if note.category != last_title:
+				resolution_message += u"\n## %s\n" % note.category
 			resolution_message += u"* %s\n" % note.content
-			last_title = note.title
+			last_title = note.category
 
 		resolution_message += "\n" + ending + "\n"
 
@@ -60,7 +60,7 @@ class Message(models.Model):
 		return m
 
 class Note(models.Model):
-	title = models.CharField(max_length=256)
+	category = models.CharField(max_length=256)
 	content = models.TextField(blank=True)
 	public = models.BooleanField(default=False)
 	recipient_set = models.ManyToManyField('engine.Player')
