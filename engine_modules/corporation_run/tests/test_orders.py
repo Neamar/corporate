@@ -50,6 +50,13 @@ class RunOrdersTest(EngineTestCase):
 		self.po.clean()
 		self.po.save()
 
+		self.po2 = ProtectionOrder(
+			player=self.p,
+			protected_corporation=self.c
+		)
+		self.po2.clean()
+		self.po2.save()
+
 		self.so = SabotageOrder(
 			player=self.p,
 			target_corporation = self.c
@@ -174,3 +181,40 @@ class RunOrdersTest(EngineTestCase):
 		# The line beneath tests two aspects, if it fails, test_multiple datasteals should too
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer1)
 		self.assertEqual(self.reload(self.dso2.stealer_corporation).assets, begin_assets_stealer2 + 1)
+
+	def test_protection_fail_success(self):
+		"""
+		In that case, the Protection fails on the first Offensive Run, but succeeds on the second
+		The first Offensive Run should therefore succeed while the second should fail
+		"""
+
+		begin_assets_stealer = self.dso.stealer_corporation.assets
+		begin_assets_sabotaged = self.so.target_corporation.assets
+
+		self.assertEqual(self.po.get_success_probability(), 0)
+		self.dso.additional_percents=10
+		self.dso.resolve()
+		self.po.additional_percents=10
+		self.po.save()
+		self.so.additional_percents=10
+		self.so.resolve()
+
+		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets_sabotaged)
+
+	def test_protection_ascending_probability(self):
+		"""
+		Test that the Protection Runs are sorted from lowest to highest probability of succes
+		In this case, for testing purposes, the Protection Run with 100 should be
+		the one that succeeds, not the one with 200
+		"""
+
+		self.po.additional_percents=10
+		self.po.save()
+		self.po2.additional_percents=20
+		self.po2.save()
+		self.dso.additional_percents=10
+		self.dso.resolve()
+
+		self.assertEqual(self.reload(self.po).done, True)
+		self.assertEqual(self.reload(self.po2).done, False)

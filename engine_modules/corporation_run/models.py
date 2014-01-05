@@ -15,7 +15,8 @@ class OffensiveRunOrder(RunOrder):
 	target_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve_successful(self):
-		protection = self.target_corporation.protectors.filter(done=False)
+		# The Protection Runs must be tested from smallest to biggest probability of success
+		protection = sorted(self.target_corporation.protectors.filter(done=False), key=lambda po: po.get_success_probability())
 		for po in protection:
 			# Test whether the Protection Run is successful
 			if po.resolve():
