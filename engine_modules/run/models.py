@@ -37,8 +37,6 @@ class RunOrder(Order):
 		self.player.save()
 		
 		if self.is_successful():
-			# added return in order to know whether the Run has succeeded 
-			# important for example for Protection Runs
 			return self.resolve_successful()
 		else:
 			return self.resolve_failure()

@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.core.validators import MaxValueValidator
 
-from engine.models import Order
 from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
 
 class OffensiveRunOrder(RunOrder):
 	"""
-	Model for DataSteal and Sabotage Runs
-	Implements the check for Protection Runs
+	Model for offensive corporation runs.
+
+	Implements the check for Protection Runs.
+
+	Exposes 4 functions to override:
+	* resolve_success: run ok, protection fail
+	* resolve_fail: run fail, protection fail
+	* resolve_interception: run ok, protection ok
+	* resolve_capture: run fail, protection ok
 	"""
 
 	target_corporation = models.ForeignKey(Corporation, related_name="+")
@@ -71,6 +76,7 @@ class OffensiveRunOrder(RunOrder):
 		"""
 		raise NotImplementedError()
 
+
 class DataStealOrder(OffensiveRunOrder):
 	"""
 	Model for DataSteal Runs
@@ -113,7 +119,6 @@ class DataStealOrder(OffensiveRunOrder):
 		return True
 
 	def resolve_fail(self):
-		
 		# Send a note for final message
 		category=u"Run de Datasteal"
 		content=u"Votre équipe a échoué à voler %s pour le compte de %s mais a réussi à s'enfuir" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
@@ -127,7 +132,7 @@ class DataStealOrder(OffensiveRunOrder):
 		
 		# Send a note to the one who ordered the Protection
 		category=u"Run de Protection"
-		content=u"Votre équipe a réussi à protéger %s d'une tentative de DataSteal. L'équipe adverse a cependant réussi à s'enfuir" %(po.protected_corporation)
+		content=u"Votre équipe a réussi à protégé %s d'une tentative de DataSteal. L'équipe adverse a cependant réussi à s'enfuir" %(po.protected_corporation)
 		po.player.add_note(category=category, content=content)
 
 	def resolve_capture(self, po):
@@ -143,6 +148,7 @@ class DataStealOrder(OffensiveRunOrder):
 		
 	def description(self):
 		return u"Envoyer une équipe voler des données de %s pour le compte de %s" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+
 
 class ProtectionOrder(RunOrder):
 	"""
@@ -168,6 +174,7 @@ class ProtectionOrder(RunOrder):
 
 	def description(self):
 		return u"Envoyer une équipe protéger les intérêts de %s" %(self.protected_corporation.base_corporation.name)
+
 
 class SabotageOrder(OffensiveRunOrder):
 	"""
