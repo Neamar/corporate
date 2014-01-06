@@ -36,7 +36,7 @@ class BuildCorporationClassementNoteTask(ResolutionTask):
 		position=1
 		corporations = Corporation.objects.filter(game=game).order_by('-assets')
 		for corporation in corporations:
-			classement+="\n%s- %s : %s  (%s)" % (position, corporation.base_corporation.name,corporation.assets, AssetHistory.objects.get(corporation=corporation,turn=(game.current_turn-1)).assets)
+			classement+="%s- %s : %s  (%+d)\n" % (position, corporation.base_corporation.name,corporation.assets, corporation.assets - AssetHistory.objects.get(corporation=corporation,turn=(game.current_turn-1)).assets)
 			position+=1
 		game.add_note(title="Classement corporatiste", content=classement)
 

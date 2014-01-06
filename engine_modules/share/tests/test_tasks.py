@@ -17,6 +17,7 @@ class TasksTest(EngineTestCase):
 		self.bc3.save()
 
 		super(TasksTest, self).setUp()
+		setattr(self.g,'disable_invisible_hand',True)
 
 		self.last_corporation = self.g.corporation_set.get(base_corporation=self.bc)
 		self.last_corporation.assets -= 3
@@ -60,12 +61,13 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
+		money=self.reload(self.p).money
 		self.g.resolve_current_turn()
 
 		
 
 		# We expect dividend on this share
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets
+		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
@@ -84,11 +86,11 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
+		money=self.reload(self.p).money
 		self.g.resolve_current_turn()
 
-		self.g.resolve_current_turn()
 		# We expect dividend on this share, taking into account the fact that this corporation is the first.
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.first_corporation).assets * DividendTask.FIRST_BONUS
+		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.first_corporation).assets * DividendTask.FIRST_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
@@ -107,11 +109,10 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
-
+		money=self.reload(self.p).money
 		self.g.resolve_current_turn()
 		# We expect dividend on this share, taking into account the fact that this corporation is the last.
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.last_corporation).assets * DividendTask.LAST_BONUS
+		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.last_corporation).assets * DividendTask.LAST_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
@@ -133,10 +134,10 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
-
+		money=self.reload(self.p).money
 		self.g.resolve_current_turn()
 
 		# We expect dividend on this share, taking into account the fact that we are citizen from this corporation
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets * DividendTask.CITIZENSHIP_BONUS
+		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets * DividendTask.CITIZENSHIP_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
