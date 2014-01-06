@@ -36,7 +36,7 @@ class Game(models.Model):
 		"""
 		Build the message to sent to all the players.
 		"""
-		notes = Note.objects.filter(recipient_set=self)
+		notes = Note.objects.filter(recipient_set=self.player_set.all())
 
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
