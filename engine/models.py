@@ -45,8 +45,8 @@ class Game(models.Model):
 
 		m=helper.build_message_from_notes(
 			message_type=Message.GLOBAL_RESOLUTION,
-			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
-			opening=u"### Résolution du tour %s ###\n\n" % self.current_turn,
+			notes=Message.objects.filter(flag=Message.GLOBAL_NOTE,recipient_set=self.player_set.all()),
+			opening=u"### Résolution du tour %s ###\n\n" % self.current_turn,
 			ending='',
 			title="Informations publiques du tour %s" % self.current_turn,
 			recipient_set=self.player_set.all()
