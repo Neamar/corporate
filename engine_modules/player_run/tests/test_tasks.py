@@ -30,4 +30,4 @@ class TaskTest(EngineTestCase):
 
 		m = self.p.message_set.get(flag=Message.ORDER, turn=self.g.current_turn - 1)
 
-		self.assertTrue(m.content in p2.message_set.filter(flag=Message.PRIVATE_MESSAGE)[0].content)
+		self.assertTrue(m.content in p2.message_set.get(flag=Message.PRIVATE_MESSAGE).content)

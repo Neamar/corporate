@@ -30,6 +30,7 @@ class Game(models.Model):
 		# Build resolution messages for each player
 		for player in self.player_set.all():
 			player.build_resolution_message()
+		Note.objects.filter(recipient_set__game=self).delete()
 
 		# Increment current turn and terminate.
 		self.current_turn += 1

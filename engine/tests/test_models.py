@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 from engine.testcases import EngineTestCase
 from engine.models import Player, Order
-from messaging.models import Message
+from messaging.models import Message, Note
 from website.models import User
 
 
@@ -44,6 +44,40 @@ class ModelTest(EngineTestCase):
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.g.current_turn, 2)
+
+	def test_game_resolve_current_turn_build_order_message(self):
+		"""
+		Check resolve_current_turn creates Order messages.
+		"""
+		
+		# sanity check
+		self.assertEqual(0, Message.objects.filter(recipient_set=self.p, flag=Message.ORDER).count())
+		self.g.resolve_current_turn()
+		self.assertEqual(1, Message.objects.filter(recipient_set=self.p, flag=Message.ORDER).count())
+
+	def test_game_resolve_current_turn_build_resolution_message(self):
+		"""
+		Check resolve_current_turn creates Resolution messages.
+		"""
+		
+		# sanity check
+		self.assertEqual(0, Message.objects.filter(recipient_set=self.p, flag=Message.RESOLUTION).count())
+		self.g.resolve_current_turn()
+		self.assertEqual(1, Message.objects.filter(recipient_set=self.p, flag=Message.RESOLUTION).count())
+
+	def test_game_resolve_current_turn_removes_notes(self):
+		"""
+		Check resolve_current_turn creates Resolution messages.
+		"""
+		
+		self.p.add_note(category="catagory", content="private")
+		self.g.add_note(category="catagory", content="private")
+		
+		# sanity check
+		self.assertEqual(2, Note.objects.count())
+
+		self.g.resolve_current_turn()
+		self.assertEqual(0, Note.objects.count())
 
 	def test_game_add_note(self):
 		"""
