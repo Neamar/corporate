@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 
@@ -234,3 +235,42 @@ class ModelTest(EngineTestCase):
 	def test_add_note(self):
 		m = self.p.add_note(title="titre", content="coucou")
 		self.assertEqual(m.flag, Message.NOTE)
+
+	def test_add_global_note(self):
+		m = self.g.add_note(title="titre", content="coucou")
+		self.assertEqual(m.flag, Message.GLOBAL_NOTE)
+
+	def test_player_build_resolution_message(self):
+		"""
+		Check if messages are not misdelivered
+		"""
+		u1=User(username="lol1",email="a@a.fr")
+		u1.save()
+		p1=Player(user=u1,game=self.g)
+		p1.save()
+		u2=User(username="lol2",email="a@b.fr")
+		u2.save()
+		p2=Player(user=u2,game=self.g)
+		p2.save()
+		n1=Message.objects.create(
+			title="T1",
+			content="C1",
+			author=None,
+			flag=Message.NOTE)
+		n1.save()
+		n1.recipient_set.add(p1)
+		n2=Message.objects.create(
+			title="T2",
+			content="C2",
+			author=None,
+			flag=Message.NOTE)
+		n2.save()
+		n2.recipient_set.add(p2)
+		p2.build_resolution_message()
+		#p2_only_receive_one_message
+		self.assertEqual(Message.objects.filter(recipient_set=p2).exclude(flag=Message.NOTE).count(),1)
+		#p2_reveive_message_T2
+		self.assertEqual(Message.objects.filter(recipient_set=p2).exclude(flag=Message.NOTE)[0].content,u"### Résolution du tour 1 ###\n\n\n## T2\n* C2\n")
+		#p1_receive_zero_message
+		self.assertEqual(Message.objects.filter(recipient_set=p1).exclude(flag=Message.NOTE).count(),0)
+	

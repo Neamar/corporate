@@ -133,7 +133,7 @@ class Player(models.Model):
 		m = helper.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=Message.objects.filter(flag=Message.NOTE,recipient_set=self),
-			opening=u"### Résolution du tour %s ###\n\n" % self.game.current_turn,
+			opening=u"### Résolution du tour %s ###\n\n" % self.game.current_turn,
 			ending='',
 			title="Informations personnelles du tour %s" % self.game.current_turn,
 			recipient_set=[self]
