@@ -96,9 +96,9 @@ class DataStealOrder(OffensiveRunOrder):
 		thief = self.target_corporation.thieves.filter(has_succeeded=True)
 		if len(thief) != 0:
 			# Send a note for final message 
-			title=u"Run de Datasteal"
+			category=u"Run de Datasteal"
 			content=u"Votre équipe s'est introduite chez %s mais n'a pas trouvé de donées intéressantes pour %s" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-			self.player.add_note(title=title, content=content)
+			self.player.add_note(category=category, content=content)
 			
 		else:
 			self.has_succeeded = True
@@ -107,39 +107,39 @@ class DataStealOrder(OffensiveRunOrder):
 			self.stealer_corporation.save()
 
 			# Send a note for final message 
-			title=u"Run de Datasteal"
+			category=u"Run de Datasteal"
 			content=u"Votre équipe a réussi à voler des données de %s pour le compte de %s" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-			self.player.add_note(title=title, content=content)
+			self.player.add_note(category=category, content=content)
 		return True
 
 	def resolve_fail(self):
 		
 		# Send a note for final message
-		title=u"Run de Datasteal"
+		category=u"Run de Datasteal"
 		content=u"Votre équipe a échoué à voler %s pour le compte de %s mais a réussi à s'enfuir" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		self.player.add_note(title=title, content=content)
+		self.player.add_note(category=category, content=content)
 
 	def resolve_interception(self, po):
 		# Send a note to the one who ordered the DataSteal
-		title=u"Run de Datasteal"
+		category=u"Run de Datasteal"
 		content=u"Votre équipe a été interceptée lors de la tentative de DataSteal sur %s. Elle a cependant réussi à s'enfuir" %(self.target_corporation.base_corporation.name)
-		self.player.add_note(title=title, content=content)
+		self.player.add_note(category=category, content=content)
 		
 		# Send a note to the one who ordered the Protection
-		title=u"Run de Protection"
+		category=u"Run de Protection"
 		content=u"Votre équipe a réussi à protéger %s d'une tentative de DataSteal. L'équipe adverse a cependant réussi à s'enfuir" %(po.protected_corporation)
-		po.player.add_note(title=title, content=content)
+		po.player.add_note(category=category, content=content)
 
 	def resolve_capture(self, po):
 		# Send a note to the one who ordered the DataSteal
-		title=u"Run de Datasteal"
+		category=u"Run de Datasteal"
 		content=u"Votre équipe a été capturée par une autre lors de la tentative de DataSteal sur %s. Le commanditaire est au courant de vos agissements" %(self.target_corporation.base_corporation.name)
-		self.player.add_note(title=title, content=content)
+		self.player.add_note(category=category, content=content)
 		
 		# Send a note to the one who ordered the Protection
-		title=u"Run de Protection"
+		category=u"Run de Protection"
 		content=u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative de DataSteal sur %s pour le compte de %s. L'équipe adverse a cependant réussi à s'enfuir" %(self.player.name, po.protected_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		po.player.add_note(title=title, content=content)
+		po.player.add_note(category=category, content=content)
 		
 	def description(self):
 		return u"Envoyer une équipe voler des données de %s pour le compte de %s" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
@@ -180,40 +180,40 @@ class SabotageOrder(OffensiveRunOrder):
 		self.target_corporation.save()
 
 		# Send a note for final message 
-		title=u"Run de Sabotage"
+		category=u"Run de Sabotage"
 		content=u"Votre équipe a réussi à saboter les opérations de %s" %(self.target_corporation.base_corporation.name)
-		self.player.add_note(title=title, content=content)
+		self.player.add_note(category=category, content=content)
 
 	def resolve_fail(self):
 		
 		# Send a note for final message 
-		title=u"Run de Sabotage"
+		category=u"Run de Sabotage"
 		content=u"La tentative de votre équipe pour saboter %s a échoué" %(self.target_corporation.base_corporation.name)
-		self.player.add_note(title=title, content=content)
+		self.player.add_note(category=category, content=content)
 
 	def resolve_interception(self, po):
 
 		# Send a note to the one who ordered the DataSteal
-		title=u"Run de Sabotage"
+		category=u"Run de Sabotage"
 		content=u"Votre équipe a été inerceptée par une autre lors de la tentative de Sabotage sur %s. Elle a cependant réussi à s'enfuir" %(self.target_corporation.base_corporation.name)
-		self.player.add_note(title=title, content=content)
+		self.player.add_note(category=category, content=content)
 
 		# Send a note to the one who ordered the Protection
-		title=u"Run de Protection"
+		category=u"Run de Protection"
 		content=u"Votre équipe a réussi à protéger %s d'une tentative de DataSteal. L'équipe adverse a cependant réussi à s'enfuir" %(po.protected_corporation)
-		po.player.add_note(title=title, content=content)
+		po.player.add_note(category=category, content=content)
 	
 	def resolve_capture(self, po):
 
 		# Send a note for final message
-		title=u"Capture"
+		category=u"Capture"
 		content=u"L'équipe que vous aviez envoyée saboter %s a été capturée" %(self.target_corporation.base_corporation.name)
-		self.player.add_note(title=title, content=content)
+		self.player.add_note(category=category, content=content)
 
 		# Send a note to the one who ordered the Protection
-		title=u"Run de Protection"
+		category=u"Run de Protection"
 		content=u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative de Sabotage sur %s. L'équipe adverse a cependant réussi à s'enfuir" %(self.player.name, po.protected_corporation.base_corporation.name)
-		po.player.add_note(title=title, content=content)
+		po.player.add_note(category=category, content=content)
 		
 	def description(self):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s" %(self.target_corporation.base_corporation.name)
