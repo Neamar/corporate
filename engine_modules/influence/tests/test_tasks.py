@@ -3,9 +3,6 @@ from engine_modules.influence.models import BuyInfluenceOrder
 
 
 class TasksTest(EngineTestCase):
-	"""
-	Unit tests for engine models
-	"""
 	def setUp(self):
 		super(TasksTest, self).setUp()
 		self.o = BuyInfluenceOrder(

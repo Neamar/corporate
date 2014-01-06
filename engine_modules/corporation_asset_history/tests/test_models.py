@@ -1,9 +1,9 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation,Corporation
+from engine_modules.corporation.models import BaseCorporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 
 
-class TasksTest(EngineTestCase):
+class ModelsTest(EngineTestCase):
 	"""
 	Unit tests for engine models
 	"""
@@ -15,26 +15,23 @@ class TasksTest(EngineTestCase):
 		self.bc3 = BaseCorporation(name="Ares", description="Ruthless")
 		self.bc3.save()
 
-		super(TasksTest, self).setUp()
+		super(ModelsTest, self).setUp()
 
-		self.last_corporation = self.g.corporation_set.get(base_corporation=self.bc)
-		self.last_corporation.assets -= 3
-		self.last_corporation.save()
-
-		self.medium_corporation = self.g.corporation_set.get(base_corporation=self.bc2)
-		
-		self.first_corporation = self.g.corporation_set.get(base_corporation=self.bc3)
-		self.first_corporation.assets += 3
-		self.first_corporation.save() 
-
-	def test_qty_assets_savings(self):
+	def test_assets_saved_on_init(self):
 		"""
-		The game should have all the corporation assets saved at the end of the turn
+		The game should save the corporation value on start
 		"""
-		nb_corporation=Corporation.objects.filter(game=self.g).count()
-		self.g.current_turn = 1
-		self.g.save()
+		nb_corporation = self.g.corporation_set.count()
+		nb_assets_saved = AssetHistory.objects.count()
+		self.assertEqual(nb_corporation, nb_assets_saved)
+
+
+	def test_assets_saved_on_resolution(self):
+		"""
+		The game should save the corporation value on resolution
+		"""
+		nb_corporation = self.g.corporation_set.count()
 		self.g.resolve_current_turn()
-		nb_corporation_saved=AssetHistory.objects.filter(turn=1).count()
-		self.assertEqual(nb_corporation,nb_corporation_saved)
 
+		nb_assets_saved = AssetHistory.objects.count()
+		self.assertEqual(nb_corporation * 2, nb_assets_saved)
