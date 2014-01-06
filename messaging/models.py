@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Message(models.Model):
 	ORDER = 'ORD'
 	PRIVATE_MESSAGE = 'PM'

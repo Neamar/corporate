@@ -17,18 +17,21 @@ class Game(models.Model):
 		Resolve all orders for this turn, increment current_turn by 1.
 		"""
 
-		# First step: build a message containing order list.
+		# First step: build a message for each player containing order list.
 		for player in self.player_set.all():
 			player.build_order_message()
 
+		# Execute all tasks
 		from engine.modules import tasks_list
 		for task in tasks_list:
 			t = task()
 			t.run(self)
 
+		# Build resolution messages for each player
 		for player in self.player_set.all():
 			player.build_resolution_message()
 
+		# Increment current turn and terminate.
 		self.current_turn += 1
 		self.save()
 
@@ -57,7 +60,7 @@ class Player(models.Model):
 		"""
 		Send a message to the player
 		"""
-		m = Message.objects.create(turn=self.game.current_turn, **kwargs)
+		m = Message(turn=self.game.current_turn, **kwargs)
 		m.save()
 		m.recipient_set.add(self)
 
@@ -67,7 +70,7 @@ class Player(models.Model):
 		"""
 		Create a note for the player
 		"""
-		n = Note.objects.create(turn=self.game.current_turn, **kwargs)
+		n = Note(turn=self.game.current_turn, **kwargs)
 		n.save()
 		n.recipient_set.add(self)
 
