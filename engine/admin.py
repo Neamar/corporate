@@ -1,5 +1,5 @@
 from django.contrib import admin
-from engine.models import Game, Message, Player, Order
+from engine.models import Game, Player, Order
 
 
 class GameAdmin(admin.ModelAdmin):
