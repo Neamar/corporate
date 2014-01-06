@@ -32,22 +32,6 @@ class Game(models.Model):
 		self.current_turn += 1
 		self.save()
 
-	def build_resolution_message(self):
-		"""
-		Build the message to sent to all the players.
-		"""
-		notes = Note.objects.filter(recipient_set=self.player_set.all())
-
-		m = Message.build_message_from_notes(
-			message_type=Message.RESOLUTION,
-			notes=notes,
-			opening=u"# Résolution du tour %s\n\n" % self.current_turn,
-			title="Informations publiques du tour %s" % self.current_turn,
-			turn = self.current_turn
-			)
-		m.recipient_set = self.player_set.all()
-		return m
-
 	def add_note(self, **kwargs):
 		"""
 		Create a note, to be used later for the resolution message

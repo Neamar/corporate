@@ -58,22 +58,6 @@ class ModelTest(EngineTestCase):
 		n = self.g.add_note(category="category", content="something")
 		self.assertEqual(list(n.recipient_set.all()), [self.p, p2])
 
-	def test_game_build_resolution_message(self):
-		"""
-		Check build_resolution_message on Game
-		"""
-
-		p2 = Player(game=self.g)
-		p2.save()
-
-		self.g.add_note(category="category", content="something")
-
-		m = self.g.build_resolution_message()
-		self.assertEqual(m.flag, Message.RESOLUTION)
-		self.assertEqual(m.recipient_set.count(), 2)
-		self.assertTrue(self.p in m.recipient_set.all())
-		self.assertTrue(p2 in m.recipient_set.all())
-
 	def test_order_clean_is_abstract(self):
 		"""
 		Check a raw Order can't be created
