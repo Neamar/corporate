@@ -234,9 +234,29 @@ class ModelTest(EngineTestCase):
 		Check build_resolution_message on Player
 		"""
 
-		self.p.add_note(category="category", content="something")
+		self.p.add_note(category="category", content="private")
 
 		m = self.p.build_resolution_message()
 		self.assertEqual(m.flag, Message.RESOLUTION)
 		self.assertEqual(m.recipient_set.count(), 1)
 		self.assertTrue(self.p in m.recipient_set.all())
+		self.assertTrue("private" in m.content)
+
+
+	def test_player_build_resolution_message_mutliple_recipients(self):
+		"""
+		Check build_resolution_message on Player, with multiple recipients.
+		"""
+		p2 = Player(game=self.g)
+		p2.save()
+
+		self.g.add_note(category="category", content="public")
+		self.p.add_note(category="category", content="private")
+
+		m = self.p.build_resolution_message()
+		self.assertTrue("public" in m.content)
+		self.assertTrue("private" in m.content)
+
+		m2 = p2.build_resolution_message()
+		self.assertTrue("public" in m2.content)
+		self.assertTrue("private" not in m2.content)

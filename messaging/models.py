@@ -54,9 +54,6 @@ class Message(models.Model):
 			turn=turn
 		)
 
-		# Remove notes once consumed
-		notes.delete()
-
 		return m
 
 

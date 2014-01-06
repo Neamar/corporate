@@ -76,23 +76,3 @@ class ModelTest(EngineTestCase):
 Ending
 """
 		self.assertEquals(m.content, expected)
-
-	def test_notes_removed(self):
-		"""
-		Notes should be removed after aggregation
-		"""
-		# n2 has been removed
-		Note.objects.create(
-			category="T1",
-			content="C1",
-			turn=self.g.current_turn
-		)
-
-		Message.build_message_from_notes(
-			message_type=Message.RESOLUTION,
-			notes=Note.objects.all(),
-			title="test",
-			turn=self.g.current_turn
-		)
-
-		self.assertEqual(Note.objects.all().count(), 0)		
