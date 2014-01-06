@@ -6,14 +6,12 @@ class Message(models.Model):
 	ORDER = 'ORD'
 	PRIVATE_MESSAGE = 'PM'
 	RESOLUTION = 'RE'
-	GLOBAL_RESOLUTION = 'GRE'
 
 
 	MESSAGE_CHOICES = (
 		(ORDER, 'Order'),
 		(PRIVATE_MESSAGE, 'Private Message'),
 		(RESOLUTION, 'Resolution'),
-		(GLOBAL_RESOLUTION, 'Global Resolution'),
 	)
 
 	title = models.CharField(max_length=256)
