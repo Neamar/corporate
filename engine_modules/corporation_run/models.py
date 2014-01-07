@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.core.validators import MaxValueValidator
 
-from engine.models import Order
 from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
 
@@ -31,8 +29,15 @@ sabotage_messages = 	{'success'	: u"Votre équipe a réussi à saboter les opér
 
 class OffensiveRunOrder(RunOrder):
 	"""
-	Model for DataSteal and Sabotage Runs
-	Implements the check for Protection Runs
+	Model for offensive corporation runs.
+
+	Implements the check for Protection Runs.
+
+	Exposes 4 functions to override:
+	* resolve_success: run ok, protection fail
+	* resolve_fail: run fail, protection fail
+	* resolve_interception: run ok, protection ok
+	* resolve_capture: run fail, protection ok
 	"""
 
 	target_corporation = models.ForeignKey(Corporation, related_name="+")
@@ -101,6 +106,7 @@ class OffensiveRunOrder(RunOrder):
 		It must be overriden
 		"""
 		raise NotImplementedError()
+
 
 class DataStealOrder(OffensiveRunOrder):
 	"""
@@ -198,6 +204,7 @@ class DefensiveRunOrder(RunOrder):
 			return False
 
 class ProtectionOrder(DefensiveRunOrder):
+
 	"""
 	Model for Protection Runs
 	"""
@@ -220,6 +227,7 @@ class ProtectionOrder(DefensiveRunOrder):
 
 	def description(self):
 		return u"Envoyer une équipe protéger les intérêts de %s" %(self.protected_corporation.base_corporation.name)
+
 
 class SabotageOrder(OffensiveRunOrder):
 	"""
