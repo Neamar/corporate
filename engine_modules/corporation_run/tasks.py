@@ -16,9 +16,9 @@ class OffensiveRunTask(OrderResolutionTask):
 		# Mix DataSteals and Sabotages
 		shuffle(orders)
 		# Offensive Runs should be resolved in decreasing order of success probability
-		orders = sorted(orders, key=lambda order: -order.get_success_probability())
+		orders = sorted(orders, key=lambda order: order.get_success_probability(), reverse=True)
 
 		for order in orders:
-			order.resolve
+			order.resolve()
 
 tasks = (OffensiveRunTask, )

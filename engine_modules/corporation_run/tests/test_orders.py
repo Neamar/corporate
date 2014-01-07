@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
-from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder
 from engine.exceptions import OrderNotAvailable
+from messaging.models import Note
 from engine_modules.corporation.models import BaseCorporation, Corporation
-from engine_modules.corporation_run.tasks import OffensiveRunTask
+from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, datasteal_messages, sabotage_messages
+
+DEBUG = False
 
 class RunOrdersTest(EngineTestCase):
 	def setUp(self):
@@ -68,23 +71,30 @@ class RunOrdersTest(EngineTestCase):
 		self.p.money = 100000
 		self.p.save()
 
-		self.t = OffensiveRunTask()
-
 	def test_datasteal_success(self):
 		"""
 		Datasteal benefits the stealer 1 asset without costing the stolen
-		"""
-
+		"""	
+		
+		if DEBUG : print "-"*90+"\n\ttest_datasteal_success"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
 		self.dso.additional_percents=10
+		self.dso.save()
+		self.assertEqual(self.dso.get_success_probability(), 100)
 		self.dso.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)		
 
+		notes = self.dso.player.note_set.filter(category=u"Run de Datasteal", turn=self.g.current_turn)
+		self.assertEqual(len(notes), 1)
+		expected_message = datasteal_messages['success'].format(self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
+		self.assertEqual(notes[0].content, expected_message)
+
 	def test_datasteal_failure(self):
 
+		if DEBUG : print "-"*90+"\n\ttest_datasteal_failure"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
@@ -93,30 +103,68 @@ class RunOrdersTest(EngineTestCase):
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)		
 
-	def test_sabotage_success(self):
-		"""
-		Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
-		"""
+		notes = self.dso.player.note_set.filter(category=u"Run de Datasteal", turn=self.g.current_turn)
+		self.assertEqual(len(notes), 1)
+		expected_message = datasteal_messages['fail'].format(self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
+		self.assertEqual(notes[0].content, expected_message)
 
-		begin_assets = self.so.target_corporation.assets
+	def test_datasteal_interception(self):
+		
+		if DEBUG : print "-"*90+"\n\ttest_datasteal_interception"
+		begin_assets_stealer = self.dso.stealer_corporation.assets
+		begin_assets_stolen = self.dso.target_corporation.assets
 
-		self.so.additional_percents=10
-		self.so.resolve()
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets - 2)
+		self.po.additional_percents=10
+		self.po.save()
+		self.assertEqual(self.po.get_success_probability(), 100)
+		self.dso.additional_percents=10
+		self.dso.resolve()
 
-	def test_sabotage_failure(self):
+		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
+		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)		
+		
+		aggressor_notes = self.dso.player.note_set.filter(category=u"Run de Datasteal", turn=self.g.current_turn)
+		self.assertEqual(len(aggressor_notes), 1)
+		expected_message = datasteal_messages['interception']['aggressor'].format(self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
+		self.assertEqual(aggressor_notes[0].content, expected_message)
 
-		begin_assets = self.so.target_corporation.assets
+		protector_notes = self.po.player.note_set.filter(category=u"Run de Protection", turn=self.g.current_turn)
+		self.assertEqual(len(protector_notes), 1)
+		expected_message = datasteal_messages['interception']['protector'].format(self.dso.target_corporation.base_corporation.name)
+		self.assertEqual(protector_notes[0].content, expected_message)
 
-		self.assertEqual(self.so.get_success_probability(), 0)
-		self.so.resolve()
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
+	def test_datasteal_capture(self):
+		
+		if DEBUG : print "-"*90+"\n\ttest_datasteal_capture"
+		begin_assets_stealer = self.dso.stealer_corporation.assets
+		begin_assets_stolen = self.dso.target_corporation.assets
+
+		self.po.additional_percents=10
+		self.po.save()
+		self.assertEqual(self.po.get_success_probability(), 100)
+		self.dso.additional_percents=00
+		self.dso.resolve()
+
+		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
+		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)		
+		
+		aggressor_notes = self.dso.player.note_set.filter(category=u"Run de Datasteal", turn=self.g.current_turn)
+		self.assertEqual(len(aggressor_notes), 1)
+		expected_message = datasteal_messages['capture']['aggressor'].format(self.dso.target_corporation.base_corporation.name)
+		self.assertTrue(aggressor_notes[0].content, expected_message)
+
+		protector_notes = self.po.player.note_set.filter(category=u"Run de Protection", turn=self.g.current_turn)
+		self.assertEqual(len(protector_notes), 1)
+		expected_message = datasteal_messages['capture']['protector'].format(self.dso.player.name, self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
+		self.assertEqual(protector_notes[0].content, expected_message)
 
 	def test_multiple_datasteal(self):
 		"""
 		Only the first successful DataSteal on a same corporation can benefit someone
 		The others succeed, but the clients do not profit from them
 		"""
+
+		if DEBUG : print "-"*90+"\n\ttest_multipledatasteal"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
@@ -127,15 +175,102 @@ class RunOrdersTest(EngineTestCase):
 		self.dso2.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
 	
+		notes = self.reload(self.dso.player).note_set.filter(category=u"Run de Datasteal", turn=self.g.current_turn)
+		self.assertEqual(len(notes), 2)
+		expected_message = datasteal_messages['late'].format(self.dso2.target_corporation.base_corporation.name, self.dso2.stealer_corporation.base_corporation.name)
+		self.assertTrue(notes[0].content==expected_message or notes[1].content==expected_message)
+
+		expected_message = datasteal_messages['success'].format(self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
+		self.assertTrue(notes[0].content==expected_message or notes[1].content==expected_message)
+	def test_sabotage_success(self):
+		"""
+		Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
+		"""
+
+		if DEBUG : print "-"*90+"\n\ttest_sabotage_success"
+		begin_assets = self.so.target_corporation.assets
+
+		self.so.additional_percents=10
+		self.so.resolve()
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets - 2)
+
+		notes = self.so.player.note_set.filter(category=u"Run de Sabotage", turn=self.g.current_turn)
+		self.assertEqual(len(notes), 1)
+		expected_message = sabotage_messages['success'].format(self.so.target_corporation.base_corporation.name)
+		self.assertEqual(notes[0].content, expected_message)
+
+	def test_sabotage_failure(self):
+
+		if DEBUG : print "-"*90+"\n\ttest_sabotage_failure"
+		begin_assets = self.so.target_corporation.assets
+
+		self.assertEqual(self.so.get_success_probability(), 0)
+		self.so.resolve()
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
+
+		notes = self.so.player.note_set.filter(category=u"Run de Sabotage", turn=self.g.current_turn)
+		self.assertEqual(len(notes), 1)
+		expected_message = sabotage_messages['fail'].format(self.so.target_corporation.base_corporation.name)
+		self.assertEqual(notes[0].content, expected_message)
+
+	def test_sabotage_interception(self):
+		
+		if DEBUG : print "-"*90+"\n\ttest_sabotage_interception"
+		begin_assets = self.dso.target_corporation.assets
+
+		self.po.additional_percents=10
+		self.po.save()
+		self.assertEqual(self.po.get_success_probability(), 100)
+		self.so.additional_percents=10
+		self.so.resolve()
+
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)		
+		
+		aggressor_notes = self.so.player.note_set.filter(category=u"Run de Sabotage", turn=self.g.current_turn)
+		self.assertEqual(len(aggressor_notes), 1)
+		expected_message = sabotage_messages['interception']['aggressor'].format(self.so.target_corporation.base_corporation.name)
+		self.assertEqual(aggressor_notes[0].content, expected_message)
+
+		protector_notes = self.po.player.note_set.filter(category=u"Run de Protection", turn=self.g.current_turn)
+		self.assertEqual(len(protector_notes), 1)
+		expected_message = sabotage_messages['interception']['protector'].format(self.so.target_corporation.base_corporation.name)
+		self.assertEqual(protector_notes[0].content, expected_message)
+
+	def test_sabotage_capture(self):
+		
+		if DEBUG : print "-"*90+"\n\ttest_sabotage_capture"
+		begin_assets = self.so.target_corporation.assets
+
+		self.po.additional_percents=10
+		self.po.save()
+		self.assertEqual(self.po.get_success_probability(), 100)
+		self.so.additional_percents=00
+		self.so.save()
+		self.assertEqual(self.so.get_success_probability(), 0)
+		self.so.resolve()
+
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)		
+		aggressor_notes = self.reload(self.so.player).note_set.filter(category=u"Run de Sabotage", turn=self.g.current_turn)
+		self.assertEqual(len(aggressor_notes), 1)
+		expected_message = sabotage_messages['capture']['aggressor'].format(self.so.target_corporation.base_corporation.name)
+		self.assertEqual(aggressor_notes[0].content, expected_message)
+
+		protector_notes = self.reload(self.po.player).note_set.filter(category=u"Run de Protection", turn=self.g.current_turn)
+		self.assertEqual(len(protector_notes), 1)
+		expected_message = sabotage_messages['capture']['protector'].format(self.so.player.name, self.so.target_corporation.base_corporation.name)
+		self.assertEqual(protector_notes[0].content, expected_message)
+
 	def test_so_po(self):
 		"""
 		Test that the Protection cancels the Sabotage
 		"""
 
+		if DEBUG : print "-"*90+"\n\ttest_so_po"
 		begin_assets = self.so.target_corporation.assets
 
 		self.po.additional_percents=10
 		self.po.save()
+		self.assertEqual(self.po.get_success_probability(), 100)
 		self.so.additional_percents=10
 		self.so.save()
 		self.assertEqual(self.so.get_success_probability(), 100)
@@ -148,15 +283,21 @@ class RunOrdersTest(EngineTestCase):
 		"""
 		Test that the Protection only cancels one Sabotage
 		"""
+		if DEBUG : print "-"*90+"\n\ttest_so_po_so"
 
 		begin_assets = self.so.target_corporation.assets
 
 		self.po.additional_percents=10
 		self.po.save()
+		self.assertEqual(self.po.get_success_probability(), 100)
 		self.so.additional_percents=10
+		self.so.save()
+		self.assertEqual(self.so.get_success_probability(), 100)
 		self.so.resolve()
 		self.so.clean()
 		self.so.additional_percents=10
+		self.so.save()
+		self.assertEqual(self.so.get_success_probability(), 100)
 		self.so.resolve()
 		self.so.clean()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets - 2)
@@ -167,18 +308,26 @@ class RunOrdersTest(EngineTestCase):
 		should succeed and benefit the client while the third succeeds without benefits
 		"""
 
+		if DEBUG : print "-"*90+"\n\ttest_dso_po_dso_dso"
 		begin_assets_stealer1 = self.dso.stealer_corporation.assets
 		begin_assets_stealer2 = self.dso2.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
 		self.po.additional_percents=10
 		self.po.save()
+		self.assertEqual(self.po.get_success_probability(), 100)
 		self.dso.additional_percents=10
+		self.dso.save()
+		self.assertEqual(self.dso.get_success_probability(), 100)
 		self.dso.resolve()
 		self.dso2.additional_percents=10
+		self.dso2.save()
+		self.assertEqual(self.dso2.get_success_probability(), 100)
 		self.dso2.resolve()
 		self.dso.clean()
 		self.dso.additional_percents=10
+		self.dso.save()
+		self.assertEqual(self.dso.get_success_probability(), 100)
 		self.dso.resolve()
 
 		# This test was failing because the multiple dso limit was not yet implemented
@@ -192,53 +341,46 @@ class RunOrdersTest(EngineTestCase):
 		The first Offensive Run should therefore succeed while the second should fail
 		"""
 
+		if DEBUG : print "-"*90+"\n\ttest_protection_fail_success"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_sabotaged = self.so.target_corporation.assets
 
 		self.assertEqual(self.po.get_success_probability(), 0)
 		self.dso.additional_percents=10
+		self.dso.save()
+		self.assertEqual(self.dso.get_success_probability(), 100)
 		self.dso.resolve()
 		self.po.additional_percents=10
+		self.assertEqual(self.po.get_success_probability(), 100)
 		self.po.save()
+		self.assertEqual(self.po.get_success_probability(), 100)
 		self.so.additional_percents=10
+		self.so.save()
+		self.assertEqual(self.so.get_success_probability(), 100)
 		self.so.resolve()
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets_sabotaged)
 
-	def test_protection_ascending_probability(self):
+	def test_protection_descending_probability(self):
 		"""
-		Test that Protection Runs are resolved from lowest to highest success probability
-		In this case, for testing purposes, the Protection Run with 100 should be
-		the one that succeeds, not the one with 200
+		Test that Protection Runs are resolved from highest to lowest success probability
+		In this case, for testing purposes, the Protection Run with 200 should be
+		the one that succeeds, not the one with 100
 		"""
 
+		if DEBUG : print "-"*90+"\n\ttest_protection_descending_probability"
 		self.po.additional_percents=10
 		self.po.save()
+		self.assertEqual(self.po.get_success_probability(), 100)
 		self.po2.additional_percents=20
 		self.po2.save()
+		self.assertEqual(self.po2.get_success_probability(), 200)
 		self.dso.additional_percents=10
+		self.dso.save()
+		self.assertEqual(self.dso.get_success_probability(), 100)
 		self.dso.resolve()
 
-		self.assertEqual(self.reload(self.po).done, True)
-		self.assertEqual(self.reload(self.po2).done, False)
+		self.assertEqual(self.reload(self.po).done, False)
+		self.assertEqual(self.reload(self.po2).done, True)
 
-	def test_offensive_runs_descending_probability(self):
-		"""
-		Test that Offensive Runs are resolved from highest to lowest success probability
-		In this case, the Datasteal with 200 should be the one that fails (because of 
-		the Protection) and the Sabotage with 100 should succeed
-		"""
-
-		begin_stealer_assets = self.dso.stealer_corporation.assets
-		begin_sabotaged_assets = self.so.target_corporation.assets
-
-		self.po.additional_percents=10
-		self.po.save()
-		self.dso.additional_percents=20
-		self.dso.save()
-		self.so.additional_percents=10
-
-		self.assertEqual(self.dso2.get_success_probability(), 0)
-		self.assertEqual(self.po2.get_success_probability(), 0)
-		self.t.run(self.g)

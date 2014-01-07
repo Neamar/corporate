@@ -30,18 +30,17 @@ class RunOrder(Order):
 		"""
 		Return true if the run is is_successful (random call)
 		"""
-		return randint(0, 100) < self.get_success_probability()
+		success = randint(1, 100) <= self.get_success_probability()
+		return success
 
 	def resolve(self):
 		self.player.money -= self.get_cost()
 		self.player.save()
 		
 		if self.is_successful():
-			# added return in order to know whether the Run has succeeded 
-			# important for example for Protection Runs
-			return self.resolve_successful()
+			self.resolve_successful()
 		else:
-			return self.resolve_failure()
+			self.resolve_failure()
 
 	def resolve_successful(self):
 		"""
