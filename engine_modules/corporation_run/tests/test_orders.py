@@ -36,26 +36,12 @@ class RunOrdersTest(EngineTestCase):
 		self.dso.clean()
 		self.dso.save()
 
-		self.dso2 = DataStealOrder(
-			stealer_corporation=self.c3,
-			player=self.p,
-			target_corporation=self.c
-		)
-		self.dso2.save()
-
 		self.po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c
 		)
 		self.po.clean()
 		self.po.save()
-
-		self.po2 = ProtectionOrder(
-			player=self.p,
-			protected_corporation=self.c
-		)
-		self.po2.clean()
-		self.po2.save()
 
 		self.so = SabotageOrder(
 			player=self.p,
@@ -162,6 +148,15 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		"""
 
 		if DEBUG : print "-"*90+"\n\ttest_multipledatasteal"
+
+		dso2 = DataStealOrder(
+			stealer_corporation=self.c3,
+			player=self.p,
+			target_corporation=self.c
+		)
+		dso2.save()
+
+
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
@@ -175,14 +170,14 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		self.assertEqual(note.content, expected_message)
 
 		# Resolve (and fail) second datasteal
-		self.dso2.additional_percents = 10
-		self.dso2.resolve()
+		dso2.additional_percents = 10
+		dso2.resolve()
 		
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
 	
 		note = self.dso.player.note_set.exclude(pk=note.pk).get(category=u"Run de Datasteal", turn=self.g.current_turn)
-		expected_message = datasteal_messages['late'].format(self.dso2.target_corporation.base_corporation.name, self.dso2.stealer_corporation.base_corporation.name)
+		expected_message = datasteal_messages['late'].format(dso2.target_corporation.base_corporation.name, dso2.stealer_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
 	def test_sabotage_success(self):
@@ -295,14 +290,21 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		"""
 
 		if DEBUG : print "-"*90+"\n\ttest_protection_descending_probability"
+
+
+		po2 = ProtectionOrder(
+			player=self.p,
+			protected_corporation=self.c,
+			additional_percents=20
+		)
+		po2.save()
+
 		self.po.additional_percents = 10
 		self.po.save()
-		self.po2.additional_percents = 20
-		self.po2.save()
 		self.dso.additional_percents=10
 		self.dso.save()
 		self.dso.resolve()
 
 		self.assertEqual(self.reload(self.po).done, False)
-		self.assertEqual(self.reload(self.po2).done, True)
+		self.assertEqual(self.reload(po2).done, True)
 
