@@ -20,6 +20,9 @@ class Message(models.Model):
 	flag = models.CharField(max_length=3, choices=MESSAGE_CHOICES)
 	turn = models.PositiveSmallIntegerField()
 
+	def __unicode__(self):
+		return "%s (%s-%s)" % (self.title, self.flag, self.turn)
+
 	@staticmethod
 	def build_message_from_notes(message_type, notes, title, turn, opening="", ending=""):
 		"""
@@ -63,6 +66,8 @@ class Note(models.Model):
 	recipient_set = models.ManyToManyField('engine.Player')
 	turn = models.PositiveSmallIntegerField()
 
+	def __unicode__(self):
+		return "%s (%s)" % (self.category, self.turn)
 
 
 # Import signals

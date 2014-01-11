@@ -40,9 +40,9 @@ class Game(models.Model):
 		"""
 		Create a note, to be used later for the resolution message
 		"""
-		m = Note.objects.create(turn = self.current_turn,**kwargs)
-		m.recipient_set = self.player_set.all()
-		return m
+		n = Note.objects.create(turn = self.current_turn, **kwargs)
+		n.recipient_set = self.player_set.all()
+		return n
 
 	def __unicode__(self):
 		return "Corporate Game: %s" % self.city
@@ -122,7 +122,7 @@ class Player(models.Model):
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=notes,
-			opening=u"# Résolution du tour %s\n\n" % self.game.current_turn,
+			opening=u"# Résolution du tour %s\n" % self.game.current_turn,
 			title="Informations personnelles du tour %s" % self.game.current_turn,
 			turn=self.game.current_turn
 		)

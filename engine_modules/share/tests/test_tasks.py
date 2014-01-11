@@ -14,6 +14,7 @@ class TasksTest(EngineTestCase):
 		self.bc3.save()
 
 		super(TasksTest, self).setUp()
+		setattr(self.g,'disable_invisible_hand',True)
 
 		self.last_corporation = self.g.corporation_set.get(base_corporation=self.bc)
 		self.last_corporation.assets -= 3
@@ -48,19 +49,17 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get dividend for previous shares
 		"""
-		# We have one share
 		self.s = Share(
 			player=self.p,
 			corporation=self.medium_corporation
 		)
 		self.s.save()
-		self.g.current_turn = 5
-		self.g.save()
 
+		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
 
 		# We expect dividend on this share
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets
+		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
@@ -68,19 +67,17 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get dividend for previous shares, with bonus if corporation is first
 		"""
-		# We have one share
 		self.s = Share(
 			player=self.p,
 			corporation=self.first_corporation
 		)
 		self.s.save()
 
-		self.g.current_turn = 5
-		self.g.save()
-
+		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
+
 		# We expect dividend on this share, taking into account the fact that this corporation is the first.
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.first_corporation).assets * DividendTask.FIRST_BONUS
+		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.first_corporation).assets * DividendTask.FIRST_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
@@ -89,19 +86,17 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get dividend for previous shares, with malus if corporation is last
 		"""
-		# We have one share
 		self.s = Share(
 			player=self.p,
 			corporation=self.last_corporation
 		)
 		self.s.save()
 
-		self.g.current_turn = 5
-		self.g.save()
+		money = self.reload(self.p).money
 
 		self.g.resolve_current_turn()
 		# We expect dividend on this share, taking into account the fact that this corporation is the last.
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.last_corporation).assets * DividendTask.LAST_BONUS
+		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.last_corporation).assets * DividendTask.LAST_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
@@ -109,7 +104,6 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get more dividend for being a citizen of the corporation
 		"""
-		# We have one share
 		self.s = Share(
 			player=self.p,
 			corporation=self.medium_corporation
@@ -117,13 +111,31 @@ class TasksTest(EngineTestCase):
 		self.s.save()
 		self.p.citizenship.corporation = self.medium_corporation
 		self.p.citizenship.save()
-
-		self.g.current_turn = 5
-		self.g.save()
-
+		
+		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
 
 		# We expect dividend on this share, taking into account the fact that we are citizen from this corporation
-		expected = self.initial_money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets * DividendTask.CITIZENSHIP_BONUS
+		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets * DividendTask.CITIZENSHIP_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
+
+	def test_no_immediate_dividend_after_turn_2(self):
+		"""
+		The player should not get dividends for shares he just bought after turn 2.
+		"""
+
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+
+		self.s = Share(
+			player=self.p,
+			corporation=self.medium_corporation
+		)
+		self.s.save()
+
+		money = self.reload(self.p).money
+		self.g.resolve_current_turn()
+
+		# No dividends
+		self.assertEqual(self.reload(self.p).money, money)
