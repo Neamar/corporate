@@ -120,7 +120,7 @@ class TasksTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
-	def test_no_immediate_ividiend_after_turn_2(self):
+	def test_no_immediate_dividend_after_turn_2(self):
 		"""
 		The player should not get dividends for shares he just bought after turn 2.
 		"""
