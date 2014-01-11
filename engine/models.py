@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
-
+from messaging.models import Message, Note
 
 class Game(models.Model):
 	city = models.CharField(max_length=50)
@@ -17,48 +17,31 @@ class Game(models.Model):
 		Resolve all orders for this turn, increment current_turn by 1.
 		"""
 
-		# First step: build a message containing order list.
+		# First step: build a message for each player containing order list.
 		for player in self.player_set.all():
 			player.build_order_message()
 
+		# Execute all tasks
 		from engine.modules import tasks_list
 		for task in tasks_list:
 			t = task()
 			t.run(self)
 
-		# Send the private resolution message to each players
-		players=Player.objects.filter(game=self)
-		for player in players:
+		# Build resolution messages for each player
+		for player in self.player_set.all():
 			player.build_resolution_message()
+		Note.objects.filter(recipient_set__game=self).delete()
 
-		#Sent the general message to all the players
-		self.build_resolution_message()
-
+		# Increment current turn and terminate.
 		self.current_turn += 1
 		self.save()
-
-	def build_resolution_message(self):
-		"""
-		Build the message to sent to all the players.
-		"""
-		from engine.helpers import build_message_from_notes
-
-		notes = Message.objects.filter(flag=Message.GLOBAL_NOTE, recipient_set=self.player_set.all())
-
-		m = build_message_from_notes(
-			message_type=Message.GLOBAL_RESOLUTION,
-			notes=notes,
-			opening=u"### Résolution du tour %s ###\n" % self.current_turn,
-			title="Informations publiques du tour %s" % self.current_turn,
-			)
-		m.recipient_set = self.player_set.all()
-		return m
 
 	def add_note(self, **kwargs):
 		"""
 		Create a note, to be used later for the resolution message
 		"""
-		m = Message.objects.create(flag=Message.GLOBAL_NOTE, author=None, **kwargs)
+		m = Note.objects.create(turn = self.current_turn,**kwargs)
+		m.recipient_set = self.player_set.all()
 		return m
 
 	def __unicode__(self):
@@ -78,7 +61,7 @@ class Player(models.Model):
 		"""
 		Send a message to the player
 		"""
-		m = Message.objects.create(**kwargs)
+		m = Message(turn=self.game.current_turn, **kwargs)
 		m.save()
 		m.recipient_set.add(self)
 
@@ -88,9 +71,11 @@ class Player(models.Model):
 		"""
 		Create a note for the player
 		"""
-		m = self.add_message(flag=Message.NOTE, author=None, **kwargs)
+		n = Note(turn=self.game.current_turn, **kwargs)
+		n.save()
+		n.recipient_set.add(self)
 
-		return m
+		return n
 
 	def get_current_orders(self):
 		"""
@@ -112,62 +97,40 @@ class Player(models.Model):
 		message = "# Ordres de %s pour le tour %s\n\n" % (self.name, self.game.current_turn)
 		for order in orders:
 			# Retrieve associated order:
-			details = getattr(order, order.type.lower())
+			try:
+				details = getattr(order, order.type.lower())
+			except AttributeError:
+				# TODO : CHANGE DAT SHIT
+				details = getattr(order.runorder, order.type.lower())
+
 			message += "* %s\n" % details.description()
 
 		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
 
 		return self.add_message(
-			title="Ordres pour le tour %s" % self.game.current_turn,
+			title="Ordres du tour",
 			content=message,
 			author=None,
-			flag=Message.ORDER
+			flag=Message.ORDER,
 		)
 
 	def build_resolution_message(self):
 		"""
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
-
-		from engine.helpers import build_message_from_notes
-
-		notes = Message.objects.filter(flag=Message.NOTE, recipient_set=self)
-		m = build_message_from_notes(
+		notes = Note.objects.filter(recipient_set=self, turn=self.game.current_turn)
+		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=notes,
 			opening=u"### Résolution du tour %s ###\n" % self.game.current_turn,
 			title="Informations personnelles du tour %s" % self.game.current_turn,
+			turn=self.game.current_turn
 		)
 		m.recipient_set.add(self)
 		return m
 
 	def __unicode__(self):
 		return self.name
-
-
-class Message(models.Model):
-	ORDER = 'ORD'
-	PRIVATE_MESSAGE = 'PM'
-	RESOLUTION = 'RE'
-	GLOBAL_RESOLUTION = 'GRE'
-	NOTE = 'NO'
-	GLOBAL_NOTE = 'GN'
-
-	MESSAGE_CHOICES = (
-		(ORDER, 'Order'),
-		(PRIVATE_MESSAGE, 'Private Message'),
-		(RESOLUTION, 'Resolution'),
-		(GLOBAL_RESOLUTION, 'Global Resolution'),
-		(NOTE, 'Note'),
-		(GLOBAL_NOTE, 'Global Note'),
-	)
-
-	title = models.CharField(max_length=256)
-	content = models.TextField(blank=True)
-	author = models.ForeignKey(Player, null=True, related_name="+")
-	public = models.BooleanField(default=False)
-	recipient_set = models.ManyToManyField('Player')
-	flag = models.CharField(max_length=3, choices=MESSAGE_CHOICES)
 
 
 class Order(models.Model):
@@ -213,6 +176,7 @@ class Order(models.Model):
 		Should return a full description of the order
 		"""
 		raise NotImplementedError("Abstract call.")
+
 
 # Import datas for all engine_modules
 from engine.modules import *

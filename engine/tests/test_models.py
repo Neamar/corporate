@@ -3,7 +3,8 @@ from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 
 from engine.testcases import EngineTestCase
-from engine.models import Game, Player, Message, Order
+from engine.models import Player, Order
+from messaging.models import Message, Note
 from website.models import User
 
 
@@ -45,28 +46,58 @@ class ModelTest(EngineTestCase):
 
 		self.assertEqual(self.g.current_turn, 2)
 
-	def test_game_add_note(self):
+	def test_game_resolve_current_turn_build_order_message(self):
 		"""
-		Check add_note on Game
+		Check resolve_current_turn creates Order messages.
 		"""
-		m = self.g.add_note(title="title", content="something")
-		self.assertEqual(m.flag, Message.GLOBAL_NOTE)
+		
+		# sanity check
+		self.assertEqual(0, Message.objects.filter(recipient_set=self.p, flag=Message.ORDER).count())
+		self.g.resolve_current_turn()
+		self.assertEqual(1, Message.objects.filter(recipient_set=self.p, flag=Message.ORDER).count())
 
-	def test_game_build_resolution_message(self):
+	def test_game_resolve_current_turn_build_resolution_message(self):
 		"""
-		Check build_resolution_message on Game
+		Check resolve_current_turn creates Resolution messages.
 		"""
+		
+		# sanity check
+		self.assertEqual(0, Message.objects.filter(recipient_set=self.p, flag=Message.RESOLUTION).count())
+		self.g.resolve_current_turn()
+		self.assertEqual(1, Message.objects.filter(recipient_set=self.p, flag=Message.RESOLUTION).count())
 
-		p2 = Player(game=self.g)
-		p2.save()
+	def test_game_resolve_current_turn_removes_notes(self):
+		"""
+		Check resolve_current_turn creates Resolution messages.
+		"""
+		
+		self.p.add_note(category="catagory", content="private")
+		self.g.add_note(category="catagory", content="private")
+		
+		# sanity check
+		self.assertEqual(2, Note.objects.count())
 
-		self.g.add_note(title="title", content="something")
+		self.g.resolve_current_turn()
+		self.assertEqual(0, Note.objects.count())
 
 		m = self.g.build_resolution_message()
 		self.assertEqual(m.flag, Message.GLOBAL_RESOLUTION)
 		self.assertEqual(m.recipient_set.count(), 2)
 		self.assertTrue(self.p in m.recipient_set.all())
 		self.assertTrue(p2 in m.recipient_set.all())
+
+	def test_game_add_note(self):
+		"""
+		Check add_note on Game
+		"""
+		u = User(username="haha", email="azre@fer.fr")
+		u.save()
+
+		p2 = Player(user=u, game=self.g, name="hahaha")
+		p2.save()
+
+		n = self.g.add_note(category="category", content="something")
+		self.assertEqual(list(n.recipient_set.all()), [self.p, p2])
 
 	def test_order_clean_is_abstract(self):
 		"""
@@ -179,30 +210,6 @@ class ModelTest(EngineTestCase):
 		)
 		# But you can't stack them
 		self.assertRaises(ValidationError, o2.clean)
-
-	def test_message_author_game_equals_player_game(self):
-		"""
-		Check if author's game = player's game
-		"""
-
-		p2 = Player(game=self.g)
-		p2.save()
-
-		g2 = Game(total_turn=20)
-		g2.save()
-
-		p3 = Player(game=g2)
-		p3.save()
-
-		m = Message(title="titre", author=self.p)
-		m.save()
-		m.recipient_set.add(p2)
-		m.save()
-
-		m2 = Message(title="titre1", author= self.p)
-		m2.save()
-		
-		self.assertRaises(IntegrityError, lambda: m2.recipient_set.add(p3))
 
 	def test_player_money_cant_be_negative(self):
 		"""
@@ -334,17 +341,38 @@ class ModelTest(EngineTestCase):
 		"""
 		Check add_note on Player
 		"""
-		m = self.p.add_note(title="title", content="something")
-		self.assertEqual(m.flag, Message.NOTE)
+
+		n = self.p.add_note(category="category", content="something")
+		self.assertEqual(list(n.recipient_set.all()), [self.p])
 
 	def test_player_build_resolution_message(self):
 		"""
 		Check build_resolution_message on Player
 		"""
-		self.p.add_note(title="title", content="something")
+
+		self.p.add_note(category="category", content="private")
 
 		m = self.p.build_resolution_message()
 		self.assertEqual(m.flag, Message.RESOLUTION)
-		self.assertEqual(len(m.recipient_set.all()), 1)
+		self.assertEqual(m.recipient_set.count(), 1)
 		self.assertTrue(self.p in m.recipient_set.all())
+		self.assertTrue("private" in m.content)
 
+
+	def test_player_build_resolution_message_mutliple_recipients(self):
+		"""
+		Check build_resolution_message on Player, with multiple recipients.
+		"""
+		p2 = Player(game=self.g)
+		p2.save()
+
+		self.g.add_note(category="category", content="public")
+		self.p.add_note(category="category", content="private")
+
+		m = self.p.build_resolution_message()
+		self.assertTrue("public" in m.content)
+		self.assertTrue("private" in m.content)
+
+		m2 = p2.build_resolution_message()
+		self.assertTrue("public" in m2.content)
+		self.assertTrue("private" not in m2.content)

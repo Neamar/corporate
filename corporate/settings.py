@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'website',
     'engine',
+    'messaging',
     'engine_modules.influence',
     'engine_modules.corporation',
     'engine_modules.invisible_hand',
@@ -47,6 +48,7 @@ INSTALLED_APPS = (
     'engine_modules.share',
     'engine_modules.run',
     'engine_modules.corporation_asset_history',
+    'engine_modules.player_run',
 )
 
 MIDDLEWARE_CLASSES = (
