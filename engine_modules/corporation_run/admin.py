@@ -12,5 +12,5 @@ class ProtectionOrderAdmin(admin.ModelAdmin):
 admin.site.register(ProtectionOrder, ProtectionOrderAdmin)
 
 class SabotageOrderAdmin(admin.ModelAdmin):
-	list_display = ('sabotaged_corporation', )
+	list_display = ('target_corporation', )
 admin.site.register(SabotageOrder, SabotageOrderAdmin)
