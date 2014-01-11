@@ -35,26 +35,12 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.dso.clean()
 		self.dso.save()
 
-		self.dso2 = DataStealOrder(
-			stealer_corporation=self.c3,
-			player=self.p,
-			target_corporation=self.c
-		)
-		self.dso2.save()
-
 		self.po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c
 		)
 		self.po.clean()
 		self.po.save()
-
-		self.po2 = ProtectionOrder(
-			player=self.p,
-			protected_corporation=self.c
-		)
-		self.po2.clean()
-		self.po2.save()
 
 		self.so = SabotageOrder(
 			player=self.p,
@@ -103,3 +89,40 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_stealer_assets)
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets - 2)
+
+	def test_datasteal_protection_datasteal_datasteal(self):
+		"""
+		Functional test, the first DataSteal fails because of the Protection, so the second should succeed and benefit the client while the third succeeds without benefits
+		"""
+
+		self.po.additional_percents = 10
+		self.po.save()
+		self.dso.additional_percents = 20
+		self.dso.save()
+		dso2 = DataStealOrder(
+			stealer_corporation=self.c3,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=15
+		)
+		dso2.save()
+		dso3 = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=10
+		)
+		dso3.save()
+
+		begin_assets_stealer1 = self.dso.stealer_corporation.assets
+		begin_assets_stealer2 = dso2.stealer_corporation.assets
+		begin_assets_stealer3 = dso3.stealer_corporation.assets
+
+		self.g.resolve_current_turn()
+
+		# protected
+		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer1)
+		# succeeded
+		self.assertEqual(self.reload(dso2.stealer_corporation).assets, begin_assets_stealer2 + 1)
+		# already stolen
+		self.assertEqual(self.reload(dso3.stealer_corporation).assets, begin_assets_stealer3)
