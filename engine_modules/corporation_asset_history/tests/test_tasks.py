@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*- 
 from engine.testcases import EngineTestCase
 from messaging.models import Message
-from engine_modules.corporation.models import BaseCorporation,Corporation
-from engine_modules.corporation_asset_history.models import AssetHistory
+from engine_modules.corporation.models import BaseCorporation
 
 
 class TasksTest(EngineTestCase):

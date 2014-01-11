@@ -9,6 +9,5 @@ admin.site.register(Message, MessageAdmin)
 
 
 class NoteAdmin(admin.ModelAdmin):
-	list_display = ('author', 'title', 'content')
-	ordering=('author',)
+	list_display = ('category', 'content')
 admin.site.register(Note, NoteAdmin)
