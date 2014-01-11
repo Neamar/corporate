@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
-from engine.exceptions import OrderNotAvailable
-from messaging.models import Note
 from engine_modules.corporation.models import BaseCorporation, Corporation
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, datasteal_messages, sabotage_messages
 
@@ -9,13 +7,11 @@ DEBUG = False
 
 class RunOrdersTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC", description="Reckless.")
+		self.bc = BaseCorporation(name="NC&T", description="Reckless")
 		self.bc.save()
-
-		self.bc2 = BaseCorporation(name="AZ", description="TY")
+		self.bc2 = BaseCorporation(name="Renraku", description="Priceless")
 		self.bc2.save()
-
-		self.bc3 = BaseCorporation(name="Hero", description="Kaamoulox")
+		self.bc3 = BaseCorporation(name="Ares", description="Ruthless")
 		self.bc3.save()
 
 		super(RunOrdersTest, self).setUp()
@@ -79,109 +75,114 @@ class RunOrdersTest(EngineTestCase):
 		if DEBUG : print "-"*90+"\n\ttest_datasteal_success"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
-
-		self.dso.additional_percents=10
+		self.dso.additional_percents = 10
 		self.dso.save()
-		self.assertEqual(self.dso.get_success_probability(), 100)
+
 		self.dso.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)		
 
-		notes = self.dso.player.note_set.filter(category=u"Run de Datasteal", turn=self.g.current_turn)
-		self.assertEqual(len(notes), 1)
+		note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['success'].format(self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
-		self.assertEqual(notes[0].content, expected_message)
+		self.assertEqual(note.content, expected_message)
 
 	def test_datasteal_failure(self):
+		"""
+		Dailed datasteal should not change corporation assets.
+		"""
 
 		if DEBUG : print "-"*90+"\n\ttest_datasteal_failure"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
-		self.assertEqual(self.dso.get_success_probability(), 0)
 		self.dso.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)		
 
-		notes = self.dso.player.note_set.filter(category=u"Run de Datasteal", turn=self.g.current_turn)
-		self.assertEqual(len(notes), 1)
+		note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['fail'].format(self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
-		self.assertEqual(notes[0].content, expected_message)
+		self.assertEqual(note.content, expected_message)
 
 	def test_datasteal_interception(self):
-		
+		"""
+		Intercepted datasteal should not change corporation assets.
+		"""
+
 		if DEBUG : print "-"*90+"\n\ttest_datasteal_interception"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
-		self.po.additional_percents=10
+		self.po.additional_percents = 10
 		self.po.save()
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.dso.additional_percents=10
+		self.dso.additional_percents = 10
 		self.dso.resolve()
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)		
 		
-		aggressor_notes = self.dso.player.note_set.filter(category=u"Run de Datasteal", turn=self.g.current_turn)
-		self.assertEqual(len(aggressor_notes), 1)
+		aggressor_note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['interception']['aggressor'].format(self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
-		self.assertEqual(aggressor_notes[0].content, expected_message)
+		self.assertEqual(aggressor_note.content, expected_message)
 
-		protector_notes = self.po.player.note_set.filter(category=u"Run de Protection", turn=self.g.current_turn)
-		self.assertEqual(len(protector_notes), 1)
+		protector_note = self.po.player.note_set.get(category=u"Run de Protection", turn=self.g.current_turn)
 		expected_message = datasteal_messages['interception']['protector'].format(self.dso.target_corporation.base_corporation.name)
-		self.assertEqual(protector_notes[0].content, expected_message)
+		self.assertEqual(protector_note.content, expected_message)
 
 	def test_datasteal_capture(self):
-		
+		"""
+		Captured datasteal should not change corporation assets.
+		"""
+
 		if DEBUG : print "-"*90+"\n\ttest_datasteal_capture"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
-		self.po.additional_percents=10
+		self.po.additional_percents = 10
 		self.po.save()
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.dso.additional_percents=00
+		self.dso.additional_percents = 0
 		self.dso.resolve()
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)		
 		
-		aggressor_notes = self.dso.player.note_set.filter(category=u"Run de Datasteal", turn=self.g.current_turn)
-		self.assertEqual(len(aggressor_notes), 1)
+		aggressor_note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['capture']['aggressor'].format(self.dso.target_corporation.base_corporation.name)
-		self.assertTrue(aggressor_notes[0].content, expected_message)
+		self.assertTrue(aggressor_note.content, expected_message)
 
-		protector_notes = self.po.player.note_set.filter(category=u"Run de Protection", turn=self.g.current_turn)
-		self.assertEqual(len(protector_notes), 1)
+		protector_note = self.po.player.note_set.get(category=u"Run de Protection", turn=self.g.current_turn)
 		expected_message = datasteal_messages['capture']['protector'].format(self.dso.player.name, self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
-		self.assertEqual(protector_notes[0].content, expected_message)
+		self.assertEqual(protector_note.content, expected_message)
 
 	def test_multiple_datasteal(self):
 		"""
-		Only the first successful DataSteal on a same corporation can benefit someone
-		The others succeed, but the clients do not profit from them
+		Only the first successful DataSteal on a same corporation can benefit someone.
+		The others succeeds, but the clients do not profit from them
 		"""
 
 		if DEBUG : print "-"*90+"\n\ttest_multipledatasteal"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
-		self.dso.additional_percents=10
+		self.dso.additional_percents = 10
 		self.dso.resolve()
 
-		self.dso2.additional_percents=10
-		self.dso2.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
-	
-		notes = self.reload(self.dso.player).note_set.filter(category=u"Run de Datasteal", turn=self.g.current_turn)
-		self.assertEqual(len(notes), 2)
-		expected_message = datasteal_messages['late'].format(self.dso2.target_corporation.base_corporation.name, self.dso2.stealer_corporation.base_corporation.name)
-		self.assertTrue(notes[0].content==expected_message or notes[1].content==expected_message)
-
+		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
+		note = self.reload(self.dso.player).note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['success'].format(self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
-		self.assertTrue(notes[0].content==expected_message or notes[1].content==expected_message)
+		self.assertEqual(note.content, expected_message)
+
+		# Resolve (and fail) second datasteal
+		self.dso2.additional_percents = 10
+		self.dso2.resolve()
+		
+		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
+		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
+	
+		note = self.reload(self.dso.player).note_set.exclude(pk=note.pk).get(category=u"Run de Datasteal", turn=self.g.current_turn)
+		expected_message = datasteal_messages['late'].format(self.dso2.target_corporation.base_corporation.name, self.dso2.stealer_corporation.base_corporation.name)
+		self.assertEqual(note.content, expected_message)
+
 	def test_sabotage_success(self):
 		"""
 		Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
