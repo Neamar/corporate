@@ -40,7 +40,7 @@ class BuildCorporationClassementNoteTask(ResolutionTask):
 		for corporation in corporations:
 			classement+="%s- %s : %s  (%+d)\n" % (position, corporation.base_corporation.name,corporation.assets, corporation.assets - AssetHistory.objects.get(corporation=corporation,turn=(game.current_turn-1)).assets)
 			position+=1
-		game.add_note(title="Classement corporatiste", content=classement)
+		game.add_note(category="Classement corporatiste", content=classement)
 
 tasks = (SaveTurnHistoryTask, BuildCorporationClassementNoteTask)
 
