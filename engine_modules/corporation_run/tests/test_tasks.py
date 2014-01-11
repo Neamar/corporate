@@ -84,8 +84,9 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.dso.additional_percents = 20
 		self.dso.save()
 		self.so.additional_percents = 10
+		self.so.save()
 
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_stealer_assets)
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets)
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets - 2)
