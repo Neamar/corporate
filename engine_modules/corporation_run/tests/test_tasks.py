@@ -69,7 +69,20 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		self.g.disable_invisible_hand = True
 
-	def test_offensive_runs_descending_probability(self):
+	def test_offensive_run_task(self):
+		"""
+		Check the task solves the run
+		"""
+		begin_sabotaged_assets = self.so.target_corporation.assets
+
+		self.so.additional_percents = 10
+		self.so.save()
+
+		self.g.resolve_current_turn()
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets - 2)
+
+
+	def test_offensive_runs_task_descending_probability(self):
 		"""
 		Test that Offensive Runs are resolved from highest to lowest success probability
 		In this case, the Datasteal with 200 should be the one that fails (because of 
