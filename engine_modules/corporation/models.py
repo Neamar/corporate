@@ -1,7 +1,7 @@
 from django.db import models
 
 from engine.models import Game
-from engine_modules.run.models import RunOrder
+
 
 class BaseCorporation(models.Model):
 	"""

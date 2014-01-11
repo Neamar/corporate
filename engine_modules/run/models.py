@@ -30,8 +30,7 @@ class RunOrder(Order):
 		"""
 		Return true if the run is is_successful (random call)
 		"""
-		success = randint(1, 100) <= self.get_success_probability()
-		return success
+		return randint(1, 100) <= self.get_success_probability()
 
 	def resolve(self):
 		self.player.money -= self.get_cost()
