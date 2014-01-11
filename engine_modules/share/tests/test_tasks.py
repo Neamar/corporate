@@ -55,14 +55,13 @@ class TasksTest(EngineTestCase):
 			corporation=self.medium_corporation
 		)
 		self.s.save()
-		#Turn 5
+
+		# Artificially move to turn 3
 		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
-		money=self.reload(self.p).money
 		self.g.resolve_current_turn()
 
-		
+		money = self.reload(self.p).money
+		self.g.resolve_current_turn()
 
 		# We expect dividend on this share
 		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets
@@ -80,11 +79,12 @@ class TasksTest(EngineTestCase):
 		)
 		self.s.save()
 
-		#turn 5
+
+		# Artificially move to turn 3
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
-		money=self.reload(self.p).money
+
+		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
 
 		# We expect dividend on this share, taking into account the fact that this corporation is the first.
@@ -103,11 +103,13 @@ class TasksTest(EngineTestCase):
 			corporation=self.last_corporation
 		)
 		self.s.save()
-		#turn 5
+
+		# Artificially move to turn 3
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
-		money=self.reload(self.p).money
+
+		money = self.reload(self.p).money
+
 		self.g.resolve_current_turn()
 		# We expect dividend on this share, taking into account the fact that this corporation is the last.
 		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.last_corporation).assets * DividendTask.LAST_BONUS
@@ -127,12 +129,12 @@ class TasksTest(EngineTestCase):
 		self.p.citizenship.corporation = self.medium_corporation
 		self.p.citizenship.save()
 		
-		#turn 5
+
+		# Artificially move to turn 3
 		self.g.resolve_current_turn()
 		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
-		money=self.reload(self.p).money
+
+		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
 
 		# We expect dividend on this share, taking into account the fact that we are citizen from this corporation
