@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 from engine.testcases import EngineTestCase
-from engine.models import Message
+from messaging.models import Message
 from engine_modules.corporation.models import BaseCorporation,Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 
@@ -42,9 +42,7 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		nb_corporation_saved=AssetHistory.objects.filter(turn=1).count()
 		self.assertEqual(nb_corporation,nb_corporation_saved)
-		"""
-		Test the corporate classement note content
-		"""
+		
 		self.last_corporation.assets = 13
 		self.last_corporation.save()
 		self.medium_corporation.assets = 12
@@ -53,8 +51,8 @@ class TasksTest(EngineTestCase):
 		self.first_corporation.save() 
 
 		self.g.resolve_current_turn()
-		message_content=Message.objects.filter(flag=Message.GLOBAL_NOTE,title="Classement corporatiste").order_by('-pk')[0].content
+		message_content = self.p.message_set.get(flag=Message.RESOLUTION,turn=self.g.current_turn - 1).content
 		expected="1- NC&T : 13  (+6)\n2- Renraku : 12  (+2)\n3- Ares : 10  (-3)\n"
-		self.assertEqual(message_content,expected)
+		self.assertTrue(expected in message_content)
 
 
