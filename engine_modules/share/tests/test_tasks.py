@@ -49,16 +49,11 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get dividend for previous shares
 		"""
-		# We have one share
 		self.s = Share(
 			player=self.p,
 			corporation=self.medium_corporation
 		)
 		self.s.save()
-
-		# Artificially move to turn 3
-		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
 
 		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
@@ -72,17 +67,11 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get dividend for previous shares, with bonus if corporation is first
 		"""
-		# We have one share
 		self.s = Share(
 			player=self.p,
 			corporation=self.first_corporation
 		)
 		self.s.save()
-
-
-		# Artificially move to turn 3
-		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
 
 		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
@@ -97,16 +86,11 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get dividend for previous shares, with malus if corporation is last
 		"""
-		# We have one share
 		self.s = Share(
 			player=self.p,
 			corporation=self.last_corporation
 		)
 		self.s.save()
-
-		# Artificially move to turn 3
-		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
 
 		money = self.reload(self.p).money
 
@@ -120,7 +104,6 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get more dividend for being a citizen of the corporation
 		"""
-		# We have one share
 		self.s = Share(
 			player=self.p,
 			corporation=self.medium_corporation
@@ -129,11 +112,6 @@ class TasksTest(EngineTestCase):
 		self.p.citizenship.corporation = self.medium_corporation
 		self.p.citizenship.save()
 		
-
-		# Artificially move to turn 3
-		self.g.resolve_current_turn()
-		self.g.resolve_current_turn()
-
 		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
 
@@ -141,3 +119,23 @@ class TasksTest(EngineTestCase):
 		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets * DividendTask.CITIZENSHIP_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
+
+	def test_no_immediate_ividiend_after_turn_2(self):
+		"""
+		The player should not get dividends for shares he just bought after turn 2.
+		"""
+
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+
+		self.s = Share(
+			player=self.p,
+			corporation=self.medium_corporation
+		)
+		self.s.save()
+
+		money = self.reload(self.p).money
+		self.g.resolve_current_turn()
+
+		# No dividends
+		self.assertEqual(self.reload(self.p).money, money)
