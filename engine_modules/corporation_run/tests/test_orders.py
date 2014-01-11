@@ -67,6 +67,8 @@ class RunOrdersTest(EngineTestCase):
 		self.p.money = 100000
 		self.p.save()
 
+
+class OffensiveRunOrderTest(RunOrdersTest):
 	def test_datasteal_success(self):
 		"""
 		Datasteal benefits the stealer 1 asset without costing the stolen
@@ -262,107 +264,28 @@ class RunOrdersTest(EngineTestCase):
 		expected_message = sabotage_messages['capture']['protector'].format(self.so.player.name, self.so.target_corporation.base_corporation.name)
 		self.assertEqual(protector_note.content, expected_message)
 
-	def test_so_po(self):
+
+class DefensiveRunOrderTest(RunOrdersTest):
+	def test_offensive_protection_offensive(self):
 		"""
-		Test that the Protection cancels the Sabotage
-		"""
-
-		if DEBUG : print "-"*90+"\n\ttest_so_po"
-		begin_assets = self.so.target_corporation.assets
-
-		self.po.additional_percents=10
-		self.po.save()
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.so.additional_percents=10
-		self.so.save()
-		self.assertEqual(self.so.get_success_probability(), 100)
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.so.resolve()
-
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
-
-	def test_so_po_so(self):
-		"""
-		Test that the Protection only cancels one Sabotage
+		Test that the Protection only cancels one Offensive run
 		"""
 		if DEBUG : print "-"*90+"\n\ttest_so_po_so"
 
 		begin_assets = self.so.target_corporation.assets
 
-		self.po.additional_percents=10
+		self.po.additional_percents = 10
 		self.po.save()
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.so.additional_percents=10
+		self.so.additional_percents = 10
 		self.so.save()
-		self.assertEqual(self.so.get_success_probability(), 100)
+
+		# Should be intercepted
 		self.so.resolve()
-		self.so.clean()
-		self.so.additional_percents=10
-		self.so.save()
-		self.assertEqual(self.so.get_success_probability(), 100)
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
+
+		# Should not be intercepted
 		self.so.resolve()
-		self.so.clean()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets - 2)
-
-	def test_dso_po_dso_dso(self):
-		"""
-		In that case, the first DataSteal fails because of the Protection, so the second
-		should succeed and benefit the client while the third succeeds without benefits
-		"""
-
-		if DEBUG : print "-"*90+"\n\ttest_dso_po_dso_dso"
-		begin_assets_stealer1 = self.dso.stealer_corporation.assets
-		begin_assets_stealer2 = self.dso2.stealer_corporation.assets
-		begin_assets_stolen = self.dso.target_corporation.assets
-
-		self.po.additional_percents=10
-		self.po.save()
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.dso.additional_percents=10
-		self.dso.save()
-		self.assertEqual(self.dso.get_success_probability(), 100)
-		self.dso.resolve()
-		self.dso2.additional_percents=10
-		self.dso2.save()
-		self.assertEqual(self.dso2.get_success_probability(), 100)
-		self.dso2.resolve()
-		self.dso.clean()
-		self.dso.additional_percents=10
-		self.dso.save()
-		self.assertEqual(self.dso.get_success_probability(), 100)
-		self.dso.resolve()
-
-		# This test was failing because the multiple dso limit was not yet implemented
-		# The line beneath tests two aspects, if it fails, test_multiple datasteals should too
-		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer1)
-		self.assertEqual(self.reload(self.dso2.stealer_corporation).assets, begin_assets_stealer2 + 1)
-
-	def test_protection_fail_success(self):
-		"""
-		In that case, the Protection fails on the first Offensive Run, but succeeds on the second
-		The first Offensive Run should therefore succeed while the second should fail
-		"""
-
-		if DEBUG : print "-"*90+"\n\ttest_protection_fail_success"
-		begin_assets_stealer = self.dso.stealer_corporation.assets
-		begin_assets_sabotaged = self.so.target_corporation.assets
-
-		self.assertEqual(self.po.get_success_probability(), 0)
-		self.dso.additional_percents=10
-		self.dso.save()
-		self.assertEqual(self.dso.get_success_probability(), 100)
-		self.dso.resolve()
-		self.po.additional_percents=10
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.po.save()
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.so.additional_percents=10
-		self.so.save()
-		self.assertEqual(self.so.get_success_probability(), 100)
-		self.so.resolve()
-
-		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets_sabotaged)
 
 	def test_protection_descending_probability(self):
 		"""
@@ -372,15 +295,12 @@ class RunOrdersTest(EngineTestCase):
 		"""
 
 		if DEBUG : print "-"*90+"\n\ttest_protection_descending_probability"
-		self.po.additional_percents=10
+		self.po.additional_percents = 10
 		self.po.save()
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.po2.additional_percents=20
+		self.po2.additional_percents = 20
 		self.po2.save()
-		self.assertEqual(self.po2.get_success_probability(), 200)
 		self.dso.additional_percents=10
 		self.dso.save()
-		self.assertEqual(self.dso.get_success_probability(), 100)
 		self.dso.resolve()
 
 		self.assertEqual(self.reload(self.po).done, False)
