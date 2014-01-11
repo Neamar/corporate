@@ -168,7 +168,7 @@ class RunOrdersTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
-		note = self.reload(self.dso.player).note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
+		note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['success'].format(self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
@@ -179,7 +179,7 @@ class RunOrdersTest(EngineTestCase):
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
 	
-		note = self.reload(self.dso.player).note_set.exclude(pk=note.pk).get(category=u"Run de Datasteal", turn=self.g.current_turn)
+		note = self.dso.player.note_set.exclude(pk=note.pk).get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['late'].format(self.dso2.target_corporation.base_corporation.name, self.dso2.stealer_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
@@ -251,7 +251,7 @@ class RunOrdersTest(EngineTestCase):
 		self.so.resolve()
 
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)		
-		aggressor_notes = self.reload(self.so.player).note_set.filter(category=u"Run de Sabotage", turn=self.g.current_turn)
+		aggressor_notes = self.so.player.note_set.filter(category=u"Run de Sabotage", turn=self.g.current_turn)
 		self.assertEqual(len(aggressor_notes), 1)
 		expected_message = sabotage_messages['capture']['aggressor'].format(self.so.target_corporation.base_corporation.name)
 		self.assertEqual(aggressor_notes[0].content, expected_message)
