@@ -1,31 +1,29 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder
-from engine.exceptions import OrderNotAvailable
-from engine_modules.corporation.models import BaseCorporation, Corporation
+from engine_modules.corporation.models import BaseCorporation
 from engine_modules.corporation_run.tasks import OffensiveRunTask
+
 
 class OffensiveRunTaskTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC", description="Reckless.")
+		self.bc = BaseCorporation(name="NC&T", description="Reckless")
 		self.bc.save()
-
-		self.bc2 = BaseCorporation(name="AZ", description="TY")
+		self.bc2 = BaseCorporation(name="Renraku", description="Priceless")
 		self.bc2.save()
-
-		self.bc3 = BaseCorporation(name="Hero", description="Kaamoulox")
+		self.bc3 = BaseCorporation(name="Ares", description="Ruthless")
 		self.bc3.save()
 
 		super(OffensiveRunTaskTest, self).setUp()
 
-		self.c = Corporation.objects.get(base_corporation=self.bc)
+		self.c = self.g.corporation_set.get(base_corporation=self.bc)
 		self.c.assets = 10
 		self.c.save()
 
-		self.c2 = Corporation.objects.get(base_corporation=self.bc2)
+		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
 		self.c2.assets = 15
 		self.c2.save()
 
-		self.c3 = Corporation.objects.get(base_corporation=self.bc3)
+		self.c3 = self.g.corporation_set.get(base_corporation=self.bc3)
 		self.c3.assets = 20
 		self.c3.save()
 
@@ -65,10 +63,11 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.so.clean()
 		self.so.save()
 
+		# Refill money for the player
 		self.p.money = 100000
 		self.p.save()
 
-		self.t = OffensiveRunTask()
+		self.g.disable_invisible_hand = True
 
 	def test_offensive_runs_descending_probability(self):
 		"""
@@ -80,15 +79,13 @@ class OffensiveRunTaskTest(EngineTestCase):
 		begin_stealer_assets = self.dso.stealer_corporation.assets
 		begin_sabotaged_assets = self.so.target_corporation.assets
 
-		self.po.additional_percents=10
+		self.po.additional_percents = 10
 		self.po.save()
-		self.dso.additional_percents=20
+		self.dso.additional_percents = 20
 		self.dso.save()
-		self.so.additional_percents=10
+		self.so.additional_percents = 10
 
-		self.assertEqual(self.dso2.get_success_probability(), 0)
-		self.assertEqual(self.po2.get_success_probability(), 0)
-		self.t.run(self.g)
+		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_stealer_assets)
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets)

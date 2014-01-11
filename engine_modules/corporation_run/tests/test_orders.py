@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation, Corporation
+from engine_modules.corporation.models import BaseCorporation
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, datasteal_messages, sabotage_messages
 
 DEBUG = False
@@ -16,15 +16,15 @@ class RunOrdersTest(EngineTestCase):
 
 		super(RunOrdersTest, self).setUp()
 
-		self.c = Corporation.objects.get(base_corporation=self.bc)
+		self.c = self.g.corporation_set.get(base_corporation=self.bc)
 		self.c.assets = 10
 		self.c.save()
 
-		self.c2 = Corporation.objects.get(base_corporation=self.bc2)
+		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
 		self.c2.assets = 15
 		self.c2.save()
 
-		self.c3 = Corporation.objects.get(base_corporation=self.bc3)
+		self.c3 = self.g.corporation_set.get(base_corporation=self.bc3)
 		self.c3.assets = 20
 		self.c3.save()
 
