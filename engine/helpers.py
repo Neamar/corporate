@@ -16,7 +16,7 @@ def build_message_from_notes(message_type, notes, title, opening="", ending=""):
 
 	notes = notes.order_by('title')
 	resolution_message = ""
-	if opening!="":
+	if opening != "":
 			resolution_message = opening + "\n"
 	last_title = ""
 
@@ -26,7 +26,7 @@ def build_message_from_notes(message_type, notes, title, opening="", ending=""):
 		resolution_message += u"* %s\n" % note.content
 		last_title = note.title
 
-	if ending!="":
+	if ending != "":
 		resolution_message += "\n" + ending + "\n"
 
 	m = Message.objects.create(
