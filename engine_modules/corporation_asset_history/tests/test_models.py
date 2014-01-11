@@ -20,12 +20,3 @@ class ModelsTest(EngineTestCase):
 		"""
 
 		self.assertEqual(self.c.assethistory_set.get(turn=0).assets, self.c.assets)
-
-
-	def test_assets_saved_on_resolution(self):
-		"""
-		The game should save the corporation assets on resolution
-		"""
-
-		self.g.resolve_current_turn()
-		self.assertEqual(self.c.assethistory_set.get(turn=1).assets, self.reload(self.c).assets)

@@ -19,40 +19,35 @@ class TasksTest(EngineTestCase):
 
 		super(TasksTest, self).setUp()
 
-		self.last_corporation = self.g.corporation_set.get(base_corporation=self.bc)
-		self.last_corporation.assets = 7
-		self.last_corporation.save()
+		self.c = self.g.corporation_set.get(base_corporation=self.bc)
+		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
+		self.c3 = self.g.corporation_set.get(base_corporation=self.bc3)
 
-		self.medium_corporation = self.g.corporation_set.get(base_corporation=self.bc2)
-		self.medium_corporation.assets = 10
-		self.last_corporation.save()
+		self.g.disable_invisible_hand = True
 
-		self.first_corporation = self.g.corporation_set.get(base_corporation=self.bc3)
-		self.first_corporation.assets = 13
-		self.first_corporation.save() 
 
-		setattr(self.g,'disable_invisible_hand',True)
-
-	def test_AssetHistory(self):
+	def test_assets_saved_on_resolution(self):
 		"""
-		The game should have all the corporation assets saved at the end of the turn
+		The game should save the corporation assets on resolution
 		"""
-		nb_corporation=Corporation.objects.filter(game=self.g).count()
-		self.g.save()
+
 		self.g.resolve_current_turn()
-		nb_corporation_saved=AssetHistory.objects.filter(turn=1).count()
-		self.assertEqual(nb_corporation,nb_corporation_saved)
-		
-		self.last_corporation.assets = 13
-		self.last_corporation.save()
-		self.medium_corporation.assets = 12
-		self.medium_corporation.save()
-		self.first_corporation.assets = 10
-		self.first_corporation.save() 
+		self.assertEqual(self.c.assethistory_set.get(turn=1).assets, self.reload(self.c).assets)
+
+	def test_task_generate_corporation_ranking(self):
+		"""
+		The game should write the ranking of every corporation
+		"""		
+		self.c3.assets = 13
+		self.c3.save()
+		self.c2.assets = 12
+		self.c2.save()
 
 		self.g.resolve_current_turn()
 		message_content = self.p.message_set.get(flag=Message.RESOLUTION,turn=self.g.current_turn - 1).content
-		expected="1- NC&T : 13  (+6)\n2- Renraku : 12  (+2)\n3- Ares : 10  (-3)\n"
+
+		expected="""1- Ares : 13  (+3)
+2- Renraku : 12  (+2)
+3- NC&T : 10  (+0)"""
+
 		self.assertTrue(expected in message_content)
-
-
