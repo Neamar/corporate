@@ -9,6 +9,7 @@ class BaseCorporation(models.Model):
 	"""
 	name = models.CharField(max_length=50, unique=True)
 	description = models.TextField()
+	initials_assets = models.PositiveSmallIntegerField(default=10)
 
 
 class Corporation(models.Model):

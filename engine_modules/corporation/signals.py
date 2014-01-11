@@ -17,7 +17,7 @@ def auto_create_corporation(sender, instance, **kwargs):
 		Corporation(
 			base_corporation=base_corporation,
 			game=instance,
-			assets=10
+			assets=base_corporation.initials_assets
 		).save()
 
 

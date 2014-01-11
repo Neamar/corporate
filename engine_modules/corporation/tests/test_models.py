@@ -16,6 +16,7 @@ class ModelTest(EngineTestCase):
 		corporations = Corporation.objects.all()
 		self.assertEqual(len(corporations), 1)
 		self.assertEqual(corporations[0].base_corporation, self.bc)
+		self.assertEqual(corporations[0].assets, self.bc.initials_assets)
 
 	def test_corporation_deleted_when_asset_drops_below_zero(self):
 		"""
