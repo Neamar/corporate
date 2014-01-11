@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from engine.tasks import ResolutionTask
-from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 
 
-
-class SaveTurnHistoryTask(ResolutionTask):
+class SaveCorporationAssetTask(ResolutionTask):
 	"""
 	Save the assets of all corporations after the turn resolution
 	"""
@@ -21,26 +19,24 @@ class SaveTurnHistoryTask(ResolutionTask):
 			ah.save()
 
 
-class BuildCorporationClassementNoteTask(ResolutionTask):
+class BuildCorporationRankingTask(ResolutionTask):
 	"""
-	At the end of the turn, send a message on what happened this turn
+	Build the ranking between each corporation
 	"""
 
 	RESOLUTION_ORDER = 1100
 
 	def run(self, game):
-
 		"""
-		Create the general note for corporate classement
+		Create the note for corporation rankings
 		"""
-		#Ajout d'une note Construction du classement des corpo avec delta du tour précédent.
-		classement = ""
-		position = 1
-		corporations = Corporation.objects.filter(game=game).order_by('-assets')
-		for corporation in corporations:
-			classement+="%s- %s : %s  (%+d)\n" % (position, corporation.base_corporation.name,corporation.assets, corporation.assets - AssetHistory.objects.get(corporation=corporation,turn=(game.current_turn-1)).assets)
-			position+=1
-		game.add_note(category="Classement corporatiste", content=classement)
 
-tasks = (SaveTurnHistoryTask, BuildCorporationClassementNoteTask)
+		content = ""
+		corporations = game.corporation_set.order_by('-assets')
+		for rank, corporation in enumerate(corporations):
+			previous_turn_assets = corporation.assethistory_set.get(turn=game.current_turn - 1).assets
+			content += "%s- %s : %s  (%+d)\n" % (rank + 1, corporation.base_corporation.name,corporation.assets, corporation.assets - previous_turn_assets)
 
+		game.add_note(category="Classement corporatiste", content=content)
+
+tasks = (SaveCorporationAssetTask, BuildCorporationRankingTask)
