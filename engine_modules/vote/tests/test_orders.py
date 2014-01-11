@@ -1,27 +1,22 @@
 from engine.testcases import EngineTestCase
 from engine.exceptions import OrderNotAvailable
-from engine_modules.corporation.models import BaseCorporation, Corporation
+from engine_modules.corporation.models import BaseCorporation
 from engine_modules.vote.models import VoteOrder
 
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless.")
+		self.bc = BaseCorporation(name="NC&T", description="Reckless.", initials_assets=10)
 		self.bc.save()
 
-		self.bc2 = BaseCorporation(name="AZER", description="TY")
+		self.bc2 = BaseCorporation(name="AZER", description="TY", initials_assets=15)
 		self.bc2.save()
 
 		super(OrdersTest, self).setUp()
 
-		self.c = Corporation.objects.get(base_corporation=self.bc)
-		self.c.assets = 10
-		self.c.save()
+		self.c = self.g.corporation_set.get(base_corporation=self.bc)
 
-		self.c2 = Corporation.objects.get(base_corporation=self.bc2)
-		self.c2.assets = 15
-		self.c2.save()
-		
+		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
 
 	def test_corporation_up_and_down(self):
 		

@@ -6,25 +6,19 @@ from engine_modules.share.tasks import DividendTask
 
 class TasksTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless")
+		self.bc = BaseCorporation(name="NC&T", description="Reckless", initials_assets=7)
 		self.bc.save()
-		self.bc2 = BaseCorporation(name="Renraku", description="Priceless")
+		self.bc2 = BaseCorporation(name="Renraku", description="Priceless", initials_assets=10)
 		self.bc2.save()
-		self.bc3 = BaseCorporation(name="Ares", description="Ruthless")
+		self.bc3 = BaseCorporation(name="Ares", description="Ruthless", initials_assets=13)
 		self.bc3.save()
 
 		super(TasksTest, self).setUp()
-		setattr(self.g,'disable_invisible_hand',True)
 
 		self.last_corporation = self.g.corporation_set.get(base_corporation=self.bc)
-		self.last_corporation.assets -= 3
-		self.last_corporation.save()
-
 		self.medium_corporation = self.g.corporation_set.get(base_corporation=self.bc2)
-		
 		self.first_corporation = self.g.corporation_set.get(base_corporation=self.bc3)
-		self.first_corporation.assets += 3
-		self.first_corporation.save()
+		self.g.disable_invisible_hand = True
 
 	def test_buy_task_applied(self):
 		"""
