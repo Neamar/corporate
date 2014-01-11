@@ -1,5 +1,6 @@
 from engine.testcases import EngineTestCase
-from engine.models import Player, Message
+from engine.models import Player
+from messaging.models import Message
 from engine_modules.player_run.models import InformationRunOrder
 
 class TaskTest(EngineTestCase):

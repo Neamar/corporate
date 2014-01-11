@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'engine_modules.share',
     'engine_modules.run',
     'engine_modules.corporation_run',
+    'engine_modules.corporation_asset_history',
     'engine_modules.player_run',
 )
 

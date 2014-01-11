@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 
