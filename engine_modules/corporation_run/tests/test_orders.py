@@ -191,75 +191,76 @@ class RunOrdersTest(EngineTestCase):
 		if DEBUG : print "-"*90+"\n\ttest_sabotage_success"
 		begin_assets = self.so.target_corporation.assets
 
-		self.so.additional_percents=10
+		self.so.additional_percents = 10
+		self.so.save()
+
 		self.so.resolve()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets - 2)
 
-		notes = self.so.player.note_set.filter(category=u"Run de Sabotage", turn=self.g.current_turn)
-		self.assertEqual(len(notes), 1)
+		note = self.so.player.note_set.get(category=u"Run de Sabotage", turn=self.g.current_turn)
 		expected_message = sabotage_messages['success'].format(self.so.target_corporation.base_corporation.name)
-		self.assertEqual(notes[0].content, expected_message)
+		self.assertEqual(note.content, expected_message)
 
 	def test_sabotage_failure(self):
+		"""
+		Failed sabotage does not change corporation assets
+		"""
 
 		if DEBUG : print "-"*90+"\n\ttest_sabotage_failure"
 		begin_assets = self.so.target_corporation.assets
 
-		self.assertEqual(self.so.get_success_probability(), 0)
 		self.so.resolve()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
 
-		notes = self.so.player.note_set.filter(category=u"Run de Sabotage", turn=self.g.current_turn)
-		self.assertEqual(len(notes), 1)
+		note = self.so.player.note_set.get(category=u"Run de Sabotage", turn=self.g.current_turn)
 		expected_message = sabotage_messages['fail'].format(self.so.target_corporation.base_corporation.name)
-		self.assertEqual(notes[0].content, expected_message)
+		self.assertEqual(note.content, expected_message)
 
 	def test_sabotage_interception(self):
-		
+		"""
+		Intercepted sabotage does not change corporation assets
+		"""
+
 		if DEBUG : print "-"*90+"\n\ttest_sabotage_interception"
 		begin_assets = self.dso.target_corporation.assets
 
-		self.po.additional_percents=10
+		self.po.additional_percents = 10
 		self.po.save()
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.so.additional_percents=10
-		self.so.resolve()
+		self.so.additional_percents = 10
 
+		self.so.resolve()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)		
 		
-		aggressor_notes = self.so.player.note_set.filter(category=u"Run de Sabotage", turn=self.g.current_turn)
-		self.assertEqual(len(aggressor_notes), 1)
+		aggressor_note = self.so.player.note_set.get(category=u"Run de Sabotage", turn=self.g.current_turn)
 		expected_message = sabotage_messages['interception']['aggressor'].format(self.so.target_corporation.base_corporation.name)
-		self.assertEqual(aggressor_notes[0].content, expected_message)
+		self.assertEqual(aggressor_note.content, expected_message)
 
-		protector_notes = self.po.player.note_set.filter(category=u"Run de Protection", turn=self.g.current_turn)
-		self.assertEqual(len(protector_notes), 1)
+		protector_note = self.po.player.note_set.get(category=u"Run de Protection", turn=self.g.current_turn)
 		expected_message = sabotage_messages['interception']['protector'].format(self.so.target_corporation.base_corporation.name)
-		self.assertEqual(protector_notes[0].content, expected_message)
+		self.assertEqual(protector_note.content, expected_message)
 
 	def test_sabotage_capture(self):
-		
+		"""
+		Captured sabotage does not change corporation assets
+		"""
+
 		if DEBUG : print "-"*90+"\n\ttest_sabotage_capture"
 		begin_assets = self.so.target_corporation.assets
 
-		self.po.additional_percents=10
+		self.po.additional_percents = 10
 		self.po.save()
-		self.assertEqual(self.po.get_success_probability(), 100)
-		self.so.additional_percents=00
+		self.so.additional_percents = 0
 		self.so.save()
-		self.assertEqual(self.so.get_success_probability(), 0)
+
 		self.so.resolve()
-
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)		
-		aggressor_notes = self.so.player.note_set.filter(category=u"Run de Sabotage", turn=self.g.current_turn)
-		self.assertEqual(len(aggressor_notes), 1)
+		aggressor_note = self.so.player.note_set.get(category=u"Run de Sabotage", turn=self.g.current_turn)
 		expected_message = sabotage_messages['capture']['aggressor'].format(self.so.target_corporation.base_corporation.name)
-		self.assertEqual(aggressor_notes[0].content, expected_message)
+		self.assertEqual(aggressor_note.content, expected_message)
 
-		protector_notes = self.reload(self.po.player).note_set.filter(category=u"Run de Protection", turn=self.g.current_turn)
-		self.assertEqual(len(protector_notes), 1)
+		protector_note = self.po.player.note_set.get(category=u"Run de Protection", turn=self.g.current_turn)
 		expected_message = sabotage_messages['capture']['protector'].format(self.so.player.name, self.so.target_corporation.base_corporation.name)
-		self.assertEqual(protector_notes[0].content, expected_message)
+		self.assertEqual(protector_note.content, expected_message)
 
 	def test_so_po(self):
 		"""
