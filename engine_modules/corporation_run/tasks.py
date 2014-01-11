@@ -1,6 +1,7 @@
 from engine.tasks import OrderResolutionTask
-from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder
+from engine_modules.corporation_run.models import DataStealOrder, SabotageOrder
 from random import shuffle
+
 
 class OffensiveRunTask(OrderResolutionTask):
 	"""
@@ -13,7 +14,7 @@ class OffensiveRunTask(OrderResolutionTask):
 		orders = []
 		for order_type in self.ORDER_TYPES:
 			orders += order_type.objects.filter(player__game=game, turn=game.current_turn)
-		# Mix DataSteals and Sabotages
+		# Mix DataSteals and Sabotages for random order resolution on same percentage
 		shuffle(orders)
 		# Offensive Runs should be resolved in decreasing order of success probability
 		orders = sorted(orders, key=lambda order: order.get_success_probability(), reverse=True)
