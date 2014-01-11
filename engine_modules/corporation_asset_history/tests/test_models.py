@@ -1,6 +1,5 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation
-from engine_modules.corporation_asset_history.models import AssetHistory
 
 
 class ModelsTest(EngineTestCase):
@@ -10,28 +9,23 @@ class ModelsTest(EngineTestCase):
 	def setUp(self):
 		self.bc = BaseCorporation(name="NC&T", description="Reckless")
 		self.bc.save()
-		self.bc2 = BaseCorporation(name="Renraku", description="Priceless")
-		self.bc2.save()
-		self.bc3 = BaseCorporation(name="Ares", description="Ruthless")
-		self.bc3.save()
 
 		super(ModelsTest, self).setUp()
+
+		self.c = self.g.corporation_set.get(base_corporation=self.bc)
 
 	def test_assets_saved_on_init(self):
 		"""
 		The game should save the corporation value on start
 		"""
-		nb_corporation = self.g.corporation_set.count()
-		nb_assets_saved = AssetHistory.objects.count()
-		self.assertEqual(nb_corporation, nb_assets_saved)
+
+		self.assertEqual(self.c.assethistory_set.get(turn=0).assets, self.c.assets)
 
 
 	def test_assets_saved_on_resolution(self):
 		"""
-		The game should save the corporation value on resolution
+		The game should save the corporation assets on resolution
 		"""
-		nb_corporation = self.g.corporation_set.count()
-		self.g.resolve_current_turn()
 
-		nb_assets_saved = AssetHistory.objects.count()
-		self.assertEqual(nb_corporation * 2, nb_assets_saved)
+		self.g.resolve_current_turn()
+		self.assertEqual(self.c.assethistory_set.get(turn=1).assets, self.reload(self.c).assets)
