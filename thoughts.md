@@ -250,3 +250,7 @@ Resolution:
 * (30) ProtectionRun
 * (35) SabotageRun / DatastealRun
 
+
+#### engine.fixers
+Base application for fixers.
+To be defined later with Laedius for models and effects.
