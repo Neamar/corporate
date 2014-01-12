@@ -1,5 +1,5 @@
 from engine.tasks import OrderResolutionTask
-from engine_modules.corporation_run.models import DataStealOrder, SabotageOrder
+from engine_modules.corporation_run.models import DataStealOrder, SabotageOrder, ProtectionOrder
 from random import shuffle
 
 
@@ -22,4 +22,20 @@ class OffensiveRunTask(OrderResolutionTask):
 		for order in orders:
 			order.resolve()
 
-tasks = (OffensiveRunTask, )
+class ProtectionRunPaymentTask(OrderResolutionTask):
+	"""
+	A Task to deduce costs of Protection Runs
+	"""	
+	resolution_order = 350
+	ORDER_TYPES = [ProtectionOrder]
+
+	def run(self, game):
+		orders = []
+		for order_type in self.ORDER_TYPES:
+			orders += order_type.objects.filter(player__game=game, turn=game.current_turn)
+			
+		for order in orders:
+			order.player.money -= order.get_cost()
+			order.player.save()
+
+tasks = (OffensiveRunTask, ProtectionRunPaymentTask)

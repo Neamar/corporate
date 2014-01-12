@@ -117,3 +117,35 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.assertEqual(self.reload(dso2.stealer_corporation).assets, begin_assets_stealer2 + 1)
 		# already stolen
 		self.assertEqual(self.reload(dso3.stealer_corporation).assets, begin_assets_stealer3)
+
+	def test_protection_costs_noresolve(self):
+		"""
+		Test that after an unresolved protection run, the ProtectionRunPaymentTask deduces the right amount of money from the player
+		"""
+
+		player_money = self.po.player.money
+
+		self.po.additional_percents = 10
+		self.po.save()
+
+		self.g.resolve_current_turn()
+		self.assertEqual(self.reload(self.po.player).money, player_money - self.po.get_cost())
+
+	def test_protection_costs_resolved(self):	
+		"""
+		Test that after a protection run that gets resolved several times, the ProtectionRunPaymentTask deduces the right amount of money from the player
+		Because the cost of a Protection Run with a 0% chance is 0, this test has a 10% Protection Run, giving a 90% chance of testing an interesting case
+		"""
+
+		self.po.additional_percents = 1
+		self.po.save()	
+		self.dso.additional_percents = 10
+		self.dso.save()
+
+		self.so.additional_percents = 10
+		self.so.save()
+
+		player_money = self.po.player.money
+		
+		self.g.resolve_current_turn()
+		self.assertEqual(self.reload(self.po.player).money, player_money - self.po.get_cost() - self.so.get_cost() - self.dso.get_cost())

@@ -3,8 +3,6 @@ from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, datasteal_messages, sabotage_messages
 
-DEBUG = False
-
 class RunOrdersTest(EngineTestCase):
 	def setUp(self):
 		self.bc = BaseCorporation(name="NC&T", description="Reckless", initials_assets=10)
@@ -52,7 +50,6 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		Datasteal benefits the stealer 1 asset without costing the stolen
 		"""	
 		
-		if DEBUG : print "-"*90+"\n\ttest_datasteal_success"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 		self.dso.additional_percents = 10
@@ -71,7 +68,6 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		Dailed datasteal should not change corporation assets.
 		"""
 
-		if DEBUG : print "-"*90+"\n\ttest_datasteal_failure"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
@@ -88,7 +84,6 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		Intercepted datasteal should not change corporation assets.
 		"""
 
-		if DEBUG : print "-"*90+"\n\ttest_datasteal_interception"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
@@ -113,7 +108,6 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		Captured datasteal should not change corporation assets.
 		"""
 
-		if DEBUG : print "-"*90+"\n\ttest_datasteal_capture"
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
@@ -139,7 +133,6 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		The others succeeds, but the clients do not profit from them
 		"""
 
-		if DEBUG : print "-"*90+"\n\ttest_multipledatasteal"
 
 		dso2 = DataStealOrder(
 			stealer_corporation=self.c3,
@@ -177,7 +170,6 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
 		"""
 
-		if DEBUG : print "-"*90+"\n\ttest_sabotage_success"
 		begin_assets = self.so.target_corporation.assets
 
 		self.so.additional_percents = 10
@@ -195,7 +187,6 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		Failed sabotage does not change corporation assets
 		"""
 
-		if DEBUG : print "-"*90+"\n\ttest_sabotage_failure"
 		begin_assets = self.so.target_corporation.assets
 
 		self.so.resolve()
@@ -210,7 +201,6 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		Intercepted sabotage does not change corporation assets
 		"""
 
-		if DEBUG : print "-"*90+"\n\ttest_sabotage_interception"
 		begin_assets = self.dso.target_corporation.assets
 
 		self.po.additional_percents = 10
@@ -233,7 +223,6 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		Captured sabotage does not change corporation assets
 		"""
 
-		if DEBUG : print "-"*90+"\n\ttest_sabotage_capture"
 		begin_assets = self.so.target_corporation.assets
 
 		self.po.additional_percents = 10
@@ -257,7 +246,6 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		"""
 		Test that the Protection only cancels one Offensive run
 		"""
-		if DEBUG : print "-"*90+"\n\ttest_so_po_so"
 
 		begin_assets = self.so.target_corporation.assets
 
@@ -280,9 +268,6 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		In this case, for testing purposes, the Protection Run with 200 should be
 		the one that succeeds, not the one with 100
 		"""
-
-		if DEBUG : print "-"*90+"\n\ttest_protection_descending_probability"
-
 
 		po2 = ProtectionOrder(
 			player=self.p,
