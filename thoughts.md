@@ -217,7 +217,7 @@ Resolution:
 
 #### engine.corporations.effects
 Apply first / last effects
-
+If an effect updates the ranking, the second effect to be applied is still determined by the initial ranking, e.g. before applying any effect we need to store first and last corporation.
 Models:
 * CorporationEffect
     - -> Corporation
