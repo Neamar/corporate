@@ -1,4 +1,4 @@
-# Corporate Game Manhattan.
+*# Corporate Game Manhattan.
 
 ## Concepts
 ### Ordres disponibles
@@ -10,10 +10,16 @@
     - Paramètre :
         + Corpo+
         + Corpo-
-* Spéculation
+* Spéculation sur une corporation. Nombre limité à ton influence corpo (pour corpo + produit dérivé)
     - Paramètre :
-        + Rang Corpo+
-        + Rang Corpo-
+        + Corpo
+        + Actifs en fin de tour
+        + Mise (maxé par influence corpo * 100k)
+* Spéculation sur un produit dérivé. Nombre limité à ton influence corpo (pour corpo + produit dérivé)
+    - Paramètre :
+        + Produit dérivé
+        + À la hausse / à la baisse
+        + Mise (maxé par influence corpo * 100k)
 * Run de Protection
     - Paramètre :
         + Corpo bénéficiaire
@@ -228,6 +234,15 @@ Models:
 
 Resolution:
 * (60) FirstLastEffect
+
+#### engine.corporations.speculation
+Spéculation corporation : si mauvaise valeur, mise perdue. Sinon, mise * 2 (quitte ou triple)
+Spéculation produit dérivé : si égalité, argent conservé. Si mauvais sens choisi, mise perdue. Sinon, mise * 1 (quitte ou double)
+
+Models:
+* DerivativeProduct
+    - <-> M2M Corporation
+    - Name
 
 #### engine.runs
 * Run
