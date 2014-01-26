@@ -223,7 +223,7 @@ Resolution:
 
 #### engine.corporations.effects
 Apply first / last effects
-
+If an effect updates the ranking, the second effect to be applied is still determined by the initial ranking, e.g. before applying any effect we need to store first and last corporation.
 Models:
 * CorporationEffect
     - -> Corporation
@@ -265,3 +265,7 @@ Resolution:
 * (30) ProtectionRun
 * (35) SabotageRun / DatastealRun
 
+
+#### engine.fixers
+Base application for fixers.
+To be defined later with Laedius for models and effects.
