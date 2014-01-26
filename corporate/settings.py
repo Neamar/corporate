@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
     'website',
+    'docs',
     'engine',
     'messaging',
     'engine_modules.influence',
