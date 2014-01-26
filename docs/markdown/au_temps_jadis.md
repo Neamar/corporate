@@ -1,4 +1,4 @@
-# Au temps jadis
+title: Au temps jadis
 
 La période qui suivit le Séisme était synonyme de lutte pour la survie. Même trouver un abris était difficile. Les bâtiments qui n'étaient pas tombés étaient des pièges mortels : certains s'effodnrèrent même trois ans après le séisme. Les galeries du métros, les réseaux d'égouts, les tunnels de ventilation, de gaz, de maintenance étaient tous endommagés ou détruits. Le travail nécessaire était herculéen, et au bout du compte, on préféra passer la ville au bulldozer et la recouvrir d'une couche fraîche d'asphalte et de béton plutôt que de tout réparer.
 

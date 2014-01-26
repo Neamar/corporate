@@ -1,4 +1,4 @@
-# Manhattan Corporate Game
+title: Manhattan Corporate Game
 
 Alléchante et volatile comme ses produits dérivés, Manhattan est une gigantesque et impitoyable jungle corporatiste dont le volume de nuyens brassés n'est rivalisé que par Neo Tokyo et la GOB. Première ville d'Amérique du Nord, elle accueil la Bourse de la Côte Est (ECSE pour "East Coast Stock Exchange"), la Statue de la Liberté et le quartier général terrestre de la Cour Corporatiste, et l'île est de loin la plus vaste région extraterritoriale continue des UCAS. 
 

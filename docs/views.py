@@ -20,7 +20,14 @@ def index(request, page):
 	except IOError:
 		raise Http404("No documentation on this subject.")
 
-	content = markdown.markdown(raw, ['nl2br'], safe_mode=True, enable_attributes=False)
+	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'table', 'footnotes'], safe_mode=True, enable_attributes=False)
+	content = md.convert(raw)
+
+	try:
+		title = md.Meta['title'][0]
+	except:
+		title = "Corporate Game"
+
 	content = mark_safe(content)
 
-	return render(request, 'docs/index.html', {"content": content})
+	return render(request, 'docs/index.html', {"content": content, "title": title})
