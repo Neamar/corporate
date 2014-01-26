@@ -1,4 +1,4 @@
-Le Séisme et le MDC
+# Le Séisme et le MDC
 
 La New York City historique disparut brutalement le 12 avril 2005. D'après la plupart des rapports officiels, le Séisme était d'amplitude modérée. Cependant, plusieurs témoignages directs laissent penser à un tremblement de terre beaucoup plus puissant. Malgré les nombreux avertissement sur la possibilité d'une telle secousse, elle prit tout le monde par surprise. Pire, la plupart des buildings n'étaient pas aux normes antisismiques, garantissant virtuellement un nombre de victime encore plus élevé. Les chiffres étaient effrayants, avec 200 000 morts, plus d'un million de blessés et de mourants, et des milliards de dollars de dégâts. Les experts s’accordèrent toutefois pour dire que cela aurait pu être bien pire.
 
