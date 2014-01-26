@@ -1,6 +1,6 @@
 body
 {
-   background:url("city.jpg") repeat fixed center top transparent;
+   background:url("city.jpg") no-repeat fixed center top #64595f;
 }
 
 :visited
@@ -54,7 +54,7 @@ td a
 
 #wrapper
 {
-   width:550px;
+   width:600px;
    margin:auto;
 }
 
@@ -144,4 +144,16 @@ td a
 #content h2, h3, h4, h5
 {
    border-bottom:1px solid #23AAB1;
+}
+
+@media screen and (max-width: 960px) {
+   body
+   {
+      background-image:none;
+   }
+
+   #wrapper
+   {
+      width: 100%;
+   }
 }
