@@ -1,4 +1,4 @@
-*# Corporate Game Manhattan.
+# Corporate Game Manhattan.
 
 ## Concepts
 ### Ordres disponibles
