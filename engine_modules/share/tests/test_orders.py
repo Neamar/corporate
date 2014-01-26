@@ -32,7 +32,7 @@ class OrdersTest(EngineTestCase):
 		"""
 		self.o.resolve()
 
-		s = Share.objects.get(pk=1)
+		s = Share.objects.get()
 		self.assertEqual(s.player, self.p)
 		self.assertEqual(s.corporation, self.o.corporation)
 		self.assertEqual(s.turn, self.p.game.current_turn)
