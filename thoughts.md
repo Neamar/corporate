@@ -177,15 +177,10 @@ Models:
 * VoteOrder
     - -> corporation+
     - -> corporation-
-* SpeculationOrder
-    - -> VoteOrder
-    - Rank+
-    - Rank-
 
 Resolution:
 * (0) BuyShareOrder
 * (10) VoteOrder
-* (70) SpeculationOrder
 * (80) DividendDistribution
 
 #### engine.corporations.assets_history
@@ -244,6 +239,9 @@ Models:
     - <-> M2M Corporation
     - Name
 
+Resolution:
+* (70) SpeculationOrder
+ 
 #### engine.runs
 * Run
     - 30% bonus
