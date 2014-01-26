@@ -7,6 +7,9 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 def index(request, page):
+	if(page == ''):
+		page = 'index'
+
 	page = '%s/docs/markdown/%s.md' % (settings.BASE_DIR, page.replace('.', ''))
 
 	raw = ''
