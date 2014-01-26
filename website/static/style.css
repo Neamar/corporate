@@ -1,0 +1,201 @@
+body
+{
+   background:url("city.jpg") repeat fixed center top transparent;
+}
+
+a:visited
+{
+   color:#0000EE;
+}
+
+a.top
+{
+  text-align:center;
+  display:block;
+}
+
+p.right
+{
+   text-align:right;
+}
+
+img.entity
+{
+   margin:auto;
+   display:block;
+}
+
+img.thumbnail
+{
+   height:2em;
+}
+
+div.spacer
+{
+   margin:90% 0;
+}
+
+table
+{
+   margin:auto;
+   border-collapse:collapse;
+   width:90%;
+}
+
+table caption
+{
+   text-align:right;
+   font-variant:small-caps;
+}
+tr, td, th
+{
+   border:1px solid black;
+}
+
+tbody tr:nth-child(odd)
+{
+   background:rgba(255, 255, 255, .3)
+}
+
+.prop_table td:not(:first-child)
+{
+   width:50px;
+}
+
+.prop_table th:first-child
+{
+   border-top:1px solid transparent;
+   border-left:1px solid transparent;
+}
+
+.prop_table td:first-child, td.important
+{
+   font-weight:bold;
+   text-align:center;
+   padding:0 20px;
+}
+
+.prop_table tr, th
+{
+   text-align:center;
+}
+
+.list_table tr ul
+{
+   list-style-type:none;
+   padding:0 5px;
+}
+
+td a
+{
+   color:black !important;
+   text-decoration:none;
+}
+
+#wrapper
+{
+   width:550px;
+   margin:auto;
+}
+
+#toc
+{
+   position:fixed;
+   right:0;
+   width:230px;
+   top:0;
+   font-size:80%;
+}
+
+#toc div.ui-accordion-content
+{
+   padding-left:0
+}
+
+#sidebar
+{
+   float:right;
+   position:relative;
+   left:-50%;
+   font-family:Audiowide, cursive;
+   text-shadow:0.1em 0 0.2em white;
+}
+
+#sidebar ul
+{
+   list-style:none;
+   position:relative;
+   left:50%;
+}
+
+#sidebar li
+{
+   float:left;
+   padding-right:5px;
+   padding-bottom:10px;
+   position:relative;
+}
+
+#sidebar li:after
+{
+   padding-left:5px;
+   content:"|";
+}
+
+#sidebar li:last-child:after
+{
+   padding-left:0;
+   content:''
+}
+
+#end
+{
+   text-align:center;
+   font-family:Audiowide, cursive;
+}
+
+#end a
+{
+   color:white;
+   text-shadow:0px 3px 3px blue;
+}
+
+#content
+{
+   clear:both;
+   border:1px solid #AAB123;
+   border-radius:5px;
+   box-shadow:0 0 20px rgba(0, 0, 0, 0.2);
+   padding:10px;
+   text-align:justify;
+   font-family:"Lucida Sans Unicode","Lucida Grande",sans-serif;
+   text-shadow:-2px 1px 3px #DDDDDD;
+   background-color:rgb(220,220,220);
+}
+
+#content p
+{
+   text-indent:2em;
+}
+
+h1, h2, h3, h4, h5
+{
+   font-family:Syncopate, sans-serif;
+   text-align:left;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited
+{
+   color:black;
+   text-decoration:none;
+}
+
+#content h1
+{
+   text-align:center;
+}
+
+#content h2, h3, h4, h5
+{
+   border-bottom:1px solid #23AAB1;
+}

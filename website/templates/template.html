@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Audiowide|Syncopate' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="{{ STATIC_URL }}/style.css" />
+	<link rel="icon" href="/static/favicon.gif" type="image/x-icon" />
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+		  $("#toc").accordion({autoHeight:false});
+		});
+	</script>
+
+	{% block head %}{% endblock %}
+	<title>{% block title %}Corporate game{% endblock %}</title>
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="sidebar">
+			<ul>
+				<li><a href="/docs/">docs</a></li>
+				<li><a href="/corpos/">corpos</a></li>
+				<li><a href="/agents/">agents</a></li>
+				<li><a href="/agents/partis/">partis</a></li>
+				<li><a href="/joueurs/">joueurs</a></li>
+				<li><a href="/recap">recap</a></li>
+				<li><a href="http://forum.corporate.edevoir.com">forum</a></li>
+			</ul>
+		</div>
+
+
+		<div id="content">
+			<h1>{% block h1 %}Corporate game{% endblock %}</h1>
+
+			{% block content %}{% endblock %}
+		</div>
+
+		<div id="end">
+			{% block end %}<a href="#">&uarr;</a>{% endblock %}
+		</div>
+	</div>
+</body>
+</html>
