@@ -117,8 +117,8 @@ class DataStealOrder(OffensiveRunOrder):
 	def resolve_success(self):
 
 		# Get a list of datasteals that have succeeded on this corporation this turn (actually there should be 0 or 1)
-		success_datasteals = filter(lambda x: x.datastealorder.has_succeeded, self.target_corporation.scoundrels.filter(type="DataStealOrder"))
-		if(success_datasteals != []):
+		success_datasteals = self.target_corporation.scoundrels.filter(type="DataStealOrder", datastealorder__has_succeeded=True)
+		if(success_datasteals.exists()):
 			# Send a note for final message 
 			category = u"Run de Datasteal"
 			content = datasteal_messages['late'].format(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
