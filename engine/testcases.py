@@ -25,7 +25,7 @@ class EngineTestCase(TestCase):
 		Setup initial configuration
 		"""
 		self.initial_money = 1000
-		self.g = Game(total_turn=10)
+		self.g = Game()
 		self.g.save()
 		self.p = Player(game=self.g, money=self.initial_money)
 		self.p.save()

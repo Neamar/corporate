@@ -9,7 +9,7 @@ from messaging.models import Message, Note
 class Game(models.Model):
 	city = models.CharField(max_length=50)
 	current_turn = models.PositiveSmallIntegerField(default=1)
-	total_turn = models.PositiveSmallIntegerField()
+	total_turn = models.PositiveSmallIntegerField(default=8)
 	started = models.DateTimeField(auto_now_add=True)
 
 	def resolve_current_turn(self):
