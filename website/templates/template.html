@@ -14,9 +14,14 @@
 	<div id="wrapper">
 		<div id="sidebar">
 			<ul>
-				<li><a href="/docs/">docs</a></li>
+				<li><a href="{% url 'docs.views.index' page='' %}">docs</a></li>
+
+				{% if not user.is_authenticated %}
+				<li><a href="{% url 'django.contrib.auth.views.login' %}">login</a></li>
+				{% else %}
 				<li><a href="/corpos/">corpos</a></li>
 				<li><a href="/joueurs/">joueurs</a></li>
+				{% endif %}
 			</ul>
 		</div>
 
