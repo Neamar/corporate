@@ -2,41 +2,41 @@
 
 ## Concepts
 ### Ordres disponibles
-* Acheter un point d'influence corpo
-* Acheter une part
+* Acheter un point d'influence corpo *(une fois par tour)*
+* Acheter une part *(dispo autant de fois qu'influence corpo)*
     - Paramètre :
         + Corpo
-* Voter
+* Voter *(dispo autant de fois qu'influence corpo)*
     - Paramètre :
         + Corpo+
         + Corpo-
-* Spéculation sur une corporation. Nombre limité à ton influence corpo (pour corpo + produit dérivé)
+* Spéculation sur une corporation *(dispo autant de fois qu'influence corpo - nb spéculations sur produit dérivé)*
     - Paramètre :
         + Corpo
         + Actifs en fin de tour
         + Mise (maxé par influence corpo * 100k)
-* Spéculation sur un produit dérivé. Nombre limité à ton influence corpo (pour corpo + produit dérivé)
+* Spéculation sur un produit dérivé *(dispo autant de fois qu'influence corpo - nb spéculations sur corporation)*
     - Paramètre :
         + Produit dérivé
         + À la hausse / à la baisse
         + Mise (maxé par influence corpo * 100k)
-* Run de Protection
+* Run de Protection *(dispo autant de fois que voulu)*
     - Paramètre :
         + Corpo bénéficiaire
         + Pourcentage
         + Bonus de 30%
-* Run de Sabotage
+* Run de Sabotage *(dispo autant de fois que voulu)*
     - Paramètre :
         + Corpo victime
         + Pourcentage
         + Bonus de 30%
-* Run de Datasteal
+* Run de Datasteal *(dispo autant de fois que voulu)*
     - Paramètre :
         + Corpo victime
         + Corpo bénéficiaire
         + Pourcentage
         + Bonus de 30%
-* Changer de nationalité corpo
+* Changer de nationalité corpo *(une fois par tour)*
     - Paramètre :
         + Corpo hôte
 
@@ -223,7 +223,7 @@ Resolution:
 
 #### engine.corporations.effects
 Apply first / last effects
-If an effect updates the ranking, the second effect to be applied is still determined by the initial ranking, e.g. before applying any effect we need to store first and last corporation.
+
 Models:
 * CorporationEffect
     - -> Corporation
@@ -265,7 +265,3 @@ Resolution:
 * (30) ProtectionRun
 * (35) SabotageRun / DatastealRun
 
-
-#### engine.fixers
-Base application for fixers.
-To be defined later with Laedius for models and effects.
