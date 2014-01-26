@@ -20,7 +20,7 @@ def index(request, page):
 	except IOError:
 		raise Http404("No documentation on this subject.")
 
-	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'table', 'footnotes'], safe_mode=True, enable_attributes=False)
+	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'footnotes'], safe_mode=True, enable_attributes=False)
 	content = md.convert(raw)
 
 	try:
