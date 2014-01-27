@@ -6,11 +6,11 @@ from engine_modules.share.tasks import DividendTask
 
 class TasksTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless", initials_assets=7)
+		self.bc = BaseCorporation("shiawase")
 		self.bc.save()
-		self.bc2 = BaseCorporation(name="Renraku", description="Priceless", initials_assets=10)
+		self.bc2 = BaseCorporation("renraku")
 		self.bc2.save()
-		self.bc3 = BaseCorporation(name="Ares", description="Ruthless", initials_assets=13)
+		self.bc3 = BaseCorporation("ares")
 		self.bc3.save()
 
 		super(TasksTest, self).setUp()

@@ -6,10 +6,10 @@ from engine_modules.vote.models import VoteOrder
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless.", initials_assets=10)
+		self.bc = BaseCorporation("renraku")
 		self.bc.save()
 
-		self.bc2 = BaseCorporation(name="AZER", description="TY", initials_assets=15)
+		self.bc2 = BaseCorporation("shiawase")
 		self.bc2.save()
 
 		super(OrdersTest, self).setUp()

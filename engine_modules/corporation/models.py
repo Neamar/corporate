@@ -1,25 +1,50 @@
 from django.db import models
+from django.conf import settings
 
 from engine.models import Game
 
+# To be changed (architecture decision): where to put the .md files
+BASE_CORPO_DIR = "{0}/engine_modules/corporation/base_corporation".format(settings.BASE_DIR)
 
-class BaseCorporation(models.Model):
+class BaseCorporation():
 	"""
 	Basic corporation definition, reused for each game
+	Implemented as a separate non-model class to avoid cluttering the database
 	"""
-	name = models.CharField(max_length=50, unique=True)
-	description = models.TextField()
-	initials_assets = models.PositiveSmallIntegerField(default=10)
 
+	def __init__(self, slug):
+
+		path = "{0}/{1}.md".format(BASE_CORPO_DIR, slug)
+	        raw = ''
+        	try:
+                	with codecs.open(path, encoding='utf-8') as content_file:
+                        	for line in content_file:
+                                	raw += line
+        	except IOError:
+                	raise Http404("No such Base Corporation was found.")
+
+        	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'footnotes'], safe_mode=True, enable_attributes=False)
+        	content = md.convert(raw)
+
+                self.name = md.Meta['name'][0]
+                self.initials_assets = md.Meta['name'][0]
+		try:
+                	self.initials_assets = int(md.Meta['initials_assets'][0], 10)
+		except:
+			# In the Model, the default value used to be 10
+			self.initials_assets = 10
+		print "Content: %s" %content
+
+		
 
 class Corporation(models.Model):
 	"""
 	A corporation being part of a game
 	"""
 	class Meta:
-		unique_together = (('base_corporation', 'game'), )
+		unique_together = (('base_corporation_slug', 'game'), )
 
-	base_corporation = models.ForeignKey(BaseCorporation)
+	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
 	assets = models.PositiveSmallIntegerField()
 

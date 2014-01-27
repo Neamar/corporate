@@ -5,11 +5,11 @@ from engine_modules.corporation.models import BaseCorporation
 
 class OffensiveRunTaskTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless", initials_assets=10)
+		self.bc = BaseCorporation("shiawase")
 		self.bc.save()
-		self.bc2 = BaseCorporation(name="Renraku", description="Priceless", initials_assets=15)
+		self.bc2 = BaseCorporation("renraku")
 		self.bc2.save()
-		self.bc3 = BaseCorporation(name="Ares", description="Ruthless", initials_assets=20)
+		self.bc3 = BaseCorporation("ares")
 		self.bc3.save()
 
 		super(OffensiveRunTaskTest, self).setUp()

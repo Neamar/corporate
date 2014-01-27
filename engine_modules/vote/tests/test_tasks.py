@@ -4,10 +4,10 @@ from engine_modules.vote.models import VoteOrder
 
 class TaskTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="bc1")
+		self.bc = BaseCorporation("renraku")
 		self.bc.save()
 
-		self.bc2 = BaseCorporation(name="bc2")
+		self.bc2 = BaseCorporation("shiawase")
 		self.bc2.save()
 		
 		super(TaskTest, self).setUp()

@@ -5,7 +5,7 @@ from engine_modules.corporation.models import BaseCorporation, Corporation
 
 class TasksTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless.")
+		self.bc = BaseCorporation("renraku")
 		self.bc.save()
 		super(TasksTest, self).setUp()
 		self.c = Corporation.objects.get(base_corporation=self.bc)

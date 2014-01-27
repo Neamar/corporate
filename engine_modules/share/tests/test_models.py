@@ -8,7 +8,7 @@ from engine_modules.share.models import Share
 
 class ModelTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless.")
+		self.bc = BaseCorporation("renraku")
 		self.bc.save()
 
 		super(ModelTest, self).setUp()

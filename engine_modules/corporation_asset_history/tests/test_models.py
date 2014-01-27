@@ -7,7 +7,7 @@ class ModelsTest(EngineTestCase):
 	Unit tests for engine models
 	"""
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless")
+		self.bc = BaseCorporation("renraku")
 		self.bc.save()
 
 		super(ModelsTest, self).setUp()

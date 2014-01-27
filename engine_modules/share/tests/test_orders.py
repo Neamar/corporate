@@ -8,7 +8,7 @@ from messaging.models import Note
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):
-		bc = BaseCorporation(name="bc1")
+		bc = BaseCorporation("renraku")
 		bc.save()
 
 		super(OrdersTest, self).setUp()

@@ -9,11 +9,11 @@ class TasksTest(EngineTestCase):
 	Unit tests for engine models
 	"""
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless")
+		self.bc = BaseCorporation("shiawase")
 		self.bc.save()
-		self.bc2 = BaseCorporation(name="Renraku", description="Priceless")
+		self.bc2 = BaseCorporation("renraku")
 		self.bc2.save()
-		self.bc3 = BaseCorporation(name="Ares", description="Ruthless")
+		self.bc3 = BaseCorporation("ares")
 		self.bc3.save()
 
 		super(TasksTest, self).setUp()

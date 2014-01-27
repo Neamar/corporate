@@ -5,11 +5,11 @@ from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrde
 
 class RunOrdersTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless", initials_assets=10)
+		self.bc = BaseCorporation("renraku")
 		self.bc.save()
-		self.bc2 = BaseCorporation(name="Renraku", description="Priceless", initials_assets=15)
+		self.bc2 = BaseCorporation("shiawase")
 		self.bc2.save()
-		self.bc3 = BaseCorporation(name="Ares", description="Ruthless", initials_assets=20)
+		self.bc3 = BaseCorporation("ares")
 		self.bc3.save()
 
 		super(RunOrdersTest, self).setUp()
