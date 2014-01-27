@@ -32,8 +32,6 @@ def orders(request, game_id):
 
 	all_orders = [{"type": order, 'name': order.__name__} for order in orders_list]
 
-	print all_orders
-
 	for order in all_orders:
 		instance = order["type"](player=player)
 		try:
