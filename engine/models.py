@@ -100,8 +100,12 @@ class Player(models.Model):
 			try:
 				details = getattr(order, order.type.lower())
 			except AttributeError:
-				# TODO : CHANGE DAT SHIT
-				details = getattr(order.runorder, order.type.lower())
+				try:
+					# TODO : CHANGE DAT SHIT
+					details = getattr(order.runorder, order.type.lower())
+				except AttributeError:
+					# TODO : CHANGE DAT SHIT (again)
+					details = getattr(order.runorder.offensiverunorder, order.type.lower())
 
 			message += "* %s\n" % details.description()
 
