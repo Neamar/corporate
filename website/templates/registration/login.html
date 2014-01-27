@@ -1,5 +1,6 @@
-{% extends "base.html" %}
+{% extends "template.html" %}
 
+{% block h1 %}Connexion au site{% endblock %}
 {% block content %}
 
 {% if form.errors %}
@@ -10,12 +11,12 @@
 {% csrf_token %}
 <table>
 <tr>
-	<td>{{ form.username.label_tag }}</td>
-	<td>{{ form.username }}</td>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
 </tr>
 <tr>
-	<td>{{ form.password.label_tag }}</td>
-	<td>{{ form.password }}</td>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
 </tr>
 </table>
 

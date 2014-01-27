@@ -1,0 +1,154 @@
+body
+{
+   background:url("city.jpg") no-repeat fixed center top #64595f;
+}
+
+:visited
+{
+   color:#0000EE;
+}
+
+.top
+{
+  text-align:center;
+  display:block;
+}
+
+.right
+{
+   text-align:right;
+}
+
+.spacer
+{
+   margin:90% 0;
+}
+
+table
+{
+   margin:auto;
+   border-collapse:collapse;
+   width:90%;
+}
+
+table caption
+{
+   text-align:right;
+   font-variant:small-caps;
+}
+tr, td, th
+{
+   border:1px solid black;
+}
+
+tbody tr:nth-child(odd)
+{
+   background:rgba(255, 255, 255, .3)
+}
+
+td a
+{
+   color:black !important;
+   text-decoration:none;
+}
+
+#wrapper
+{
+   width:600px;
+   margin:auto;
+}
+
+#sidebar
+{
+   float:right;
+   font-family:Audiowide, cursive;
+   text-shadow:0.1em 0 0.2em white;
+}
+
+#sidebar ul
+{
+   list-style:none;
+}
+
+#sidebar li
+{
+   float:left;
+   padding-right:5px;
+   padding-bottom:10px;
+}
+
+#sidebar li:after
+{
+   padding-left:5px;
+   content:"|";
+}
+
+#sidebar li:last-child:after
+{
+   padding-left:0;
+   content:''
+}
+
+#end
+{
+   text-align:center;
+   font-family:Audiowide, cursive;
+}
+
+#end a
+{
+   color:white;
+   text-shadow:0px 3px 3px blue;
+}
+
+#content
+{
+   clear:both;
+   border:1px solid #AAB123;
+   border-radius:5px;
+   box-shadow:0 0 20px rgba(0, 0, 0, 0.2);
+   padding:10px;
+   text-align:justify;
+   font-family:"Lucida Sans Unicode","Lucida Grande",sans-serif;
+   text-shadow:-2px 1px 3px #DDDDDD;
+   background-color:rgb(220,220,220);
+}
+
+#content p
+{
+   text-indent:2em;
+}
+
+#content h1, h2, h3, h4, h5
+{
+   font-family:Syncopate, sans-serif;
+   text-align:left;
+}
+
+#content h1 a, h2 a, h3 a, h4 a, h5 a, h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited
+{
+   color:black;
+   text-decoration:none;
+}
+
+#content h1
+{
+   text-align:center;
+}
+
+#content h2, h3, h4, h5
+{
+   border-bottom:1px solid #23AAB1;
+}
+
+@media screen and (max-width: 960px) {
+   body
+   {
+      background-image:none;
+   }
+
+   #wrapper
+   {
+      width: 100%;
+   }
+}

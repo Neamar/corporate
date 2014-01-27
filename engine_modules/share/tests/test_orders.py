@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share, BuyShareOrder
 from engine_modules.corporation.models import Corporation, BaseCorporation
+from messaging.models import Note
 
 
 class OrdersTest(EngineTestCase):
@@ -32,7 +34,7 @@ class OrdersTest(EngineTestCase):
 		"""
 		self.o.resolve()
 
-		s = Share.objects.get(pk=1)
+		s = Share.objects.get()
 		self.assertEqual(s.player, self.p)
 		self.assertEqual(s.corporation, self.o.corporation)
 		self.assertEqual(s.turn, self.p.game.current_turn)
@@ -52,3 +54,15 @@ class OrdersTest(EngineTestCase):
 		self.p.influence.save()
 		# assertNoRaises
 		o2.clean()
+
+	def test_order_message(self):
+		"""
+		Note differ after first share
+		"""
+		self.o.resolve()
+		n = Note.objects.filter(category="Parts").last()
+		self.assertTrue(u'première' in n.content)
+
+		self.o.resolve()
+		n = Note.objects.filter(category="Parts").last()
+		self.assertTrue(u'2ème' in n.content)
