@@ -36,6 +36,17 @@
         + Corpo bénéficiaire
         + Pourcentage
         + Bonus de 30%
+* Run d'Effraction *(dispo autant de fois que voulu)*
+    - Paramètre :
+        + Corpo victime
+        + Corpo bénéficiaire
+        + Pourcentage
+        + Bonus de 30%
+* Run d'Information *(dispo autant de fois que voulu)*
+    - Paramètre :
+        + Joueur cible
+        + Pourcentage
+        + Bonus de 30%
 * Changer de nationalité corpo *(une fois par tour)*
     - Paramètre :
         + Corpo hôte
