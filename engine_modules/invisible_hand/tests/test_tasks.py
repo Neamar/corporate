@@ -1,19 +1,17 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation
+from engine_modules.corporation.models import Corporation
 
 class TaskTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation("renraku")
-		self.bc2 = BaseCorporation("shiawase")
 		
 		super(TaskTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
-		self.c.assets=10
-		self.c.save()
-		self.c2 = self.g.corporation_set.get(base_corporation_slug=self.bc2.slug)
-		self.c2.assets=10
-		self.c2.save()
+		self.g.corporation_set.all().delete()
+
+		self.c = Corporation(base_corporation_slug='renraku', assets=10)
+		self.g.corporation_set.add(self.c)
+		self.c2 = Corporation(base_corporation_slug='shiawase', assets=10)
+		self.g.corporation_set.add(self.c2)
 
 	def test_invisible_hand_with_two_corporations(self):
 		self.c2.assets = 15

@@ -55,6 +55,7 @@ class Corporation(models.Model):
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
 	assets = models.PositiveSmallIntegerField()
+
 	def _base_corporation(self):
 		return BaseCorporation(self.base_corporation_slug)
 

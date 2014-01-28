@@ -1,20 +1,28 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation
+from engine_modules.corporation.models import Corporation
 from engine_modules.share.models import Share, BuyShareOrder
 from engine_modules.share.tasks import DividendTask
 
 
 class TasksTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation("shiawase")
-		self.bc2 = BaseCorporation("renraku")
-		self.bc3 = BaseCorporation("ares")
 
 		super(TasksTest, self).setUp()
 
-		self.last_corporation = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
-		self.medium_corporation = self.g.corporation_set.get(base_corporation_slug=self.bc2.slug)
-		self.first_corporation = self.g.corporation_set.get(base_corporation_slug=self.bc3.slug)
+		self.g.corporation_set.all().delete()
+
+		self.c = Corporation(base_corporation_slug='renraku', assets=20)
+		self.g.corporation_set.add(self.c)
+		self.c2 = Corporation(base_corporation_slug='shiawase', assets=10)
+		self.g.corporation_set.add(self.c2)
+		self.c3 = Corporation(base_corporation_slug='ares', assets=5)
+		self.g.corporation_set.add(self.c3)
+
+
+		self.first_corporation = self.c
+		self.medium_corporation = self.c2
+		self.last_corporation = self.c3
+
 		self.g.disable_invisible_hand = True
 
 	def test_buy_task_applied(self):
@@ -63,6 +71,7 @@ class TasksTest(EngineTestCase):
 			corporation=self.first_corporation
 		)
 		self.s.save()
+
 
 		money = self.reload(self.p).money
 		self.g.resolve_current_turn()

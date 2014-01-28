@@ -45,5 +45,4 @@ class TasksTest(EngineTestCase):
 2- Renraku Computer Systems : 12  (+2)
 3- Shiawase Corporation : 10  (+0)"""
 
-		print message.content
 		self.assertTrue(expected in message.content)
