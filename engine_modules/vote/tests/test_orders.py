@@ -7,19 +7,17 @@ from engine_modules.vote.models import VoteOrder
 class OrdersTest(EngineTestCase):
 	def setUp(self):
 		self.bc = BaseCorporation("renraku")
-		self.bc.save()
-
 		self.bc2 = BaseCorporation("shiawase")
-		self.bc2.save()
 
 		super(OrdersTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation=self.bc)
-
-		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
+		self.c = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
+		self.c2 = self.g.corporation_set.get(base_corporation_slug=self.bc2.slug)
 
 	def test_corporation_up_and_down(self):
 		
+		begin_assets_1 = self.c.assets
+		begin_assets_2 = self.c2.assets
 		o = VoteOrder(
 			corporation_up=self.c, 
 			corporation_down=self.c2, 
@@ -29,8 +27,8 @@ class OrdersTest(EngineTestCase):
 
 		o.resolve()
 
-		self.assertEqual(self.reload(self.c).assets, 11)
-		self.assertEqual(self.reload(self.c2).assets, 14)
+		self.assertEqual(self.reload(self.c).assets, begin_assets_1 + 1)
+		self.assertEqual(self.reload(self.c2).assets, begin_assets_2 - 1)
 
 	def test_cant_vote_more_than_influence(self):
 		self.p.influence.level=1

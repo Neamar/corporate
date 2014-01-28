@@ -6,17 +6,14 @@ from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrde
 class RunOrdersTest(EngineTestCase):
 	def setUp(self):
 		self.bc = BaseCorporation("renraku")
-		self.bc.save()
 		self.bc2 = BaseCorporation("shiawase")
-		self.bc2.save()
 		self.bc3 = BaseCorporation("ares")
-		self.bc3.save()
 
 		super(RunOrdersTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation=self.bc)
-		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
-		self.c3 = self.g.corporation_set.get(base_corporation=self.bc3)
+		self.c = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
+		self.c2 = self.g.corporation_set.get(base_corporation_slug=self.bc2.slug)
+		self.c3 = self.g.corporation_set.get(base_corporation_slug=self.bc3.slug)
 
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,

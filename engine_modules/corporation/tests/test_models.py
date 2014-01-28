@@ -1,11 +1,12 @@
+from os import listdir
+
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation, Corporation
+from engine_modules.corporation.models import BaseCorporation, Corporation, BASE_CORPO_DIR
 
 
 class ModelTest(EngineTestCase):
 	def setUp(self):
 		self.bc = BaseCorporation("renraku")
-		self.bc.save()
 
 		super(ModelTest, self).setUp()
 
@@ -15,9 +16,7 @@ class ModelTest(EngineTestCase):
 		"""
 
 		corporations = Corporation.objects.all()
-		self.assertEqual(len(corporations), 1)
-		self.assertEqual(corporations[0].base_corporation, self.bc)
-		self.assertEqual(corporations[0].assets, self.bc.initials_assets)
+		self.assertEqual(len(corporations), len([f for f in listdir(BASE_CORPO_DIR) if f.endswith('.md')]))
 
 	def test_corporation_deleted_when_asset_drops_to_zero(self):
 		"""

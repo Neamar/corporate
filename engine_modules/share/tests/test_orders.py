@@ -9,11 +9,10 @@ from messaging.models import Note
 class OrdersTest(EngineTestCase):
 	def setUp(self):
 		bc = BaseCorporation("renraku")
-		bc.save()
 
 		super(OrdersTest, self).setUp()
 
-		self.c = Corporation.objects.get(base_corporation=bc)
+		self.c = Corporation.objects.get(base_corporation_slug=bc.slug)
 		self.o = BuyShareOrder(
 			player=self.p,
 			corporation=self.c

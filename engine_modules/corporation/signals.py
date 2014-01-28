@@ -15,8 +15,6 @@ def auto_create_corporation(sender, instance, **kwargs):
 	"""
 	base_corporations = BaseCorporation.retrieve_all()
 	for base_corporation in base_corporations:
-	#Temporary, only for debug, don't freak out, I'll remove it later
-		print "Corporation : %s" %base_corporation.name
 		Corporation(
 			base_corporation_slug=base_corporation.slug,
 			game=instance,

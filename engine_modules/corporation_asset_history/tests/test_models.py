@@ -8,11 +8,10 @@ class ModelsTest(EngineTestCase):
 	"""
 	def setUp(self):
 		self.bc = BaseCorporation("renraku")
-		self.bc.save()
 
 		super(ModelsTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation=self.bc)
+		self.c = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
 
 	def test_assets_saved_on_init(self):
 		"""
