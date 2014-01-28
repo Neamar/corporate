@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- 
 from engine.testcases import EngineTestCase
 from messaging.models import Message
-from engine_modules.corporation.models import BaseCorporation
+from engine_modules.corporation.models import Corporation
 
 
 class TasksTest(EngineTestCase):
@@ -9,15 +9,13 @@ class TasksTest(EngineTestCase):
 	Unit tests for engine models
 	"""
 	def setUp(self):
-		self.bc = BaseCorporation("shiawase")
-		self.bc2 = BaseCorporation("renraku")
-		self.bc3 = BaseCorporation("ares")
-
 		super(TasksTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
-		self.c2 = self.g.corporation_set.get(base_corporation_slug=self.bc2.slug)
-		self.c3 = self.g.corporation_set.get(base_corporation_slug=self.bc3.slug)
+		self.g.corporation_set.all().delete()
+		self.c = Corporation(base_corporation_slug='shiawase', assets=10)
+		self.c2 = Corporation(base_corporation_slug='renraku', assets=10)
+		self.c3 = Corporation(base_corporation_slug='ares', assets=10)
+		self.g.corporation_set.add(self.c, self.c2, self.c3)
 
 		self.g.disable_invisible_hand = True
 
@@ -40,10 +38,12 @@ class TasksTest(EngineTestCase):
 		self.c2.save()
 
 		self.g.resolve_current_turn()
-		message_content = self.p.message_set.get(flag=Message.RESOLUTION,turn=self.g.current_turn - 1).content
+		message = self.p.message_set.get(flag=Message.RESOLUTION,turn=self.g.current_turn - 1)
 
-		expected="""1- Ares : 13  (+3)
-2- Renraku : 12  (+2)
-3- NC&T : 10  (+0)"""
+		expected="""## Classement corporatiste
+* 1- Ares Macrotechnology Incorporated : 13  (+3)
+2- Renraku Computer Systems : 12  (+2)
+3- Shiawase Corporation : 10  (+0)"""
 
-		self.assertTrue(expected in message_content)
+		print message.content
+		self.assertTrue(expected in message.content)
