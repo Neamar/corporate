@@ -190,6 +190,7 @@ class Order(models.Model):
 		class OrderForm(ModelForm):
 			class Meta:
 				model = self.__class__
+				exclude = ['player']
 
 		return OrderForm()
 

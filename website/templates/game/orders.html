@@ -12,6 +12,11 @@ Rejoignez la danse pour devenir le roi d'un instant !</p>
 	<form method="post" action="">
 		<table>
 		{{ order.form.as_table }}
+		<tr>
+			<td colspan="2">
+				<input type="submit" value="Envoyer l'ordre" />
+			</td>
+		</tr>
 		</table>
 	</form>
 	{% else %}
