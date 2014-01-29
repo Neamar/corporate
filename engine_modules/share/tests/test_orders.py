@@ -21,9 +21,6 @@ class OrdersTest(EngineTestCase):
 		)
 		self.o.save()
 
-		self.p.money = 2000
-		self.p.save()
-
 	def test_order_cost_money(self):
 		"""
 		Order should cost money
