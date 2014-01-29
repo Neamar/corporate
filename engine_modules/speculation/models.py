@@ -66,7 +66,7 @@ class DerivativeSpeculationOrder(Order):
 	)
 
 	speculation = models.BooleanField(choices=UPDOWN_CHOICES)
-	derivative = models.OneToManyField(Corporation)
+	derivative = models.ManyToManyField(Corporation)
 	investment = models.PositiveIntegerField()
 
 	def get_cost(self):

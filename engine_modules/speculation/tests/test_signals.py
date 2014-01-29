@@ -10,11 +10,11 @@ class SignalsTest(EngineTestCase):
 
 		self.g.corporation_set.all().delete()
 
-		self.first_corporation = Corporation(base_corporation_slug='Last', assets=100)
+		self.first_corporation = Corporation(base_corporation_slug='ares', assets=100)
 		self.g.corporation_set.add(self.first_corporation)
-		self.medium_corporation = Corporation(base_corporation_slug='Medium', assets=10)
+		self.medium_corporation = Corporation(base_corporation_slug='renraku', assets=10)
 		self.g.corporation_set.add(self.medium_corporation)
-		self.last_corporation = Corporation(base_corporation_slug='First', assets=1)
+		self.last_corporation = Corporation(base_corporation_slug='shiawase', assets=1)
 		self.g.corporation_set.add(self.last_corporation)
 
 	def test_max_speculation(self):
