@@ -5,15 +5,12 @@ from engine_modules.corporation.models import BaseCorporation
 
 class OffensiveRunTaskTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation("shiawase")
-		self.bc2 = BaseCorporation("renraku")
-		self.bc3 = BaseCorporation("ares")
 
 		super(OffensiveRunTaskTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
-		self.c2 = self.g.corporation_set.get(base_corporation_slug=self.bc2.slug)
-		self.c3 = self.g.corporation_set.get(base_corporation_slug=self.bc3.slug)
+		self.c = self.g.corporation_set.get(base_corporation_slug="shiawase")
+		self.c2 = self.g.corporation_set.get(base_corporation_slug="renraku")
+		self.c3 = self.g.corporation_set.get(base_corporation_slug="ares")
 
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,

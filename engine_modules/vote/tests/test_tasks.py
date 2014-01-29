@@ -4,13 +4,11 @@ from engine_modules.vote.models import VoteOrder
 
 class TaskTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation("renraku")
-		self.bc2 = BaseCorporation("shiawase")
 		
 		super(TaskTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
-		self.c2 = self.g.corporation_set.get(base_corporation_slug=self.bc2.slug)
+		self.c = self.g.corporation_set.get(base_corporation_slug="renraku")
+		self.c2 = self.g.corporation_set.get(base_corporation_slug="shiawase")
 
 		self.v = VoteOrder(
 			player=self.p,
@@ -32,4 +30,4 @@ class TaskTest(EngineTestCase):
 		self.c2 = self.reload(self.c2)
 
 		self.assertEqual(self.c.assets, begin_assets_1 + 1)
-		self.assertEqual(self.c2.assets, begin_assets_2-1)
+		self.assertEqual(self.c2.assets, begin_assets_2 - 1)

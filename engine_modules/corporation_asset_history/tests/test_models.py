@@ -7,11 +7,10 @@ class ModelsTest(EngineTestCase):
 	Unit tests for engine models
 	"""
 	def setUp(self):
-		self.bc = BaseCorporation("renraku")
 
 		super(ModelsTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
+		self.c = self.g.corporation_set.get(base_corporation_slug="renraku")
 
 	def test_assets_saved_on_init(self):
 		"""

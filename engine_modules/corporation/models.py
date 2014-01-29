@@ -4,12 +4,11 @@ import markdown
 from os import  listdir
 from django.db import models
 from django.conf import settings
-from django.utils.functional import lazy_property
+from django.utils.functional import cached_property
 
 from engine.models import Game
 
-# To be changed (architecture decision): where to put the .md files
-BASE_CORPO_DIR = "{0}/engine_modules/corporation/base_corporation".format(settings.BASE_DIR)
+BASE_CORPO_DIR = "%s/engine_modules/corporation/base_corporation" %(settings.BASE_DIR)
 
 class BaseCorporation():
 	"""
@@ -19,31 +18,37 @@ class BaseCorporation():
 
 	def __init__(self, slug):
 
-		path = "{0}/{1}.md".format(BASE_CORPO_DIR, slug)
-	        raw = ''
-        	try:
-                	with codecs.open(path, encoding='utf-8') as content_file:
-                        	for line in content_file:
-                                	raw += line
-        	except IOError:
-                	raise Http404("No such Base Corporation was found.")
+		path = "%s/%s.md" %(BASE_CORPO_DIR, slug)
+		raw = ''
+		
+		with codecs.open(path, encoding='utf-8') as content_file:
+			for line in content_file:
+				raw += line
 
-        	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'footnotes'], safe_mode=True, enable_attributes=False)
-        	content = md.convert(raw)
+		md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'footnotes'], safe_mode=True, enable_attributes=False)
+		content = md.convert(raw)
 
-                self.name = md.Meta['name'][0]
-                self.slug = md.Meta['slug'][0]
+		self.name = md.Meta['name'][0]
+		self.slug = md.Meta['slug'][0]
 		try:
-                	self.initials_assets = int(md.Meta['initials_assets'][0], 10)
+			self.initials_assets = int(md.Meta['initials_assets'][0], 10)
 		except:
 			# In the Model, the default value used to be 10
 			self.initials_assets = 10
 
 	@classmethod
 	def retrieve_all(cls):
-		# Having to strip the extension seems kinda stupid, it feels like the constructor should take the slug, not the path
-		return [ BaseCorporation(f.strip(".md")) for f in listdir(BASE_CORPO_DIR) if f.endswith('.md')]
+		return BASE_CORPORATIONS.values()
 		
+def build_corpo_dict():
+	bc_dict = {}
+	for f in listdir(BASE_CORPO_DIR):
+		if f.endswith('.md'):
+			bc = BaseCorporation(f.strip(".md"))
+			bc_dict[bc.slug] = bc
+	return bc_dict
+
+BASE_CORPORATIONS = build_corpo_dict()
 
 class Corporation(models.Model):
 	"""
@@ -56,10 +61,9 @@ class Corporation(models.Model):
 	game = models.ForeignKey(Game)
 	assets = models.PositiveSmallIntegerField()
 
-	def _base_corporation(self):
-		return BaseCorporation(self.base_corporation_slug)
-
-	base_corporation = lazy_property(_base_corporation, None)
+	@cached_property
+	def base_corporation(self):
+		return BASE_CORPORATIONS[self.base_corporation_slug]
 
 	def __unicode__(self):
 		return "%s (%s)" % (self.base_corporation.name, self.game)

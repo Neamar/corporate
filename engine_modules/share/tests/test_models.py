@@ -8,7 +8,6 @@ from engine_modules.share.models import Share
 
 class ModelTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation("renraku")
 
 		super(ModelTest, self).setUp()
 
@@ -17,7 +16,7 @@ class ModelTest(EngineTestCase):
 		Share should be created at current turn
 		"""
 		s = Share(
-			corporation=self.g.corporation_set.get(base_corporation_slug=self.bc.slug),
+			corporation=self.g.corporation_set.get(base_corporation_slug="renraku"),
 			player=self.p
 		)
 		s.save()
@@ -29,7 +28,7 @@ class ModelTest(EngineTestCase):
 		Share should be created at current turn
 		"""
 		s = Share(
-			corporation=self.g.corporation_set.get(base_corporation_slug=self.bc.slug),
+			corporation=self.g.corporation_set.get(base_corporation_slug="renraku"),
 			player=self.p
 		)
 		s.save()
@@ -48,7 +47,7 @@ class ModelTest(EngineTestCase):
 		g2.save()
 
 		s = Share(
-			corporation=g2.corporation_set.get(base_corporation_slug=self.bc.slug),
+			corporation=g2.corporation_set.get(base_corporation_slug="renraku"),
 			player=self.p
 		)
 		

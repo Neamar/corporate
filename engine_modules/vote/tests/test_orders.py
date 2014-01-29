@@ -6,13 +6,11 @@ from engine_modules.vote.models import VoteOrder
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation("renraku")
-		self.bc2 = BaseCorporation("shiawase")
 
 		super(OrdersTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
-		self.c2 = self.g.corporation_set.get(base_corporation_slug=self.bc2.slug)
+		self.c = self.g.corporation_set.get(base_corporation_slug="renraku")
+		self.c2 = self.g.corporation_set.get(base_corporation_slug="shiawase")
 
 	def test_corporation_up_and_down(self):
 		

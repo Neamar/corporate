@@ -6,7 +6,6 @@ from engine_modules.corporation.models import BaseCorporation, Corporation, BASE
 
 class ModelTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation("renraku")
 
 		super(ModelTest, self).setUp()
 
@@ -16,7 +15,7 @@ class ModelTest(EngineTestCase):
 		"""
 
 		corporations = Corporation.objects.all()
-		self.assertEqual(len(corporations), len([f for f in listdir(BASE_CORPO_DIR) if f.endswith('.md')]))
+		self.assertEqual(len(corporations), len(BaseCorporation.retrieve_all()))
 
 	def test_corporation_deleted_when_asset_drops_to_zero(self):
 		"""

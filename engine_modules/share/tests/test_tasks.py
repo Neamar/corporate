@@ -11,17 +11,12 @@ class TasksTest(EngineTestCase):
 
 		self.g.corporation_set.all().delete()
 
-		self.c = Corporation(base_corporation_slug='renraku', assets=20)
-		self.g.corporation_set.add(self.c)
-		self.c2 = Corporation(base_corporation_slug='shiawase', assets=10)
-		self.g.corporation_set.add(self.c2)
-		self.c3 = Corporation(base_corporation_slug='ares', assets=5)
-		self.g.corporation_set.add(self.c3)
-
-
-		self.first_corporation = self.c
-		self.medium_corporation = self.c2
-		self.last_corporation = self.c3
+		self.first_corporation = Corporation(base_corporation_slug='renraku', assets=20)
+		self.g.corporation_set.add(self.first_corporation)
+		self.medium_corporation = Corporation(base_corporation_slug='shiawase', assets=10)
+		self.g.corporation_set.add(self.medium_corporation)
+		self.last_corporation = Corporation(base_corporation_slug='ares', assets=5)
+		self.g.corporation_set.add(self.last_corporation)
 
 		self.g.disable_invisible_hand = True
 

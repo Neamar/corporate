@@ -7,11 +7,10 @@ from engine_modules.corporation.models import BaseCorporation
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation("ares")
 
 		super(OrdersTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation_slug=self.bc.slug)
+		self.c = self.g.corporation_set.get(base_corporation_slug='ares')
 
 		self.o = CitizenShipOrder(
 			player=self.p,
