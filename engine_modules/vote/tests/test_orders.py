@@ -58,4 +58,4 @@ class OrdersTest(EngineTestCase):
 		self.p.save()
 
 		# assertNoRaises
-		o.clean()
+		o2.clean()
