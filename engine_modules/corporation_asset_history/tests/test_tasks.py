@@ -41,8 +41,8 @@ class TasksTest(EngineTestCase):
 		message = self.p.message_set.get(flag=Message.RESOLUTION,turn=self.g.current_turn - 1)
 
 		expected="""## Classement corporatiste
-* 1- Ares Macrotechnology Incorporated : 13  (+3)
-2- Renraku Computer Systems : 12  (+2)
-3- Shiawase Corporation : 10  (+0)"""
+* 1- %s : 13  (+3)
+2- %s : 12  (+2)
+3- %s : 10  (+0)""" % (self.c3.base_corporation.name, self.c2.base_corporation.name, self.c.base_corporation.name)
 
 		self.assertTrue(expected in message.content)
