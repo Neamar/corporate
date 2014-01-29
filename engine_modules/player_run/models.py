@@ -6,6 +6,8 @@ from messaging.models import Message
 
 
 class InformationRunOrder(RunOrder):
+	title = "Lancer une run d'Information"
+	
 	target = models.ForeignKey(Player)
 
 	def resolve_successful(self):

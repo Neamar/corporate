@@ -6,9 +6,13 @@
 <p>Le <strong>Corporate Game: Manhattan</strong> est un jeu par navigateur en tour par tour (un tour par jour, huit tours par partie).<br />
 Rejoignez la danse pour devenir le roi d'un instant !</p>
 
-<ul>
 {% for order in orders %}
-	<li>{{ order.name }} : {{ order.available }}</li>
+	<h3>{{ order.title }}</h3>
+	{% if order.available != False %}
+		{{ order.form }}
+	{% else %}
+		Unavailable !
+	{% endif %}
 {% endfor %}
 </ul>
 

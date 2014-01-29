@@ -41,5 +41,9 @@ def orders(request, game_id):
 			order['available'] = False
 		except:
 			order['available'] = None
+		
+		order['title'] = instance.title
+		if order['available'] != False:
+			pass#order['form'] = instance.getForm()
 
 	return render(request, 'game/orders.html', { "game": game, "orders": all_orders})

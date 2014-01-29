@@ -110,6 +110,7 @@ class DataStealOrder(OffensiveRunOrder):
 	"""
 	Model for DataSteal Runs
 	"""
+	title = "Lancer une run de Datasteal"
 	
 	has_succeeded = models.BooleanField(default=False)
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")	
@@ -171,6 +172,7 @@ class SabotageOrder(OffensiveRunOrder):
 	"""
 	Model for Sabotage Runs
 	"""
+	title = "Lancer une run de Sabotage"
 
 	def resolve_success(self):
 		self.target_corporation.assets -= 2
@@ -236,6 +238,8 @@ class ProtectionOrder(DefensiveRunOrder):
 	"""
 	Model for Protection Runs
 	"""
+	title = "Lancer une run de Protection"
+
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
 	done = models.BooleanField(default=False)
 

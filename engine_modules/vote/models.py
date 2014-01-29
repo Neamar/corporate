@@ -7,6 +7,8 @@ class VoteOrder(Order):
 	"""
 	Order to vote for a Corporation
 	"""
+	title = "Voter pour les corporations"
+	
 	corporation_up = models.ForeignKey(Corporation, related_name="+")
 	corporation_down = models.ForeignKey(Corporation, related_name="+")
 

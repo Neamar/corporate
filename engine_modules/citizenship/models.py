@@ -12,6 +12,8 @@ class CitizenShipOrder(Order):
 	"""
 	Order to become citizen from a new corporation
 	"""
+	title = "Changement de citoyenneté corpo"
+
 	corporation = models.ForeignKey(Corporation)
 
 	def resolve(self):
