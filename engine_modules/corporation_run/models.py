@@ -118,7 +118,7 @@ class DataStealOrder(OffensiveRunOrder):
 	"""
 	title = "Lancer une run de Datasteal"
 	
-	has_succeeded = models.BooleanField(default=False)
+	has_succeeded = models.BooleanField(default=False, editable=False)
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")	
 
 	def resolve_success(self):
@@ -253,7 +253,7 @@ class ProtectionOrder(DefensiveRunOrder):
 	title = "Lancer une run de Protection"
 
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
-	done = models.BooleanField(default=False)
+	done = models.BooleanField(default=False, editable=False)
 
 	def resolve_successful(self):
 		self.done = True
