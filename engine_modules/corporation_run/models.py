@@ -5,29 +5,29 @@ from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
 
 datasteal_messages = {
-	'success': u"Votre équipe a réussi à voler des données de {0} pour le compte de {1}",
-	'fail': u"Votre équipe a échoué lors de la tentative de DataSteal sur {0} pour {1}",
+	'success': u"Votre équipe a réussi à voler des données de %s pour le compte de %s",
+	'fail': u"Votre équipe a échoué lors de la tentative de DataSteal sur %s pour %s",
 	'interception'	: {
-		'aggressor'	: u"Votre équipe a été interceptée lors de la tentative de DataSteal sur {0}. Elle a cependant réussi à s'enfuir",
-		'protector'	: u"Votre équipe a réussi à protéger {0} d'une tentative de DataSteal. L'équipe adverse a cependant réussi à s'enfuir",
+		'aggressor'	: u"Votre équipe a été interceptée lors de la tentative de DataSteal sur %s. Elle a cependant réussi à s'enfuir",
+		'protector'	: u"Votre équipe a réussi à protéger %s d'une tentative de DataSteal. L'équipe adverse a cependant réussi à s'enfuir",
 	},
 	'capture': {
-		'aggressor' : u"Votre équipe a été capturée par une autre lors de la tentative de DataSteal sur {0}. Le commanditaire est au courant de vos agissements",
-			'protector'	: u"Votre équipe a réussi à capturer une équipe de {0} lors d'une tentative de DataSteal sur {1} pour le compte de {2}.",
+		'aggressor' : u"Votre équipe a été capturée par une autre lors de la tentative de DataSteal sur %s. Le commanditaire est au courant de vos agissements",
+			'protector'	: u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative de DataSteal sur %s pour le compte de %s.",
 	},
-	'late': u"Votre équipe s'est introduite chez {0} mais n'a pas trouvé de donées intéressantes pour {1}"
+	'late': u"Votre équipe s'est introduite chez %s mais n'a pas trouvé de donées intéressantes pour %s"
 }
 
 sabotage_messages = {
-	'success': u"Votre équipe a réussi à saboter les opérations de {0}",
-	'fail': u"La tentative de votre équipe pour saboter {0} a échoué",
+	'success': u"Votre équipe a réussi à saboter les opérations de %s",
+	'fail': u"La tentative de votre équipe pour saboter %s a échoué",
 	'interception'	: {
-		'aggressor'	: u"Votre équipe a été inerceptée par une autre lors de la tentative de Sabotage sur {0}. Elle a cependant réussi à s'enfuir",
-		'protector'	: u"Votre équipe a réussi à protéger {0} d'une tentative de Sabotage. L'équipe adverse a cependant réussi à s'enfuir",
+		'aggressor'	: u"Votre équipe a été inerceptée par une autre lors de la tentative de Sabotage sur %s. Elle a cependant réussi à s'enfuir",
+		'protector'	: u"Votre équipe a réussi à protéger %s d'une tentative de Sabotage. L'équipe adverse a cependant réussi à s'enfuir",
 	},
 	'capture': {
-		'aggressor' : u"L'équipe que vous aviez envoyée saboter {0} a été capturée",
-		'protector'	: u"Votre équipe a réussi à capturer une équipe de {0} lors d'une tentative de Sabotage sur {1}",
+		'aggressor' : u"L'équipe que vous aviez envoyée saboter %s a été capturée",
+		'protector'	: u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative de Sabotage sur %s",
 	}
 }
 
@@ -121,7 +121,7 @@ class DataStealOrder(OffensiveRunOrder):
 		if(success_datasteals.exists()):
 			# Send a note for final message 
 			category = u"Run de Datasteal"
-			content = datasteal_messages['late'].format(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			content = datasteal_messages['late'] %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 			self.player.add_note(category=category, content=content)
 		else:
 			self.has_succeeded = True
@@ -131,36 +131,36 @@ class DataStealOrder(OffensiveRunOrder):
 
 			# Send a note for final message 
 			category = u"Run de Datasteal"
-			content = datasteal_messages['success'].format(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			content = datasteal_messages['success'] %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 			self.player.add_note(category=category, content=content)
 		return True
 
 	def resolve_fail(self):
 		# Send a note for final message
 		category = u"Run de Datasteal"
-		content = datasteal_messages['fail'].format(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+		content = datasteal_messages['fail'] %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 	def resolve_interception(self, po):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
-		content = datasteal_messages['interception']['aggressor'].format(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+		content = datasteal_messages['interception']['aggressor'] %(self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 		
 		# Send a note to the one who ordered the Protection
 		category = u"Run de Protection"
-		content = datasteal_messages['interception']['protector'].format(self.target_corporation.base_corporation.name)
+		content = datasteal_messages['interception']['protector'] %(self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 
 	def resolve_capture(self, po):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
-		content = datasteal_messages['capture']['aggressor'].format(self.target_corporation.base_corporation.name)
+		content = datasteal_messages['capture']['aggressor'] %(self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 		
 		# Send a note to the one who ordered the Protection
 		category = u"Run de Protection"
-		content = datasteal_messages['capture']['protector'].format(self.player.name, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+		content = datasteal_messages['capture']['protector'] %(self.player.name, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 		
 	def description(self):
@@ -178,35 +178,35 @@ class SabotageOrder(OffensiveRunOrder):
 
 		# Send a note for final message 
 		category = u"Run de Sabotage"
-		content = sabotage_messages['success'].format(self.target_corporation.base_corporation.name)
+		content = sabotage_messages['success'] %(self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 	def resolve_fail(self):
 		# Send a note for final message 
 		category = u"Run de Sabotage"
-		content = sabotage_messages['fail'].format(self.target_corporation.base_corporation.name)
+		content = sabotage_messages['fail'] %(self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 	def resolve_interception(self, po):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Sabotage"
-		content = sabotage_messages['interception']['aggressor'].format(self.target_corporation.base_corporation.name)
+		content = sabotage_messages['interception']['aggressor'] %(self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 		# Send a note to the one who ordered the Protection
 		category = u"Run de Protection"
-		content = sabotage_messages['interception']['protector'].format(self.target_corporation.base_corporation.name)
+		content = sabotage_messages['interception']['protector'] %(self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 	
 	def resolve_capture(self, po):
 		# Send a note for final message
 		category = u"Run de Sabotage"
-		content = sabotage_messages['capture']['aggressor'].format(self.target_corporation.base_corporation.name)
+		content = sabotage_messages['capture']['aggressor'] %(self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 		# Send a note to the one who ordered the Protection
 		category = u"Run de Protection"
-		content = sabotage_messages['capture']['protector'].format(self.player, self.target_corporation.base_corporation.name)
+		content = sabotage_messages['capture']['protector'] %(self.player, self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 		
 	def description(self):

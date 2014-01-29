@@ -55,7 +55,7 @@ class Player(models.Model):
 	name = models.CharField(max_length=64)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
 	game = models.ForeignKey(Game)
-	money = models.PositiveIntegerField(default=0)
+	money = models.PositiveIntegerField(default=2000)
 
 	def add_message(self, **kwargs):
 		"""

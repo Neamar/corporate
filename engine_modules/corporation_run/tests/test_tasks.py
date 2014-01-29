@@ -1,22 +1,15 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder
-from engine_modules.corporation.models import BaseCorporation
 
 
 class OffensiveRunTaskTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless", initials_assets=10)
-		self.bc.save()
-		self.bc2 = BaseCorporation(name="Renraku", description="Priceless", initials_assets=15)
-		self.bc2.save()
-		self.bc3 = BaseCorporation(name="Ares", description="Ruthless", initials_assets=20)
-		self.bc3.save()
 
 		super(OffensiveRunTaskTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation=self.bc)
-		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
-		self.c3 = self.g.corporation_set.get(base_corporation=self.bc3)
+		self.c = self.g.corporation_set.get(base_corporation_slug="shiawase")
+		self.c2 = self.g.corporation_set.get(base_corporation_slug="renraku")
+		self.c3 = self.g.corporation_set.get(base_corporation_slug="ares")
 
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
