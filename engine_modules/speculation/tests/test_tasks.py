@@ -1,6 +1,6 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import Corporation
-from engine_modules.speculation.models import SpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder
 
 
 class TasksTest(EngineTestCase):
@@ -16,7 +16,7 @@ class TasksTest(EngineTestCase):
 		self.last_corporation = Corporation(base_corporation_slug='shiawase', assets=1)
 		self.g.corporation_set.add(self.last_corporation)
 
-		self.o = SpeculationOrder(
+		self.o = CorporationSpeculationOrder(
 			player=self.p,
 			corporation=self.first_corporation,
 			rank=1,
@@ -24,7 +24,7 @@ class TasksTest(EngineTestCase):
 		)
 		self.o.save()
 
-	def test_speculation(self):
+	def test_corporation_speculation(self):
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money + 100)

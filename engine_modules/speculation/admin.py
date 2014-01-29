@@ -1,4 +1,4 @@
 from django.contrib import admin
-from engine_modules.speculation.models import SpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder
 
-admin.site.register(SpeculationOrder)
+admin.site.register(CorporationSpeculationOrder)

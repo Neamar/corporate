@@ -4,7 +4,7 @@ from engine.models import Order
 from engine_modules.corporation.models import Corporation
 
 
-class SpeculationOrder(Order):
+class CorporationSpeculationOrder(Order):
 	"""
 	Order to speculate on a corporation's rank
 	"""
@@ -50,4 +50,4 @@ class SpeculationOrder(Order):
 		return u"Miser %s ny sur la postion %s de la corporation %s" % (self.get_cost(), self.rank, self.corporation.base_corporation.name)
 
 
-orders = (SpeculationOrder,)
+orders = (CorporationSpeculationOrder,)

@@ -1,6 +1,6 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import Corporation
-from engine_modules.speculation.models import SpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder
 from engine.exceptions import OrderNotAvailable
 
 
@@ -20,7 +20,7 @@ class SignalsTest(EngineTestCase):
 	def test_max_speculation(self):
 		self.p.influence.level = 1
 
-		o = SpeculationOrder(
+		o = CorporationSpeculationOrder(
 			player=self.p,
 			corporation=self.last_corporation,
 			rank=1,
@@ -28,7 +28,7 @@ class SignalsTest(EngineTestCase):
 		)
 		o.save()
 
-		o2 = SpeculationOrder(
+		o2 = CorporationSpeculationOrder(
 			player=self.p,
 			corporation=self.last_corporation,
 			rank=1,
@@ -42,10 +42,10 @@ class SignalsTest(EngineTestCase):
 		# assertNoRaises
 		o2.clean()
 
-	def test_max_speculation_amount(self):
+	def test_max_corporation_speculation_amount(self):
 		self.p.influence.level = 1;
 
-		o = SpeculationOrder(
+		o = CorporationSpeculationOrder(
 			player=self.p,
 			corporation=self.last_corporation,
 			rank=1,
