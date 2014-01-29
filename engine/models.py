@@ -139,7 +139,6 @@ class Player(models.Model):
 
 class Order(models.Model):
 	title = "Ordre"
-	short_description = "Description"
 
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField(editable=False)
