@@ -27,11 +27,7 @@ class OrdersTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c).assets, begin_assets_1 + 1)
 		self.assertEqual(self.reload(self.c2).assets, begin_assets_2 - 1)
 
-	def test_cant_vote_more_than_influence(self):
-		self.p.influence.level=1
-		self.p.save()
-
-
+	def test_cant_vote_more_than_once(self):
 		o = VoteOrder(
 			corporation_up=self.c, 
 			corporation_down=self.c2, 
@@ -48,9 +44,3 @@ class OrdersTest(EngineTestCase):
 		)
 		
 		self.assertRaises(OrderNotAvailable, o2.clean)
-
-		self.p.influence.level=2
-		self.p.save()
-
-		# assertNoRaises
-		o.clean()
