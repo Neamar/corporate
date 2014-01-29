@@ -1,12 +1,6 @@
 from django.contrib import admin
 
-from engine_modules.corporation.models import BaseCorporation, Corporation
-
-
-class BaseCorporationAdmin(admin.ModelAdmin):
-	list_display = ('name', 'description')
-admin.site.register(BaseCorporation, BaseCorporationAdmin)
-
+from engine_modules.corporation.models import Corporation
 
 class CorporationAdmin(admin.ModelAdmin):
 	list_display = ('name', 'game', 'assets')

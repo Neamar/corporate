@@ -16,11 +16,3 @@ class TasksTest(EngineTestCase):
 		"""
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.p).influence.level, 2)
-
-	def test_task_applied_once(self):
-		self.g.current_turn += 1
-		self.g.save()
-
-		# Check order is only applied on creation turn
-		self.g.resolve_current_turn()
-		self.assertEqual(self.reload(self.p).influence.level, 1)

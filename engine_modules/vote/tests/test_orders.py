@@ -1,25 +1,20 @@
 from engine.testcases import EngineTestCase
 from engine.exceptions import OrderNotAvailable
-from engine_modules.corporation.models import BaseCorporation
 from engine_modules.vote.models import VoteOrder
 
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless.", initials_assets=10)
-		self.bc.save()
-
-		self.bc2 = BaseCorporation(name="AZER", description="TY", initials_assets=15)
-		self.bc2.save()
 
 		super(OrdersTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation=self.bc)
-
-		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
+		self.c = self.g.corporation_set.get(base_corporation_slug="renraku")
+		self.c2 = self.g.corporation_set.get(base_corporation_slug="shiawase")
 
 	def test_corporation_up_and_down(self):
 		
+		begin_assets_1 = self.c.assets
+		begin_assets_2 = self.c2.assets
 		o = VoteOrder(
 			corporation_up=self.c, 
 			corporation_down=self.c2, 
@@ -29,8 +24,8 @@ class OrdersTest(EngineTestCase):
 
 		o.resolve()
 
-		self.assertEqual(self.reload(self.c).assets, 11)
-		self.assertEqual(self.reload(self.c2).assets, 14)
+		self.assertEqual(self.reload(self.c).assets, begin_assets_1 + 1)
+		self.assertEqual(self.reload(self.c2).assets, begin_assets_2 - 1)
 
 	def test_cant_vote_more_than_once(self):
 		o = VoteOrder(
