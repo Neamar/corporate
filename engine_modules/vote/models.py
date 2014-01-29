@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+
 from engine.models import Order
 from engine_modules.corporation.models import Corporation
+
 
 class VoteOrder(Order):
 	"""
@@ -27,7 +29,12 @@ class VoteOrder(Order):
 	def description(self):
 		return u"Voter pour l'augmentation des actifs de %s et la diminution de %s" % (self.corporation_up.base_corporation.name, self.corporation_down.base_corporation.name)
 
+	def get_form(self):
+		form = super(VoteOrder, self).get_form()
+		form.fields['corporation_up'].queryset = self.player.game.corporation_set.all()
+		form.fields['corporation_down'].queryset = self.player.game.corporation_set.all()
 
+		return form
 
 orders = (VoteOrder,)
 

@@ -51,5 +51,10 @@ class BuyShareOrder(Order):
 	def description(self):
 		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)
 
+	def get_form(self):
+		form = super(BuyShareOrder, self).get_form()
+		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
 
 orders = (BuyShareOrder,)

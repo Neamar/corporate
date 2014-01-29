@@ -105,6 +105,12 @@ class OffensiveRunOrder(RunOrder):
 		"""
 		raise NotImplementedError()
 
+	def get_form(self):
+		form = super(OffensiveRunOrder, self).get_form()
+		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
+
 
 class DataStealOrder(OffensiveRunOrder):
 	"""
@@ -166,6 +172,12 @@ class DataStealOrder(OffensiveRunOrder):
 		
 	def description(self):
 		return u"Envoyer une équipe voler des données de %s pour le compte de %s" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+
+	def get_form(self):
+		form = super(DataStealOrder, self).get_form()
+		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
 
 
 class SabotageOrder(OffensiveRunOrder):
@@ -255,5 +267,11 @@ class ProtectionOrder(DefensiveRunOrder):
 
 	def description(self):
 		return u"Envoyer une équipe protéger les intérêts de %s" %(self.protected_corporation.base_corporation.name)
+
+	def get_form(self):
+		form = super(ProtectionOrder, self).get_form()
+		form.fields['protected_corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
 
 orders = (DataStealOrder, ProtectionOrder, SabotageOrder, )
