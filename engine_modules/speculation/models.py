@@ -93,4 +93,4 @@ class DerivativeSpeculationOrder(Order):
 		self.player.add_note(category=category, content=content)
 
 
-orders = (CorporationSpeculationOrder,)
+orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)
