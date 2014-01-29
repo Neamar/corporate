@@ -22,25 +22,24 @@ class SpeculationOrder(Order):
 
 	def resolve(self):
 		ladder = self.player.game.get_ordered_corporations()
-		corpo = self.corporation
 
 		# Build message
 		category = u"Spéculations"
 
-		# Success
-		if ladder.index(corpo) + 1 == self.rank:
-			# Speculation on first or last corpo
-			if corpo == ladder[0] or corpo == ladder[-1]:
+		if ladder.index(self.corporation) + 1 == self.rank:
+			# Success
+			if self.corporation == ladder[0] or self.corporation == ladder[-1]:
+				# Speculation on first or last corpo
 				self.player.money += self.get_cost() * 2
 				self.player.save()
 				content = u"Vous êtes un bon spéculateur, vos investissements vous ont rapporté %s" % self.investment * 3
-			# Speculation on non first or non last corpo
 			else:
+				# Speculation on non first or non last corpo
 				self.player.money += self.get_cost() * 4
 				self.player.save()
 				content = u"Vous êtes un excellent spéculateur, vos investissements vous ont rapporté %s" % self.investment * 5
-		# Failure
 		else:
+			# Failure
 			self.player.money -= self.get_cost()
 			self.player.save()
 			content = u"Vos spéculations n'ont malheureusement pas étés concluantes"
@@ -48,7 +47,7 @@ class SpeculationOrder(Order):
 		self.player.add_note(category=category, content=content)
 
 	def description(self):
-		return u"Spéculer sur le classement d'un corporation"
+		return u"Miser %s ny sur la postion %s de la corporation %s" % (self.get_cost(), self.rank, self.corporation.base_corporation.name)
 
 
 orders = (SpeculationOrder,)

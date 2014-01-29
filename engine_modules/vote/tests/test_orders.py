@@ -44,9 +44,3 @@ class OrdersTest(EngineTestCase):
 		)
 		
 		self.assertRaises(OrderNotAvailable, o2.clean)
-
-		self.p.influence.level=2
-		self.p.save()
-
-		# assertNoRaises
-		o2.clean()

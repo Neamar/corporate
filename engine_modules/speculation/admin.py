@@ -1,3 +1,4 @@
 from django.contrib import admin
+from engine_modules.speculation.models import SpeculationOrder
 
-# Register your models here.
+admin.site.register(SpeculationOrder)

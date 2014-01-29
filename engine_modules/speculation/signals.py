@@ -16,7 +16,7 @@ def limit_speculation_by_influence(sender, instance, **kwargs):
 @receiver(validate_order, sender=SpeculationOrder)
 def limit_speculation_amount_by_influence(sender, instance, **kwargs):
 	"""
-	A speculations can't be more than {{influence}} * 50 000 share per turn
+	A speculation can't be more than {{influence}} * 50 000 ny per turn
 	"""
-	if instance.investment > instance.player.influence.level * 50000:
+	if instance.investment > instance.player.influence.level * 50:
 		raise OrderNotAvailable("Pas assez d'influence pour spéculer un tel montant. (montant max : %s)" % instance.player.influence.level * 50000)

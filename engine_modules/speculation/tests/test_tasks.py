@@ -1,22 +1,20 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation
+from engine_modules.corporation.models import Corporation
 from engine_modules.speculation.models import SpeculationOrder
 
 
 class TasksTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="Last", description="looser", initials_assets=1)
-		self.bc.save()
-		self.bc2 = BaseCorporation(name="Medium", description="useless", initials_assets=10)
-		self.bc2.save()
-		self.bc3 = BaseCorporation(name="First", description="Winner", initials_assets=100)
-		self.bc3.save()
 
 		super(TasksTest, self).setUp()
+		self.g.corporation_set.all().delete()
 
-		self.last_corporation = self.g.corporation_set.get(base_corporation=self.bc)
-		self.medium_corporation = self.g.corporation_set.get(base_corporation=self.bc2)
-		self.first_corporation = self.g.corporation_set.get(base_corporation=self.bc3)
+		self.first_corporation = Corporation(base_corporation_slug='ares', assets=100)
+		self.g.corporation_set.add(self.first_corporation)
+		self.medium_corporation = Corporation(base_corporation_slug='renraku', assets=10)
+		self.g.corporation_set.add(self.medium_corporation)
+		self.last_corporation = Corporation(base_corporation_slug='shiawase', assets=1)
+		self.g.corporation_set.add(self.last_corporation)
 
 		self.o = SpeculationOrder(
 			player=self.p,
