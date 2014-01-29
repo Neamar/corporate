@@ -20,3 +20,4 @@ class ModelsTest(EngineTestCase):
 		"""
 
 		self.assertEqual(self.c.assethistory_set.get(turn=0).assets, self.c.assets)
+
