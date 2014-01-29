@@ -2,7 +2,7 @@
 from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share, BuyShareOrder
-from engine_modules.corporation.models import Corporation, BaseCorporation
+from engine_modules.corporation.models import Corporation
 from messaging.models import Note
 
 
@@ -52,7 +52,7 @@ class OrdersTest(EngineTestCase):
 
 		self.assertRaises(OrderNotAvailable, o2.clean)
 
-		self.p.influence.level += 2
+		self.p.influence.level = 2
 		self.p.influence.save()
 		# assertNoRaises
 		o2.clean()
