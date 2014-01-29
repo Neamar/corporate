@@ -18,17 +18,17 @@ class AssetHistory(models.Model):
 
 
 def get_ordered_corporations(self):
-	Previous = AssetHistory.objects.filter(corporation__game=self)
+	previous = AssetHistory.objects.filter(corporation__game = self)
 	ranking = defaultdict(lambda:0)
-	for element in Previous:
-		ranking[element.corporation] += element.assets*10^(2*element.turn)
+	for element in previous:
+		ranking[element.corporation] += element.assets * 10 ^ (2 * element.turn)
 
-	Actual=Corporation.objects.filter(game=self)
-	for element in Actual:
-		ranking[element] += element.assets*10^(2*self.current_turn)
+	actual = Corporation.objects.filter(game = self)
+	for element in actual:
+		ranking[element] += element.assets * 10 ^ (2 * self.current_turn)
 
-	Ordered_corporation=sorted(ranking, key=lambda c:ranking[c], reverse=True)
-	return Ordered_corporation
+	ordered_corporation = sorted(ranking, key=lambda c:ranking[c], reverse=True)
+	return ordered_corporation
 Game.get_ordered_corporations = get_ordered_corporations
 
 
