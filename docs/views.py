@@ -1,10 +1,9 @@
-import markdown
-import codecs
-
 from django.shortcuts import render
 from django.http import Http404
 from django.conf import settings
 from django.utils.safestring import mark_safe
+
+from utils.read_markdown import read_markdown
 
 def index(request, page):
 	if(page == ''):
@@ -12,19 +11,13 @@ def index(request, page):
 
 	page = '%s/docs/markdown/%s.md' % (settings.BASE_DIR, page.replace('.', ''))
 
-	raw = ''
 	try:
-		with codecs.open(page, encoding='utf-8') as content_file:
-			for line in content_file:
-				raw += line
+		content, metas = read_markdown(page)
 	except IOError:
 		raise Http404("No documentation on this subject.")
 
-	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'footnotes'], safe_mode=True, enable_attributes=False)
-	content = md.convert(raw)
-
 	try:
-		title = md.Meta['title'][0]
+		title = metas['title'][0]
 	except:
 		title = "Corporate Game"
 

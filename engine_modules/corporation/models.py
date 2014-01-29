@@ -1,11 +1,10 @@
-import codecs
-import markdown
-
 from os import  listdir
+
 from django.db import models
 from django.conf import settings
 from django.utils.functional import cached_property
 
+from utils.read_markdown import read_markdown
 from engine.models import Game
 
 BASE_CORPO_DIR = "%s/engine_modules/corporation/base_corporation" %(settings.BASE_DIR)
@@ -19,20 +18,13 @@ class BaseCorporation():
 	def __init__(self, slug):
 
 		path = "%s/%s.md" %(BASE_CORPO_DIR, slug)
-		raw = ''
 		
-		with codecs.open(path, encoding='utf-8') as content_file:
-			for line in content_file:
-				raw += line
-
-		md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'footnotes'], safe_mode=True, enable_attributes=False)
-		content = md.convert(raw)
-
-		self.name = md.Meta['name'][0]
-		self.slug = md.Meta['slug'][0]
+		content, meta = read_markdown(path)
+		self.name = meta['name'][0]
+		self.slug = meta['slug'][0]
 		try:
-			self.initials_assets = int(md.Meta['initials_assets'][0], 10)
-		except:
+			self.initials_assets = int(meta['initials_assets'][0], 10)
+		except KeyError:
 			# In the Model, the default value used to be 10
 			self.initials_assets = 10
 
