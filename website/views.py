@@ -44,6 +44,6 @@ def orders(request, game_id):
 		
 		order['title'] = instance.title
 		if order['available'] != False:
-			pass#order['form'] = instance.getForm()
+			order['form'] = instance.get_form()
 
 	return render(request, 'game/orders.html', { "game": game, "orders": all_orders})

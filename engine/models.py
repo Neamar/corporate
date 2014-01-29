@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.conf import settings
+from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
@@ -147,7 +148,6 @@ class Order(models.Model):
 
 	def save(self):
 		# Save the current type to inflate later
-		# self.type = '%s.%s' % (self._meta.app_label, self._meta.object_name)
 		self.type = self._meta.object_name
 
 		# Turn default values is game current_turn
@@ -183,6 +183,15 @@ class Order(models.Model):
 		"""
 		raise NotImplementedError("Abstract call.")
 
+	def get_form(self):
+		"""
+		Retrieve a form to create / edit this order
+		"""
+		class OrderForm(ModelForm):
+			class Meta:
+				model = self.__class__
+
+		return OrderForm()
 
 # Import datas for all engine_modules
 from engine.modules import *

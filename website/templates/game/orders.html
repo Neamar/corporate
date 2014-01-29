@@ -9,7 +9,11 @@ Rejoignez la danse pour devenir le roi d'un instant !</p>
 {% for order in orders %}
 	<h3>{{ order.title }}</h3>
 	{% if order.available != False %}
-		{{ order.form }}
+	<form method="post" action="">
+		<table>
+		{{ order.form.as_table }}
+		</table>
+	</form>
 	{% else %}
 		Unavailable !
 	{% endif %}
