@@ -97,7 +97,7 @@ class TasksTest(EngineTestCase):
 
 		self.assertEqual(basic_setup,turn1)
 
-	def test_previous_var(self):
+	def test_multi_turn(self):
 		"""
 		Test on more than one turn
 		"""	
@@ -115,6 +115,7 @@ class TasksTest(EngineTestCase):
 		self.c2.save()
 		self.c.assets = 11
 		self.c.save()
+		self.g.resolve_current_turn()
 
 		self.c3.assets = 11
 		self.c3.save()

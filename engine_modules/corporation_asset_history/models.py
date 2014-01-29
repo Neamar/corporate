@@ -18,6 +18,11 @@ class AssetHistory(models.Model):
 
 
 def get_ordered_corporations(self):
+	"""
+	order corporation by assets
+	if ex-aequo order by assets the turn before and the turn even before until the turn 1
+	if ex-aequo again, order by the first in the sql request. Postgres should always send them in the same order
+	"""
 	previous = AssetHistory.objects.filter(corporation__game = self)
 	ranking = defaultdict(lambda:0)
 	for element in previous:
