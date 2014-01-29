@@ -1,5 +1,4 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation
 
 
 class ModelsTest(EngineTestCase):

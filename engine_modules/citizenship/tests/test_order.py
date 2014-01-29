@@ -2,7 +2,6 @@ from django.core.exceptions import ValidationError
 
 from engine.testcases import EngineTestCase
 from engine_modules.citizenship.models import CitizenShipOrder
-from engine_modules.corporation.models import BaseCorporation
 
 
 class OrdersTest(EngineTestCase):

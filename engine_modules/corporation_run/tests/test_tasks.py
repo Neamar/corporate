@@ -1,6 +1,5 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder
-from engine_modules.corporation.models import BaseCorporation
 
 
 class OffensiveRunTaskTest(EngineTestCase):

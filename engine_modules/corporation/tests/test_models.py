@@ -1,7 +1,5 @@
-from os import listdir
-
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation, Corporation, BASE_CORPO_DIR
+from engine_modules.corporation.models import BaseCorporation, Corporation
 
 
 class ModelTest(EngineTestCase):
