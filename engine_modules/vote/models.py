@@ -27,5 +27,7 @@ class VoteOrder(Order):
 	def description(self):
 		return u"Voter pour l'augmentation des actifs de %s et la diminution de %s" % (self.corporation_up.base_corporation.name, self.corporation_down.base_corporation.name)
 
+
+
 orders = (VoteOrder,)
 

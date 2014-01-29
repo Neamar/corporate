@@ -187,13 +187,27 @@ class Order(models.Model):
 		"""
 		Retrieve a form to create / edit this order
 		"""
+		return self.form_class()(instance=self)
+
+	def form_class(self):
+		"""
+		Build a new class for forms,
+		"""
 		class OrderForm(ModelForm):
-			class Meta:
-				model = self.__class__
-				exclude = ['player']
+			class Meta(self.get_form_meta()):
+				pass
 
-		return OrderForm()
+		return OrderForm
 
+	def get_form_meta(self):
+		"""
+		Meta class to use for get_form()
+		"""
+		class Meta:
+			model = self.__class__
+			exclude = ['player']
+
+		return Meta
 # Import datas for all engine_modules
 from engine.modules import *
 
