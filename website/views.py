@@ -1,12 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.db.models.loading import get_model
 from django.http import Http404
 
-from engine.models import Order
 from engine.modules import orders_list
 from engine.exceptions import OrderNotAvailable
-from website.utils import get_game, get_player
+from website.utils import get_player
 
 
 def index(request):
@@ -16,7 +14,6 @@ def index(request):
 @login_required
 def orders(request, game_id):
 	player = get_player(request, game_id)
-	game = get_game(request, game_id)
 
 	all_orders = [{"type": order, 'name': order.__name__} for order in orders_list]
 
@@ -34,15 +31,21 @@ def orders(request, game_id):
 		if order['available'] != False:
 			order['form'] = instance.get_form()
 
-	return render(request, 'game/orders.html', { "game": game, "orders": all_orders})
+	return render(request, 'game/orders.html', { "game": player.game, "orders": all_orders})
 
 
 @login_required
-def add_order(request, game_id, app, order_type):
+def add_order(request, game_id, order_type):
 	player = get_player(request, game_id)
-	game = get_game(request, game_id)
 
-	if order not in [order.__class__.__name__ for order in orders_list]:
+	# Retrieve OrderClass
+	all_orders_dict = {order.__name__:order for order in orders_list}
+
+	try:
+		Order = all_orders_dict[order_type]
+	except ValueError:
 		raise Http404("This is not an Order.")
+
+	order = Order(player=player)
 
 	return render(request, 'game/orders.html', {})

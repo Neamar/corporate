@@ -14,5 +14,8 @@ class OrderWebsiteTest(WebsiteTest):
 		self.assertEqual(r.status_code, 302)
 
 	def test_posting_orders_require_login(self):
-		r = self.c.get(reverse('website.views.add_order', args=[self.g.id, 'influence', 'BuyInfluenceOrder']))
+		r = self.c.get(reverse('website.views.add_order', args=[self.g.id, 'BuyInfluenceOrder']))
 		self.assertEqual(r.status_code, 302)
+
+	def test_posting_orders_require_valid_order(self):
+		pass
