@@ -1,6 +1,6 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import Corporation
-from engine_modules.speculation.models import CorporationSpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
 from engine.exceptions import OrderNotAvailable
 
 
@@ -22,6 +22,7 @@ class SignalsTest(EngineTestCase):
 		Can't speculate more than influence
 		"""
 		self.p.influence.level = 1
+		self.p.influence.save()
 
 		o = CorporationSpeculationOrder(
 			player=self.p,
@@ -38,6 +39,13 @@ class SignalsTest(EngineTestCase):
 			investment=5
 		)
 		self.assertRaises(OrderNotAvailable, o2.clean)
+
+		dso = DerivativeSpeculationOrder(
+			player=self.p,
+			speculation=DerivativeSpeculationOrder.UP,
+			investment=51
+		)
+		self.assertRaises(OrderNotAvailable, dso.clean)
 
 		self.p.influence.level = 2
 		self.p.influence.save()
@@ -58,11 +66,30 @@ class SignalsTest(EngineTestCase):
 			rank=1,
 			investment=51
 		)
+		self.assertRaises(OrderNotAvailable, o.save)
 
-		self.assertRaises(OrderNotAvailable, o.clean)
+		self.p.influence.level = 2;
+		self.p.influence.save()
+
+		#assertNoRaises
+		o.clean()
+
+	def test_max_derivative_speculation_amount(self):
+		"""
+		can't speculate more than influence * 50
+		"""
+		self.p.influence.level = 1;
+		self.p.influence.save()
+
+		dso = DerivativeSpeculationOrder(
+			player=self.p,
+			speculation=DerivativeSpeculationOrder.UP,
+			investment=51
+		)
+		self.assertRaises(OrderNotAvailable, dso.save)
 
 		self.p.influence.level = 2;
 		self.p.influence.save()
 		
 		#assertNoRaises
-		o.clean()
+		dso.clean()
