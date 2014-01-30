@@ -18,6 +18,9 @@ class SignalsTest(EngineTestCase):
 		self.g.corporation_set.add(self.last_corporation)
 
 	def test_max_speculation(self):
+		"""
+		Can't speculate more than influence
+		"""
 		self.p.influence.level = 1
 
 		o = CorporationSpeculationOrder(
@@ -43,7 +46,11 @@ class SignalsTest(EngineTestCase):
 		o2.clean()
 
 	def test_max_corporation_speculation_amount(self):
+		"""
+		can't speculate more than influence * 50
+		"""
 		self.p.influence.level = 1;
+		self.p.influence.save()
 
 		o = CorporationSpeculationOrder(
 			player=self.p,
@@ -51,4 +58,11 @@ class SignalsTest(EngineTestCase):
 			rank=1,
 			investment=51
 		)
+
 		self.assertRaises(OrderNotAvailable, o.clean)
+
+		self.p.influence.level = 2;
+		self.p.influence.save()
+		
+		#assertNoRaises
+		o.clean()

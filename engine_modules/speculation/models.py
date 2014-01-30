@@ -77,9 +77,8 @@ class DerivativeSpeculationOrder(Order):
 
 		# Build message
 		category = u"Spéculations"
-		current_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.all(), turn=self.player.game.current_turn).aggregate(Sum('assets'))
-		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.all(), turn=self.player.game.current_turn - 1).aggregate(Sum('assets'))
-
+		current_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.all(), turn=self.player.game.current_turn).aggregate(Sum('assets'))['assets__sum']
+		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.all(), turn=self.player.game.current_turn - 1).aggregate(Sum('assets'))['assets__sum']
 		if current_turn_sum > previous_turn_sum and self.speculation == self.UP:
 			# Success
 			self.player.money += self.get_cost() * 2

@@ -17,6 +17,9 @@ class TasksTest(EngineTestCase):
 		self.g.corporation_set.add(self.last_corporation)
 
 	def test_corporation_speculation(self):
+		"""
+		Task should be called
+		"""
 		cso = CorporationSpeculationOrder(
 			player=self.p,
 			corporation=self.first_corporation,
@@ -30,6 +33,9 @@ class TasksTest(EngineTestCase):
 		self.assertEqual(self.reload(self.p).money, self.initial_money + 100)
 
 	def test_derivative_speculation(self):
+		"""
+		Task should be called
+		"""
 		self.g.resolve_current_turn()
 
 		self.first_corporation.assets -= 50
@@ -43,7 +49,6 @@ class TasksTest(EngineTestCase):
 		dso.save()
 		dso.derivative.add(self.first_corporation, self.last_corporation)
 		
-
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money - 50)
