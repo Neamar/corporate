@@ -95,25 +95,6 @@ class TasksTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
-	def test_dividend_task_applied_medium_corporation_citizenship(self):
-		"""
-		The player should get more dividend for being a citizen of the corporation
-		"""
-		self.s = Share(
-			player=self.p,
-			corporation=self.medium_corporation
-		)
-		self.s.save()
-		self.p.citizenship.corporation = self.medium_corporation
-		self.p.citizenship.save()
-		
-		money = self.reload(self.p).money
-		self.g.resolve_current_turn()
-
-		# We expect dividend on this share, taking into account the fact that we are citizen from this corporation
-		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets * DividendTask.CITIZENSHIP_BONUS
-
-		self.assertEqual(self.reload(self.p).money, int(expected))
 
 	def test_no_immediate_dividend_after_turn_2(self):
 		"""

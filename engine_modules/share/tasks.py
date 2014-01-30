@@ -15,9 +15,8 @@ class DividendTask(ResolutionTask):
 	It's time to get money!
 	"""
 	SHARE_BASE_VALUE = 50
-	FIRST_BONUS = 1.25
-	LAST_BONUS = 0.75
-	CITIZENSHIP_BONUS = 1.25
+	FIRST_BONUS = 1.5
+	LAST_BONUS = 0.5
 
 	RESOLUTION_ORDER = 800
 
@@ -27,18 +26,16 @@ class DividendTask(ResolutionTask):
 		TODO: megaoptimize queries
 		"""
 		shares = Share.objects.filter(player__game=game)
-		ordered_corporations = game.get_ordered_corporations()
+		ladder = game.get_ordered_corporations()
 
 		for share in shares:
 			# Dont give dividends for share bought this turn, unless we're in turn 1 or 2
 			if share.turn < game.current_turn or game.current_turn < 2:
 				dividend = self.SHARE_BASE_VALUE * share.corporation.assets
-				if share.corporation == ordered_corporations[0]:
+				if share.corporation == ladder[0]:
 					dividend *= self.FIRST_BONUS
-				if share.corporation == ordered_corporations[-1]:
+				if share.corporation == ladder[-1]:
 					dividend *= self.LAST_BONUS
-				if share.player.citizenship.corporation == share.corporation:
-					dividend *= self.CITIZENSHIP_BONUS
 
 				share.player.money += int(dividend)
 				share.player.save()
