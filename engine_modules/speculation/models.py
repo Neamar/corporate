@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.db.models import Sum
 from engine.models import Order
 from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
@@ -76,8 +77,8 @@ class DerivativeSpeculationOrder(Order):
 
 		# Build message
 		category = u"Spéculations"
-		current_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.all(), turn=self.player.game.current_turn).sum()
-		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.all(), turn=self.player.game.current_turn - 1).sum()
+		current_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.all(), turn=self.player.game.current_turn).aggregate(Sum('assets'))
+		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.all(), turn=self.player.game.current_turn - 1).aggregate(Sum('assets'))
 
 		if current_turn_sum > previous_turn_sum and self.speculation == self.UP:
 			# Success
@@ -88,9 +89,15 @@ class DerivativeSpeculationOrder(Order):
 			# Failure
 			self.player.money -= self.get_cost()
 			self.player.save()
-			content = u"Vos spéculations sur les produits dérivés n'ont malheureusement pas étés concluantes"
+			content = u"Vos spéculations sur les produits dérivés n'ont malheureusement pas été concluantes"
 
 		self.player.add_note(category=category, content=content)
+
+	def description(self):
+		if self.speculation == self.UP:
+			return u"Miser %s ny à la hausse du produit dérivé" % self.get_cost()
+		else:
+			return u"Miser %s ny à la baisse du produit dérivé" % self.get_cost()
 
 
 orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)
