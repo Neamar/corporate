@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.db.models.loading import get_model
+from django.http import Http404
 
+from engine.models import Order
 from engine.modules import orders_list
 from engine.exceptions import OrderNotAvailable
 from website.utils import get_game, get_player
@@ -35,8 +38,11 @@ def orders(request, game_id):
 
 
 @login_required
-def add_order(request, game_id):
+def add_order(request, game_id, app, order_type):
 	player = get_player(request, game_id)
 	game = get_game(request, game_id)
 
-	return render(request, 'game/orders.html', { "game": game, "orders": all_orders})
+	if order not in [order.__class__.__name__ for order in orders_list]:
+		raise Http404("This is not an Order.")
+
+	return render(request, 'game/orders.html', {})
