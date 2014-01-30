@@ -22,11 +22,15 @@ class BaseCorporation():
 		content, meta = read_markdown(path)
 		self.name = meta['name'][0]
 		self.slug = meta['slug'][0]
+		self.on_first = compile("\n".join(meta['on_first']), self.name+".on_first()", 'exec')
+		self.on_last = compile(meta['on_last'][0], self.name+".on_last()", 'exec')
+
 		try:
 			self.initials_assets = int(meta['initials_assets'][0], 10)
 		except KeyError:
 			# In the Model, the default value used to be 10
 			self.initials_assets = 10
+
 
 	@classmethod
 	def retrieve_all(cls):
@@ -56,6 +60,11 @@ class Corporation(models.Model):
 	@cached_property
 	def base_corporation(self):
 		return BASE_CORPORATIONS[self.base_corporation_slug]
+
+	def on_first_effect(self):
+		exec(self.base_corporation.on_first, {'game': self.game})
+	def on_last_effect(self):
+		exec(self.base_corporation.on_last, {'game': self.game})
 
 	def __unicode__(self):
 		return "%s (%s)" % (self.base_corporation.name, self.game)
