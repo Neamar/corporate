@@ -10,8 +10,8 @@ class FirstLastEffectsTask(ResolutionTask):
 	def run(self, game):
 
 		ladder = game.get_ordered_corporations()
-		first_corporation = corps[0]
-		last_corporation = corps[-1]
+		first_corporation = ladder[0]
+		last_corporation = ladder[-1]
 
 		first_corporation.on_first_effect()
 		last_corporation.on_last_effect()
