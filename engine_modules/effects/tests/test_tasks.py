@@ -17,6 +17,9 @@ class TasksTest(EngineTestCase):
 		self.g.corporation_set.add(self.last_corporation)
 
 	def test_first_effect(self):
+		"""
+		Test that the first corporation's on_first effect gets applied
+		"""
 
 		self.g.resolve_current_turn()
 		#self.assertEqual(self.first_corporation.assets, 31337)

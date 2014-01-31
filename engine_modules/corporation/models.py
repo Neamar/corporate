@@ -22,8 +22,10 @@ class BaseCorporation():
 		content, meta = read_markdown(path)
 		self.name = meta['name'][0]
 		self.slug = meta['slug'][0]
-		self.on_first = compile("\n".join(meta['on_first']), self.name+".on_first()", 'exec')
-		self.on_last = compile(meta['on_last'][0], self.name+".on_last()", 'exec')
+		code = "\n".join(meta['on_first'])
+		self.on_first = compile(code, "%s.on_first()" %self.name, 'exec')
+		code = "\n".join(meta['on_last'])
+		self.on_last = compile(code, self.name+".on_last()", 'exec')
 
 		try:
 			self.initials_assets = int(meta['initials_assets'][0], 10)
