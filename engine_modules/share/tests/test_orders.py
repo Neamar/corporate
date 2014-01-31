@@ -79,7 +79,7 @@ class OrdersTest(EngineTestCase):
 
 	def test_order_cost_money_first_corpo_and_citizen(self):
 		"""
-		Order should cost money
+		Order should cost FIRST_BUT_CITIZEN_COST rate
 		"""
 		from engine_modules.citizenship.models import CitizenShipOrder
 		self.o3 = CitizenShipOrder(
@@ -96,9 +96,27 @@ class OrdersTest(EngineTestCase):
 
 	def test_order_cost_money_first_corpo_and_not_citizen(self):
 		"""
-		Order should cost money
+		Order should cost money more
 		"""
 		init_money = self.p.money
 		self.o2.resolve()
 
 		self.assertEqual(self.reload(self.p).money, init_money - BuyShareOrder.FIRST_COST * self.c2.assets)
+
+
+	def test_order_cost_money_not_first_corpo_and_citizen(self):
+		"""
+		Order should cost standard price
+		"""
+		from engine_modules.citizenship.models import CitizenShipOrder
+		self.o3 = CitizenShipOrder(
+			player=self.p,
+			corporation=self.c2
+		)
+		self.o3.clean()
+		self.o3.save()
+		self.o3.resolve()
+
+		init_money = self.p.money
+		self.o.resolve()
+		self.assertEqual(self.reload(self.p).money, init_money - BuyShareOrder.BASE_COST * self.c.assets)
