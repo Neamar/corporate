@@ -12,13 +12,13 @@ La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui 
 
 Le **classement** trie les corpos par nombre d'actifs et leur attribue un rang de 1 à 10, 1 correspondant à la corpo possédant le plus d'actifs, celle qui domine le marché.
 
-Les joueurs commencent la partie avec 1 point d'**Influence corporatiste, ou "IC"**. Cette caractéristique représente l'étendue de leur pouvoir et de leur réseau dans l'île de Manhattan et sert de limite à certaines de leurs actions. Elle pourra être augmentée en cours de partie.
+Les joueurs commencent la partie avec 1 point d'**Influence corporatiste, ou "IC"**. Cette caractéristique représente l'étendue de leur pouvoir et de leurs réseaux dans l'île de Manhattan et sert de limite à certaines de leurs actions. Elle pourra être augmentée en cours de partie.
 
-Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 1 millions de **nuyens (ny)**, la monnaie globale du 6ème Monde.
+Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 1 millions de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
 
 La partie se joue en 8 **tours** ; chaque tour correspondant à un trimestre. À la fin du jeu, chaque joueur compte ses **points de victoire**, et celui qui en possède le plus est déclaré vainqueur. (cf fin du jeu)
 
-##Structure d'un tour
+## Structure d'un tour
 
 Chacun des concepts suivants sera expliqué en détail.
 
@@ -32,7 +32,7 @@ Chacun des concepts suivants sera expliqué en détail.
 
 5)  Un **rapport de fin de tour** est publié, révélant le nouveau classement et les évènements publics du tour écoulé, et chaque joueur reçoit en plus un **message de résolution** personnalisé qui contient les information plus confidentielles. Un nouveau tour peut commencer.
 
-##Comment ça marche ?
+## Comment ça marche ?
 
 À chaque tour, les joueurs peuvent acheter des **parts** dans les corpos de leur choix. Le nombre maximum de parts qu'un joueur peut acheter par tour est égal à son IC (Influence Corporatiste, de 1 au début du jeu).
 
@@ -49,7 +49,7 @@ Un joueur ne touche pas de dividendes sur les parts qu'il a acheté ce tour ci. 
 
 `Exception : au tour 1, cette règle ne s’applique pas et les joueurs touchent leurs dividendes dès la fin du tour.
 
-##Évolution du marché
+## Évolution du marché
 
 À chaque tour, les corpos vont gagner et perdre des actifs. Ce n'est qu'après toutes les modifications effectuées que sont calculés les dividendes.
 
@@ -60,24 +60,24 @@ En tant qu'acteur majeur du marché, chaque joueur à droit à un **Vote** par t
 ** Une corpo qui gagne 1 actif.
 ** Une corpo qui perd 1 actif.
 
-###La main invisible du marché
+### La main invisible du marché
 
 Le reste des aléas de la bourse de Manhattan est laissé à la chance. À chaque tour :
 
 **Une corpo au hasard gagne 1 actif.
 **Une corpo au hasard perd 1 actif.
 
-###Effet premier / effet dernier
+### Effet premier / effet dernier
 
 Les effets premier et dernier des corpo en tête et en fin de classement s'appliquent chaque tour, après tout autre modificateur, et peuvent chambouler les actifs des corpos. (cf corpos) pour une description individuelle de chaque corpo et (cf recap) pour une liste de leurs effets premiers / derniers.
 
-##Achat d'Influence
+## Achat d'Influence
 
 Un fois par tour, les joueurs peuvent payer pour augmenter leur Influence corporatiste d'un point. Le coût est de (500 000 ny) x nouvel indice, soit 1 500 000 ny pour passer de 2 à 3. 
 
 Le point acheté ne prendra effet qu’au tour suivant.
 
-##Citoyenneté corpo
+## Citoyenneté corpo
 
 Dans le sixième monde, les corporations ont tellement de pouvoir qu'elles sont de véritables états, avec leurs propres lois et leur propres citoyens. À chaque tour, un joueur peut réclamer la citoyenneté d'une corpo dans laquelle il possède au moins une part.
 
@@ -88,7 +88,7 @@ Un **citoyen corpo** :
 
 Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Choisissez vite et choisissez bien.
 
-##Runs
+## Runs
 
 Les requins corpos ont tendance à ne pas jouer selon les règles. Pour manipuler le marché et gagner un avantage sur la concurrence, ils n'hésitent pas à engager des agents indépendants, appelés shadowrunners, pour effectuer toutes sortes d'opérations clandestines, ou shadowruns. **Runs**, pour les intimes.
 
@@ -102,7 +102,7 @@ Une run ne peut pas avoir plus de 90% de chance de réussite.
 
 Si une run autre que Protection échoue ou est contrée (voir ci dessous), son commanditaire récupère la moitié des nuyens investis.
 
-###Défense
+### Défense
 
 Les corporations n'apprécient pas particulièrement d'être la cible de runs, et investissent des sommes colossales dans leur sécurité. Chaque corpo possède un indice de **Défense** qui lui est propre en Datasteal, Sabotage et Extraction. La Défense en Datasteal est également utilisée pour contrer les runs d'Information (voir plus bas).
 
@@ -110,7 +110,7 @@ Par exemple, la corpo Renraku a une Défense de 20 en Datasteal, de 10 en Sabota
 
 L'indice de Défense représente le pourcentage de chance qu'une run du même nom soit contrée par la sécurité de la corpo. Renraku a donc 20% de chance de contrer toute run d'Extraction qui la cible.
 
-###Détection
+### Détection
 
 En plus de leurs indices de Défense, les corpos possèdent un indice de **Détection** (30 pour Renraku). Ce nombre correspond au % de chance que la corpo détecte les runs qui la ciblent. Une run détectée est déclarée dans le message de résolution de tous les citoyens de la corpo ciblée, commanditaire et chances de réussite inclus.
 
@@ -118,27 +118,27 @@ Une run détectée est également publiée dans le rapport public de fin de tour
 
 `Les runs de Sabotage sont toujours mentionnées dans le rapport de fin de tour, sans commanditaire ni chance de réussite.
 
-##Les types de runs
+## Les types de runs
 
-###Datasteal
+### Datasteal
 Base : 30 %
 Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, la corpo bénéficiaire gagne **+1 actif** grâce aux précieuses informations dérobées à la concurrence.
 
-###Sabotage
+### Sabotage
 Base : 30 %
 Le commanditaire choisit une **corpo cible**, et tente de saboter une de ses opérations. En cas de réussite, elle subit  **-2 actifs**.
 
-###Extraction
+### Extraction
 Base : 10 %
 Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui subit **-1 actif**, et rejoint la corpo bénéficiaire, lui faisant gagner **+1 actif**.
 
-###Information
+### Information
 Base : 60 %
 Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit les les messages de résolution du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de ses propres runs d'Information).
 
 La Défense de Datasteal de la corpo dont la cible est citoyen est utilisée pour contrer les runs d'Information.
 
-###Protection
+### Protection
 Base : 
 Datasteal : 40 %
 Sabotage : 0 %
@@ -158,7 +158,7 @@ Le commanditaire choisit une **corpo bénéficiaire**, et lui attribue une Défe
 
 > Un scientifique de renom est arraché à son laboratoire. Renraku perd 1 actif, Horizon en gagne 1. La run a cependant été détectée, et tout Manhattan est au courant qu'elle a eu lieu, sans savoir que Jack Finn est son commanditaire. Shiro Kuboka, en revanche, est citoyen de Renraku, et apprend donc l'ensemble de la vérité. Maudissant l'incompétence de ses employés, il rassemble ses fonds pour un Sabotage bien senti contre Horizon...
 
-##Spéculation - Le miracle de Wall Street
+## Spéculation - Le miracle de Wall Street
 
 Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
 
@@ -178,7 +178,7 @@ Si sa spéculation est juste, il fait un bénéfice de  :
 
 Les corpos qui crashent comptent toutes comme étant dernière.
 
-###Produits dérivés
+### Produits dérivés
 
 Un produit dérivé est la somme des actifs d'un ensemble de corpos. Le **Nikkei** (indice de Bourse de Neo Tokyo) est par exemple la somme des actifs des corpos Sony, Shiawase et Renraku, alors que le **Dow Jones** est celles des actifs d’Ares, Neonet, Spinrad et Prometheus. (cf Wall Street)
 
@@ -192,7 +192,7 @@ Chaque tour, de 1 à 3 produits dérivés rassemblant les actifs de 2 à 4 corpo
 > Horizon, malgré une Extraction vicieuse, finit en seconde position. Il garde ses 50 000 ny et touche 200 000 de plus qui le font largement rentrer dans ses frais.
 
 
-##Le Manhattan Development Consortium
+## Le Manhattan Development Consortium
 
 Le MDC (ou Manhattan Inc.) n'est pas exactement une corporation, mais la structure à travers laquelle un groupe de corpos se sont alliées pour pour coordonner la reconstruction, assurer l'extraterritorialité de Manhattan et partager sa gouvernance entre ses membres. Cet équivalent corporatiste d'un conseil municipal tente de maintenir un contrôle absolu sur presque toutes les activités de Manhattan.
 
@@ -202,42 +202,42 @@ Chaque tour, les joueurs votent pour décider la **ligne politique** du MCD. Les
 
 Chaque joueur possède une voix, plus celle de toutes les corpos dans lesquels il possède plus de parts que n'importe quel autre joueur. Ces corpos comptent comme ayant voté comme lui (voir Contrats publics, Développement urbain et Contrôles ciblés ci dessous).
 
-###Contrats publics
+### Contrats publics
 De gros contrats d'entretien et de sécurité sont redistribués entre les corpos du MDC.
 
 Effets :
 ** Les **corpos** ayant voté **Contrats publics** gagnent **+1 actif**. 
 ** Les **corpos** ayant voté **Développement urbain** subissent **-1 actif**.
 
-###Développement urbain
+### Développement urbain
 De grands travaux sont lancé par le MDC, redessinant la carte de Manhattan au profit de certaines corpos.
 
 Effets :
 ** Les **corpos** ayant voté **Développement urbain** gagnent **+1 actif**. 
 ** Les **corpos** ayant voté **Contrats publics** subissent **-1 actif**.
 
-###Contrôles ciblés
+### Contrôles ciblés
 De nouvelles lois sont votées, renforçant certains contrôles ciblés au détriment de certaines zones.
 
 Effet : 
 ** Au prochain tour, les **corpos** ayant voté **Contrôles ciblés** gagnent une seconde **Défense de 20%** en Datasteal, Sabotage et Extraction.
 ** Les **joueur** ayant voté **Transparence** subissent un malus **-10%** sur leurs runs de **Protection**, amenant le maximum pour une run de ce type à 40%.
 
-###Transparence
+### Transparence
 L'ouverture de bases de données privées offre de nouvelles possibilités de runs pour ceux qui y ont accès.
 
 Effets : 
 ** Au prochain tour, les **joueurs** ayant voté **Transparence** gagnent un bonus de **+10%** sur toutes leurs runs de **Datasteal**, **Sabotage**, **Extraction** et **Information**. 
 ** Les **joueurs** ayant voté **Contrôles ciblés** subissent **-10%** sur toutes leurs runs **Datasteal**, **Sabotage**, **Extraction** et **Information**, pour un maximum de 80%.
 
-###Gardes fous bancaires
+### Gardes fous bancaires
 Malgré les protestations de Wall Street, de nouvelles régulations pour la ECSE entrent en action. Elles garantissent davantage de sécurité pour ceux en mesure d'en tirer profit mais limitent les opérations de certains.
 
 Effet :
 ** Au prochain tour, les **joueurs** ayant votés **Garde fous bancaires** peuvent **garder l'intégralité des mises** de leurs spéculations manquées.
 ** Les **joueurs** ayant voté **Dérégulation** ne pourront pas effectuer de **Spéculations**.
 
-###Dérégulation
+### Dérégulation
 De nouvelles barrières sautent, repoussant encore les limites de l'avidité boursière. Cependant, déréguler la ECSE représente un gros risque...
 
 Effet

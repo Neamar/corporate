@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import markdown
 import codecs
 
@@ -9,5 +10,6 @@ def read_markdown(path):
 
 	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'footnotes', 'toc'], safe_mode=False, enable_attributes=False)
 	content = md.convert(raw)
+	content = content.replace('ny', u'¥')
 
 	return content, md.Meta
