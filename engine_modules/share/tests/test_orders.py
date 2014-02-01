@@ -23,12 +23,6 @@ class OrdersTest(EngineTestCase):
 		)
 		self.o.save()
 
-		self.o2 = BuyShareOrder(
-			player=self.p,
-			corporation=self.c2
-		)
-		self.o.save()
-
 	def test_order_cost_money(self):
 		"""
 		Order should cost money
@@ -77,7 +71,23 @@ class OrdersTest(EngineTestCase):
 		n = Note.objects.filter(category="Parts").last()
 		self.assertTrue(u'2ème' in n.content)
 
-	def test_order_cost_money_first_corpo_and_citizen(self):
+	def test_order_cost_money_first_corpo_and_not_citizen(self):
+		"""
+		Share should cost more money when corporation is first
+		"""
+		init_money = self.p.money
+
+
+		o2 = BuyShareOrder(
+			player=self.p,
+			corporation=self.c2
+		)
+		o2.save()
+		o2.resolve()
+
+		self.assertEqual(self.reload(self.p).money, init_money - BuyShareOrder.FIRST_COST * self.c2.assets)
+
+	def test_order_special_cost_for_first_corpo_and_citizen(self):
 		"""
 		Order should cost FIRST_BUT_CITIZEN_COST rate
 		"""
@@ -91,18 +101,15 @@ class OrdersTest(EngineTestCase):
 		self.o3.resolve()
 
 		init_money = self.p.money
-		self.o2.resolve()
+
+		o2 = BuyShareOrder(
+			player=self.p,
+			corporation=self.c2
+		)
+		o2.save()
+		o2.resolve()
+
 		self.assertEqual(self.reload(self.p).money, init_money - BuyShareOrder.FIRST_BUT_CITIZEN_COST * self.c2.assets)
-
-	def test_order_cost_money_first_corpo_and_not_citizen(self):
-		"""
-		Order should cost money more
-		"""
-		init_money = self.p.money
-		self.o2.resolve()
-
-		self.assertEqual(self.reload(self.p).money, init_money - BuyShareOrder.FIRST_COST * self.c2.assets)
-
 
 	def test_order_cost_money_not_first_corpo_and_citizen(self):
 		"""
