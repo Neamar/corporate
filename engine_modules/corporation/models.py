@@ -18,12 +18,15 @@ class BaseCorporation():
 	BASE_CORPORATION_DIR = "%s/engine_modules/corporation/base_corporation" %(settings.BASE_DIR)
 
 	@classmethod
-	def build_corpo_dict(cls, base_corporations_path):
-		bc_dict = {}
-		for f in [f for f in listdir(base_corporations_path) if f.endswith('.md')]:
-			bc = BaseCorporation("%s/%s"%(base_corporations_path, f))
-			bc_dict[bc.slug] = bc
-		return bc_dict
+	def build_dict(cls):
+		"""
+		Build a dict holding all base corporations.
+		This dict is static and will be available anytime.
+		"""
+		cls.base_corporations = {}
+		for f in [f for f in listdir(cls.BASE_CORPORATION_DIR) if f.endswith('.md')]:
+			bc = BaseCorporation("%s/%s" % (cls.BASE_CORPORATION_DIR, f))
+			cls.base_corporations[bc.slug] = bc
 	
 	def __init__(self, path):
 		"""
@@ -53,15 +56,11 @@ class BaseCorporation():
 		return compile(code, "%s.%s()" % (self.name, effect), 'exec')
 
 	@classmethod
-	def generate_dict(cls):
-		cls.base_corporations = cls.build_corpo_dict(cls.BASE_CORPORATION_DIR)
-
-	@classmethod
 	def retrieve_all(cls):
 		return cls.base_corporations.values()
 
 # Build the dict at startup once and for all
-BaseCorporation.generate_dict()
+BaseCorporation.build_dict()
 
 
 class Corporation(models.Model):
