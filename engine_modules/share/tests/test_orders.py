@@ -2,18 +2,19 @@
 from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share, BuyShareOrder
-from engine_modules.corporation.models import Corporation, BaseCorporation
+from engine_modules.corporation.models import Corporation
 from messaging.models import Note
 
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):
-		bc = BaseCorporation(name="bc1")
-		bc.save()
 
 		super(OrdersTest, self).setUp()
 
-		self.c = Corporation.objects.get(base_corporation=bc)
+		self.g.corporation_set.all().delete()
+		self.c = Corporation(base_corporation_slug='renraku', assets=10)
+		self.g.corporation_set.add(self.c)
+
 		self.o = BuyShareOrder(
 			player=self.p,
 			corporation=self.c
@@ -24,9 +25,10 @@ class OrdersTest(EngineTestCase):
 		"""
 		Order should cost money
 		"""
+		init_money = self.p.money
 		self.o.resolve()
 
-		self.assertEqual(self.reload(self.p).money, self.initial_money - BuyShareOrder.BASE_COST * self.c.assets)
+		self.assertEqual(self.reload(self.p).money, init_money - BuyShareOrder.BASE_COST * self.c.assets)
 
 	def test_order_add_share(self):
 		"""
@@ -41,7 +43,7 @@ class OrdersTest(EngineTestCase):
 
 	def test_order_limited_by_influence(self):
 		"""
-		You can't buy more share than your influence
+		You can't buy more shares than your influence
 		"""
 		o2 =  BuyShareOrder(
 			player=self.p,

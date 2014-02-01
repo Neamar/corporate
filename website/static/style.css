@@ -61,8 +61,6 @@ td a
 #sidebar
 {
    float:right;
-   position:relative;
-   left:-50%;
    font-family:Audiowide, cursive;
    text-shadow:0.1em 0 0.2em white;
 }
@@ -70,8 +68,6 @@ td a
 #sidebar ul
 {
    list-style:none;
-   position:relative;
-   left:50%;
 }
 
 #sidebar li
@@ -79,7 +75,6 @@ td a
    float:left;
    padding-right:5px;
    padding-bottom:10px;
-   position:relative;
 }
 
 #sidebar li:after

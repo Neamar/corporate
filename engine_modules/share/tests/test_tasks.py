@@ -1,23 +1,23 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation
+from engine_modules.corporation.models import Corporation
 from engine_modules.share.models import Share, BuyShareOrder
 from engine_modules.share.tasks import DividendTask
 
 
 class TasksTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless", initials_assets=7)
-		self.bc.save()
-		self.bc2 = BaseCorporation(name="Renraku", description="Priceless", initials_assets=10)
-		self.bc2.save()
-		self.bc3 = BaseCorporation(name="Ares", description="Ruthless", initials_assets=13)
-		self.bc3.save()
 
 		super(TasksTest, self).setUp()
 
-		self.last_corporation = self.g.corporation_set.get(base_corporation=self.bc)
-		self.medium_corporation = self.g.corporation_set.get(base_corporation=self.bc2)
-		self.first_corporation = self.g.corporation_set.get(base_corporation=self.bc3)
+		self.g.corporation_set.all().delete()
+
+		self.first_corporation = Corporation(base_corporation_slug='renraku', assets=20)
+		self.g.corporation_set.add(self.first_corporation)
+		self.medium_corporation = Corporation(base_corporation_slug='shiawase', assets=10)
+		self.g.corporation_set.add(self.medium_corporation)
+		self.last_corporation = Corporation(base_corporation_slug='ares', assets=5)
+		self.g.corporation_set.add(self.last_corporation)
+
 		self.g.disable_invisible_hand = True
 
 	def test_buy_task_applied(self):
@@ -67,6 +67,7 @@ class TasksTest(EngineTestCase):
 		)
 		self.s.save()
 
+
 		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
 
@@ -94,32 +95,12 @@ class TasksTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
-	def test_dividend_task_applied_medium_corporation_citizenship(self):
-		"""
-		The player should get more dividend for being a citizen of the corporation
-		"""
-		self.s = Share(
-			player=self.p,
-			corporation=self.medium_corporation
-		)
-		self.s.save()
-		self.p.citizenship.corporation = self.medium_corporation
-		self.p.citizenship.save()
-		
-		money = self.reload(self.p).money
-		self.g.resolve_current_turn()
 
-		# We expect dividend on this share, taking into account the fact that we are citizen from this corporation
-		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets * DividendTask.CITIZENSHIP_BONUS
-
-		self.assertEqual(self.reload(self.p).money, int(expected))
-
-	def test_no_immediate_dividend_after_turn_2(self):
+	def test_no_immediate_dividend_after_turn_1(self):
 		"""
-		The player should not get dividends for shares he just bought after turn 2.
+		The player should not get dividends for shares he just bought, except in turn 1
 		"""
-
-		self.g.resolve_current_turn()
+		# Skip first turn
 		self.g.resolve_current_turn()
 
 		self.s = Share(
@@ -133,3 +114,20 @@ class TasksTest(EngineTestCase):
 
 		# No dividends
 		self.assertEqual(self.reload(self.p).money, money)
+
+
+	def test_immediate_dividend_on_turn_1(self):
+		"""
+		The player should get dividends for shares he just bought in turn 1
+		"""
+		self.s = Share(
+			player=self.p,
+			corporation=self.medium_corporation
+		)
+		self.s.save()
+
+		money = self.reload(self.p).money
+		self.g.resolve_current_turn()
+
+		# No dividends
+		self.assertEqual(self.reload(self.p).money, money + DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets)
