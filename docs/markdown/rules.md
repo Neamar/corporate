@@ -234,7 +234,7 @@ Effets :
 ### Contrôles ciblés
 De nouvelles lois sont votées, renforçant certains contrôles ciblés au détriment de certaines zones.
 
-Effet : 
+Effets : 
 
 * Au prochain tour, les **corpos** ayant voté **Contrôles ciblés** gagnent une seconde **Défense de 20%** en Datasteal, Sabotage et Extraction.
 * Les **joueurs** ayant voté **Transparence** subissent un malus de **-10%** sur leurs runs de **Protection**, amenant le maximum pour une run de ce type à 40%.
@@ -250,7 +250,7 @@ Effets :
 ### Gardes fous bancaires
 Malgré les protestations de Wall Street, de nouvelles régulations pour la ECSE entrent en action. Elles garantissent davantage de sécurité pour ceux en mesure d'en tirer profit mais limitent les opérations de certains.
 
-Effet :
+Effets :
 
 * Au prochain tour, les **joueurs** ayant votés **Garde fous bancaires** peuvent **garder l'intégralité des mises** de leurs spéculations manquées.
 * Les **joueurs** ayant voté **Dérégulation** ne pourront pas effectuer de **spéculations**.
@@ -258,7 +258,7 @@ Effet :
 ### Dérégulation
 De nouvelles barrières sautent, repoussant encore les limites de l'avidité boursière. Cependant, déréguler la ECSE représente un gros risque...
 
-Effet
+Effets :
 
 * Au prochain tour, les spéculations des **joueurs** ayant voté **Dérégulation** voient les **côtes augmentées de 1** (1 pour 2 devient 1 pour 3, 1 pour 5 devient 1 pour 6...)
 * Les **joueurs** ayant voté **Gardes fous bancaires** ne pourront pas effectuer de **spéculations**.
