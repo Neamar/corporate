@@ -2,7 +2,7 @@ from engine.tasks import ResolutionTask
 
 class FirstLastEffectsTask(ResolutionTask):
 	"""
-	Every time, the first and last corporations have an effect
+	App first and last corporations effects
 	"""
 
 	RESOLUTION_ORDER = 600
