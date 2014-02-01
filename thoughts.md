@@ -275,47 +275,90 @@ Resolution:
 * (35) SabotageRun / DatastealRun
 
 ## Frontend
+### Docs
+Documentation
+
+### Newsfeeds
+Récapitulatif :
+* Ligne du tour
+
+Rapport public de fin de tour
+
+* runs publiques
+* ligne choisie (+ détails)
+* achat de parts
+* bref, tout le public sauf les corpos
+
 ### Wall Street
 Tableau des corpos :
-* Nom de la corpo
-* Actifs actuels
-* Delta dernier tour
-* Effet premier dernier
-* Effet ligne
-
-Renraku     15      +3      +1-1+1
+---------------------------------------------
+Renraku | 15 | 12 +3 | * +1 effet premier
+                       * -2 sabotage
+---------------------------------------------
 
 Graphique de la bourse
 
+Tableau des produits dérivés :
+---------------------------------------------
+Nikkei | 45 | 38 +7
+---------------------------------------------
+Graphique des produits dérivés
+
 foreach corpo:
-    graphique de la corpo
+
+* Lien vers la corpo
+* graphique de la corpo
 
 ### Corporations
 Tableau des corpos:
+
 * Nom de la corpo
 * Actifs
-* Défense
-* Citoyens
+* Défense Datasteal,
+* Défense Sabotage
+* Défense Extraction
+* Détection
+
+-----------------------------------------
+Renraku | **15** | 20 | 10 | 20 | 30
+-----------------------------------------
 
 #### Corporation
 Nom
 Logo
+
 Actifs actuels
-Parts possédées
-Citoyen corpo
 Ligne votée
-Défense
-Description
+Défenses
+
+-----------------------------------------
+Renraku | **15** | 20 | 10 | 20 | 30
+-----------------------------------------
+
 Graphique de la corpo
+Description
+Parts possédées
+Citoyens corpos
+-----------------------------------------
+Renraku     | Parts   | Citoyen
+Tiroshi     | 18      | KING
+Remi        | 12      | Oui
+Jules       | 12      
+-----------------------------------------
+(tableau trié par parts possédées)
+
 Effet premier dernier
-Vote de ligne
 
 ### Joueurs
 Tableau des joueurs :
-* Nom du joueur
-* Citoyenneté
-* IC
-* Vote
+
+Nom du joueur
+IC
+Vote de ligne
+Citoyenneté
+-----------------------------------------
+Tiroshi | **2** | Transparence | Renraku
+-----------------------------------------
 
 Tableau croisé :
 * Nom du joueur
@@ -323,23 +366,14 @@ Tableau croisé :
 * en gras cellule citoyenneté corpo
 
 #### Joueur
-    * Nom
-    * avatar
-    * description
-    * ic
-    * citoyenneté
-    * parts
-    * vote
+* Nom
+* avatar
+* description
+* ic
+* citoyenneté
+* parts
+* vote
 
-### Newsfeeds
-Récapitulatif :
-* Ligne du tour
-
-Rapport public de fin de tour
-    * runs publiques
-    * ligne choisie (+ détails)
-    * achat de parts
-    * bref, tout le public
 
 ### Commlink
-MEssages privés entre PJ et de fin de tour, résultat runs d'informations
+Messages privés entre PJ et de fin de tour, résultat runs d'informations
