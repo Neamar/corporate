@@ -7,18 +7,17 @@ from django.utils.functional import cached_property
 from utils.read_markdown import read_markdown
 from engine.models import Game
 
-BASE_CORPO_DIR = "%s/engine_modules/corporation/base_corporation" %(settings.BASE_DIR)
+BASE_CORPO_DIR = "%s/engine_modules/corporation/base_corporation" % (settings.BASE_DIR)
 
-class BaseCorporation():
+class BaseCorporation:
 	"""
 	Basic corporation definition, reused for each game
 	Implemented as a separate non-model class to avoid cluttering the database
 	"""
 
 	def __init__(self, slug):
+		path = "%s/%s.md" % (BASE_CORPO_DIR, slug)
 
-		path = "%s/%s.md" %(BASE_CORPO_DIR, slug)
-		
 		content, meta = read_markdown(path)
 		self.name = meta['name'][0]
 		self.slug = slug
@@ -36,7 +35,7 @@ def build_corpo_dict():
 	bc_dict = {}
 	for f in listdir(BASE_CORPO_DIR):
 		if f.endswith('.md'):
-			bc = BaseCorporation(f.strip(".md"))
+			bc = BaseCorporation(f[:-3])
 			bc_dict[bc.slug] = bc
 	return bc_dict
 
