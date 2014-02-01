@@ -1,8 +1,6 @@
-from django.conf import settings
-
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import Corporation, BaseCorporation
-from engine_modules.effects.tasks import FirstLastEffectsTask
+from engine_modules.corporation.models import Corporation
+
 
 class TasksTest(EngineTestCase):
 	def setUp(self):
@@ -10,30 +8,61 @@ class TasksTest(EngineTestCase):
 		super(TasksTest, self).setUp()
 
 		self.g.corporation_set.all().delete()
-
-		# We modify the base corporations
-		TEST_BASE_CORPORATIONS_DIR = "%s/engine_modules/effects/tests/base_corporations_test" %(settings.BASE_DIR)
-		BaseCorporation.base_corporations = BaseCorporation.build_corpo_dict(TEST_BASE_CORPORATIONS_DIR)
-
-		self.first_corporation = Corporation(base_corporation_slug='testrenraku', assets=20)
+		self.first_corporation = Corporation(base_corporation_slug='renraku', assets=20)
 		self.g.corporation_set.add(self.first_corporation)
-		self.medium_corporation = Corporation(base_corporation_slug='testshiawase', assets=10)
+		self.medium_corporation = Corporation(base_corporation_slug='shiawase', assets=10)
 		self.g.corporation_set.add(self.medium_corporation)
-		self.last_corporation = Corporation(base_corporation_slug='testares', assets=5)
+		self.last_corporation = Corporation(base_corporation_slug='ares', assets=5)
 		self.g.corporation_set.add(self.last_corporation)
-
-	def tearDown(self):
-		"""
-		Since this test modifies BaseCorporation, we have to cleanup .
-		"""
-		
-		BaseCorporation.generate_dict()
-		super(TasksTest, self).tearDown()
 
 	def test_first_effect(self):
 		"""
 		Test that the first corporation's on_first effect gets applied
 		"""
 
-		self.g.resolve_current_turn()
-		self.assertEqual(self.reload(self.first_corporation).assets, 31337)
+		# Change the default code
+		base_first_corporation = self.first_corporation.base_corporation
+		default_on_first = base_first_corporation.on_first
+
+		test_first_effect = """
+c = game.corporation_set.get(base_corporation_slug='renraku')
+c.assets=31337
+c.save()
+"""
+
+		base_first_corporation.on_first = base_first_corporation.compile_effect(test_first_effect, 'on_first')
+
+		try:
+			self.g.resolve_current_turn()
+			self.assertEqual(self.reload(self.first_corporation).assets, 31337)
+		except:
+			raise
+		finally:
+			# Restore default behavior whatever happens
+			base_first_corporation.on_first = default_on_first
+
+	def test_mast_effect(self):
+		"""
+		Test that the first corporation's on_last effect gets applied
+		"""
+
+		# Change the default code
+		base_last_corporation = self.last_corporation.base_corporation
+		default_on_last = base_last_corporation.on_last
+
+		test_last_effect = """
+c = game.corporation_set.get(base_corporation_slug='renraku')
+c.assets=337
+c.save()
+"""
+
+		base_last_corporation.on_last = base_last_corporation.compile_effect(test_last_effect, 'on_last')
+
+		try:
+			self.g.resolve_current_turn()
+			self.assertEqual(self.reload(self.first_corporation).assets, 337)
+		except:
+			raise
+		finally:
+			# Restore default behavior whatever happens
+			base_last_corporation.on_last = default_on_last
