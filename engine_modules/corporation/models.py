@@ -35,16 +35,22 @@ class BaseCorporation():
 		self.slug = meta['slug'][0]
 
 		code = "\n".join(meta['on_first'])
-		self.on_first = compile(code, "%s.on_first()" %self.name, 'exec')
+		self.on_first = self.compile_effect(code, "on_first")
 
 		code = "\n".join(meta['on_last'])
-		self.on_last = compile(code, self.name+".on_last()", 'exec')
+		self.on_last = self.compile_effect(code, "on_last")
 
 		try:
 			self.initials_assets = int(meta['initials_assets'][0], 10)
 		except KeyError:
 			# In the Model, the default value used to be 10
 			self.initials_assets = 10
+
+	def compile_effect(self, code, effect):
+		"""
+		Compile specified code. Effect is a string that will be used for stacktrace reports.
+		"""
+		return compile(code, "%s.%s()" % (self.name, effect), 'exec')
 
 	@classmethod
 	def generate_dict(cls):
@@ -75,7 +81,7 @@ class Corporation(models.Model):
 
 	def on_first_effect(self):
 		exec(self.base_corporation.on_first, {'game': self.game})
-		
+
 	def on_last_effect(self):
 		exec(self.base_corporation.on_last, {'game': self.game})
 
