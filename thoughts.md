@@ -274,3 +274,72 @@ Resolution:
 * (30) ProtectionRun
 * (35) SabotageRun / DatastealRun
 
+## Frontend
+### Wall Street
+Tableau des corpos :
+* Nom de la corpo
+* Actifs actuels
+* Delta dernier tour
+* Effet premier dernier
+* Effet ligne
+
+Renraku     15      +3      +1-1+1
+
+Graphique de la bourse
+
+foreach corpo:
+    graphique de la corpo
+
+### Corporations
+Tableau des corpos:
+* Nom de la corpo
+* Actifs
+* Défense
+* Citoyens
+
+#### Corporation
+Nom
+Logo
+Actifs actuels
+Parts possédées
+Citoyen corpo
+Ligne votée
+Défense
+Description
+Graphique de la corpo
+Effet premier dernier
+Vote de ligne
+
+### Joueurs
+Tableau des joueurs :
+* Nom du joueur
+* Citoyenneté
+* IC
+* Vote
+
+Tableau croisé :
+* Nom du joueur
+* Corporation
+* en gras cellule citoyenneté corpo
+
+#### Joueur
+    * Nom
+    * avatar
+    * description
+    * ic
+    * citoyenneté
+    * parts
+    * vote
+
+### Newsfeeds
+Récapitulatif :
+* Ligne du tour
+
+Rapport public de fin de tour
+    * runs publiques
+    * ligne choisie (+ détails)
+    * achat de parts
+    * bref, tout le public
+
+### Commlink
+MEssages privés entre PJ et de fin de tour, résultat runs d'informations
