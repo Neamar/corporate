@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+import re
 import markdown
 import codecs
+
 
 def read_markdown(path):
 	raw = ''
@@ -7,7 +10,9 @@ def read_markdown(path):
 		for line in content_file:
 			raw += line
 
-	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'footnotes'], safe_mode=True, enable_attributes=False)
+	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'toc'], safe_mode=False, enable_attributes=False)
 	content = md.convert(raw)
+
+	content = re.sub(r'(\s|\()ny', u'\\1¥', content)
 
 	return content, md.Meta
