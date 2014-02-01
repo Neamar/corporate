@@ -190,9 +190,7 @@ Si sa spéculation est juste, il fait un bénéfice de  :
 
 ### Produits dérivés
 
-Un produit dérivé est la somme des actifs d'un ensemble de corpos. Le **Nikkei** (indice de Bourse de Neo Tokyo) est par exemple la somme des actifs des corpos Sony, Shiawase et Renraku, alors que le **Dow Jones** est celles des actifs d’Ares, Neonet, Spinrad et Prometheus. (cf Wall Street)
-
-Chaque tour, de 1 à 3 produits dérivés rassemblant les actifs de 2 à 4 corpos sont générés aléatoirement. Ils disparaissent à la fin du tour.
+Un produit dérivé est la somme des actifs d'un ensemble de corpos. Le **Nikkei** (indice de Bourse de Neo Tokyo) est par exemple la somme des actifs des corpos Sony, Shiawase et Renraku, alors que le **Dow Jones** est celle des actifs d’Ares, Neonet, Spinrad et Prometheus. (cf Wall Street)
 
     Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il effectue deux spéculations :
     * 100 000 ny sur une chute du Nikkei. Après tout, il a un sabotage prévu sur Renraku...
