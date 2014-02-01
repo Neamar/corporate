@@ -1,7 +1,7 @@
 name: Renraku Computer Systems
 slug: testrenraku
 initials_assets: 20
-on_first: c=game.corporation_set.filter(base_corporation_slug='testrenraku')[0]
+on_first: c = game.corporation_set.get(base_corporation_slug='testrenraku')
         c.assets=31337
         c.save()
 on_last: "Renraku.on_last()"

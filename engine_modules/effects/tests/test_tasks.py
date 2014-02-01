@@ -23,8 +23,10 @@ class TasksTest(EngineTestCase):
 		self.g.corporation_set.add(self.last_corporation)
 
 	def tearDown(self):
-		# Because the test modifies BaseCorporation, we have to cleanup (the other tests do not import engine_modules.corporation.models)
-		# So the class is not initialized. To protect performance, we cleanup here instead of initializing everywhere
+		"""
+		Since this test modifies BaseCorporation, we have to cleanup .
+		"""
+		
 		BaseCorporation.generate_dict()
 		super(TasksTest, self).tearDown()
 
