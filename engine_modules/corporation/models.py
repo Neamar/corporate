@@ -8,14 +8,13 @@ from utils.read_markdown import read_markdown
 from engine.models import Game
 
 
-
-class BaseCorporation():
+class BaseCorporation:
 	"""
 	Basic corporation definition, reused for each game
 	Implemented as a separate non-model class to avoid cluttering the database
 	"""
 
-	BASE_CORPORATION_DIR = "%s/engine_modules/corporation/base_corporation" %(settings.BASE_DIR)
+	BASE_CORPORATION_DIR = "%s/engine_modules/corporation/base_corporation" % (settings.BASE_DIR)
 
 	@classmethod
 	def build_dict(cls):
@@ -25,17 +24,18 @@ class BaseCorporation():
 		"""
 		cls.base_corporations = {}
 		for f in [f for f in listdir(cls.BASE_CORPORATION_DIR) if f.endswith('.md')]:
-			bc = BaseCorporation("%s/%s" % (cls.BASE_CORPORATION_DIR, f))
+			bc = BaseCorporation(f[:-3])
 			cls.base_corporations[bc.slug] = bc
 	
-	def __init__(self, path):
+	def __init__(self, slug):
 		"""
 		Create a base_corporation from a file
 		"""
+		path = "%s/%s.md" % (self.BASE_CORPORATION_DIR, slug)
 		content, meta = read_markdown(path)
 
 		self.name = meta['name'][0]
-		self.slug = meta['slug'][0]
+		self.slug = slug
 
 		code = "\n".join(meta['on_first'])
 		self.on_first = self.compile_effect(code, "on_first")
