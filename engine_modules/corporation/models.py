@@ -21,7 +21,7 @@ class BaseCorporation():
 		
 		content, meta = read_markdown(path)
 		self.name = meta['name'][0]
-		self.slug = meta['slug'][0]
+		self.slug = slug
 		try:
 			self.initials_assets = int(meta['initials_assets'][0], 10)
 		except KeyError:

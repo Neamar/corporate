@@ -1,3 +1,6 @@
+name: Ares Macrotechnology
+initials_assets: 15
+
 Dirigée depuis Détroit par le playboy multimilliardaire Damien Knight, Ares a la réputation d'être très "américaine" dans sa conception : enthousiaste, militariste, patriote et individualiste. Cette nostalgie de la "bonne vieille Amérique d'autre fois" fait que Manhattan lui va comme un gant.
 
 La corpo s'est spécialisée dans le maintien de l'ordre (Knight Errant, une de ses filiales, est la plus grosse corpo de sécurité du monde), le matériel militaire et l'armement, l'aérospatiale, les loisirs et la construction automobile (la vénérable General Motors fait également partie de la famille Ares).
@@ -8,19 +11,17 @@ Principal fournisseur pour l'infrastructure de transport, Ares gère le métro, 
 
 Autant de raisons pour laquelle est est souvent considérée comme indispensable au bon fonctionnement et à la sûreté de NYC.
 
-*Datasteal : 10
-*Sabotage : 30 
-*Extraction : 10
-*Detection : 30
+* Datasteal : 10
+* Sabotage : 30 
+* Extraction : 10
+* Detection : 30
 
-##Effet  premier : 
-
+## Effet premier : 
 Le succès d'Ares l'amène à redoubler ses efforts pour rendre Manhattan fonctionnel et attractif, ce qui relance l'investissement.
 
 >+1 actifs pour les deux dernières corpos.
 
-##Effest dernier :
-
+## Effet dernier :
 Ares a de plus en plus de mal à faire tourner ses activités, qui sont cruciales pour NYC. L'économie locale en pâtie.
 
 >-1 actifs pour les deux premières corpos.
