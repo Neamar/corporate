@@ -1,5 +1,9 @@
 name: Ares Macrotechnology
 initials_assets: 15
+datasteal: 10
+sabotage: 30
+extraction: 10
+detection: 30
 
 Dirigée depuis Détroit par le playboy multimilliardaire Damien Knight, Ares a la réputation d'être très "américaine" dans sa conception : enthousiaste, militariste, patriote et individualiste. Cette nostalgie de la "bonne vieille Amérique d'autre fois" fait que Manhattan lui va comme un gant.
 
@@ -10,11 +14,6 @@ Ares et ses sous-divisions sont un des piliers de NYC et de sa communauté. La c
 Principal fournisseur pour l'infrastructure de transport, Ares gère le métro, les trains et les autres transports publics. Environ 80% des véhicules qui circulent sur l'île sont sortis de ses usines, et elle fournit également la plus grosses partie du matos de sécurité des autres corpos, NYPD Inc. inclus. 
 
 Autant de raisons pour laquelle est est souvent considérée comme indispensable au bon fonctionnement et à la sûreté de NYC.
-
-* Datasteal : 10
-* Sabotage : 30 
-* Extraction : 10
-* Detection : 30
 
 ## Effet premier : 
 Le succès d'Ares l'amène à redoubler ses efforts pour rendre Manhattan fonctionnel et attractif, ce qui relance l'investissement.

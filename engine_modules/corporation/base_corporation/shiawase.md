@@ -1,5 +1,9 @@
 name: Shiawase Corporation
 initials_assets: 15
+datasteal: 10
+sabotage: 10
+extraction: 30
+detection: 30
 
 La plus vieille de toutes les mégas, Shiawase s'est fait connaître comme l'entreprise à l'origine de la décision de justice qui a mené le monde vers la loi d'extraterritorialité que les corpos adorent encore aujourd'hui. En tant que *zaibatsu* japonaise classique, Shiawase est gérée comme une entreprise "familiale", avec des employés qui signent des contrats à vie et qui vont souvent jusqu'à se marier au sein de la corpo. 
 
@@ -9,11 +13,6 @@ Comme pour toutes les corpos de cette taille, pour savoir ce que fait Shiawase, 
 
 Le projet le plus connu de Shiawase à Manhattan est son contrat d'entretien de Central Park. La corpo s'est assurée que les plantes continuent de pousser, et que Central Park soit "préservé". Évidemment, cela lui a aussi donné le monopole sur tout ce qui a trait à cet espace vert. Les panneaux sont estampillés du logo Shiawase, tous les vendeurs de souvenirs et de repas à emporter proposent des produits Shiawase, et même les artistes de rue lui paient un droit d'exercice. Malgré ce monopole absolu, les habitants de Manhattan profitent toujours de Central Park. Cela signifie un énorme impact marketing.
 
-* Datasteal : 10
-* Sabotage : 10 
-* Extraction : 30
-* Detection : 30
-
 ## Effet premier : 
 En position de force, Shiawase fait sentir à Renraku le poids de ses arguments idéologiques, laissant Sony profiter de la hausse du Nikkei pour investir à Manhattan.
 
@@ -21,7 +20,6 @@ En position de force, Shiawase fait sentir à Renraku le poids de ses arguments 
 >+1 actif pour Sony.
 
 ## Effet dernier :
-
 Prête à tout pour ne pas perdre la face, Shiawase se déchaîne contre ses concurrents. Dépendant de ses partenariats japonais, cependant, Sony accuse le coup.
 
 >-1 actif pour l'avant-dernière corpo.

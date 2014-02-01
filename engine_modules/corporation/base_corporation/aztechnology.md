@@ -1,5 +1,9 @@
 name: Aztechnology
 initials_assets: 15
+datasteal: 10
+sabotage: 20
+extraction: 10
+detection: 60
 
 Basée à Atzlan (le Mexique avant qu'elle n'en prenne totalement le contrôle), Aztechnology a des oeufs dans bien plus de paniers que n'importe quelle autre megacorp. Elle produit de tout, des jeux tridéos aux armements militaires, des accessoires pour mage à la nourriture pour chiens. Acheter n'importe quel article de consommation courante a de bonnes chances de contribuer à sa cagnotte.
 
@@ -12,11 +16,6 @@ La plupart des habitants de Manhattan ignorent à quel point ils sont redevables
 Le big A se sert de New York pour lancer nombre de nouveaux produits. Le marketing est suffisamment fin pour flatter l'ego des New-Yorkais en en faisant des initiateurs de tendances tout en abreuvant le reste de UCAS de l'idée que tout produit adopté par les New-Yorkais est un produit qu'il faut consommer.
 
 Les bureaux d'Aztechnology à Manhattan sont occupés par les meilleurs employés de la côte Est. C'est un privilège d'être muté à Manhattan, et elle offre à ses employés les meilleurs écoles privées pour leurs enfants, les meilleurs appartements, les meilleurs passes d'accès aux soirées, etc. De l'autre côté du pont, elle remplit ses ateliers de misères du New Jersey d'autochtones désespérés, ayant depuis longtemps calculé qu'il est plus rentables de faire travailler une armée de quasi-esclaves plutôt que des chaînes de montages automatisées demandant un entretien important.
-
-* Datasteal : 10
-* Sabotage : 20 
-* Extraction : 10
-* Detection : 60
 
 ## Effet premier : 
 Le big A utilise le MDC pour gêner les opérations des concurrents qui manquent de poids politique.

@@ -1,5 +1,9 @@
 name: Renraku Computer Systems
 initials_assets: 15
+datasteal: 20
+sabotage: 10
+extraction: 20
+detection: 30
 
 Renraku, encore sous le choc de la débâcle de l'arcologie de Seattle, ne s'est pas encore complètement remise du Crash. La corpo y a perdu un paquet de pognon, et plus important encore, la possibilité de prendre le dessus sur le marché de la réalité augmentée. Dans le monde des megacorps, le second à l'arrivée est également le premier perdant, et Renraku n'a même pas fini second.
 
@@ -10,11 +14,6 @@ Sur un plan plus politique, Renraku est très impliquée dans le conflit qui opp
 À Manhattan, Renraku a pu nager dans les nuyens en fournissant des solutions de sécurité matricielles aux entreprises de la région. Après une période de "débauche de talents" méticuleuse, ses services R&D logiciel ont fait des heures sup pour développer des programmes plus intelligents, des firewall à l'épreuve l'épreuve du piratage et des protocoles de sécurités censés garantir l'impossibilité d'une intrusion informatique. La corpo a promis d'aider ses clients à reprendre le réseau matriciel de Manhattan, et à le protéger des vandales et des saboteurs virtuels qui avaient provoqué son effondrement en 64.
 
 Les japanocorp sont connues pour leur tendance à être rancunières, et Renraku n'a jamais vraiment digéré la prise du contrôle matricielle par NeoNET des Tours qui constituent les bâtiments de la Cour corporatiste. Les anciens cadres de Fuchi qui bossent encore chez Renraku se servent toujours de leur influence pour harceler NeoNET à la moindre occasion.
-
-* Datasteal : 20
-* Sabotage : 10 
-* Extraction : 20
-* Detection : 30
 
 ## Effet premier : 
 Renraku prend enfin le dessus sur ses rivaux et lave fièrement son honneur.
