@@ -7,7 +7,7 @@ from django.utils.functional import cached_property
 from utils.read_markdown import read_markdown
 from engine.models import Game
 
-BASE_CORPO_DIR = "%s/engine_modules/corporation/base_corporation" %(settings.BASE_DIR)
+
 
 class BaseCorporation():
 	"""
@@ -15,10 +15,19 @@ class BaseCorporation():
 	Implemented as a separate non-model class to avoid cluttering the database
 	"""
 
-	def __init__(self, slug):
+	base_corporations_dir = "%s/engine_modules/corporation/base_corporation" %(settings.BASE_DIR)
 
-		path = "%s/%s.md" %(BASE_CORPO_DIR, slug)
-		
+	@classmethod
+	def build_corpo_dict(cls, base_corporations_path):
+		bc_dict = {}
+		for f in listdir(base_corporations_path):
+			if f.endswith('.md'):
+				bc = BaseCorporation("%s/%s"%(base_corporations_path, f))
+				bc_dict[bc.slug] = bc
+		return bc_dict
+	
+	def __init__(self, path):
+
 		content, meta = read_markdown(path)
 		self.name = meta['name'][0]
 		self.slug = meta['slug'][0]
@@ -33,20 +42,15 @@ class BaseCorporation():
 			# In the Model, the default value used to be 10
 			self.initials_assets = 10
 
+	@classmethod
+	def generate_dict(cls):
+		cls.base_corporations = cls.build_corpo_dict(cls.base_corporations_dir)
 
 	@classmethod
 	def retrieve_all(cls):
-		return BASE_CORPORATIONS.values()
-		
-def build_corpo_dict():
-	bc_dict = {}
-	for f in listdir(BASE_CORPO_DIR):
-		if f.endswith('.md'):
-			bc = BaseCorporation(f.strip(".md"))
-			bc_dict[bc.slug] = bc
-	return bc_dict
+		return cls.base_corporations.values()
 
-BASE_CORPORATIONS = build_corpo_dict()
+BaseCorporation.generate_dict()
 
 class Corporation(models.Model):
 	"""
@@ -61,7 +65,7 @@ class Corporation(models.Model):
 
 	@cached_property
 	def base_corporation(self):
-		return BASE_CORPORATIONS[self.base_corporation_slug]
+		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
 	def on_first_effect(self):
 		exec(self.base_corporation.on_first, {'game': self.game})
