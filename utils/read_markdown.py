@@ -7,7 +7,7 @@ def read_markdown(path):
 		for line in content_file:
 			raw += line
 
-	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'footnotes'], safe_mode=True, enable_attributes=False)
+	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'footnotes', 'toc'], safe_mode=False, enable_attributes=False)
 	content = md.convert(raw)
 
 	return content, md.Meta
