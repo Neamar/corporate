@@ -16,7 +16,7 @@ class BuyInfluenceOrder(Order):
 	Order to increase Player Influence
 	"""
 
-	BASE_COST = 50
+	BASE_COST = 500
 
 	def get_cost(self):
 		return BuyInfluenceOrder.BASE_COST * (self.player.influence.level + 1)

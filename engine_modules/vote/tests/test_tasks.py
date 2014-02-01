@@ -1,19 +1,13 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation
 from engine_modules.vote.models import VoteOrder
 
 class TaskTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="bc1")
-		self.bc.save()
-
-		self.bc2 = BaseCorporation(name="bc2")
-		self.bc2.save()
 		
 		super(TaskTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation=self.bc)
-		self.c2 = self.g.corporation_set.get(base_corporation=self.bc2)
+		self.c = self.g.corporation_set.get(base_corporation_slug="renraku")
+		self.c2 = self.g.corporation_set.get(base_corporation_slug="shiawase")
 
 		self.v = VoteOrder(
 			player=self.p,
@@ -26,10 +20,13 @@ class TaskTest(EngineTestCase):
 		self.g.disable_invisible_hand = True
 
 	def test_vote(self):
+		begin_assets_1 = self.c.assets
+		begin_assets_2 = self.c2.assets
+
 		self.g.resolve_current_turn()
 
 		self.c = self.reload(self.c)
 		self.c2 = self.reload(self.c2)
 
-		self.assertEqual(self.c.assets, 11)
-		self.assertEqual(self.c2.assets, 9)
+		self.assertEqual(self.c.assets, begin_assets_1 + 1)
+		self.assertEqual(self.c2.assets, begin_assets_2 - 1)

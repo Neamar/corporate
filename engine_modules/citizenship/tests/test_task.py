@@ -1,14 +1,15 @@
 from engine.testcases import EngineTestCase
 from engine_modules.citizenship.models import CitizenShipOrder
-from engine_modules.corporation.models import BaseCorporation, Corporation
+from engine_modules.corporation.models import Corporation
 
 
 class TasksTest(EngineTestCase):
 	def setUp(self):
-		self.bc = BaseCorporation(name="NC&T", description="Reckless.")
-		self.bc.save()
 		super(TasksTest, self).setUp()
-		self.c = Corporation.objects.get(base_corporation=self.bc)
+		
+		self.g.corporation_set.all().delete()
+		self.c = Corporation(base_corporation_slug='renraku', assets=10)
+		self.g.corporation_set.add(self.c)
 
 		self.o = CitizenShipOrder(
 			player=self.p,
