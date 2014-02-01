@@ -88,7 +88,7 @@ class OrdersTest(EngineTestCase):
 
 	def test_order_special_cost_for_first_corpo_and_citizen(self):
 		"""
-		Order should cost FIRST_BUT_CITIZEN_COST rate when corporation is first and we have the citizenship
+		Order should cost FIRST_AND_CITIZEN_COST rate when corporation is first and we have the citizenship
 		"""
 		self.p.citizenship.corporation = self.c2
 		self.p.citizenship.save()
@@ -102,4 +102,4 @@ class OrdersTest(EngineTestCase):
 		o2.save()
 		o2.resolve()
 
-		self.assertEqual(self.reload(self.p).money, init_money - BuyShareOrder.FIRST_BUT_CITIZEN_COST * self.c2.assets)
+		self.assertEqual(self.reload(self.p).money, init_money - BuyShareOrder.FIRST_AND_CITIZEN_COST * self.c2.assets)

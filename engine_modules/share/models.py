@@ -19,7 +19,7 @@ class BuyShareOrder(Order):
 	"""
 	BASE_COST = 100
 	FIRST_COST = 125
-	FIRST_BUT_CITIZEN_COST = 100
+	FIRST_AND_CITIZEN_COST = 100
 
 	corporation = models.ForeignKey(Corporation)
 
@@ -28,7 +28,7 @@ class BuyShareOrder(Order):
 			if self.player.citizenship.corporation != self.corporation:
 				return BuyShareOrder.FIRST_COST * self.corporation.assets
 			else:
-				return BuyShareOrder.FIRST_BUT_CITIZEN_COST * self.corporation.assets
+				return BuyShareOrder.FIRST_AND_CITIZEN_COST * self.corporation.assets
 		else:
 			return BuyShareOrder.BASE_COST * self.corporation.assets
 
