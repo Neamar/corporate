@@ -4,6 +4,8 @@ datasteal: 10
 sabotage: 30
 extraction: 10
 detection: 30
+on_first: "lol"
+on_last: "lol"
 
 Dirigée depuis Détroit par le playboy multimilliardaire Damien Knight, Ares a la réputation d'être très "américaine" dans sa conception : enthousiaste, militariste, patriote et individualiste. Cette nostalgie de la "bonne vieille Amérique d'autre fois" fait que Manhattan lui va comme un gant.
 

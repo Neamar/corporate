@@ -4,6 +4,8 @@ datasteal: 10
 sabotage: 10
 extraction: 30
 detection: 30
+on_first: "lol"
+on_last: "lol"
 
 La plus vieille de toutes les mégas, Shiawase s'est fait connaître comme l'entreprise à l'origine de la décision de justice qui a mené le monde vers la loi d'extraterritorialité que les corpos adorent encore aujourd'hui. En tant que *zaibatsu* japonaise classique, Shiawase est gérée comme une entreprise "familiale", avec des employés qui signent des contrats à vie et qui vont souvent jusqu'à se marier au sein de la corpo. 
 

@@ -4,6 +4,8 @@ datasteal: 10
 sabotage: 20
 extraction: 10
 detection: 60
+on_first: "lol"
+on_last: "lol"
 
 Basée à Atzlan (le Mexique avant qu'elle n'en prenne totalement le contrôle), Aztechnology a des oeufs dans bien plus de paniers que n'importe quelle autre megacorp. Elle produit de tout, des jeux tridéos aux armements militaires, des accessoires pour mage à la nourriture pour chiens. Acheter n'importe quel article de consommation courante a de bonnes chances de contribuer à sa cagnotte.
 

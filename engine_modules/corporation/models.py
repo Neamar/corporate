@@ -7,7 +7,6 @@ from django.utils.functional import cached_property
 from utils.read_markdown import read_markdown
 from engine.models import Game
 
-BASE_CORPO_DIR = "%s/engine_modules/corporation/base_corporation" % (settings.BASE_DIR)
 
 class BaseCorporation:
 	"""
@@ -15,31 +14,54 @@ class BaseCorporation:
 	Implemented as a separate non-model class to avoid cluttering the database
 	"""
 
-	def __init__(self, slug):
-		path = "%s/%s.md" % (BASE_CORPO_DIR, slug)
+	BASE_CORPORATION_DIR = "%s/engine_modules/corporation/base_corporation" % (settings.BASE_DIR)
 
+	@classmethod
+	def build_dict(cls):
+		"""
+		Build a dict holding all base corporations.
+		This dict is static and will be available anytime.
+		"""
+		cls.base_corporations = {}
+		for f in [f for f in listdir(cls.BASE_CORPORATION_DIR) if f.endswith('.md')]:
+			bc = BaseCorporation(f[:-3])
+			cls.base_corporations[bc.slug] = bc
+	
+	def __init__(self, slug):
+		"""
+		Create a base_corporation from a file
+		"""
+		path = "%s/%s.md" % (self.BASE_CORPORATION_DIR, slug)
 		content, meta = read_markdown(path)
+
 		self.name = meta['name'][0]
 		self.slug = slug
+
+		code = "\n".join(meta['on_first'])
+		self.on_first = self.compile_effect(code, "on_first")
+
+		code = "\n".join(meta['on_last'])
+		self.on_last = self.compile_effect(code, "on_last")
+
 		try:
 			self.initials_assets = int(meta['initials_assets'][0], 10)
 		except KeyError:
 			# In the Model, the default value used to be 10
 			self.initials_assets = 10
 
+	def compile_effect(self, code, effect):
+		"""
+		Compile specified code. Effect is a string that will be used for stacktrace reports.
+		"""
+		return compile(code, "%s.%s()" % (self.name, effect), 'exec')
+
 	@classmethod
 	def retrieve_all(cls):
-		return BASE_CORPORATIONS.values()
-		
-def build_corpo_dict():
-	bc_dict = {}
-	for f in listdir(BASE_CORPO_DIR):
-		if f.endswith('.md'):
-			bc = BaseCorporation(f[:-3])
-			bc_dict[bc.slug] = bc
-	return bc_dict
+		return cls.base_corporations.values()
 
-BASE_CORPORATIONS = build_corpo_dict()
+# Build the dict at startup once and for all
+BaseCorporation.build_dict()
+
 
 class Corporation(models.Model):
 	"""
@@ -54,7 +76,13 @@ class Corporation(models.Model):
 
 	@cached_property
 	def base_corporation(self):
-		return BASE_CORPORATIONS[self.base_corporation_slug]
+		return BaseCorporation.base_corporations[self.base_corporation_slug]
+
+	def on_first_effect(self):
+		exec(self.base_corporation.on_first, {'game': self.game})
+
+	def on_last_effect(self):
+		exec(self.base_corporation.on_last, {'game': self.game})
 
 	def __unicode__(self):
 		return "%s (%s)" % (self.base_corporation.name, self.game)
