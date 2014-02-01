@@ -1,7 +1,7 @@
 name: Aztechnology
 initials_assets: 15
 
-Basée à Atzlan (le Mexique avant qu'elle n'en prenne totalement le contrôle), Aztechnology a des oeufs dans bien plus de paniers que n'importe quelle autre megacorp. Elle produit de tout, des jeux tridéos aux armements militaires, des accessoires pour mage à la nourriture pour chiens. Acheter n'importe quel article de consommation courante a de bonnes chances de contribuer à sa  cagnotte.
+Basée à Atzlan (le Mexique avant qu'elle n'en prenne totalement le contrôle), Aztechnology a des oeufs dans bien plus de paniers que n'importe quelle autre megacorp. Elle produit de tout, des jeux tridéos aux armements militaires, des accessoires pour mage à la nourriture pour chiens. Acheter n'importe quel article de consommation courante a de bonnes chances de contribuer à sa cagnotte.
 
 Auprès des masses, Aztechnology a une excellente réputation, le fruit de milliards dépensés en matraquage médiatique. Pour ceux qui connaissent les sombres affaires dans lesquels elle est impliqué loin des yeux du public, en revanche -- cartels de drogues, magie du sang et massacres de populations indigènes pour ne citer que le dessus de la pile -- elle est l'une des corpos les plus sinistres, et les shadowrunners demandent souvent un supplément pour s'y frotter.
 
