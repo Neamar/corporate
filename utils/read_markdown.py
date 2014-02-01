@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+import re
 import markdown
 import codecs
+
 
 def read_markdown(path):
 	raw = ''
@@ -10,6 +12,7 @@ def read_markdown(path):
 
 	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'toc'], safe_mode=False, enable_attributes=False)
 	content = md.convert(raw)
-	content = content.replace('ny', u'¥')
+
+	content = re.sub(r'(\s|\()ny', u'\\1¥', content)
 
 	return content, md.Meta
