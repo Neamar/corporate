@@ -289,18 +289,19 @@ Rapport public de fin de tour
 * achat de parts
 * bref, tout le public sauf les corpos
 
-### Wall Street
+### Wall Street ou pas000000
 Tableau des corpos :
+(nom, actifs, anciens actifs, changements inconnus, premier, dernier, sabotage, mdc, ds, s, e)
 ---------------------------------------------
-Renraku | 15 | 12 +3 | * +1 effet premier
-                       * -2 sabotage
+Nom     | Ac | Old|  ? | P  |  D | Sab| MDC| DS | S | E
+Renraku | 15 | 12 | +2 | +1 | -1 | +5 | -2 | 2
+(Le 15 est en gras rouge ou vert selon le delta)
 ---------------------------------------------
-
 Graphique de la bourse
 
 Tableau des produits dérivés :
 ---------------------------------------------
-Nikkei | 45 | 38 +7
+Nikkei | 45 | 38 | +7
 ---------------------------------------------
 Graphique des produits dérivés
 
@@ -350,6 +351,17 @@ Jules       | 12
 Effet premier dernier
 
 ### Joueurs
+Tableau croisé :
+
+* Nom du joueur
+* Corporation
+* en gras cellule citoyenneté corpo
+----------------------------------
+            Renraku     MCT     Ares
+Tiroshi     0           0      0
+Remi        0           0      0
+-----------------------------------
+
 Tableau des joueurs :
 
 Nom du joueur
@@ -360,19 +372,18 @@ Citoyenneté
 Tiroshi | **2** | Transparence | Renraku
 -----------------------------------------
 
-Tableau croisé :
-* Nom du joueur
-* Corporation
-* en gras cellule citoyenneté corpo
-
 #### Joueur
 * Nom
 * avatar
-* description
 * ic
+* vote
+-----------------------------------------
+Tiroshi | **2** | Transparence | Renraku
+-----------------------------------------
+
+* description
 * citoyenneté
 * parts
-* vote
 
 
 ### Commlink
