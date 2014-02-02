@@ -1,15 +1,13 @@
-from random import randint
-
 from engine.models import Player
 from engine.testcases import EngineTestCase
-from engine_modules.mdc.models import MDCVoteOrder, MDC_Party_Lines
+from engine_modules.mdc.models import MDCVoteOrder
 from engine_modules.share.models import BuyShareOrder
 from engine_modules.corporation.models import Corporation
 
-class TaskTest(EngineTestCase):
+class OrdersTest(EngineTestCase):
 	def setUp(self):
 		
-		super(TaskTest, self).setUp()
+		super(OrdersTest, self).setUp()
 
 		self.p.money = 1000000
 		self.p.save()
@@ -17,7 +15,6 @@ class TaskTest(EngineTestCase):
 		self.p2 = Player(game=self.g, money=1000000)
 		self.p2.save()
 
-		self.p.order_set.all().delete()
 		self.g.corporation_set.all().delete()
 		self.c = Corporation(base_corporation_slug='renraku', assets=20)
 		self.g.corporation_set.add(self.c)
@@ -38,13 +35,11 @@ class TaskTest(EngineTestCase):
 		)
 		self.o2.save()
 
-		i = randint(0, len(MDC_Party_Lines.keys())-1)
 		self.v = MDCVoteOrder(
 			player=self.p,
-			party_line = MDC_Party_Lines.keys()[i]
+			party_line = MDCVoteOrder.MDC_PARTY_LINE_CHOICES[2][0]
 		)
 		self.v.save()
-
 
 	def test_one_top_holder(self):
 		"""
@@ -86,21 +81,3 @@ class TaskTest(EngineTestCase):
 		
 		self.assertEqual(self.reload(self.v).weight, 3)
 
-	def test_party_line_set(self):
-
-		self.g.resolve_current_turn()
-		line = (self.g.mdcvotesession_set.filter(turn=self.g.current_turn)[0]).current_party_line
-		self.assertEqual(line, self.v.party_line)
-
-	def test_equality_no_party_line(self):
-	
-		self.v.party_line = "cpublics"
-		self.v2 = MDCVoteOrder(
-			player=self.p,
-			party_line = "transparence"
-		)
-		self.v2.save()
-		self.g.resolve_current_turn()
-
-		line = (self.g.mdcvotesession_set.filter(turn=self.g.current_turn)[0]).current_party_line
-		self.assertEqual(line, "aucune")

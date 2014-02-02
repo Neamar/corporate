@@ -1,6 +1,6 @@
 from collections import Counter
 from engine.tasks import OrderResolutionTask
-from engine_modules.mdc.models import MDCVoteSession, MDCVoteOrder, MDC_Party_Lines
+from engine_modules.mdc.models import MDCVoteSession, MDCVoteOrder
 
 
 class MDCVoteTask(OrderResolutionTask):
@@ -13,18 +13,17 @@ class MDCVoteTask(OrderResolutionTask):
 	def run(self, game):
 		r = MDCVoteOrder.build_vote_registry(game)
 		
-		#super(MDCVoteTask, self).run(game)
 		orders = self.ORDER_TYPE.objects.filter(player__game=game, turn=game.current_turn)
 		votes = {}
-		for l in MDC_Party_Lines.keys():
-			votes[l] = 0
+		for t in MDCVoteOrder.MDC_PARTY_LINE_CHOICES:
+			votes[t[0]] = 0
 
                 for order in orders:
                         order.resolve(r)
 			votes[order.party_line] += order.weight
 
 		top_line = Counter(votes).most_common(2)
-		official_line = "aucune"
+		official_line = MDCVoteOrder.MDC_PARTY_LINE_CHOICES[-1][0]
 		try:
 			if top_line[0][1] != top_line[1][1]:
 				official_line = top_line[0][0]
