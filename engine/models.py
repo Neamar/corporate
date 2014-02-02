@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.conf import settings
+from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
@@ -9,7 +10,7 @@ from messaging.models import Message, Note
 class Game(models.Model):
 	city = models.CharField(max_length=50)
 	current_turn = models.PositiveSmallIntegerField(default=1)
-	total_turn = models.PositiveSmallIntegerField()
+	total_turn = models.PositiveSmallIntegerField(default=8)
 	started = models.DateTimeField(auto_now_add=True)
 
 	def resolve_current_turn(self):
@@ -138,6 +139,8 @@ class Player(models.Model):
 
 
 class Order(models.Model):
+	title = "Ordre"
+
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField(editable=False)
 	cost = models.PositiveSmallIntegerField(editable=False) # TODO : recompute from inheritance
@@ -145,7 +148,6 @@ class Order(models.Model):
 
 	def save(self):
 		# Save the current type to inflate later
-		# self.type = '%s.%s' % (self._meta.app_label, self._meta.object_name)
 		self.type = self._meta.object_name
 
 		# Turn default values is game current_turn
@@ -181,7 +183,31 @@ class Order(models.Model):
 		"""
 		raise NotImplementedError("Abstract call.")
 
+	def get_form(self):
+		"""
+		Retrieve a form to create / edit this order
+		"""
+		return self.form_class()(instance=self)
 
+	def form_class(self):
+		"""
+		Build a new class for forms,
+		"""
+		class OrderForm(ModelForm):
+			class Meta(self.get_form_meta()):
+				pass
+
+		return OrderForm
+
+	def get_form_meta(self):
+		"""
+		Meta class to use for get_form()
+		"""
+		class Meta:
+			model = self.__class__
+			exclude = ['player']
+
+		return Meta
 # Import datas for all engine_modules
 from engine.modules import *
 

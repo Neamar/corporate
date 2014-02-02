@@ -105,13 +105,20 @@ class OffensiveRunOrder(RunOrder):
 		"""
 		raise NotImplementedError()
 
+	def get_form(self):
+		form = super(OffensiveRunOrder, self).get_form()
+		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
+
 
 class DataStealOrder(OffensiveRunOrder):
 	"""
 	Model for DataSteal Runs
 	"""
+	title = "Lancer une run de Datasteal"
 	
-	has_succeeded = models.BooleanField(default=False)
+	has_succeeded = models.BooleanField(default=False, editable=False)
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")	
 
 	def resolve_success(self):
@@ -166,11 +173,18 @@ class DataStealOrder(OffensiveRunOrder):
 	def description(self):
 		return u"Envoyer une équipe voler des données de %s pour le compte de %s" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 
+	def get_form(self):
+		form = super(DataStealOrder, self).get_form()
+		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
+
 
 class SabotageOrder(OffensiveRunOrder):
 	"""
 	Model for Sabotage Runs
 	"""
+	title = "Lancer une run de Sabotage"
 
 	def resolve_success(self):
 		self.target_corporation.assets -= 2
@@ -236,8 +250,10 @@ class ProtectionOrder(DefensiveRunOrder):
 	"""
 	Model for Protection Runs
 	"""
+	title = "Lancer une run de Protection"
+
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
-	done = models.BooleanField(default=False)
+	done = models.BooleanField(default=False, editable=False)
 
 	def resolve_successful(self):
 		self.done = True
@@ -251,5 +267,11 @@ class ProtectionOrder(DefensiveRunOrder):
 
 	def description(self):
 		return u"Envoyer une équipe protéger les intérêts de %s" %(self.protected_corporation.base_corporation.name)
+
+	def get_form(self):
+		form = super(ProtectionOrder, self).get_form()
+		form.fields['protected_corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
 
 orders = (DataStealOrder, ProtectionOrder, SabotageOrder, )
