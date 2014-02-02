@@ -15,13 +15,15 @@
 		<div id="sidebar">
 			<ul>
 				<li><a href="{% url 'docs.views.index' page='' %}">docs</a></li>
-
-				{% if not user.is_authenticated %}
+			{% if not user.is_authenticated %}
 				<li><a href="{% url 'django.contrib.auth.views.login' %}">login</a></li>
-				{% else %}
+			{% else %}
+				<li><a href="/newsfeeds/">newsfeeds</a></li>
+				<li><a href="/wallstreet/">wall street</a></li>
 				<li><a href="/corpos/">corpos</a></li>
 				<li><a href="/joueurs/">joueurs</a></li>
-				{% endif %}
+				<li><a href="/commlink/">commlink</a></li>
+			{% endif %}
 			</ul>
 		</div>
 

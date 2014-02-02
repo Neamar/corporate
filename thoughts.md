@@ -289,7 +289,7 @@ Rapport public de fin de tour
 * achat de parts
 * bref, tout le public sauf les corpos
 
-### Wall Street ou pas000000
+### Wall Street
 Tableau des corpos :
 (nom, actifs, anciens actifs, changements inconnus, premier, dernier, sabotage, mdc, ds, s, e)
 ---------------------------------------------
