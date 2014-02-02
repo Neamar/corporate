@@ -49,3 +49,27 @@ def add_order(request, game_id, order_type):
 	order = Order(player=player)
 
 	return render(request, 'game/orders.html', {})
+
+
+@login_required
+def wallstreet(request, game_id):
+	"""
+	Wallstreet datas
+	"""	
+	return render(request, 'game/wallstreet.html', {})
+
+
+@login_required
+def corporations(request, game_id):
+	"""
+	Wallstreet datas
+	"""	
+	return render(request, 'game/wallstreet.html', {})
+
+
+@login_required
+def players(request, game_id):
+	"""
+	Wallstreet datas
+	"""	
+	return render(request, 'game/wallstreet.html', {})
