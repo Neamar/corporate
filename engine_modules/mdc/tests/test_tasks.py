@@ -1,7 +1,7 @@
 from engine.models import Player
 from engine.testcases import EngineTestCase
 from engine_modules.mdc.models import MDCVoteOrder
-from engine_modules.share.models import BuyShareOrder
+from engine_modules.share.models import Share
 from engine_modules.corporation.models import Corporation
 
 class TaskTest(EngineTestCase):
@@ -23,17 +23,19 @@ class TaskTest(EngineTestCase):
 		self.g.corporation_set.add(self.c2)
 		self.c2.share_set.all().delete()
 
-		self.o1 = BuyShareOrder(
+		self.s1 = Share(
+			corporation=self.c,
 			player=self.p,
-			corporation=self.c
+			turn=self.g.current_turn
 		)
-		self.o1.save()
+		self.s1.save()
 
-		self.o2 = BuyShareOrder(
+		self.s2 = Share(
+			corporation=self.c,
 			player=self.p,
-			corporation=self.c
+			turn=self.g.current_turn
 		)
-		self.o2.save()
+		self.s2.save()
 
 		self.v = MDCVoteOrder(
 			player=self.p,

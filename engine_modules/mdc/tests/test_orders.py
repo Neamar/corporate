@@ -1,7 +1,7 @@
 from engine.models import Player
 from engine.testcases import EngineTestCase
 from engine_modules.mdc.models import MDCVoteOrder
-from engine_modules.share.models import BuyShareOrder
+from engine_modules.share.models import Share
 from engine_modules.corporation.models import Corporation
 
 class OrdersTest(EngineTestCase):
@@ -23,17 +23,19 @@ class OrdersTest(EngineTestCase):
 		self.g.corporation_set.add(self.c2)
 		self.c2.share_set.all().delete()
 
-		self.o1 = BuyShareOrder(
+		self.s1 = Share(
+			corporation=self.c,
 			player=self.p,
-			corporation=self.c
+			turn=self.g.current_turn
 		)
-		self.o1.save()
+		self.s1.save()
 
-		self.o2 = BuyShareOrder(
+		self.s2 = Share(
+			corporation=self.c,
 			player=self.p,
-			corporation=self.c
+			turn=self.g.current_turn
 		)
-		self.o2.save()
+		self.s2.save()
 
 		self.v = MDCVoteOrder(
 			player=self.p,
@@ -54,8 +56,8 @@ class OrdersTest(EngineTestCase):
 		Test the case where no one holds any shares
 		"""
 
-		self.o1.delete()
-		self.o2.delete()
+		self.s1.delete()
+		self.s2.delete()
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.v).weight, 1)
 
@@ -64,8 +66,13 @@ class OrdersTest(EngineTestCase):
 		Test when two players have the same amount of shares
 		"""
 
-		self.o2.player = self.p2
-		self.o2.save()
+		self.s2.delete()
+		self.s2 = Share(
+			corporation=self.c,
+			player=self.p2,
+			turn=self.g.current_turn
+		)
+		self.s2.save()
 		self.g.resolve_current_turn()
 		
 		self.assertEqual(self.reload(self.v).weight, 1)
@@ -75,8 +82,13 @@ class OrdersTest(EngineTestCase):
 		Test when a player is the top holder in two corporations
 		"""
 		
-		self.o2.corporation = self.c2
-		self.o2.save()
+		self.s2.delete()
+		self.s2 = Share(
+			corporation=self.c2,
+			player=self.p,
+			turn=self.g.current_turn
+		)
+		self.s2.save()
 		self.g.resolve_current_turn()
 		
 		self.assertEqual(self.reload(self.v).weight, 3)
