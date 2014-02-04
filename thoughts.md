@@ -279,15 +279,13 @@ Resolution:
 Documentation
 
 ### Newsfeeds
-Récapitulatif :
-* Ligne du tour
 
-Rapport public de fin de tour
+* Politique (MDC)
+* Breaking News (Sabotage)
+* Ragots & faits divers (Runs détectées)
+* People (Influence, Changement Corpo)
+* Économie (Premiers, Derniers)
 
-* runs publiques
-* ligne choisie (+ détails)
-* achat de parts
-* bref, tout le public sauf les corpos
 
 ### Wall Street
 Tableau des corpos :
