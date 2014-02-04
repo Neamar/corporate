@@ -6,7 +6,7 @@ Vous incarnez un cadre corporatiste décidé à se tailler un empire dans une de
 
 ## Concepts de base
 
-Les **corporations, ou "corpos"**, sont au coeur du jeu. De gigantesques multinationales qui ont supplanté le pouvoir des nations et fait main basse sur l'économie planétaire. Elles sont innombrables, mais le Corporate Game (**CG**) ne tient compte que des dix plus grosses s’étant implantées à Manhattan.
+Les **corporations, ou "corpos"**, sont au coeur du jeu. De gigantesques multinationales qui ont supplanté le pouvoir des nations et fait main basse sur l'économie planétaire. Elles sont innombrables, mais le Corporate Game ne tient compte que des dix plus grosses s’étant implantées à Manhattan.
 
 La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui évoluera en fonction des actions des joueurs et des caprices du marché. Plus une corpo possède d'actifs, plus elle engrange de bénéfices. Une corpo à 0 actifs à la fin d'un tour crashe définitivement. Au début de la partie, les actifs des 10 corpos sont tirés au hasard. (cf mise en place)
 
@@ -73,6 +73,10 @@ Le reste des aléas de la bourse de Manhattan est laissé à la chance. À chaqu
 
 Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tout autre modificateur, et peuvent chambouler les actifs des corpos. (cf corpos) pour une description individuelle de chaque corpo et (cf recap) pour une liste de leurs effets premiers / derniers.
 
+### Crash
+
+Au cour de la résolution du tour, une corpo peut descendre à 0  actifs ou moins. Son effet dernier  peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle **Crash** et est définitivement retirée du classement. Pas de remboursement pour les parts investies.
+
 ## Achat d'Influence
 
 Un fois par tour, les joueurs peuvent payer pour augmenter leur Influence corporatiste d'un point. Le coût est de 500 000 ny × nouvel indice, soit 1 500 000 ny pour passer de 2 à 3. 
@@ -87,9 +91,11 @@ Un **citoyen corpo** :
 
 * Gagne davantage de points de victoire si sa corpo est bien placée dans le classement à la fin de la partie (cf fin du jeu).
 * Paie les parts de sa corpo au prix usuel de 100 000 ny × actifs même si elle est en tête du classement (au lieu de 125 000 ny × actifs).
-* Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses fiches d’ordres (voir plus bas)
+* Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses actions (cf Information).
 
-Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Choisissez vite et choisissez bien.
+Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste (cf mise en place).
+
+Si la corpo dont le joueur est citoyen Crash, il en perd la citoyenneté et pourra s'il le souhaite en réclamer une nouvelle au tour suivant. Il subit normalement le malus de points de victoire.
 
 ## Runs
 
@@ -101,7 +107,7 @@ Pour lancer une run, un joueur doit investir un minimum de 50 000 ny, soit +10%.
 
 Pour chaque point d'IC qu'il possède, un joueur peut gratuitement ajouter +30% à une run par tour. Un joueur possédant une IC de 3 pourra donc ajouter +30% à 3 runs par tour. Ces bonus ne peuvent pas être cumulés sur une même run.
 
-Une run ne peut pas avoir plus de 90% de chance de réussite.
+Une run a un maximum de 90% de chance de réussire, mais il est possible de payer un pourcentage supérieur pour passer outre les malus de concurence (voir Runs en concurence plus bas).
 
 Si une run autre que Protection échoue ou est contrée (voir ci-dessous), son commanditaire récupère la moitié des nuyens investis.
 
@@ -122,6 +128,20 @@ En plus de leurs indices de Défense, les corpos possèdent un indice de **Déte
 Une run détectée figure également dans le rapport public de fin de tour, mais sans préciser le commanditaire et les chances de réussite.
 
 > Les runs de Sabotage sont toujours mentionnées dans le rapport de fin de tour, sans commanditaire ni chance de réussite.
+
+### Malus de concurence
+Il arrive que plusieurs équipes de shadowrunners soient engagées pour des runs similaires. Lorsque cela se produit, leurs plans peuvent entrer en conflit et se gèner les uns les autres.
+
+Une run subit un malus de **-10%** pour chaque autre run qui :
+*  Est du **même type** (Datasteal, Sabotage, Extraction ou Information).
+*  A la **même cible**, joueur ou corpo.
+* A un **pourcentage** de réussite **supérieur ou égal** au sien (avant que les malus de concurences ne soient appliqués).
+
+Si deux runs de Sabotage avec 70% de chance de réussite sont lancées contre Renraku le même tour, elles subissent toutes les deux un malus de concurence de -10%. Leurs chances de réussite descendent donc à 60%
+
+Si une troisième run de Sabotage est lancée contre Renraku avec 80% de chance de réussite, elle ne subit pas de malus  (les autres runs ont un pourcentage de réussite inférieur) mais fait subir -10% aux deux autres, faisant descendre leurs chances à 50%.
+
+> Les runs de Protection n'entre pas en concurence.
 
 ## Les types de runs
 
@@ -144,6 +164,8 @@ Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En
 * Base : 60 %
 
 Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit les les messages de résolution du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information).
+
+Au début du jeu, chaque joueur envoie à tous les autres un mail de **Secrets** (cf mise en place). Une fois que vous avez réussit une run d'Information contre un joueur (et pas avant!) vous avez le droit d'ouvrir et de lire les Secrets de ce joueur.
 
 > La Défense de Datasteal de la corpo dont la cible est citoyen est utilisée pour contrer les runs d'Information.
 
@@ -190,7 +212,10 @@ Si sa spéculation est juste, il fait un bénéfice de :
 
 ### Produits dérivés
 
-Un produit dérivé est la somme des actifs d'un ensemble de corpos. Le **Nikkei** (indice de Bourse de Neo Tokyo) est par exemple la somme des actifs des corpos Sony, Shiawase et Renraku, alors que le **Dow Jones** est celle des actifs d’Ares, Neonet, Spinrad et Prometheus. (cf Wall Street)
+Un produit dérivé est la somme des actifs d'un ensemble de corpos. 
+
+* Le **Nikkei** (indice de Bourse de Neo Tokyo) est la somme des actifs des corpos Sony, Shiawase et Renraku
+*  Le **Dow Jones** est la somme des actifs d’Ares, Neonet, Spinrad et Prometheus.
 
     Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il effectue deux spéculations :
     * 100 000 ny sur une chute du Nikkei. Après tout, il a un sabotage prévu sur Renraku...
@@ -206,7 +231,7 @@ Le MDC (ou Manhattan Inc.) n'est pas exactement une corporation, mais la structu
 
 Les corpos membres ont changées plusieurs fois depuis la fin de la reconstruction. Aujourd'hui, elles sont treize (seules 10 sont représentées dans le jeu), et ont chacune une voix lors des votes du consortium. Ces votes légifèrent sur tous les aspects de la vie et des affaires à Manhattan, des juteux contrats de la voirie, de la sécurité, du traitement des déchets ou du développement de la matrice aux lois de régulations des marchés qui ont le potentiel de bouleverser le cours des actions des corpos les plus stables. Les votes du MDC rythment la vie politique de Manhattan, et sont disputés par des coalitions fluctuantes qui ne reculent devant aucun coup bas pour rafler la mise.
 
-Chaque tour, les joueurs votent pour décider la **ligne politique** du MCD. Les options, détaillées plus bas, consistent en une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
+Chaque tour, les joueurs votent pour une **coalition** au MCD. Les options, détaillées plus bas, consistent en une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
 
 Chaque joueur possède une voix, plus celle de toutes les corpos dans lesquels il possède plus de parts que n'importe quel autre joueur. Ces corpos comptent comme ayant voté comme lui (voir Contrats publics, Développement urbain et Contrôles ciblés ci dessous).
 
