@@ -6,6 +6,8 @@ from messaging.models import Message
 
 
 class InformationRunOrder(RunOrder):
+	title = "Lancer une run d'Information"
+	
 	target = models.ForeignKey(Player)
 
 	def resolve_successful(self):
@@ -20,3 +22,5 @@ class InformationRunOrder(RunOrder):
 
 	def description(self):
 		return "Lancer une run d'information sur %s" % self.target
+
+orders = (InformationRunOrder, )

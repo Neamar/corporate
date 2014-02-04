@@ -17,7 +17,7 @@ class ModelTest(EngineTestCase):
 		p2 = Player(game=self.g)
 		p2.save()
 
-		g2 = Game(total_turn=20)
+		g2 = Game()
 		g2.save()
 
 		p3 = Player(game=g2)
