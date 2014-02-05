@@ -57,6 +57,5 @@ class RunOrder(Order):
 		"""
 		pass
 
-
 	def get_cost(self):
 		return RunOrder.BASE_COST * self.additional_percents

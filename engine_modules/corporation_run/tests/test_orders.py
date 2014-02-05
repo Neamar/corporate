@@ -127,14 +127,12 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		The others succeeds, but the clients do not profit from them
 		"""
 
-
 		dso2 = DataStealOrder(
 			stealer_corporation=self.c3,
 			player=self.p,
 			target_corporation=self.c
 		)
 		dso2.save()
-
 
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets

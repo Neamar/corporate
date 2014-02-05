@@ -66,7 +66,6 @@ class TasksTest(EngineTestCase):
 		)
 		self.s.save()
 
-
 		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
 

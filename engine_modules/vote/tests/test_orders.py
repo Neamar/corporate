@@ -36,7 +36,6 @@ class OrdersTest(EngineTestCase):
 		# assertNoRaises
 		o.save()
 		
-
 		o2 = VoteOrder(
 			corporation_up=self.c,
 			corporation_down=self.c2,

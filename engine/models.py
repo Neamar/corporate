@@ -157,7 +157,6 @@ class Order(models.Model):
 		if not self.cost:
 			self.cost = self.get_cost()
 
-
 		super(Order, self).save()
 
 	def clean(self):

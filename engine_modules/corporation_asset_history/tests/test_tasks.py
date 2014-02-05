@@ -18,7 +18,6 @@ class TasksTest(EngineTestCase):
 
 		self.g.disable_invisible_hand = True
 
-
 	def test_assets_saved_on_resolution(self):
 		"""
 		The game should save the corporation assets on resolution
