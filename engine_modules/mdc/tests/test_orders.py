@@ -4,6 +4,7 @@ from engine_modules.mdc.models import MDCVoteOrder
 from engine_modules.share.models import Share
 from engine_modules.corporation.models import Corporation
 
+
 class OrdersTest(EngineTestCase):
 	def setUp(self):
 		
@@ -39,7 +40,7 @@ class OrdersTest(EngineTestCase):
 
 		self.v = MDCVoteOrder(
 			player=self.p,
-			party_line = MDCVoteOrder.MDC_PARTY_LINE_CHOICES[2][0]
+			party_line=MDCVoteOrder.MDC_PARTY_LINE_CHOICES[2][0]
 		)
 		self.v.save()
 

@@ -34,7 +34,7 @@ class MDCVoteTask(OrderResolutionTask):
 		s = MDCVoteSession(
 			current_party_line=official_line,
 			game=game,
-			turn=game.current_turn+1
+			turn=game.current_turn +1
 		)
 		s.save()
 tasks = (MDCVoteTask, )

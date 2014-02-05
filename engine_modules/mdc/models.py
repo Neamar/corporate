@@ -7,30 +7,29 @@ from engine.models import Order, Game
 from engine_modules.corporation.models import Corporation
 
 
-	
 class MDCVoteOrder(Order):
 	"""
 	Order to vote for the party line of the MDC
 	"""
 
 	# Enumerate the party lines and what they mean
-	MDC_PARTY_LINE_CHOICES = (('CPUB', u'Contrats publics'), 
-				('CCIB', u'Contrôles ciblés'), 
-				('DERE', u'Dérégulation'), 
-				('DEVE', u'Développement urbain'), 
-				('BANK', u'Garde-fous bancaires'), 
-				('TRAN', u'Transparence'), 
+	MDC_PARTY_LINE_CHOICES = (('CPUB', u'Contrats publics'),
+				('CCIB', u'Contrôles ciblés'),
+				('DERE', u'Dérégulation'),
+				('DEVE', u'Développement urbain'),
+				('BANK', u'Garde-fous bancaires'),
+				('TRAN', u'Transparence'),
 				('NONE', u'Aucune'))
 
 	weight = models.PositiveSmallIntegerField(default=1)
-	party_line = models.CharField(max_length=4, 
+	party_line = models.CharField(max_length=4,
 				choices=MDC_PARTY_LINE_CHOICES,
-				default = "NONE")
+				default="NONE")
 
 	def resolve(self, vote_registry):
 
 		if self.player in vote_registry.values():
-			self.weight = Counter(vote_registry.values())[self.player]+1
+			self.weight = Counter(vote_registry.values())[self.player] +1
 			self.save()
 
 	@classmethod
@@ -54,6 +53,7 @@ class MDCVoteOrder(Order):
 	
 	def description(self):
 		return u"Vote pour définir la ligne du Manhattan Development Consortium"
+
 
 class MDCVoteSession(models.Model):
 	"""

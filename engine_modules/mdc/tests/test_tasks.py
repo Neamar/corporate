@@ -4,6 +4,7 @@ from engine_modules.mdc.models import MDCVoteOrder
 from engine_modules.share.models import Share
 from engine_modules.corporation.models import Corporation
 
+
 class TaskTest(EngineTestCase):
 	def setUp(self):
 		
@@ -39,10 +40,9 @@ class TaskTest(EngineTestCase):
 
 		self.v = MDCVoteOrder(
 			player=self.p,
-			party_line = MDCVoteOrder.MDC_PARTY_LINE_CHOICES[2][0]
+			party_line=MDCVoteOrder.MDC_PARTY_LINE_CHOICES[2][0]
 		)
 		self.v.save()
-
 
 	def test_party_line_set(self):
 
@@ -54,7 +54,7 @@ class TaskTest(EngineTestCase):
 	
 		self.v2 = MDCVoteOrder(
 			player=self.p,
-			party_line = MDCVoteOrder.MDC_PARTY_LINE_CHOICES[3][0]
+			party_line=MDCVoteOrder.MDC_PARTY_LINE_CHOICES[3][0]
 		)
 		self.v2.save()
 		self.g.resolve_current_turn()
