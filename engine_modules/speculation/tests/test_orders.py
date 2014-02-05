@@ -91,7 +91,7 @@ class OrdersTest(EngineTestCase):
 		"""
 		self.g.resolve_current_turn()
 
-		self.first_corporation.assets -= 50
+		self.first_corporation.assets -= 5
 		self.first_corporation.save()
 
 		dso = DerivativeSpeculationOrder(
@@ -112,7 +112,7 @@ class OrdersTest(EngineTestCase):
 		"""
 		self.g.resolve_current_turn()
 
-		self.first_corporation.assets += 50
+		self.first_corporation.assets += 5
 		self.first_corporation.save()
 
 		dso = DerivativeSpeculationOrder(

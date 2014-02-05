@@ -47,7 +47,7 @@ class SignalsTest(EngineTestCase):
 		dso = DerivativeSpeculationOrder(
 			player=self.p,
 			speculation=DerivativeSpeculationOrder.UP,
-			investment=51
+			investment=DerivativeSpeculationOrder.MAX_AMOUNT_SPECULATION + 1
 		)
 		self.assertRaises(OrderNotAvailable, dso.clean)
 
