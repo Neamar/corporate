@@ -17,6 +17,7 @@ class BuyShareOrder(Order):
 	"""
 	Order to buy a corporation share
 	"""
+	title = "Acheter une part dans une corporation"
 	BASE_COST = 100
 	FIRST_COST = 125
 	FIRST_AND_CITIZEN_COST = 100
@@ -47,16 +48,21 @@ class BuyShareOrder(Order):
 		category = u"Parts"
 		nb_shares = self.player.share_set.filter(corporation=self.corporation).count()
 		if nb_shares == 1:
-		  content = u"Vous avez acheté votre première part dans %s." % self.corporation.base_corporation.name
-		  global_content = u"%s a acheté sa première part dans %s." % (self.player, self.corporation.base_corporation.name)
+			content = u"Vous avez acheté votre première part dans %s." % self.corporation.base_corporation.name
+			global_content = u"%s a acheté sa première part dans %s." % (self.player, self.corporation.base_corporation.name)
 		else:
-			content = u"Vous avez acheté votre %ième part dans %s." %(nb_shares, self.corporation)
-			global_content = u"%s a acheté sa %ième part dans %s." %(self.player,nb_shares, self.corporation)
+			content = u"Vous avez acheté votre %ième part dans %s." % (nb_shares, self.corporation)
+			global_content = u"%s a acheté sa %ième part dans %s." % (self.player, nb_shares, self.corporation)
 		self.player.add_note(category=category, content=content)
 		self.player.game.add_note(category=category, content=global_content)
 
 	def description(self):
 		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)
 
+	def get_form(self):
+		form = super(BuyShareOrder, self).get_form()
+		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
 
 orders = (BuyShareOrder,)

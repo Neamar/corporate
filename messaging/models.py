@@ -6,7 +6,6 @@ class Message(models.Model):
 	PRIVATE_MESSAGE = 'PM'
 	RESOLUTION = 'RE'
 
-
 	MESSAGE_CHOICES = (
 		(ORDER, 'Order'),
 		(PRIVATE_MESSAGE, 'Private Message'),

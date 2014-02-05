@@ -6,7 +6,7 @@ from random import shuffle
 class OffensiveRunTask(OrderResolutionTask):
 	"""
 	A Task to resolve all Offensive Runs (DataSteal and Sabotage)
-	"""	
+	"""
 	resolution_order = 350
 	ORDER_TYPES = [DataStealOrder, SabotageOrder]
 
@@ -22,10 +22,11 @@ class OffensiveRunTask(OrderResolutionTask):
 		for order in orders:
 			order.resolve()
 
+
 class ProtectionRunPaymentTask(OrderResolutionTask):
 	"""
 	A Task to deduce costs of Protection Runs
-	"""	
+	"""
 	resolution_order = 350
 	ORDER_TYPES = [ProtectionOrder]
 

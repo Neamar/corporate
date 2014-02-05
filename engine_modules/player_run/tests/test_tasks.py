@@ -3,6 +3,7 @@ from engine.models import Player
 from messaging.models import Message
 from engine_modules.player_run.models import InformationRunOrder
 
+
 class TaskTest(EngineTestCase):
 
 	def test_information_run_success(self):
@@ -15,7 +16,7 @@ class TaskTest(EngineTestCase):
 		o = BuyInfluenceOrder(
 			player=self.p
 		)
-		o.save()		
+		o.save()
 
 		p2 = Player(game=self.g, money=1000000)
 		p2.save()

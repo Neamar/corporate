@@ -30,4 +30,3 @@ class TaskTest(EngineTestCase):
 		# Check order is only applied on creation turn, not every turn
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.p).influence.level, start_influence + 1)
-

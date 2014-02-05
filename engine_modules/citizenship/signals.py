@@ -15,6 +15,7 @@ def auto_create_player_citizenship(sender, instance, **kwargs):
 	"""
 	CitizenShip(player=instance).save()
 
+
 @receiver(validate_order, sender=CitizenShipOrder)
 def limit_citizenship_order(sender, instance, **kwargs):
 	"""

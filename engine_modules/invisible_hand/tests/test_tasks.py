@@ -1,6 +1,7 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import Corporation
 
+
 class TaskTest(EngineTestCase):
 	def setUp(self):
 		
