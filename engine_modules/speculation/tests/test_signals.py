@@ -68,7 +68,7 @@ class SignalsTest(EngineTestCase):
 			player=self.p,
 			corporation=self.last_corporation,
 			rank=1,
-			investment=51
+			investment=self.p.influence.level * CorporationSpeculationOrder.MAX_AMOUNT_SPECULATION + 1
 		)
 		self.assertRaises(OrderNotAvailable, o.clean)
 
@@ -88,7 +88,7 @@ class SignalsTest(EngineTestCase):
 		dso = DerivativeSpeculationOrder(
 			player=self.p,
 			speculation=DerivativeSpeculationOrder.UP,
-			investment=51,
+			investment=DerivativeSpeculationOrder.MAX_AMOUNT_SPECULATION + 1,
 			derivative=self.d
 		)
 		self.assertRaises(OrderNotAvailable, dso.clean)

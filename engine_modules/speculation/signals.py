@@ -28,7 +28,7 @@ def limit_corporate_speculation_amount_by_influence(sender, instance, **kwargs):
 	"""
 	A speculation can't be more than {{influence}} * 50 000 ny per turn
 	"""
-	if instance.investment > instance.player.influence.level * 50:
+	if instance.investment > instance.player.influence.level * sender.MAX_AMOUNT_SPECULATION:
 		raise OrderNotAvailable("Pas assez d'influence pour spéculer un tel montant. (montant max : %s)" % (instance.player.influence.level * 50))
 
 @receiver(validate_order, sender=DerivativeSpeculationOrder)
@@ -36,5 +36,5 @@ def limit_derivative_speculation_amount_by_influence(sender, instance, **kwargs)
 	"""
 	A speculation can't be more than {{influence}} * 50 000 ny per turn
 	"""
-	if instance.investment > instance.player.influence.level * 50:
+	if instance.investment > instance.player.influence.level * sender.MAX_AMOUNT_SPECULATION:
 		raise OrderNotAvailable("Pas assez d'influence pour spéculer un tel montant. (montant max : %s)" % (instance.player.influence.level * 50))

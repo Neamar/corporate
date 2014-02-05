@@ -14,7 +14,7 @@ class CorporationSpeculationOrder(Order):
 	"""
 	Order to speculate on a corporation's rank
 	"""
-
+	MAX_AMOUNT_SPECULATION = 50
 	BASE_COST = 10
 
 	corporation = models.ForeignKey(Corporation)
@@ -58,6 +58,7 @@ class DerivativeSpeculationOrder(Order):
 	"""
 	Order to speculate on a derivative up or down
 	"""
+	MAX_AMOUNT_SPECULATION = 50
 	BASE_COST = 10
 
 	UP = True
