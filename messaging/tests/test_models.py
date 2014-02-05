@@ -53,8 +53,8 @@ class ModelTest(EngineTestCase):
 			turn=self.g.current_turn
 		)
 
-		opening="Opening"
-		ending="Ending"
+		opening = "Opening"
+		ending = "Ending"
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=Note.objects.all(),

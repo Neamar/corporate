@@ -39,7 +39,7 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		message = self.p.message_set.get(flag=Message.RESOLUTION,turn=self.g.current_turn - 1)
 
-		expected="""## Classement corporatiste
+		expected = """## Classement corporatiste
 * 1- %s : 13  (+3)
 2- %s : 12  (+2)
 3- %s : 10  (+0)""" % (self.c3.base_corporation.name, self.c2.base_corporation.name, self.c.base_corporation.name)

@@ -128,7 +128,7 @@ class DataStealOrder(OffensiveRunOrder):
 		if(success_datasteals.exists()):
 			# Send a note for final message 
 			category = u"Run de Datasteal"
-			content = datasteal_messages['late'] %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			content = datasteal_messages['late'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 			self.player.add_note(category=category, content=content)
 		else:
 			self.has_succeeded = True
@@ -138,40 +138,40 @@ class DataStealOrder(OffensiveRunOrder):
 
 			# Send a note for final message 
 			category = u"Run de Datasteal"
-			content = datasteal_messages['success'] %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			content = datasteal_messages['success'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 			self.player.add_note(category=category, content=content)
 		return True
 
 	def resolve_fail(self):
 		# Send a note for final message
 		category = u"Run de Datasteal"
-		content = datasteal_messages['fail'] %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+		content = datasteal_messages['fail'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 	def resolve_interception(self, po):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
-		content = datasteal_messages['interception']['aggressor'] %(self.target_corporation.base_corporation.name)
+		content = datasteal_messages['interception']['aggressor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 		
 		# Send a note to the one who ordered the Protection
 		category = u"Run de Protection"
-		content = datasteal_messages['interception']['protector'] %(self.target_corporation.base_corporation.name)
+		content = datasteal_messages['interception']['protector'] % (self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 
 	def resolve_capture(self, po):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
-		content = datasteal_messages['capture']['aggressor'] %(self.target_corporation.base_corporation.name)
+		content = datasteal_messages['capture']['aggressor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 		
 		# Send a note to the one who ordered the Protection
 		category = u"Run de Protection"
-		content = datasteal_messages['capture']['protector'] %(self.player.name, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+		content = datasteal_messages['capture']['protector'] % (self.player.name, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 		
 	def description(self):
-		return u"Envoyer une équipe voler des données de %s pour le compte de %s" %(self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+		return u"Envoyer une équipe voler des données de %s pour le compte de %s" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 
 	def get_form(self):
 		form = super(DataStealOrder, self).get_form()
@@ -192,39 +192,39 @@ class SabotageOrder(OffensiveRunOrder):
 
 		# Send a note for final message 
 		category = u"Run de Sabotage"
-		content = sabotage_messages['success'] %(self.target_corporation.base_corporation.name)
+		content = sabotage_messages['success'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 	def resolve_fail(self):
 		# Send a note for final message 
 		category = u"Run de Sabotage"
-		content = sabotage_messages['fail'] %(self.target_corporation.base_corporation.name)
+		content = sabotage_messages['fail'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 	def resolve_interception(self, po):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Sabotage"
-		content = sabotage_messages['interception']['aggressor'] %(self.target_corporation.base_corporation.name)
+		content = sabotage_messages['interception']['aggressor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 		# Send a note to the one who ordered the Protection
 		category = u"Run de Protection"
-		content = sabotage_messages['interception']['protector'] %(self.target_corporation.base_corporation.name)
+		content = sabotage_messages['interception']['protector'] % (self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 	
 	def resolve_capture(self, po):
 		# Send a note for final message
 		category = u"Run de Sabotage"
-		content = sabotage_messages['capture']['aggressor'] %(self.target_corporation.base_corporation.name)
+		content = sabotage_messages['capture']['aggressor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 		# Send a note to the one who ordered the Protection
 		category = u"Run de Protection"
-		content = sabotage_messages['capture']['protector'] %(self.player, self.target_corporation.base_corporation.name)
+		content = sabotage_messages['capture']['protector'] % (self.player, self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 		
 	def description(self):
-		return u"Envoyer une équipe saper les opérations et les résultats de %s" %(self.target_corporation.base_corporation.name)
+		return u"Envoyer une équipe saper les opérations et les résultats de %s" % (self.target_corporation.base_corporation.name)
 
 
 class DefensiveRunOrder(RunOrder):
@@ -266,7 +266,7 @@ class ProtectionOrder(DefensiveRunOrder):
 		return False
 
 	def description(self):
-		return u"Envoyer une équipe protéger les intérêts de %s" %(self.protected_corporation.base_corporation.name)
+		return u"Envoyer une équipe protéger les intérêts de %s" % (self.protected_corporation.base_corporation.name)
 
 	def get_form(self):
 		form = super(ProtectionOrder, self).get_form()
