@@ -36,7 +36,6 @@ class ModelTest(EngineTestCase):
 		self.g.current_turn += 1
 		self.g.save()
 
-
 		self.assertRaises(IntegrityError, s.save)
 
 	def test_share_integrity(self):

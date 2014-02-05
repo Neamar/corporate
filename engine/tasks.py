@@ -22,4 +22,4 @@ class OrderResolutionTask(ResolutionTask):
 		orders = self.ORDER_TYPE.objects.filter(player__game=game, turn=game.current_turn)
 
 		for order in orders:
-			order.resolve()			
+			order.resolve()

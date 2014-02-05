@@ -28,10 +28,10 @@ def orders(request, game_id):
 			order['available'] = None
 		
 		order['title'] = instance.title
-		if order['available'] != False:
+		if order['available'] is not False:
 			order['form'] = instance.get_form()
 
-	return render(request, 'game/orders.html', { "game": player.game, "orders": all_orders})
+	return render(request, 'game/orders.html', {"game": player.game, "orders": all_orders})
 
 
 @login_required
@@ -39,7 +39,7 @@ def add_order(request, game_id, order_type):
 	player = get_player(request, game_id)
 
 	# Retrieve OrderClass
-	all_orders_dict = {order.__name__:order for order in orders_list}
+	all_orders_dict = {order.__name__: order for order in orders_list}
 
 	try:
 		Order = all_orders_dict[order_type]
@@ -55,7 +55,7 @@ def add_order(request, game_id, order_type):
 def wallstreet(request, game_id):
 	"""
 	Wallstreet datas
-	"""	
+	"""
 	return render(request, 'game/wallstreet.html', {})
 
 
@@ -63,7 +63,7 @@ def wallstreet(request, game_id):
 def corporations(request, game_id):
 	"""
 	Wallstreet datas
-	"""	
+	"""
 	return render(request, 'game/wallstreet.html', {})
 
 
@@ -71,5 +71,5 @@ def corporations(request, game_id):
 def players(request, game_id):
 	"""
 	Wallstreet datas
-	"""	
+	"""
 	return render(request, 'game/wallstreet.html', {})

@@ -1,5 +1,6 @@
 from engine.tasks import ResolutionTask
 
+
 class InvisibleHandTask(ResolutionTask):
 	"""
 	Give +1 and -1 asset to two corporation
