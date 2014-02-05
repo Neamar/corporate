@@ -143,7 +143,7 @@ class Order(models.Model):
 
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField(editable=False)
-	cost = models.PositiveSmallIntegerField(editable=False) # TODO : recompute from inheritance
+	cost = models.PositiveSmallIntegerField(editable=False)  # TODO : recompute from inheritance
 	type = models.CharField(max_length=80, blank=True, editable=False)
 
 	def save(self):
