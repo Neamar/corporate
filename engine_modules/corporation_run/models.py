@@ -31,6 +31,7 @@ sabotage_messages = {
 	}
 }
 
+
 class OffensiveRunOrder(RunOrder):
 	"""
 	Model for offensive corporation runs.

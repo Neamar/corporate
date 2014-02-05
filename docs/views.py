@@ -5,6 +5,7 @@ from django.utils.safestring import mark_safe
 
 from utils.read_markdown import read_markdown
 
+
 def index(request, page):
 	if(page == ''):
 		page = 'index'

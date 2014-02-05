@@ -3,6 +3,7 @@ from engine.testcases import EngineTestCase
 from messaging.models import Message
 from engine_modules.corporation.models import Corporation
 
+
 class TasksTest(EngineTestCase):
 	"""
 	Unit tests for engine models

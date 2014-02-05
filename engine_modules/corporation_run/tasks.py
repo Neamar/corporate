@@ -22,6 +22,7 @@ class OffensiveRunTask(OrderResolutionTask):
 		for order in orders:
 			order.resolve()
 
+
 class ProtectionRunPaymentTask(OrderResolutionTask):
 	"""
 	A Task to deduce costs of Protection Runs

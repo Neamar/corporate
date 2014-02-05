@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from engine.dispatchs import validate_order
 from messaging.models import Message, Note
 
+
 class Game(models.Model):
 	city = models.CharField(max_length=50)
 	current_turn = models.PositiveSmallIntegerField(default=1)

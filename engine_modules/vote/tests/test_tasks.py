@@ -1,6 +1,7 @@
 from engine.testcases import EngineTestCase
 from engine_modules.vote.models import VoteOrder
 
+
 class TaskTest(EngineTestCase):
 	def setUp(self):
 		
