@@ -41,7 +41,7 @@ class Game(models.Model):
 		"""
 		Create a note, to be used later for the resolution message
 		"""
-		n = Note.objects.create(turn = self.current_turn, **kwargs)
+		n = Note.objects.create(turn=self.current_turn, **kwargs)
 		n.recipient_set = self.player_set.all()
 		return n
 

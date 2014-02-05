@@ -28,7 +28,7 @@ class ModelTest(EngineTestCase):
 		m.recipient_set.add(p2)
 		m.save()
 
-		m2 = Message(title="titre1", author= self.p, turn=self.g.current_turn)
+		m2 = Message(title="titre1", author=self.p, turn=self.g.current_turn)
 		m2.save()
 		
 		self.assertRaises(IntegrityError, lambda: m2.recipient_set.add(p3))

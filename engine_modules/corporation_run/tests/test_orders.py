@@ -29,7 +29,7 @@ class RunOrdersTest(EngineTestCase):
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation = self.c
+			target_corporation=self.c
 		)
 		self.so.clean()
 		self.so.save()
