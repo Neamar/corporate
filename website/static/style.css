@@ -52,6 +52,10 @@ td a
    text-decoration:none;
 }
 
+pre {
+   white-space: pre-wrap;
+}
+
 #wrapper
 {
    width:600px;

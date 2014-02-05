@@ -1,0 +1,24 @@
+{% extends "template.html" %}
+
+{% block content %}
+
+{% for order in orders %}
+	<h3>{{ order.title }}</h3>
+	{% if order.available != False %}
+	<form method="post" action="">
+		<table>
+		{{ order.form.as_table }}
+		<tr>
+			<td colspan="2">
+				<input type="submit" value="Envoyer l'ordre" />
+			</td>
+		</tr>
+		</table>
+	</form>
+	{% else %}
+		Unavailable !
+	{% endif %}
+{% endfor %}
+</ul>
+
+{% endblock content %}

@@ -29,7 +29,7 @@ class OrdersTest(EngineTestCase):
 	def test_cant_create_order_twice(self):
 		"""
 		Order can't be created twice
-		"""	
+		"""
 		o2 = CitizenShipOrder(
 			player=self.p,
 			corporation=self.c

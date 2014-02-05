@@ -36,14 +36,13 @@ class ModelTest(EngineTestCase):
 		self.g.current_turn += 1
 		self.g.save()
 
-
 		self.assertRaises(IntegrityError, s.save)
 
 	def test_share_integrity(self):
 		"""
 		Share corporation must be part of the same game as the player
 		"""
-		g2 = Game(total_turn=10)
+		g2 = Game()
 		g2.save()
 
 		s = Share(

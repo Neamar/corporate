@@ -17,7 +17,7 @@ class MDCVoteTask(OrderResolutionTask):
 		for t in MDCVoteOrder.MDC_PARTY_LINE_CHOICES:
 			votes[t[0]] = 0
 
-                for order in orders:
+		for order in orders:
 			votes[order.party_line] += order.weight
 
 		top_line = Counter(votes).most_common(2)
@@ -32,7 +32,7 @@ class MDCVoteTask(OrderResolutionTask):
 		s = MDCVoteSession(
 			current_party_line=official_line,
 			game=game,
-			turn=game.current_turn+1
+			turn=game.current_turn + 1
 		)
 		s.save()
 tasks = (MDCVoteTask, )

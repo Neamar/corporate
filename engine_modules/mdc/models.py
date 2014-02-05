@@ -7,29 +7,31 @@ from engine.models import Order, Game
 from engine_modules.corporation.models import Corporation
 
 
-	
 class MDCVoteOrder(Order):
 	"""
 	Order to vote for the party line of the MDC
 	"""
 
 	# Enumerate the party lines and what they mean
-	MDC_PARTY_LINE_CHOICES = (('CPUB', u'Contrats publics'), 
-				('CCIB', u'Contrôles ciblés'), 
-				('DERE', u'Dérégulation'), 
-				('DEVE', u'Développement urbain'), 
-				('BANK', u'Garde-fous bancaires'), 
-				('TRAN', u'Transparence'), 
+	MDC_PARTY_LINE_CHOICES = (('CPUB', u'Contrats publics'),
+				('CCIB', u'Contrôles ciblés'),
+				('DERE', u'Dérégulation'),
+				('DEVE', u'Développement urbain'),
+				('BANK', u'Garde-fous bancaires'),
+				('TRAN', u'Transparence'),
 				('NONE', u'Aucune'))
 
 	party_line = models.CharField(max_length=4, 
 				choices=MDC_PARTY_LINE_CHOICES,
 				default = "NONE")
+
+	def resolve(self):
+		pass
+
 	@property
 	def weight(self):
 
 		vote_registry = self.build_vote_registry()
-
 		if self.player in vote_registry.values():
 			return Counter(vote_registry.values())[self.player] + 1
 		else:
@@ -37,24 +39,28 @@ class MDCVoteOrder(Order):
 
 	def build_vote_registry(self):
 		"""
-		Build a registry of the top shareholders for each corporation that will be 
-		used in resolve, but must be exported in order to be calculated only once
+		Build a registry of the top shareholders for each corporation that will be
+		used in calculation of weight
 		"""
 		vote_registry = {}
 		corporations = self.player.game.corporation_set.all()
+		# For each corporation, get the 2 players that have the most shares
 		for c in corporations:
-			shareholders  = (s.player for s in c.share_set.all())
+			shareholders = (s.player for s in c.share_set.all())
 			top_holders = Counter(shareholders).most_common(2)
+			# if they don't have the same number of shares, the first one gets a vote
 			try:
 				if top_holders[0][1] != top_holders[1][1]:
 					vote_registry[c.base_corporation_slug] = top_holders[0][0]
 			except(IndexError):
 				if len(top_holders) != 0:
+					# Only one had shares
 					vote_registry[c.base_corporation_slug] = top_holders[0][0]
 		return vote_registry
 	
 	def description(self):
 		return u"Vote pour définir la ligne du Manhattan Development Consortium"
+
 
 class MDCVoteSession(models.Model):
 	"""

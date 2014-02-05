@@ -8,5 +8,5 @@ class DispatchTest(EngineTestCase):
 		"""
 		Check is current_turn can't be greater than total_turn
 		"""
-		self.g.current_turn = 11
+		self.g.current_turn = self.g.total_turn + 1
 		self.assertRaises(IntegrityError, self.g.save)

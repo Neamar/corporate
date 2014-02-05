@@ -30,7 +30,7 @@ Chacun des concepts suivants sera expliqué en détail.
 
 4. Chaque joueur touche ses divers retours sur investissements.
 
-5.  Un **rapport de fin de tour** est publié, révélant le nouveau classement et les évènements publics du tour écoulé, et chaque joueur reçoit en plus un **message de résolution** personnalisé qui contient les informations plus confidentielles.
+5. Un **rapport de fin de tour** est publié, révélant le nouveau classement et les évènements publics du tour écoulé, et chaque joueur reçoit en plus un **message de résolution** personnalisé qui contient les informations plus confidentielles.
 
 Un nouveau tour peut commencer.
 
@@ -133,7 +133,7 @@ Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En
 ### Sabotage
 * Base : 30 %
 
-Le commanditaire choisit une **corpo cible**, et tente de saboter une de ses opérations. En cas de réussite, la corpo subit  **-2 actifs**.
+Le commanditaire choisit une **corpo cible**, et tente de saboter une de ses opérations. En cas de réussite, la corpo subit **-2 actifs**.
 
 ### Extraction
 * Base : 10 %
@@ -180,7 +180,7 @@ Chaque spéculation peut viser :
 
 Si le spéculateur se trompe, il perd la somme misée. 
 
-Si sa spéculation est juste, il fait un bénéfice de  :
+Si sa spéculation est juste, il fait un bénéfice de :
 
 * 1 fois la somme misée s'il a spéculé sur la **fluctuation d'un produit dérivé** -- soit une cote de **1 pour 2**. (S’il a placé 100 000 ny, il en récupère 200 000)
 * 2 fois la somme misée s'il a spéculé qu’une corpo finirait le tour **première ou dernière** -- soit une cote de **1 pour 3**.
@@ -190,9 +190,7 @@ Si sa spéculation est juste, il fait un bénéfice de  :
 
 ### Produits dérivés
 
-Un produit dérivé est la somme des actifs d'un ensemble de corpos. Le **Nikkei** (indice de Bourse de Neo Tokyo) est par exemple la somme des actifs des corpos Sony, Shiawase et Renraku, alors que le **Dow Jones** est celles des actifs d’Ares, Neonet, Spinrad et Prometheus. (cf Wall Street)
-
-Chaque tour, de 1 à 3 produits dérivés rassemblant les actifs de 2 à 4 corpos sont générés aléatoirement. Ils disparaissent à la fin du tour.
+Un produit dérivé est la somme des actifs d'un ensemble de corpos. Le **Nikkei** (indice de Bourse de Neo Tokyo) est par exemple la somme des actifs des corpos Sony, Shiawase et Renraku, alors que le **Dow Jones** est celle des actifs d’Ares, Neonet, Spinrad et Prometheus. (cf Wall Street)
 
     Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il effectue deux spéculations :
     * 100 000 ny sur une chute du Nikkei. Après tout, il a un sabotage prévu sur Renraku...
@@ -206,7 +204,7 @@ Chaque tour, de 1 à 3 produits dérivés rassemblant les actifs de 2 à 4 corpo
 
 Le MDC (ou Manhattan Inc.) n'est pas exactement une corporation, mais la structure à travers laquelle un groupe de corpos se sont alliées pour coordonner la reconstruction, assurer l'extraterritorialité de Manhattan et partager sa gouvernance entre ses membres. Cet équivalent corporatiste d'un conseil municipal tente de maintenir un contrôle absolu sur presque toutes les activités de Manhattan.
 
-Les corpos membres ont changées plusieurs fois depuis la fin de la reconstruction.  Aujourd'hui, elles sont treize (seules 10 sont représentées dans le jeu), et ont chacune une voix lors des votes du consortium. Ces votes légifèrent sur tous les aspects de la vie et des affaires à Manhattan, des juteux contrats de la voirie, de la sécurité, du traitement des déchets ou du développement de la matrice aux lois de régulations des marchés qui ont le potentiel de bouleverser le cours des actions des corpos les plus stables. Les votes du MDC rythment la vie politique de Manhattan, et sont disputés par des coalitions fluctuantes qui ne reculent devant aucun coup bas pour rafler la mise.
+Les corpos membres ont changées plusieurs fois depuis la fin de la reconstruction. Aujourd'hui, elles sont treize (seules 10 sont représentées dans le jeu), et ont chacune une voix lors des votes du consortium. Ces votes légifèrent sur tous les aspects de la vie et des affaires à Manhattan, des juteux contrats de la voirie, de la sécurité, du traitement des déchets ou du développement de la matrice aux lois de régulations des marchés qui ont le potentiel de bouleverser le cours des actions des corpos les plus stables. Les votes du MDC rythment la vie politique de Manhattan, et sont disputés par des coalitions fluctuantes qui ne reculent devant aucun coup bas pour rafler la mise.
 
 Chaque tour, les joueurs votent pour décider la **ligne politique** du MCD. Les options, détaillées plus bas, consistent en une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
 

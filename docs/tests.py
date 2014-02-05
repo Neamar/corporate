@@ -1,6 +1,5 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 
-from django.test import Client
 
 class DocTest(TestCase):
 	def setUp(self):

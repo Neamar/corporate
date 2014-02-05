@@ -13,7 +13,7 @@ class SignalTest(EngineTestCase):
 		first_creation.was_called = False
 
 		post_create.connect(first_creation)
-		g2 = Game(total_turn=10)
+		g2 = Game()
 		g2.save()
 		self.assertTrue(first_creation.was_called)
 
