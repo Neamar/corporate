@@ -59,7 +59,7 @@ class SignalsTest(EngineTestCase):
 
 	def test_max_corporation_speculation_amount(self):
 		"""
-		can't speculate more than influence * 50
+		can't speculate more than influence * MAX_AMOUNT_SPECULATION
 		"""
 		self.p.influence.level = 1;
 		self.p.influence.save()
@@ -80,7 +80,7 @@ class SignalsTest(EngineTestCase):
 
 	def test_max_derivative_speculation_amount(self):
 		"""
-		can't speculate more than influence * 50
+		can't speculate more than influence * MAX_AMOUNT_SPECULATION
 		"""
 		self.p.influence.level = 1;
 		self.p.influence.save()
