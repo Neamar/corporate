@@ -16,8 +16,8 @@ class OrdersTest(EngineTestCase):
 		begin_assets_1 = self.c.assets
 		begin_assets_2 = self.c2.assets
 		o = VoteOrder(
-			corporation_up=self.c, 
-			corporation_down=self.c2, 
+			corporation_up=self.c,
+			corporation_down=self.c2,
 			player=self.p
 		)
 		o.save()
@@ -29,8 +29,8 @@ class OrdersTest(EngineTestCase):
 
 	def test_cant_vote_more_than_once(self):
 		o = VoteOrder(
-			corporation_up=self.c, 
-			corporation_down=self.c2, 
+			corporation_up=self.c,
+			corporation_down=self.c2,
 			player=self.p
 		)
 		# assertNoRaises
@@ -38,8 +38,8 @@ class OrdersTest(EngineTestCase):
 		
 
 		o2 = VoteOrder(
-			corporation_up=self.c, 
-			corporation_down=self.c2, 
+			corporation_up=self.c,
+			corporation_down=self.c2,
 			player=self.p
 		)
 		

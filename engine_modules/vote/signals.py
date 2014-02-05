@@ -5,6 +5,7 @@ from engine.dispatchs import validate_order
 from engine.exceptions import OrderNotAvailable
 from engine_modules.vote.models import VoteOrder
 
+
 @receiver(validate_order, sender=VoteOrder)
 def only_one_vote_per_turn(sender, instance, **kwargs):
 	"""

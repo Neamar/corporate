@@ -39,7 +39,7 @@ class ModelTest(EngineTestCase):
 		Check if the current turn is incremented
 		"""
 
-		self.g.current_turn=1
+		self.g.current_turn = 1
 		self.g.save()
 
 		self.g.resolve_current_turn()
@@ -150,7 +150,6 @@ class ModelTest(EngineTestCase):
 
 		self.assertRaises(IntegrityError, o.save)
 
-
 	def test_order_modification_during_another_turn(self):
 		"""
 		Can't modify the turn from an existing order
@@ -170,6 +169,7 @@ class ModelTest(EngineTestCase):
 		class SomeOrder(Order):
 			class Meta:
 				proxy = True
+
 			def get_cost(self):
 				return 1
 
@@ -249,7 +249,7 @@ class ModelTest(EngineTestCase):
 		o = BuyInfluenceOrder(
 			player=self.p
 		)
-		o.save()	
+		o.save()
 
 		m = self.p.build_order_message()
 		self.assertTrue("influence" in m.content)
@@ -276,7 +276,6 @@ class ModelTest(EngineTestCase):
 		self.assertEqual(m.recipient_set.count(), 1)
 		self.assertTrue(self.p in m.recipient_set.all())
 		self.assertTrue("private" in m.content)
-
 
 	def test_player_build_resolution_message_mutliple_recipients(self):
 		"""

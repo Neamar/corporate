@@ -6,7 +6,6 @@ from engine_modules.share.tasks import DividendTask
 
 class TasksTest(EngineTestCase):
 	def setUp(self):
-
 		super(TasksTest, self).setUp()
 
 		self.g.corporation_set.all().delete()
@@ -76,7 +75,6 @@ class TasksTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
-
 	def test_dividend_task_applied_last_corporation(self):
 		"""
 		The player should get dividend for previous shares, with malus if corporation is last
@@ -94,7 +92,6 @@ class TasksTest(EngineTestCase):
 		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.last_corporation).assets * DividendTask.LAST_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
-
 
 	def test_no_immediate_dividend_after_turn_1(self):
 		"""
@@ -114,7 +111,6 @@ class TasksTest(EngineTestCase):
 
 		# No dividends
 		self.assertEqual(self.reload(self.p).money, money)
-
 
 	def test_immediate_dividend_on_turn_1(self):
 		"""

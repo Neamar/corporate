@@ -156,7 +156,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
 	
 		note = self.dso.player.note_set.exclude(pk=note.pk).get(category=u"Run de Datasteal", turn=self.g.current_turn)
-		expected_message = datasteal_messages['late'] %(dso2.target_corporation.base_corporation.name, dso2.stealer_corporation.base_corporation.name)
+		expected_message = datasteal_messages['late'] % (dso2.target_corporation.base_corporation.name, dso2.stealer_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
 	def test_sabotage_success(self):
@@ -173,7 +173,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets - 2)
 
 		note = self.so.player.note_set.get(category=u"Run de Sabotage", turn=self.g.current_turn)
-		expected_message = sabotage_messages['success'] %(self.so.target_corporation.base_corporation.name)
+		expected_message = sabotage_messages['success'] % (self.so.target_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
 	def test_sabotage_failure(self):
@@ -187,7 +187,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
 
 		note = self.so.player.note_set.get(category=u"Run de Sabotage", turn=self.g.current_turn)
-		expected_message = sabotage_messages['fail'] %(self.so.target_corporation.base_corporation.name)
+		expected_message = sabotage_messages['fail'] % (self.so.target_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
 	def test_sabotage_interception(self):
@@ -202,14 +202,14 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		self.so.additional_percents = 10
 
 		self.so.resolve()
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)		
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
 		
 		aggressor_note = self.so.player.note_set.get(category=u"Run de Sabotage", turn=self.g.current_turn)
-		expected_message = sabotage_messages['interception']['aggressor'] %(self.so.target_corporation.base_corporation.name)
+		expected_message = sabotage_messages['interception']['aggressor'] % (self.so.target_corporation.base_corporation.name)
 		self.assertEqual(aggressor_note.content, expected_message)
 
 		protector_note = self.po.player.note_set.get(category=u"Run de Protection", turn=self.g.current_turn)
-		expected_message = sabotage_messages['interception']['protector'] %(self.so.target_corporation.base_corporation.name)
+		expected_message = sabotage_messages['interception']['protector'] % (self.so.target_corporation.base_corporation.name)
 		self.assertEqual(protector_note.content, expected_message)
 
 	def test_sabotage_capture(self):
@@ -225,13 +225,13 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		self.so.save()
 
 		self.so.resolve()
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)		
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
 		aggressor_note = self.so.player.note_set.get(category=u"Run de Sabotage", turn=self.g.current_turn)
-		expected_message = sabotage_messages['capture']['aggressor'] %(self.so.target_corporation.base_corporation.name)
+		expected_message = sabotage_messages['capture']['aggressor'] % (self.so.target_corporation.base_corporation.name)
 		self.assertEqual(aggressor_note.content, expected_message)
 
 		protector_note = self.po.player.note_set.get(category=u"Run de Protection", turn=self.g.current_turn)
-		expected_message = sabotage_messages['capture']['protector'] %(self.so.player.name, self.so.target_corporation.base_corporation.name)
+		expected_message = sabotage_messages['capture']['protector'] % (self.so.player.name, self.so.target_corporation.base_corporation.name)
 		self.assertEqual(protector_note.content, expected_message)
 
 
@@ -272,10 +272,9 @@ class DefensiveRunOrderTest(RunOrdersTest):
 
 		self.po.additional_percents = 10
 		self.po.save()
-		self.dso.additional_percents=10
+		self.dso.additional_percents = 10
 		self.dso.save()
 		self.dso.resolve()
 
 		self.assertEqual(self.reload(self.po).done, False)
 		self.assertEqual(self.reload(po2).done, True)
-
