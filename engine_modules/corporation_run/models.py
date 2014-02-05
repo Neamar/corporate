@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.core.validators import MaxValueValidator
+from random import randint
 
 from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
@@ -31,6 +33,19 @@ sabotage_messages = {
 	}
 }
 
+extraction_messages = {
+	'success': u"Votre équipe a réussi à kidnapper un scientifique de %s",
+	'fail': u"La tentative de votre équipe pour kidnapper un scientifique %s a échoué",
+	'interception'	: {
+		'aggressor'	: u"Votre équipe a été inerceptée par une autre lors de la tentative d'Extraction' sur %s. Elle a cependant réussi à s'enfuir",
+		'protector'	: u"Votre équipe a réussi à protéger %s d'une tentative d'Extraction'. L'équipe adverse a cependant réussi à s'enfuir",
+	},
+	'capture': {
+		'aggressor' : u"L'équipe que vous aviez envoyée kidnapper un scientifique %s a été capturée",
+		'protector'	: u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative d'Extraction sur %s",
+	}
+}
+
 class OffensiveRunOrder(RunOrder):
 	"""
 	Model for offensive corporation runs.
@@ -46,28 +61,20 @@ class OffensiveRunOrder(RunOrder):
 
 	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
 
-	def resolve_successful(self):
-		# The Protection Runs must be tested from highest to lowest probability of success
-		protection_runs = sorted(self.target_corporation.protectors.filter(done=False), key=lambda po: po.get_success_probability(), reverse=True)
-		for protection_run in protection_runs:
-			# Test whether the Protection Run is successful
-			if protection_run.resolve():
-				return self.resolve_interception(protection_run)
+	def resolve(self):
+		raise NotImplementedError()
 
-		# No Protection Run has succeeded
-		self.resolve_success()
-		return True
+	def resolve_successful(self):
+		"""
+
+		"""
+		raise NotImplementedError()
 
 	def resolve_failure(self):
-		protection_runs = sorted(self.target_corporation.protectors.filter(done=False), key=lambda po: po.get_success_probability(), reverse=True)
-		for protection_run in protection_runs:
-			# Test whether the Protection Run is successful
-			if protection_run.resolve():
-				return self.resolve_capture(protection_run)
-
-		# No Protection Run has succeeded
-		self.resolve_fail()
-		return False
+		"""
+		
+		"""
+		raise NotImplementedError()
 
 	def resolve_success(self):
 		"""
@@ -110,9 +117,39 @@ class DataStealOrder(OffensiveRunOrder):
 	"""
 	Model for DataSteal Runs
 	"""
-	
+	PROBA_SUCCESS = 30
+
 	has_succeeded = models.BooleanField(default=False)
-	stealer_corporation = models.ForeignKey(Corporation, related_name="+")	
+	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
+
+	def resolve(self):
+		
+		if self.is_successful():
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.datasteal_protection:
+				# succesful attack but defended
+				self.resolve_interception()
+			else:
+				# Succesful attack
+				self.resolve_success()
+		else:
+			# Attack failure
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.datasteal_protection:
+				# Defense failure too
+				self.resolve_fail()
+			else:
+				# Attack failure and successful defense
+				self.resolve_capture
+
+	def get_success_probability(self):
+		"""
+		Compute success probability, maxed by 90%
+		"""
+		proba = self.PROBA_SUCCESS
+		if self.has_influence_bonus:
+			proba += 30
+		proba += self.additional_percents * 10
+
+		return proba
 
 	def resolve_success(self):
 
@@ -172,8 +209,39 @@ class SabotageOrder(OffensiveRunOrder):
 	Model for Sabotage Runs
 	"""
 
+	PROBA_SUCCESS = 30
+
+	def resolve(self):
+		
+		if self.is_successful():
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.sabotage_protection:
+				# succesful attack but defended
+				self.resolve_interception()
+			else:
+				# Succesful attack
+				self.resolve_success()
+		else:
+			# Attack failure
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.sabotage_protection:
+				# Defense failure too
+				self.resolve_fail()
+			else:
+				# Attack failure and successful defense
+				self.resolve_capture()
+
+	def get_success_probability(self):
+		"""
+		Compute success probability, maxed by 90%
+		"""
+		proba = self.PROBA_SUCCESS
+		if self.has_influence_bonus:
+			proba += 30
+		proba += self.additional_percents * 10
+
+		return proba
+
 	def resolve_success(self):
-		self.target_corporation.assets -= 2
+		self.target_corporation.assets -= 1
 		self.target_corporation.save()
 
 		# Send a note for final message 
@@ -213,31 +281,111 @@ class SabotageOrder(OffensiveRunOrder):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s" %(self.target_corporation.base_corporation.name)
 
 
-class DefensiveRunOrder(RunOrder):
+class ExtractionOrder(OffensiveRunOrder):
 	"""
-	Model for defensive corporation runs.
+	Model for Extraction Runs
+	"""
 
-	Resolve the runs in a slightly different way thant standards run.
-	"""
-	class Meta:
-		proxy = True
+	PROBA_SUCCESS = 10
+
+	kidnapper_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve(self):
+		if self.is_successful():
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.kidnapper_protection:
+				# succesful attack but defended
+				self.resolve_interception()
+			else:
+				# Succesful attack
+				self.resolve_success()
+		else:
+			# Attack failure
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.kidnapper_protection:
+				# Defense failure too
+				self.resolve_fail()
+			else:
+				# Attack failure and successful defense
+				self.resolve_capture
+
+	def get_success_probability(self):
+		"""
+		Compute success probability, maxed by 90%
+		"""
+		proba = self.PROBA_SUCCESS
+		if self.has_influence_bonus:
+			proba += 30
+		proba += self.additional_percents * 10
+
+		return proba
+	def resolve_success(self):
+		self.target_corporation.assets -= 1
+		self.target_corporation.save()
+
+		self.kidnapper_corporation.assets += 1
+		self.kidnapper_corporation.save()
+
+		# Send a note for final message 
+		category = u"Run d'Extraction'"
+		content = extraction_messages['success'] %(self.target_corporation.base_corporation.name)
+		self.player.add_note(category=category, content=content)
+
+	def resolve_fail(self):
+		# Send a note for final message 
+		category = u"Run d'Extraction'"
+		content = extraction_messages['fail'] %(self.target_corporation.base_corporation.name)
+		self.player.add_note(category=category, content=content)
+
+	def resolve_interception(self, po):
+		# Send a note to the one who ordered the DataSteal
+		category = u"Run d'Extraction'"
+		content = extraction_messages['interception']['aggressor'] %(self.target_corporation.base_corporation.name)
+		self.player.add_note(category=category, content=content)
+
+		# Send a note to the one who ordered the Protection
+		category = u"Run de Protection"
+		content = extraction_messages['interception']['protector'] %(self.target_corporation.base_corporation.name)
+		po.player.add_note(category=category, content=content)
+	
+	def resolve_capture(self, po):
+		# Send a note for final message
+		category = u"Run d'Extraction'"
+		content = extraction_messages['capture']['aggressor'] %(self.target_corporation.base_corporation.name)
+		self.player.add_note(category=category, content=content)
+
+		# Send a note to the one who ordered the Protection
+		category = u"Run de Protection"
+		content = extraction_messages['capture']['protector'] %(self.player, self.target_corporation.base_corporation.name)
+		po.player.add_note(category=category, content=content)
 		
+	def description(self):
+		return u"Envoyer une équipe kidnapper un scientifique renommé de %s" %(self.target_corporation.base_corporation.name)
+
+
+class ProtectionOrder(RunOrder):
+	"""
+	Model for Protection Runs
+	"""
+
+	EXTRACTION = "ex"
+	DATASTEAL = "ds"
+	SABOTAGE = "sa"
+
+	DEFENSE_CHOICES = (
+		(EXTRACTION,"extraction"),
+		(DATASTEAL, "datasteal"),
+		(SABOTAGE, "sabotage")
+	)
+	defense = models.CharField(max_length=2, choices=DEFENSE_CHOICES)
+	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
+	done = models.BooleanField(default=False)
+
+	def resolve(self):
 		if self.is_successful():
 			self.resolve_successful()
 			return True
 		else:
 			self.resolve_failure()
 			return False
-
-
-class ProtectionOrder(DefensiveRunOrder):
-	"""
-	Model for Protection Runs
-	"""
-	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
-	done = models.BooleanField(default=False)
 
 	def resolve_successful(self):
 		self.done = True

@@ -18,13 +18,10 @@ class RunOrder(Order):
 	def get_success_probability(self):
 		"""
 		Compute success probability, maxed by 90%
-		"""
-		proba = 0
-		if self.has_influence_bonus:
-			proba += 30
-		proba += self.additional_percents * 10
 
-		return proba
+		It must be overriden.
+		"""
+		raise NotImplementedError()
 
 	def is_successful(self):
 		"""
@@ -33,14 +30,8 @@ class RunOrder(Order):
 		return randint(1, 100) <= self.get_success_probability()
 
 	def resolve(self):
-		self.player.money -= self.get_cost()
-		self.player.save()
+		raise NotImplementedError()
 		
-		if self.is_successful():
-			self.resolve_successful()
-		else:
-			self.resolve_failure()
-
 	def resolve_successful(self):
 		"""
 		This function is called when the run has succeeded
