@@ -12,7 +12,7 @@ datasteal_messages = {
 		'protector'	: u"Votre équipe a réussi à protéger %s d'une tentative de DataSteal. L'équipe adverse a cependant réussi à s'enfuir",
 	},
 	'capture': {
-		'aggressor' : u"Votre équipe a été capturée par une autre lors de la tentative de DataSteal sur %s. Le commanditaire est au courant de vos agissements",
+		'aggressor': u"Votre équipe a été capturée par une autre lors de la tentative de DataSteal sur %s. Le commanditaire est au courant de vos agissements",
 			'protector'	: u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative de DataSteal sur %s pour le compte de %s.",
 	},
 	'late': u"Votre équipe s'est introduite chez %s mais n'a pas trouvé de donées intéressantes pour %s"
@@ -26,7 +26,7 @@ sabotage_messages = {
 		'protector'	: u"Votre équipe a réussi à protéger %s d'une tentative de Sabotage. L'équipe adverse a cependant réussi à s'enfuir",
 	},
 	'capture': {
-		'aggressor' : u"L'équipe que vous aviez envoyée saboter %s a été capturée",
+		'aggressor': u"L'équipe que vous aviez envoyée saboter %s a été capturée",
 		'protector'	: u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative de Sabotage sur %s",
 	}
 }
