@@ -189,6 +189,7 @@ class ModelTest(EngineTestCase):
 		class SomeExpensiveOrder(Order):
 			class Meta:
 				proxy = True
+
 			def get_cost(self):
 				return self.player.money
 

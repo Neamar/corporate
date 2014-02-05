@@ -72,8 +72,7 @@ class OffensiveRunOrder(RunOrder):
 
 	def resolve_success(self):
 		"""
-		This method is called when the Offensive Run succeeds on a corporation 
-		that has no successful Protection Run.
+		This method is called when the Offensive Run succeeds on a corporation that has no successful Protection Run.
 
 		It must be overriden
 		"""
@@ -81,8 +80,7 @@ class OffensiveRunOrder(RunOrder):
 	
 	def resolve_fail(self):
 		"""
-		This method is called when the Offensive Run fails on a corporation 
-		that has no successful Protection Run.
+		This method is called when the Offensive Run fails on a corporation that has no successful Protection Run.
 
 		It must be overriden
 		"""
@@ -90,8 +88,7 @@ class OffensiveRunOrder(RunOrder):
 
 	def resolve_interception(self, po):
 		"""
-		This method is called when the Offensive Run succeeds on a corporation 
-		that has a successful Protection Run.
+		This method is called when the Offensive Run succeeds on a corporation that has a successful Protection Run.
 
 		It must be overriden
 		"""
@@ -99,8 +96,7 @@ class OffensiveRunOrder(RunOrder):
 
 	def resolve_capture(self, po):
 		"""
-		This method is called when the Offensive Run fails on a corporation 
-		that has a successful Protection Run.
+		This method is called when the Offensive Run fails on a corporation that has a successful Protection Run.
 
 		It must be overriden
 		"""
