@@ -70,7 +70,7 @@ class SignalsTest(EngineTestCase):
 			rank=1,
 			investment=51
 		)
-		self.assertRaises(OrderNotAvailable, o.save)
+		self.assertRaises(OrderNotAvailable, o.clean)
 
 		self.p.influence.level = 2;
 		self.p.influence.save()
@@ -91,7 +91,7 @@ class SignalsTest(EngineTestCase):
 			investment=51,
 			derivative=self.d
 		)
-		self.assertRaises(OrderNotAvailable, dso.save)
+		self.assertRaises(OrderNotAvailable, dso.clean)
 
 		self.p.influence.level = 2;
 		self.p.influence.save()
