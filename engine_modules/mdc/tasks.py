@@ -11,7 +11,6 @@ class MDCVoteTask(OrderResolutionTask):
 	ORDER_TYPE = MDCVoteOrder
 
 	def run(self, game):
-		r = MDCVoteOrder.build_vote_registry(game)
 		
 		orders = self.ORDER_TYPE.objects.filter(player__game=game, turn=game.current_turn)
 		votes = {}
@@ -19,7 +18,6 @@ class MDCVoteTask(OrderResolutionTask):
 			votes[t[0]] = 0
 
                 for order in orders:
-                        order.resolve(r)
 			votes[order.party_line] += order.weight
 
 		top_line = Counter(votes).most_common(2)

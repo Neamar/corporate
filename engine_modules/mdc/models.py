@@ -22,25 +22,26 @@ class MDCVoteOrder(Order):
 				('TRAN', u'Transparence'), 
 				('NONE', u'Aucune'))
 
-	weight = models.PositiveSmallIntegerField(default=1)
 	party_line = models.CharField(max_length=4, 
 				choices=MDC_PARTY_LINE_CHOICES,
 				default = "NONE")
+	@property
+	def weight(self):
 
-	def resolve(self, vote_registry):
+		vote_registry = self.build_vote_registry()
 
 		if self.player in vote_registry.values():
-			self.weight = Counter(vote_registry.values())[self.player]+1
-			self.save()
+			return Counter(vote_registry.values())[self.player] + 1
+		else:
+			return 1
 
-	@classmethod
-	def build_vote_registry(cls, game):
+	def build_vote_registry(self):
 		"""
 		Build a registry of the top shareholders for each corporation that will be 
 		used in resolve, but must be exported in order to be calculated only once
 		"""
 		vote_registry = {}
-		corporations = game.corporation_set.all()
+		corporations = self.player.game.corporation_set.all()
 		for c in corporations:
 			shareholders  = (s.player for s in c.share_set.all())
 			top_holders = Counter(shareholders).most_common(2)
