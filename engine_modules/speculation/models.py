@@ -104,4 +104,3 @@ class DerivativeSpeculationOrder(Order):
 
 
 orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)
-
