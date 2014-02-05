@@ -6,7 +6,6 @@ from engine_modules.share.tasks import DividendTask
 
 class TasksTest(EngineTestCase):
 	def setUp(self):
-
 		super(TasksTest, self).setUp()
 
 		self.g.corporation_set.all().delete()
@@ -67,7 +66,6 @@ class TasksTest(EngineTestCase):
 		)
 		self.s.save()
 
-
 		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
 
@@ -75,7 +73,6 @@ class TasksTest(EngineTestCase):
 		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.first_corporation).assets * DividendTask.FIRST_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
-
 
 	def test_dividend_task_applied_last_corporation(self):
 		"""
@@ -95,7 +92,6 @@ class TasksTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
 
-
 	def test_no_immediate_dividend_after_turn_1(self):
 		"""
 		The player should not get dividends for shares he just bought, except in turn 1
@@ -114,7 +110,6 @@ class TasksTest(EngineTestCase):
 
 		# No dividends
 		self.assertEqual(self.reload(self.p).money, money)
-
 
 	def test_immediate_dividend_on_turn_1(self):
 		"""

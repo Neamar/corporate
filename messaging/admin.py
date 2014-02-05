@@ -4,7 +4,7 @@ from messaging.models import Message, Note
 
 class MessageAdmin(admin.ModelAdmin):
 	list_display = ('author', 'title', 'content')
-	ordering=('author',)
+	ordering = ('author',)
 admin.site.register(Message, MessageAdmin)
 
 
