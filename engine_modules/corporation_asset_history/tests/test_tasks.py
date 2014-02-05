@@ -37,7 +37,7 @@ class TasksTest(EngineTestCase):
 		self.c2.save()
 
 		self.g.resolve_current_turn()
-		message = self.p.message_set.get(flag=Message.RESOLUTION,turn=self.g.current_turn - 1)
+		message = self.p.message_set.get(flag=Message.RESOLUTION, turn=self.g.current_turn - 1)
 
 		expected = """## Classement corporatiste
 * 1- %s : 13  (+3)
@@ -91,7 +91,7 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		turn1 = self.g.get_ordered_corporations()
 
-		self.assertEqual(basic_setup,turn1)
+		self.assertEqual(basic_setup, turn1)
 
 	def test_multi_turn(self):
 		"""

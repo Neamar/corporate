@@ -10,7 +10,7 @@ class AssetHistory(models.Model):
 	"""
 
 	class Meta:
-		unique_together = (("corporation","turn"),)
+		unique_together = (("corporation", "turn"),)
 
 	corporation = models.ForeignKey(Corporation)
 	assets = models.PositiveSmallIntegerField()
@@ -24,7 +24,7 @@ def get_ordered_corporations(self):
 	if ex-aequo again, order by the first in the sql request. Postgres should always send them in the same order
 	"""
 	previous = AssetHistory.objects.filter(corporation__game=self)
-	ranking = defaultdict(lambda:0)
+	ranking = defaultdict(lambda: 0)
 	for element in previous:
 		ranking[element.corporation] += element.assets * 10 ^ (2 * element.turn)
 
@@ -32,7 +32,7 @@ def get_ordered_corporations(self):
 	for element in actual:
 		ranking[element] += element.assets * 10 ^ (2 * self.current_turn)
 
-	ordered_corporation = sorted(ranking, key=lambda c:ranking[c], reverse=True)
+	ordered_corporation = sorted(ranking, key=lambda c: ranking[c], reverse=True)
 	return ordered_corporation
 Game.get_ordered_corporations = get_ordered_corporations
 
