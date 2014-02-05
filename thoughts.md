@@ -274,3 +274,115 @@ Resolution:
 * (30) ProtectionRun
 * (35) SabotageRun / DatastealRun
 
+## Frontend
+### Docs
+Documentation
+
+### Newsfeeds
+
+* Politique (MDC)
+* Breaking News (Sabotage)
+* Ragots & faits divers (Runs détectées)
+* People (Influence, Changement Corpo)
+* Économie (Premiers, Derniers)
+
+
+### Wall Street
+Tableau des corpos :
+(nom, actifs, anciens actifs, changements inconnus, premier, dernier, sabotage, mdc, ds, s, e)
+---------------------------------------------
+Nom     | Ac | Old|  ? | P  |  D | Sab| MDC| DS | S | E
+Renraku | 15 | 12 | +2 | +1 | -1 | +5 | -2 | 2
+(Le 15 est en gras rouge ou vert selon le delta)
+---------------------------------------------
+Graphique de la bourse
+
+Tableau des produits dérivés :
+---------------------------------------------
+Nikkei | 45 | 38 | +7
+---------------------------------------------
+Graphique des produits dérivés
+
+foreach corpo:
+
+* Lien vers la corpo
+* graphique de la corpo
+
+### Corporations
+Tableau des corpos:
+
+* Nom de la corpo
+* Actifs
+* Défense Datasteal,
+* Défense Sabotage
+* Défense Extraction
+* Détection
+
+-----------------------------------------
+Renraku | **15** | 20 | 10 | 20 | 30
+-----------------------------------------
+
+#### Corporation
+Nom
+Logo
+
+Actifs actuels
+Ligne votée
+Défenses
+
+-----------------------------------------
+Renraku | **15** | 20 | 10 | 20 | 30
+-----------------------------------------
+
+Graphique de la corpo
+Description
+Parts possédées
+Citoyens corpos
+-----------------------------------------
+Renraku     | Parts   | Citoyen
+Tiroshi     | 18      | KING
+Remi        | 12      | Oui
+Jules       | 12      
+-----------------------------------------
+(tableau trié par parts possédées)
+
+Effet premier dernier
+
+### Joueurs
+Tableau croisé :
+
+* Nom du joueur
+* Corporation
+* en gras cellule citoyenneté corpo
+----------------------------------
+            Renraku     MCT     Ares
+Tiroshi     0           0      0
+Remi        0           0      0
+-----------------------------------
+
+Tableau des joueurs :
+
+Nom du joueur
+IC
+Vote de ligne
+Citoyenneté
+-----------------------------------------
+Tiroshi | **2** | Transparence | Renraku
+-----------------------------------------
+
+#### Joueur
+* Nom
+* avatar
+* ic
+* vote
+-----------------------------------------
+Tiroshi | **2** | Transparence | Renraku
+-----------------------------------------
+
+* description
+* citoyenneté
+* parts
+
+
+### Commlink
+Messages privés entre PJ et de fin de tour, résultat runs d'informations
