@@ -17,12 +17,21 @@ class BuyShareOrder(Order):
 	"""
 	Order to buy a corporation share
 	"""
+	title = "Acheter une part dans une corporation"
 	BASE_COST = 100
+	FIRST_COST = 125
+	FIRST_AND_CITIZEN_COST = 100
 
 	corporation = models.ForeignKey(Corporation)
 
 	def get_cost(self):
-		return BuyShareOrder.BASE_COST * self.corporation.assets
+		if self.corporation == self.player.game.get_ordered_corporations()[0]:
+			if self.player.citizenship.corporation != self.corporation:
+				return BuyShareOrder.FIRST_COST * self.corporation.assets
+			else:
+				return BuyShareOrder.FIRST_AND_CITIZEN_COST * self.corporation.assets
+		else:
+			return BuyShareOrder.BASE_COST * self.corporation.assets
 
 	def resolve(self):
 		# Pay.
@@ -50,5 +59,10 @@ class BuyShareOrder(Order):
 	def description(self):
 		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)
 
+	def get_form(self):
+		form = super(BuyShareOrder, self).get_form()
+		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
 
 orders = (BuyShareOrder,)

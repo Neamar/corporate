@@ -1,6 +1,6 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import Corporation
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder, Derivative
 
 
 class OrdersTest(EngineTestCase):
@@ -17,6 +17,10 @@ class OrdersTest(EngineTestCase):
 		self.last_corporation = Corporation(base_corporation_slug='shiawase', assets=1)
 		self.g.corporation_set.add(self.last_corporation)
 
+		self.d = Derivative(name="first and last")
+		self.d.save()
+		self.d.corporations.add(self.first_corporation, self.last_corporation)
+
 	def test_corporation_speculation_order_cost_money(self):
 		"""
 		Order should cost money
@@ -31,7 +35,7 @@ class OrdersTest(EngineTestCase):
 
 		o.resolve()
 
-		self.assertEqual(self.reload(self.p).money, self.initial_money - 50)
+		self.assertEqual(self.reload(self.p).money, self.initial_money - o.get_cost())
 
 	def test_corporation_speculation_big_success_give_money(self):
 		"""
@@ -47,7 +51,7 @@ class OrdersTest(EngineTestCase):
 
 		o.resolve()
 
-		self.assertEqual(self.reload(self.p).money, self.initial_money + 200)
+		self.assertEqual(self.reload(self.p).money, self.initial_money + o.get_cost() * 4)
 
 	def test_corporation_speculation_little_success_first_give_money(self):
 		"""
@@ -63,7 +67,7 @@ class OrdersTest(EngineTestCase):
 
 		o.resolve()
 
-		self.assertEqual(self.reload(self.p).money, self.initial_money + 100)
+		self.assertEqual(self.reload(self.p).money, self.initial_money + o.get_cost() * 2)
 
 	def test_corporation_speculation_little_success_last_give_money(self):
 		"""
@@ -79,7 +83,7 @@ class OrdersTest(EngineTestCase):
 
 		o.resolve()
 
-		self.assertEqual(self.reload(self.p).money, self.initial_money + 100)
+		self.assertEqual(self.reload(self.p).money, self.initial_money + o.get_cost() * 2)
 
 	def test_derivative_failure_remove_money(self):
 		"""
@@ -93,14 +97,14 @@ class OrdersTest(EngineTestCase):
 		dso = DerivativeSpeculationOrder(
 			player=self.p,
 			speculation=DerivativeSpeculationOrder.UP,
-			investment=5
+			investment=5,
+			derivative=self.d
 		)
 		dso.save()
-		dso.derivative.add(self.first_corporation, self.last_corporation)
 		
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.reload(self.p).money, self.initial_money - 50)
+		self.assertEqual(self.reload(self.p).money, self.initial_money - dso.get_cost())
 
 	def test_derivative_success_give_money(self):
 		"""
@@ -114,12 +118,12 @@ class OrdersTest(EngineTestCase):
 		dso = DerivativeSpeculationOrder(
 			player=self.p,
 			speculation=DerivativeSpeculationOrder.UP,
-			investment=5
+			investment=5,
+			derivative=self.d
 		)
 		dso.save()
-		dso.derivative.add(self.first_corporation, self.last_corporation)
 		
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.reload(self.p).money, self.initial_money + 100)
+		self.assertEqual(self.reload(self.p).money, self.initial_money + dso.get_cost() * 2)
 

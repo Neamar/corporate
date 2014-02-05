@@ -1,6 +1,6 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import Corporation
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder, Derivative
 from engine.exceptions import OrderNotAvailable
 
 
@@ -16,6 +16,10 @@ class SignalsTest(EngineTestCase):
 		self.g.corporation_set.add(self.medium_corporation)
 		self.last_corporation = Corporation(base_corporation_slug='shiawase', assets=1)
 		self.g.corporation_set.add(self.last_corporation)
+
+		self.d = Derivative(name="first and last")
+		self.d.save()
+		self.d.corporations.add(self.first_corporation, self.last_corporation)
 
 	def test_max_speculation(self):
 		"""
@@ -84,7 +88,8 @@ class SignalsTest(EngineTestCase):
 		dso = DerivativeSpeculationOrder(
 			player=self.p,
 			speculation=DerivativeSpeculationOrder.UP,
-			investment=51
+			investment=51,
+			derivative=self.d
 		)
 		self.assertRaises(OrderNotAvailable, dso.save)
 

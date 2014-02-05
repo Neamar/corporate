@@ -5,6 +5,10 @@ from engine.models import Order
 from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 
+class Derivative(models.Model):
+	name = models.CharField(max_length=30)
+	corporations = models.ManyToManyField(Corporation)
+
 
 class CorporationSpeculationOrder(Order):
 	"""
@@ -17,10 +21,8 @@ class CorporationSpeculationOrder(Order):
 	rank = models.PositiveSmallIntegerField()
 	investment = models.PositiveIntegerField()
 
-
 	def get_cost(self):
 		return self.investment * self.BASE_COST
-
 
 	def resolve(self):
 		ladder = self.player.game.get_ordered_corporations()
@@ -49,7 +51,7 @@ class CorporationSpeculationOrder(Order):
 		self.player.add_note(category=category, content=content)
 
 	def description(self):
-		return u"Miser %s ny sur la postion %s de la corporation %s" % (self.get_cost(), self.rank, self.corporation.base_corporation.name)
+		return u"Miser %s ¥ sur la postion %s de la corporation %s" % (self.get_cost(), self.rank, self.corporation.base_corporation.name)
 
 
 class DerivativeSpeculationOrder(Order):
@@ -67,7 +69,7 @@ class DerivativeSpeculationOrder(Order):
 	)
 
 	speculation = models.BooleanField(choices=UPDOWN_CHOICES)
-	derivative = models.ManyToManyField(Corporation)
+	derivative = models.ForeignKey(Derivative)
 	investment = models.PositiveIntegerField()
 
 	def get_cost(self):
@@ -77,26 +79,26 @@ class DerivativeSpeculationOrder(Order):
 
 		# Build message
 		category = u"Spéculations"
-		current_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.all(), turn=self.player.game.current_turn).aggregate(Sum('assets'))['assets__sum']
-		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.all(), turn=self.player.game.current_turn - 1).aggregate(Sum('assets'))['assets__sum']
+		current_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.corporations.all(), turn=self.player.game.current_turn).aggregate(Sum('assets'))['assets__sum']
+		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.corporations.all(), turn=self.player.game.current_turn - 1).aggregate(Sum('assets'))['assets__sum']
 		if current_turn_sum > previous_turn_sum and self.speculation == self.UP:
 			# Success
 			self.player.money += self.get_cost() * 2
 			self.player.save()
-			content = u"Vous êtes un bon spéculateur, vos investissements sur les produits dérivés vous ont rapporté %s" % self.investment * 2
+			content = u"Vous êtes un bon spéculateur, vos investissements sur le produit dérivé %s vous ont rapporté %s" % (self.derivative.name, self.investment * 2)
 		else:
 			# Failure
 			self.player.money -= self.get_cost()
 			self.player.save()
-			content = u"Vos spéculations sur les produits dérivés n'ont malheureusement pas été concluantes"
+			content = u"Vos spéculations sur le produit dérivé %s n'ont malheureusement pas été concluantes" % self.derivative.name
 
 		self.player.add_note(category=category, content=content)
 
 	def description(self):
 		if self.speculation == self.UP:
-			return u"Miser %s ny à la hausse du produit dérivé" % self.get_cost()
+			return u"Miser %s ¥ à la hausse du produit dérivé %s" % (self.get_cost(), self.derivative.name)
 		else:
-			return u"Miser %s ny à la baisse du produit dérivé" % self.get_cost()
+			return u"Miser %s ¥ à la baisse du produit dérivé %s" % (self.get_cost(), self.derivative.name)
 
 
 orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)
