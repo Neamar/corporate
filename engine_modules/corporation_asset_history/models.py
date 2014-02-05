@@ -35,5 +35,3 @@ def get_ordered_corporations(self):
 	ordered_corporation = sorted(ranking, key=lambda c: ranking[c], reverse=True)
 	return ordered_corporation
 Game.get_ordered_corporations = get_ordered_corporations
-
-

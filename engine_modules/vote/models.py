@@ -37,4 +37,3 @@ class VoteOrder(Order):
 		return form
 
 orders = (VoteOrder,)
-
