@@ -1,5 +1,7 @@
-from django.conf import settings
 import importlib
+import sys
+
+from django.conf import settings
 
 """
 List of tasks to call for each game resolution
@@ -22,7 +24,10 @@ def try_import(package, name, default=None):
 		app = importlib.import_module(package)
 		return getattr(app, name)
 	except ImportError:
-		return default
+		if 'No module named' in str(sys.exc_value):
+			return default
+		else:
+			raise
 	except AttributeError:
 		return default
 
