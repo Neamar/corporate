@@ -61,7 +61,7 @@ class SignalsTest(EngineTestCase):
 		"""
 		can't speculate more than influence * MAX_AMOUNT_SPECULATION
 		"""
-		self.p.influence.level = 1;
+		self.p.influence.level = 1
 		self.p.influence.save()
 
 		o = CorporationSpeculationOrder(
@@ -72,7 +72,7 @@ class SignalsTest(EngineTestCase):
 		)
 		self.assertRaises(OrderNotAvailable, o.clean)
 
-		self.p.influence.level = 2;
+		self.p.influence.level = 2
 		self.p.influence.save()
 
 		#assertNoRaises
@@ -82,7 +82,7 @@ class SignalsTest(EngineTestCase):
 		"""
 		can't speculate more than influence * MAX_AMOUNT_SPECULATION
 		"""
-		self.p.influence.level = 1;
+		self.p.influence.level = 1
 		self.p.influence.save()
 
 		dso = DerivativeSpeculationOrder(
@@ -93,7 +93,7 @@ class SignalsTest(EngineTestCase):
 		)
 		self.assertRaises(OrderNotAvailable, dso.clean)
 
-		self.p.influence.level = 2;
+		self.p.influence.level = 2
 		self.p.influence.save()
 		
 		#assertNoRaises

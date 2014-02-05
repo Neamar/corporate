@@ -5,6 +5,7 @@ from engine.models import Order
 from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 
+
 class Derivative(models.Model):
 	name = models.CharField(max_length=30)
 	corporations = models.ManyToManyField(Corporation)

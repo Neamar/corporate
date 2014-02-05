@@ -9,6 +9,7 @@ class CorporationSpeculationTask(OrderResolutionTask):
 	RESOLUTION_ORDER = 900
 	ORDER_TYPE = CorporationSpeculationOrder
 
+
 class DerivativeSpeculationTask(OrderResolutionTask):
 	"""
 	Speculate on a corporation's rank
