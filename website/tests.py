@@ -3,10 +3,12 @@ from django.core.urlresolvers import reverse
 
 from engine.testcases import EngineTestCase
 
+
 class WebsiteTest(EngineTestCase):
 	def setUp(self):
 		self.c = Client()
 		super(WebsiteTest, self).setUp()
+
 
 class OrderWebsiteTest(WebsiteTest):
 	def test_orders_require_login(self):
