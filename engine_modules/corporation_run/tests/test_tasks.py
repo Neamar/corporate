@@ -122,7 +122,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.po.player).money, player_money - self.po.get_cost())
 
-	def test_protection_costs_resolved(self):	
+	def test_protection_costs_resolved(self):
 		"""
 		Test that after a protection run that gets resolved several times, the ProtectionRunPaymentTask deduces the right amount of money from the player
 		Because the cost of a Protection Run with a 0% chance is 0, this test has a 10% Protection Run, giving a 90% chance of testing an interesting case

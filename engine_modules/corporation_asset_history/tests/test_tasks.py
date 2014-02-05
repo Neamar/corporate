@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
 from messaging.models import Message
 from engine_modules.corporation.models import Corporation
@@ -30,7 +30,7 @@ class TasksTest(EngineTestCase):
 	def test_task_generate_corporation_ranking(self):
 		"""
 		The game should write the ranking of every corporation
-		"""		
+		"""
 		self.c3.assets = 13
 		self.c3.save()
 		self.c2.assets = 12
@@ -49,7 +49,7 @@ class TasksTest(EngineTestCase):
 	def test_get_ordered_corporations(self):
 		"""
 		Test rank of turn if no ex-aequo
-		"""	
+		"""
 
 		self.c3.assets = 13
 		self.c3.save()
@@ -64,7 +64,7 @@ class TasksTest(EngineTestCase):
 	def test_ex_aequo(self):
 		"""
 		Test rank of turn if ex-aequo
-		"""	
+		"""
 
 		self.c3.assets = 13
 		self.c3.save()
@@ -86,7 +86,7 @@ class TasksTest(EngineTestCase):
 	def test_stability(self):
 		"""
 		Test stability of ordering corporation with equals assets from the start
-		"""	
+		"""
 		basic_setup = self.g.get_ordered_corporations()
 		self.g.resolve_current_turn()
 		turn1 = self.g.get_ordered_corporations()
@@ -96,7 +96,7 @@ class TasksTest(EngineTestCase):
 	def test_multi_turn(self):
 		"""
 		Test on more than one turn
-		"""	
+		"""
 		self.c3.assets = 13
 		self.c3.save()
 		self.c2.assets = 12

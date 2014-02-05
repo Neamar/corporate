@@ -119,14 +119,14 @@ class DataStealOrder(OffensiveRunOrder):
 	title = "Lancer une run de Datasteal"
 	
 	has_succeeded = models.BooleanField(default=False, editable=False)
-	stealer_corporation = models.ForeignKey(Corporation, related_name="+")	
+	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve_success(self):
 
 		# Get a list of datasteals that have succeeded on this corporation this turn (actually there should be 0 or 1)
 		success_datasteals = self.target_corporation.scoundrels.filter(type="DataStealOrder", datastealorder__has_succeeded=True)
 		if(success_datasteals.exists()):
-			# Send a note for final message 
+			# Send a note for final message
 			category = u"Run de Datasteal"
 			content = datasteal_messages['late'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 			self.player.add_note(category=category, content=content)
@@ -136,7 +136,7 @@ class DataStealOrder(OffensiveRunOrder):
 			self.stealer_corporation.assets += 1
 			self.stealer_corporation.save()
 
-			# Send a note for final message 
+			# Send a note for final message
 			category = u"Run de Datasteal"
 			content = datasteal_messages['success'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 			self.player.add_note(category=category, content=content)
@@ -190,13 +190,13 @@ class SabotageOrder(OffensiveRunOrder):
 		self.target_corporation.assets -= 2
 		self.target_corporation.save()
 
-		# Send a note for final message 
+		# Send a note for final message
 		category = u"Run de Sabotage"
 		content = sabotage_messages['success'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
 	def resolve_fail(self):
-		# Send a note for final message 
+		# Send a note for final message
 		category = u"Run de Sabotage"
 		content = sabotage_messages['fail'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
