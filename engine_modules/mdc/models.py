@@ -10,6 +10,8 @@ class MDCVoteOrder(Order):
 	Order to vote for the party line of the MDC
 	"""
 
+	NONE = 'None'
+
 	# Enumerate the party lines and what they mean
 	MDC_PARTY_LINE_CHOICES = (('CPUB', u'Contrats publics'),
 				('CCIB', u'Contrôles ciblés'),
@@ -17,7 +19,7 @@ class MDCVoteOrder(Order):
 				('DEVE', u'Développement urbain'),
 				('BANK', u'Garde-fous bancaires'),
 				('TRAN', u'Transparence'),
-				('NONE', u'Aucune'))
+				(NONE, u'Aucune'))
 
 	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, default="NONE")
 
@@ -65,6 +67,6 @@ class MDCVoteSession(models.Model):
 
 	current_party_line = models.CharField(max_length=3,
 				choices=MDCVoteOrder.MDC_PARTY_LINE_CHOICES,
-				default="NONE")
+				default=MDCVoteOrder.NONE)
 	game = models.ForeignKey(Game)
 	turn = models.PositiveSmallIntegerField(editable=False)

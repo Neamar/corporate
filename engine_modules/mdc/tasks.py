@@ -21,7 +21,7 @@ class MDCVoteTask(ResolutionTask):
 
 		top_line = Counter(votes).most_common(2)
 		# Default to NONE
-		official_line = MDCVoteOrder.MDC_PARTY_LINE_CHOICES[-1][0]
+		official_line = MDCVoteOrder.NONE
 		try:
 			if top_line[0][1] != top_line[1][1]:
 				official_line = top_line[0][0]
