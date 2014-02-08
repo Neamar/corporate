@@ -22,10 +22,21 @@ class EngineTestCase(TestCase):
 
 	def setUp(self):
 		"""
-		Setup initial configuration
+		Setup initial configuration.
+		For faster tests, remove all BaseCorporation to avoid creating useless fixtures.
 		"""
-		self.initial_money = Player._meta.get_field_by_name('money')[0].default
-		self.g = Game()
-		self.g.save()
-		self.p = Player(game=self.g, money=self.initial_money)
-		self.p.save()
+
+		from engine_modules.corporation.models import BaseCorporation
+		original_base_corporations = BaseCorporation.base_corporations
+		try:
+			BaseCorporation.base_corporations = {}
+
+			self.initial_money = Player._meta.get_field_by_name('money')[0].default
+			self.g = Game()
+			self.g.save()
+			self.p = Player(game=self.g, money=self.initial_money)
+			self.p.save()
+		except:
+			raise
+		finally:
+			BaseCorporation.base_corporations = original_base_corporations
