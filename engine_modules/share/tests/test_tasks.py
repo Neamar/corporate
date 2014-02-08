@@ -1,5 +1,4 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import Corporation
 from engine_modules.share.models import Share, BuyShareOrder
 from engine_modules.share.tasks import DividendTask
 
@@ -8,14 +7,17 @@ class TasksTest(EngineTestCase):
 	def setUp(self):
 		super(TasksTest, self).setUp()
 
-		self.g.corporation_set.all().delete()
+		self.c.assets = 20
+		self.c.save()
+		self.first_corporation = self.c
 
-		self.first_corporation = Corporation(base_corporation_slug='renraku', assets=20)
-		self.g.corporation_set.add(self.first_corporation)
-		self.medium_corporation = Corporation(base_corporation_slug='shiawase', assets=10)
-		self.g.corporation_set.add(self.medium_corporation)
-		self.last_corporation = Corporation(base_corporation_slug='ares', assets=5)
-		self.g.corporation_set.add(self.last_corporation)
+		self.c2.assets = 10
+		self.c2.save()
+		self.medium_corporation = self.c2
+
+		self.c3.assets = 5
+		self.c3.save()
+		self.last_corporation = self.c3
 
 		self.g.disable_invisible_hand = True
 
