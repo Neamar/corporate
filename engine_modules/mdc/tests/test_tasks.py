@@ -48,16 +48,21 @@ class TaskTest(EngineTestCase):
 		Test the line is defined
 		"""
 		self.g.resolve_current_turn()
-		line = (self.g.mdcvotesession_set.get(turn=self.g.current_turn)).current_party_line
-		self.assertEqual(line, self.v.party_line)
+		
+		mdc_vote_session = self.g.mdcvotesession_set.get(turn=self.g.current_turn)
+		self.assertEqual(mdc_vote_session.current_party_line, self.v.party_line)
 
 	def test_equality_no_party_line(self):
+		"""
+		When an equality occurs, no line is set
+		"""
 		self.v2 = MDCVoteOrder(
 			player=self.p,
 			party_line=MDCVoteOrder.MDC_PARTY_LINE_CHOICES[3][0]
 		)
 		self.v2.save()
+
 		self.g.resolve_current_turn()
 
-		line = (self.g.mdcvotesession_set.get(turn=self.g.current_turn)).current_party_line
-		self.assertEqual(line, MDCVoteOrder.MDC_PARTY_LINE_CHOICES[-1][0])
+		mdc_vote_session = (self.g.mdcvotesession_set.get(turn=self.g.current_turn))
+		self.assertEqual(mdc_vote_session.current_party_line, MDCVoteOrder.NONE)
