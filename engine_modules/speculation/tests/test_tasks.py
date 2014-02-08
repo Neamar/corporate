@@ -7,29 +7,20 @@ class TasksTest(EngineTestCase):
 
 		super(TasksTest, self).setUp()
 
-		self.c.assets = 100
-		self.c.save()
-		self.first_corporation = self.c
-
-		self.c2.assets = 10
-		self.c2.save()
-		self.medium_corporation = self.c2
-
-		self.c3.assets = 1
-		self.c3.save()
-		self.last_corporation = self.c3
-
 		self.d = Derivative(name="first and last")
 		self.d.save()
-		self.d.corporations.add(self.first_corporation, self.last_corporation)
+		self.d.corporations.add(self.c, self.c2)
 
 	def test_corporation_speculation(self):
 		"""
 		Task should be called
 		"""
+		self.c.assets = 50
+		self.c.save()
+		
 		cso = CorporationSpeculationOrder(
 			player=self.p,
-			corporation=self.first_corporation,
+			corporation=self.c,
 			rank=1,
 			investment=5
 		)
@@ -45,8 +36,8 @@ class TasksTest(EngineTestCase):
 		"""
 		self.g.resolve_current_turn()
 
-		self.first_corporation.assets -= 50
-		self.first_corporation.save()
+		self.c.assets = 5
+		self.c.save()
 
 		dso = DerivativeSpeculationOrder(
 			player=self.p,
