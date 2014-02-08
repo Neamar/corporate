@@ -1,4 +1,5 @@
 from engine.testcases import EngineTestCase
+from engine_modules.corporation.models import Corporation
 
 
 class ModelsTest(EngineTestCase):
@@ -8,8 +9,9 @@ class ModelsTest(EngineTestCase):
 	def setUp(self):
 
 		super(ModelsTest, self).setUp()
-
-		self.c = self.g.corporation_set.get(base_corporation_slug="renraku")
+		self.g.corporation_set.all().delete()
+		self.c = Corporation(base_corporation_slug='shiawase', assets=10)
+		self.g.corporation_set.add(self.c)
 
 	def test_assets_saved_on_init(self):
 		"""

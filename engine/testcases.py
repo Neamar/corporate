@@ -26,17 +26,24 @@ class EngineTestCase(TestCase):
 		For faster tests, remove all BaseCorporation to avoid creating useless fixtures.
 		"""
 
-		from engine_modules.corporation.models import BaseCorporation
+		# Create a Game, without creating all default base corporations
+		from engine_modules.corporation.models import Corporation, BaseCorporation
 		original_base_corporations = BaseCorporation.base_corporations
+		BaseCorporation.base_corporations = {}
 		try:
-			BaseCorporation.base_corporations = {}
-
-			self.initial_money = Player._meta.get_field_by_name('money')[0].default
 			self.g = Game()
 			self.g.save()
-			self.p = Player(game=self.g, money=self.initial_money)
-			self.p.save()
 		except:
 			raise
 		finally:
 			BaseCorporation.base_corporations = original_base_corporations
+	
+		# Create base corporations
+		self.c = Corporation(base_corporation_slug='shiawase', assets=10)
+		self.c2 = Corporation(base_corporation_slug='renraku', assets=10)
+		self.c3 = Corporation(base_corporation_slug='ares', assets=10)
+		self.g.corporation_set.add(self.c, self.c2, self.c3)
+
+		self.initial_money = Player._meta.get_field_by_name('money')[0].default
+		self.p = Player(game=self.g, money=self.initial_money)
+		self.p.save()
