@@ -280,13 +280,14 @@ Resolution:
 Documentation
 
 ### Newsfeeds
-
-* Politique (MDC)
-* Breaking News (Sabotage)
-* Ragots & faits divers (Runs détectées)
-* People (Influence, Changement Corpo)
-* Économie (Premiers, Derniers)
-
+* Bulletin du MDC
+    * ligne politique votée
+    * coalitions
+* Matrix buzz
+    * runs
+* People
+    * influence
+    * changement nat. corpo
 
 ### Wall Street
 Tableau des corpos :
