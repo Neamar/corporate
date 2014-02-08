@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'engine_modules.player_run',
     'engine_modules.speculation',
     'engine_modules.effects',
+    'engine_modules.mdc',
 )
 
 MIDDLEWARE_CLASSES = (

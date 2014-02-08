@@ -41,7 +41,7 @@ c.save()
 			# Restore default behavior whatever happens
 			base_first_corporation.on_first = default_on_first
 
-	def test_mast_effect(self):
+	def test_last_effect(self):
 		"""
 		Test that the first corporation's on_last effect gets applied
 		"""
