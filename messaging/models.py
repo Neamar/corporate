@@ -1,6 +1,9 @@
 from django.db import models
 
 
+class Newsfeed(models.Model):
+	pass
+
 class Message(models.Model):
 	ORDER = 'ORD'
 	PRIVATE_MESSAGE = 'PM'
