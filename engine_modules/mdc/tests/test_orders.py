@@ -26,7 +26,7 @@ class OrdersTest(EngineTestCase):
 		"""
 		Test that your vote counts for 1 when you're not top holder
 		"""
-		self.assertEqual(self.reload(self.v).weight, 1)
+		self.assertEqual(self.reload(self.v).get_weight(), 1)
 
 
 	def test_one_top_holder(self):
@@ -40,7 +40,7 @@ class OrdersTest(EngineTestCase):
 		)
 		s.save()
 
-		self.assertEqual(self.reload(self.v).weight, 2)
+		self.assertEqual(self.reload(self.v).get_weight(), 2)
 
 	def test_equality_case(self):
 		"""
@@ -61,7 +61,7 @@ class OrdersTest(EngineTestCase):
 		)
 		s2.save()
 	
-		self.assertEqual(self.reload(self.v).weight, 1)
+		self.assertEqual(self.reload(self.v).get_weight(), 1)
 
 	def test_top_holder_two_corporations(self):
 		"""
@@ -79,4 +79,4 @@ class OrdersTest(EngineTestCase):
 		)
 		s2.save()
 				
-		self.assertEqual(self.reload(self.v).weight, 3)
+		self.assertEqual(self.reload(self.v).get_weight(), 3)

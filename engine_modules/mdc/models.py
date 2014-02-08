@@ -10,24 +10,18 @@ class MDCVoteOrder(Order):
 	Order to vote for the party line of the MDC
 	"""
 
-	NONE = 'None'
-
 	# Enumerate the party lines and what they mean
 	MDC_PARTY_LINE_CHOICES = (('CPUB', u'Contrats publics'),
-				('CCIB', u'Contrôles ciblés'),
-				('DERE', u'Dérégulation'),
-				('DEVE', u'Développement urbain'),
-				('BANK', u'Garde-fous bancaires'),
-				('TRAN', u'Transparence'),
-				(NONE, u'Aucune'))
+		('CCIB', u'Contrôles ciblés'),
+		('DERE', u'Dérégulation'),
+		('DEVE', u'Développement urbain'),
+		('BANK', u'Garde-fous bancaires'),
+		('TRAN', u'Transparence')
+	)
 
-	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, default="NONE")
+	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
 
-	def resolve(self):
-		pass
-
-	@property
-	def weight(self):
+	def get_weight(self):
 
 		vote_registry = self.build_vote_registry()
 		if self.player in vote_registry.values():
@@ -66,7 +60,6 @@ class MDCVoteSession(models.Model):
 	"""
 
 	current_party_line = models.CharField(max_length=3,
-				choices=MDCVoteOrder.MDC_PARTY_LINE_CHOICES,
-				default=MDCVoteOrder.NONE)
+		choices=MDCVoteOrder.MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
 	game = models.ForeignKey(Game)
 	turn = models.PositiveSmallIntegerField(editable=False)
