@@ -28,7 +28,6 @@ class OrdersTest(EngineTestCase):
 		"""
 		self.assertEqual(self.reload(self.v).get_weight(), 1)
 
-
 	def test_one_top_holder(self):
 		"""
 		Test that a top holder's vote is correctly weighed
