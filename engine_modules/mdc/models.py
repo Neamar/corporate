@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.core.exceptions import ValidationError
 from collections import Counter
 
 from engine.models import Order, Game
-from engine_modules.corporation.models import Corporation
 
 
 class MDCVoteOrder(Order):
@@ -21,9 +19,7 @@ class MDCVoteOrder(Order):
 				('TRAN', u'Transparence'),
 				('NONE', u'Aucune'))
 
-	party_line = models.CharField(max_length=4, 
-				choices=MDC_PARTY_LINE_CHOICES,
-				default = "NONE")
+	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, default="NONE")
 
 	def resolve(self):
 		pass
@@ -39,8 +35,7 @@ class MDCVoteOrder(Order):
 
 	def build_vote_registry(self):
 		"""
-		Build a registry of the top shareholders for each corporation that will be
-		used in calculation of weight
+		Build a registry of the top shareholders for each corporation that will be used in calculation of weight
 		"""
 		vote_registry = {}
 		corporations = self.player.game.corporation_set.all()
@@ -54,12 +49,12 @@ class MDCVoteOrder(Order):
 					vote_registry[c.base_corporation_slug] = top_holders[0][0]
 			except(IndexError):
 				if len(top_holders) != 0:
-					# Only one had shares
+					# Only one has share
 					vote_registry[c.base_corporation_slug] = top_holders[0][0]
 		return vote_registry
 	
 	def description(self):
-		return u"Vote pour définir la ligne du Manhattan Development Consortium"
+		return u"Voter pour définir la ligne du Manhattan Development Consortium"
 
 
 class MDCVoteSession(models.Model):

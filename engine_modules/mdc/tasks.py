@@ -1,9 +1,9 @@
 from collections import Counter
-from engine.tasks import OrderResolutionTask
+from engine.tasks import ResolutionTask
 from engine_modules.mdc.models import MDCVoteSession, MDCVoteOrder
 
 
-class MDCVoteTask(OrderResolutionTask):
+class MDCVoteTask(ResolutionTask):
 	"""
 	Choose the MDC party line
 	"""
@@ -11,8 +11,7 @@ class MDCVoteTask(OrderResolutionTask):
 	ORDER_TYPE = MDCVoteOrder
 
 	def run(self, game):
-		
-		orders = self.ORDER_TYPE.objects.filter(player__game=game, turn=game.current_turn)
+		orders = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
 		votes = {}
 		for t in MDCVoteOrder.MDC_PARTY_LINE_CHOICES:
 			votes[t[0]] = 0
@@ -21,11 +20,13 @@ class MDCVoteTask(OrderResolutionTask):
 			votes[order.party_line] += order.weight
 
 		top_line = Counter(votes).most_common(2)
+		# Default to NONE
 		official_line = MDCVoteOrder.MDC_PARTY_LINE_CHOICES[-1][0]
 		try:
 			if top_line[0][1] != top_line[1][1]:
 				official_line = top_line[0][0]
-		except(IndexError):
+		except IndexError:
+			# Only one line voted for
 			if len(top_line) != 0:
 				official_line = top_line[0][0]
 
