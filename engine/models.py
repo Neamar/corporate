@@ -95,7 +95,7 @@ class Player(models.Model):
 		"""
 		Retrieve all orders for this turn, and build a message to remember them.
 		"""
-		orders = self.order_set.all()
+		orders = self.order_set.filter(turn=self.game.current_turn)
 		message = "# Ordres de %s pour le tour %s\n\n" % (self.name, self.game.current_turn)
 		for order in orders:
 			# Retrieve associated order:
