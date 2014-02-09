@@ -7,15 +7,21 @@ from website.models import User
 
 class WebsiteTest(EngineTestCase):
 	def setUp(self):
+		super(WebsiteTest, self).setUp()
+
 		self.u = User(username="hello")
 		self.u.set_password("password")
 		self.u.save()
 
+		self.p.user = self.u
+		self.p.save()
+		
 		self.client = Client()
 
 		self.authenticated_client = Client()
-		self.authenticated_client.login(username=self.u.username, password='password')
-		super(WebsiteTest, self).setUp()
+		is_logged_in = self.authenticated_client.login(username=self.u.username, password='password')
+		self.assertTrue(is_logged_in)
+		
 
 	def test_pages_require_login(self):
 		pages = [
