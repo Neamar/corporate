@@ -13,10 +13,15 @@ def index(request):
 def orders(request, game_id):
 	player = get_player(request, game_id)
 
-	existing_orders = player.order_set.filter(turn=self.game.current_turn)
+	existing_orders = [order.to_child() for order in player.order_set.filter(turn=player.game.current_turn)]
+
 	available_orders = get_orders_availability(player)
 
-	return render(request, 'game/orders.html', {"game": player.game, "orders": available_orders})
+	return render(request, 'game/orders.html', {
+		"game": player.game,
+		"available_orders": available_orders,
+		"existing_orders": existing_orders,
+	})
 
 
 @login_required

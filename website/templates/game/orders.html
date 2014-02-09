@@ -2,7 +2,26 @@
 
 {% block content %}
 
-{% for order in orders %}
+<h2>Ordres existants</h2>
+<table>
+<thead>
+	<tr>
+		<th>Ordre</th>
+		<th>Coût</th>
+	</tr>
+</thead>
+<tbody>
+{% for order in existing_orders %}
+<tr>
+	<td>{{ order.description }}</td>
+	<td>{{ order.get_cost }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<h2>Passer un ordre</h2>
+{% for order in available_orders %}
 	<h3>{{ order.title }}</h3>
 	{% if order.available != False %}
 	<form method="post" action="{% url "website.views.add_order" game_id=1 order_type=order.name %}">

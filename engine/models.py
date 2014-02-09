@@ -137,7 +137,6 @@ class Order(models.Model):
 	turn = models.PositiveSmallIntegerField(editable=False)
 	cost = models.PositiveSmallIntegerField(editable=False)
 	type = models.CharField(max_length=40, blank=True, editable=False)
-	type_drilldown = models.CharField(max_length=80, blank=True, editable=False)
 
 	def save(self):
 		# Save the current type to inflate later

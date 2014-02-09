@@ -21,7 +21,6 @@ class WebsiteTest(EngineTestCase):
 		self.authenticated_client = Client()
 		is_logged_in = self.authenticated_client.login(username=self.u.username, password='password')
 		self.assertTrue(is_logged_in)
-		
 
 	def test_index_and_admin_up(self):
 		"""
