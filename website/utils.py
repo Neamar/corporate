@@ -13,6 +13,15 @@ def get_player(request, game_id):
 	return get_object_or_404(Player, user=request.user, game=game_id)
 
 
+def get_order_by_name(order_name):
+	"""
+	Return the class with the name specified.
+	Will raise ValueError when Order does not exists.
+	"""
+	all_orders_dict = {Order.__name__: Order for Order in orders_list}
+	return all_orders_dict[order_name]
+
+
 def get_orders_availability(player):
 	"""
 	Return an array holding all orders availability.
@@ -39,7 +48,8 @@ def get_order_availability(Order, player):
 
 	status = {
 		'type': Order,
-		'name': Order.__name__
+		'name': Order.__name__,
+		'title': Order.title,
 	}
 	instance = Order(player=player)
 	try:
@@ -50,7 +60,6 @@ def get_order_availability(Order, player):
 	except:
 		status['available'] = None
 	
-	status['title'] = instance.title
 	if status['available'] is not False:
 		status['form'] = instance.get_form()
 
