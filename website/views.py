@@ -4,7 +4,7 @@ from django.http import Http404
 
 from engine.modules import orders_list
 from engine.exceptions import OrderNotAvailable
-from website.utils import get_player
+from website.utils import get_player, get_orders_availability, get_order_availability
 
 
 def index(request):
@@ -15,21 +15,7 @@ def index(request):
 def orders(request, game_id):
 	player = get_player(request, game_id)
 
-	all_orders = [{"type": Order, 'name': Order.__name__} for Order in orders_list]
-
-	for order in all_orders:
-		instance = order["type"](player=player)
-		try:
-			instance.clean()
-			order['available'] = True
-		except OrderNotAvailable:
-			order['available'] = False
-		except:
-			order['available'] = None
-		
-		order['title'] = instance.title
-		if order['available'] is not False:
-			order['form'] = instance.get_form()
+	all_orders = get_orders_availability(player)
 
 	return render(request, 'game/orders.html', {"game": player.game, "orders": all_orders})
 
@@ -59,7 +45,7 @@ def add_order(request, game_id, order_type):
 		"name": Order.__name__,
 		"form": form
 	}
-	
+
 	return render(request, 'game/add_order.html', {"game": player.game, "order": order})
 
 
