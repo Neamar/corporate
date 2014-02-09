@@ -281,13 +281,16 @@ Documentation
 
 ### Newsfeeds
 * Bulletin du MDC
-    * ligne politique votée
-    * coalitions
+    * ligne politique votée (rédigé)
+    * coalitions (rédigé)
 * Matrix buzz
-    * runs
+    * runs (rédigé)
 * People
     * influence
     * changement nat. corpo
+* Économique
+    - achat de part
+    - effets premiers derniers
 
 ### Wall Street
 Tableau des corpos :
