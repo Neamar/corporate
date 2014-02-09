@@ -10,5 +10,5 @@ admin.site.register(MDCVoteSession, MDCVoteSessionAdmin)
 
 
 class MDCVoteOrderAdmin(admin.ModelAdmin):
-	list_display = ('weight', 'party_line')
+	list_display = ('get_weight', 'party_line')
 admin.site.register(MDCVoteOrder, MDCVoteOrderAdmin)
