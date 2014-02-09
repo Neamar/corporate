@@ -136,11 +136,22 @@ class Order(models.Model):
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField(editable=False)
 	cost = models.PositiveSmallIntegerField(editable=False)
-	type = models.CharField(max_length=80, blank=True, editable=False)
+	type = models.CharField(max_length=40, blank=True, editable=False)
+	type_drilldown = models.CharField(max_length=80, blank=True, editable=False)
 
 	def save(self):
 		# Save the current type to inflate later
 		self.type = self._meta.object_name
+
+		# Save the type drilldown, to be able to restore the object
+		self.type_drilldown = self.type
+		c = self.__class__
+		if c != Order:
+			c = c.__bases__[0]
+			while c != Order:
+				if not hasattr(c, '_meta') or not c._meta.proxy:
+					self.type_drilldown = "%s.%s" % (c.__name__, self.type_drilldown)
+				c = c.__bases__[0]
 
 		# Turn default values is game current_turn
 		if not self.turn:
@@ -206,15 +217,11 @@ class Order(models.Model):
 		In most case, we need to subclass all those orders to their correct orders type, and this function will convert a plain Order to the most specific Order subclass according to the stored `.type`.
 		"""
 		# Retrieve associated order:
-		try:
-			return getattr(self, self.type.lower())
-		except AttributeError:
-			try:
-				# TODO : CHANGE DAT SHIT
-				return getattr(self.runorder, self.type.lower())
-			except AttributeError:
-				# TODO : CHANGE DAT SHIT (again)
-				return getattr(self.runorder.offensiverunorder, self.type.lower())
+		child = self
+		for attr in self.type_drilldown.split("."):
+			child = getattr(child, attr.lower())
+
+		return child
 
 
 # Import datas for all engine_modules
