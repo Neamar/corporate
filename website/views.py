@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
+from engine.models import Order
 from website.utils import get_player, get_orders_availability, get_order_by_name
 
 
@@ -33,11 +34,11 @@ def add_order(request, game_id, order_type):
 
 	# Retrieve OrderClass
 	try:
-		Order = get_order_by_name(order_type)
+		SubOrder = get_order_by_name(order_type)
 	except ValueError:
 		raise Http404("This is not an Order.")
 
-	instance = Order(player=player)
+	instance = SubOrder(player=player)
 
 	if request.method == 'POST':
 		form = instance.get_form(request.POST)
@@ -49,11 +50,21 @@ def add_order(request, game_id, order_type):
 
 	order = {
 		"title": instance.title,
-		"name": Order.__name__,
+		"name": SubOrder.__name__,
 		"form": form
 	}
 
 	return render(request, 'game/add_order.html', {"game": player.game, "order": order})
+
+
+@login_required
+def delete_order(request, game_id, order_id):
+	player = get_player(request, game_id)
+
+	order = get_object_or_404(Order, pk=order_id, player=player)
+	order.delete()
+
+	return redirect('website.views.orders', game_id=game_id)
 
 
 @login_required

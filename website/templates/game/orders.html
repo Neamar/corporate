@@ -1,28 +1,31 @@
 {% extends "template.html" %}
 
+{% block title %}Ordres du tour{% endblock %}
+{% block h1 %}Ordres du tour{% endblock %}
+
 {% block content %}
 
-<h2>Ordres existants</h2>
 <table>
 <thead>
 	<tr>
-		<th>Ordre</th>
+		<th colspan="2">Ordre</th>
 		<th>Coût</th>
 	</tr>
 </thead>
 <tfoot>
 	<tr>
-		<td>TOTAL</td>
+		<td colspan="2">TOTAL</td>
 		<td>{{ existing_orders_cost }}</td>
 	</tr>
 	<tr>
-		<td>RESTANT</td>
+		<td colspan="2">RESTANT</td>
 		<td>{{ remaining_money }}</td>
 	</tr>
 </tfoot>
 <tbody>
 {% for order in existing_orders %}
 <tr>
+	<td><a href="{% url "website.views.delete_order" game_id=1 order_id=order.pk %}" title="Supprimer cet ordre">✗</a></td>
 	<td>{{ order.description }}</td>
 	<td>{{ order.get_cost }}</td>
 </tr>
