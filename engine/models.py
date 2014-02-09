@@ -143,16 +143,6 @@ class Order(models.Model):
 		# Save the current type to inflate later
 		self.type = self._meta.object_name
 
-		# Save the type drilldown, to be able to restore the object
-		self.type_drilldown = self.type
-		c = self.__class__
-		if c != Order:
-			c = c.__bases__[0]
-			while c != Order:
-				if not hasattr(c, '_meta') or not c._meta.proxy:
-					self.type_drilldown = "%s.%s" % (c.__name__, self.type_drilldown)
-				c = c.__bases__[0]
-
 		# Turn default values is game current_turn
 		if not self.turn:
 			self.turn = self.player.game.current_turn
@@ -216,12 +206,13 @@ class Order(models.Model):
 		By default, when we do player.order_set.all(), we retrieve Order instance.
 		In most case, we need to subclass all those orders to their correct orders type, and this function will convert a plain Order to the most specific Order subclass according to the stored `.type`.
 		"""
-		# Retrieve associated order:
-		child = self
-		for attr in self.type_drilldown.split("."):
-			child = getattr(child, attr.lower())
+		from engine.modules import orders_list
 
-		return child
+		for ChildOrder in orders_list:
+			if ChildOrder.__name__ == self.type:
+				return ChildOrder.objects.get(pk=self.pk)
+
+		raise LookupError("No orders subclass match this base: %s" % self.type)
 
 
 # Import datas for all engine_modules
