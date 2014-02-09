@@ -183,11 +183,11 @@ class Order(models.Model):
 		"""
 		raise NotImplementedError("Abstract call.")
 
-	def get_form(self):
+	def get_form(self, datas=None):
 		"""
 		Retrieve a form to create / edit this order
 		"""
-		return self.form_class()(instance=self)
+		return self.form_class()(datas, instance=self)
 
 	def form_class(self):
 		"""

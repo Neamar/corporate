@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
@@ -15,7 +15,7 @@ def index(request):
 def orders(request, game_id):
 	player = get_player(request, game_id)
 
-	all_orders = [{"type": order, 'name': order.__name__} for order in orders_list]
+	all_orders = [{"type": Order, 'name': Order.__name__} for Order in orders_list]
 
 	for order in all_orders:
 		instance = order["type"](player=player)
@@ -40,15 +40,27 @@ def add_order(request, game_id, order_type):
 
 	# Retrieve OrderClass
 	all_orders_dict = {order.__name__: order for order in orders_list}
-
 	try:
 		Order = all_orders_dict[order_type]
 	except ValueError:
 		raise Http404("This is not an Order.")
+	instance = Order(player=player)
 
-	order = Order(player=player)
+	if request.method == 'POST':
+		form = instance.get_form(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('website.views.orders', game_id=game_id)
+	else:
+		form = instance.get_form()
 
-	return render(request, 'game/orders.html', {})
+	order = {
+		"title": instance.title,
+		"name": Order.__name__,
+		"form": form
+	}
+	
+	return render(request, 'game/add_order.html', {"game": player.game, "order": order})
 
 
 @login_required
