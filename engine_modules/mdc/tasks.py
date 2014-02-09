@@ -36,4 +36,44 @@ class MDCVoteTask(ResolutionTask):
 			turn=game.current_turn + 1
 		)
 		s.save()
-tasks = (MDCVoteTask, )
+
+class MDCLineCPUBTask(ResolutionTask):
+	"""
+	Enforce the effects of the MDC CPUB party line
+	"""
+
+	# To be debated
+	resolution_order=100
+
+	def run(self, game):
+		# Have to put this in for the moment to prevent tests from crashing
+		try:
+			session = game.mdcvotesession_set.get(turn=game.current_turn-1)
+		except:
+			return
+
+		party_line = session.current_party_line
+		if party_line != "CPUB":
+			return
+
+		winners = []
+		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn-1, party_line="CPUB")
+		for o in win_votes:
+			winners += o.get_friendly_corporations() 
+			
+		losers = []
+		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn-1, party_line="DEVE")
+		for o in loss_votes:
+			losers += o.get_friendly_corporations() 
+
+		for winslug in winners:
+			c = game.corporation_set.get(base_corporation_slug=winslug)
+			c.assets += 1
+			c.save()
+
+		for loseslug in losers:
+			c = game.corporation_set.get(base_corporation_slug=loseslug)
+			c.assets -= 1
+			c.save()
+	
+tasks = (MDCVoteTask, MDCLineCPUBTask)
