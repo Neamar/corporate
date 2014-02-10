@@ -87,5 +87,5 @@ def players(request, game_id):
 		shares[player.pk]['name'] = player.name
 		shares[player.pk]['shares'] = {}
 		for corporation in corporations:
-			shares[player.pk]['shares'][corporation.pk] = Share.objects.filter(player=player,corporation=corporation).count()
+			shares[player.pk]['shares'][corporation.pk] = Share.objects.filter(player = player, corporation = corporation).count()
 	return render(request, 'game/players.html', {"players": players, "corporations": corporations, "shares": shares})
