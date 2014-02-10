@@ -23,11 +23,11 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get dividend for previous share, and this turn order should be resolved
 		"""
-		self.o = BuyShareOrder(
+		o = BuyShareOrder(
 			player=self.p,
 			corporation=self.last_corporation
 		)
-		self.o.save()
+		o.save()
 
 		self.g.resolve_current_turn()
 
@@ -42,11 +42,11 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get dividend for previous shares
 		"""
-		self.s = Share(
+		s = Share(
 			player=self.p,
 			corporation=self.medium_corporation
 		)
-		self.s.save()
+		s.save()
 
 		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
@@ -60,11 +60,11 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get dividend for previous shares, with bonus if corporation is first
 		"""
-		self.s = Share(
+		s = Share(
 			player=self.p,
 			corporation=self.first_corporation
 		)
-		self.s.save()
+		s.save()
 
 		money = self.reload(self.p).money
 		self.g.resolve_current_turn()
@@ -78,11 +78,11 @@ class TasksTest(EngineTestCase):
 		"""
 		The player should get dividend for previous shares, with malus if corporation is last
 		"""
-		self.s = Share(
+		s = Share(
 			player=self.p,
 			corporation=self.last_corporation
 		)
-		self.s.save()
+		s.save()
 
 		money = self.reload(self.p).money
 
