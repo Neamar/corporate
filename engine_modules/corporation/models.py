@@ -34,8 +34,12 @@ class BaseCorporation:
 		path = "%s/%s.md" % (self.BASE_CORPORATION_DIR, slug)
 		content, meta = read_markdown(path)
 
-		self.name = meta['name'][0]
 		self.slug = slug
+		self.name = meta['name'][0]
+		self.datasteal = meta['datasteal'][0]
+		self.sabotage = meta['sabotage'][0]
+		self.extraction = meta['extraction'][0]
+		self.detection = meta['detection'][0]
 
 		code = "\n".join(meta['on_first'])
 		self.on_first = self.compile_effect(code, "on_first")
