@@ -72,7 +72,7 @@ class Corporation(models.Model):
 
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
-	assets = models.PositiveSmallIntegerField()
+	assets = models.SmallIntegerField()
 
 	@cached_property
 	def base_corporation(self):
