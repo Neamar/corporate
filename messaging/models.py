@@ -17,6 +17,8 @@ class Newsfeed(models.Model):
 
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
 	content = models.TextField(blank=True)
+	turn = models.PositiveSmallIntegerField()
+	game = models.ForeignKey('engine.Game')
 
 
 class Message(models.Model):

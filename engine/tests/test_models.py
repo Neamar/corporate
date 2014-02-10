@@ -2,6 +2,7 @@
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 
+from messaging.models import Newsfeed
 from engine.testcases import EngineTestCase
 from engine.models import Player, Order
 from messaging.models import Message, Note
@@ -71,18 +72,17 @@ class ModelTest(EngineTestCase):
 		Check resolve_current_turn creates Resolution messages.
 		"""
 		
-		self.p.add_note(category="catagory", content="private")
-		self.g.add_note(category="catagory", content="private")
+		self.p.add_note(category="category", content="private")
 		
 		# sanity check
-		self.assertEqual(2, Note.objects.count())
+		self.assertEqual(1, Note.objects.count())
 
 		self.g.resolve_current_turn()
 		self.assertEqual(0, Note.objects.count())
 
-	def test_game_add_note(self):
+	def test_game_add_newsfeed(self):
 		"""
-		Check add_note on Game
+		Check add_newsfeed on Game
 		"""
 		u = User(username="haha", email="azre@fer.fr")
 		u.save()
@@ -90,8 +90,9 @@ class ModelTest(EngineTestCase):
 		p2 = Player(user=u, game=self.g, name="hahaha")
 		p2.save()
 
-		n = self.g.add_note(category="category", content="something")
-		self.assertEqual(list(n.recipient_set.all()), [self.p, p2])
+		self.assertEqual(Newsfeed.objects.count(), 0)
+		self.g.add_newsfeed(category=Newsfeed.MDC_REPORT, content="something")
+		self.assertEqual(Newsfeed.objects.count(), 1)
 
 	def test_order_clean_is_abstract(self):
 		"""
@@ -277,21 +278,3 @@ class ModelTest(EngineTestCase):
 		self.assertEqual(m.recipient_set.count(), 1)
 		self.assertTrue(self.p in m.recipient_set.all())
 		self.assertTrue("private" in m.content)
-
-	def test_player_build_resolution_message_mutliple_recipients(self):
-		"""
-		Check build_resolution_message on Player, with multiple recipients.
-		"""
-		p2 = Player(game=self.g)
-		p2.save()
-
-		self.g.add_note(category="category", content="public")
-		self.p.add_note(category="category", content="private")
-
-		m = self.p.build_resolution_message()
-		self.assertTrue("public" in m.content)
-		self.assertTrue("private" in m.content)
-
-		m2 = p2.build_resolution_message()
-		self.assertTrue("public" in m2.content)
-		self.assertTrue("private" not in m2.content)
