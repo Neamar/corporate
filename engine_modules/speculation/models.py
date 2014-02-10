@@ -62,7 +62,7 @@ class DerivativeSpeculationOrder(Order):
 	Order to speculate on a derivative up or down
 	"""
 	MAX_AMOUNT_SPECULATION = 50
-	BASE_COST = 10
+	BASE_COST = 1
 
 	UP = True
 	DOWN = False
