@@ -390,4 +390,20 @@ Tiroshi | **2** | Transparence | Renraku
 
 
 ### Commlink
-Messages privés entre PJ et de fin de tour, résultat runs d'informations
+Messages privés entre PJ et de fin de tour, résultat runs d'informations et message de résolution
+
+#### Messages
+* Argent restant
+* Achat de part
+* Changement de nationalité corporatiste
+* Augmentation d'influence corporatiste
+* Runs
+    * Runs défensives
+    * Runs offensives
+* Détections
+    * Toutes les runs détectées
+* Spéculations
+    * Spéculations
+* Votes
+    * Vote
+    * Vote de coalition
