@@ -5,7 +5,7 @@ from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
-from messaging.models import Message, Note
+from messaging.models import Message, Note, Newsfeed
 
 
 class Game(models.Model):
@@ -39,12 +39,11 @@ class Game(models.Model):
 		self.current_turn += 1
 		self.save()
 
-	def add_note(self, **kwargs):
+	def add_newsfeed(self, **kwargs):
 		"""
-		Create a note, to be used later for the resolution message
+		Create a newsfeed on the game
 		"""
-		n = Note.objects.create(turn=self.current_turn, **kwargs)
-		n.recipient_set = self.player_set.all()
+		n = Newsfeed.objects.create(turn=self.current_turn, game=self, **kwargs)
 		return n
 
 	def __unicode__(self):
