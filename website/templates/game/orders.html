@@ -5,6 +5,7 @@
 
 {% block content %}
 
+{% if existing_orders|length > 0 %}
 <table>
 <thead>
 	<tr>
@@ -15,11 +16,11 @@
 <tfoot>
 	<tr>
 		<td colspan="2">TOTAL</td>
-		<td>{{ existing_orders_cost }}</td>
+		<td>{{ existing_orders_cost }}k ¥</td>
 	</tr>
 	<tr>
 		<td colspan="2">RESTANT</td>
-		<td>{{ remaining_money }}</td>
+		<td>{{ remaining_money }}k ¥</td>
 	</tr>
 </tfoot>
 <tbody>
@@ -32,8 +33,11 @@
 {% endfor %}
 </tbody>
 </table>
+{% endif %}
 
 <h2>Passer un ordre</h2>
+<p>Fonds : {{ remaining_money }}k ¥</p>
+
 {% for order in available_orders %}
 	<h3>{{ order.title }}</h3>
 	{% if order.available != False %}
