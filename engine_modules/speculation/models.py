@@ -16,7 +16,7 @@ class CorporationSpeculationOrder(Order):
 	Order to speculate on a corporation's rank
 	"""
 	MAX_AMOUNT_SPECULATION = 50
-	BASE_COST = 10
+	BASE_COST = 1
 
 	title = "Spéculer sur une corporation"
 
