@@ -18,6 +18,8 @@ class CorporationSpeculationOrder(Order):
 	MAX_AMOUNT_SPECULATION = 50
 	BASE_COST = 10
 
+	title = "Spéculer sur une corporation"
+
 	corporation = models.ForeignKey(Corporation)
 	rank = models.PositiveSmallIntegerField()
 	investment = models.PositiveIntegerField()
@@ -69,6 +71,8 @@ class DerivativeSpeculationOrder(Order):
 		(UP, 'up'),
 		(DOWN, 'down')
 	)
+
+	title = "Spéculer sur un produit dérivé"
 
 	speculation = models.BooleanField(choices=UPDOWN_CHOICES)
 	derivative = models.ForeignKey(Derivative)

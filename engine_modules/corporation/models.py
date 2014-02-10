@@ -72,7 +72,7 @@ class Corporation(models.Model):
 
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
-	assets = models.PositiveSmallIntegerField()
+	assets = models.SmallIntegerField()
 
 	@cached_property
 	def base_corporation(self):
@@ -85,4 +85,4 @@ class Corporation(models.Model):
 		exec(self.base_corporation.on_last, {'game': self.game})
 
 	def __unicode__(self):
-		return "%s (%s)" % (self.base_corporation.name, self.game)
+		return "%s (%s)" % (self.base_corporation.name, self.assets)

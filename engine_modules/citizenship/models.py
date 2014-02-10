@@ -31,8 +31,8 @@ class CitizenShipOrder(Order):
 	def description(self):
 		return u"Récupérer la nationalité corporatiste %s" % self.corporation.base_corporation.name
 
-	def get_form(self):
-		form = super(CitizenShipOrder, self).get_form()
+	def get_form(self, datas=None):
+		form = super(CitizenShipOrder, self).get_form(datas)
 		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
 
 		return form

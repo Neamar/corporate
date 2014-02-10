@@ -19,6 +19,8 @@ class MDCVoteOrder(Order):
 		('TRAN', u'Transparence')
 	)
 
+	title = "Choisir une coalition"
+
 	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
 
 	def get_weight(self):
@@ -63,3 +65,5 @@ class MDCVoteSession(models.Model):
 		choices=MDCVoteOrder.MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
 	game = models.ForeignKey(Game)
 	turn = models.PositiveSmallIntegerField(editable=False)
+
+orders = (MDCVoteOrder,)

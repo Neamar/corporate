@@ -95,19 +95,10 @@ class Player(models.Model):
 		"""
 		Retrieve all orders for this turn, and build a message to remember them.
 		"""
-		orders = self.order_set.all()
+		orders = self.order_set.filter(turn=self.game.current_turn)
 		message = "# Ordres de %s pour le tour %s\n\n" % (self.name, self.game.current_turn)
 		for order in orders:
-			# Retrieve associated order:
-			try:
-				details = getattr(order, order.type.lower())
-			except AttributeError:
-				try:
-					# TODO : CHANGE DAT SHIT
-					details = getattr(order.runorder, order.type.lower())
-				except AttributeError:
-					# TODO : CHANGE DAT SHIT (again)
-					details = getattr(order.runorder.offensiverunorder, order.type.lower())
+			details = order.to_child()
 
 			message += "* %s\n" % details.description()
 
@@ -144,8 +135,8 @@ class Order(models.Model):
 
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField(editable=False)
-	cost = models.PositiveSmallIntegerField(editable=False)  # TODO : recompute from inheritance
-	type = models.CharField(max_length=80, blank=True, editable=False)
+	cost = models.PositiveSmallIntegerField(editable=False)
+	type = models.CharField(max_length=40, blank=True, editable=False)
 
 	def save(self):
 		# Save the current type to inflate later
@@ -183,13 +174,13 @@ class Order(models.Model):
 		"""
 		raise NotImplementedError("Abstract call.")
 
-	def get_form(self):
+	def get_form(self, datas=None):
 		"""
 		Retrieve a form to create / edit this order
 		"""
-		return self.form_class()(instance=self)
+		return self.get_form_class()(datas, instance=self)
 
-	def form_class(self):
+	def get_form_class(self):
 		"""
 		Build a new class for forms,
 		"""
@@ -208,6 +199,21 @@ class Order(models.Model):
 			exclude = ['player']
 
 		return Meta
+
+	def to_child(self):
+		"""
+		By default, when we do player.order_set.all(), we retrieve Order instance.
+		In most case, we need to subclass all those orders to their correct orders type, and this function will convert a plain Order to the most specific Order subclass according to the stored `.type`.
+		"""
+		from engine.modules import orders_list
+
+		for ChildOrder in orders_list:
+			if ChildOrder.__name__ == self.type:
+				return ChildOrder.objects.get(pk=self.pk)
+
+		raise LookupError("No orders subclass match this base: %s" % self.type)
+
+
 # Import datas for all engine_modules
 from engine.modules import *
 
