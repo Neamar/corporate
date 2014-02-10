@@ -27,7 +27,7 @@
 				<li><a href="{% url 'website.views.wallstreet' game_id=1 %}">wall street</a></li>
 				<li><a href="{% url 'website.views.corporations' game_id=1 %}">corpos</a></li>
 				<li><a href="{% url 'website.views.players' game_id=1 %}">joueurs</a></li>
-				<li><a href="#">commlink</a></li>
+				<li><a href="{% url 'website.views.comlink' game_id=1 %}">commlink</a></li>
 			</ul>
 			{% endif %}
 		</div>

@@ -102,3 +102,15 @@ def newsfeeds(request, game_id):
 	newsfeeds = player.game.newsfeed_set.filter(turn=player.game.current_turn - 1).order_by('category')
 
 	return render(request, 'game/newsfeeds.html', {"newsfeeds": newsfeeds})
+
+
+@login_required
+def comlink(request, game_id):
+	"""
+	Display newsfeed
+	"""
+	player = get_player(request, game_id)
+
+	messages = player.message_set.all().order_by("-turn")
+
+	return render(request, 'game/comlink.html', {"messages": messages})
