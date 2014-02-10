@@ -85,4 +85,4 @@ class Corporation(models.Model):
 		exec(self.base_corporation.on_last, {'game': self.game})
 
 	def __unicode__(self):
-		return "%s (%s)" % (self.base_corporation.name, self.game)
+		return "%s (%s)" % (self.base_corporation.name, self.assets)
