@@ -7,7 +7,7 @@ class SaveCorporationAssetTask(ResolutionTask):
 	"""
 	Save the assets of all corporations after the turn resolution
 	"""
-	RESOLUTION_ORDER = 1000
+	RESOLUTION_ORDER = 550
 
 	def run(self, game):
 		corporations = game.corporation_set.all()
@@ -35,7 +35,7 @@ class BuildCorporationRankingTask(ResolutionTask):
 		corporations = game.corporation_set.order_by('-assets')
 		for rank, corporation in enumerate(corporations):
 			previous_turn_assets = corporation.assethistory_set.get(turn=game.current_turn - 1).assets
-			content += "%s- %s : %s  (%+d)\n" % (rank + 1, corporation.base_corporation.name,corporation.assets, corporation.assets - previous_turn_assets)
+			content += "%s- %s : %s  (%+d)\n" % (rank + 1, corporation.base_corporation.name, corporation.assets, corporation.assets - previous_turn_assets)
 
 		game.add_note(category="Classement corporatiste", content=content)
 

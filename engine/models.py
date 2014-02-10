@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from engine.dispatchs import validate_order
 from messaging.models import Message, Note
 
+
 class Game(models.Model):
 	city = models.CharField(max_length=50)
 	current_turn = models.PositiveSmallIntegerField(default=1)
@@ -41,7 +42,7 @@ class Game(models.Model):
 		"""
 		Create a note, to be used later for the resolution message
 		"""
-		n = Note.objects.create(turn = self.current_turn, **kwargs)
+		n = Note.objects.create(turn=self.current_turn, **kwargs)
 		n.recipient_set = self.player_set.all()
 		return n
 
@@ -143,7 +144,7 @@ class Order(models.Model):
 
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField(editable=False)
-	cost = models.PositiveSmallIntegerField(editable=False) # TODO : recompute from inheritance
+	cost = models.PositiveSmallIntegerField(editable=False)  # TODO : recompute from inheritance
 	type = models.CharField(max_length=80, blank=True, editable=False)
 
 	def save(self):
@@ -156,7 +157,6 @@ class Order(models.Model):
 
 		if not self.cost:
 			self.cost = self.get_cost()
-
 
 		super(Order, self).save()
 

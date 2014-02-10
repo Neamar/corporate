@@ -47,7 +47,7 @@ class OrdersTest(EngineTestCase):
 		"""
 		You can't buy more shares than your influence
 		"""
-		o2 =  BuyShareOrder(
+		o2 = BuyShareOrder(
 			player=self.p,
 			corporation=self.c
 		)

@@ -76,7 +76,8 @@
 8. Distribution des dividendes
     - Les parts achetées ce tour-ci ne comptent pas, sauf pour les tours 1 et 2
     - 50 * actifs * nbparts * (1.25 si corpo première) * (0.75 si corpo dernière) * (1.1 si citoyenneté corpo)
-9. Achat d'influence corporatiste
+9. Spéculation
+10. Achat d'influence corporatiste
 
 ### Feedbacks
 * Global

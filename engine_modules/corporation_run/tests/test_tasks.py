@@ -28,7 +28,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation = self.c
+			target_corporation=self.c
 		)
 		self.so.clean()
 		self.so.save()
@@ -51,12 +51,10 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets - 2)
 
-
 	def test_offensive_runs_task_descending_probability(self):
 		"""
 		Test that Offensive Runs are resolved from highest to lowest success probability
-		In this case, the Datasteal with 200 should be the one that fails (because of 
-		the Protection) and the Sabotage with 100 should succeed
+		In this case, the Datasteal with 200 should be the one that fails (because of the Protection) and the Sabotage with 100 should succeed
 		"""
 
 		begin_stealer_assets = self.dso.stealer_corporation.assets
@@ -124,14 +122,14 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.po.player).money, player_money - self.po.get_cost())
 
-	def test_protection_costs_resolved(self):	
+	def test_protection_costs_resolved(self):
 		"""
 		Test that after a protection run that gets resolved several times, the ProtectionRunPaymentTask deduces the right amount of money from the player
 		Because the cost of a Protection Run with a 0% chance is 0, this test has a 10% Protection Run, giving a 90% chance of testing an interesting case
 		"""
 
 		self.po.additional_percents = 1
-		self.po.save()	
+		self.po.save()
 		self.dso.additional_percents = 10
 		self.dso.save()
 

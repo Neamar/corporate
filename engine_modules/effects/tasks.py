@@ -1,5 +1,6 @@
 from engine.tasks import ResolutionTask
 
+
 class FirstLastEffectsTask(ResolutionTask):
 	"""
 	App first and last corporations effects
