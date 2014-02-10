@@ -254,7 +254,7 @@ class ModelTest(EngineTestCase):
 		o.save()
 
 		m = self.p.build_order_message()
-		self.assertTrue("influence" in m.content)
+		self.assertTrue("Influence" in m.content)
 		self.assertTrue(str(self.p.money) in m.content)
 		self.assertIsNone(m.author)
 
