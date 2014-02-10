@@ -94,3 +94,31 @@ class TaskTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c).assets, initial_assets + 1)
 		self.assertEqual(self.reload(self.c2).assets, initial_assets2 + 1)
 		self.assertEqual(self.reload(self.c3).assets, initial_assets3 - 1)
+
+	def test_MDC_DEVE_line_effects(self):
+		"""
+		Test what happens when the CPUB party line is chosen
+		"""
+
+		initial_assets = self.c.assets
+		initial_assets2 = self.c2.assets
+		initial_assets3 = self.c3.assets
+		
+		self.v.party_line = MDCVoteOrder.CPUB
+		self.v.save()
+
+		self.v2.party_line = MDCVoteOrder.DEVE
+		self.v2.save()
+
+		self.v3.party_line = MDCVoteOrder.DEVE
+		self.v3.save()
+
+		self.g.resolve_current_turn()
+
+		# We have to resolve twice: once for the MDCVoteOrders to be taken into account
+		# And once for the resulting MDCVoteSession to be effective
+		self.g.resolve_current_turn()
+
+		self.assertEqual(self.reload(self.c).assets, initial_assets - 1)
+		self.assertEqual(self.reload(self.c2).assets, initial_assets2 + 1)
+		self.assertEqual(self.reload(self.c3).assets, initial_assets3 + 1)
