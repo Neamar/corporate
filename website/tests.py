@@ -9,8 +9,9 @@ class WebsiteTest(EngineTestCase):
 	def setUp(self):
 		super(WebsiteTest, self).setUp()
 
+		password = "password"
 		self.u = User(username="hello")
-		self.u.set_password("password")
+		self.u.set_password(password)
 		self.u.save()
 
 		self.p.user = self.u
@@ -19,7 +20,7 @@ class WebsiteTest(EngineTestCase):
 		self.client = Client()
 
 		self.authenticated_client = Client()
-		is_logged_in = self.authenticated_client.login(username=self.u.username, password='password')
+		is_logged_in = self.authenticated_client.login(username=self.u.username, password=password)
 		self.assertTrue(is_logged_in)
 
 	def test_index_and_admin_up(self):

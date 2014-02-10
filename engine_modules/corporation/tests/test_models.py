@@ -1,11 +1,14 @@
-from engine.testcases import EngineTestCase
+from django.test import TestCase
+from engine.models import Game
 from engine_modules.corporation.models import BaseCorporation, Corporation
 
 
-class ModelTest(EngineTestCase):
+# Inherit from TestCase and not from EngineTestCase, since EngineTestCase overrides base corporation behavior for faster tests.
+class ModelTest(TestCase):
 	def setUp(self):
 
-		super(ModelTest, self).setUp()
+		self.g = Game()
+		self.g.save()
 
 	def test_corporation_auto_created(self):
 		"""

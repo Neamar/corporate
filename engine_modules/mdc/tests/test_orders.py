@@ -2,19 +2,11 @@ from engine.models import Player
 from engine.testcases import EngineTestCase
 from engine_modules.mdc.models import MDCVoteOrder
 from engine_modules.share.models import Share
-from engine_modules.corporation.models import Corporation
 
 
 class OrdersTest(EngineTestCase):
-	def setUp(self):
-		
+	def setUp(self):		
 		super(OrdersTest, self).setUp()
-
-		self.g.corporation_set.all().delete()
-		self.c = Corporation(base_corporation_slug='renraku', assets=20)
-		self.g.corporation_set.add(self.c)
-		self.c2 = Corporation(base_corporation_slug='shiawase', assets=10)
-		self.g.corporation_set.add(self.c2)
 
 		self.v = MDCVoteOrder(
 			player=self.p,

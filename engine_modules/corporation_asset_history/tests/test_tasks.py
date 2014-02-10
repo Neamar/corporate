@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
 from messaging.models import Message
-from engine_modules.corporation.models import Corporation
 
 
 class TasksTest(EngineTestCase):
@@ -10,12 +9,6 @@ class TasksTest(EngineTestCase):
 	"""
 	def setUp(self):
 		super(TasksTest, self).setUp()
-
-		self.g.corporation_set.all().delete()
-		self.c = Corporation(base_corporation_slug='shiawase', assets=10)
-		self.c2 = Corporation(base_corporation_slug='renraku', assets=10)
-		self.c3 = Corporation(base_corporation_slug='ares', assets=10)
-		self.g.corporation_set.add(self.c, self.c2, self.c3)
 
 		self.g.disable_invisible_hand = True
 
