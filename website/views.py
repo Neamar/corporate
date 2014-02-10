@@ -58,8 +58,8 @@ def wallstreet(request, game_id):
 	Wallstreet datas
 	"""
 	player = get_player(request, game_id)
-	corporations=player.game.corporation_set.all()
-	return render(request, 'game/wallstreet.html', {"corporations" : corporations})
+	corporations = player.game.corporation_set.all()
+	return render(request, 'game/wallstreet.html', {"corporations": corporations})
 
 
 @login_required
