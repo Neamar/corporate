@@ -79,4 +79,5 @@ def players(request, game_id):
 	"""
 	player = get_player(request, game_id)
 	players = player.game.player_set.all()
-	return render(request, 'game/wallstreet.html', {"players": players})
+	corporations = player.game.corporation_set.all()
+	return render(request, 'game/wallstreet.html', {"players": players, "corporations": corporations})

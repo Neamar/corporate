@@ -1,0 +1,27 @@
+{% extends "template.html" %}
+
+{% block title %}Wallstreet{% endblock %}
+
+{% block content %}
+<table>
+<thead>
+       <tr>
+               <th>Nom</th>
+              {% for corporation in corporations %}
+               <th>{{ corporation.base_corporation.name }}</th>
+              {% endfor %}
+       </tr>
+</thead>
+<tbody>
+{% for player in players %}
+<tr>
+      <td>{{ player.name }}</td>
+      {% for corporation in corporations %}
+       <td>{{ Share.objects.filter(player=player, corporation=corporation) }}</td>
+      {% endfor %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock content %}
