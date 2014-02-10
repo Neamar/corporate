@@ -40,6 +40,6 @@ class MDCVoteTask(ResolutionTask):
 		s.save()
 
 		if official_line is not None:
-			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content="La coalition du MDC pour ce tour a voté %s" % s.get_current_party_line_display())
+			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté %s" % s.get_current_party_line_display())
 
 tasks = (MDCVoteTask, )
