@@ -1,4 +1,24 @@
+# -*- coding: utf-8 -*-
 from django.db import models
+
+
+class Newsfeed(models.Model):
+	MDC_REPORT = 'mdc-report'
+	MATRIX_BUZZ = 'matrix-buzz'
+	PEOPLE = 'people'
+	ECONOMY = 'economy'
+
+	CATEGORY_CHOICES = (
+		(MDC_REPORT, 'Rapport du MDC'),
+		(MATRIX_BUZZ, 'Matrix Buzz'),
+		(PEOPLE, 'People'),
+		(ECONOMY, 'Économie'),
+	)
+
+	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
+	content = models.TextField(blank=True)
+	turn = models.PositiveSmallIntegerField()
+	game = models.ForeignKey('engine.Game')
 
 
 class Message(models.Model):

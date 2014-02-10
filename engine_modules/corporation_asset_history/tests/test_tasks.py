@@ -20,25 +20,6 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		self.assertEqual(self.c.assethistory_set.get(turn=1).assets, self.reload(self.c).assets)
 
-	def test_task_generate_corporation_ranking(self):
-		"""
-		The game should write the ranking of every corporation
-		"""
-		self.c3.assets = 13
-		self.c3.save()
-		self.c2.assets = 12
-		self.c2.save()
-
-		self.g.resolve_current_turn()
-		message = self.p.message_set.get(flag=Message.RESOLUTION, turn=self.g.current_turn - 1)
-
-		expected = """## Classement corporatiste
-* 1- %s : 13  (+3)
-2- %s : 12  (+2)
-3- %s : 10  (+0)""" % (self.c3.base_corporation.name, self.c2.base_corporation.name, self.c.base_corporation.name)
-
-		self.assertTrue(expected in message.content)
-
 	def test_get_ordered_corporations(self):
 		"""
 		Test rank of turn if no ex-aequo
