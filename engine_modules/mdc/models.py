@@ -10,18 +10,32 @@ class MDCVoteOrder(Order):
 	Order to vote for the party line of the MDC
 	"""
 
+	CPUB = "CPUB"
+	CCIB = "CCIB"
+	DERE = "DERE"
+	DEVE = "DEVE"
+	BANK = "BANK"
+	TRAN = "TRAN"
+	NONE = "NONE"
+
 	# Enumerate the party lines and what they mean
 	MDC_PARTY_LINE_CHOICES = (('CPUB', u'Contrats publics'),
 		('CCIB', u'Contrôles ciblés'),
 		('DERE', u'Dérégulation'),
 		('DEVE', u'Développement urbain'),
 		('BANK', u'Garde-fous bancaires'),
-		('TRAN', u'Transparence')
+		('TRAN', u'Transparence'),
+		('NONE', u'Pas de ligne officielle')
 	)
 
-	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
+	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, blank=True, null=True, default="NONE")
 
 	def get_weight(self):
+		"""
+		returns the vote's weight: each corporation in which the player is top_shareholder (strictly more shares than any other)
+					sides with said player, increasing the weight by 1
+		each player also has their own vote
+		"""
 		return len(self.get_friendly_corporations()) + 1
 
 	def get_friendly_corporations(self):
@@ -71,3 +85,16 @@ class MDCVoteSession(models.Model):
 		choices=MDCVoteOrder.MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
 	game = models.ForeignKey(Game)
 	turn = models.PositiveSmallIntegerField(editable=False)
+
+def get_current_mdc_party_line(self):
+	"""
+	A function used to get the MDC party line voted last session
+	if the current turn is the first one, returns "NONE"
+	"""
+
+	if self.current_turn == 1:
+		return MDCVoteOrder.NONE
+
+	session = self.mdcvotesession_set.get(turn=self.current_turn)
+	return session.current_party_line
+Game.get_current_mdc_party_line = get_current_mdc_party_line

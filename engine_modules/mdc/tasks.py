@@ -20,8 +20,8 @@ class MDCVoteTask(ResolutionTask):
 			votes[order.party_line] += order.get_weight()
 
 		top_line = Counter(votes).most_common(2)
-		# Default to NONE
-		official_line = None
+		# Default to "NONE"
+		official_line = MDCVoteOrder.NONE
 		try:
 			if top_line[0][1] != top_line[1][1]:
 				official_line = top_line[0][0]
@@ -43,35 +43,31 @@ class MDCLineCPUBTask(ResolutionTask):
 	"""
 
 	# To be debated
-	resolution_order=100
+	resolution_order = 100
 
 	def run(self, game):
-		# Have to put this in for the moment to prevent tests from crashing
-		try:
-			session = game.mdcvotesession_set.get(turn=game.current_turn-1)
-		except:
+
+		party_line = game.get_current_mdc_party_line()
+
+		if party_line != MDCVoteOrder.CPUB:
 			return
 
-		party_line = session.current_party_line
-		if party_line != "CPUB":
-			return
-
-		winners = []
-		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn-1, party_line="CPUB")
+		winning_corporations = []
+		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn - 1, party_line=MDCVoteOrder.CPUB)
 		for o in win_votes:
-			winners += o.get_friendly_corporations() 
+			winning_corporations += o.get_friendly_corporations()
 			
-		losers = []
-		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn-1, party_line="DEVE")
+		losing_corporations = []
+		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn - 1, party_line=MDCVoteOrder.DEVE)
 		for o in loss_votes:
-			losers += o.get_friendly_corporations() 
+			losing_corporations += o.get_friendly_corporations()
 
-		for winslug in winners:
+		for winslug in winning_corporations:
 			c = game.corporation_set.get(base_corporation_slug=winslug)
 			c.assets += 1
 			c.save()
 
-		for loseslug in losers:
+		for loseslug in losing_corporations:
 			c = game.corporation_set.get(base_corporation_slug=loseslug)
 			c.assets -= 1
 			c.save()
