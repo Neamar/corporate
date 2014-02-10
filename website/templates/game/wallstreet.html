@@ -3,6 +3,9 @@
 {% block title %}Wallstreet{% endblock %}
 
 {% block content %}
-
+{% for corporation in corporations %}
+	<li>{{ corporation.base_corporation.name }}</li>
+{% endfor %}
+</ul>
 
 {% endblock content %}
