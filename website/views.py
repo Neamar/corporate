@@ -4,6 +4,7 @@ from django.http import Http404
 
 from engine.models import Order
 from website.utils import get_player, get_orders_availability, get_order_by_name
+from messaging.models import Newsfeed
 
 
 def index(request):
@@ -89,3 +90,15 @@ def players(request, game_id):
 	Wallstreet datas
 	"""
 	return render(request, 'game/wallstreet.html', {})
+
+
+@login_required
+def newsfeeds(request, game_id):
+	"""
+	Display newsfeed
+	"""
+	player = get_player(request, game_id)
+
+	newsfeeds = player.game.newsfeed_set.filter(turn=player.game.current_turn - 1).order_by('category')
+
+	return render(request, 'game/newsfeeds.html', {"newsfeeds": newsfeeds})

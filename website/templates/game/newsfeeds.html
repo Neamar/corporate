@@ -1,0 +1,18 @@
+{% extends "template.html" %}
+
+{% block title %}Newsfeeds{% endblock %}
+{% block h1 %}Newsfeeds{% endblock %}
+
+{% block content %}
+{% regroup newsfeeds by get_category_display as categories %}
+
+{% for category in categories %}
+<h2>{{ category.grouper }}</h2>
+
+<ul>
+{% for newsfeed in category.list %}
+	<li>{{ newsfeed.content }}</li>
+{% endfor %}
+</ul>
+{% endfor %}
+{% endblock content %}
