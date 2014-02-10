@@ -7,8 +7,6 @@ class OrdersTest(EngineTestCase):
 
 		super(OrdersTest, self).setUp()
 
-		self.g.corporation_set.all().delete()
-
 		self.c.assets = 100
 		self.c.save()
 		self.first_corporation = self.c
