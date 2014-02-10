@@ -2,7 +2,6 @@
 from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share, BuyShareOrder
-from engine_modules.corporation.models import Corporation
 from messaging.models import Note
 
 
@@ -10,12 +9,13 @@ class OrdersTest(EngineTestCase):
 	def setUp(self):
 
 		super(OrdersTest, self).setUp()
+		self.c3.delete()
+		
+		self.c.assets = 7
+		self.c.save()
 
-		self.g.corporation_set.all().delete()
-		self.c = Corporation(base_corporation_slug='renraku', assets=7)
-		self.c2 = Corporation(base_corporation_slug='shiawase', assets=8)
-		self.g.corporation_set.add(self.c)
-		self.g.corporation_set.add(self.c2)
+		self.c2.assets = 8
+		self.c2.save()
 
 		self.o = BuyShareOrder(
 			player=self.p,

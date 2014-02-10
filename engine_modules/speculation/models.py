@@ -16,7 +16,9 @@ class CorporationSpeculationOrder(Order):
 	Order to speculate on a corporation's rank
 	"""
 	MAX_AMOUNT_SPECULATION = 50
-	BASE_COST = 10
+	BASE_COST = 1
+
+	title = "Spéculer sur une corporation"
 
 	corporation = models.ForeignKey(Corporation)
 	rank = models.PositiveSmallIntegerField()
@@ -60,7 +62,7 @@ class DerivativeSpeculationOrder(Order):
 	Order to speculate on a derivative up or down
 	"""
 	MAX_AMOUNT_SPECULATION = 50
-	BASE_COST = 10
+	BASE_COST = 1
 
 	UP = True
 	DOWN = False
@@ -69,6 +71,8 @@ class DerivativeSpeculationOrder(Order):
 		(UP, 'up'),
 		(DOWN, 'down')
 	)
+
+	title = "Spéculer sur un produit dérivé"
 
 	speculation = models.BooleanField(choices=UPDOWN_CHOICES)
 	derivative = models.ForeignKey(Derivative)

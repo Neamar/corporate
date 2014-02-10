@@ -7,13 +7,17 @@ class TasksTest(EngineTestCase):
 
 		super(TasksTest, self).setUp()
 
-		self.g.corporation_set.all().delete()
-		self.first_corporation = Corporation(base_corporation_slug='renraku', assets=20)
-		self.g.corporation_set.add(self.first_corporation)
-		self.medium_corporation = Corporation(base_corporation_slug='shiawase', assets=10)
-		self.g.corporation_set.add(self.medium_corporation)
-		self.last_corporation = Corporation(base_corporation_slug='ares', assets=5)
-		self.g.corporation_set.add(self.last_corporation)
+		self.c.assets = 10
+		self.c.save()
+		self.medium_corporation = self.c
+
+		self.c2.assets = 20
+		self.c2.save()
+		self.first_corporation = self.c2
+
+		self.c3.assets = 5
+		self.c3.save()
+		self.last_corporation = self.c3
 
 	def test_first_effect(self):
 		"""
@@ -25,10 +29,10 @@ class TasksTest(EngineTestCase):
 		default_on_first = base_first_corporation.on_first
 
 		test_first_effect = """
-c = game.corporation_set.get(base_corporation_slug='renraku')
+c = game.corporation_set.get(base_corporation_slug='%s')
 c.assets=31337
 c.save()
-"""
+""" % self.first_corporation.base_corporation_slug
 
 		base_first_corporation.on_first = base_first_corporation.compile_effect(test_first_effect, 'on_first')
 
@@ -41,7 +45,7 @@ c.save()
 			# Restore default behavior whatever happens
 			base_first_corporation.on_first = default_on_first
 
-	def test_mast_effect(self):
+	def test_last_effect(self):
 		"""
 		Test that the first corporation's on_last effect gets applied
 		"""
@@ -51,10 +55,10 @@ c.save()
 		default_on_last = base_last_corporation.on_last
 
 		test_last_effect = """
-c = game.corporation_set.get(base_corporation_slug='renraku')
+c = game.corporation_set.get(base_corporation_slug='%s')
 c.assets=337
 c.save()
-"""
+""" % self.first_corporation.base_corporation_slug
 
 		base_last_corporation.on_last = base_last_corporation.compile_effect(test_last_effect, 'on_last')
 
