@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.db import models
+from django.db import models, transaction
 from django.conf import settings
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
@@ -14,6 +14,7 @@ class Game(models.Model):
 	total_turn = models.PositiveSmallIntegerField(default=8)
 	started = models.DateTimeField(auto_now_add=True)
 
+	@transaction.atomic
 	def resolve_current_turn(self):
 		"""
 		Resolve all orders for this turn, increment current_turn by 1.
