@@ -67,8 +67,9 @@ def corporations(request, game_id):
 	"""
 	Wallstreet datas
 	"""
-
-	return render(request, 'game/wallstreet.html', {})
+	player = get_player(request, game_id)
+	corporations = player.game.corporation_set.all()
+	return render(request, 'game/wallstreet.html', {"corporations": corporations})
 
 
 @login_required
@@ -76,4 +77,6 @@ def players(request, game_id):
 	"""
 	Wallstreet datas
 	"""
-	return render(request, 'game/wallstreet.html', {})
+	player = get_player(request, game_id)
+	players = player.game.player_set.all()
+	return render(request, 'game/wallstreet.html', {"players": players})
