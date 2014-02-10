@@ -13,11 +13,11 @@
        </tr>
 </thead>
 <tbody>
-{% for player in players %}
+{% for player_shares in shares.values %}
 <tr>
-      <td>{{ player.name }}</td>
-      {% for corporation in corporations %}
-       <td>{{ Share.objects.filter(player=player, corporation=corporation) }}</td>
+      <td>{{ player_shares.name }}</td>
+      {% for share in player_shares.shares.values %}
+      <td>{{ share }}</td>
       {% endfor %}
 </tr>
 {% endfor %}

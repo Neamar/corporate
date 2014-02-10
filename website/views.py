@@ -4,6 +4,7 @@ from django.http import Http404
 
 from engine.modules import orders_list
 from engine_modules.corporation.models import Corporation
+from engine_modules.share.models import Share
 from engine.exceptions import OrderNotAvailable
 from website.utils import get_player
 
@@ -65,11 +66,11 @@ def wallstreet(request, game_id):
 @login_required
 def corporations(request, game_id):
 	"""
-	Wallstreet datas
+	corporations datas
 	"""
 	player = get_player(request, game_id)
 	corporations = player.game.corporation_set.all()
-	return render(request, 'game/wallstreet.html', {"corporations": corporations})
+	return render(request, 'game/corporations.html', {"corporations": corporations})
 
 
 @login_required
@@ -77,7 +78,14 @@ def players(request, game_id):
 	"""
 	Wallstreet datas
 	"""
+	shares = {}
 	player = get_player(request, game_id)
-	players = player.game.player_set.all()
-	corporations = player.game.corporation_set.all()
-	return render(request, 'game/wallstreet.html', {"players": players, "corporations": corporations})
+	players = player.game.player_set.all().order_by('pk')
+	corporations = player.game.corporation_set.all().order_by('pk')
+	for player in players:
+		shares[player.pk] = {}
+		shares[player.pk]['name'] = player.name
+		shares[player.pk]['shares'] = {}
+		for corporation in corporations:
+			shares[player.pk]['shares'][corporation.pk] = Share.objects.filter(player=player,corporation=corporation).count()
+	return render(request, 'game/players.html', {"players": players, "corporations": corporations, "shares": shares})

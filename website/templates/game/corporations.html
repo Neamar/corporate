@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 
-{% block title %}Wallstreet{% endblock %}
+{% block title %}Corporation{% endblock %}
 
 {% block content %}
 <table>
@@ -8,10 +8,10 @@
        <tr>
                <th>Nom</th>
                <th>Actif</th>
-               <th>Datasteal</th>
-               <th>Sabotage</th>
-               <th>Extraction</th>
-               <th>Detection</th>
+               <th>DS</th>
+               <th>S</th>
+               <th>E</th>
+               <th>D</th>
        </tr>
 </thead>
 <tbody>
@@ -19,10 +19,10 @@
 <tr>
        <td>{{ corporation.base_corporation.name }}</td>
        <td>{{ corporation.assets }}</td>
-       <td>{{ corporation.datasteal }}</td>
-       <td>{{ corporation.sabotage }}</td>
-       <td>{{ corporation.extraction }}</td>
-       <td>{{ corporation.detection }}</td>
+       <td>{{ corporation.base_corporation.datasteal }}</td>
+       <td>{{ corporation.base_corporation.sabotage }}</td>
+       <td>{{ corporation.base_corporation.extraction }}</td>
+       <td>{{ corporation.base_corporation.detection }}</td>
 </tr>
 {% endfor %}
 </tbody>
