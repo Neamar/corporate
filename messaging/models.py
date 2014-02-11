@@ -62,7 +62,7 @@ class Message(models.Model):
 
 		for note in notes:
 			if note.category != last_title:
-				resolution_message += u"\n## %s\n" % note.category
+				resolution_message += u"\n### %s\n" % note.category
 			resolution_message += u"* %s\n" % note.content
 			last_title = note.category
 
