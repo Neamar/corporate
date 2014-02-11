@@ -20,6 +20,9 @@ class Newsfeed(models.Model):
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
 
+	def __unicode__(self):
+		return "%s newsfeeds" % self.get_category_display()
+
 
 class Message(models.Model):
 	ORDER = 'ORD'

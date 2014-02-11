@@ -16,6 +16,9 @@ class AssetHistory(models.Model):
 	assets = models.PositiveSmallIntegerField()
 	turn = models.PositiveSmallIntegerField()
 
+	def __unicode__(self):
+		return "%s assets for %s on turn %s" % (self.assets, self.corporation.base_corporation.name, self.turn)
+
 
 def get_ordered_corporations(self):
 	"""

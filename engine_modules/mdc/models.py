@@ -66,4 +66,6 @@ class MDCVoteSession(models.Model):
 	game = models.ForeignKey(Game)
 	turn = models.PositiveSmallIntegerField(editable=False)
 
+	def __unicode__(self):
+		return "%s line for %s on turn %s" % (self.current_party_line, self.game, self.turn)
 orders = (MDCVoteOrder,)
