@@ -14,21 +14,24 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation=self.c
+			target_corporation=self.c,
+			additional_percents=0,
 		)
 		self.dso.clean()
 		self.dso.save()
 
 		self.po = ProtectionOrder(
 			player=self.p,
-			protected_corporation=self.c
+			protected_corporation=self.c,
+			additional_percents=0,
 		)
 		self.po.clean()
 		self.po.save()
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation=self.c
+			target_corporation=self.c,
+			additional_percents=0,
 		)
 		self.so.clean()
 		self.so.save()
