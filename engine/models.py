@@ -105,7 +105,7 @@ class Player(models.Model):
 		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
 
 		return self.add_message(
-			title="Ordres du tour",
+			title="Ordres pour le tour %s" % self.game.current_turn,
 			content=message,
 			author=None,
 			flag=Message.ORDER,
@@ -119,7 +119,6 @@ class Player(models.Model):
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=notes,
-			opening=u"# Résolution du tour %s\n" % self.game.current_turn,
 			title="Informations personnelles du tour %s" % self.game.current_turn,
 			turn=self.game.current_turn
 		)
