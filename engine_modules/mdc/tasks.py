@@ -37,6 +37,7 @@ class MDCVoteTask(ResolutionTask):
 		)
 		s.save()
 
+
 class MDCLineCPUBTask(ResolutionTask):
 	"""
 	Enforce the effects of the MDC CPUB party line
@@ -71,6 +72,7 @@ class MDCLineCPUBTask(ResolutionTask):
 			c = game.corporation_set.get(base_corporation_slug=loseslug)
 			c.assets -= 1
 			c.save()
+
 	
 class MDCLineDEVETask(ResolutionTask):
 	"""
