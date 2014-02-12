@@ -14,7 +14,7 @@ Le **classement** trie les corpos par nombre d'actifs et leur attribue un rang d
 
 Les joueurs commencent la partie avec 1 point d'**Influence corporatiste, ou "IC"**. Cette caractéristique représente l'étendue de leur pouvoir et de leurs réseaux dans l'île de Manhattan et sert de limite à certaines de leurs actions. Elle pourra être augmentée en cours de partie.
 
-Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 1 millions de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
+Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 1 million de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
 
 La partie se joue en 8 **tours** ; chaque tour correspondant à un trimestre. À la fin du jeu, chaque joueur compte ses **points de victoire**, et celui qui en possède le plus est déclaré vainqueur. (cf fin du jeu)
 
@@ -40,7 +40,7 @@ Un nouveau tour peut commencer.
 
 Une part coûte 100 000 ny × (actifs de la corpo). Soit 500 000 ny pour une corpo de 5 actifs. 
 
-> Une part dans la corpo en tête du classement (rang 1) coûte 125 000 ny × actifs pour joueurs qui n’en ont pas la "nationalité" (cf citoyenneté corpo)
+> Une part dans la corpo en tête du classement (rang 1) coûte 125 000 ny × actifs pour les joueurs qui n’en ont pas la "nationalité" (cf citoyenneté corpo)
 
 À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire 50 000 ny × (actifs de la corpo). Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc : (2 × 50 000 × 5 + 1 × 50 000 × 10), soit 1 million de ny.
 
@@ -57,7 +57,7 @@ Un joueur ne touche pas de dividendes sur les parts qu'il a acheté ce tour ci. 
 
 ### Les Votes
 
-En tant qu'acteur majeur du marché, chaque joueur à droit à un **Vote** par tour. Il choisit :
+En tant qu'acteur majeur du marché, chaque joueur a droit à un **Vote** par tour. Il choisit :
 
 * Une corpo qui gagne 1 actif.
 * Une corpo qui perd 1 actif.
@@ -250,7 +250,7 @@ Malgré les protestations de Wall Street, de nouvelles régulations pour la ECSE
 
 Effets :
 
-* Au prochain tour, les **joueurs** ayant votés **Garde fous bancaires** peuvent **garder l'intégralité des mises** de leurs spéculations manquées.
+* Au prochain tour, les **joueurs** ayant voté **Garde fous bancaires** **gardent l'intégralité des mises** de leurs spéculations manquées.
 * Les **joueurs** ayant voté **Dérégulation** ne pourront pas effectuer de **spéculations**.
 
 ### Dérégulation

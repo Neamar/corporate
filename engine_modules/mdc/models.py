@@ -2,7 +2,7 @@
 from django.db import models
 from collections import Counter
 
-from engine.models import Order, Game
+from engine.models import Order, Game, Player
 
 
 class MDCVoteOrder(Order):
@@ -88,7 +88,7 @@ class MDCVoteSession(models.Model):
 
 def get_current_mdc_party_line(self):
 	"""
-	A function used to get the MDC party line voted last session
+	Get the MDC party line voted last session
 	if the current turn is the first one, returns "NONE"
 	"""
 
@@ -97,4 +97,17 @@ def get_current_mdc_party_line(self):
 
 	session = self.mdcvotesession_set.get(turn=self.current_turn)
 	return session.current_party_line
+
+def get_last_mdc_vote(self):
+	"""
+	Get what a player voted in the last MDC Vote session
+	"""
+
+	if self.game.current_turn == 1:
+		return MDCVoteOrder.NONE
+
+	vote = MDCVoteOrder.objects.get(turn=self.game.current_turn - 1, player=self)
+	return vote.party_line
+
 Game.get_current_mdc_party_line = get_current_mdc_party_line
+Player.get_last_mdc_vote = get_last_mdc_vote
