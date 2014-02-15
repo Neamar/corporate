@@ -7,7 +7,8 @@ class OrdersTest(EngineTestCase):
 	def setUp(self):
 		super(OrdersTest, self).setUp()
 		self.o = RunOrder(
-			player=self.p
+			player=self.p,
+			additional_percents=0,
 		)
 		self.o.clean()
 		self.o.save()

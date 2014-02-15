@@ -66,11 +66,11 @@ class ModelTest(EngineTestCase):
 
 		expected = """Opening
 
-## T1
+### T1
 * C1
 * C2
 
-## T2
+### T2
 * C3
 
 Ending

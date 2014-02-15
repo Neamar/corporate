@@ -20,6 +20,9 @@ class Newsfeed(models.Model):
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
 
+	def __unicode__(self):
+		return "%s newsfeeds" % self.get_category_display()
+
 
 class Message(models.Model):
 	ORDER = 'ORD'
@@ -62,7 +65,7 @@ class Message(models.Model):
 
 		for note in notes:
 			if note.category != last_title:
-				resolution_message += u"\n## %s\n" % note.category
+				resolution_message += u"\n### %s\n" % note.category
 			resolution_message += u"* %s\n" % note.content
 			last_title = note.category
 
