@@ -1,53 +1,56 @@
 {% extends "template.html" %}
 
-{% block title %}Wallstreet{% endblock %}
+{% block title %}Joueurs{% endblock %}
+{% block h1 %}Joueurs{% endblock %}
 
 {% block content %}
-<table>
+
+
+<table class="prop_table">
 <thead>
-       <tr>
-               <th>Nom</th>
-              {% for corporation in corporations %}
-               <th>{{ corporation.base_corporation.name }}</th>
-              {% endfor %}
-       </tr>
-</thead>
-<tbody>
-{% for player_shares in shares.values %}
 <tr>
-      <td><a href="{% url "website.views.player" game_id=1 player_id=player_shares.player.id %}">{{ player_shares.player.name }}</a></td>
-      {% for share in player_shares.shares.values %}
-        {% if player_shares.citizenship == forloop.counter0 %}
-          <td><strong>{{ share }}</strong></td>
-        {% else %}
-          <td>{{ share }}</td>
-        {% endif %}
-      {% endfor %}
+	<th></th>
+	<th>IC</th>
+	<th>Ligne</th>
+	<th>Citoyen</th>
 </tr>
-{% endfor %}
-</tbody>
-</table>
-
-
-<table>
-<thead>
-       <tr>
-               <th>Nom</th>
-               <th>IC</th>
-               <th>Ligne</th>
-               <th>Citoyen</th>
-       </tr>
 </thead>
 <tbody>
 {% for player in players %}
 <tr>
-      <td><a href="{% url "website.views.player" game_id=1 player_id=player.id %}">{{ player.name }}</a></td>
-      <td>{{ player.influence.level }}</td>
-      <td> Not meged yet </td>
-      <td>{{ player.citizenship.corporation.base_corporation.name }}</td>
+			<td><a href="{% url "website.views.player" game_id=1 player_id=player.id %}">{{ player.name }}</a></td>
+			<td>{{ player.influence.level }}</td>
+			<td> TBD </td>
+			<td>{{ player.citizenship.corporation.base_corporation.name }}</td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
 
+
+<h2>Parts possédées</h2>
+<table>
+<thead>
+<tr>
+	<th>Nom</th>
+	{% for corporation in corporations %}
+	<th>{{ corporation.base_corporation.name }}</th>
+	{% endfor %}
+</tr>
+</thead>
+<tbody>
+{% for player_shares in shares.values %}
+<tr>
+	<td><a href="{% url "website.views.player" game_id=1 player_id=player_shares.player.id %}">{{ player_shares.player.name }}</a></td>
+	{% for share in player_shares.shares.values %}
+		{% if player_shares.citizenship == forloop.counter0 %}
+			<td><strong>{{ share }}</strong></td>
+		{% else %}
+			<td>{{ share }}</td>
+		{% endif %}
+	{% endfor %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
 {% endblock content %}

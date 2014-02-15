@@ -1,6 +1,7 @@
 {% extends "template.html" %}
 
-{% block title %}Corporation{% endblock %}
+{% block title %}{{ corporation.base_corporation.name }}{% endblock %}
+{% block h1 %}{{ corporation.base_corporation.name }}{% endblock %}
 
 {% block content %}
 <table class="prop_table">
