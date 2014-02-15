@@ -11,23 +11,6 @@ from engine.models import Game
 from engine_modules.speculation.models import Derivative, CorporationSpeculationOrder, DerivativeSpeculationOrder
 
 
-BASE_DERIVATIVE_DIR = "%s/engine_modules/speculation/derivatives" % (settings.BASE_DIR)
-
-
-@receiver(post_create, sender=Game)
-def create_derivatives(sender, instance, **kwargs):
-	for f in [f for f in listdir(BASE_DERIVATIVE_DIR) if f.endswith('.md')]:
-		text, meta = read_markdown("%s/%s" % (BASE_DERIVATIVE_DIR, f))
-
-		d = Derivative(name=meta['name'][0], game=instance)
-		d.save()
-
-		print instance.corporation_set.all()
-		for corporation in meta['corporation']:
-			print corporation
-			d.corporations.add(instance.corporation_set.get(base_corporation_slug=corporation))
-
-
 def limit_speculation_by_influence(player):
 	if CorporationSpeculationOrder.objects.filter(player=player, turn=player.game.current_turn).count() + DerivativeSpeculationOrder.objects.filter(player=player, turn=player.game.current_turn).count() >= player.influence.level:
 		raise OrderNotAvailable("Pas assez d'influence pour spéculer à nouveau ce tour-ci.")
