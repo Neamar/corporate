@@ -1,11 +1,21 @@
+/********************
+ * ELEMENTS
+ */
+a:visited
+{
+   color:#0000EE;
+}
+
+pre {
+   white-space: pre-wrap;
+}
+
+/********************
+ * GLOBAL LAYOUT
+ */
 body
 {
    background:url("city.jpg") no-repeat fixed center top #64595f;
-}
-
-:visited
-{
-   color:#0000EE;
 }
 
 .top
@@ -14,46 +24,9 @@ body
   display:block;
 }
 
-.right
-{
-   text-align:right;
-}
-
 .spacer
 {
    margin:90% 0;
-}
-
-table
-{
-   margin:auto;
-   border-collapse:collapse;
-   width:90%;
-}
-
-table caption
-{
-   text-align:right;
-   font-variant:small-caps;
-}
-tr, td, th
-{
-   border:1px solid black;
-}
-
-tbody tr:nth-child(odd)
-{
-   background:rgba(255, 255, 255, .3)
-}
-
-td a
-{
-   color:black !important;
-   text-decoration:none;
-}
-
-pre {
-   white-space: pre-wrap;
 }
 
 #wrapper
@@ -157,4 +130,66 @@ pre {
    {
       width: 100%;
    }
+}
+
+
+/********************
+ * TABLES
+ */
+table
+{
+   margin:auto;
+   border-collapse:collapse;
+   max-width:90%;
+}
+
+table caption
+{
+   text-align:right;
+   font-variant:small-caps;
+}
+
+tr, td, th
+{
+   border:1px solid black;
+}
+
+tbody tr:nth-child(odd)
+
+{
+   background:rgba(255, 255, 255, .3)
+}
+
+td a
+{
+   color:black !important;
+   text-decoration:none;
+}
+
+.prop_table td:not(:first-child)
+{
+   width:50px;
+}
+
+.prop_table tr, th
+{
+   text-align:center;
+}
+
+.prop_table th:first-child
+{
+   border-top:1px solid transparent;
+   border-left:1px solid transparent;
+}
+
+.prop_table td:first-child
+{
+   font-weight:bold;
+   text-align:left;
+   padding:0 20px;
+}
+
+.prop_table td.important
+{
+   background: rgba(100, 89, 95, .2)
 }

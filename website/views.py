@@ -7,7 +7,7 @@ from django.db.models import Sum
 from engine_modules.citizenship.models import CitizenShip
 from engine_modules.corporation.models import Corporation
 from engine_modules.share.models import Share
-from engine.models import Order,Player
+from engine.models import Order, Player
 from website.utils import get_player, get_orders_availability, get_order_by_name
 from utils.read_markdown import parse_markdown
 
@@ -94,6 +94,15 @@ def corporations(request, game_id):
 
 
 @login_required
+def corporation(request, game_id, corporation_slug):
+	"""
+	Corporation datas
+	"""
+	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug)
+	return render(request, 'game/corporation.html', {"corporation": corporation})
+
+
+@login_required
 def players(request, game_id):
 	"""
 	Players datas
@@ -106,7 +115,7 @@ def players(request, game_id):
 	for player in players:
 		shares[player.pk] = {}
 		shares[player.pk]['player'] = player
-		corporation_index = -1 #If no citizenship, no corporation to be set in bold
+		corporation_index = -1  # If no citizenship, no corporation to be set in bold
 		try:
 			#else share in bold should be the share of the copraration where the player is citizen
 			for index, item in enumerate(corporations):
@@ -114,11 +123,23 @@ def players(request, game_id):
 					corporation_index = index
 		except:
 			pass
-		shares[player.pk]['citizenship']= corporation_index
+		shares[player.pk]['citizenship'] = corporation_index
 		shares[player.pk]['shares'] = {}
 		for corporation in corporations:
-			shares[player.pk]['shares'][corporation.pk] = Share.objects.filter(player = player, corporation = corporation).count()
+			shares[player.pk]['shares'][corporation.pk] = Share.objects.filter(player=player, corporation=corporation).count()
 	return render(request, 'game/players.html', {"players": players, "corporations": corporations, "shares": shares})
+
+
+@login_required
+def player(request, game_id, player_id):
+	"""
+	Player datas
+	"""
+	player = Player.objects.get(pk=player_id)
+	corporations = Corporation.objects.filter(game=player.game,share__player=player).annotate(qty_share=Sum('share'))
+	
+	return render(request, 'game/player.html', {"player": player, "corporations": corporations})
+
 
 
 @login_required
@@ -146,23 +167,3 @@ def comlink(request, game_id):
 		message.html, _ = parse_markdown(message.content)
 		message.html = mark_safe(message.html)
 	return render(request, 'game/comlink.html', {"messages": messages})
-
-
-@login_required
-def player(request, game_id, player_id):
-	"""
-	Player datas
-	"""
-	player = Player.objects.get(pk=player_id)
-	corporations = Corporation.objects.filter(game=player.game,share__player=player).annotate(qty_share=Sum('share'))
-	
-	return render(request, 'game/player.html', {"player": player, "corporations": corporations})
-
-
-@login_required
-def corporation(request, game_id, corporation_id):
-	"""
-	Corporation datas
-	"""
-	corporation = Corporation.objects.get(pk=corporation_id)
-	return render(request, 'game/corporation.html', {"corporation": corporation})
