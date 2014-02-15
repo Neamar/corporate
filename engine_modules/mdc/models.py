@@ -103,10 +103,11 @@ def get_last_mdc_vote(self):
 	Get what a player voted in the last MDC Vote session
 	"""
 
-	if self.game.current_turn == 1:
+	try:
+		vote = MDCVoteOrder.objects.get(turn=self.game.current_turn - 1, player=self)
+	except:
 		return MDCVoteOrder.NONE
 
-	vote = MDCVoteOrder.objects.get(turn=self.game.current_turn - 1, player=self)
 	return vote.party_line
 
 Game.get_current_mdc_party_line = get_current_mdc_party_line
