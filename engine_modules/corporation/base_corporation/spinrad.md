@@ -6,7 +6,6 @@ extraction: 20
 detection: 30
 on_first: "lol"
 on_last: "lol"
-derivative: dowjones
 
 Spin est surtout connue pour ses augmentations dernier cri et son propriétaire flamboyant, Johnny Spinrad. Des Spin Shop sont visibles partout à Manhattan et dans ses boroughs. Ceux-ci font généralement dans le cyber haute gamme, en particulier la gamme Spin-X de suites cybernétiques pour les modes de vie extrêmes. Évidemment, ils sont également prêts à créer des suites personnalisées pour leur clients, avec un prix lui aussi sur mesure.
 

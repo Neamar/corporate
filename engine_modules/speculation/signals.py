@@ -1,10 +1,31 @@
 # -*- coding: utf-8 -*-
-from django.dispatch import receiver
+from os import listdir
 
+from django.dispatch import receiver
+from django.conf import settings
+
+from utils.read_markdown import read_markdown
 from engine.dispatchs import validate_order, post_create
 from engine.exceptions import OrderNotAvailable
 from engine.models import Game
 from engine_modules.speculation.models import Derivative, CorporationSpeculationOrder, DerivativeSpeculationOrder
+
+
+BASE_DERIVATIVE_DIR = "%s/engine_modules/speculation/derivatives" % (settings.BASE_DIR)
+
+
+@receiver(post_create, sender=Game)
+def create_derivatives(sender, instance, **kwargs):
+	for f in [f for f in listdir(BASE_DERIVATIVE_DIR) if f.endswith('.md')]:
+		text, meta = read_markdown("%s/%s" % (BASE_DERIVATIVE_DIR, f))
+
+		d = Derivative(name=meta['name'][0], game=instance)
+		d.save()
+
+		print instance.corporation_set.all()
+		for corporation in meta['corporation']:
+			print corporation
+			d.corporations.add(instance.corporation_set.get(base_corporation_slug=corporation))
 
 
 def limit_speculation_by_influence(player):
@@ -44,16 +65,3 @@ def limit_derivative_speculation_amount_by_influence(sender, instance, **kwargs)
 	"""
 	if instance.investment > instance.player.influence.level * sender.MAX_AMOUNT_SPECULATION:
 		raise OrderNotAvailable("Pas assez d'influence pour spéculer un tel montant. (montant max : %s)" % (instance.player.influence.level * 50))
-
-
-@receiver(post_create, sender=Game)
-def create_derivatives(sender, instance, **kwargs):
-	corporations = instance.corporation_set.all()
-
-	derivatives = set([c.base_corporation.derivative for c in corporations if c.base_corporation.derivative is not None])
-
-	for derivative in derivatives:
-		d = Derivative(name=derivative, game=instance)
-		d.save()
-
-		[d.corporations.add(c) for c in corporations if c.base_corporation.derivative == derivative]
