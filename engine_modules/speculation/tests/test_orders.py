@@ -103,7 +103,7 @@ class OrdersTest(EngineTestCase):
 			derivative=self.d
 		)
 		dso.save()
-		
+
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money - dso.get_cost())
@@ -124,7 +124,7 @@ class OrdersTest(EngineTestCase):
 			derivative=self.d
 		)
 		dso.save()
-		
+
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.reload(self.p).money, self.initial_money + dso.get_cost() * 2)
+		self.assertEqual(self.reload(self.p).money, self.initial_money + dso.get_cost())

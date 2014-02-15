@@ -1,6 +1,7 @@
 from engine.tasks import ResolutionTask
 from messaging.models import Newsfeed
 
+
 class FirstLastEffectsTask(ResolutionTask):
 	"""
 	App first and last corporations effects
