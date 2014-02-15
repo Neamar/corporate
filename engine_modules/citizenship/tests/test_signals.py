@@ -4,10 +4,10 @@ from engine.testcases import EngineTestCase
 from engine_modules.citizenship.models import CitizenShipOrder
 
 
-class OrdersTest(EngineTestCase):
+class SignalsTest(EngineTestCase):
 	def setUp(self):
 
-		super(OrdersTest, self).setUp()
+		super(SignalsTest, self).setUp()
 
 		self.c = self.g.corporation_set.get(base_corporation_slug='ares')
 
@@ -18,10 +18,13 @@ class OrdersTest(EngineTestCase):
 		self.o.clean()
 		self.o.save()
 
-	def test_citizenship_is_affected(self):
+	def test_cant_create_order_twice(self):
 		"""
-		Check if the citizenship is created
+		Order can't be created twice
 		"""
-		self.o.resolve()
+		o2 = CitizenShipOrder(
+			player=self.p,
+			corporation=self.c
+		)
 
-		self.assertEqual(self.reload(self.p).citizenship.corporation, self.c)
+		self.assertRaises(ValidationError, o2.clean)
