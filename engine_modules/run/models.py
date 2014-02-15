@@ -16,13 +16,19 @@ class RunOrder(Order):
 	has_influence_bonus = models.BooleanField(default=False, help_text="Accorder à cette run un bonus de 30% gratuit")
 	additional_percents = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(9), MinValueValidator(1)])
 
+	def clean(self):
+		super(RunOrder, self).clean()
+
 	def get_success_probability(self):
 		"""
 		Compute success probability, maxed by 90%
-
-		It must be overriden.
 		"""
-		raise NotImplementedError()
+		proba = 0
+		if self.has_influence_bonus:
+			proba += 30
+		proba += self.additional_percents * 10
+
+		return proba
 
 	def is_successful(self):
 		"""
@@ -53,5 +59,5 @@ class RunOrder(Order):
 		return RunOrder.BASE_COST * self.additional_percents
 
 	def repay(self):
-		self.player.money += self.get_cost / 2
+		self.player.money += self.get_cost() / 2
 		self.player.save()

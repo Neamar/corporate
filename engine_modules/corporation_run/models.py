@@ -93,7 +93,7 @@ class OffensiveRunOrder(RunOrder):
 		"""
 		raise NotImplementedError()
 
-	def resolve_interception(self, po):
+	def resolve_interception(self, protections):
 		"""
 		This method is called when the Offensive Run succeeds on a corporation that has a successful Protection Run.
 
@@ -101,7 +101,7 @@ class OffensiveRunOrder(RunOrder):
 		"""
 		raise NotImplementedError()
 
-	def resolve_capture(self, po):
+	def resolve_capture(self, protections):
 		"""
 		This method is called when the Offensive Run fails on a corporation that has a successful Protection Run.
 
@@ -129,7 +129,7 @@ class DataStealOrder(OffensiveRunOrder):
 		if self.is_successful():
 			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.base_corporation.datasteal:
 				# succesful attack but defended
-				self.resolve_interception()
+				self.resolve_interception(self.target_corporation.protectors.filter(done=True))
 			else:
 				# Succesful attack
 				self.resolve_success()
@@ -182,30 +182,33 @@ class DataStealOrder(OffensiveRunOrder):
 		# Repay the player
 		self.repay()
 
-	def resolve_interception(self, po):
+	def resolve_interception(self, protections):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
 		content = datasteal_messages['interception']['aggressor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to the one who ordered the Protection
+		# Send a note to protectors
 		category = u"Run de Protection"
 		content = datasteal_messages['interception']['protector'] % (self.target_corporation.base_corporation.name)
-		po.player.add_note(category=category, content=content)
+		for protection in protections:
+			protection.player.add_note(category=category, content=content)
 
 		# Repay the player
 		self.repay()
 
-	def resolve_capture(self, po):
+	def resolve_capture(self, protections):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
 		content = datasteal_messages['capture']['aggressor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to the one who ordered the Protection
+		# Send a note to protectors
 		category = u"Run de Protection"
 		content = datasteal_messages['capture']['protector'] % (self.player.name, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		po.player.add_note(category=category, content=content)
+		for protection in protections:
+			protection.player.add_note(category=category, content=content)
+
 		# Repay the player
 		self.repay()
 
@@ -232,7 +235,7 @@ class SabotageOrder(OffensiveRunOrder):
 		if self.is_successful():
 			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.base_corporation.sabotage:
 				# succesful attack but defended
-				self.resolve_interception()
+				self.resolve_interception(self.target_corporation.protectors.filter(done=True))
 			else:
 				# Succesful attack
 				self.resolve_success()
@@ -274,30 +277,32 @@ class SabotageOrder(OffensiveRunOrder):
 		# Repay the player
 		self.repay()
 
-	def resolve_interception(self, po):
+	def resolve_interception(self, protections):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Sabotage"
 		content = sabotage_messages['interception']['aggressor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to the one who ordered the Protection
+		# Send a note to protectors
 		category = u"Run de Protection"
 		content = sabotage_messages['interception']['protector'] % (self.target_corporation.base_corporation.name)
-		po.player.add_note(category=category, content=content)
+		for protection in protections:
+			protection.player.add_note(category=category, content=content)
 
 		# Repay the player
 		self.repay()
 
-	def resolve_capture(self, po):
+	def resolve_capture(self, protections):
 		# Send a note for final message
 		category = u"Run de Sabotage"
 		content = sabotage_messages['capture']['aggressor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to the one who ordered the Protection
+		# Send a note to protectors
 		category = u"Run de Protection"
 		content = sabotage_messages['capture']['protector'] % (self.player, self.target_corporation.base_corporation.name)
-		po.player.add_note(category=category, content=content)
+		for protection in protections:
+			protection.player.add_note(category=category, content=content)
 
 		# Repay the player
 		self.repay()
@@ -317,9 +322,9 @@ class ExtractionOrder(OffensiveRunOrder):
 
 	def resolve(self):
 		if self.is_successful():
-			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= sself.target_corporation.base_corporation.extraction:
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.base_corporation.extraction:
 				# succesful attack but defended
-				self.resolve_interception()
+				self.resolve_interception(self.target_corporation.protectors.filter(done=True))
 			else:
 				# Succesful attack
 				self.resolve_success()
@@ -364,30 +369,32 @@ class ExtractionOrder(OffensiveRunOrder):
 		# Repay the player
 		self.repay()
 
-	def resolve_interception(self, po):
+	def resolve_interception(self, protections):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run d'Extraction'"
 		content = extraction_messages['interception']['aggressor'] %(self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to the one who ordered the Protection
+		# Send a note to protectors
 		category = u"Run de Protection"
 		content = extraction_messages['interception']['protector'] %(self.target_corporation.base_corporation.name)
-		po.player.add_note(category=category, content=content)
+		for protection in protections:
+			protection.player.add_note(category=category, content=content)
 
 		# Repay the player
 		self.repay()
 
-	def resolve_capture(self, po):
+	def resolve_capture(self, protections):
 		# Send a note for final message
 		category = u"Run d'Extraction'"
 		content = extraction_messages['capture']['aggressor'] %(self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to the one who ordered the Protection
+		# Send a note to protectors
 		category = u"Run de Protection"
 		content = extraction_messages['capture']['protector'] %(self.player, self.target_corporation.base_corporation.name)
-		po.player.add_note(category=category, content=content)
+		for protection in protections:
+			protection.player.add_note(category=category, content=content)
 
 		# Repay the player
 		self.repay()
@@ -416,6 +423,7 @@ class ProtectionOrder(RunOrder):
 	done = models.BooleanField(default=False, editable=False)
 
 	def clean(self):
+		super(ProtectionOrder, self).clean()
 		self.proba_success = getattr(self.protected_corporation.base_corporation, self.get_defense_display())
 		if self.additional_percents > 5:
 			raise ValidationError
