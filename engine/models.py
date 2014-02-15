@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from django.db import models
+from django.db import models, transaction
 from django.conf import settings
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
-from messaging.models import Message, Note
+from messaging.models import Message, Note, Newsfeed
 
 
 class Game(models.Model):
@@ -14,6 +14,7 @@ class Game(models.Model):
 	total_turn = models.PositiveSmallIntegerField(default=8)
 	started = models.DateTimeField(auto_now_add=True)
 
+	@transaction.atomic
 	def resolve_current_turn(self):
 		"""
 		Resolve all orders for this turn, increment current_turn by 1.
@@ -38,12 +39,11 @@ class Game(models.Model):
 		self.current_turn += 1
 		self.save()
 
-	def add_note(self, **kwargs):
+	def add_newsfeed(self, **kwargs):
 		"""
-		Create a note, to be used later for the resolution message
+		Create a newsfeed on the game
 		"""
-		n = Note.objects.create(turn=self.current_turn, **kwargs)
-		n.recipient_set = self.player_set.all()
+		n = Newsfeed.objects.create(turn=self.current_turn, game=self, **kwargs)
 		return n
 
 	def __unicode__(self):
@@ -95,26 +95,17 @@ class Player(models.Model):
 		"""
 		Retrieve all orders for this turn, and build a message to remember them.
 		"""
-		orders = self.order_set.all()
-		message = "# Ordres de %s pour le tour %s\n\n" % (self.name, self.game.current_turn)
+		orders = self.order_set.filter(turn=self.game.current_turn)
+		message = ""
 		for order in orders:
-			# Retrieve associated order:
-			try:
-				details = getattr(order, order.type.lower())
-			except AttributeError:
-				try:
-					# TODO : CHANGE DAT SHIT
-					details = getattr(order.runorder, order.type.lower())
-				except AttributeError:
-					# TODO : CHANGE DAT SHIT (again)
-					details = getattr(order.runorder.offensiverunorder, order.type.lower())
+			details = order.to_child()
 
 			message += "* %s\n" % details.description()
 
 		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
 
 		return self.add_message(
-			title="Ordres du tour",
+			title="Ordres pour le tour %s" % self.game.current_turn,
 			content=message,
 			author=None,
 			flag=Message.ORDER,
@@ -128,7 +119,6 @@ class Player(models.Model):
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=notes,
-			opening=u"# Résolution du tour %s\n" % self.game.current_turn,
 			title="Informations personnelles du tour %s" % self.game.current_turn,
 			turn=self.game.current_turn
 		)
@@ -144,8 +134,8 @@ class Order(models.Model):
 
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField(editable=False)
-	cost = models.PositiveSmallIntegerField(editable=False)  # TODO : recompute from inheritance
-	type = models.CharField(max_length=80, blank=True, editable=False)
+	cost = models.PositiveSmallIntegerField(editable=False)
+	type = models.CharField(max_length=40, blank=True, editable=False)
 
 	def save(self):
 		# Save the current type to inflate later
@@ -183,13 +173,13 @@ class Order(models.Model):
 		"""
 		raise NotImplementedError("Abstract call.")
 
-	def get_form(self):
+	def get_form(self, datas=None):
 		"""
 		Retrieve a form to create / edit this order
 		"""
-		return self.form_class()(instance=self)
+		return self.get_form_class()(datas, instance=self)
 
-	def form_class(self):
+	def get_form_class(self):
 		"""
 		Build a new class for forms,
 		"""
@@ -208,6 +198,21 @@ class Order(models.Model):
 			exclude = ['player']
 
 		return Meta
+
+	def to_child(self):
+		"""
+		By default, when we do player.order_set.all(), we retrieve Order instance.
+		In most case, we need to subclass all those orders to their correct orders type, and this function will convert a plain Order to the most specific Order subclass according to the stored `.type`.
+		"""
+		from engine.modules import orders_list
+
+		for ChildOrder in orders_list:
+			if ChildOrder.__name__ == self.type:
+				return ChildOrder.objects.get(pk=self.pk)
+
+		raise LookupError("No orders subclass match this base: %s" % self.type)
+
+
 # Import datas for all engine_modules
 from engine.modules import *
 

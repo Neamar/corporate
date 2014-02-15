@@ -280,13 +280,17 @@ Resolution:
 Documentation
 
 ### Newsfeeds
-
-* Politique (MDC)
-* Breaking News (Sabotage)
-* Ragots & faits divers (Runs détectées)
-* People (Influence, Changement Corpo)
-* Économie (Premiers, Derniers)
-
+* Bulletin du MDC
+    * ligne politique votée (rédigé)
+    * coalitions (rédigé)
+* People
+    * influence
+    * changement nat. corpo
+* Économique
+    - achat de part
+    - effets premiers derniers
+* Matrix buzz
+    * runs (rédigé)
 
 ### Wall Street
 Tableau des corpos :
@@ -393,4 +397,20 @@ Citoyenneté
 
 
 ### Commlink
-Messages privés entre PJ et de fin de tour, résultat runs d'informations
+Messages privés entre PJ et de fin de tour, résultat runs d'informations et message de résolution
+
+#### Messages
+* Argent restant
+* Achat de part
+* Changement de nationalité corporatiste
+* Augmentation d'influence corporatiste
+* Runs
+    * Runs défensives
+    * Runs offensives
+* Détections
+    * Toutes les runs détectées
+* Spéculations
+    * Spéculations
+* Votes
+    * Vote
+    * Vote de coalition

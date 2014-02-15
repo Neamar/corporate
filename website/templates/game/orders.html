@@ -1,11 +1,47 @@
 {% extends "template.html" %}
 
+{% block title %}Ordres du tour{% endblock %}
+{% block h1 %}Ordres du tour{% endblock %}
+
 {% block content %}
 
-{% for order in orders %}
+{% if existing_orders|length > 0 %}
+<table>
+<thead>
+	<tr>
+		<th colspan="2">Ordre</th>
+		<th>Coût</th>
+	</tr>
+</thead>
+<tfoot>
+	<tr>
+		<td colspan="2">TOTAL</td>
+		<td>{{ existing_orders_cost }}k&nbsp;¥</td>
+	</tr>
+	<tr>
+		<td colspan="2">RESTANT</td>
+		<td>{{ remaining_money }}k&nbsp;¥</td>
+	</tr>
+</tfoot>
+<tbody>
+{% for order in existing_orders %}
+<tr>
+	<td><a href="{% url "website.views.delete_order" game_id=1 order_id=order.pk %}" title="Supprimer cet ordre">✗</a></td>
+	<td>{{ order.description }}</td>
+	<td>{{ order.get_cost }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+<h2>Passer un ordre</h2>
+<p>Fonds : {{ remaining_money }}k&nbsp;¥</p>
+
+{% for order in available_orders %}
 	<h3>{{ order.title }}</h3>
 	{% if order.available != False %}
-	<form method="post" action="">
+	<form method="post" action="{% url "website.views.add_order" game_id=1 order_type=order.name %}">
 		<table>
 		{{ order.form.as_table }}
 		<tr>

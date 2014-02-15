@@ -16,7 +16,9 @@ class CorporationSpeculationOrder(Order):
 	Order to speculate on a corporation's rank
 	"""
 	MAX_AMOUNT_SPECULATION = 50
-	BASE_COST = 10
+	BASE_COST = 1
+
+	title = "Spéculer sur une corporation"
 
 	corporation = models.ForeignKey(Corporation)
 	rank = models.PositiveSmallIntegerField()
@@ -37,12 +39,12 @@ class CorporationSpeculationOrder(Order):
 				# Speculation on first or last corpo
 				self.player.money += self.get_cost() * 2
 				self.player.save()
-				content = u"Vous êtes un bon spéculateur, vos investissements sur la corporation %s vous ont rapporté %s" % (self.corporation.base_corporation.name, self.investment * 3)
+				content = u"Vous êtes un bon spéculateur, vos investissements sur la corporation %s vous ont rapporté %sk ¥" % (self.corporation.base_corporation.name, self.investment * 3)
 			else:
 				# Speculation on non first or non last corpo
 				self.player.money += self.get_cost() * 4
 				self.player.save()
-				content = u"Vous êtes un excellent spéculateur, vos investissements sur la corporation %s vous ont rapporté %s" % (self.corporation.base_corporation.name, self.investment * 5)
+				content = u"Vous êtes un excellent spéculateur, vos investissements sur la corporation %s vous ont rapporté %sk ¥" % (self.corporation.base_corporation.name, self.investment * 5)
 		else:
 			# Failure
 			self.player.money -= self.get_cost()
@@ -52,7 +54,7 @@ class CorporationSpeculationOrder(Order):
 		self.player.add_note(category=category, content=content)
 
 	def description(self):
-		return u"Miser %s ¥ sur la postion %s de la corporation %s" % (self.get_cost(), self.rank, self.corporation.base_corporation.name)
+		return u"Miser %sk ¥ sur la postion %s de la corporation %s" % (self.get_cost(), self.rank, self.corporation.base_corporation.name)
 
 
 class DerivativeSpeculationOrder(Order):
@@ -60,7 +62,7 @@ class DerivativeSpeculationOrder(Order):
 	Order to speculate on a derivative up or down
 	"""
 	MAX_AMOUNT_SPECULATION = 50
-	BASE_COST = 10
+	BASE_COST = 1
 
 	UP = True
 	DOWN = False
@@ -69,6 +71,8 @@ class DerivativeSpeculationOrder(Order):
 		(UP, 'up'),
 		(DOWN, 'down')
 	)
+
+	title = "Spéculer sur un produit dérivé"
 
 	speculation = models.BooleanField(choices=UPDOWN_CHOICES)
 	derivative = models.ForeignKey(Derivative)
@@ -87,7 +91,7 @@ class DerivativeSpeculationOrder(Order):
 			# Success
 			self.player.money += self.get_cost() * 2
 			self.player.save()
-			content = u"Vous êtes un bon spéculateur, vos investissements sur le produit dérivé %s vous ont rapporté %s" % (self.derivative.name, self.investment * 2)
+			content = u"Vous êtes un bon spéculateur, vos investissements sur le produit dérivé %s vous ont rapporté %sk ¥" % (self.derivative.name, self.investment * 2)
 		else:
 			# Failure
 			self.player.money -= self.get_cost()
@@ -98,9 +102,9 @@ class DerivativeSpeculationOrder(Order):
 
 	def description(self):
 		if self.speculation == self.UP:
-			return u"Miser %s ¥ à la hausse du produit dérivé %s" % (self.get_cost(), self.derivative.name)
+			return u"Miser %sk ¥ à la hausse du produit dérivé %s" % (self.get_cost(), self.derivative.name)
 		else:
-			return u"Miser %s ¥ à la baisse du produit dérivé %s" % (self.get_cost(), self.derivative.name)
+			return u"Miser %sk ¥ à la baisse du produit dérivé %s" % (self.get_cost(), self.derivative.name)
 
 
 orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)

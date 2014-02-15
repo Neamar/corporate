@@ -29,15 +29,13 @@ class DividendTask(ResolutionTask):
 		ladder = game.get_ordered_corporations()
 
 		for share in shares:
-			# Dont give dividends for share bought this turn, unless we're in turn 1
-			if share.turn < game.current_turn or game.current_turn == 1:
-				dividend = self.SHARE_BASE_VALUE * share.corporation.assets
-				if share.corporation == ladder[0]:
-					dividend *= self.FIRST_BONUS
-				if share.corporation == ladder[-1]:
-					dividend *= self.LAST_BONUS
+			dividend = self.SHARE_BASE_VALUE * share.corporation.assets
+			if share.corporation == ladder[0]:
+				dividend *= self.FIRST_BONUS
+			if share.corporation == ladder[-1]:
+				dividend *= self.LAST_BONUS
 
-				share.player.money += int(dividend)
-				share.player.save()
+			share.player.money += int(dividend)
+			share.player.save()
 
 tasks = (BuyShareTask, DividendTask)

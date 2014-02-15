@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 from collections import Counter
 from engine.tasks import ResolutionTask
 from engine_modules.mdc.models import MDCVoteSession, MDCVoteOrder
+from messaging.models import Newsfeed
 
 
 class MDCVoteTask(ResolutionTask):
@@ -36,4 +38,8 @@ class MDCVoteTask(ResolutionTask):
 			turn=game.current_turn + 1
 		)
 		s.save()
+
+		if official_line is not None:
+			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté %s" % s.get_current_party_line_display())
+
 tasks = (MDCVoteTask, )
