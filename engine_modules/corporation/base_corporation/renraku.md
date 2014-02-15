@@ -7,6 +7,7 @@ detection: 30
 on_first: "lol"
 on_last: "lol"
 
+
 Renraku, encore sous le choc de la débâcle de l'arcologie de Seattle, ne s'est pas encore complètement remise du Crash. La corpo y a perdu un paquet de pognon, et plus important encore, la possibilité de prendre le dessus sur le marché de la réalité augmentée. Dans le monde des megacorps, le second à l'arrivée est également le premier perdant, et Renraku n'a même pas fini second.
 
 Tout ne va pas si mal, cependant. Comme son nom l'indique ("communication" en japonais), elle est toujours la première en matière de stockage de données et elle possède une bonne partie des grilles télécom d'Asie, ce qui lui laisse des arguments de poids.
@@ -17,7 +18,7 @@ Sur un plan plus politique, Renraku est très impliquée dans le conflit qui opp
 
 Les japanocorp sont connues pour leur tendance à être rancunières, et Renraku n'a jamais vraiment digéré la prise du contrôle matricielle par NeoNET des Tours qui constituent les bâtiments de la Cour corporatiste. Les anciens cadres de Fuchi qui bossent encore chez Renraku se servent toujours de leur influence pour harceler NeoNET à la moindre occasion.
 
-## Effet premier : 
+## Effet premier :
 Renraku prend enfin le dessus sur ses rivaux et lave fièrement son honneur.
 
 >-1 actif pour Neonet.

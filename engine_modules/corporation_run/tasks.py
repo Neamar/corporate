@@ -1,5 +1,5 @@
 from engine.tasks import OrderResolutionTask
-from engine_modules.corporation_run.models import DataStealOrder, SabotageOrder, ProtectionOrder
+from engine_modules.corporation_run.models import DataStealOrder, SabotageOrder, ProtectionOrder, ExtractionOrder
 from random import shuffle
 
 
@@ -8,7 +8,7 @@ class OffensiveRunTask(OrderResolutionTask):
 	A Task to resolve all Offensive Runs (DataSteal and Sabotage)
 	"""
 	resolution_order = 350
-	ORDER_TYPES = [DataStealOrder, SabotageOrder]
+	ORDER_TYPES = [DataStealOrder, SabotageOrder , ExtractionOrder]
 
 	def run(self, game):
 		orders = []
@@ -34,9 +34,9 @@ class ProtectionRunPaymentTask(OrderResolutionTask):
 		orders = []
 		for order_type in self.ORDER_TYPES:
 			orders += order_type.objects.filter(player__game=game, turn=game.current_turn)
-			
+
 		for order in orders:
 			order.player.money -= order.get_cost()
 			order.player.save()
 
-tasks = (OffensiveRunTask, ProtectionRunPaymentTask)
+tasks = (OffensiveRunTask, ProtectionRunTask)
