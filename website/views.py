@@ -5,8 +5,9 @@ from django.http import Http404
 from django.utils.safestring import mark_safe
 
 from engine_modules.citizenship.models import CitizenShip
+from engine_modules.corporation.models import Corporation
 from engine_modules.share.models import Share
-from engine.models import Order
+from engine.models import Order,Player
 from website.utils import get_player, get_orders_availability, get_order_by_name
 from utils.read_markdown import parse_markdown
 
@@ -95,7 +96,7 @@ def corporations(request, game_id):
 @login_required
 def players(request, game_id):
 	"""
-	Wallstreet datas
+	Players datas
 	"""
 	shares = {}
 	player = get_player(request, game_id)
@@ -113,7 +114,6 @@ def players(request, game_id):
 					corporation_index = index
 		except:
 			pass
-		print corporation_index
 		shares[player.pk]['citizenship']= corporation_index
 		shares[player.pk]['shares'] = {}
 		for corporation in corporations:
@@ -136,7 +136,7 @@ def newsfeeds(request, game_id):
 @login_required
 def comlink(request, game_id):
 	"""
-	Display newsfeed
+	Display comlink
 	"""
 	player = get_player(request, game_id)
 
@@ -146,3 +146,21 @@ def comlink(request, game_id):
 		message.html, _ = parse_markdown(message.content)
 		message.html = mark_safe(message.html)
 	return render(request, 'game/comlink.html', {"messages": messages})
+
+
+@login_required
+def player(request, game_id, player_id):
+	"""
+	Player datas
+	"""
+	player = Player.objects.get(pk=player_id)
+	corporations = player.game.corporation_set.get()
+	return render(request, 'game/player.html', {"corporations": corporations})
+
+@login_required
+def corporation(request, game_id, corporation_id):
+	"""
+	Corporation datas
+	"""
+	corporation = Corporation.objects.get(pk=corporation_id)
+	return render(request, 'game/corporation.html', {"corporation": corporation})

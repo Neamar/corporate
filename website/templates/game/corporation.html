@@ -15,16 +15,14 @@
        </tr>
 </thead>
 <tbody>
-{% for corporation in corporations %}
 <tr>
-       <td><a href="{% url "website.views.corporation" game_id=1 corporation_id=corporation.id %}">{{ corporation.base_corporation.name }}</a></td>
+       <td>{{ corporation.base_corporation.name }}</td>
        <td>{{ corporation.assets }}</td>
        <td>{{ corporation.base_corporation.datasteal }}</td>
        <td>{{ corporation.base_corporation.sabotage }}</td>
        <td>{{ corporation.base_corporation.extraction }}</td>
        <td>{{ corporation.base_corporation.detection }}</td>
 </tr>
-{% endfor %}
 </tbody>
 </table>
 
