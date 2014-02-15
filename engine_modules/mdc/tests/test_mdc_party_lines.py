@@ -66,7 +66,6 @@ class TaskTest(EngineTestCase):
 		self.v3.save()
 
 		self.g.disable_invisible_hand = True
-		self.g.save()
 
 
 	def test_MDC_CPUB_line_effects(self):
@@ -147,7 +146,7 @@ class TaskTest(EngineTestCase):
 
 	def test_MDC_TRAN_line_effects(self):
 		"""
-		Test what happens when the CCIB party line is chose
+		Test what happens when the CCIB party line is chosen
 		"""
 
 		self.v.party_line = MDCVoteOrder.CCIB

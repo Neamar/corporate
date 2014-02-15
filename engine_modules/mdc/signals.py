@@ -9,8 +9,6 @@ from engine_modules.corporation_run.models import ProtectionOrder, SabotageOrder
 from engine_modules.player_run.models import InformationRunOrder
 from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
 
-# Note: all these signals are called on a "clean()" call, so I don't think they should save
-# It should probably be done by the caller afterwards
 
 @receiver(validate_order, sender=ProtectionOrder)
 def enforce_mdc_party_line_protection(sender, instance, **kwargs):
@@ -46,9 +44,9 @@ def enforce_mdc_party_line_no_speculation(instance, **kwargs):
 
 	if party_line == MDCVoteOrder.BANK:
 		if instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
-			raise OrderNotAvailable("Vous avez voté pour la dérégulation au tour précédent, vous ne pouvez donc pas spéculez ce tour-ci")
+			raise OrderNotAvailable("Vous avez voté pour la dérégulation au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 
 	elif party_line == MDCVoteOrder.DERE:
 		if instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
-                        raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculez ce tour-ci")
+                        raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 

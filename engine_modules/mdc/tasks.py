@@ -7,7 +7,7 @@ class MDCVoteTask(ResolutionTask):
 	"""
 	Choose the MDC party line
 	"""
-	resolution_order = 100
+	RESOLUTION_ORDER = 100
 	ORDER_TYPE = MDCVoteOrder
 
 	def run(self, game):
@@ -43,8 +43,7 @@ class MDCLineCPUBTask(ResolutionTask):
 	Enforce the effects of the MDC CPUB party line
 	"""
 
-	# To be debated
-	resolution_order = 100
+	RESOLUTION_ORDER = 100
 
 	def run(self, game):
 
@@ -79,8 +78,7 @@ class MDCLineDEVETask(ResolutionTask):
 	Enforce the effects of the MDC CPUB party line
 	"""
 
-	# To be debated
-	resolution_order = 100
+	RESOLUTION_ORDER = 100
 
 	def run(self, game):
 
