@@ -17,6 +17,9 @@ def parse_markdown(text):
 	"""
 	Convert markdown to html
 	"""
+	if text.strip() == '':
+		return '', {}
+
 	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'toc'], safe_mode=False, enable_attributes=False)
 	content = md.convert(text)
 
