@@ -57,7 +57,7 @@ class WebsiteTest(EngineTestCase):
 			reverse('website.views.orders', args=[self.g.id]),
 			reverse('website.views.wallstreet', args=[self.g.id]),
 			reverse('website.views.corporations', args=[self.g.id]),
-			reverse('website.views.corporation', args=[self.g.id, self.c.id]),
+			reverse('website.views.corporation', args=[self.g.id, self.c.base_corporation_slug]),
 			reverse('website.views.players', args=[self.g.id]),
 			reverse('website.views.player', args=[self.g.id, self.p.id]),
 			reverse('website.views.orders', args=[self.g.id]),

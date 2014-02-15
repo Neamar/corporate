@@ -16,7 +16,7 @@
 </thead>
 <tbody>
 <tr>
-	<td><a href="{% url "website.views.corporation" game_id=1 corporation_id=corporation.id %}">{{ corporation.base_corporation.slug|title }}</a></td>
+	<td><a href="{% url "website.views.corporation" game_id=1 corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
 	<td class="important">{{ corporation.assets }}</td>
 	<td>{{ corporation.base_corporation.datasteal }}</td>
 	<td>{{ corporation.base_corporation.sabotage }}</td>
