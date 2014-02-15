@@ -92,7 +92,7 @@ class DerivativeSpeculationOrder(Order):
 		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.corporations.all(), turn=self.player.game.current_turn - 1).aggregate(Sum('assets'))['assets__sum']
 		if current_turn_sum > previous_turn_sum and self.speculation == self.UP:
 			# Success
-			self.player.money += self.get_cost() * 2
+			self.player.money += self.get_cost()
 			self.player.save()
 			content = u"Vous êtes un bon spéculateur, vos investissements sur le produit dérivé %s vous ont rapporté %sk ¥" % (self.derivative.name, self.investment * 2)
 		else:
