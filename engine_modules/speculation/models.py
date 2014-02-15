@@ -10,6 +10,9 @@ class Derivative(models.Model):
 	name = models.CharField(max_length=30)
 	corporations = models.ManyToManyField(Corporation)
 
+	def __unicode__(self):
+		return self.name
+
 
 class CorporationSpeculationOrder(Order):
 	"""
@@ -68,8 +71,8 @@ class DerivativeSpeculationOrder(Order):
 	DOWN = False
 
 	UPDOWN_CHOICES = (
-		(UP, 'up'),
-		(DOWN, 'down')
+		(UP, 'à la hausse'),
+		(DOWN, 'à la baisse')
 	)
 
 	title = "Spéculer sur un produit dérivé"
@@ -101,10 +104,7 @@ class DerivativeSpeculationOrder(Order):
 		self.player.add_note(category=category, content=content)
 
 	def description(self):
-		if self.speculation == self.UP:
-			return u"Miser %sk ¥ à la hausse du produit dérivé %s" % (self.get_cost(), self.derivative.name)
-		else:
-			return u"Miser %sk ¥ à la baisse du produit dérivé %s" % (self.get_cost(), self.derivative.name)
+		return u"Miser %sk ¥ %s du produit dérivé %s" % (self.get_cost(), self.get_speculation_display(), self.derivative.name)
 
 
 orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)
