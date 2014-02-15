@@ -6,6 +6,7 @@ extraction: 20
 detection: 30
 on_first: "lol"
 on_last: "lol"
+derivative: Nikkei
 
 Renraku, encore sous le choc de la débâcle de l'arcologie de Seattle, ne s'est pas encore complètement remise du Crash. La corpo y a perdu un paquet de pognon, et plus important encore, la possibilité de prendre le dessus sur le marché de la réalité augmentée. Dans le monde des megacorps, le second à l'arrivée est également le premier perdant, et Renraku n'a même pas fini second.
 

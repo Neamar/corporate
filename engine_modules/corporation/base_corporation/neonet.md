@@ -6,6 +6,7 @@ extraction: 10
 detection: 30
 on_first: "lol"
 on_last: "lol"
+derivative: Dow Jones
 
 Cette corpo, issue de l'ancienne et remuante Novatech, aurait aussi bien pu s'appeler "Phénix", rapport à sa capacité à se relever de ses cendres. Née des restes de l'ancienne Fuchi Electronics, Novatech a jeté quelques pavés dans la mare au cours de ces dernières années, le dernier en date étant son entrée en bourse en 2064, ce qui déclencha la série d'évènements qui conduisirent au second Crash matriciel. Un autre de ses coups d'éclat fut sa sortie du crash et son entrée en bourse sans une égratignure, fusionnant avec le géant des télécommunications Erika et le puissant constructeur électronique Transys Neuronet afin de poser les bases de la nouvelle Matrice sans fil, coupant ainsi l'herbe sous le pied de tous ses concurrents.
 
