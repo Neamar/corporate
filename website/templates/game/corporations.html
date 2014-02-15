@@ -3,26 +3,26 @@
 {% block title %}Corporation{% endblock %}
 
 {% block content %}
-<table>
+<table class="prop_table">
 <thead>
-       <tr>
-               <th>Nom</th>
-               <th>Actif</th>
-               <th>DS</th>
-               <th>S</th>
-               <th>E</th>
-               <th>D</th>
-       </tr>
+<tr>
+	<th></th>
+	<th>Actif</th>
+	<th>DS</th>
+	<th>S</th>
+	<th>E</th>
+	<th>D</th>
+</tr>
 </thead>
 <tbody>
 {% for corporation in corporations %}
 <tr>
-       <td><a href="{% url "website.views.corporation" game_id=1 corporation_id=corporation.id %}">{{ corporation.base_corporation.name }}</a></td>
-       <td>{{ corporation.assets }}</td>
-       <td>{{ corporation.base_corporation.datasteal }}</td>
-       <td>{{ corporation.base_corporation.sabotage }}</td>
-       <td>{{ corporation.base_corporation.extraction }}</td>
-       <td>{{ corporation.base_corporation.detection }}</td>
+	<td><a href="{% url "website.views.corporation" game_id=1 corporation_id=corporation.id %}">{{ corporation.base_corporation.slug|title }}</a></td>
+	<td class="important">{{ corporation.assets }}</td>
+	<td>{{ corporation.base_corporation.datasteal }}</td>
+	<td>{{ corporation.base_corporation.sabotage }}</td>
+	<td>{{ corporation.base_corporation.extraction }}</td>
+	<td>{{ corporation.base_corporation.detection }}</td>
 </tr>
 {% endfor %}
 </tbody>
