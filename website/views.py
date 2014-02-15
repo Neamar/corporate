@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.utils.safestring import mark_safe
-
+from django.db.models import Sum
 from engine_modules.citizenship.models import CitizenShip
 from engine_modules.corporation.models import Corporation
 from engine_modules.share.models import Share
@@ -153,25 +153,10 @@ def player(request, game_id, player_id):
 	"""
 	Player datas
 	"""
-	shares = {}
 	player = Player.objects.get(pk=player_id)
-
-	corporations = player.game.corporation_set.all().order_by('pk')
-	shares = {}
-	shares['name'] = player.name
-	corporation_index = -1 #If no citizenship, no corporation to be set in bold
-	try:
-		#else share in bold should be the share of the copraration where the player is citizen
-		for index, item in enumerate(corporations):
-			if item == CitizenShip.objects.get(player=player).corporation:
-				corporation_index = index
-	except:
-		pass
-	shares['citizenship']= corporation_index
-	shares['shares'] = {}
-	for corporation in corporations:
-		shares['shares'][corporation.pk] = Share.objects.filter(player = player, corporation = corporation).count()
-	return render(request, 'game/player.html', {"player": player, "corporations": corporations, "shares": shares})
+	corporations = Corporation.objects.filter(game=player.game,share__player=player).annotate(qty_share=Sum('share'))
+	
+	return render(request, 'game/player.html', {"player": player, "corporations": corporations})
 
 
 @login_required

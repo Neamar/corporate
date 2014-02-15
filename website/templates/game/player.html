@@ -6,23 +6,15 @@
 <table>
 <thead>
        <tr>
-               <th>Nom</th>
-              {% for corporation in corporations %}
-               <th>{{ corporation.base_corporation.name }}</th>
-              {% endfor %}
+               <th>Corporation</th>
+               <th>Parts</th>
        </tr>
 </thead>
 <tbody>
-{% for player_shares in shares.values %}
+{% for corporation in corporations %}
 <tr>
-      <td>{{ player_shares.name }}</td>
-      {% for share in player_shares.shares.values %}
-        {% if player_shares.citizenship == forloop.counter0 %}
-          <td><strong>{{ share }}</strong></td>
-        {% else %}
-          <td>{{ share }}</td>
-        {% endif %}
-      {% endfor %}
+      <td>{{ corporation.base_corporation.name }}</td>
+      <td>{{ corporation.qty_share }}</td>
 </tr>
 {% endfor %}
 </tbody>
