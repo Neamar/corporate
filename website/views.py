@@ -4,6 +4,7 @@ from django.http import Http404
 
 from engine.modules import orders_list
 from engine_modules.corporation.models import Corporation
+from engine_modules.citizenship.models import CitizenShip
 from engine_modules.share.models import Share
 from engine.exceptions import OrderNotAvailable
 from website.utils import get_player
@@ -81,10 +82,21 @@ def players(request, game_id):
 	shares = {}
 	player = get_player(request, game_id)
 	players = player.game.player_set.all().order_by('pk')
+
 	corporations = player.game.corporation_set.all().order_by('pk')
 	for player in players:
 		shares[player.pk] = {}
 		shares[player.pk]['name'] = player.name
+		corporation_index = -1 #If no citizenship, no corporation to be set in bold
+		try:
+			#else share in bold should be the share of the copraration where the player is citizen
+			for index, item in enumerate(corporations):
+				if item == CitizenShip.objects.get(player=player).corporation:
+					corporation_index = index
+		except:
+			pass
+		print corporation_index
+		shares[player.pk]['citizenship']= corporation_index
 		shares[player.pk]['shares'] = {}
 		for corporation in corporations:
 			shares[player.pk]['shares'][corporation.pk] = Share.objects.filter(player = player, corporation = corporation).count()

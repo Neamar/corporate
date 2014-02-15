@@ -17,7 +17,11 @@
 <tr>
       <td>{{ player_shares.name }}</td>
       {% for share in player_shares.shares.values %}
-      <td>{{ share }}</td>
+        {% if player_shares.citizenship == forloop.counter0 %}
+          <td><strong>{{ share }}</strong></td>
+        {% else %}
+          <td>{{ share }}</td>
+        {% endif %}
       {% endfor %}
 </tr>
 {% endfor %}
