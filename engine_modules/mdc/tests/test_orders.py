@@ -5,7 +5,7 @@ from engine_modules.share.models import Share
 
 
 class OrdersTest(EngineTestCase):
-	def setUp(self):		
+	def setUp(self):
 		super(OrdersTest, self).setUp()
 
 		self.v = MDCVoteOrder(
@@ -51,7 +51,7 @@ class OrdersTest(EngineTestCase):
 			player=p2,
 		)
 		s2.save()
-	
+
 		self.assertEqual(self.reload(self.v).get_weight(), 1)
 
 	def test_top_holder_two_corporations(self):
@@ -69,5 +69,5 @@ class OrdersTest(EngineTestCase):
 			player=self.p,
 		)
 		s2.save()
-				
+
 		self.assertEqual(self.reload(self.v).get_weight(), 3)
