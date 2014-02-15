@@ -15,7 +15,7 @@
 <tbody>
 {% for player_shares in shares.values %}
 <tr>
-      <td><a href="{% url "website.views.player" game_id=1 player_id=player_shares.player.id %}">{{ player_shares.player.name }}</a></td>
+      <td>{{ player_shares.name }}</td>
       {% for share in player_shares.shares.values %}
         {% if player_shares.citizenship == forloop.counter0 %}
           <td><strong>{{ share }}</strong></td>
@@ -39,14 +39,12 @@
        </tr>
 </thead>
 <tbody>
-{% for player in players %}
 <tr>
-      <td><a href="{% url "website.views.player" game_id=1 player_id=player.id %}">{{ player.name }}</a></td>
+      <td>{{ player.name }}</td>
       <td>{{ player.influence.level }}</td>
-      <td> Not meged yet </td>
+      <td> Not merged yet </td>
       <td>{{ player.citizenship.corporation.base_corporation.name }}</td>
 </tr>
-{% endfor %}
 </tbody>
 </table>
 

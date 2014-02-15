@@ -105,7 +105,7 @@ def players(request, game_id):
 	corporations = player.game.corporation_set.all().order_by('pk')
 	for player in players:
 		shares[player.pk] = {}
-		shares[player.pk]['name'] = player.name
+		shares[player.pk]['player'] = player
 		corporation_index = -1 #If no citizenship, no corporation to be set in bold
 		try:
 			#else share in bold should be the share of the copraration where the player is citizen
@@ -153,9 +153,26 @@ def player(request, game_id, player_id):
 	"""
 	Player datas
 	"""
+	shares = {}
 	player = Player.objects.get(pk=player_id)
-	corporations = player.game.corporation_set.get()
-	return render(request, 'game/player.html', {"corporations": corporations})
+
+	corporations = player.game.corporation_set.all().order_by('pk')
+	shares = {}
+	shares['name'] = player.name
+	corporation_index = -1 #If no citizenship, no corporation to be set in bold
+	try:
+		#else share in bold should be the share of the copraration where the player is citizen
+		for index, item in enumerate(corporations):
+			if item == CitizenShip.objects.get(player=player).corporation:
+				corporation_index = index
+	except:
+		pass
+	shares['citizenship']= corporation_index
+	shares['shares'] = {}
+	for corporation in corporations:
+		shares['shares'][corporation.pk] = Share.objects.filter(player = player, corporation = corporation).count()
+	return render(request, 'game/player.html', {"player": player, "corporations": corporations, "shares": shares})
+
 
 @login_required
 def corporation(request, game_id, corporation_id):
