@@ -26,13 +26,14 @@ class BaseCorporation:
 		for f in [f for f in listdir(cls.BASE_CORPORATION_DIR) if f.endswith('.md')]:
 			bc = BaseCorporation(f[:-3])
 			cls.base_corporations[bc.slug] = bc
-	
+
 	def __init__(self, slug):
 		"""
 		Create a base_corporation from a file
 		"""
 		path = "%s/%s.md" % (self.BASE_CORPORATION_DIR, slug)
 		content, meta = read_markdown(path)
+		self.meta = meta
 
 		self.name = meta['name'][0]
 		self.slug = slug
@@ -44,10 +45,16 @@ class BaseCorporation:
 		self.on_last = self.compile_effect(code, "on_last")
 
 		try:
-			self.initials_assets = int(meta['initials_assets'][0], 10)
+			self.initials_assets = int(meta['initials_assets'][0])
 		except KeyError:
 			# In the Model, the default value used to be 10
 			self.initials_assets = 10
+
+		try:
+			self.derivative = meta['derivative'][0]
+		except KeyError:
+			# In the Model, the default value used to be 10
+			self.derivative = 10
 
 	def compile_effect(self, code, effect):
 		"""
