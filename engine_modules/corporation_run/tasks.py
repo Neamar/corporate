@@ -7,7 +7,7 @@ class OffensiveRunTask(OrderResolutionTask):
 	"""
 	A Task to resolve all Offensive Runs (DataSteal and Sabotage)
 	"""
-	resolution_order = 350
+	RESOLUTION_ORDER = 350
 	ORDER_TYPES = [DataStealOrder, SabotageOrder , ExtractionOrder]
 
 	def run(self, game):
@@ -23,11 +23,11 @@ class OffensiveRunTask(OrderResolutionTask):
 			order.resolve()
 
 
-class ProtectionRunPaymentTask(OrderResolutionTask):
+class ProtectionRunTask(OrderResolutionTask):
 	"""
 	A Task to deduce costs of Protection Runs
 	"""
-	resolution_order = 350
+	RESOLUTION_ORDER = 349
 	ORDER_TYPES = [ProtectionOrder]
 
 	def run(self, game):

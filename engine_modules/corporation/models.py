@@ -26,7 +26,7 @@ class BaseCorporation:
 		for f in [f for f in listdir(cls.BASE_CORPORATION_DIR) if f.endswith('.md')]:
 			bc = BaseCorporation(f[:-3])
 			cls.base_corporations[bc.slug] = bc
-	
+
 	def __init__(self, slug):
 		"""
 		Create a base_corporation from a file
@@ -36,6 +36,11 @@ class BaseCorporation:
 
 		self.name = meta['name'][0]
 		self.slug = slug
+
+		self.datasteal = meta['datasteal'][0]
+		self.sabotage = meta['sabotage'][0]
+		self.extraction = meta['extraction'][0]
+		self.detection = meta['detection'][0]
 
 		code = "\n".join(meta['on_first'])
 		self.on_first = self.compile_effect(code, "on_first")

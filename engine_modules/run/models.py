@@ -11,6 +11,7 @@ class RunOrder(Order):
 	Base model for all runs
 	"""
 	BASE_COST = 50
+	INFLUENCE_BONUS = 30
 
 	has_influence_bonus = models.BooleanField(default=False, help_text="Accorder à cette run un bonus de 30% gratuit")
 	additional_percents = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(9), MinValueValidator(1)])
@@ -31,7 +32,7 @@ class RunOrder(Order):
 
 	def resolve(self):
 		raise NotImplementedError()
-		
+
 	def resolve_successful(self):
 		"""
 		This function is called when the run has succeeded
@@ -50,3 +51,7 @@ class RunOrder(Order):
 
 	def get_cost(self):
 		return RunOrder.BASE_COST * self.additional_percents
+
+	def repay(self):
+		self.player.money += self.get_cost / 2
+		self.player.save()

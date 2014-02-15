@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from random import randint
 
 from engine_modules.run.models import RunOrder
@@ -126,9 +126,8 @@ class DataStealOrder(OffensiveRunOrder):
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve(self):
-
 		if self.is_successful():
-			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.datasteal_protection:
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.base_corporation.datasteal:
 				# succesful attack but defended
 				self.resolve_interception()
 			else:
@@ -136,12 +135,12 @@ class DataStealOrder(OffensiveRunOrder):
 				self.resolve_success()
 		else:
 			# Attack failure
-			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.datasteal_protection:
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.base_corporation.datasteal:
 				# Defense failure too
 				self.resolve_fail()
 			else:
 				# Attack failure and successful defense
-				self.resolve_capture
+				self.resolve_capture()
 
 	def get_success_probability(self):
 		"""
@@ -149,13 +148,12 @@ class DataStealOrder(OffensiveRunOrder):
 		"""
 		proba = self.PROBA_SUCCESS
 		if self.has_influence_bonus:
-			proba += 30
+			proba += self.INFLUENCE_BONUS
 		proba += self.additional_percents * 10
 
 		return proba
 
 	def resolve_success(self):
-
 		# Get a list of datasteals that have succeeded on this corporation this turn (actually there should be 0 or 1)
 		success_datasteals = self.target_corporation.scoundrels.filter(type="DataStealOrder", datastealorder__has_succeeded=True)
 		if(success_datasteals.exists()):
@@ -181,6 +179,9 @@ class DataStealOrder(OffensiveRunOrder):
 		content = datasteal_messages['fail'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
+		# Repay the player
+		self.repay()
+
 	def resolve_interception(self, po):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
@@ -192,6 +193,9 @@ class DataStealOrder(OffensiveRunOrder):
 		content = datasteal_messages['interception']['protector'] % (self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 
+		# Repay the player
+		self.repay()
+
 	def resolve_capture(self, po):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
@@ -202,6 +206,8 @@ class DataStealOrder(OffensiveRunOrder):
 		category = u"Run de Protection"
 		content = datasteal_messages['capture']['protector'] % (self.player.name, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
+		# Repay the player
+		self.repay()
 
 	def description(self):
 		return u"Envoyer une équipe voler des données de %s pour le compte de %s" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
@@ -224,7 +230,7 @@ class SabotageOrder(OffensiveRunOrder):
 	def resolve(self):
 
 		if self.is_successful():
-			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.sabotage_protection:
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.base_corporation.sabotage:
 				# succesful attack but defended
 				self.resolve_interception()
 			else:
@@ -232,7 +238,7 @@ class SabotageOrder(OffensiveRunOrder):
 				self.resolve_success()
 		else:
 			# Attack failure
-			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.sabotage_protection:
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.base_corporation.sabotage:
 				# Defense failure too
 				self.resolve_fail()
 			else:
@@ -265,6 +271,9 @@ class SabotageOrder(OffensiveRunOrder):
 		content = sabotage_messages['fail'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
+		# Repay the player
+		self.repay()
+
 	def resolve_interception(self, po):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Sabotage"
@@ -276,6 +285,9 @@ class SabotageOrder(OffensiveRunOrder):
 		content = sabotage_messages['interception']['protector'] % (self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 
+		# Repay the player
+		self.repay()
+
 	def resolve_capture(self, po):
 		# Send a note for final message
 		category = u"Run de Sabotage"
@@ -286,6 +298,9 @@ class SabotageOrder(OffensiveRunOrder):
 		category = u"Run de Protection"
 		content = sabotage_messages['capture']['protector'] % (self.player, self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
+
+		# Repay the player
+		self.repay()
 
 	def description(self):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s" % (self.target_corporation.base_corporation.name)
@@ -302,7 +317,7 @@ class ExtractionOrder(OffensiveRunOrder):
 
 	def resolve(self):
 		if self.is_successful():
-			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.kidnapper_protection:
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= sself.target_corporation.base_corporation.extraction:
 				# succesful attack but defended
 				self.resolve_interception()
 			else:
@@ -310,12 +325,12 @@ class ExtractionOrder(OffensiveRunOrder):
 				self.resolve_success()
 		else:
 			# Attack failure
-			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.kidnapper_protection:
+			if self.target_corporation.protectors.filter(done=True).count() >= 1 or randint(1, 100) <= self.target_corporation.base_corporation.extraction:
 				# Defense failure too
 				self.resolve_fail()
 			else:
 				# Attack failure and successful defense
-				self.resolve_capture
+				self.resolve_capture()
 
 	def get_success_probability(self):
 		"""
@@ -327,6 +342,7 @@ class ExtractionOrder(OffensiveRunOrder):
 		proba += self.additional_percents * 10
 
 		return proba
+
 	def resolve_success(self):
 		self.target_corporation.assets -= 1
 		self.target_corporation.save()
@@ -345,6 +361,9 @@ class ExtractionOrder(OffensiveRunOrder):
 		content = extraction_messages['fail'] %(self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
+		# Repay the player
+		self.repay()
+
 	def resolve_interception(self, po):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run d'Extraction'"
@@ -355,6 +374,9 @@ class ExtractionOrder(OffensiveRunOrder):
 		category = u"Run de Protection"
 		content = extraction_messages['interception']['protector'] %(self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
+
+		# Repay the player
+		self.repay()
 
 	def resolve_capture(self, po):
 		# Send a note for final message
@@ -367,6 +389,9 @@ class ExtractionOrder(OffensiveRunOrder):
 		content = extraction_messages['capture']['protector'] %(self.player, self.target_corporation.base_corporation.name)
 		po.player.add_note(category=category, content=content)
 
+		# Repay the player
+		self.repay()
+
 	def description(self):
 		return u"Envoyer une équipe kidnapper un scientifique renommé de %s" %(self.target_corporation.base_corporation.name)
 
@@ -375,10 +400,7 @@ class ProtectionOrder(RunOrder):
 	"""
 	Model for Protection Runs
 	"""
-<<<<<<< HEAD
 	title = "Lancer une run de Protection"
-
-=======
 
 	EXTRACTION = "ex"
 	DATASTEAL = "ds"
@@ -390,27 +412,38 @@ class ProtectionOrder(RunOrder):
 		(SABOTAGE, "sabotage")
 	)
 	defense = models.CharField(max_length=2, choices=DEFENSE_CHOICES)
->>>>>>> 6ce523f4826722081b958741fb55728c3c549059
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
 	done = models.BooleanField(default=False, editable=False)
+
+	def clean(self):
+		self.proba_success = getattr(self.protected_corporation.base_corporation, self.get_defense_display())
+		if self.additional_percents > 5:
+			raise ValidationError
+
+	def get_success_probability(self):
+		"""
+		Compute success probability, maxed by 50%
+		"""
+		proba = self.proba_success
+		if self.has_influence_bonus:
+			proba += self.INFLUENCE_BONUS
+		proba += self.additional_percents * 10
+
+		return proba
 
 	def resolve(self):
 		if self.is_successful():
 			self.resolve_successful()
-			return True
 		else:
 			self.resolve_failure()
-			return False
 
 	def resolve_successful(self):
 		self.done = True
 		self.save()
-		return True
 
 	def resolve_failure(self):
 		self.done = False
-
-		return False
+		self.save()
 
 	def description(self):
 		return u"Envoyer une équipe protéger les intérêts de %s" % (self.protected_corporation.base_corporation.name)
@@ -421,4 +454,4 @@ class ProtectionOrder(RunOrder):
 
 		return form
 
-orders = (DataStealOrder, ProtectionOrder, SabotageOrder, )
+orders = (DataStealOrder, ProtectionOrder, SabotageOrder, ExtractionOrder)
