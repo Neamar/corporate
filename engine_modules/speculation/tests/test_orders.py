@@ -19,7 +19,7 @@ class OrdersTest(EngineTestCase):
 		self.c3.save()
 		self.last_corporation = self.c3
 
-		self.d = Derivative(name="first and last")
+		self.d = Derivative(name="first and last", game=self.g)
 		self.d.save()
 		self.d.corporations.add(self.first_corporation, self.last_corporation)
 
@@ -103,7 +103,7 @@ class OrdersTest(EngineTestCase):
 			derivative=self.d
 		)
 		dso.save()
-		
+
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money - dso.get_cost())
@@ -124,7 +124,7 @@ class OrdersTest(EngineTestCase):
 			derivative=self.d
 		)
 		dso.save()
-		
+
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money + dso.get_cost() * 2)

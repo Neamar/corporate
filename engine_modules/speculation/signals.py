@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
 
-from engine.dispatchs import validate_order
+from engine.dispatchs import validate_order, post_create
 from engine.exceptions import OrderNotAvailable
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine.models import Game
+from engine_modules.speculation.models import Derivative, CorporationSpeculationOrder, DerivativeSpeculationOrder
 
 
 def limit_speculation_by_influence(player):
@@ -43,3 +44,16 @@ def limit_derivative_speculation_amount_by_influence(sender, instance, **kwargs)
 	"""
 	if instance.investment > instance.player.influence.level * sender.MAX_AMOUNT_SPECULATION:
 		raise OrderNotAvailable("Pas assez d'influence pour spéculer un tel montant. (montant max : %s)" % (instance.player.influence.level * 50))
+
+
+@receiver(post_create, sender=Game)
+def create_derivatives(sender, instance, **kwargs):
+	corporations = instance.corporation_set.all()
+
+	derivatives = set([c.base_corporation.derivative for c in corporations if c.base_corporation.derivative is not None])
+
+	for derivative in derivatives:
+		d = Derivative(name=derivative, game=instance)
+		d.save()
+
+		[d.corporations.add(c) for c in corporations if c.base_corporation.derivative == derivative]

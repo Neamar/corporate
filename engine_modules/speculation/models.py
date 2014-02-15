@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.db.models import Sum
-from engine.models import Order
+from engine.models import Order, Game
 from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 
 
 class Derivative(models.Model):
 	name = models.CharField(max_length=30)
+	game = models.ForeignKey(Game)
 	corporations = models.ManyToManyField(Corporation)
 
 
