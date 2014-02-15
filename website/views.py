@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 from engine_modules.citizenship.models import CitizenShip
 from engine_modules.corporation.models import Corporation
 from engine_modules.share.models import Share
-from engine.models import Order,Player
+from engine.models import Order, Player
 from website.utils import get_player, get_orders_availability, get_order_by_name
 from utils.read_markdown import parse_markdown
 
