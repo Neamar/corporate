@@ -4,10 +4,10 @@
 {% block h1 %}{{ player.name }}{% endblock %}
 
 {% block content %}
-<table>
+<table class="prop_table">
 <thead>
 <tr>
-	<th>Nom</th>
+	<th></th>
 	<th>IC</th>
 	<th>Ligne</th>
 	<th>Citoyen</th>
@@ -16,8 +16,8 @@
 <tbody>
 <tr>
 	<td>{{ player.name }}</td>
-	<td>{{ player.influence.level }}</td>
-	<td> Not merged yet </td>
+	<td class="important">{{ player.influence.level }}</td>
+	<td> TBD </td>
 	<td>{{ player.citizenship.corporation.base_corporation.name }}</td>
 </tr>
 </tbody>
