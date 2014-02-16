@@ -29,7 +29,7 @@ class WebsiteTest(EngineTestCase):
 		"""
 
 		pages = [
-			'website.views.index',
+			'website.views.index.index',
 			'django.contrib.auth.views.login',
 			'admin:index',
 		]
@@ -40,12 +40,12 @@ class WebsiteTest(EngineTestCase):
 
 	def test_pages_require_login(self):
 		pages = [
-			reverse('website.views.orders', args=[self.g.id]),
-			reverse('website.views.wallstreet', args=[self.g.id]),
-			reverse('website.views.corporations', args=[self.g.id]),
-			reverse('website.views.players', args=[self.g.id]),
-			reverse('website.views.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
-			reverse('website.views.delete_order', args=[self.g.id, 1]),
+			reverse('website.views.orders.orders', args=[self.g.id]),
+			reverse('website.views.orders.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
+			reverse('website.views.orders.delete_order', args=[self.g.id, 1]),
+			reverse('website.views.datas.wallstreet', args=[self.g.id]),
+			reverse('website.views.datas.corporations', args=[self.g.id]),
+			reverse('website.views.datas.players', args=[self.g.id]),
 		]
 
 		for page in pages:
@@ -54,14 +54,13 @@ class WebsiteTest(EngineTestCase):
 
 	def test_pages_up(self):
 		pages = [
-			reverse('website.views.orders', args=[self.g.id]),
-			reverse('website.views.wallstreet', args=[self.g.id]),
-			reverse('website.views.corporations', args=[self.g.id]),
-			reverse('website.views.corporation', args=[self.g.id, self.c.base_corporation_slug]),
-			reverse('website.views.players', args=[self.g.id]),
-			reverse('website.views.player', args=[self.g.id, self.p.id]),
-			reverse('website.views.orders', args=[self.g.id]),
-			reverse('website.views.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
+			reverse('website.views.orders.orders', args=[self.g.id]),
+			reverse('website.views.orders.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
+			reverse('website.views.datas.wallstreet', args=[self.g.id]),
+			reverse('website.views.datas.corporations', args=[self.g.id]),
+			reverse('website.views.datas.corporation', args=[self.g.id, self.c.base_corporation_slug]),
+			reverse('website.views.datas.players', args=[self.g.id]),
+			reverse('website.views.datas.player', args=[self.g.id, self.p.id]),
 		]
 
 		for page in pages:
@@ -76,7 +75,7 @@ class WebsiteTest(EngineTestCase):
 		o.save()
 
 		pages = [
-			reverse('website.views.delete_order', args=[self.g.id, 1]),
+			reverse('website.views.orders.delete_order', args=[self.g.id, 1]),
 		]
 
 		for page in pages:

@@ -34,7 +34,7 @@
 <tbody>
 {% for corporation in corporations %}
 <tr>
-	<td><a href="{% url "website.views.corporation" game_id=1 corporation_slug=corporation.base_corporation.slug %}">{{ corporation.base_corporation.name }}</a></td>
+	<td><a href="{% url "website.views.datas.corporation" game_id=1 corporation_slug=corporation.base_corporation.slug %}">{{ corporation.base_corporation.name }}</a></td>
 	<td>{{ corporation.qty_share }}</td>
 </tr>
 {% endfor %}
