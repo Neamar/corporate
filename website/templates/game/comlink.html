@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+
+{% block title %}Ordres du tour{% endblock %}
+{% block h1 %}Ordres du tour{% endblock %}
+
+{% block content %}
+
+{% for message in messages %}
+<h2>{{ message.title }}</h2>
+{{ message.html }}
+
+{% endfor %}
+
+{% endblock content %}

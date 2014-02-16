@@ -1,5 +1,4 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import Corporation
 from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder, Derivative
 from engine.exceptions import OrderNotAvailable
 
@@ -8,18 +7,13 @@ class SignalsTest(EngineTestCase):
 	def setUp(self):
 		super(SignalsTest, self).setUp()
 
-		self.g.corporation_set.all().delete()
-
-		self.first_corporation = Corporation(base_corporation_slug='ares', assets=100)
-		self.g.corporation_set.add(self.first_corporation)
-		self.medium_corporation = Corporation(base_corporation_slug='renraku', assets=10)
-		self.g.corporation_set.add(self.medium_corporation)
-		self.last_corporation = Corporation(base_corporation_slug='shiawase', assets=1)
-		self.g.corporation_set.add(self.last_corporation)
-
-		self.d = Derivative(name="first and last")
+		self.d = Derivative(name="first and last", game=self.g)
 		self.d.save()
-		self.d.corporations.add(self.first_corporation, self.last_corporation)
+		self.d.corporations.add(self.c, self.c2)
+
+	def test_derivatives_created(self):
+		nikkei = self.g.derivative_set.get(name="Nikkei")
+		self.assertTrue(self.c in nikkei.corporations.all())
 
 	def test_max_speculation(self):
 		"""
@@ -30,7 +24,7 @@ class SignalsTest(EngineTestCase):
 
 		o = CorporationSpeculationOrder(
 			player=self.p,
-			corporation=self.last_corporation,
+			corporation=self.c2,
 			rank=1,
 			investment=5
 		)
@@ -38,7 +32,7 @@ class SignalsTest(EngineTestCase):
 
 		o2 = CorporationSpeculationOrder(
 			player=self.p,
-			corporation=self.last_corporation,
+			corporation=self.c2,
 			rank=1,
 			investment=5
 		)
@@ -66,7 +60,7 @@ class SignalsTest(EngineTestCase):
 
 		o = CorporationSpeculationOrder(
 			player=self.p,
-			corporation=self.last_corporation,
+			corporation=self.c2,
 			rank=1,
 			investment=self.p.influence.level * CorporationSpeculationOrder.MAX_AMOUNT_SPECULATION + 1
 		)
@@ -95,6 +89,6 @@ class SignalsTest(EngineTestCase):
 
 		self.p.influence.level = 2
 		self.p.influence.save()
-		
+
 		#assertNoRaises
 		dso.clean()

@@ -1,5 +1,4 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import Corporation
 from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder, Derivative
 
 
@@ -8,16 +7,19 @@ class OrdersTest(EngineTestCase):
 
 		super(OrdersTest, self).setUp()
 
-		self.g.corporation_set.all().delete()
+		self.c.assets = 100
+		self.c.save()
+		self.first_corporation = self.c
 
-		self.first_corporation = Corporation(base_corporation_slug='ares', assets=100)
-		self.g.corporation_set.add(self.first_corporation)
-		self.medium_corporation = Corporation(base_corporation_slug='renraku', assets=10)
-		self.g.corporation_set.add(self.medium_corporation)
-		self.last_corporation = Corporation(base_corporation_slug='shiawase', assets=1)
-		self.g.corporation_set.add(self.last_corporation)
+		self.c2.assets = 10
+		self.c2.save()
+		self.medium_corporation = self.c2
 
-		self.d = Derivative(name="first and last")
+		self.c3.assets = 1
+		self.c3.save()
+		self.last_corporation = self.c3
+
+		self.d = Derivative(name="first and last", game=self.g)
 		self.d.save()
 		self.d.corporations.add(self.first_corporation, self.last_corporation)
 
@@ -101,7 +103,7 @@ class OrdersTest(EngineTestCase):
 			derivative=self.d
 		)
 		dso.save()
-		
+
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money - dso.get_cost())
@@ -122,7 +124,7 @@ class OrdersTest(EngineTestCase):
 			derivative=self.d
 		)
 		dso.save()
-		
+
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.reload(self.p).money, self.initial_money + dso.get_cost() * 2)
+		self.assertEqual(self.reload(self.p).money, self.initial_money + dso.get_cost())

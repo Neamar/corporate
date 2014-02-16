@@ -3,6 +3,7 @@ from django.db import models
 from collections import Counter
 
 from engine.models import Order, Game, Player
+from engine.exceptions import OrderNotAvailable
 
 
 class MDCVoteOrder(Order):
@@ -29,6 +30,8 @@ class MDCVoteOrder(Order):
 	)
 
 	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, blank=True, null=True, default="NONE")
+	title = "Choisir une coalition"
+
 
 	def get_weight(self):
 		"""
@@ -70,9 +73,9 @@ class MDCVoteOrder(Order):
 					# Only one has share
 					vote_registry[top_holders[0][0]].append(c.base_corporation_slug)
 		return vote_registry
-	
+
 	def description(self):
-		return u"Voter pour définir la ligne du Manhattan Development Consortium"
+		return u"Apporter %d voix pour la coalition « %s » du MDC" % (self.get_weight(), self.get_party_line_display())
 
 
 class MDCVoteSession(models.Model):
@@ -85,6 +88,9 @@ class MDCVoteSession(models.Model):
 		choices=MDCVoteOrder.MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
 	game = models.ForeignKey(Game)
 	turn = models.PositiveSmallIntegerField(editable=False)
+
+	def __unicode__(self):
+		return "%s line for %s on turn %s" % (self.current_party_line, self.game, self.turn)
 
 def get_current_mdc_party_line(self):
 	"""
@@ -112,3 +118,5 @@ def get_last_mdc_vote(self):
 
 Game.get_current_mdc_party_line = get_current_mdc_party_line
 Player.get_last_mdc_vote = get_last_mdc_vote
+
+orders = (MDCVoteOrder,)

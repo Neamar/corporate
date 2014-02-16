@@ -7,14 +7,7 @@ from engine_modules.corporation.models import Corporation
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):
-		
 		super(OrdersTest, self).setUp()
-
-		self.g.corporation_set.all().delete()
-		self.c = Corporation(base_corporation_slug='renraku', assets=20)
-		self.g.corporation_set.add(self.c)
-		self.c2 = Corporation(base_corporation_slug='shiawase', assets=10)
-		self.g.corporation_set.add(self.c2)
 
 		self.v = MDCVoteOrder(
 			player=self.p,
@@ -59,7 +52,7 @@ class OrdersTest(EngineTestCase):
 			player=p2,
 		)
 		s2.save()
-	
+
 		self.assertEqual(self.reload(self.v).get_weight(), 1)
 
 	def test_top_holder_two_corporations(self):
@@ -77,5 +70,5 @@ class OrdersTest(EngineTestCase):
 			player=self.p,
 		)
 		s2.save()
-				
+
 		self.assertEqual(self.reload(self.v).get_weight(), 3)

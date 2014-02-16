@@ -181,7 +181,7 @@ class TaskTest(EngineTestCase):
 		self.g.resolve_current_turn()
 
 		# Player 3 has voted Deregulation, so he shouldn't be able to speculate
-		d = Derivative(name="first and last")
+		d = Derivative(name="first and last", game=self.g)
 		d.save()
 		d.corporations.add(self.c, self.c2)
 
@@ -233,7 +233,7 @@ class TaskTest(EngineTestCase):
 		self.g.resolve_current_turn()
 
 		# Player 1 has voted Garde Fous Bancaires, so he shouldn't be able to speculate
-		d = Derivative(name="first and last")
+		d = Derivative(name="first and last", game=self.g)
 		d.save()
 		d.corporations.add(self.c, self.c2)
 

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
-
 from engine.dispatchs import validate_order
 from engine.models import Order
 from engine.exceptions import OrderNotAvailable
@@ -52,3 +51,10 @@ def enforce_mdc_party_line_no_speculation(instance, **kwargs):
 		if player_vote == MDCVoteOrder.BANK:
                         raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 
+@receiver(validate_order, sender=MDCVoteOrder)
+def limit_mdc_order(sender, instance, **kwargs):
+	"""
+	Can't vote twice the same turn
+	"""
+	if MDCVoteOrder.objects.filter(player=instance.player, turn=instance.player.game.current_turn).exists():
+		raise OrderNotAvailable("Vous ne pouvez pas voter deux fois dans le même tour.")

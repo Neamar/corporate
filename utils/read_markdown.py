@@ -10,9 +10,18 @@ def read_markdown(path):
 		for line in content_file:
 			raw += line
 
+	return parse_markdown(raw)
+
+
+def parse_markdown(text):
+	"""
+	Convert markdown to html
+	"""
+	if text.strip() == '':
+		return '', {}
+
 	md = markdown.Markdown(extensions=['nl2br', 'sane_lists', 'meta', 'tables', 'toc'], safe_mode=False, enable_attributes=False)
-	content = md.convert(raw)
+	content = md.convert(text)
 
 	content = re.sub(r'(\s|\()ny', u'\\1¥', content)
-
 	return content, md.Meta

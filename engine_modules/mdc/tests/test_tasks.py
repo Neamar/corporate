@@ -13,26 +13,6 @@ class TaskTest(EngineTestCase):
 		self.p2 = Player(game=self.g)
 		self.p2.save()
 
-		self.g.corporation_set.all().delete()
-		self.c = Corporation(base_corporation_slug='renraku', assets=20)
-		self.g.corporation_set.add(self.c)
-		self.c2 = Corporation(base_corporation_slug='shiawase', assets=10)
-		self.g.corporation_set.add(self.c2)
-
-		self.s = Share(
-			corporation=self.c,
-			player=self.p,
-			turn=self.g.current_turn
-		)
-		self.s.save()
-
-		self.s2 = Share(
-			corporation=self.c2,
-			player=self.p2,
-			turn=self.g.current_turn
-		)
-		self.s2.save()
-
 		self.v = MDCVoteOrder(
 			player=self.p,
 			party_line=MDCVoteOrder.DERE

@@ -64,7 +64,6 @@ pre {
 
 #sidebar
 {
-   float:right;
    font-family:Audiowide, cursive;
    text-shadow:0.1em 0 0.2em white;
 }
@@ -72,6 +71,9 @@ pre {
 #sidebar ul
 {
    list-style:none;
+   float:right;
+   clear: both;
+   margin: 0;
 }
 
 #sidebar li
