@@ -21,7 +21,7 @@
 			<td><a href="{% url "website.views.player" game_id=1 player_id=player.id %}">{{ player.name }}</a></td>
 			<td class="important">{{ player.influence.level }}</td>
 			<td> TBD </td>
-			<td>{{ player.citizenship.corporation.base_corporation.name }}</td>
+			<td>{{ player.citizenship.corporation.base_corporation.slug|title }}</td>
 </tr>
 {% endfor %}
 </tbody>
@@ -45,8 +45,10 @@
 	{% for share in player_shares.shares.values %}
 		{% if player_shares.citizenship == forloop.counter0 %}
 			<td><strong>{{ share }}</strong></td>
-		{% else %}
+		{% elif share != 0 %}
 			<td>{{ share }}</td>
+		{% else %}
+			<td></td>
 		{% endif %}
 	{% endfor %}
 </tr>
