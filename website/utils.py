@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.http import Http404
 
 from engine.exceptions import OrderNotAvailable
 from engine.models import Player
@@ -10,7 +10,10 @@ def get_player(request, game_id):
 	Retrieve a player associated with the user and the game.
 	Returns 404 exception if the user has no access to this game, or the game does not exists.
 	"""
-	return get_object_or_404(Player, user=request.user, game=game_id)
+	try:
+		return Player.objects.select_related('game').get(user=request.user, game=game_id)
+	except:
+		raise Http404("You have no access to this game.")
 
 
 def get_order_by_name(order_name):

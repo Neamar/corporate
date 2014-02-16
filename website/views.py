@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.utils.safestring import mark_safe
-from django.db.models import Sum
+from django.db.models import Count
 from engine_modules.citizenship.models import CitizenShip
 from engine_modules.corporation.models import Corporation
 from engine_modules.share.models import Share
@@ -136,8 +136,8 @@ def player(request, game_id, player_id):
 	"""
 	Player datas
 	"""
-	player = Player.objects.get(pk=player_id)
-	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Sum('share'))
+	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id)
+	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
 	return render(request, 'game/player.html', {"player": player, "corporations": corporations})
 
