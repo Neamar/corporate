@@ -59,8 +59,16 @@ def get_order_availability(Order, player):
 		status['available'] = False
 	except:
 		status['available'] = None
-	
+
 	if status['available'] is not False:
 		status['form'] = instance.get_form()
 
 	return status
+
+
+def get_shares_count(corporation, player, shares):
+	"""
+	Retrieve the number of shares owned by player in corporation
+	"""
+
+	return len([s for s in shares if s.player_id == player.pk and s.corporation_id == corporation.pk])

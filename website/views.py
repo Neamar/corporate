@@ -8,7 +8,7 @@ from engine_modules.citizenship.models import CitizenShip
 from engine_modules.corporation.models import Corporation
 from engine_modules.share.models import Share
 from engine.models import Order, Player
-from website.utils import get_player, get_orders_availability, get_order_by_name
+from website.utils import get_player, get_orders_availability, get_order_by_name, get_shares_count
 from utils.read_markdown import parse_markdown
 
 
@@ -107,28 +107,28 @@ def players(request, game_id):
 	"""
 	Players datas
 	"""
-	shares = {}
 	player = get_player(request, game_id)
-	players = player.game.player_set.all().order_by('pk')
+	game = player.game
 
-	corporations = player.game.corporation_set.all().order_by('pk')
+	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('pk')
+	corporations = list(game.corporation_set.all().order_by('pk'))
+	shares = Share.objects.filter(player__game=game)
+	player_shares = []
+
 	for player in players:
-		shares[player.pk] = {}
-		shares[player.pk]['player'] = player
-		corporation_index = -1  # If no citizenship, no corporation to be set in bold
-		try:
-			#else share in bold should be the share of the copraration where the player is citizen
-			for index, item in enumerate(corporations):
-				if item == CitizenShip.objects.get(player=player).corporation:
-					corporation_index = index
-		except:
-			pass
-		shares[player.pk]['citizenship'] = corporation_index
-		shares[player.pk]['shares'] = {}
-		for corporation in corporations:
-			shares[player.pk]['shares'][corporation.pk] = Share.objects.filter(player=player, corporation=corporation).count()
+		player_share = {
+			"player": player,
+			"shares": [get_shares_count(c, player, shares) for c in corporations]
+		}
 
-	return render(request, 'game/players.html', {"players": players, "corporations": corporations, "shares": shares})
+		try:
+			player_share["citizenship_index"] = corporations.index(player.citizenship.corporation)
+		except IndexError:
+			pass
+
+		player_shares.append(player_share)
+
+	return render(request, 'game/players.html', {"players": players, "corporations": corporations, "shares": player_shares})
 
 
 @login_required
@@ -137,10 +137,9 @@ def player(request, game_id, player_id):
 	Player datas
 	"""
 	player = Player.objects.get(pk=player_id)
-	corporations = Corporation.objects.filter(game=player.game,share__player=player).annotate(qty_share=Sum('share'))
+	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Sum('share'))
 
 	return render(request, 'game/player.html', {"player": player, "corporations": corporations})
-
 
 
 @login_required
