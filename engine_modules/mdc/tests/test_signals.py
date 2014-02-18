@@ -20,4 +20,4 @@ class SignalsTest(EngineTestCase):
 		v2 = MDCVoteOrder(
 			player=self.p,
 		)
-		self.assertRaises(OrderNotAvailable, v.clean)
+		self.assertRaises(OrderNotAvailable, v2.clean)

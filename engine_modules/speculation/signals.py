@@ -1,9 +1,17 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
 
-from engine.dispatchs import validate_order
+from engine.dispatchs import validate_order, post_create
 from engine.exceptions import OrderNotAvailable
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.corporation.models import Corporation
+from engine_modules.speculation.models import Derivative, CorporationSpeculationOrder, DerivativeSpeculationOrder
+
+
+@receiver(post_create, sender=Corporation)
+def create_derivatives(sender, instance, **kwargs):
+	if instance.base_corporation.derivative is not None:
+		d, _ = Derivative.objects.get_or_create(name=instance.base_corporation.derivative, game=instance.game)
+		d.corporations.add(instance)
 
 
 def limit_speculation_by_influence(player):

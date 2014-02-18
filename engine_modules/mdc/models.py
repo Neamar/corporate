@@ -3,7 +3,6 @@ from django.db import models
 from collections import Counter
 
 from engine.models import Order, Game
-from engine.exceptions import OrderNotAvailable
 
 
 class MDCVoteOrder(Order):

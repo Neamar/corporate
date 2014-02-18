@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.db.models import Sum
-from engine.models import Order
+from engine.models import Order, Game
 from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 
 
 class Derivative(models.Model):
 	name = models.CharField(max_length=30)
+	game = models.ForeignKey(Game)
 	corporations = models.ManyToManyField(Corporation)
+
+	def __unicode__(self):
+		return self.name
 
 
 class CorporationSpeculationOrder(Order):
@@ -68,8 +72,8 @@ class DerivativeSpeculationOrder(Order):
 	DOWN = False
 
 	UPDOWN_CHOICES = (
-		(UP, 'up'),
-		(DOWN, 'down')
+		(UP, 'à la hausse'),
+		(DOWN, 'à la baisse')
 	)
 
 	title = "Spéculer sur un produit dérivé"
@@ -89,7 +93,7 @@ class DerivativeSpeculationOrder(Order):
 		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.corporations.all(), turn=self.player.game.current_turn - 1).aggregate(Sum('assets'))['assets__sum']
 		if current_turn_sum > previous_turn_sum and self.speculation == self.UP:
 			# Success
-			self.player.money += self.get_cost() * 2
+			self.player.money += self.get_cost()
 			self.player.save()
 			content = u"Vous êtes un bon spéculateur, vos investissements sur le produit dérivé %s vous ont rapporté %sk ¥" % (self.derivative.name, self.investment * 2)
 		else:
@@ -101,10 +105,7 @@ class DerivativeSpeculationOrder(Order):
 		self.player.add_note(category=category, content=content)
 
 	def description(self):
-		if self.speculation == self.UP:
-			return u"Miser %sk ¥ à la hausse du produit dérivé %s" % (self.get_cost(), self.derivative.name)
-		else:
-			return u"Miser %sk ¥ à la baisse du produit dérivé %s" % (self.get_cost(), self.derivative.name)
+		return u"Miser %sk ¥ %s du produit dérivé %s" % (self.get_cost(), self.get_speculation_display(), self.derivative.name)
 
 
 orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)

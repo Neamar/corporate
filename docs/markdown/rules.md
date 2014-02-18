@@ -38,7 +38,7 @@ Un nouveau tour peut commencer.
 
 À chaque tour, les joueurs peuvent acheter des **parts** dans les corpos de leur choix. Le nombre maximum de parts qu'un joueur peut acheter par tour est égal à son IC (Influence Corporatiste, de 1 au début du jeu).
 
-Une part coûte 100 000 ny × (actifs de la corpo). Soit 500 000 ny pour une corpo de 5 actifs. 
+Une part coûte 100 000 ny × (actifs de la corpo). Soit 500 000 ny pour une corpo de 5 actifs.
 
 > Une part dans la corpo en tête du classement (rang 1) coûte 125 000 ny × actifs pour joueurs qui n’en ont pas la "nationalité" (cf citoyenneté corpo)
 
@@ -75,7 +75,7 @@ Les effets premier et dernier des corpos en tête et en fin de classement s'appl
 
 ## Achat d'Influence
 
-Un fois par tour, les joueurs peuvent payer pour augmenter leur Influence corporatiste d'un point. Le coût est de 500 000 ny × nouvel indice, soit 1 500 000 ny pour passer de 2 à 3. 
+Une fois par tour, les joueurs peuvent payer pour augmenter leur Influence corporatiste d'un point. Le coût est de 500 000 ny × nouvel indice, soit 1 500 000 ny pour passer de 2 à 3.
 
 La nouvelle influence ne prendra effet qu’au tour suivant.
 
@@ -169,7 +169,7 @@ Le commanditaire choisit une **corpo bénéficiaire**, et lui attribue une Défe
 
 ## Spéculation &ndash; Le miracle de Wall Street
 
-Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
+Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché.
 
 Les joueurs qui veulent miser dans le grand casino de l’East Coast Stock Exchange peuvent effectuer un nombre de **spéculations** par tour égal à leur IC. Le montant de chaque spéculation ne peut dépasser 50 000 ny × (IC du spéculateur). Il est possible d’effectuer la même spéculation plusieurs fois.
 
@@ -178,7 +178,7 @@ Chaque spéculation peut viser :
 * La croissance ou la chute des actifs d'un **produit dérivé** (voir plus bas)
 * La place d’une corpo dans le classement de fin de tour.
 
-Si le spéculateur se trompe, il perd la somme misée. 
+Si le spéculateur se trompe, il perd la somme misée.
 
 Si sa spéculation est juste, il fait un bénéfice de :
 
@@ -206,7 +206,7 @@ Le MDC (ou Manhattan Inc.) n'est pas exactement une corporation, mais la structu
 
 Les corpos membres ont changées plusieurs fois depuis la fin de la reconstruction. Aujourd'hui, elles sont treize (seules 10 sont représentées dans le jeu), et ont chacune une voix lors des votes du consortium. Ces votes légifèrent sur tous les aspects de la vie et des affaires à Manhattan, des juteux contrats de la voirie, de la sécurité, du traitement des déchets ou du développement de la matrice aux lois de régulations des marchés qui ont le potentiel de bouleverser le cours des actions des corpos les plus stables. Les votes du MDC rythment la vie politique de Manhattan, et sont disputés par des coalitions fluctuantes qui ne reculent devant aucun coup bas pour rafler la mise.
 
-Chaque tour, les joueurs votent pour décider la **ligne politique** du MCD. Les options, détaillées plus bas, consistent en une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
+Chaque tour, les joueurs votent pour décider la **ligne politique** du MDC. Les options, détaillées plus bas, consistent en une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
 
 Chaque joueur possède une voix, plus celle de toutes les corpos dans lesquels il possède plus de parts que n'importe quel autre joueur. Ces corpos comptent comme ayant voté comme lui (voir Contrats publics, Développement urbain et Contrôles ciblés ci dessous).
 
@@ -218,7 +218,7 @@ De gros contrats d'entretien et de sécurité sont redistribués entre les corpo
 
 Effets :
 
-* Les **corpos** ayant voté **Contrats publics** gagnent **+1 actif**. 
+* Les **corpos** ayant voté **Contrats publics** gagnent **+1 actif**.
 * Les **corpos** ayant voté **Développement urbain** subissent **-1 actif**.
 
 ### Développement urbain
@@ -226,13 +226,13 @@ De grands travaux sont lancés par le MDC, redessinant la carte de Manhattan au 
 
 Effets :
 
-* Les **corpos** ayant voté **Développement urbain** gagnent **+1 actif**. 
+* Les **corpos** ayant voté **Développement urbain** gagnent **+1 actif**.
 * Les **corpos** ayant voté **Contrats publics** subissent **-1 actif**.
 
 ### Contrôles ciblés
 De nouvelles lois sont votées, renforçant certains contrôles ciblés au détriment de certaines zones.
 
-Effets : 
+Effets :
 
 * Au prochain tour, les **corpos** ayant voté **Contrôles ciblés** gagnent une seconde **Défense de 20%** en Datasteal, Sabotage et Extraction.
 * Les **joueurs** ayant voté **Transparence** subissent un malus de **-10%** sur leurs runs de **Protection**, amenant le maximum pour une run de ce type à 40%.
@@ -240,9 +240,9 @@ Effets :
 ### Transparence
 L'ouverture de bases de données privées offre de nouvelles possibilités de runs pour ceux qui y ont accès.
 
-Effets : 
+Effets :
 
-* Au prochain tour, les **joueurs** ayant voté **Transparence** gagnent un bonus de **+10%** sur toutes leurs runs de **Datasteal**, **Sabotage**, **Extraction** et **Information**. 
+* Au prochain tour, les **joueurs** ayant voté **Transparence** gagnent un bonus de **+10%** sur toutes leurs runs de **Datasteal**, **Sabotage**, **Extraction** et **Information**.
 * Les **joueurs** ayant voté **Contrôles ciblés** subissent **-10%** sur toutes leurs runs **Datasteal**, **Sabotage**, **Extraction** et **Information**, pour un maximum de 80%.
 
 ### Gardes fous bancaires

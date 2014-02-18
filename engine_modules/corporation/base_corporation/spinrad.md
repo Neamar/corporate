@@ -6,6 +6,7 @@ extraction: 20
 detection: 30
 on_first: "lol"
 on_last: "lol"
+derivative: Dow Jones
 
 Spin est surtout connue pour ses augmentations dernier cri et son propriétaire flamboyant, Johnny Spinrad. Des Spin Shop sont visibles partout à Manhattan et dans ses boroughs. Ceux-ci font généralement dans le cyber haute gamme, en particulier la gamme Spin-X de suites cybernétiques pour les modes de vie extrêmes. Évidemment, ils sont également prêts à créer des suites personnalisées pour leur clients, avec un prix lui aussi sur mesure.
 
@@ -13,7 +14,7 @@ On voit rarement Johnny Spinrad à New York, ces temps-ci. Malgré cela, il rest
 
 Avec le charisme de son fondateur en étendard, Spinrad Industries vend du machisme, du sexe et du succès tout à la fois. Les produits sur mesure de Spin et ses alliances stratégiques ont permis à la corpo de produire et de commercialiser du cyberware et du bioware correspondant exactement aux besoins de ses clients. Les esclaves corpos ont acheté l'illusion de participer au Grand Tour, le circuit européen des riches et des puissants, aussi vite qu'on a pu la leur vendre. Cette illusion et son succès à Manhattan sont en train de générer une demande sur toute la côte Est et à travers les UCAS.
 
-## Effet premier : 
+## Effet premier :
 Spinrad a réussi son pari, et la bourse s'arrache ses actifs.
 
 >+2 actifs pour Spinrad.

@@ -7,7 +7,7 @@ class SaveCorporationAssetTask(ResolutionTask):
 	"""
 	Save the assets of all corporations after the turn resolution
 	"""
-	RESOLUTION_ORDER = 550
+	RESOLUTION_ORDER = 650
 
 	def run(self, game):
 		corporations = game.corporation_set.all()

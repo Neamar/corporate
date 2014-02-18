@@ -29,11 +29,11 @@ def get_ordered_corporations(self):
 	previous = AssetHistory.objects.filter(corporation__game=self)
 	ranking = defaultdict(lambda: 0)
 	for element in previous:
-		ranking[element.corporation] += element.assets * 10 ^ (2 * element.turn)
+		ranking[element.corporation] += element.assets * pow(10, 2 * element.turn)
 
 	actual = Corporation.objects.filter(game=self)
 	for element in actual:
-		ranking[element] += element.assets * 10 ^ (2 * self.current_turn)
+		ranking[element] += element.assets * pow(10, 2 * self.current_turn)
 
 	ordered_corporation = sorted(ranking, key=lambda c: ranking[c], reverse=True)
 	return ordered_corporation
