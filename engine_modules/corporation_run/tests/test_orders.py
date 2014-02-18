@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, datasteal_messages, sabotage_messages
 
 
@@ -47,7 +46,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		"""
 		Datasteal benefits the stealer 1 asset without costing the stolen
 		"""
-		
+
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 		self.dso.additional_percents = 10
@@ -92,7 +91,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
-		
+
 		aggressor_note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['interception']['aggressor'] % (self.dso.target_corporation.base_corporation.name)
 		self.assertEqual(aggressor_note.content, expected_message)
@@ -116,7 +115,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
-		
+
 		aggressor_note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['capture']['aggressor'] % (self.dso.target_corporation.base_corporation.name)
 		self.assertTrue(aggressor_note.content, expected_message)
@@ -153,10 +152,10 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		# Resolve (and fail) second datasteal
 		dso2.additional_percents = 10
 		dso2.resolve()
-		
+
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
-	
+
 		note = self.dso.player.note_set.exclude(pk=note.pk).get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['late'] % (dso2.target_corporation.base_corporation.name, dso2.stealer_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
@@ -205,7 +204,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		self.so.resolve()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
-		
+
 		aggressor_note = self.so.player.note_set.get(category=u"Run de Sabotage", turn=self.g.current_turn)
 		expected_message = sabotage_messages['interception']['aggressor'] % (self.so.target_corporation.base_corporation.name)
 		self.assertEqual(aggressor_note.content, expected_message)
