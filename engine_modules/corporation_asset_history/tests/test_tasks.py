@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
-from messaging.models import Message
 
 
 class TasksTest(EngineTestCase):

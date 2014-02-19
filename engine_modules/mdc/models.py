@@ -50,9 +50,9 @@ class MDCVoteOrder(Order):
 					# Only one has share
 					vote_registry[c.base_corporation_slug] = top_holders[0][0]
 		return vote_registry
-	
+
 	def description(self):
-		return u"Voter pour définir la ligne du Manhattan Development Consortium"
+		return u"Apporter %d voix pour la coalition « %s » du MDC" % (self.get_weight(), self.get_party_line_display())
 
 
 class MDCVoteSession(models.Model):
@@ -66,4 +66,6 @@ class MDCVoteSession(models.Model):
 	game = models.ForeignKey(Game)
 	turn = models.PositiveSmallIntegerField(editable=False)
 
+	def __unicode__(self):
+		return "%s line for %s on turn %s" % (self.current_party_line, self.game, self.turn)
 orders = (MDCVoteOrder,)

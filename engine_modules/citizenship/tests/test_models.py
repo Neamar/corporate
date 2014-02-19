@@ -2,6 +2,10 @@ from engine.testcases import EngineTestCase
 
 
 class ModelTest(EngineTestCase):
+	def setUp(self):
+		super(ModelTest, self).setUp()
+		self.g.disable_invisible_hand = True
+
 	def test_corporation_crashing_removes_citizenship(self):
 		"""
 		Corporation should have been created alongside the game

@@ -7,7 +7,7 @@ class TasksTest(EngineTestCase):
 
 		super(TasksTest, self).setUp()
 
-		self.d = Derivative(name="first and last")
+		self.d = Derivative(name="first and last", game=self.g)
 		self.d.save()
 		self.d.corporations.add(self.c, self.c2)
 
@@ -17,7 +17,7 @@ class TasksTest(EngineTestCase):
 		"""
 		self.c.assets = 50
 		self.c.save()
-		
+
 		cso = CorporationSpeculationOrder(
 			player=self.p,
 			corporation=self.c,
@@ -46,7 +46,7 @@ class TasksTest(EngineTestCase):
 			derivative=self.d
 		)
 		dso.save()
-		
+
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money - dso.get_cost())

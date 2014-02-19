@@ -15,14 +15,16 @@ class RunOrdersTest(EngineTestCase):
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation=self.c
+			target_corporation=self.c,
+			additional_percents=0,
 		)
 		self.dso.clean()
 		self.dso.save()
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation=self.c
+			target_corporation=self.c,
+			additional_percents=0,
 		)
 		self.so.clean()
 		self.so.save()
@@ -140,6 +142,45 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = datasteal_messages['capture']['protector'] % (self.dso.player.name, self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
 		self.assertEqual(protector_note.content, expected_message)
 
+<<<<<<< HEAD
+=======
+	def test_multiple_datasteal(self):
+		"""
+		Only the first successful DataSteal on a same corporation can benefit someone.
+		The others succeeds, but the clients do not profit from them
+		"""
+
+		dso2 = DataStealOrder(
+			stealer_corporation=self.c3,
+			player=self.p,
+			target_corporation=self.c
+		)
+		dso2.save()
+
+		begin_assets_stealer = self.dso.stealer_corporation.assets
+		begin_assets_stolen = self.dso.target_corporation.assets
+
+		self.dso.additional_percents = 10
+		self.dso.resolve()
+
+		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
+		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
+		note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
+		expected_message = datasteal_messages['success'] % (self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
+		self.assertEqual(note.content, expected_message)
+
+		# Resolve (and fail) second datasteal
+		dso2.additional_percents = 10
+		dso2.resolve()
+
+		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
+		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
+
+		note = self.dso.player.note_set.exclude(pk=note.pk).get(category=u"Run de Datasteal", turn=self.g.current_turn)
+		expected_message = datasteal_messages['late'] % (dso2.target_corporation.base_corporation.name, dso2.stealer_corporation.base_corporation.name)
+		self.assertEqual(note.content, expected_message)
+
+>>>>>>> f55fcb749277632959a701662914d9f440fd0555
 	def test_sabotage_success(self):
 		"""
 		Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets

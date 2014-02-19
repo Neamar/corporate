@@ -9,7 +9,7 @@ class MDCVoteTask(ResolutionTask):
 	"""
 	Choose the MDC party line
 	"""
-	resolution_order = 100
+	RESOLUTION_ORDER = 0
 	ORDER_TYPE = MDCVoteOrder
 
 	def run(self, game):

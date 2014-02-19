@@ -7,9 +7,13 @@ class SignalsTest(EngineTestCase):
 	def setUp(self):
 		super(SignalsTest, self).setUp()
 
-		self.d = Derivative(name="first and last")
+		self.d = Derivative(name="first and last", game=self.g)
 		self.d.save()
 		self.d.corporations.add(self.c, self.c2)
+
+	def test_derivatives_created(self):
+		nikkei = self.g.derivative_set.get(name="Nikkei")
+		self.assertTrue(self.c in nikkei.corporations.all())
 
 	def test_max_speculation(self):
 		"""
@@ -85,6 +89,6 @@ class SignalsTest(EngineTestCase):
 
 		self.p.influence.level = 2
 		self.p.influence.save()
-		
+
 		#assertNoRaises
 		dso.clean()
