@@ -44,12 +44,51 @@ class RunOrdersTest(EngineTestCase):
 
 		self.g.disable_invisible_hand = True
 
+		self.so_initial_extraction = self.so.target_corporation.base_corporation.extraction
+		self.so_initial_sabotage = self.so.target_corporation.base_corporation.sabotage
+		self.so_initial_datasteal = self.so.target_corporation.base_corporation.datasteal
+
+		self.eo_initial_extraction = self.so.target_corporation.base_corporation.extraction
+		self.eo_initial_sabotage = self.so.target_corporation.base_corporation.sabotage
+		self.eo_initial_datasteal = self.so.target_corporation.base_corporation.datasteal
+
+		self.dso_initial_extraction = self.so.target_corporation.base_corporation.extraction
+		self.dso_initial_sabotage = self.so.target_corporation.base_corporation.sabotage
+		self.dso_initial_datasteal = self.so.target_corporation.base_corporation.datasteal
+
+	def set_zero_def(self):
+		self.so.target_corporation.base_corporation.extraction = 0
+		self.so.target_corporation.base_corporation.sabotage = 0
+		self.so.target_corporation.base_corporation.datasteal = 0
+
+		self.eo.target_corporation.base_corporation.extraction = 0
+		self.eo.target_corporation.base_corporation.sabotage = 0
+		self.eo.target_corporation.base_corporation.datasteal = 0
+
+		self.dso.target_corporation.base_corporation.extraction = 0
+		self.dso.target_corporation.base_corporation.sabotage = 0
+		self.dso.target_corporation.base_corporation.datasteal = 0
+
+	def tear_done(self):
+		self.so.target_corporation.base_corporation.extraction = self.so_initial_extraction
+		self.so.target_corporation.base_corporation.sabotage = self.so_initial_sabotage
+		self.so.target_corporation.base_corporation.datasteal = self.so_initial_datasteal
+
+		self.eo.target_corporation.base_corporation.extraction = self.so_initial_extraction
+		self.eo.target_corporation.base_corporation.sabotage = self.so_initial_sabotage
+		self.eo.target_corporation.base_corporation.datasteal = self.so_initial_datasteal
+
+		self.dso.target_corporation.base_corporation.extraction = self.so_initial_extraction
+		self.dso.target_corporation.base_corporation.sabotage = self.so_initial_sabotage
+		self.dso.target_corporation.base_corporation.datasteal = self.so_initial_datasteal
+
 
 class OffensiveRunOrderTest(RunOrdersTest):
 	def test_datasteal_success(self):
 		"""
 		Datasteal benefits the stealer 1 asset without costing the stolen
 		"""
+		self.set_zero_def()
 
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
@@ -64,14 +103,20 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = datasteal_messages['success'] % (self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
+		self.tear_done()
+
 	def test_datasteal_failure(self):
 		"""
-		Dailed datasteal should not change corporation assets.
+		Failed datasteal should not change corporation assets.
 		"""
+		self.set_zero_def()
 
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
+		self.dso.additional_percents = 0
+		self.dso.hidden_percents = -3
+		self.dso.save()
 		self.dso.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
@@ -80,10 +125,13 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = datasteal_messages['fail'] % (self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
+		self.tear_done()
+
 	def test_datasteal_interception(self):
 		"""
 		Intercepted datasteal should not change corporation assets.
 		"""
+		self.set_zero_def()
 
 		po = ProtectionOrder(
 			player=self.p,
@@ -97,7 +145,9 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		begin_assets_stolen = self.dso.target_corporation.assets
 		po.additional_percents = 10
 		po.save()
+
 		self.dso.additional_percents = 10
+		self.dso.save()
 		self.dso.resolve()
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
@@ -111,14 +161,18 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = datasteal_messages['interception']['protector'] % (self.dso.target_corporation.base_corporation.name)
 		self.assertEqual(protector_note.content, expected_message)
 
+		self.tear_done()
+
 	def test_datasteal_capture(self):
 		"""
 		Captured datasteal should not change corporation assets.
 		"""
+		self.set_zero_def()
+
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
-			defense=ProtectionOrder.DATASTEAL
+			defense=ProtectionOrder.DATASTEAL,
 		)
 		po.clean()
 		po.save()
@@ -128,7 +182,10 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		po.additional_percents = 10
 		po.save()
+
 		self.dso.additional_percents = 0
+		self.dso.hidden_percents = -3
+		self.dso.save()
 		self.dso.resolve()
 
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
@@ -137,54 +194,17 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		aggressor_note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
 		expected_message = datasteal_messages['capture']['aggressor'] % (self.dso.target_corporation.base_corporation.name)
 		self.assertTrue(aggressor_note.content, expected_message)
-
 		protector_note = po.player.note_set.get(category=u"Run de Protection", turn=self.g.current_turn)
 		expected_message = datasteal_messages['capture']['protector'] % (self.dso.player.name, self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
 		self.assertEqual(protector_note.content, expected_message)
 
-<<<<<<< HEAD
-=======
-	def test_multiple_datasteal(self):
-		"""
-		Only the first successful DataSteal on a same corporation can benefit someone.
-		The others succeeds, but the clients do not profit from them
-		"""
+		self.tear_done()
 
-		dso2 = DataStealOrder(
-			stealer_corporation=self.c3,
-			player=self.p,
-			target_corporation=self.c
-		)
-		dso2.save()
-
-		begin_assets_stealer = self.dso.stealer_corporation.assets
-		begin_assets_stolen = self.dso.target_corporation.assets
-
-		self.dso.additional_percents = 10
-		self.dso.resolve()
-
-		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
-		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
-		note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
-		expected_message = datasteal_messages['success'] % (self.dso.target_corporation.base_corporation.name, self.dso.stealer_corporation.base_corporation.name)
-		self.assertEqual(note.content, expected_message)
-
-		# Resolve (and fail) second datasteal
-		dso2.additional_percents = 10
-		dso2.resolve()
-
-		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
-		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
-
-		note = self.dso.player.note_set.exclude(pk=note.pk).get(category=u"Run de Datasteal", turn=self.g.current_turn)
-		expected_message = datasteal_messages['late'] % (dso2.target_corporation.base_corporation.name, dso2.stealer_corporation.base_corporation.name)
-		self.assertEqual(note.content, expected_message)
-
->>>>>>> f55fcb749277632959a701662914d9f440fd0555
 	def test_sabotage_success(self):
 		"""
 		Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
 		"""
+		self.set_zero_def()
 
 		begin_assets = self.so.target_corporation.assets
 
@@ -198,13 +218,18 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = sabotage_messages['success'] % (self.so.target_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
+		self.tear_done()
+
 	def test_sabotage_failure(self):
 		"""
 		Failed sabotage does not change corporation assets
 		"""
-
+		self.set_zero_def()
 		begin_assets = self.so.target_corporation.assets
 
+		self.so.additional_percents = 0
+		self.so.hidden_percents = -3
+		self.so.save()
 		self.so.resolve()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
 
@@ -212,10 +237,14 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = sabotage_messages['fail'] % (self.so.target_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
+		self.tear_done()
+
 	def test_sabotage_interception(self):
 		"""
 		Intercepted sabotage does not change corporation assets
 		"""
+		self.set_zero_def()
+
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
@@ -228,7 +257,9 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		po.additional_percents = 10
 		po.save()
+
 		self.so.additional_percents = 10
+		self.so.save()
 
 		self.so.resolve()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
@@ -241,10 +272,14 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = sabotage_messages['interception']['protector'] % (self.so.target_corporation.base_corporation.name)
 		self.assertEqual(protector_note.content, expected_message)
 
+		self.tear_done()
+
 	def test_sabotage_capture(self):
 		"""
 		Captured sabotage does not change corporation assets
 		"""
+		self.set_zero_def()
+
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
@@ -257,7 +292,9 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		po.additional_percents = 10
 		po.save()
+
 		self.so.additional_percents = 0
+		self.so.hidden_percents = -3
 		self.so.save()
 
 		self.so.resolve()
@@ -270,31 +307,40 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = sabotage_messages['capture']['protector'] % (self.so.player.name, self.so.target_corporation.base_corporation.name)
 		self.assertEqual(protector_note.content, expected_message)
 
+		self.tear_done()
+
 	def test_extraction_success(self):
 		"""
 		Extraction doesn't benefit anyone, but costs the sabotaged 2 assets
 		"""
+		self.set_zero_def()
 
 		begin_assets_target = self.eo.target_corporation.assets
-		begin_target_kidnapper = self.eo.kidnapper_corporation.assets
+		begin_assets_kidnapper = self.eo.kidnapper_corporation.assets
+
 		self.eo.additional_percents = 10
 		self.eo.save()
-
 		self.eo.resolve()
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets_target - 1)
-		self.assertEqual(self.reload(self.so.kidnapper_corporation).assets, begin_assets_kidnapper + 1)
+		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets_target - 1)
+		self.assertEqual(self.reload(self.eo.kidnapper_corporation).assets, begin_assets_kidnapper + 1)
 
 		note = self.eo.player.note_set.get(category=u"Run d'Extraction", turn=self.g.current_turn)
 		expected_message = extraction_messages['success'] % (self.eo.target_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
+		self.tear_done()
+
 	def test_extraction_failure(self):
 		"""
 		Failed extraction does not change corporation assets
 		"""
+		self.set_zero_def()
 
 		begin_assets = self.eo.target_corporation.assets
 
+		self.eo.additional_percents = 0
+		self.eo.hidden_percents = -3
+		self.eo.save()
 		self.eo.resolve()
 		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets)
 
@@ -302,10 +348,14 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = extraction_messages['fail'] % (self.eo.target_corporation.base_corporation.name)
 		self.assertEqual(note.content, expected_message)
 
+		self.tear_done()
+
 	def test_extraction_interception(self):
 		"""
 		Intercepted extraction does not change corporation assets
 		"""
+		self.set_zero_def()
+
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
@@ -318,7 +368,9 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		po.additional_percents = 10
 		po.save()
-		self.so.additional_percents = 10
+
+		self.eo.additional_percents = 10
+		self.eo.save()
 
 		self.eo.resolve()
 		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets)
@@ -331,10 +383,14 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = extraction_messages['interception']['protector'] % (self.eo.target_corporation.base_corporation.name)
 		self.assertEqual(protector_note.content, expected_message)
 
+		self.tear_done()
+
 	def test_extraction_capture(self):
 		"""
 		Captured extraction does not change corporation assets
 		"""
+		self.set_zero_def()
+
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
@@ -347,7 +403,9 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		po.additional_percents = 10
 		po.save()
+
 		self.eo.additional_percents = 0
+		self.eo.hidden_percents = -3
 		self.eo.save()
 
 		self.eo.resolve()
@@ -360,12 +418,16 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		expected_message = extraction_messages['capture']['protector'] % (self.eo.player.name, self.so.target_corporation.base_corporation.name)
 		self.assertEqual(protector_note.content, expected_message)
 
+		self.tear_done()
+
 
 class DefensiveRunOrderTest(RunOrdersTest):
 	def test_offensive_protection_offensive(self):
 		"""
 		Test that the Protection only cancels one Offensive run
 		"""
+		self.set_zero_def()
+
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
@@ -378,9 +440,34 @@ class DefensiveRunOrderTest(RunOrdersTest):
 
 		po.additional_percents = 10
 		po.save()
+
 		self.so.additional_percents = 10
 		self.so.save()
 
 		# Should be intercepted
 		self.so.resolve()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
+
+		self.tear_done()
+
+	def test_corpo_can_def_alone(self):
+		"""
+		Corporations can def themselves
+		"""
+		self.dso.target_corporation.base_corporation.datasteal = 100
+
+		begin_assets_stealer = self.dso.stealer_corporation.assets
+		begin_assets_stolen = self.dso.target_corporation.assets
+
+		self.dso.additional_percents = 10
+		self.dso.save()
+		self.dso.resolve()
+
+		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
+		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
+
+		aggressor_note = self.dso.player.note_set.get(category=u"Run de Datasteal", turn=self.g.current_turn)
+		expected_message = datasteal_messages['interception']['aggressor'] % (self.dso.target_corporation.base_corporation.name)
+		self.assertEqual(aggressor_note.content, expected_message)
+
+		self.tear_done()
