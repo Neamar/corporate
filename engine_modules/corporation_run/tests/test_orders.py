@@ -9,6 +9,24 @@ class RunOrdersTest(EngineTestCase):
 
 		self.g.disable_invisible_hand = True
 
+	def set_to_zero(self, corporation):
+		"""
+		Set corporation protection values to 0, to ease testing.
+		"""
+		bc = corporation.base_corporation
+		self._values = (bc.extraction, bc.sabotage, bc.datasteal)
+
+		bc.extraction = bc.sabotage = bc.datasteal = 0
+
+	def set_to_original(self, corporation):
+		"""
+		Set corporation protection values back to original values, to ease testing.
+		"""
+		bc = corporation.base_corporation
+		bc.extraction = self._values[0]
+		bc.sabotage = self._values[0]
+		bc.datasteal = self._values[0]
+
 
 class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):
@@ -22,18 +40,10 @@ class DatastealRunOrderTest(RunOrdersTest):
 		self.dso.clean()
 		self.dso.save()
 
-		self.dso_initial_extraction = self.dso.target_corporation.base_corporation.extraction
-		self.dso_initial_sabotage = self.dso.target_corporation.base_corporation.sabotage
-		self.dso_initial_datasteal = self.dso.target_corporation.base_corporation.datasteal
-
-		self.dso.target_corporation.base_corporation.extraction = 0
-		self.dso.target_corporation.base_corporation.sabotage = 0
-		self.dso.target_corporation.base_corporation.datasteal = 0
+		self.set_to_zero(self.dso.target_corporation)
 
 	def tearDown(self):
-		self.dso.target_corporation.base_corporation.extraction = self.dso_initial_extraction
-		self.dso.target_corporation.base_corporation.sabotage = self.dso_initial_sabotage
-		self.dso.target_corporation.base_corporation.datasteal = self.dso_initial_datasteal
+		self.set_to_original(self.dso.target_corporation)
 
 	def test_datasteal_success(self):
 		"""
@@ -122,18 +132,10 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.so.clean()
 		self.so.save()
 
-		self.so_initial_extraction = self.so.target_corporation.base_corporation.extraction
-		self.so_initial_sabotage = self.so.target_corporation.base_corporation.sabotage
-		self.so_initial_datasteal = self.so.target_corporation.base_corporation.datasteal
-
-		self.so.target_corporation.base_corporation.extraction = 0
-		self.so.target_corporation.base_corporation.sabotage = 0
-		self.so.target_corporation.base_corporation.datasteal = 0
+		self.set_to_zero(self.so.target_corporation)
 
 	def tearDown(self):
-		self.so.target_corporation.base_corporation.extraction = self.so_initial_extraction
-		self.so.target_corporation.base_corporation.sabotage = self.so_initial_sabotage
-		self.so.target_corporation.base_corporation.datasteal = self.so_initial_datasteal
+		self.set_to_original(self.so.target_corporation)
 
 	def test_sabotage_success(self):
 		"""
@@ -215,18 +217,10 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		self.eo.clean()
 		self.eo.save()
 
-		self.eo_initial_extraction = self.eo.target_corporation.base_corporation.extraction
-		self.eo_initial_sabotage = self.eo.target_corporation.base_corporation.sabotage
-		self.eo_initial_datasteal = self.eo.target_corporation.base_corporation.datasteal
-
-		self.eo.target_corporation.base_corporation.extraction = 0
-		self.eo.target_corporation.base_corporation.sabotage = 0
-		self.eo.target_corporation.base_corporation.datasteal = 0
+		self.set_to_zero(self.eo.target_corporation)
 
 	def tearDown(self):
-		self.eo.target_corporation.base_corporation.extraction = self.eo_initial_extraction
-		self.eo.target_corporation.base_corporation.sabotage = self.eo_initial_sabotage
-		self.eo.target_corporation.base_corporation.datasteal = self.eo_initial_datasteal
+		self.set_to_original(self.eo.target_corporation)
 
 	def test_extraction_success(self):
 		"""
@@ -317,18 +311,10 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		self.so.clean()
 		self.so.save()
 
-		self.so_initial_extraction = self.so.target_corporation.base_corporation.extraction
-		self.so_initial_sabotage = self.so.target_corporation.base_corporation.sabotage
-		self.so_initial_datasteal = self.so.target_corporation.base_corporation.datasteal
-
-		self.so.target_corporation.base_corporation.extraction = 0
-		self.so.target_corporation.base_corporation.sabotage = 0
-		self.so.target_corporation.base_corporation.datasteal = 0
+		self.set_to_zero(self.so.target_corporation)
 
 	def tearDown(self):
-		self.so.target_corporation.base_corporation.extraction = self.so_initial_extraction
-		self.so.target_corporation.base_corporation.sabotage = self.so_initial_sabotage
-		self.so.target_corporation.base_corporation.datasteal = self.so_initial_datasteal
+		self.set_to_original(self.so.target_corporation)
 
 	def test_offensive_protection_offensive(self):
 		"""
