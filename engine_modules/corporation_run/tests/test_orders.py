@@ -141,15 +141,13 @@ class OffensiveRunOrderTest(RunOrdersTest):
 			player=self.p,
 			protected_corporation=self.c,
 			defense=ProtectionOrder.DATASTEAL,
+			hidden_percents=10
 		)
 		po.clean()
 		po.save()
 
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
-
-		po.additional_percents = 10
-		po.save()
 
 		self.dso.additional_percents = 0
 		self.dso.hidden_percents = -3
@@ -190,15 +188,13 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
-			defense=ProtectionOrder.SABOTAGE
+			defense=ProtectionOrder.SABOTAGE,
+			hidden_percents=10,
 		)
 		po.clean()
 		po.save()
 
 		begin_assets = self.dso.target_corporation.assets
-
-		po.additional_percents = 10
-		po.save()
 
 		self.so.additional_percents = 10
 		self.so.save()
@@ -213,15 +209,13 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
-			defense=ProtectionOrder.SABOTAGE
+			defense=ProtectionOrder.SABOTAGE,
+			hidden_percents=10,
 		)
 		po.clean()
 		po.save()
 
 		begin_assets = self.so.target_corporation.assets
-
-		po.additional_percents = 10
-		po.save()
 
 		self.so.additional_percents = 0
 		self.so.hidden_percents = -3
@@ -262,15 +256,13 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
-			defense=ProtectionOrder.EXTRACTION
+			defense=ProtectionOrder.EXTRACTION,
+			hidden_percents=10,
 		)
 		po.clean()
 		po.save()
 
 		begin_assets = self.eo.target_corporation.assets
-
-		po.additional_percents = 10
-		po.save()
 
 		self.eo.additional_percents = 10
 		self.eo.save()
@@ -285,15 +277,13 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
-			defense=ProtectionOrder.EXTRACTION
+			defense=ProtectionOrder.EXTRACTION,
+			hidden_percents=10,
 		)
 		po.clean()
 		po.save()
 
 		begin_assets = self.eo.target_corporation.assets
-
-		po.additional_percents = 10
-		po.save()
 
 		self.eo.additional_percents = 0
 		self.eo.hidden_percents = -3
@@ -311,15 +301,13 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
-			defense=ProtectionOrder.SABOTAGE
+			defense=ProtectionOrder.SABOTAGE,
+			hidden_percents=10,
 		)
 		po.clean()
 		po.save()
 
 		begin_assets = self.so.target_corporation.assets
-
-		po.additional_percents = 10
-		po.save()
 
 		self.so.additional_percents = 10
 		self.so.save()

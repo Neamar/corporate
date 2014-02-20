@@ -296,7 +296,7 @@ class ProtectionOrder(RunOrder):
 	def clean(self):
 		super(ProtectionOrder, self).clean()
 		if self.additional_percents > 5:
-			raise ValidationError
+			raise ValidationError("Impossible de mettre plus de 50% en protection.")
 
 	def resolve(self):
 		self.player.money -= self.get_cost()

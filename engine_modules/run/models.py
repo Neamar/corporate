@@ -39,12 +39,17 @@ class RunOrder(Order):
 		return randint(1, 100) <= self.get_success_probability()
 
 	def resolve(self):
-			self.player.money -= self.get_cost()
-			self.player.save()
-			if self.is_successful():
-				self.resolve_successful()
-			else:
-				self.resolve_failure()
+		"""
+		Check whether the run is successful or not,
+		Make the player pay for his order.
+		"""
+		self.player.money -= self.get_cost()
+		self.player.save()
+
+		if self.is_successful():
+			self.resolve_successful()
+		else:
+			self.resolve_failure()
 
 	def resolve_successful(self):
 		"""
@@ -66,5 +71,8 @@ class RunOrder(Order):
 		return RunOrder.BASE_COST * self.additional_percents
 
 	def repay(self):
+		"""
+		Give the player back half the money he paid
+		"""
 		self.player.money += self.get_cost() / 2
 		self.player.save()
