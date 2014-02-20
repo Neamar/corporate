@@ -4,44 +4,46 @@ from random import randint
 from django.core.exceptions import ValidationError
 from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
+from messaging.models import Note
+from engine.models import Player
 
 datasteal_messages = {
-	'success': u"Votre équipe a réussi à voler des données de %s pour le compte de %s",
-	'fail': u"Votre équipe a échoué lors de la tentative de DataSteal sur %s pour %s",
-	'interception': {
-		'aggressor': u"Votre équipe a été interceptée lors de la tentative de DataSteal sur %s. Elle a cependant réussi à s'enfuir",
-		'protector': u"Votre équipe a réussi à protéger %s d'une tentative de DataSteal. L'équipe adverse a cependant réussi à s'enfuir",
+	'success': {
+		'sponsor': u"Votre équipe a réussi à voler des données de %s pour le compte de %s",
+		'newsfeed': u"Un vol de données à été effectué sur %s",
+		'citizens': u"Un vol de données à été effectué sur %s pour le compte de %s",
 	},
-	'capture': {
-		'aggressor': u"Votre équipe a été capturée par une autre lors de la tentative de DataSteal sur %s. Le commanditaire est au courant de vos agissements",
-			'protector'	: u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative de DataSteal sur %s pour le compte de %s.",
-	}
+	'fail': {
+		'sponsor': u"Votre équipe a échoué lors de la tentative de DataSteal sur %s pour %s",
+		'newsfeed': u"Une tentative de vol de données à été effectué sur %s",
+		'citizens': u"Une tentative de vol de données à été effectué sur %s pour le compte de %s",
+	},
 }
 
 sabotage_messages = {
-	'success': u"Votre équipe a réussi à saboter les opérations de %s",
-	'fail': u"La tentative de votre équipe pour saboter %s a échoué",
-	'interception': {
-		'aggressor': u"Votre équipe a été inerceptée par une autre lors de la tentative de Sabotage sur %s. Elle a cependant réussi à s'enfuir",
-		'protector': u"Votre équipe a réussi à protéger %s d'une tentative de Sabotage. L'équipe adverse a cependant réussi à s'enfuir",
+	'success': {
+		'sponsor': u"Votre équipe a réussi à saboter les opérations de %s",
+		'newsfeed': u"Un sabotage à été effectué sur %s",
+		'citizens': u"Un sabotage à été effectué sur %s",
 	},
-	'capture': {
-		'aggressor': u"L'équipe que vous aviez envoyée saboter %s a été capturée",
-		'protector': u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative de Sabotage sur %s",
-	}
+	'fail': {
+		'sponsor': u"Votre équipe a échoué lors de la tentative de DataSteal sur %s",
+		'newsfeed': u"Une tentative de sabotage à été effectué sur %s",
+		'citizens': u"Une tentative de sabotage à été effectué sur %s",
+	},
 }
 
 extraction_messages = {
-	'success': u"Votre équipe a réussi à kidnapper un scientifique de %s",
-	'fail': u"La tentative de votre équipe pour kidnapper un scientifique %s a échoué",
-	'interception': {
-		'aggressor': u"Votre équipe a été inerceptée par une autre lors de la tentative d'Extraction' sur %s. Elle a cependant réussi à s'enfuir",
-		'protector': u"Votre équipe a réussi à protéger %s d'une tentative d'Extraction'. L'équipe adverse a cependant réussi à s'enfuir",
+	'success': {
+		'sponsor': u"Votre équipe a extraire un scientifique de %s pour le compte de %s",
+		'newsfeed': u"Une extraction à été effectué sur %s",
+		'citizens': u"Une extraction à été effectué sur %s pour le compte de %s",
 	},
-	'capture': {
-		'aggressor': u"L'équipe que vous aviez envoyée kidnapper un scientifique %s a été capturée",
-		'protector': u"Votre équipe a réussi à capturer une équipe de %s lors d'une tentative d'Extraction sur %s",
-	}
+	'fail': {
+		'sponsor': u"Votre équipe a échoué lors de la tentative d'Extraction sur %s pour %s",
+		'newsfeed': u"Une tentative d'extraction à été effectué sur %s",
+		'citizens': u"Une tentative d'extraction à été effectué sur %s pour le compte de %s",
+	},
 }
 
 
@@ -60,52 +62,45 @@ class OffensiveRunOrder(RunOrder):
 
 	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
 
+	def is_protected(self):
+		for protection in self.get_protection_values():
+			if randint(1, 100) <= protection:
+				return True
+		return False
+
+	def is_detected(self):
+		if randint(1, 100) <= self.target_corporation.base_corporation.detection:
+			return True
+		return False
+
+	def get_protection_values(self):
+		values = []
+		for protector in self.target_corporation.protectors.filter(defense=self.TYPE):
+			values.append(protector.get_success_probability())
+		values.append(getattr(self.target_corporation.base_corporation, self.TYPE))
+		return values
+
 	def resolve(self):
-		raise NotImplementedError()
+			self.player.money -= self.get_cost()
+			self.player.save()
+			if self.is_successful() and not self.is_protected():
+				self.resolve_success(self.is_detected())
+			else:
+				self.resolve_fail(self.is_detected())
+				# Repay the player
+				self.repay()
 
 	def resolve_successful(self):
 		"""
-
+		This function is called when the run has succeeded
 		"""
-		raise NotImplementedError()
+		self.resolve_success(self.is_protected())
 
 	def resolve_failure(self):
 		"""
-
+		This function is called when the run has failed.
 		"""
-		raise NotImplementedError()
-
-	def resolve_success(self):
-		"""
-		This method is called when the Offensive Run succeeds on a corporation that has no successful Protection Run.
-
-		It must be overriden
-		"""
-		raise NotImplementedError()
-
-	def resolve_fail(self):
-		"""
-		This method is called when the Offensive Run fails on a corporation that has no successful Protection Run.
-
-		It must be overriden
-		"""
-		raise NotImplementedError()
-
-	def resolve_interception(self, protections):
-		"""
-		This method is called when the Offensive Run succeeds on a corporation that has a successful Protection Run.
-
-		It must be overriden
-		"""
-		raise NotImplementedError()
-
-	def resolve_capture(self, protections):
-		"""
-		This method is called when the Offensive Run fails on a corporation that has a successful Protection Run.
-
-		It must be overriden
-		"""
-		raise NotImplementedError()
+		self.resolve_fail(self.is_protected())
 
 	def get_form(self, datas=None):
 		form = super(OffensiveRunOrder, self).get_form(datas)
@@ -119,34 +114,10 @@ class DataStealOrder(OffensiveRunOrder):
 	Model for DataSteal Runs
 	"""
 	PROBA_SUCCESS = 30
+	TYPE = "datasteal"
+
 	title = "Lancer une run de Datasteal"
-	has_succeeded = models.BooleanField(default=False, editable=False)
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
-
-	def resolve(self):
-		self.player.money -= self.get_cost()
-		self.player.save()
-		protected = False
-		for protector in self.target_corporation.protectors.filter(defense=ProtectionOrder.DATASTEAL):
-			if protector.protect():
-				protected = True
-				break
-
-		if self.is_successful():
-			if protected or randint(1, 100) <= self.target_corporation.base_corporation.datasteal:
-				# succesful attack but defended
-				self.resolve_interception(self.target_corporation.protectors.filter(defense=ProtectionOrder.DATASTEAL))
-			else:
-				# Succesful attack
-				self.resolve_success()
-		else:
-			# Attack failure
-			if protected or randint(1, 100) <= self.target_corporation.base_corporation.datasteal:
-				# Attack failure and successful defense
-				self.resolve_capture(self.target_corporation.protectors.filter(defense=ProtectionOrder.DATASTEAL))
-			else:
-				# Defense failure too
-				self.resolve_fail()
 
 	def get_success_probability(self):
 		"""
@@ -159,55 +130,52 @@ class DataStealOrder(OffensiveRunOrder):
 		proba += self.hidden_percents * 10
 		return proba
 
-	def resolve_success(self):
-		self.has_succeeded = True
-		self.save()
+	def resolve_success(self, detected):
 		self.stealer_corporation.assets += 1
 		self.stealer_corporation.save()
 
-		# Send a note for final message
-		category = u"Run de Datasteal"
-		content = datasteal_messages['success'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
-
-	def resolve_fail(self):
-		# Send a note for final message
-		category = u"Run de Datasteal"
-		content = datasteal_messages['fail'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
-
-		# Repay the player
-		self.repay()
-
-	def resolve_interception(self, protections):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
-		content = datasteal_messages['interception']['aggressor'] % (self.target_corporation.base_corporation.name)
+		content = datasteal_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to protectors
-		category = u"Run de Protection"
-		content = datasteal_messages['interception']['protector'] % (self.target_corporation.base_corporation.name)
-		for protection in protections:
-			protection.player.add_note(category=category, content=content)
+		if detected:
+			# Send a note to citizens
+			category = u"matrix-buzz"
+			content = datasteal_messages['success']['citizens'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			n = Note(
+				category=category,
+				content=content,
+				turn=self.player.game.current_turn,
+			)
+			n.save()
+			n.recipient_set = Player.objects.filter(citizenship__corporation=self.target_corporation)
+			# Send a note to everybody
+			category = u"matrix-buzz"
+			content = datasteal_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
+			self.player.game.add_newsfeed(category=category, content=content)
 
-		# Repay the player
-		self.repay()
-
-	def resolve_capture(self, protections):
+	def resolve_fail(self, detected):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
-		content = datasteal_messages['capture']['aggressor'] % (self.target_corporation.base_corporation.name)
+		content = datasteal_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to protectors
-		category = u"Run de Protection"
-		content = datasteal_messages['capture']['protector'] % (self.player.name, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		for protection in protections:
-			protection.player.add_note(category=category, content=content)
-
-		# Repay the player
-		self.repay()
+		if detected:
+			# Send a note to citizens
+			category = u"matrix-buzz"
+			content = datasteal_messages['fail']['citizens'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			n = Note(
+				category=category,
+				content=content,
+				turn=self.player.game.current_turn,
+			)
+			n.save()
+			n.recipient_set = Player.objects.filter(citizenship__corporation=self.target_corporation)
+			# Send a note to everybody
+			category = u"matrix-buzz"
+			content = datasteal_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
+			self.player.game.add_newsfeed(category=category, content=content)
 
 	def description(self):
 		return u"Envoyer une équipe voler des données de %s pour le compte de %s" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
@@ -226,91 +194,49 @@ class SabotageOrder(OffensiveRunOrder):
 	title = "Lancer une run de Sabotage"
 
 	PROBA_SUCCESS = 30
+	TYPE = "sabotage"
 
-	def resolve(self):
-		self.player.money -= self.get_cost()
-		self.player.save()
-		protected = False
-
-		for protector in self.target_corporation.protectors.filter(defense=ProtectionOrder.SABOTAGE):
-			if protector.protect():
-				protected = True
-				break
-
-		if self.is_successful():
-			if protected or randint(1, 100) <= self.target_corporation.base_corporation.sabotage:
-				# succesful attack but defended
-				self.resolve_interception(self.target_corporation.protectors.filter(defense=ProtectionOrder.SABOTAGE))
-			else:
-				# Succesful attack
-				self.resolve_success()
-		else:
-			# Attack failure
-			if protected or randint(1, 100) <= self.target_corporation.base_corporation.sabotage:
-				# Attack failure and successful defense
-				self.resolve_capture(self.target_corporation.protectors.filter(defense=ProtectionOrder.SABOTAGE))
-			else:
-				# Defense failure too
-				self.resolve_fail()
-
-	def get_success_probability(self):
-		"""
-		Compute success probability, maxed by 90%
-		"""
-		proba = self.PROBA_SUCCESS
-		if self.has_influence_bonus:
-			proba += 30
-		proba += self.additional_percents * 10
-		proba += self.hidden_percents * 10
-		return proba
-
-	def resolve_success(self):
+	def resolve_success(self, detected):
 		self.target_corporation.assets -= 2
 		self.target_corporation.save()
 
-		# Send a note for final message
-		category = u"Run de Sabotage"
-		content = sabotage_messages['success'] % (self.target_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
-
-	def resolve_fail(self):
-		# Send a note for final message
-		category = u"Run de Sabotage"
-		content = sabotage_messages['fail'] % (self.target_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
-
-		# Repay the player
-		self.repay()
-
-	def resolve_interception(self, protections):
 		# Send a note to the one who ordered the Sabotage
 		category = u"Run de Sabotage"
-		content = sabotage_messages['interception']['aggressor'] % (self.target_corporation.base_corporation.name)
+		content = sabotage_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to protectors
-		category = u"Run de Protection"
-		content = sabotage_messages['interception']['protector'] % (self.target_corporation.base_corporation.name)
-		for protection in protections:
-			protection.player.add_note(category=category, content=content)
+		# Send a note to citizens
+		category = u"matrix-buzz"
+		content = sabotage_messages['success']['citizens'] % (self.target_corporation.base_corporation.name)
+		n = Note(
+				category=category,
+				content=content,
+				turn=self.player.game.current_turn,
+			)
+		n.save()
+		n.recipient_set = Player.objects.filter(citizenship__corporation=self.target_corporation)
+		# Send a note to everybody
+		category = u"matrix-buzz"
+		content = sabotage_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
+		self.player.game.add_newsfeed(category=category, content=content)
 
-		# Repay the player
-		self.repay()
-
-	def resolve_capture(self, protections):
-		# Send a note for final message
+	def resolve_fail(self, detected):
+		# Send a note to the one who ordered the Sabotage
 		category = u"Run de Sabotage"
-		content = sabotage_messages['capture']['aggressor'] % (self.target_corporation.base_corporation.name)
+		content = sabotage_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to protectors
-		category = u"Run de Protection"
-		content = sabotage_messages['capture']['protector'] % (self.player, self.target_corporation.base_corporation.name)
-		for protection in protections:
-			protection.player.add_note(category=category, content=content)
-
-		# Repay the player
-		self.repay()
+		if detected:
+			# Send a note to citizens
+			category = u"matrix-buzz"
+			content = sabotage_messages['success']['citizens'] % (self.target_corporation.base_corporation.name)
+			n = Note(
+				category=category,
+				content=content,
+				turn=self.player.game.current_turn,
+			)
+			n.save()
+			n.recipient_set = Player.objects.filter(citizenship__corporation=self.target_corporation)
 
 	def description(self):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s" % (self.target_corporation.base_corporation.name)
@@ -322,95 +248,59 @@ class ExtractionOrder(OffensiveRunOrder):
 	"""
 
 	PROBA_SUCCESS = 10
+	TYPE = "extraction"
 
 	kidnapper_corporation = models.ForeignKey(Corporation, related_name="+")
 
-	def resolve(self):
-		self.player.money -= self.get_cost()
-		self.player.save()
-		protected = False
-		for protector in self.target_corporation.protectors.filter(defense=ProtectionOrder.EXTRACTION):
-			if protector.protect():
-				protected = True
-				break
-
-		if self.is_successful():
-			if protected or randint(1, 100) <= self.target_corporation.base_corporation.extraction:
-				# succesful attack but defended
-				self.resolve_interception(self.target_corporation.protectors.filter(defense=ProtectionOrder.EXTRACTION))
-			else:
-				# Succesful attack
-				self.resolve_success()
-		else:
-			# Attack failure
-			if protected or randint(1, 100) <= self.target_corporation.base_corporation.extraction:
-				# Attack failure and successful defense
-				self.resolve_capture(self.target_corporation.protectors.filter(defense=ProtectionOrder.EXTRACTION))
-			else:
-				# Defense failure too
-				self.resolve_fail()
-
-	def get_success_probability(self):
-		"""
-		Compute success probability, maxed by 90%
-		"""
-		proba = self.PROBA_SUCCESS
-		if self.has_influence_bonus:
-			proba += 30
-		proba += self.additional_percents * 10
-		proba += self.hidden_percents * 10
-		return proba
-
-	def resolve_success(self):
+	def resolve_success(self, detected):
 		self.target_corporation.assets -= 1
 		self.target_corporation.save()
 
 		self.kidnapper_corporation.assets += 1
 		self.kidnapper_corporation.save()
 
-		# Send a note for final message
-		category = u"Run d'Extraction"
-		content = extraction_messages['success'] % (self.target_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
-
-	def resolve_fail(self):
-		# Send a note for final message
-		category = u"Run d'Extraction"
-		content = extraction_messages['fail'] % (self.target_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
-
-		# Repay the player
-		self.repay()
-
-	def resolve_interception(self, protections):
 		# Send a note to the one who ordered the Extraction
 		category = u"Run d'Extraction"
-		content = extraction_messages['interception']['aggressor'] % (self.target_corporation.base_corporation.name)
+		content = extraction_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to protectors
-		category = u"Run de Protection"
-		content = extraction_messages['interception']['protector'] % (self.target_corporation.base_corporation.name)
-		for protection in protections:
-			protection.player.add_note(category=category, content=content)
+		if detected:
+			# Send a note to citizens
+			category = u"matrix-buzz"
+			content = extraction_messages['success']['citizens'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
+			n = Note(
+				category=category,
+				content=content,
+				turn=self.player.game.current_turn,
+			)
+			n.save()
+			n.recipient_set = Player.objects.filter(citizenship__corporation=self.target_corporation)
+			# Send a note to everybody
+			category = u"matrix-buzz"
+			content = extraction_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
+			self.player.game.add_newsfeed(category=category, content=content)
 
-		# Repay the player
-		self.repay()
-
-	def resolve_capture(self, protections):
-		# Send a note for final message
-		category = u"Run d'Extraction"
-		content = extraction_messages['capture']['aggressor'] % (self.target_corporation.base_corporation.name)
+	def resolve_fail(self, detected):
+		# Send a note to the one who ordered the DataSteal
+		category = u"Run d'Extraction'"
+		content = extraction_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to protectors
-		category = u"Run de Protection"
-		content = extraction_messages['capture']['protector'] % (self.player, self.target_corporation.base_corporation.name)
-		for protection in protections:
-			protection.player.add_note(category=category, content=content)
-
-		# Repay the player
-		self.repay()
+		if detected:
+			# Send a note to citizens
+			category = u"matrix-buzz"
+			content = extraction_messages['fail']['citizens'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
+			n = Note(
+				category=category,
+				content=content,
+				turn=self.player.game.current_turn,
+			)
+			n.save()
+			n.recipient_set = Player.objects.filter(citizenship__corporation=self.target_corporation)
+			# Send a note to everybody
+			category = u"matrix-buzz"
+			content = extraction_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
+			self.player.game.add_newsfeed(category=category, content=content)
 
 	def description(self):
 		return u"Envoyer une équipe kidnapper un scientifique renommé de %s" % (self.target_corporation.base_corporation.name)
@@ -422,9 +312,9 @@ class ProtectionOrder(RunOrder):
 	"""
 	title = "Lancer une run de Protection"
 
-	EXTRACTION = "ex"
-	DATASTEAL = "ds"
-	SABOTAGE = "sa"
+	EXTRACTION = "extraction"
+	DATASTEAL = "datasteal"
+	SABOTAGE = "sabotage"
 
 	DEFENSE_CHOICES = (
 		(EXTRACTION, "extraction"),
@@ -432,12 +322,10 @@ class ProtectionOrder(RunOrder):
 		(SABOTAGE, "sabotage")
 	)
 	defense = models.CharField(max_length=2, choices=DEFENSE_CHOICES)
-	proba_success = models.PositiveSmallIntegerField()
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
 
 	def clean(self):
 		super(ProtectionOrder, self).clean()
-		self.proba_success = getattr(self.protected_corporation.base_corporation, self.get_defense_display())
 		if self.additional_percents > 5:
 			raise ValidationError
 
@@ -449,17 +337,12 @@ class ProtectionOrder(RunOrder):
 		"""
 		Compute success probability, maxed by 50%
 		"""
-		proba = self.proba_success
+		proba = 0
 		if self.has_influence_bonus:
 			proba += self.INFLUENCE_BONUS
 		proba += self.additional_percents * 10
 		proba += self.hidden_percents * 10
 		return proba
-
-	def protect(self):
-		if randint(1, 100) <= self.get_success_probability():
-			return True
-		return False
 
 	def description(self):
 		return u"Envoyer une équipe protéger les intérêts de %s" % (self.protected_corporation.base_corporation.name)
