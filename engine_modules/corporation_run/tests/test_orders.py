@@ -7,6 +7,12 @@ class RunOrdersTest(EngineTestCase):
 	def setUp(self):
 		super(RunOrdersTest, self).setUp()
 
+		self.g.disable_invisible_hand = True
+
+
+class DatastealRunOrderTest(RunOrdersTest):
+	def setUp(self):
+		super(DatastealRunOrderTest, self).setUp()
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
@@ -16,63 +22,19 @@ class RunOrdersTest(EngineTestCase):
 		self.dso.clean()
 		self.dso.save()
 
-		self.so = SabotageOrder(
-			player=self.p,
-			target_corporation=self.c,
-			additional_percents=0,
-		)
-		self.so.clean()
-		self.so.save()
-
-		self.eo = ExtractionOrder(
-			player=self.p,
-			target_corporation=self.c,
-			kidnapper_corporation=self.c2
-		)
-		self.eo.clean()
-		self.eo.save()
-
-		self.g.disable_invisible_hand = True
-
-		self.so_initial_extraction = self.so.target_corporation.base_corporation.extraction
-		self.so_initial_sabotage = self.so.target_corporation.base_corporation.sabotage
-		self.so_initial_datasteal = self.so.target_corporation.base_corporation.datasteal
-
-		self.eo_initial_extraction = self.so.target_corporation.base_corporation.extraction
-		self.eo_initial_sabotage = self.so.target_corporation.base_corporation.sabotage
-		self.eo_initial_datasteal = self.so.target_corporation.base_corporation.datasteal
-
-		self.dso_initial_extraction = self.so.target_corporation.base_corporation.extraction
-		self.dso_initial_sabotage = self.so.target_corporation.base_corporation.sabotage
-		self.dso_initial_datasteal = self.so.target_corporation.base_corporation.datasteal
-
-		self.so.target_corporation.base_corporation.extraction = 0
-		self.so.target_corporation.base_corporation.sabotage = 0
-		self.so.target_corporation.base_corporation.datasteal = 0
-
-		self.eo.target_corporation.base_corporation.extraction = 0
-		self.eo.target_corporation.base_corporation.sabotage = 0
-		self.eo.target_corporation.base_corporation.datasteal = 0
+		self.dso_initial_extraction = self.dso.target_corporation.base_corporation.extraction
+		self.dso_initial_sabotage = self.dso.target_corporation.base_corporation.sabotage
+		self.dso_initial_datasteal = self.dso.target_corporation.base_corporation.datasteal
 
 		self.dso.target_corporation.base_corporation.extraction = 0
 		self.dso.target_corporation.base_corporation.sabotage = 0
 		self.dso.target_corporation.base_corporation.datasteal = 0
 
 	def tearDown(self):
-		self.so.target_corporation.base_corporation.extraction = self.so_initial_extraction
-		self.so.target_corporation.base_corporation.sabotage = self.so_initial_sabotage
-		self.so.target_corporation.base_corporation.datasteal = self.so_initial_datasteal
+		self.dso.target_corporation.base_corporation.extraction = self.dso_initial_extraction
+		self.dso.target_corporation.base_corporation.sabotage = self.dso_initial_sabotage
+		self.dso.target_corporation.base_corporation.datasteal = self.dso_initial_datasteal
 
-		self.eo.target_corporation.base_corporation.extraction = self.so_initial_extraction
-		self.eo.target_corporation.base_corporation.sabotage = self.so_initial_sabotage
-		self.eo.target_corporation.base_corporation.datasteal = self.so_initial_datasteal
-
-		self.dso.target_corporation.base_corporation.extraction = self.so_initial_extraction
-		self.dso.target_corporation.base_corporation.sabotage = self.so_initial_sabotage
-		self.dso.target_corporation.base_corporation.datasteal = self.so_initial_datasteal
-
-
-class OffensiveRunOrderTest(RunOrdersTest):
 	def test_datasteal_success(self):
 		"""
 		Datasteal benefits the stealer 1 asset without costing the stolen
@@ -148,6 +110,31 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
 
+
+class SabotageRunOrderTest(RunOrdersTest):
+	def setUp(self):
+		super(SabotageRunOrderTest, self).setUp()
+		self.so = SabotageOrder(
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=0,
+		)
+		self.so.clean()
+		self.so.save()
+
+		self.so_initial_extraction = self.so.target_corporation.base_corporation.extraction
+		self.so_initial_sabotage = self.so.target_corporation.base_corporation.sabotage
+		self.so_initial_datasteal = self.so.target_corporation.base_corporation.datasteal
+
+		self.so.target_corporation.base_corporation.extraction = 0
+		self.so.target_corporation.base_corporation.sabotage = 0
+		self.so.target_corporation.base_corporation.datasteal = 0
+
+	def tearDown(self):
+		self.so.target_corporation.base_corporation.extraction = self.so_initial_extraction
+		self.so.target_corporation.base_corporation.sabotage = self.so_initial_sabotage
+		self.so.target_corporation.base_corporation.datasteal = self.so_initial_datasteal
+
 	def test_sabotage_success(self):
 		"""
 		Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
@@ -185,7 +172,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		po.clean()
 		po.save()
 
-		begin_assets = self.dso.target_corporation.assets
+		begin_assets = self.so.target_corporation.assets
 
 		self.so.additional_percents = 10
 		self.so.save()
@@ -214,6 +201,32 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		self.so.resolve()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
+
+
+class ExtractionRunOrderTest(RunOrdersTest):
+	def setUp(self):
+		super(ExtractionRunOrderTest, self).setUp()
+
+		self.eo = ExtractionOrder(
+			player=self.p,
+			target_corporation=self.c,
+			kidnapper_corporation=self.c2
+		)
+		self.eo.clean()
+		self.eo.save()
+
+		self.eo_initial_extraction = self.eo.target_corporation.base_corporation.extraction
+		self.eo_initial_sabotage = self.eo.target_corporation.base_corporation.sabotage
+		self.eo_initial_datasteal = self.eo.target_corporation.base_corporation.datasteal
+
+		self.eo.target_corporation.base_corporation.extraction = 0
+		self.eo.target_corporation.base_corporation.sabotage = 0
+		self.eo.target_corporation.base_corporation.datasteal = 0
+
+	def tearDown(self):
+		self.eo.target_corporation.base_corporation.extraction = self.eo_initial_extraction
+		self.eo.target_corporation.base_corporation.sabotage = self.eo_initial_sabotage
+		self.eo.target_corporation.base_corporation.datasteal = self.eo_initial_datasteal
 
 	def test_extraction_success(self):
 		"""
@@ -285,6 +298,38 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 
 class DefensiveRunOrderTest(RunOrdersTest):
+	def setUp(self):
+		super(DefensiveRunOrderTest, self).setUp()
+		self.dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=0,
+		)
+		self.dso.clean()
+		self.dso.save()
+
+		self.so = SabotageOrder(
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=0,
+		)
+		self.so.clean()
+		self.so.save()
+
+		self.so_initial_extraction = self.so.target_corporation.base_corporation.extraction
+		self.so_initial_sabotage = self.so.target_corporation.base_corporation.sabotage
+		self.so_initial_datasteal = self.so.target_corporation.base_corporation.datasteal
+
+		self.so.target_corporation.base_corporation.extraction = 0
+		self.so.target_corporation.base_corporation.sabotage = 0
+		self.so.target_corporation.base_corporation.datasteal = 0
+
+	def tearDown(self):
+		self.so.target_corporation.base_corporation.extraction = self.so_initial_extraction
+		self.so.target_corporation.base_corporation.sabotage = self.so_initial_sabotage
+		self.so.target_corporation.base_corporation.datasteal = self.so_initial_datasteal
+
 	def test_offensive_protection_offensive(self):
 		"""
 		Test that the Protection only cancels one Offensive run
