@@ -5,11 +5,7 @@ from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrde
 
 class RunOrdersTest(EngineTestCase):
 	def setUp(self):
-
 		super(RunOrdersTest, self).setUp()
-
-		self.c2 = self.g.corporation_set.get(base_corporation_slug="renraku")
-		self.c3 = self.g.corporation_set.get(base_corporation_slug="ares")
 
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
@@ -35,11 +31,6 @@ class RunOrdersTest(EngineTestCase):
 		)
 		self.eo.clean()
 		self.eo.save()
-
-		# Refill money for the player
-		self.INITIAL_MONEY = 100000
-		self.p.money = self.INITIAL_MONEY
-		self.p.save()
 
 		self.g.disable_invisible_hand = True
 
