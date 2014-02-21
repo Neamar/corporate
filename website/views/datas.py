@@ -1,10 +1,12 @@
 from __future__ import absolute_import
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
+
 from engine_modules.corporation.models import Corporation
+from engine_modules.corporation_asset_history.models import AssetHistory
 from engine_modules.share.models import Share
 from engine.models import Player
 from website.utils import get_player, get_shares_count
@@ -24,7 +26,12 @@ def wallstreet(request, game_id):
 	Wallstreet datas
 	"""
 	player = get_player(request, game_id)
-	corporations = player.game.corporation_set.all()
+	corporations = player.game.get_ordered_corporations()
+	delta = AssetHistory.objects.filter(corporation__game=player.game, turn=player.game.current_turn - 1)
+	delta_hash = {ah.corporation_id: ah.assets for ah in delta}
+	for corporation in corporations:
+		corporation.last_assets = delta_hash[corporation.pk]
+
 	return render(request, 'game/wallstreet.html', {"corporations": corporations})
 
 
