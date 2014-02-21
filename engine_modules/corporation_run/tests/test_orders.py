@@ -28,6 +28,42 @@ class RunOrdersTest(EngineTestCase):
 		bc.datasteal = self._values[0]
 
 
+class OffensiveRunOrderTest(RunOrdersTest):
+	def test_get_success_probability(self):
+		self.p.money = 12465135165465186
+		self.p.save()
+
+		self.dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=5,
+		)
+		self.dso.clean()
+		self.dso.save()
+
+		self.dso2 = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=6,
+		)
+		self.dso2.clean()
+		self.dso2.save()
+
+		self.dso3 = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=7,
+		)
+		self.dso3.clean()
+		self.dso3.save()
+
+		self.assertEqual(self.dso.get_success_probability(), 30 + DataStealOrder.PROBA_SUCCESS)
+		self.assertEqual(self.dso2.get_success_probability(), 50 + DataStealOrder.PROBA_SUCCESS)
+
+
 class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):
 		super(DatastealRunOrderTest, self).setUp()
