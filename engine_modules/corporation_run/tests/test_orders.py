@@ -63,6 +63,55 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.dso.get_success_probability(), 30 + DataStealOrder.PROBA_SUCCESS)
 		self.assertEqual(self.dso2.get_success_probability(), 50 + DataStealOrder.PROBA_SUCCESS)
 
+	def test_repay(self):
+		self.p.money = 10000
+		self.p.save()
+
+		self.dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=1,
+			hidden_percents=-4
+		)
+		self.dso.clean()
+		self.dso.save()
+		self.dso.resolve()
+
+		self.assertEqual(self.reload(self.p).money, 10000 - 25)
+
+	def test_is_detected(self):
+		self.dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=7,
+		)
+		self.dso.clean()
+		self.dso.save()
+
+		self.dso.target_corporation.base_corporation.detection = 0
+		self.assertFalse(self.dso.is_detected())
+
+		self.dso.target_corporation.base_corporation.detection = 100
+		self.assertTrue(self.dso.is_detected())
+
+	def test_is_protected(self):
+		self.dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=7,
+		)
+		self.dso.clean()
+		self.dso.save()
+
+		self.dso.target_corporation.base_corporation.datasteal = 0
+		self.assertFalse(self.dso.is_protected())
+
+		self.dso.target_corporation.base_corporation.datasteal = 100
+		self.assertTrue(self.dso.is_protected())
+
 
 class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):
