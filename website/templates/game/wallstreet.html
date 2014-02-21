@@ -23,6 +23,47 @@
 </tbody>
 </table>
 
+<div id="chart_div" style="width: 90%; height: 300px; margin:15px auto;"></div>
+
 {% endblock content %}
+
+{% block scripts %}
+{% regroup assets_history by turn as assets_history_turn %}
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+	var data = google.visualization.arrayToDataTable([
+    ['Tour',
+		{% for c in corporations %}
+			'{{c.base_corporation.name}}',
+		{% endfor %}
+	],
+	{% for assets in assets_history_turn %}
+    ['{{ assets.grouper }}',
+		{% for a in assets.list %}
+			{{a.assets}},
+		{% endfor %}
+	],
+	{% endfor %}
+	]);
+
+	var options = {
+		title: 'Bourse',
+		backgroundColor: 'transparent',
+		theme: 'maximized',
+		pointSize: 4,
+		curveType: 'function',
+	};
+
+	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+	chart.draw(data, options);
+  }
+
+  window.onresize = drawChart;
+</script>
+{% endblock scripts %}
 
 

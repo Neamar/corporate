@@ -29,6 +29,8 @@
 </tbody>
 </table>
 
+<div id="chart_div" style="width: 530px; height: 300px; margin:15px auto;"></div>
+
 {% if players %}
 <h2>Parts possédées</h2>
 <table class="prop_table">
@@ -56,5 +58,33 @@
 <h2>Description</h2>
 {{ corporation.base_corporation.description }}
 {% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+function drawChart() {
+	var data = google.visualization.arrayToDataTable([
+		['Tour', 'Actifs'],
+		{% for asset_history in assets_history %}
+			[{{ asset_history.turn }}, {{ asset_history.assets }}],
+		{% endfor %}
+	]);
+
+	var options = {
+		title: 'Actifs',
+		backgroundColor: 'transparent',
+		theme: 'maximized',
+		pointSize: 4,
+		legend: 'none',
+		vAxis: {minValue:0, format:'#'},
+	};
+
+	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+	chart.draw(data, options);
+}
+</script>
+{% endblock scripts %}
 
 

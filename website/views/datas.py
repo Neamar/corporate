@@ -27,12 +27,13 @@ def wallstreet(request, game_id):
 	"""
 	player = get_player(request, game_id)
 	corporations = player.game.get_ordered_corporations()
+	assets_history = AssetHistory.objects.filter(corporation__game=player.game).order_by('turn')
 	delta = AssetHistory.objects.filter(corporation__game=player.game, turn=player.game.current_turn - 1)
 	delta_hash = {ah.corporation_id: ah.assets for ah in delta}
 	for corporation in corporations:
 		corporation.last_assets = delta_hash[corporation.pk]
 
-	return render(request, 'game/wallstreet.html', {"corporations": corporations})
+	return render(request, 'game/wallstreet.html', {"corporations": corporations, "assets_history": assets_history})
 
 
 @login_required
@@ -52,7 +53,8 @@ def corporation(request, game_id, corporation_slug):
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game_id)
 	players = Player.objects.filter(game_id=game_id, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share').select_related('citizenship')
-	return render(request, 'game/corporation.html', {"corporation": corporation, "players": players})
+	assets_history = corporation.assethistory_set.all()
+	return render(request, 'game/corporation.html', {"corporation": corporation, "players": players, "assets_history": assets_history})
 
 
 @login_required
