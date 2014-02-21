@@ -358,7 +358,7 @@ Jules       | 12      |          |
 
 Effet premier dernier
 
-### Joueurs
+### Parts
 Tableau croisé :
 
 * Nom du joueur
@@ -370,8 +370,8 @@ Tableau croisé :
 | Tiroshi | 0         | 0      | 0       |
 | Remi    | 0         | 0      | 0       |
 
-Tableau des joueurs :
 
+### Joueurs
 Nom du joueur
 IC
 Vote de ligne
