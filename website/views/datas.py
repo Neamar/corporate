@@ -1,5 +1,6 @@
 from __future__ import absolute_import
-from django.shortcuts import render
+
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
@@ -43,7 +44,8 @@ def corporation(request, game_id, corporation_slug):
 	Corporation datas
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game_id)
-	return render(request, 'game/corporation.html', {"corporation": corporation})
+	players = Player.objects.filter(game_id=game_id, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
+	return render(request, 'game/corporation.html', {"corporation": corporation, "players": players})
 
 
 @login_required

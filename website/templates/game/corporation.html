@@ -27,6 +27,27 @@
 </tbody>
 </table>
 
+{% if players %}
+<h2>Parts possédées</h2>
+<table class="prop_table">
+<thead>
+<tr>
+	<th></th>
+	<th>Parts</th>
+</tr>
+</thead>
+<tbody>
+{% for player in players %}
+<tr>
+	<td><a href="{% url "website.views.datas.player" game_id=1 player_id=player.pk %}">{{ player.name }}</a></td>
+	<td>{{ player.qty_share }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+<h2>Description</h2>
 {{ corporation.base_corporation.description }}
 {% endblock content %}
 
