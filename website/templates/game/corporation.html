@@ -40,7 +40,11 @@
 {% for player in players %}
 <tr>
 	<td><a href="{% url "website.views.datas.player" game_id=1 player_id=player.pk %}">{{ player.name }}</a></td>
+	{% if player.citizenship.corporation_id == corporation.pk %}
+	<td><strong>{{ player.qty_share }}</strong></td>
+	{% else %}
 	<td>{{ player.qty_share }}</td>
+	{% endif %}
 </tr>
 {% endfor %}
 </tbody>

@@ -44,7 +44,7 @@ def corporation(request, game_id, corporation_slug):
 	Corporation datas
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game_id)
-	players = Player.objects.filter(game_id=game_id, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
+	players = Player.objects.filter(game_id=game_id, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share').select_related('citizenship')
 	return render(request, 'game/corporation.html', {"corporation": corporation, "players": players})
 
 
