@@ -89,6 +89,35 @@ def player(request, game_id, player_id):
 
 
 @login_required
+def shares(request, game_id):
+	"""
+	Shares datas
+	"""
+	player = get_player(request, game_id)
+	game = player.game
+
+	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('pk')
+	corporations = list(game.corporation_set.all().order_by('pk'))
+	shares = Share.objects.filter(player__game=game)
+	player_shares = []
+
+	for player in players:
+		player_share = {
+			"player": player,
+			"shares": [get_shares_count(c, player, shares) for c in corporations]
+		}
+
+		try:
+			player_share["citizenship_index"] = corporations.index(player.citizenship.corporation)
+		except ValueError:
+			pass
+
+		player_shares.append(player_share)
+
+	return render(request, 'game/shares.html', {"corporations": corporations, "shares": player_shares})
+
+
+@login_required
 def newsfeeds(request, game_id):
 	"""
 	Display newsfeed
