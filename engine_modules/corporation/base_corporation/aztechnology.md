@@ -22,10 +22,10 @@ Les bureaux d'Aztechnology à Manhattan sont occupés par les meilleurs employé
 ## Effet premier : 
 Le big A utilise le MDC pour gêner les opérations des concurrents qui manquent de poids politique.
 
->-1 actif pour Horizon 
->-1 actif pour la dernière corpo.
+* -1 actif pour Horizon 
+* -1 actif pour la dernière corpo.
 
 ## Effet dernier :
 Aztechnology lâchant prise, Horizon s’engouffre dans la brèche.
 
->+2 actifs pour Horizon.
+* +2 actifs pour Horizon.

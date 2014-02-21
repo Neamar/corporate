@@ -3,6 +3,7 @@ from os import listdir
 from django.db import models
 from django.conf import settings
 from django.utils.functional import cached_property
+from django.utils.safestring import mark_safe
 
 from utils.read_markdown import read_markdown
 from engine.models import Game
@@ -37,6 +38,7 @@ class BaseCorporation:
 
 		self.slug = slug
 		self.name = meta['name'][0]
+		self.description = mark_safe(content)
 		self.datasteal = meta['datasteal'][0]
 		self.sabotage = meta['sabotage'][0]
 		self.extraction = meta['extraction'][0]

@@ -17,10 +17,10 @@ Avec le charisme de son fondateur en étendard, Spinrad Industries vend du machi
 ## Effet premier :
 Spinrad a réussi son pari, et la bourse s'arrache ses actifs.
 
->+2 actifs pour Spinrad.
+* +2 actifs pour Spinrad.
 
 ## Effet dernier :
 Le public et le marché ne se sont pas laissé bluffer par l'esbroufe de Johnny Spinrad. La corpo est obligée de brader ses actifs dans l'espoir d'une seconde chance.
 
->-1 actif pour Spinrad.
->+1 actif pour l'avant dernière corpo.
+* -1 actif pour Spinrad.
+* +1 actif pour l'avant dernière corpo.

@@ -21,11 +21,11 @@ Les japanocorp sont connues pour leur tendance à être rancunières, et Renraku
 ## Effet premier :
 Renraku prend enfin le dessus sur ses rivaux et lave fièrement son honneur.
 
->-1 actif pour Neonet.
->-1 actif pour Shiawase.
+* -1 actif pour Neonet.
+* -1 actif pour Shiawase.
 
 ## Effet dernier :
 La chute de Renraku est une mauvaise nouvelle pour les japanocorps, à l'exception de Shiawase qui en profite pour renforcer son emprise sur Neo Tokyo.
 
->-1 actif pour Sony.
->+1 actif pour Shiawase.
+* -1 actif pour Sony.
+* +1 actif pour Shiawase.

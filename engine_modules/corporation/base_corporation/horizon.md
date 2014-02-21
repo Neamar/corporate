@@ -19,11 +19,11 @@ Il est indéniable que les Me-Feeds de NYC ont inspiré le réseau Persona 2.0 d
 
 *There is blood in the water*. Un concurrent est en difficulté, le moment idéal pour Horizon de sortir les vieux dossiers et faire des gros titres ravageurs.
 
->-2 actifs pour la dernière corpo.
+* -2 actifs pour la dernière corpo.
 
 ##Effet dernier :
 
 Bien qu'en train de perdre son conflit global contre Aztechnology, Horizon n'oublie pas la puissance du 5<sup>ème</sup> pouvoir contre ceux qui se croient intouchables.
 
->+1 actif pour Aztechnology.
->-1 actif pour la première corpo.
+* +1 actif pour Aztechnology.
+* -1 actif pour la première corpo.
