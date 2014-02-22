@@ -31,7 +31,6 @@ class RunOrder(Order):
 	
 		proba += self.hidden_percents * 10
 
-		proba += self.hidden_percents * 10
 		return proba
 
 	def is_successful(self):
