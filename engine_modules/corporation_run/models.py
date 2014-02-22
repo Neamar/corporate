@@ -296,18 +296,32 @@ class ProtectionOrder(RunOrder):
 	DATASTEAL = "datasteal"
 	SABOTAGE = "sabotage"
 
+	PROBA_DATASTEAL_SUCCESS = 40
+	PROBA_EXTRACTION_SUCCESS = 10
+	PROBA_SABOTAGE_SUCCESS = 0
+
 	DEFENSE_CHOICES = (
 		(EXTRACTION, "Extraction"),
 		(DATASTEAL, "Datasteal"),
 		(SABOTAGE, "Sabotage")
 	)
+
+	PROBA_SUCCESS = {
+		EXTRACTION: PROBA_EXTRACTION_SUCCESS,
+		DATASTEAL: PROBA_DATASTEAL_SUCCESS,
+		SABOTAGE: PROBA_SABOTAGE_SUCCESS,
+	}
+
 	defense = models.CharField(max_length=2, choices=DEFENSE_CHOICES)
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
 
-	def clean(self):
-		super(ProtectionOrder, self).clean()
-		if self.additional_percents > 5:
-			raise ValidationError("Impossible de mettre plus de 50% en protection.")
+	def get_success_probability(self):
+		"""
+		Compute success probability, adding base values
+		"""
+		proba = super(ProtectionOrder, self).get_success_probability()
+		proba += self.PROBA_SUCCESS[self.defense]
+		return proba
 
 	def resolve(self):
 		self.player.money -= self.get_cost()

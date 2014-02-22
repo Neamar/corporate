@@ -179,32 +179,32 @@ class DatastealRunOrderTest(RunOrdersTest):
 		Datasteal benefits the stealer 1 asset without costing the stolen
 		"""
 		begin_assets_stealer = self.dso.stealer_corporation.assets
-		begin_assets_stolen = self.dso.target_corporation.assets
+
 		self.dso.additional_percents = 10
 		self.dso.save()
 
 		self.dso.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer + 1)
-		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
 
 	def test_datasteal_failure(self):
 		"""
 		Failed datasteal should not change corporation assets.
 		"""
 		begin_assets_stealer = self.dso.stealer_corporation.assets
-		begin_assets_stolen = self.dso.target_corporation.assets
 
 		self.dso.additional_percents = 0
-		self.dso.hidden_percents = -3
+		self.dso.hidden_percents = -10
 		self.dso.save()
+
 		self.dso.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
-		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
 
 	def test_datasteal_interception(self):
 		"""
 		Intercepted datasteal should not change corporation assets.
 		"""
+		begin_assets_stealer = self.dso.stealer_corporation.assets
+
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
@@ -213,41 +213,14 @@ class DatastealRunOrderTest(RunOrdersTest):
 		po.clean()
 		po.save()
 
-		begin_assets_stealer = self.dso.stealer_corporation.assets
-		begin_assets_stolen = self.dso.target_corporation.assets
 		po.additional_percents = 10
 		po.save()
 
 		self.dso.additional_percents = 10
 		self.dso.save()
+
 		self.dso.resolve()
-
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
-		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
-
-	def test_datasteal_capture(self):
-		"""
-		Captured datasteal should not change corporation assets.
-		"""
-		po = ProtectionOrder(
-			player=self.p,
-			protected_corporation=self.c,
-			defense=ProtectionOrder.DATASTEAL,
-			hidden_percents=10
-		)
-		po.clean()
-		po.save()
-
-		begin_assets_stealer = self.dso.stealer_corporation.assets
-		begin_assets_stolen = self.dso.target_corporation.assets
-
-		self.dso.additional_percents = 0
-		self.dso.hidden_percents = -3
-		self.dso.save()
-		self.dso.resolve()
-
-		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
-		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
 
 
 class SabotageRunOrderTest(RunOrdersTest):
@@ -285,8 +258,9 @@ class SabotageRunOrderTest(RunOrdersTest):
 		begin_assets = self.so.target_corporation.assets
 
 		self.so.additional_percents = 0
-		self.so.hidden_percents = -3
+		self.so.hidden_percents = -10
 		self.so.save()
+
 		self.so.resolve()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
 
@@ -294,6 +268,8 @@ class SabotageRunOrderTest(RunOrdersTest):
 		"""
 		Intercepted sabotage does not change corporation assets
 		"""
+		begin_assets = self.so.target_corporation.assets
+
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
@@ -302,32 +278,8 @@ class SabotageRunOrderTest(RunOrdersTest):
 		)
 		po.clean()
 		po.save()
-
-		begin_assets = self.so.target_corporation.assets
 
 		self.so.additional_percents = 10
-		self.so.save()
-
-		self.so.resolve()
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
-
-	def test_sabotage_capture(self):
-		"""
-		Captured sabotage does not change corporation assets
-		"""
-		po = ProtectionOrder(
-			player=self.p,
-			protected_corporation=self.c,
-			defense=ProtectionOrder.SABOTAGE,
-			hidden_percents=10,
-		)
-		po.clean()
-		po.save()
-
-		begin_assets = self.so.target_corporation.assets
-
-		self.so.additional_percents = 0
-		self.so.hidden_percents = -3
 		self.so.save()
 
 		self.so.resolve()
@@ -360,6 +312,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 
 		self.eo.additional_percents = 10
 		self.eo.save()
+
 		self.eo.resolve()
 		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets_target - 1)
 		self.assertEqual(self.reload(self.eo.kidnapper_corporation).assets, begin_assets_kidnapper + 1)
@@ -368,56 +321,38 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		"""
 		Failed extraction does not change corporation assets
 		"""
-		begin_assets = self.eo.target_corporation.assets
+		begin_assets_target = self.eo.target_corporation.assets
+		begin_assets_kidnapper = self.eo.kidnapper_corporation.assets
 
 		self.eo.additional_percents = 0
-		self.eo.hidden_percents = -3
+		self.eo.hidden_percents = -10
 		self.eo.save()
+
 		self.eo.resolve()
-		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets)
+		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets_target)
+		self.assertEqual(self.reload(self.eo.kidnapper_corporation).assets, begin_assets_kidnapper)
 
 	def test_extraction_interception(self):
 		"""
 		Intercepted extraction does not change corporation assets
 		"""
+		begin_assets_target = self.eo.target_corporation.assets
+		begin_assets_kidnapper = self.eo.kidnapper_corporation.assets
+
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
 			defense=ProtectionOrder.EXTRACTION,
 			hidden_percents=10,
 		)
-		po.clean()
 		po.save()
-
-		begin_assets = self.eo.target_corporation.assets
 
 		self.eo.additional_percents = 10
 		self.eo.save()
 
 		self.eo.resolve()
-		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets)
-
-	def test_extraction_capture(self):
-		"""
-		Captured extraction does not change corporation assets
-		"""
-		po = ProtectionOrder(
-			player=self.p,
-			protected_corporation=self.c,
-			defense=ProtectionOrder.EXTRACTION,
-			hidden_percents=10,
-		)
-		po.clean()
-		po.save()
-
-		begin_assets = self.eo.target_corporation.assets
-
-		self.eo.additional_percents = 0
-		self.eo.hidden_percents = -3
-		self.eo.save()
-
-		self.eo.resolve()
-		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets)
+		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets_target)
+		self.assertEqual(self.reload(self.eo.kidnapper_corporation).assets, begin_assets_kidnapper)
 
 
 class DefensiveRunOrderTest(RunOrdersTest):
@@ -445,40 +380,37 @@ class DefensiveRunOrderTest(RunOrdersTest):
 	def tearDown(self):
 		self.set_to_original(self.so.target_corporation)
 
-	def test_offensive_protection_offensive(self):
+	def test_has_base_value(self):
 		"""
-		Test that the Protection only cancels one Offensive run
+		Protection has defaut protection values
 		"""
+
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
-			defense=ProtectionOrder.SABOTAGE,
-			hidden_percents=10,
+			defense=ProtectionOrder.DATASTEAL,
+			additional_percents=1,
 		)
-		po.clean()
 		po.save()
 
-		begin_assets = self.so.target_corporation.assets
+		self.assertEqual(po.get_success_probability(), po.additional_percents * 10 + po.PROBA_SUCCESS[po.defense])
 
-		self.so.additional_percents = 10
-		self.so.save()
-
-		# Should be intercepted
-		self.so.resolve()
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
-
-	def test_corpo_can_def_alone(self):
+	def test_corpo_can_protect_alone(self):
 		"""
-		Corporations can def themselves
+		Corporations can protect themselves
 		"""
-		self.dso.target_corporation.base_corporation.datasteal = 100
-
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
-		self.dso.additional_percents = 10
-		self.dso.save()
-		self.dso.resolve()
+		base_value = self.dso.target_corporation.base_corporation.datasteal
+		try:
+			self.dso.target_corporation.base_corporation.datasteal = 100
 
-		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
-		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
+			self.dso.additional_percents = 10
+			self.dso.save()
+
+			self.dso.resolve()
+			self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
+			self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
+		finally:
+			self.dso.target_corporation.base_corporation.datasteal = base_value
