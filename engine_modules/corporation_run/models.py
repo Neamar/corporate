@@ -312,7 +312,7 @@ class ProtectionOrder(RunOrder):
 		SABOTAGE: PROBA_SABOTAGE_SUCCESS,
 	}
 
-	defense = models.CharField(max_length=2, choices=DEFENSE_CHOICES)
+	defense = models.CharField(max_length=15, choices=DEFENSE_CHOICES)
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
 
 	def get_success_probability(self):
