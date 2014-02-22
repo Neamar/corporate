@@ -19,4 +19,4 @@ class ModelTest(TestCase):
 		self.assertEqual(len(corporations), len(BaseCorporation.retrieve_all()))
 
 		self.assertEqual(corporations[0].base_corporation.slug, 'ares')
-		self.assertEqual(corporations[0].base_corporation.datasteal, "10")
+		self.assertEqual(corporations[0].base_corporation.datasteal, 10)
