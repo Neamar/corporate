@@ -18,12 +18,12 @@ information_messages = {
 }
 
 
-class InformationRunOrder(OffensiveRunOrder):
+class InformationOrder(OffensiveRunOrder):
 	title = "Lancer une run d'Information"
 
 	TIMING_MALUS_SIMILAR = 'player'
-	TYPE = "information"
-	PROBA_SUCCESS = 60
+	PROTECTION_TYPE = "datasteal"
+	BASE_SUCCESS_PROBABILITY = 60
 
 	target = models.ForeignKey(Player)
 
@@ -64,4 +64,4 @@ class InformationRunOrder(OffensiveRunOrder):
 	def description(self):
 		return "Lancer une run d'information sur %s" % self.target
 
-orders = (InformationRunOrder, )
+orders = (InformationOrder, )

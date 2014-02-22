@@ -1,6 +1,6 @@
 from engine.testcases import EngineTestCase
 from engine.exceptions import OrderNotAvailable
-from engine_modules.player_run.models import InformationRunOrder
+from engine_modules.player_run.models import InformationOrder
 
 
 class ModelTest(EngineTestCase):
@@ -9,7 +9,7 @@ class ModelTest(EngineTestCase):
 		"""
 		Check a Johnson can't target himself
 		"""
-		o = InformationRunOrder(
+		o = InformationOrder(
 			target=self.p,
 			player=self.p,
 		)
