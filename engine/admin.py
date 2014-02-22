@@ -2,7 +2,12 @@ from django.contrib import admin
 from engine.models import Game, Player, Order
 
 
+class PlayerInline(admin.TabularInline):
+	model = Player
+
+
 class GameAdmin(admin.ModelAdmin):
+	inlines = [PlayerInline]
 	list_display = ('city', 'current_turn', 'total_turn')
 	actions = ("resolve_current_turn",)
 
