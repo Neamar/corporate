@@ -51,7 +51,11 @@ class OffensiveRunOrder(RunOrder):
 	Model for offensive runs.
 
 	Require subclass to define a property target_corporation, whose values will be used for protection and defense.
-	Require a TYPE constant.
+	Require constants to be defined:
+
+	* TYPE : run type. Will be used to find protection run.
+	* TIMING_MALUS_SIMILAR value to consider for the timing malus.
+	* PROBA_SUCCESS base probability for resolution
 
 	Checks for Protection Runs.
 	Implements timing malus.
@@ -72,6 +76,9 @@ class OffensiveRunOrder(RunOrder):
 		"""
 		Rturn True if the run is detected
 		"""
+		if self.target_corporation is None:
+			return False
+
 		if randint(1, 100) <= self.target_corporation.base_corporation.detection:
 			return True
 		return False
@@ -81,9 +88,11 @@ class OffensiveRunOrder(RunOrder):
 		Return a list of defenses probabilities
 		"""
 		values = []
-		for protector in self.target_corporation.protectors.filter(defense=self.TYPE):
-			values.append(protector.get_success_probability())
-		values.append(getattr(self.target_corporation.base_corporation, self.TYPE))
+		if self.target_corporation is not None:
+			for protector in self.target_corporation.protectors.filter(defense=self.TYPE):
+				values.append(protector.get_success_probability())
+
+			values.append(getattr(self.target_corporation.base_corporation, self.TYPE))
 		return values
 
 	def get_raw_probability(self):
@@ -99,7 +108,11 @@ class OffensiveRunOrder(RunOrder):
 		Compute success probability, maxed by 90%. Add timing malus.
 		"""
 		raw_proba = self.get_raw_probability()
-		similar_runs = self.__class__.objects.filter(target_corporation=self.target_corporation).exclude(pk=self.pk)
+
+		kwargs = {
+			self.TIMING_MALUS_SIMILAR: getattr(self, self.TIMING_MALUS_SIMILAR)
+		}
+		similar_runs = self.__class__.objects.filter(**kwargs).exclude(pk=self.pk)
 		better_runs = [run for run in similar_runs if run.get_raw_probability() >= raw_proba]
 		proba = raw_proba - 10 * len(better_runs)
 		return proba
@@ -132,6 +145,7 @@ class OffensiveCorporationRunOrder(OffensiveRunOrder):
 	"""
 	Model for offensive corporation runs.
 	"""
+	TIMING_MALUS_SIMILAR = 'target_corporation'
 
 	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
 
