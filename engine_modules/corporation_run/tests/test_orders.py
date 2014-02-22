@@ -29,6 +29,20 @@ class RunOrdersTest(EngineTestCase):
 
 
 class OffensiveRunOrderTest(RunOrdersTest):
+	def test_get_raw_probability(self):
+		"""
+		Check raw probability values (without timing malus)
+		"""
+		dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=1,
+			hidden_percents=3
+		)
+
+		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.hidden_percents * 10 + dso.PROBA_SUCCESS)
+
 	def test_get_success_probability_with_timing_malus(self):
 		"""
 		Test for the timing malus (multiple runs, same type)
@@ -46,69 +60,101 @@ class OffensiveRunOrderTest(RunOrdersTest):
 			dso.save()
 			return dso
 
-		self.dso = create_order(5)
-		self.dso2 = create_order(6)
-		self.dso3 = create_order(6)
-		self.dso4 = create_order(7)
+		dso = create_order(5)
+		dso2 = create_order(6)
+		dso3 = create_order(6)
+		dso4 = create_order(7)
 
 		# -30 : three similar runs above
-		self.assertEqual(self.dso.get_success_probability(), self.dso.additional_percents * 10 - 30 + DataStealOrder.PROBA_SUCCESS)
+		self.assertEqual(dso.get_success_probability(), dso.additional_percents * 10 - 30 + DataStealOrder.PROBA_SUCCESS)
 
 		# -20 : two similar runs above or equal
-		self.assertEqual(self.dso2.get_success_probability(), self.dso2.additional_percents * 10 - 20 + DataStealOrder.PROBA_SUCCESS)
-		self.assertEqual(self.dso3.get_success_probability(), self.dso3.additional_percents * 10 - 20 + DataStealOrder.PROBA_SUCCESS)
+		self.assertEqual(dso2.get_success_probability(), dso2.additional_percents * 10 - 20 + DataStealOrder.PROBA_SUCCESS)
+		self.assertEqual(dso3.get_success_probability(), dso3.additional_percents * 10 - 20 + DataStealOrder.PROBA_SUCCESS)
 
 		# No malus
-		self.assertEqual(self.dso4.get_success_probability(), self.dso4.additional_percents * 10 + DataStealOrder.PROBA_SUCCESS)
+		self.assertEqual(dso4.get_success_probability(), dso4.additional_percents * 10 + DataStealOrder.PROBA_SUCCESS)
 
 	def test_repay(self):
-		self.p.money = 10000
-		self.p.save()
-
-		self.dso = DataStealOrder(
+		"""
+		Player gets back half the money when the run fails
+		"""
+		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
 			target_corporation=self.c,
 			additional_percents=1,
-			hidden_percents=-4
+			hidden_percents=-10
 		)
-		self.dso.clean()
-		self.dso.save()
-		self.dso.resolve()
+		dso.save()
+		dso.resolve()
 
-		self.assertEqual(self.reload(self.p).money, 10000 - 25)
+		self.assertEqual(self.reload(self.p).money, self.initial_money - dso.get_cost() / 2)
 
 	def test_is_detected(self):
-		self.dso = DataStealOrder(
+		"""
+		Check detection use corporation base values
+		"""
+		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
 			target_corporation=self.c,
 			additional_percents=7,
 		)
-		self.dso.clean()
-		self.dso.save()
+		dso.save()
 
-		self.dso.target_corporation.base_corporation.detection = 0
-		self.assertFalse(self.dso.is_detected())
+		save_value = dso.target_corporation.base_corporation.detection
+		try:
+			dso.target_corporation.base_corporation.detection = 0
+			self.assertFalse(dso.is_detected())
 
-		self.dso.target_corporation.base_corporation.detection = 100
-		self.assertTrue(self.dso.is_detected())
+			dso.target_corporation.base_corporation.detection = 100
+			self.assertTrue(dso.is_detected())
+		finally:
+			dso.target_corporation.base_corporation.detection = save_value
 
 	def test_is_protected(self):
-		self.dso = DataStealOrder(
+		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
 			target_corporation=self.c,
 			additional_percents=7,
 		)
-		self.dso.clean()
-		self.dso.save()
+		dso.save()
 
-		self.dso.target_corporation.base_corporation.datasteal = 0
-		self.assertFalse(self.dso.is_protected())
+		save_value = dso.target_corporation.base_corporation.datasteal
+		try:
+			dso.target_corporation.base_corporation.datasteal = 0
+			self.assertFalse(dso.is_protected())
 
-		self.dso.target_corporation.base_corporation.datasteal = 100
-		self.assertTrue(self.dso.is_protected())
+			dso.target_corporation.base_corporation.datasteal = 100
+			self.assertTrue(dso.is_protected())
+		finally:
+			dso.target_corporation.base_corporation.datasteal = save_value
+
+	def test_get_protection_values(self):
+		"""
+		Protection values should include Protection runs.
+		"""
+		dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=7,
+		)
+		dso.save()
+
+		self.assertEqual(dso.get_protection_values(), [dso.target_corporation.base_corporation.datasteal])
+
+		po = ProtectionOrder(
+			player=self.p,
+			protected_corporation=self.c,
+			defense=ProtectionOrder.DATASTEAL,
+			hidden_percents=10,
+		)
+		po.save()
+
+		self.assertEqual(dso.get_protection_values(), [po.get_success_probability(), dso.target_corporation.base_corporation.datasteal])
 
 
 class DatastealRunOrderTest(RunOrdersTest):
