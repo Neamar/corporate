@@ -48,22 +48,20 @@ extraction_messages = {
 
 class OffensiveRunOrder(RunOrder):
 	"""
-	Model for offensive corporation runs.
+	Model for offensive runs.
 
-	Implements the check for Protection Runs.
+	Require subclass to define a property target_corporation, whose values will be used for protection and defense.
+	Require a TYPE constant.
 
-	Exposes 4 functions to override:
-	* resolve_success: run ok, protection fail
-	* resolve_fail: run fail, protection fail
-	* resolve_interception: run ok, protection ok
-	* resolve_capture: run fail, protection ok
+	Checks for Protection Runs.
+	Implements timing malus.
 	"""
-
-	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
+	class Meta:
+		abstract = True
 
 	def is_protected(self):
 		"""
-		Return True if the corporation is defended
+		Return True if the run is defended against
 		"""
 		for protection in self.get_protection_values():
 			if randint(1, 100) <= protection:
@@ -116,12 +114,6 @@ class OffensiveRunOrder(RunOrder):
 				# Repay the player
 				self.repay()
 
-	def get_form(self, datas=None):
-		form = super(OffensiveRunOrder, self).get_form(datas)
-		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
-
-		return form
-
 	def notify_citizens(self, content):
 		"""
 		Send a message to target_corporation citizens
@@ -136,7 +128,21 @@ class OffensiveRunOrder(RunOrder):
 		n.recipient_set = Player.objects.filter(citizenship__corporation=self.target_corporation)
 
 
-class DataStealOrder(OffensiveRunOrder):
+class OffensiveCorporationRunOrder(OffensiveRunOrder):
+	"""
+	Model for offensive corporation runs.
+	"""
+
+	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
+
+	def get_form(self, datas=None):
+		form = super(OffensiveRunOrder, self).get_form(datas)
+		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
+
+
+class DataStealOrder(OffensiveCorporationRunOrder):
 	"""
 	Model for DataSteal Runs
 	"""
@@ -190,7 +196,7 @@ class DataStealOrder(OffensiveRunOrder):
 		return form
 
 
-class SabotageOrder(OffensiveRunOrder):
+class SabotageOrder(OffensiveCorporationRunOrder):
 	"""
 	Model for Sabotage Runs
 	"""
@@ -232,7 +238,7 @@ class SabotageOrder(OffensiveRunOrder):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
 
 
-class ExtractionOrder(OffensiveRunOrder):
+class ExtractionOrder(OffensiveCorporationRunOrder):
 	"""
 	Model for Extraction Runs
 	"""

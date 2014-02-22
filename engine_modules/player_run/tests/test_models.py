@@ -13,4 +13,4 @@ class ModelTest(EngineTestCase):
 			target=self.p,
 			player=self.p,
 		)
-		self.assertRaises(OrderNotAvailable, o.save)
+		self.assertRaises(OrderNotAvailable, o.clean)
