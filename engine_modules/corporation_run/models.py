@@ -237,6 +237,7 @@ class ExtractionOrder(OffensiveRunOrder):
 	"""
 	Model for Extraction Runs
 	"""
+	title = "Lancer une run d'Extraction"
 
 	PROBA_SUCCESS = 10
 	TYPE = "extraction"
