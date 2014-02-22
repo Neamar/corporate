@@ -29,39 +29,37 @@ class RunOrdersTest(EngineTestCase):
 
 
 class OffensiveRunOrderTest(RunOrdersTest):
-	def test_get_success_probability(self):
-		self.p.money = 12465135165465186
+	def test_get_success_probability_with_timing_malus(self):
+		"""
+		Test for the timing malus (multiple runs, same type)
+		"""
+		self.p.money = 20000
 		self.p.save()
 
-		self.dso = DataStealOrder(
-			stealer_corporation=self.c2,
-			player=self.p,
-			target_corporation=self.c,
-			additional_percents=5,
-		)
-		self.dso.clean()
-		self.dso.save()
+		def create_order(additional_percents):
+			dso = DataStealOrder(
+				stealer_corporation=self.c2,
+				player=self.p,
+				target_corporation=self.c,
+				additional_percents=additional_percents,
+			)
+			dso.save()
+			return dso
 
-		self.dso2 = DataStealOrder(
-			stealer_corporation=self.c2,
-			player=self.p,
-			target_corporation=self.c,
-			additional_percents=6,
-		)
-		self.dso2.clean()
-		self.dso2.save()
+		self.dso = create_order(5)
+		self.dso2 = create_order(6)
+		self.dso3 = create_order(6)
+		self.dso4 = create_order(7)
 
-		self.dso3 = DataStealOrder(
-			stealer_corporation=self.c2,
-			player=self.p,
-			target_corporation=self.c,
-			additional_percents=7,
-		)
-		self.dso3.clean()
-		self.dso3.save()
+		# -30 : three similar runs above
+		self.assertEqual(self.dso.get_success_probability(), self.dso.additional_percents * 10 - 30 + DataStealOrder.PROBA_SUCCESS)
 
-		self.assertEqual(self.dso.get_success_probability(), 30 + DataStealOrder.PROBA_SUCCESS)
-		self.assertEqual(self.dso2.get_success_probability(), 50 + DataStealOrder.PROBA_SUCCESS)
+		# -20 : two similar runs above or equal
+		self.assertEqual(self.dso2.get_success_probability(), self.dso2.additional_percents * 10 - 20 + DataStealOrder.PROBA_SUCCESS)
+		self.assertEqual(self.dso3.get_success_probability(), self.dso3.additional_percents * 10 - 20 + DataStealOrder.PROBA_SUCCESS)
+
+		# No malus
+		self.assertEqual(self.dso4.get_success_probability(), self.dso4.additional_percents * 10 + DataStealOrder.PROBA_SUCCESS)
 
 	def test_repay(self):
 		self.p.money = 10000

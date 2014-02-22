@@ -104,7 +104,7 @@ class OffensiveRunOrder(RunOrder):
 		proba = super(OffensiveRunOrder, self).get_success_probability()
 		proba += self.PROBA_SUCCESS
 		similar_runs = self.__class__.objects.filter(target_corporation=self.target_corporation).exclude(pk=self.pk)
-		better_runs = [run for run in similar_runs if run.get_raw_probability() > proba]
+		better_runs = [run for run in similar_runs if run.get_raw_probability() >= proba]
 		proba -= 10 * len(better_runs)
 		return proba
 
