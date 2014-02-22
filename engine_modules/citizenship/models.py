@@ -9,6 +9,9 @@ class CitizenShip(models.Model):
 	player = models.OneToOneField(Player)
 	corporation = models.ForeignKey(Corporation, null=True, on_delete=models.SET_NULL)
 
+	def __unicode__(self):
+		return "%s - %s" % (self.player, self.corporation)
+
 
 class CitizenShipOrder(Order):
 	"""
@@ -21,7 +24,7 @@ class CitizenShipOrder(Order):
 	def resolve(self):
 		self.player.citizenship.corporation = self.corporation
 		self.player.citizenship.save()
-		
+
 		# Send a note for final message
 		category = u"Citoyenneté"
 		content = u"Vous êtes désormais citoyen de la mégacorporation %s." % self.corporation

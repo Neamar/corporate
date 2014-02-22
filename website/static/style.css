@@ -1,11 +1,21 @@
+/********************
+ * ELEMENTS
+ */
+a:visited
+{
+   color:#0000EE;
+}
+
+pre {
+   white-space: pre-wrap;
+}
+
+/********************
+ * GLOBAL LAYOUT
+ */
 body
 {
    background:url("city.jpg") no-repeat fixed center top #64595f;
-}
-
-:visited
-{
-   color:#0000EE;
 }
 
 .top
@@ -14,51 +24,14 @@ body
   display:block;
 }
 
-.right
-{
-   text-align:right;
-}
-
 .spacer
 {
    margin:90% 0;
 }
 
-table
-{
-   margin:auto;
-   border-collapse:collapse;
-   width:90%;
-}
-
-table caption
-{
-   text-align:right;
-   font-variant:small-caps;
-}
-tr, td, th
-{
-   border:1px solid black;
-}
-
-tbody tr:nth-child(odd)
-{
-   background:rgba(255, 255, 255, .3)
-}
-
-td a
-{
-   color:black !important;
-   text-decoration:none;
-}
-
-pre {
-   white-space: pre-wrap;
-}
-
 #wrapper
 {
-   width:600px;
+   width:650px;
    margin:auto;
 }
 
@@ -157,4 +130,118 @@ pre {
    {
       width: 100%;
    }
+}
+
+
+/********************
+ * TABLES
+ */
+table
+{
+   margin:auto;
+   border-collapse:collapse;
+   max-width:90%;
+}
+
+table caption
+{
+   text-align:right;
+   font-variant:small-caps;
+}
+
+tr, td, th
+{
+   border:1px solid black;
+}
+
+tbody tr:nth-child(odd)
+
+{
+   background:rgba(255, 255, 255, .3)
+}
+
+td a
+{
+   color:black !important;
+   text-decoration:none;
+}
+
+.prop_table td:not(:first-child)
+{
+   width:50px;
+}
+
+.prop_table tr, th
+{
+   text-align:center;
+}
+
+.prop_table th:first-child
+{
+   border-top:1px solid transparent;
+   border-left:1px solid transparent;
+}
+
+.prop_table td:first-child
+{
+   font-weight:bold;
+   text-align:left;
+   padding:0 20px;
+}
+
+.prop_table td.important
+{
+   background: rgba(100, 89, 95, .2)
+}
+
+.slanted_head thead tr {
+   border: none;
+}
+
+.slanted_head td:not(:first-child) {
+   max-width:30px;
+}
+
+.slanted_head th {
+  height: 80px;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  position: relative;
+  vertical-align: bottom;
+  padding: 0;
+  font-size: 12px;
+  line-height: 0.8;
+  border: none;
+}
+
+/* http://jimmybonney.com/articles/column_header_rotation_css/ */
+.slanted_head th > div {
+  position: relative;
+  top: 0px;
+  left: 40px; /* 80 * tan(45) / 2 = 40 where 80 is the height on the cell and 45 is the transform angle*/
+  height: 100%;
+  -ms-transform:skew(-45deg,0deg);
+  -moz-transform:skew(-45deg,0deg);
+  -webkit-transform:skew(-45deg,0deg);
+  -o-transform:skew(-45deg,0deg);
+  transform:skew(-45deg,0deg);
+  overflow: hidden;
+  border-left: 1px solid black;
+}
+
+.slanted_head th span {
+  -ms-transform:skew(45deg,0deg) rotate(315deg);
+  -moz-transform:skew(45deg,0deg) rotate(315deg);
+  -webkit-transform:skew(45deg,0deg) rotate(315deg);
+  -o-transform:skew(45deg,0deg) rotate(315deg);
+  transform:skew(45deg,0deg) rotate(315deg);
+  position: absolute;
+  bottom: 30px; /* 40 cos(45) = 28 with an additional 2px margin*/
+  left: -25px; /*Because it looked good, but there is probably a mathematical link here as well*/
+  display: inline-block;
+  // width: 100%;
+  width: 85px; /* 80 / cos(45) - 40 cos (45) = 85 where 80 is the height of the cell, 40 the width of the cell and 45 the transform angle*/
+  text-align: left;
+  // white-space: nowrap; /*whether to display in one line or not*/
 }

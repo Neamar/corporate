@@ -20,11 +20,11 @@ Le projet le plus connu de Shiawase à Manhattan est son contrat d'entretien de 
 ## Effet premier :
 En position de force, Shiawase fait sentir à Renraku le poids de ses arguments idéologiques, laissant Sony profiter de la hausse du Nikkei pour investir à Manhattan.
 
->-1 actif pour Renraku.
->+1 actif pour Sony.
+* -1 actif pour Renraku.
+* +1 actif pour Sony.
 
 ## Effet dernier :
 Prête à tout pour ne pas perdre la face, Shiawase se déchaîne contre ses concurrents. Dépendant de ses partenariats japonais, cependant, Sony accuse le coup.
 
->-1 actif pour l'avant-dernière corpo.
->-1 actif pour Sony.
+* -1 actif pour l'avant-dernière corpo.
+* -1 actif pour Sony.

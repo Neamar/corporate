@@ -21,9 +21,9 @@ Autant de raisons pour laquelle est est souvent considérée comme indispensable
 ## Effet premier :
 Le succès d'Ares l'amène à redoubler ses efforts pour rendre Manhattan fonctionnel et attractif, ce qui relance l'investissement.
 
->+1 actifs pour les deux dernières corpos.
+* +1 actifs pour les deux dernières corpos.
 
 ## Effet dernier :
 Ares a de plus en plus de mal à faire tourner ses activités, qui sont cruciales pour NYC. L'économie locale en pâtit.
 
->-1 actifs pour les deux premières corpos.
+* -1 actifs pour les deux premières corpos.

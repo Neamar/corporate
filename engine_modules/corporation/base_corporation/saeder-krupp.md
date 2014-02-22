@@ -16,9 +16,9 @@ Pourtant, les plus gros bénéfices de Saeder Krupp à Manhattan sont prélevés
 ## Effet premier : 
 Fidèle à sa stratégie prédatrice, SK met un point d'honneur à écraser ses rivaux.
 
->-2 actifs pour la deuxième corpo.
+* -2 actifs pour la deuxième corpo.
 
 ## Effet dernier :
 Furieux des résultats catastrophiques de ses larbins, Lofwyr en réduit un ou deux en cendres pour motiver les autres et injecte assez de nuyens à Manhattan pour être certain de ne pas y perdre pied.
 
->+2 actifs pour Saeder Krupp.
+* +2 actifs pour Saeder Krupp.

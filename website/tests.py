@@ -23,13 +23,13 @@ class WebsiteTest(EngineTestCase):
 		is_logged_in = self.authenticated_client.login(username=self.u.username, password=password)
 		self.assertTrue(is_logged_in)
 
-	def test_index_and_admin_up(self):
+	def test_index_and_admin_up_nologin(self):
 		"""
 		Checking index also checks admin forms are properly configured
 		"""
 
 		pages = [
-			'website.views.index',
+			'website.views.index.index',
 			'django.contrib.auth.views.login',
 			'admin:index',
 		]
@@ -40,28 +40,46 @@ class WebsiteTest(EngineTestCase):
 
 	def test_pages_require_login(self):
 		pages = [
-			'website.views.orders',
-			'website.views.wallstreet',
-			'website.views.corporations',
-			'website.views.players',
+			reverse('website.views.orders.orders', args=[self.g.id]),
+			reverse('website.views.orders.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
+			reverse('website.views.orders.delete_order', args=[self.g.id, 1]),
+			reverse('website.views.datas.wallstreet', args=[self.g.id]),
+			reverse('website.views.datas.corporations', args=[self.g.id]),
+			reverse('website.views.datas.players', args=[self.g.id]),
+			reverse('website.views.datas.shares', args=[self.g.id]),
 		]
 
 		for page in pages:
-			r = self.client.get(reverse(page, args=[self.g.id]))
+			r = self.client.get(page)
 			self.assertEqual(r.status_code, 302)
 
-	def test_posting_orders_require_login(self):
-		r = self.client.get(reverse('website.views.add_order', args=[self.g.id, 'BuyInfluenceOrder']))
-		self.assertEqual(r.status_code, 302)
+	def test_pages_up(self):
+		pages = [
+			reverse('website.views.orders.orders', args=[self.g.id]),
+			reverse('website.views.orders.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
+			reverse('website.views.datas.wallstreet', args=[self.g.id]),
+			reverse('website.views.datas.corporations', args=[self.g.id]),
+			reverse('website.views.datas.corporation', args=[self.g.id, self.c.base_corporation_slug]),
+			reverse('website.views.datas.players', args=[self.g.id]),
+			reverse('website.views.datas.player', args=[self.g.id, self.p.id]),
+			reverse('website.views.datas.shares', args=[self.g.id]),
+		]
 
-	def test_wallstreet(self):
-		r = self.authenticated_client.get(reverse('website.views.wallstreet', args=[self.g.id]))
-		self.assertEqual(r.status_code, 200)
-	
-	def test_corporations(self):
-		r = self.authenticated_client.get(reverse('website.views.corporations', args=[self.g.id]))
-		self.assertEqual(r.status_code, 200)
+		for page in pages:
+			r = self.authenticated_client.get(page)
+			self.assertEqual(r.status_code, 200)
 
-	def test_players(self):
-		r = self.authenticated_client.get(reverse('website.views.players', args=[self.g.id]))
-		self.assertEqual(r.status_code, 200)
+	def test_pages_redirect(self):
+		from engine_modules.influence.models import BuyInfluenceOrder
+		o = BuyInfluenceOrder(
+			player=self.p
+		)
+		o.save()
+
+		pages = [
+			reverse('website.views.orders.delete_order', args=[self.g.id, 1]),
+		]
+
+		for page in pages:
+			r = self.authenticated_client.get(page)
+			self.assertEqual(r.status_code, 302)

@@ -26,7 +26,7 @@ def get_ordered_corporations(self):
 	if ex-aequo order by assets the turn before and the turn even before until the turn 1
 	if ex-aequo again, order by the first in the sql request. Postgres should always send them in the same order
 	"""
-	previous = AssetHistory.objects.filter(corporation__game=self)
+	previous = AssetHistory.objects.filter(corporation__game=self).select_related('corporation')
 	ranking = defaultdict(lambda: 0)
 	for element in previous:
 		ranking[element.corporation] += element.assets * pow(10, 2 * element.turn)

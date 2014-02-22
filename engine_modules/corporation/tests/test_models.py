@@ -15,5 +15,8 @@ class ModelTest(TestCase):
 		Corporation should have been created alongside the game
 		"""
 
-		corporations = Corporation.objects.all()
+		corporations = Corporation.objects.all().order_by('base_corporation_slug')
 		self.assertEqual(len(corporations), len(BaseCorporation.retrieve_all()))
+
+		self.assertEqual(corporations[0].base_corporation.slug, 'ares')
+		self.assertEqual(corporations[0].base_corporation.datasteal, 10)
