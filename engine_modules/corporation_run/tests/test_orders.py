@@ -175,7 +175,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 			dso.resolve()
 
-			self.assertTrue(dso.target_corporation.base_corporation.name in self.g.newsfeed_set.get().content)
+			self.assertIn(dso.target_corporation.base_corporation.name, self.g.newsfeed_set.get().content)
 		finally:
 			dso.target_corporation.base_corporation.detection = save_value
 
