@@ -87,10 +87,6 @@ class TaskTest(EngineTestCase):
 		
 		self.g.resolve_current_turn()
 
-		# We have to resolve twice: once for the MDCVoteOrders to be taken into account
-		# And once for the resulting MDCVoteSession to be effective
-		self.g.resolve_current_turn()
-
 		self.assertEqual(self.reload(self.c).assets, initial_assets + 1)
 		self.assertEqual(self.reload(self.c2).assets, initial_assets2 + 1)
 		self.assertEqual(self.reload(self.c3).assets, initial_assets3 - 1)
@@ -106,10 +102,6 @@ class TaskTest(EngineTestCase):
 		
 		self.set_Turn_Line(MDCVoteOrder.CPUB, MDCVoteOrder.DEVE, MDCVoteOrder.DEVE)
 
-		self.g.resolve_current_turn()
-
-		# We have to resolve twice: once for the MDCVoteOrders to be taken into account
-		# And once for the resulting MDCVoteSession to be effective
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.c).assets, initial_assets - 1)

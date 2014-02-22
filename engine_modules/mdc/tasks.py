@@ -48,22 +48,25 @@ class MDCLineCPUBTask(ResolutionTask):
 	Enforce the effects of the MDC CPUB party line
 	"""
 
-	RESOLUTION_ORDER = 100
+	# The CPUB line takes effect on the same turn that it was voted, so this task must be resolved
+	# strictly after MDCVoteTask and strictly before the First Last Effects
+	RESOLUTION_ORDER = 300
 
 	def run(self, game):
 
-		party_line = game.get_current_mdc_party_line()
+		# Because this is run the turn of the vote, we have to watch out for the next line
+		party_line = game.get_next_mdc_party_line()
 
 		if party_line != MDCVoteOrder.CPUB:
 			return
 
 		winning_corporations = []
-		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn - 1, party_line=MDCVoteOrder.CPUB)
+		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.CPUB)
 		for o in win_votes:
 			winning_corporations += o.get_friendly_corporations()
 			
 		losing_corporations = []
-		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn - 1, party_line=MDCVoteOrder.DEVE)
+		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.DEVE)
 		for o in loss_votes:
 			losing_corporations += o.get_friendly_corporations()
 
@@ -83,22 +86,25 @@ class MDCLineDEVETask(ResolutionTask):
 	Enforce the effects of the MDC CPUB party line
 	"""
 
-	RESOLUTION_ORDER = 100
+	# The DEVE line takes effect on the same turn that it was voted, so this task must be resolved
+	# strictly after MDCVoteTask and strictly before the First Last Effects
+	RESOLUTION_ORDER = 300
 
 	def run(self, game):
 
-		party_line = game.get_current_mdc_party_line()
+		# Because this is run the turn of the vote, we have to watch out for the next line
+		party_line = game.get_next_mdc_party_line()
 
 		if party_line != MDCVoteOrder.DEVE:
 			return
 
 		winning_corporations = []
-		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn - 1, party_line=MDCVoteOrder.DEVE)
+		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.DEVE)
 		for o in win_votes:
 			winning_corporations += o.get_friendly_corporations()
 			
 		losing_corporations = []
-		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn - 1, party_line=MDCVoteOrder.CPUB)
+		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.CPUB)
 		for o in loss_votes:
 			losing_corporations += o.get_friendly_corporations()
 

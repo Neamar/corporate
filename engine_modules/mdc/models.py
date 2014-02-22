@@ -103,6 +103,19 @@ def get_current_mdc_party_line(self):
 	session = self.mdcvotesession_set.get(turn=self.current_turn)
 	return session.current_party_line
 
+def get_next_mdc_party_line(self):
+	"""
+	Get the MDC party line voted this session
+	Return None if the vote hasn't happened yet
+	"""
+
+	try:
+		session = self.mdcvotesession_set.get(turn=self.current_turn + 1)
+	except:
+		return None
+
+	return session.current_party_line
+
 def get_last_mdc_vote(self):
 	"""
 	Get what a player voted in the last MDC Vote session
@@ -116,6 +129,7 @@ def get_last_mdc_vote(self):
 	return vote.party_line
 
 Game.get_current_mdc_party_line = get_current_mdc_party_line
+Game.get_next_mdc_party_line = get_next_mdc_party_line
 Player.get_last_mdc_vote = get_last_mdc_vote
 
 orders = (MDCVoteOrder,)
