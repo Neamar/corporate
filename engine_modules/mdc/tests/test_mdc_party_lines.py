@@ -18,14 +18,6 @@ class TaskTest(EngineTestCase):
 		self.p3 = Player(game=self.g)
 		self.p3.save()
 
-		self.g.corporation_set.all().delete()
-		self.c = Corporation(base_corporation_slug='renraku', assets=20)
-		self.g.corporation_set.add(self.c)
-		self.c2 = Corporation(base_corporation_slug='shiawase', assets=10)
-		self.g.corporation_set.add(self.c2)
-		self.c3 = Corporation(base_corporation_slug='ares', assets=10)
-		self.g.corporation_set.add(self.c3)
-
 		self.s = Share(
 			corporation=self.c,
 			player=self.p,
@@ -67,6 +59,20 @@ class TaskTest(EngineTestCase):
 
 		self.g.disable_invisible_hand = True
 
+	def set_Turn_Line(self, L1, L2, L3):
+		"""
+		A little helper to set the Line each player has voted for this turn
+		"""
+
+		self.v.party_line = L1
+		self.v.save()
+
+		self.v2.party_line = L2
+		self.v2.save()
+
+		self.v3.party_line = L3
+		self.v3.save()
+
 
 	def test_MDC_CPUB_line_effects(self):
 		"""
@@ -76,16 +82,9 @@ class TaskTest(EngineTestCase):
 		initial_assets = self.c.assets
 		initial_assets2 = self.c2.assets
 		initial_assets3 = self.c3.assets
+
+		self.set_Turn_Line(MDCVoteOrder.CPUB, MDCVoteOrder.CPUB, MDCVoteOrder.DEVE)
 		
-		self.v.party_line = MDCVoteOrder.CPUB
-		self.v.save()
-
-		self.v2.party_line = MDCVoteOrder.CPUB
-		self.v2.save()
-
-		self.v3.party_line = MDCVoteOrder.DEVE
-		self.v3.save()
-
 		self.g.resolve_current_turn()
 
 		# We have to resolve twice: once for the MDCVoteOrders to be taken into account
@@ -105,14 +104,7 @@ class TaskTest(EngineTestCase):
 		initial_assets2 = self.c2.assets
 		initial_assets3 = self.c3.assets
 		
-		self.v.party_line = MDCVoteOrder.CPUB
-		self.v.save()
-
-		self.v2.party_line = MDCVoteOrder.DEVE
-		self.v2.save()
-
-		self.v3.party_line = MDCVoteOrder.DEVE
-		self.v3.save()
+		self.set_Turn_Line(MDCVoteOrder.CPUB, MDCVoteOrder.DEVE, MDCVoteOrder.DEVE)
 
 		self.g.resolve_current_turn()
 
@@ -129,14 +121,7 @@ class TaskTest(EngineTestCase):
 		Test what happens when the CCIB party line is chose
 		"""
 
-		self.v.party_line = MDCVoteOrder.CCIB
-		self.v.save()
-
-		self.v2.party_line = MDCVoteOrder.CCIB
-		self.v2.save()
-
-		self.v3.party_line = MDCVoteOrder.TRAN
-		self.v3.save()
+		self.set_Turn_Line(MDCVoteOrder.CCIB, MDCVoteOrder.CCIB, MDCVoteOrder.TRAN)
 
 		self.g.resolve_current_turn()
 
@@ -149,14 +134,7 @@ class TaskTest(EngineTestCase):
 		Test what happens when the CCIB party line is chosen
 		"""
 
-		self.v.party_line = MDCVoteOrder.CCIB
-		self.v.save()
-
-		self.v2.party_line = MDCVoteOrder.TRAN
-		self.v2.save()
-
-		self.v3.party_line = MDCVoteOrder.TRAN
-		self.v3.save()
+		self.set_Turn_Line(MDCVoteOrder.CCIB, MDCVoteOrder.TRAN, MDCVoteOrder.TRAN)
 
 		self.g.resolve_current_turn()
 
@@ -169,14 +147,7 @@ class TaskTest(EngineTestCase):
 		Test what happens when the BANK party line is chose
 		"""
 
-		self.v.party_line = MDCVoteOrder.BANK
-		self.v.save()
-
-		self.v2.party_line = MDCVoteOrder.BANK
-		self.v2.save()
-
-		self.v3.party_line = MDCVoteOrder.DERE
-		self.v3.save()
+		self.set_Turn_Line(MDCVoteOrder.BANK, MDCVoteOrder.BANK, MDCVoteOrder.DERE)
 
 		self.g.resolve_current_turn()
 
@@ -221,14 +192,7 @@ class TaskTest(EngineTestCase):
 		Test what happens when the BANK party line is chose
 		"""
 
-		self.v.party_line = MDCVoteOrder.BANK
-		self.v.save()
-
-		self.v2.party_line = MDCVoteOrder.DERE
-		self.v2.save()
-
-		self.v3.party_line = MDCVoteOrder.DERE
-		self.v3.save()
+		self.set_Turn_Line(MDCVoteOrder.BANK, MDCVoteOrder.DERE, MDCVoteOrder.DERE)
 
 		self.g.resolve_current_turn()
 
