@@ -47,16 +47,6 @@ class ModelTest(EngineTestCase):
 
 		self.assertEqual(self.g.current_turn, 2)
 
-	def test_game_resolve_current_turn_build_order_message(self):
-		"""
-		Check resolve_current_turn creates Order messages.
-		"""
-
-		# sanity check
-		self.assertEqual(0, Message.objects.filter(recipient_set=self.p, flag=Message.ORDER).count())
-		self.g.resolve_current_turn()
-		self.assertEqual(1, Message.objects.filter(recipient_set=self.p, flag=Message.ORDER).count())
-
 	def test_game_resolve_current_turn_build_resolution_message(self):
 		"""
 		Check resolve_current_turn creates Resolution messages.
@@ -241,22 +231,6 @@ class ModelTest(EngineTestCase):
 		self.g.save()
 
 		self.assertEqual([o2], list(self.p.get_current_orders()))
-
-	def test_player_build_order_message(self):
-		"""
-		Should create a new message
-		"""
-		from engine_modules.influence.models import BuyInfluenceOrder
-
-		o = BuyInfluenceOrder(
-			player=self.p
-		)
-		o.save()
-
-		m = self.p.build_order_message()
-		self.assertIn("Influence", m.content)
-		self.assertIn(str(self.p.money), m.content)
-		self.assertIsNone(m.author)
 
 	def test_player_add_note(self):
 		"""
