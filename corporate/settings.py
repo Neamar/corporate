@@ -72,7 +72,7 @@ WSGI_APPLICATION = 'corporate.wsgi.application'
 
 # settings.py
 AUTH_USER_MODEL = 'website.User'
-LOGIN_REDIRECT_URL = 'website.views.index'
+LOGIN_REDIRECT_URL = 'website.views.index.index'
 LOGIN_URL = 'django.contrib.auth.views.login'
 
 # Database
