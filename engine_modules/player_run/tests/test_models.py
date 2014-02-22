@@ -7,7 +7,7 @@ class ModelTest(EngineTestCase):
 
 	def test_information_run_cant_target_self(self):
 		"""
-		Check if a Johnson can't target himself
+		Check a Johnson can't target himself
 		"""
 		o = InformationRunOrder(
 			target=self.p,
