@@ -27,8 +27,8 @@ class CitizenShipOrder(Order):
 
 		# Send a note for final message
 		category = u"Citoyenneté"
-		content = u"Vous êtes désormais citoyen de la mégacorporation %s." % self.corporation
-		newsfeed_content = u"%s est maintenant citoyen de la mégacorporation %s" % (self.player, self.corporation)
+		content = u"Vous êtes désormais citoyen de la mégacorporation %s." % self.corporation.base_corporation.name
+		newsfeed_content = u"%s est maintenant citoyen de la mégacorporation %s" % (self.player, self.corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 		self.player.game.add_newsfeed(category=Newsfeed.PEOPLE, content=newsfeed_content)
 
