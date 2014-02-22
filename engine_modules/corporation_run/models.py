@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from random import randint
-from django.core.exceptions import ValidationError
 from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
 from messaging.models import Note
@@ -27,7 +26,7 @@ sabotage_messages = {
 		'citizens': u"Un sabotage a été effectué sur %s",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe a échoué lors de la tentative de DataSteal sur %s",
+		'sponsor': u"Votre équipe a échoué lors de la tentative de sabotage sur %s",
 		'newsfeed': u"Une tentative de sabotage à été effectuée sur %s",
 		'citizens': u"Une tentative de sabotage à été effectuée sur %s",
 	},
