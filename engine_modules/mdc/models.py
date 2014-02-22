@@ -18,7 +18,6 @@ class MDCVoteOrder(Order):
 	DEVE = "DEVE"
 	BANK = "BANK"
 	TRAN = "TRAN"
-	NONE = "NONE"
 
 	# Enumerate the party lines and what they mean
 	MDC_PARTY_LINE_CHOICES = (('CPUB', u'Contrats publics'),
@@ -27,10 +26,9 @@ class MDCVoteOrder(Order):
 		('DEVE', u'Développement urbain'),
 		('BANK', u'Garde-fous bancaires'),
 		('TRAN', u'Transparence'),
-		('NONE', u'Pas de ligne officielle')
 	)
 
-	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, blank=True, null=True, default="NONE")
+	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
 	title = "Choisir une coalition"
 
 
@@ -96,11 +94,11 @@ class MDCVoteSession(models.Model):
 def get_current_mdc_party_line(self):
 	"""
 	Get the MDC party line voted last session
-	if the current turn is the first one, returns "NONE"
+	if the current turn is the first one, returns None
 	"""
 
 	if self.current_turn == 1:
-		return MDCVoteOrder.NONE
+		return None
 
 	session = self.mdcvotesession_set.get(turn=self.current_turn)
 	return session.current_party_line
@@ -113,7 +111,7 @@ def get_last_mdc_vote(self):
 	try:
 		vote = MDCVoteOrder.objects.get(turn=self.game.current_turn - 1, player=self)
 	except:
-		return MDCVoteOrder.NONE
+		return None
 
 	return vote.party_line
 

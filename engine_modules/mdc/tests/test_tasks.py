@@ -43,5 +43,5 @@ class TaskTest(EngineTestCase):
 		self.g.resolve_current_turn()
 
 		mdc_vote_session = (self.g.mdcvotesession_set.get(turn=self.g.current_turn))
-		self.assertEqual(mdc_vote_session.current_party_line, MDCVoteOrder.NONE)
+		self.assertEqual(mdc_vote_session.current_party_line, None)
 
