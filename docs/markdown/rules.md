@@ -30,7 +30,7 @@ Chacun des concepts suivants sera expliqué en détail.
 
 4. Chaque joueur touche ses divers retours sur investissements.
 
-5. Les onglets et **Wall Street** et **Newsfeeds** révèlent respectivement le nouveau classement et les évènements publics du tour écoulé, et chaque joueur reçoit en plus un **message de résolution** personnalisé qui contient les informations plus confidentielles.
+5. Les onglets **Wall Street** et **Newsfeeds** révèlent respectivement le nouveau classement et les évènements publics du tour écoulé, et chaque joueur reçoit en plus un **message de résolution** personnalisé qui contient les informations plus confidentielles.
 
 Un nouveau tour peut commencer.
 
@@ -71,7 +71,7 @@ Les effets premier et dernier des corpos en tête et en fin de classement s'appl
 
 ### Crash
 
-Au cour de la résolution du tour, une corpo peut descendre à 0 actifs ou moins. Son effet dernier peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle **Crash** et est définitivement retirée du classement. Pas de remboursement pour les parts investies.
+Au cours de la résolution du tour, une corpo peut descendre à 0 actifs ou moins. Son effet dernier peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle **Crashe** et est définitivement retirée du classement. Pas de remboursement pour les parts investies.
 
 ## Achat d'Influence
 
@@ -92,7 +92,7 @@ Un **citoyen corpo** :
 
 Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste (cf mise en place).
 
-Si la corpo dont le joueur est citoyen Crash, il en perd la citoyenneté et pourra s'il le souhaite en réclamer une nouvelle au tour suivant. Il subit normalement le malus de points de victoire.
+Si la corpo dont le joueur est citoyen Crashe, il en perd la citoyenneté et pourra s'il le souhaite en réclamer une nouvelle au tour suivant. Il subit normalement le malus de points de victoire.
 
 ## Runs
 
@@ -126,20 +126,20 @@ Une run détectée sera également mentionnée dans les Newsfeeds de fin de tour
 
 > Les runs de Protection ne sont jamais détectées.
 > Les runs de Sabotage réussies sont particulièrement voyantes, et apparaissent dans les Newsfeeds même si elles n’ont pas été détectées.
-> Même détectées, les runs d’Information ne font pas de vague et ne sont pas révélées dans les Newsfeeds.
+> Même détectées, les runs d’Information ne font pas de vagues et ne sont pas révélées dans les Newsfeeds.
 
 ### Malus de timing
 
-Lorsque plusieurs équipes de shadowrunners sont engagées pour des runs similaires, elles risquent d’entrer en concurrence et se marcher sur les pieds.
+Lorsque plusieurs équipes de shadowrunners sont engagées pour des runs similaires, elles risquent d’entrer en concurrence et de se marcher sur les pieds.
 
 Une run subit un malus de **-10%** pour chaque autre run qui **correspond aux 3 critères** suivants :
-*  Est du **même type** (Datasteal, Sabotage, Extraction ou Information).
-*  A la **même cible**, joueur ou corpo.
+* Est du **même type** (Datasteal, Sabotage, Extraction ou Information).
+* A la **même cible**, joueur ou corpo.
 * A un **pourcentage de réussite supérieur ou égal** au sien (avant que les malus de timing ne soient appliqués).
 
     2 runs de Sabotage (même type) sont lancées contre Renraku (même cible) le même tour : 
     * Si elles ont toutes les deux 70% de chance de réussite, chacune fait subir à l’autre un malus de timing de -10%.
-    * En revanche, si la première a 80% de chance réussite et la seconde 70%, seule la seconde subit un malus.
+    * En revanche, si la première a 80% de chance de réussite et la seconde 70%, seule la seconde subit un malus.
 
 > Les runs de Protection n'entrent pas en concurrence.
 
@@ -155,7 +155,7 @@ Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En
 
 Le commanditaire choisit une **corpo cible**, et tente de saboter une de ses opérations. En cas de réussite, la corpo subit **-2 actifs**.
 
-> Quelles aient été détectées ou non, les runs de Sabotage réussies sont révélée dans les Newsfeeds.
+> Qu'elles aient été détectées ou non, les runs de Sabotage réussies sont révélées dans les Newsfeeds.
 
 ### Extraction
 * Base : 10 %
@@ -194,7 +194,7 @@ Le commanditaire choisit une **corpo bénéficiaire**, et lui attribue une Défe
 
 Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
 
-Les joueurs qui veulent miser dans le grand casino de l’East Coast Stock Exchange peuvent effectuer un nombre de **spéculations** par tour égal à leur IC. Le nombre de spéculations qu’un joueur peut effectié est limité par son IC, et le montant de chaque spéculation ne peut dépasser 1000 000 ny × (IC du spéculateur). Il est possible d’effectuer la même spéculation plusieurs fois.
+Les joueurs qui veulent miser dans le grand casino de l’East Coast Stock Exchange peuvent effectuer un nombre de **spéculations** par tour égal à leur IC. Le nombre de spéculations qu’un joueur peut effectué est limité par son IC, et le montant de chaque spéculation ne peut dépasser 100 000 ny × (IC du spéculateur). Il est possible d’effectuer la même spéculation plusieurs fois.
 
 Chaque spéculation peut viser :
 
@@ -232,11 +232,11 @@ Le MDC (ou Manhattan Inc.) n'est pas exactement une corporation, mais la structu
 
 Les corpos membres ont changées plusieurs fois depuis la fin de la reconstruction. Aujourd'hui, elles sont treize (seules 10 sont représentées dans le jeu), et ont chacune une voix lors des votes du consortium. Ces votes légifèrent sur tous les aspects de la vie et des affaires à Manhattan, des juteux contrats de la voirie, de la sécurité, du traitement des déchets ou du développement de la matrice aux lois de régulations des marchés qui ont le potentiel de bouleverser le cours des actions des corpos les plus stables. Les votes du MDC rythment la vie politique de Manhattan, et sont disputés par des coalitions fluctuantes qui ne reculent devant aucun coup bas pour rafler la mise.
 
-Chaque tour, les joueurs peuvent voter pour une **coalition** au MCD. Les options, détaillées plus bas, consistent en une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
+Chaque tour, les joueurs peuvent voter pour une **coalition** au MDC. Les options, détaillées plus bas, consistent en une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
 
 Chaque joueur possède une voix, plus celle de toutes les corpos dans lesquels il possède plus de parts que n'importe quel autre joueur. Ces corpos comptent comme ayant voté comme lui (voir Contrats publics, Développement urbain et Contrôles ciblés ci dessous).
 
-> En cas d'égalité sur le nombre de parts possédée, aucun joueur ne récupère la voix de la corpo. 
+> En cas d'égalité sur le nombre de parts possédées, aucun joueur ne récupère la voix de la corpo. 
 > De même, en cas d'égalité sur le vote de coalition, aucune coalition ne l'emporte.
 > Les gains et pertes d’actifs prennent effet le tour du vote, avant les effets premier/dernier. Tous les autres effets prennent effet le tour suivant.
 
