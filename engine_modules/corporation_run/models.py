@@ -99,13 +99,12 @@ class OffensiveRunOrder(RunOrder):
 
 	def get_success_probability(self):
 		"""
-		Compute success probability, maxed by 90%
+		Compute success probability, maxed by 90%. Add timing malus.
 		"""
-		proba = super(OffensiveRunOrder, self).get_success_probability()
-		proba += self.PROBA_SUCCESS
+		raw_proba = self.get_raw_probability()
 		similar_runs = self.__class__.objects.filter(target_corporation=self.target_corporation).exclude(pk=self.pk)
-		better_runs = [run for run in similar_runs if run.get_raw_probability() >= proba]
-		proba -= 10 * len(better_runs)
+		better_runs = [run for run in similar_runs if run.get_raw_probability() >= raw_proba]
+		proba = raw_proba - 10 * len(better_runs)
 		return proba
 
 	def resolve(self):
