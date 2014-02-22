@@ -182,7 +182,7 @@ class DataStealOrder(OffensiveRunOrder):
 			self.player.game.add_newsfeed(category=category, content=content)
 
 	def description(self):
-		return u"Envoyer une équipe voler des données de %s pour le compte de %s" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+		return u"Envoyer une équipe voler des données de %s pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 
 	def get_form(self, datas=None):
 		form = super(DataStealOrder, self).get_form(datas)
@@ -230,7 +230,7 @@ class SabotageOrder(OffensiveRunOrder):
 			self.notify_citizens(content)
 
 	def description(self):
-		return u"Envoyer une équipe saper les opérations et les résultats de %s" % (self.target_corporation.base_corporation.name)
+		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
 
 
 class ExtractionOrder(OffensiveRunOrder):
@@ -283,7 +283,7 @@ class ExtractionOrder(OffensiveRunOrder):
 			self.player.game.add_newsfeed(category=category, content=content)
 
 	def description(self):
-		return u"Envoyer une équipe kidnapper un scientifique renommé de %s" % (self.target_corporation.base_corporation.name)
+		return u"Envoyer une équipe kidnapper un scientifique renommé de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
 
 
 class ProtectionOrder(RunOrder):
@@ -328,7 +328,7 @@ class ProtectionOrder(RunOrder):
 		self.player.save()
 
 	def description(self):
-		return u"Envoyer une équipe protéger les intérêts de %s" % (self.protected_corporation.base_corporation.name)
+		return u"Envoyer une équipe protéger les intérêts de %s (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_success_probability())
 
 	def get_form(self, datas=None):
 		form = super(ProtectionOrder, self).get_form(datas)
