@@ -44,6 +44,11 @@ class BaseCorporation:
 		self.extraction = meta['extraction'][0]
 		self.detection = meta['detection'][0]
 
+		self.datasteal = int(meta['datasteal'][0])
+		self.sabotage = int(meta['sabotage'][0])
+		self.extraction = int(meta['extraction'][0])
+		self.detection = int(meta['detection'][0])
+
 		code = "\n".join(meta['on_first'])
 		self.on_first = self.compile_effect(code, "on_first")
 
