@@ -13,13 +13,6 @@ from website.utils import get_player, get_shares_count
 from utils.read_markdown import parse_markdown
 
 
-def index(request):
-	"""
-	Index page
-	"""
-	return render(request, 'index.html', {})
-
-
 @login_required
 def wallstreet(request, game_id):
 	"""
