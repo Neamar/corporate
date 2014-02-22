@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, ExtractionOrder
+from messaging.models import Newsfeed
 
 
 class RunOrdersTest(EngineTestCase):
@@ -155,6 +156,28 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		po.save()
 
 		self.assertEqual(dso.get_protection_values(), [po.get_success_probability(), dso.target_corporation.base_corporation.datasteal])
+
+	def test_detected_create_newsfeed(self):
+		"""
+		Check detection use corporation base values
+		"""
+		dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=7,
+		)
+		dso.save()
+
+		save_value = dso.target_corporation.base_corporation.detection
+		try:
+			dso.target_corporation.base_corporation.detection = 100
+
+			dso.resolve()
+
+			self.assertTrue(dso.target_corporation.base_corporation.name in self.g.newsfeed_set.get().content)
+		finally:
+			dso.target_corporation.base_corporation.detection = save_value
 
 
 class DatastealRunOrderTest(RunOrdersTest):
