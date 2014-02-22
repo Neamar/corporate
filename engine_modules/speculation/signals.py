@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
-from os import listdir
-
 from django.dispatch import receiver
-from django.conf import settings
 
-from utils.read_markdown import read_markdown
 from engine.dispatchs import validate_order, post_create
 from engine.exceptions import OrderNotAvailable
-from engine.models import Game
 from engine_modules.corporation.models import Corporation
 from engine_modules.speculation.models import Derivative, CorporationSpeculationOrder, DerivativeSpeculationOrder
 

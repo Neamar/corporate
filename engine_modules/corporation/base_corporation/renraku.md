@@ -8,6 +8,7 @@ on_first: "lol"
 on_last: "lol"
 derivative: Nikkei
 
+
 Renraku, encore sous le choc de la débâcle de l'arcologie de Seattle, ne s'est pas encore complètement remise du Crash. La corpo y a perdu un paquet de pognon, et plus important encore, la possibilité de prendre le dessus sur le marché de la réalité augmentée. Dans le monde des megacorps, le second à l'arrivée est également le premier perdant, et Renraku n'a même pas fini second.
 
 Tout ne va pas si mal, cependant. Comme son nom l'indique ("communication" en japonais), elle est toujours la première en matière de stockage de données et elle possède une bonne partie des grilles télécom d'Asie, ce qui lui laisse des arguments de poids.
@@ -21,11 +22,11 @@ Les japanocorp sont connues pour leur tendance à être rancunières, et Renraku
 ## Effet premier :
 Renraku prend enfin le dessus sur ses rivaux et lave fièrement son honneur.
 
->-1 actif pour Neonet.
->-1 actif pour Shiawase.
+* -1 actif pour Neonet.
+* -1 actif pour Shiawase.
 
 ## Effet dernier :
 La chute de Renraku est une mauvaise nouvelle pour les japanocorps, à l'exception de Shiawase qui en profite pour renforcer son emprise sur Neo Tokyo.
 
->-1 actif pour Sony.
->+1 actif pour Shiawase.
+* -1 actif pour Sony.
+* +1 actif pour Shiawase.

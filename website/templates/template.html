@@ -22,12 +22,16 @@
 
 			{% if user.is_authenticated %}
 			<ul class="game">
-				<li><a href="{% url 'website.views.newsfeeds' game_id=1 %}">newsfeeds</a></li>
-				<li><a href="{% url 'website.views.orders' game_id=1 %}">ordres</a></li>
-				<li><a href="{% url 'website.views.wallstreet' game_id=1 %}">wall street</a></li>
-				<li><a href="{% url 'website.views.corporations' game_id=1 %}">corpos</a></li>
-				<li><a href="{% url 'website.views.players' game_id=1 %}">joueurs</a></li>
-				<li><a href="{% url 'website.views.comlink' game_id=1 %}">commlink</a></li>
+				<li><a href="{% url 'website.views.datas.newsfeeds' game_id=1 %}">newsfeeds</a></li>
+				<li><a href="{% url 'website.views.orders.orders' game_id=1 %}">ordres</a></li>
+				<li><a href="{% url 'website.views.datas.comlink' game_id=1 %}">commlink</a></li>
+			</ul>
+
+			<ul class="datas">
+				<li><a href="{% url 'website.views.datas.wallstreet' game_id=1 %}">wall street</a></li>
+				<li><a href="{% url 'website.views.datas.corporations' game_id=1 %}">corpos</a></li>
+				<li><a href="{% url 'website.views.datas.players' game_id=1 %}">joueurs</a></li>
+				<li><a href="{% url 'website.views.datas.shares' game_id=1 %}">parts</a></li>
 			</ul>
 			{% endif %}
 		</div>
@@ -42,6 +46,8 @@
 		<div id="end">
 			{% block end %}<a href="#">&uarr;</a>{% endblock %}
 		</div>
+
+		{% block scripts %}{% endblock %}
 	</div>
 </body>
 </html>

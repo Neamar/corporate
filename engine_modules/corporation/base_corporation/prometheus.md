@@ -17,10 +17,10 @@ Les analystes corporatistes estiment actuellement que Prometheus Engineering est
 ## Effet premier :
 Sous le feu des projecteurs, Prometheus est en mesure de nouer de nouveaux partenariats qui exploitent pleinement ses compétences acquises.
 
->+1 actif pour Prometheus
->+1 actif pour la deuxième corpo.
+* +1 actif pour Prometheus
+* +1 actif pour la deuxième corpo.
 
 ## Effet dernier :
 En mauvaise posture, Prometheus est obligée de soutenir sans condition ceux qui peuvent la sortir de ce mauvais pas.
 
->+2 actifs pour la première corpo.
+* +2 actifs pour la première corpo.

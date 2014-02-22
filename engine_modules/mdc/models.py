@@ -4,6 +4,7 @@ from collections import Counter
 
 from engine.models import Order, Game, Player
 from engine.exceptions import OrderNotAvailable
+from engine.models import Order, Game
 
 
 class MDCVoteOrder(Order):

@@ -19,11 +19,11 @@ Outre son rôle de FAM, ses filiales à Manhattan mettent sur le marché des sui
 ## Effet premier :
 Fort du succès de ses suites cybernétiques, NeoNET exploite son emprise sur la matrice pour contrer les ambitions de la concurrence.
 
->-1 actif pour Spinrad Industries.
->-1 actif pour la deuxième corpo.
+* -1 actif pour Spinrad Industries.
+* -1 actif pour la deuxième corpo.
 
 ## Effet dernier :
 La matrice reste une valeur sûre pour NeoNET, même si Renraku peut enfin mettre un pied dans la porte.
 
->+1 actif pour NeoNET.
->+1 actif pour Renraku.
+* +1 actif pour NeoNET.
+* +1 actif pour Renraku.

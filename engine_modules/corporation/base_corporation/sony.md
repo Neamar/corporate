@@ -17,10 +17,10 @@ Cela fait un moment que Sony siège au MDC, mais tout n'a pas été un long fleu
 ## Effet premier :
 La hausse du Nikkei provoquée par l'ascension de Sony est une sinécure pour ses partenaires japanocorps.
 
->+1 actif pour Renraku.
->+1 actif pour Shiawase.
+* +1 actif pour Renraku.
+* +1 actif pour Shiawase.
 
 ## Effet dernier :
 Son honneur bafoué, Sony déploie tout son arsenal clandestin pour ne pas se laisser distancer.
 
->-2 actifs à l'avant dernière corpo.
+* -2 actifs à l'avant dernière corpo.
