@@ -8,6 +8,7 @@ on_first: "lol"
 on_last: "lol"
 derivative: Nikkei
 
+
 La plus vieille de toutes les mégas, Shiawase s'est fait connaître comme l'entreprise à l'origine de la décision de justice qui a mené le monde vers la loi d'extraterritorialité que les corpos adorent encore aujourd'hui. En tant que *zaibatsu* japonaise classique, Shiawase est gérée comme une entreprise "familiale", avec des employés qui signent des contrats à vie et qui vont souvent jusqu'à se marier au sein de la corpo.
 
 La PDG de la corpo a fait récemment entrer un mari prestigieux dans le clan Shiawase : rien de moins que l’ Empereur du  Japon, le jeune Yasuhito. Depuis son arrivée sur le trône, il est devenu le champion du peuple en lançant un audacieux mouvement de réforme au pays du soleil levant, menaçant une hégémonie nationaliste bien enracinée dans la société japonaise. Le Japon est maintenant divisé, et Shiawase se retrouve opposée aux corpos les plus traditionalistes, dont Sony et plus particulièrement Renraku font partie. À Manhattan, où les japanocorps sont pourtant interdépendantes sur le plan économique face aux corpos gaijins, le conflit prend parfois le dessus.
