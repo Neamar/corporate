@@ -48,22 +48,24 @@ extraction_messages = {
 
 class OffensiveRunOrder(RunOrder):
 	"""
-	Model for offensive corporation runs.
+	Model for offensive runs.
 
-	Implements the check for Protection Runs.
+	Require subclass to define a property target_corporation, whose values will be used for protection and defense.
+	Require constants to be defined:
 
-	Exposes 4 functions to override:
-	* resolve_success: run ok, protection fail
-	* resolve_fail: run fail, protection fail
-	* resolve_interception: run ok, protection ok
-	* resolve_capture: run fail, protection ok
+	* PROTECTION_TYPE : Will be used to find protection run and base default values.
+	* TIMING_MALUS_SIMILAR value to consider for the timing malus.
+	* BASE_SUCCESS_PROBABILITY base probability for resolution
+
+	Checks for Protection Runs.
+	Implements timing malus.
 	"""
-
-	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
+	class Meta:
+		abstract = True
 
 	def is_protected(self):
 		"""
-		Return True if the corporation is defended
+		Return True if the run is defended against
 		"""
 		for protection in self.get_protection_values():
 			if randint(1, 100) <= protection:
@@ -74,6 +76,9 @@ class OffensiveRunOrder(RunOrder):
 		"""
 		Rturn True if the run is detected
 		"""
+		if self.target_corporation is None:
+			return False
+
 		if randint(1, 100) <= self.target_corporation.base_corporation.detection:
 			return True
 		return False
@@ -83,9 +88,11 @@ class OffensiveRunOrder(RunOrder):
 		Return a list of defenses probabilities
 		"""
 		values = []
-		for protector in self.target_corporation.protectors.filter(defense=self.TYPE):
-			values.append(protector.get_success_probability())
-		values.append(getattr(self.target_corporation.base_corporation, self.TYPE))
+		if self.target_corporation is not None:
+			for protector in self.target_corporation.protectors.filter(defense=self.PROTECTION_TYPE):
+				values.append(protector.get_success_probability())
+
+			values.append(getattr(self.target_corporation.base_corporation, self.PROTECTION_TYPE))
 		return values
 
 	def get_raw_probability(self):
@@ -93,7 +100,7 @@ class OffensiveRunOrder(RunOrder):
 		Compute success probability, maxed by 90%
 		"""
 		proba = super(OffensiveRunOrder, self).get_success_probability()
-		proba += self.PROBA_SUCCESS
+		proba += self.BASE_SUCCESS_PROBABILITY
 		return proba
 
 	def get_success_probability(self):
@@ -101,7 +108,11 @@ class OffensiveRunOrder(RunOrder):
 		Compute success probability, maxed by 90%. Add timing malus.
 		"""
 		raw_proba = self.get_raw_probability()
-		similar_runs = self.__class__.objects.filter(target_corporation=self.target_corporation).exclude(pk=self.pk)
+
+		kwargs = {
+			self.TIMING_MALUS_SIMILAR: getattr(self, self.TIMING_MALUS_SIMILAR)
+		}
+		similar_runs = self.__class__.objects.filter(**kwargs).exclude(pk=self.pk)
 		better_runs = [run for run in similar_runs if run.get_raw_probability() >= raw_proba]
 		proba = raw_proba - 10 * len(better_runs)
 		return proba
@@ -115,12 +126,6 @@ class OffensiveRunOrder(RunOrder):
 				self.resolve_fail(self.is_detected())
 				# Repay the player
 				self.repay()
-
-	def get_form(self, datas=None):
-		form = super(OffensiveRunOrder, self).get_form(datas)
-		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
-
-		return form
 
 	def notify_citizens(self, content):
 		"""
@@ -136,12 +141,27 @@ class OffensiveRunOrder(RunOrder):
 		n.recipient_set = Player.objects.filter(citizenship__corporation=self.target_corporation)
 
 
-class DataStealOrder(OffensiveRunOrder):
+class OffensiveCorporationRunOrder(OffensiveRunOrder):
+	"""
+	Model for offensive corporation runs.
+	"""
+	TIMING_MALUS_SIMILAR = 'target_corporation'
+
+	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
+
+	def get_form(self, datas=None):
+		form = super(OffensiveRunOrder, self).get_form(datas)
+		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
+
+
+class DataStealOrder(OffensiveCorporationRunOrder):
 	"""
 	Model for DataSteal Runs
 	"""
-	PROBA_SUCCESS = 30
-	TYPE = "datasteal"
+	BASE_SUCCESS_PROBABILITY = 30
+	PROTECTION_TYPE = "datasteal"
 
 	title = "Lancer une run de Datasteal"
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
@@ -190,14 +210,14 @@ class DataStealOrder(OffensiveRunOrder):
 		return form
 
 
-class SabotageOrder(OffensiveRunOrder):
+class SabotageOrder(OffensiveCorporationRunOrder):
 	"""
 	Model for Sabotage Runs
 	"""
 	title = "Lancer une run de Sabotage"
 
-	PROBA_SUCCESS = 30
-	TYPE = "sabotage"
+	BASE_SUCCESS_PROBABILITY = 30
+	PROTECTION_TYPE = "sabotage"
 
 	def resolve_success(self, detected):
 		self.target_corporation.assets -= 2
@@ -232,14 +252,14 @@ class SabotageOrder(OffensiveRunOrder):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
 
 
-class ExtractionOrder(OffensiveRunOrder):
+class ExtractionOrder(OffensiveCorporationRunOrder):
 	"""
 	Model for Extraction Runs
 	"""
 	title = "Lancer une run d'Extraction"
 
-	PROBA_SUCCESS = 10
-	TYPE = "extraction"
+	BASE_SUCCESS_PROBABILITY = 10
+	PROTECTION_TYPE = "extraction"
 
 	kidnapper_corporation = models.ForeignKey(Corporation, related_name="+")
 
@@ -305,7 +325,7 @@ class ProtectionOrder(RunOrder):
 		(SABOTAGE, "Sabotage")
 	)
 
-	PROBA_SUCCESS = {
+	BASE_SUCCESS_PROBABILITY = {
 		EXTRACTION: PROBA_EXTRACTION_SUCCESS,
 		DATASTEAL: PROBA_DATASTEAL_SUCCESS,
 		SABOTAGE: PROBA_SABOTAGE_SUCCESS,
@@ -319,7 +339,7 @@ class ProtectionOrder(RunOrder):
 		Compute success probability, adding base values
 		"""
 		proba = super(ProtectionOrder, self).get_success_probability()
-		proba += self.PROBA_SUCCESS[self.defense]
+		proba += self.BASE_SUCCESS_PROBABILITY[self.defense]
 		return proba
 
 	def resolve(self):

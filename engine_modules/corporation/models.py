@@ -39,10 +39,6 @@ class BaseCorporation:
 		self.slug = slug
 		self.name = meta['name'][0]
 		self.description = mark_safe(content)
-		self.datasteal = meta['datasteal'][0]
-		self.sabotage = meta['sabotage'][0]
-		self.extraction = meta['extraction'][0]
-		self.detection = meta['detection'][0]
 
 		self.datasteal = int(meta['datasteal'][0])
 		self.sabotage = int(meta['sabotage'][0])

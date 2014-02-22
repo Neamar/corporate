@@ -51,7 +51,7 @@ class ModelTest(EngineTestCase):
 		"""
 		Check resolve_current_turn creates Order messages.
 		"""
-		
+
 		# sanity check
 		self.assertEqual(0, Message.objects.filter(recipient_set=self.p, flag=Message.ORDER).count())
 		self.g.resolve_current_turn()
@@ -61,7 +61,7 @@ class ModelTest(EngineTestCase):
 		"""
 		Check resolve_current_turn creates Resolution messages.
 		"""
-		
+
 		# sanity check
 		self.assertEqual(0, Message.objects.filter(recipient_set=self.p, flag=Message.RESOLUTION).count())
 		self.g.resolve_current_turn()
@@ -71,9 +71,9 @@ class ModelTest(EngineTestCase):
 		"""
 		Check resolve_current_turn creates Resolution messages.
 		"""
-		
+
 		self.p.add_note(category="category", content="private")
-		
+
 		# sanity check
 		self.assertEqual(1, Note.objects.count())
 
@@ -136,7 +136,7 @@ class ModelTest(EngineTestCase):
 		class TestOrder(Order):
 			class Meta:
 				proxy = True
-			
+
 		o = TestOrder(player=self.p)
 		o.save()
 
@@ -155,7 +155,7 @@ class ModelTest(EngineTestCase):
 		"""
 		Can't modify the turn from an existing order
 		"""
-		
+
 		o = Order(player=self.p)
 		o.save()
 
@@ -176,7 +176,7 @@ class ModelTest(EngineTestCase):
 
 		self.p.money = 0
 		self.p.save()
-		
+
 		o = SomeOrder(
 			player=self.p
 		)
@@ -254,8 +254,8 @@ class ModelTest(EngineTestCase):
 		o.save()
 
 		m = self.p.build_order_message()
-		self.assertTrue("Influence" in m.content)
-		self.assertTrue(str(self.p.money) in m.content)
+		self.assertIn("Influence", m.content)
+		self.assertIn(str(self.p.money), m.content)
 		self.assertIsNone(m.author)
 
 	def test_player_add_note(self):
@@ -276,5 +276,5 @@ class ModelTest(EngineTestCase):
 		m = self.p.build_resolution_message()
 		self.assertEqual(m.flag, Message.RESOLUTION)
 		self.assertEqual(m.recipient_set.count(), 1)
-		self.assertTrue(self.p in m.recipient_set.all())
-		self.assertTrue("private" in m.content)
+		self.assertIn(self.p, m.recipient_set.all())
+		self.assertIn("private", m.content)
