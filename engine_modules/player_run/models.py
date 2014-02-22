@@ -15,7 +15,7 @@ class InformationRunOrder(RunOrder):
 
 		self.player.add_message(
 			title="Run d'information sur %s" % (self.target),
-			content=["## Tour %s\n\n%s" % (o.turn, o.content) for o in target_orders],
+			content="\n".join(["## Tour %s\n\n%s" % (o.turn, o.content) for o in target_orders]),
 			author=None,
 			flag=Message.PRIVATE_MESSAGE,
 		)
