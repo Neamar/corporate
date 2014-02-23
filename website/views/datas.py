@@ -22,10 +22,11 @@ def wallstreet(request, game_id):
 
 	# Table datas
 	corporations = player.game.get_ordered_corporations()
-	delta = AssetHistory.objects.filter(corporation__game=player.game, turn=player.game.current_turn - 2)
-	delta_hash = {ah.corporation_id: ah.assets for ah in delta}
-	for corporation in corporations:
-		corporation.last_assets = delta_hash[corporation.pk]
+	if player.game.current_turn > 1:
+		delta = AssetHistory.objects.filter(corporation__game=player.game, turn=player.game.current_turn - 2)
+		delta_hash = {ah.corporation_id: ah.assets for ah in delta}
+		for corporation in corporations:
+			corporation.last_assets = delta_hash[corporation.pk]
 
 	# Graph datas
 	sorted_corporations = sorted(corporations, key=lambda c: c.pk)
