@@ -10,7 +10,7 @@ def index(request, page):
 	if(page == ''):
 		page = 'index'
 
-	page = '%s/docs/markdown/%s.md' % (settings.BASE_DIR, page.replace('.', ''))
+	page = '%s/datas/docs/%s.md' % (settings.BASE_DIR, page.replace('.', ''))
 
 	try:
 		content, metas = read_markdown(page)
