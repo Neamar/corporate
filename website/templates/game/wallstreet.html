@@ -37,7 +37,7 @@
   function drawChart() {
 	var data = google.visualization.arrayToDataTable([
     ['Tour',
-		{% for c in corporations %}
+		{% for c in sorted_corporations %}
 			'{{c.base_corporation.name}}',
 		{% endfor %}
 	],
@@ -53,7 +53,6 @@
 	var options = {
 		title: 'Bourse',
 		backgroundColor: 'transparent',
-		theme: 'maximized',
 		pointSize: 4,
 		curveType: 'function',
 	};
