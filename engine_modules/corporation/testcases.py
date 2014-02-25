@@ -3,6 +3,9 @@ import copy
 
 
 def override_base_corporations(func):
+	"""
+	Allow to override base corporation values for the length of a test.
+	"""
 	def base_corporation_wrapper(*args, **kwargs):
 		original_base_corporations = copy.deepcopy(BaseCorporation.base_corporations)
 		try:
