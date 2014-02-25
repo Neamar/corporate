@@ -3,8 +3,9 @@ from engine.testcases import EngineTestCase
 
 class TaskTest(EngineTestCase):
 	def setUp(self):
-		
+
 		super(TaskTest, self).setUp()
+		self.g.force_invisible_hand = True
 		self.c3.delete()
 
 	def test_invisible_hand_with_two_corporations(self):
