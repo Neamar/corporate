@@ -21,6 +21,13 @@ class TasksTest(EngineTestCase):
 
 		self.g.force_first_last_effects = True
 
+	def update_effect(self, corporation, type, code):
+		"""
+		Update base_corporation code, for testing.
+		"""
+		base_corporation = corporation.base_corporation
+		setattr(base_corporation, type, base_corporation.compile_effect(code, type))
+
 	@override_base_corporations
 	def test_first_effect(self):
 		"""
@@ -29,11 +36,8 @@ class TasksTest(EngineTestCase):
 		initial_assets = self.first_corporation.assets
 
 		# Change the default code
-		base_first_corporation = self.first_corporation.base_corporation
-		base_first_corporation.on_first = base_first_corporation.compile_effect("corporation.update_assets(5)", 'on_first')
-
-		base_last_corporation = self.last_corporation.base_corporation
-		base_last_corporation.on_last = base_last_corporation.compile_effect("", 'on_last')
+		self.update_effect(self.first_corporation, 'on_first', "corporation.update_assets(5)")
+		self.update_effect(self.last_corporation, 'on_last', "")
 
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.first_corporation).assets, initial_assets + 5)
@@ -46,11 +50,8 @@ class TasksTest(EngineTestCase):
 		initial_assets = self.last_corporation.assets
 
 		# Change the default code
-		base_first_corporation = self.first_corporation.base_corporation
-		base_first_corporation.on_first = base_first_corporation.compile_effect("", 'on_first')
-
-		base_last_corporation = self.last_corporation.base_corporation
-		base_last_corporation.on_last = base_last_corporation.compile_effect("corporation.update_assets(-5)", 'on_last')
+		self.update_effect(self.last_corporation, 'on_last', "corporation.update_assets(-5)")
+		self.update_effect(self.first_corporation, 'on_first', "")
 
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.last_corporation).assets, initial_assets - 5)
