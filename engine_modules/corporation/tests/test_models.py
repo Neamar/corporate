@@ -4,8 +4,11 @@ from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation, Corporation
 
 
-# Inherit from TestCase and not from EngineTestCase, since EngineTestCase overrides base corporation behavior for faster tests.
 class ModelTest(TestCase):
+	"""
+	Inherit from TestCase and not from EngineTestCase, since EngineTestCase overrides base corporation behavior for faster tests.
+	"""
+
 	def setUp(self):
 
 		self.g = Game()

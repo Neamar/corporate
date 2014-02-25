@@ -8,7 +8,7 @@ on_first:
     corporation.update_assets(2)
 on_last:
     corporation.update_assets(-1)
-    game.get_ordered_corporations()[:-1].update_assets(-1)
+    game.get_ordered_corporations()[-1].update_assets(-1)
 
 derivative: Dow Jones
 

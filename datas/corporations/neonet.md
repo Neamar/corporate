@@ -5,11 +5,11 @@ sabotage: 10
 extraction: 10
 detection: 30
 on_first:
-    corporations.get('spinrad').update_assets(-1)
+    corporations.get(base_corporation_slug='spinrad').update_assets(-1)
     game.get_ordered_corporations()[1].update_assets(-1)
 on_last:
-    corporations.get('neonet').update_assets(1)
-    corporations.get('renraku').update_assets(1)
+    corporations.get(base_corporation_slug='neonet').update_assets(1)
+    corporations.get(base_corporation_slug='renraku').update_assets(1)
 
 derivative: Dow Jones
 

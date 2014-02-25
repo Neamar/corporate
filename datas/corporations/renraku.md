@@ -5,11 +5,11 @@ sabotage: 10
 extraction: 20
 detection: 30
 on_first:
-    corporations.get('neonet').update_assets(-1)
-    corporations.get('shiawase').update_assets(-1)
+    corporations.get(base_corporation_slug='neonet').update_assets(-1)
+    corporations.get(base_corporation_slug='shiawase').update_assets(-1)
 on_last:
-    corporations.get('sony').update_assets(-1)
-    corporations.get('shiawase').update_assets(1)
+    corporations.get(base_corporation_slug='sony').update_assets(-1)
+    corporations.get(base_corporation_slug='shiawase').update_assets(1)
 derivative: Nikkei
 
 

@@ -5,7 +5,7 @@ sabotage: 20
 extraction: 10
 detection: 30
 on_first:
-    corporations.get('prometheus').update_assets(1)
+    corporations.get(base_corporation_slug='prometheus').update_assets(1)
     game.get_ordered_corporations()[1].update_assets(1)
 on_last:
     game.get_ordered_corporations()[0].update_assets(2)
