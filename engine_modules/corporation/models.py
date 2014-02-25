@@ -1,7 +1,6 @@
 from os import listdir
 
 from django.db import models
-from django.db.models import F
 from django.conf import settings
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
@@ -93,10 +92,10 @@ class Corporation(models.Model):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
 	def on_first_effect(self):
-		exec(self.base_corporation.on_first, {'game': self.game, 'corporation': self, 'corporations': self.game.corporation_set, 'F': F})
+		exec(self.base_corporation.on_first, {'game': self.game, 'corporation': self, 'corporations': self.game.corporation_set})
 
 	def on_last_effect(self):
-		exec(self.base_corporation.on_last, {'game': self.game, 'corporation': self, 'corporations': self.game.corporation_set, 'F': F})
+		exec(self.base_corporation.on_last, {'game': self.game, 'corporation': self, 'corporations': self.game.corporation_set})
 
 	def update_assets(self, delta):
 		"""
