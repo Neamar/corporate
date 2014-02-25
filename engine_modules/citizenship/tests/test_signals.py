@@ -9,8 +9,6 @@ class SignalsTest(EngineTestCase):
 
 		super(SignalsTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation_slug='ares')
-
 		self.o = CitizenShipOrder(
 			player=self.p,
 			corporation=self.c

@@ -7,10 +7,6 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		super(OffensiveRunTaskTest, self).setUp()
 
-		self.c = self.g.corporation_set.get(base_corporation_slug="shiawase")
-		self.c2 = self.g.corporation_set.get(base_corporation_slug="renraku")
-		self.c3 = self.g.corporation_set.get(base_corporation_slug="ares")
-
 		self.so = SabotageOrder(
 			player=self.p,
 			target_corporation=self.c,
