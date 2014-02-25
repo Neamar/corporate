@@ -167,8 +167,7 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve_success(self, detected):
-		self.stealer_corporation.assets += 1
-		self.stealer_corporation.save()
+		self.stealer_corporation.update_assets(+1)
 
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run de Datasteal"
@@ -220,8 +219,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 	PROTECTION_TYPE = "sabotage"
 
 	def resolve_success(self, detected):
-		self.target_corporation.assets -= 2
-		self.target_corporation.save()
+		self.target_corporation.update_assets(-2)
 
 		# Send a note to the one who ordered the Sabotage
 		category = u"Run de Sabotage"
@@ -264,11 +262,8 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 	kidnapper_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve_success(self, detected):
-		self.target_corporation.assets -= 1
-		self.target_corporation.save()
-
-		self.kidnapper_corporation.assets += 1
-		self.kidnapper_corporation.save()
+		self.target_corporation.update_assets(-1)
+		self.kidnapper_corporation.update_assets(1)
 
 		# Send a note to the one who ordered the Extraction
 		category = u"Run d'Extraction"

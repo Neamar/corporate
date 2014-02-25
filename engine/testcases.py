@@ -37,7 +37,7 @@ class EngineTestCase(TestCase):
 			raise
 		finally:
 			BaseCorporation.base_corporations = original_base_corporations
-	
+
 		# Create base corporations
 		self.c = Corporation(base_corporation_slug='shiawase', assets=10)
 		self.c2 = Corporation(base_corporation_slug='renraku', assets=10)
@@ -47,3 +47,6 @@ class EngineTestCase(TestCase):
 		self.initial_money = Player._meta.get_field_by_name('money')[0].default
 		self.p = Player(game=self.g, money=self.initial_money)
 		self.p.save()
+
+		# Disable all side effects for the game (first and last effects, invisible hand)
+		self.g.disable_side_effects = True

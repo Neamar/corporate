@@ -54,7 +54,6 @@ class BaseCorporation:
 		try:
 			self.initials_assets = int(meta['initials_assets'][0])
 		except KeyError:
-			# In the Model, the default value used to be 10
 			self.initials_assets = 10
 
 		try:
@@ -93,10 +92,17 @@ class Corporation(models.Model):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
 	def on_first_effect(self):
-		exec(self.base_corporation.on_first, {'game': self.game})
+		exec(self.base_corporation.on_first, {'game': self.game, 'corporation': self, 'corporations': self.game.corporation_set})
 
 	def on_last_effect(self):
-		exec(self.base_corporation.on_last, {'game': self.game})
+		exec(self.base_corporation.on_last, {'game': self.game, 'corporation': self, 'corporations': self.game.corporation_set})
+
+	def update_assets(self, delta):
+		"""
+		Update assets values, and save the model
+		"""
+		self.assets += delta
+		self.save()
 
 	def __unicode__(self):
 		return "%s (%s)" % (self.base_corporation.name, self.assets)

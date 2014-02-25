@@ -4,10 +4,7 @@ from engine_modules.citizenship.models import CitizenShipOrder
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):
-
 		super(OrdersTest, self).setUp()
-
-		self.c = self.g.corporation_set.get(base_corporation_slug='ares')
 
 		self.o = CitizenShipOrder(
 			player=self.p,
