@@ -1,5 +1,6 @@
 from django.test import TestCase
 from engine.models import Game
+from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation, Corporation
 
 
@@ -20,3 +21,15 @@ class ModelTest(TestCase):
 
 		self.assertEqual(corporations[0].base_corporation.slug, 'ares')
 		self.assertEqual(corporations[0].base_corporation.datasteal, 10)
+
+class ModelMethodTest(EngineTestCase):
+	def test_corporation_update_assets(self):
+		"""
+		Corporation assets should be updated
+		"""
+
+		corporation = Corporation.objects.get(base_corporation_slug='ares')
+
+		initial_assets = corporation.assets
+		corporation.update_assets(-5)
+		self.assertEqual(self.reload(corporation).assets, initial_assets - 5)
