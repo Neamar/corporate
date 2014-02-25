@@ -19,8 +19,6 @@ class TasksTest(EngineTestCase):
 		self.c3.save()
 		self.last_corporation = self.c3
 
-		self.g.disable_invisible_hand = True
-
 	def test_buy_task_applied(self):
 		"""
 		The player should get dividend for previous share, and this turn order should be resolved

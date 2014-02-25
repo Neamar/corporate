@@ -24,8 +24,6 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.p.money = self.INITIAL_MONEY
 		self.p.save()
 
-		self.g.disable_invisible_hand = True
-
 		self.so_initial_extraction = self.so.target_corporation.base_corporation.sabotage
 
 	def test_offensive_run_task(self):

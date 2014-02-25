@@ -4,11 +4,6 @@ from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrde
 
 
 class RunOrdersTest(EngineTestCase):
-	def setUp(self):
-		super(RunOrdersTest, self).setUp()
-
-		self.g.disable_invisible_hand = True
-
 	def set_to_zero(self, corporation):
 		"""
 		Set corporation protection values to 0, to ease testing.

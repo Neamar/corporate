@@ -10,6 +10,9 @@ class FirstLastEffectsTask(ResolutionTask):
 	RESOLUTION_ORDER = 600
 
 	def run(self, game):
+		# Effects can be disabled, for instance to ease testing, by setting the "disable_side_effects" flag.
+		if hasattr(game, 'disable_side_effects'):
+			return
 
 		ladder = game.get_ordered_corporations()
 

@@ -3,16 +3,11 @@ from engine_modules.corporation.models import Corporation
 
 
 class ModelTest(EngineTestCase):
-	def setUp(self):
-
-		super(ModelTest, self).setUp()
-		self.g.disable_invisible_hand = True
-
 	def test_corporation_deleted_when_asset_drops_to_zero(self):
 		"""
 		Corporation should crash when their assets are null
 		"""
-		
+
 		self.c.assets = 0
 		self.c.save()
 

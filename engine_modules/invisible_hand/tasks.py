@@ -8,8 +8,8 @@ class InvisibleHandTask(ResolutionTask):
 	RESOLUTION_ORDER = 400
 
 	def run(self, game):
-		# Invisible hand can be disabled, for instance to ease testing
-		if hasattr(game, 'disable_invisible_hand'):
+		# Invisible hand can be disabled, for instance to ease testing, by setting the "disable_side_effects" flag.
+		if hasattr(game, 'disable_side_effects'):
 			return
 
 		corpos = game.corporation_set.all().order_by('?')[0:2]
