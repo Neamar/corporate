@@ -18,10 +18,9 @@ class InvisibleHandTask(ResolutionTask):
 		if len(corpos) == 0:
 			return
 
-		corpos[0].assets += 1
+		corpos[0].update_assets(1)
 
 		if len(corpos) >= 2:
-			corpos[1].assets -= 1
-		[corpo.save() for corpo in corpos]
+			corpos[1].update_assets(-1)
 
 tasks = (InvisibleHandTask,)

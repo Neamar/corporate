@@ -22,6 +22,7 @@ class ModelTest(TestCase):
 		self.assertEqual(corporations[0].base_corporation.slug, 'ares')
 		self.assertEqual(corporations[0].base_corporation.datasteal, 10)
 
+
 class ModelMethodTest(EngineTestCase):
 	def test_corporation_update_assets(self):
 		"""
