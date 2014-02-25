@@ -9,14 +9,6 @@ from engine_modules.player_run.models import InformationRunOrder
 from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
 
 
-@receiver(validate_order, sender=ProtectionOrder)
-def enforce_mdc_party_line_protection(sender, instance, **kwargs):
-
-	party_line = instance.player.game.get_current_mdc_party_line()
-
-	if party_line == MDCVoteOrder.CCIB:
-		if instance.player.get_last_mdc_vote() == MDCVoteOrder.TRAN:
-			instance.hidden_percents = -1
 
 @receiver(validate_order)
 def enforce_mdc_party_line_offense(instance, **kwargs):
@@ -27,12 +19,33 @@ def enforce_mdc_party_line_offense(instance, **kwargs):
 	party_line = instance.player.game.get_current_mdc_party_line()
 	player_vote = instance.player.get_last_mdc_vote()
 
+	if isinstance(instance, OffensiveRunOrder):
+		if party_line == MDCVoteOrder.CCIB:
+			g =instance.player.game
+			protected_corporations = []
+			# This call is going to be a DataBase catastrophe !!!!
+			right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
+			for vo in right_vote_orders:
+				protected_corporations.append(vo.get_friendly_corporations())
+			
+			if [instance.target_corporation.base_corporation_slug] in protected_corporations:
+				instance.hidden_percents -= 1
+
 	if party_line == MDCVoteOrder.TRAN:
 		if player_vote == MDCVoteOrder.CCIB:
-			instance.hidden_percents = -1
+			instance.hidden_percents -= 1
 		
 		elif player_vote == MDCVoteOrder.TRAN:
-			instance.hidden_percents = 1
+			instance.hidden_percents += 1
+
+@receiver(validate_order, sender=ProtectionOrder)
+def enforce_mdc_party_line_no_protection(sender, instance, **kwargs):
+
+	party_line = instance.player.game.get_current_mdc_party_line()
+
+	if party_line == MDCVoteOrder.CCIB:
+		if instance.player.get_last_mdc_vote() == MDCVoteOrder.TRAN:
+			raise OrderNotAvailable("Vous avez voté pour la transparence au tour précédent, vous ne pouvez donc pas effectuer de run de protection ce tour-ci")
 
 @receiver(validate_order)
 def enforce_mdc_party_line_no_speculation(instance, **kwargs):

@@ -5,6 +5,7 @@ from engine_modules.share.models import Share
 from engine_modules.mdc.models import MDCVoteOrder, MDCVoteSession
 from engine_modules.corporation.models import Corporation
 from engine_modules.speculation.models import Derivative, CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.corporation_run.models import ProtectionOrder, DataStealOrder, SabotageOrder, ExtractionOrder
 
 from engine_modules.mdc.tasks import MDCLineCPUBTask
 
@@ -108,35 +109,137 @@ class TaskTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c2).assets, initial_assets2 + 1)
 		self.assertEqual(self.reload(self.c3).assets, initial_assets3 + 1)
 
-	def test_MDC_CCIB_line_effects(self):
+	def test_MDC_CCIB_line_positive_effects(self):
 		"""
-		Test what happens when the CCIB party line is chose
+		Test what happens to voters of the CCIB party line when it is chosen
 		"""
 
 		self.set_Turn_Line(MDCVoteOrder.CCIB, MDCVoteOrder.CCIB, MDCVoteOrder.TRAN)
-
 		self.g.resolve_current_turn()
 
-		# We have to resolve twice: once for the MDCVoteOrders to be taken into account
-		# And once for the resulting MDCVoteSession to be effective
+		dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=5,
+		)
+		dso.clean()
+		dso.save()
+
+		so = SabotageOrder(
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=5,
+		)
+		so.clean()
+		so.save()
+
+		eo = ExtractionOrder(
+			player=self.p,
+			target_corporation=self.c,
+			kidnapper_corporation=self.c2
+		)
+		eo.clean()
+		eo.save()
+
+		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.PROBA_SUCCESS - 10)
+		self.assertEqual(so.get_raw_probability(), so.additional_percents * 10 + so.PROBA_SUCCESS - 10)
+		self.assertEqual(eo.get_raw_probability(), eo.additional_percents * 10 + eo.PROBA_SUCCESS - 10)
+
+	def test_MDC_CCIB_line_negative_effects(self):
+		"""
+		Test what happens when the CCIB party line is chosen to players who voted for transparency
+		"""
+
+		self.set_Turn_Line(MDCVoteOrder.CCIB, MDCVoteOrder.CCIB, MDCVoteOrder.TRAN)
 		self.g.resolve_current_turn()
+
+		# Player 3 has voted transparency, so he should'nt be able to have a protection run
+		po = ProtectionOrder(
+                        player=self.p3,
+                        protected_corporation=self.c,
+                        defense=ProtectionOrder.SABOTAGE,
+                )
+		self.assertRaises(OrderNotAvailable, po.clean)
+
+		# Check that player 1 stil can
+		po2 = ProtectionOrder(
+                        player=self.p,
+                        protected_corporation=self.c,
+                        defense=ProtectionOrder.SABOTAGE,
+                )
+		po2.clean()
 
 	def test_MDC_TRAN_line_effects(self):
 		"""
-		Test what happens when the CCIB party line is chosen
+		Test what happens when the TRAN party line is chosen
 		"""
 
 		self.set_Turn_Line(MDCVoteOrder.CCIB, MDCVoteOrder.TRAN, MDCVoteOrder.TRAN)
-
 		self.g.resolve_current_turn()
 
-		# We have to resolve twice: once for the MDCVoteOrders to be taken into account
-		# And once for the resulting MDCVoteSession to be effective
-		self.g.resolve_current_turn()
+		dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=5,
+		)
+		dso.clean()
+		dso.save()
+
+		so = SabotageOrder(
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=5,
+		)
+		so.clean()
+		so.save()
+
+		eo = ExtractionOrder(
+			player=self.p,
+			target_corporation=self.c,
+			kidnapper_corporation=self.c2
+		)
+		eo.clean()
+		eo.save()
+
+		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.PROBA_SUCCESS - 10)
+		self.assertEqual(so.get_raw_probability(), so.additional_percents * 10 + so.PROBA_SUCCESS - 10)
+		self.assertEqual(eo.get_raw_probability(), eo.additional_percents * 10 + eo.PROBA_SUCCESS - 10)
+
+
+		dso2 = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p2,
+			target_corporation=self.c,
+			additional_percents=5,
+		)
+		dso2.clean()
+		dso2.save()
+
+		so2 = SabotageOrder(
+			player=self.p2,
+			target_corporation=self.c,
+			additional_percents=5,
+		)
+		so2.clean()
+		so2.save()
+
+		eo2 = ExtractionOrder(
+			player=self.p2,
+			target_corporation=self.c,
+			kidnapper_corporation=self.c2
+		)
+		eo2.clean()
+		eo2.save()
+
+		self.assertEqual(dso2.get_raw_probability(), dso2.additional_percents * 10 + dso2.PROBA_SUCCESS + 10)
+		self.assertEqual(so2.get_raw_probability(), so2.additional_percents * 10 + so2.PROBA_SUCCESS + 10)
+		self.assertEqual(eo2.get_raw_probability(), eo2.additional_percents * 10 + eo2.PROBA_SUCCESS + 10)
 
 	def test_MDC_BANK_line_negative_effect(self):
 		"""
-		Test what happens when the BANK party line is chose
+		Test what happens when BANK party line is chosen to people who voted deregulation
 		"""
 
 		self.set_Turn_Line(MDCVoteOrder.BANK, MDCVoteOrder.BANK, MDCVoteOrder.DERE)
@@ -181,7 +284,7 @@ class TaskTest(EngineTestCase):
 
 	def test_MDC_DERE_line_negative_effect(self):
 		"""
-		Test what happens when the BANK party line is chose
+		Test what happens when the BANK party line is chosen
 		"""
 
 		self.set_Turn_Line(MDCVoteOrder.BANK, MDCVoteOrder.DERE, MDCVoteOrder.DERE)
