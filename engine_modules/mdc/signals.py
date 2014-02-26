@@ -5,7 +5,7 @@ from engine.models import Order
 from engine.exceptions import OrderNotAvailable
 from engine_modules.mdc.models import MDCVoteOrder
 from engine_modules.corporation_run.models import ProtectionOrder, SabotageOrder, DataStealOrder, OffensiveRunOrder
-from engine_modules.player_run.models import InformationRunOrder
+from engine_modules.player_run.models import InformationOrder
 from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
 
 
@@ -13,7 +13,7 @@ from engine_modules.speculation.models import CorporationSpeculationOrder, Deriv
 @receiver(validate_order)
 def enforce_mdc_party_line_offense(instance, **kwargs):
 
-	if not (isinstance(instance, InformationRunOrder) or isinstance(instance, OffensiveRunOrder)):
+	if not (isinstance(instance, InformationOrder) or isinstance(instance, OffensiveRunOrder)):
 		return
 
 	party_line = instance.player.game.get_current_mdc_party_line()

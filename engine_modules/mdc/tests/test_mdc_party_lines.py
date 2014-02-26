@@ -125,7 +125,7 @@ class TaskTest(EngineTestCase):
 		)
 		dso.clean()
 		dso.save()
-		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.PROBA_SUCCESS - 10)
+		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.BASE_SUCCESS_PROBABILITY - 10)
 
 	def test_MDC_CCIB_line_negative_effects(self):
 		"""
@@ -167,7 +167,7 @@ class TaskTest(EngineTestCase):
 		)
 		dso.clean()
 		dso.save()
-		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.PROBA_SUCCESS - 10)
+		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.BASE_SUCCESS_PROBABILITY - 10)
 
 
 		dso2 = DataStealOrder(
@@ -178,7 +178,7 @@ class TaskTest(EngineTestCase):
 		)
 		dso2.clean()
 		dso2.save()
-		self.assertEqual(dso2.get_raw_probability(), dso2.additional_percents * 10 + dso2.PROBA_SUCCESS + 10)
+		self.assertEqual(dso2.get_raw_probability(), dso2.additional_percents * 10 + dso2.BASE_SUCCESS_PROBABILITY + 10)
 
 	def test_MDC_BANK_line_negative_effect(self):
 		"""
