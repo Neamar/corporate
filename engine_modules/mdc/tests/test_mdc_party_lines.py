@@ -13,10 +13,21 @@ class TaskTest(EngineTestCase):
 	def setUp(self):
 		super(TaskTest, self).setUp()
 
+		self.c.update_assets(50)
+
 		self.p2 = Player(game=self.g)
 		self.p2.save()
 
-		self.p3 = Player(game=self.g)
+		self.p3 = Player(game=self.g, )
+		self.p3.save()
+
+		self.p.influence.level = 10
+		self.p.save()
+
+		self.p2.influence.level = 10
+		self.p2.save()
+
+		self.p3.influence.level = 10
 		self.p3.save()
 
 		self.s = Share(
@@ -57,6 +68,10 @@ class TaskTest(EngineTestCase):
 			party_line=MDCVoteOrder.DEVE
 		)
 		self.v3.save()
+
+		self.d = Derivative(name="first and last", game=self.g)
+                self.d.save()
+                self.d.corporations.add(self.c, self.c3)
 
 		self.g.disable_invisible_hand = True
 
@@ -180,13 +195,33 @@ class TaskTest(EngineTestCase):
 		dso2.save()
 		self.assertEqual(dso2.get_raw_probability(), dso2.additional_percents * 10 + dso2.BASE_SUCCESS_PROBABILITY + 10)
 
+	def test_MDC_BANK_line_positive_effect(self):
+		"""
+		Test what happens when BANK party line is chosen to people who voted it
+		"""
+
+		self.set_turn_line(MDCVoteOrder.BANK, MDCVoteOrder.BANK, MDCVoteOrder.DERE)
+		self.g.resolve_current_turn()
+		
+		# should fail, because first rank is c
+		o = CorporationSpeculationOrder(
+                        player=self.p,
+                        corporation=self.c2,
+                        rank=1,
+                        investment=5
+                )
+		o.clean()
+                o.save()
+                o.resolve()
+
+                self.assertEqual(self.reload(self.p).money, self.initial_money)
+
 	def test_MDC_BANK_line_negative_effect(self):
 		"""
 		Test what happens when BANK party line is chosen to people who voted deregulation
 		"""
 
 		self.set_turn_line(MDCVoteOrder.BANK, MDCVoteOrder.BANK, MDCVoteOrder.DERE)
-
 		self.g.resolve_current_turn()
 
 		# Player 3 has voted Deregulation, so he shouldn't be able to speculate
@@ -214,31 +249,47 @@ class TaskTest(EngineTestCase):
 		dso = DerivativeSpeculationOrder(
                         player=self.p3,
                         speculation=DerivativeSpeculationOrder.UP,
-                        investment=DerivativeSpeculationOrder.MAX_AMOUNT_SPECULATION - 1
+                        investment=DerivativeSpeculationOrder.MAX_AMOUNT_SPECULATION - 1,
+			derivative = self.d
                 )
                 self.assertRaises(OrderNotAvailable, dso.clean)
 
 		dso2 = DerivativeSpeculationOrder(
                         player=self.p,
                         speculation=DerivativeSpeculationOrder.UP,
-                        investment=DerivativeSpeculationOrder.MAX_AMOUNT_SPECULATION - 1
+                        investment=DerivativeSpeculationOrder.MAX_AMOUNT_SPECULATION - 1,
+			derivative = self.d
                 )
 		dso2.clean()
 
+	def test_MDC_DERE_line_positive_effect(self):
+		"""
+		Test what happens when the DERE party line is chosen for players who voted for it
+		"""
+		
+		self.set_turn_line(MDCVoteOrder.BANK, MDCVoteOrder.DERE, MDCVoteOrder.DERE)
+		self.g.resolve_current_turn()
+
+		o = CorporationSpeculationOrder(
+			player=self.p2,
+			corporation=self.c,
+			rank=1,
+			investment=5
+		)
+		o.clean()
+		o.resolve()
+
+		self.assertEqual(self.reload(self.p2).money, self.initial_money + o.investment * 3 )
+
 	def test_MDC_DERE_line_negative_effect(self):
 		"""
-		Test what happens when the BANK party line is chosen
+		Test what happens when the DERE party line is chosen for detractors
 		"""
 
 		self.set_turn_line(MDCVoteOrder.BANK, MDCVoteOrder.DERE, MDCVoteOrder.DERE)
-
 		self.g.resolve_current_turn()
 
 		# Player 1 has voted Garde Fous Bancaires, so he shouldn't be able to speculate
-		d = Derivative(name="first and last", game=self.g)
-		d.save()
-		d.corporations.add(self.c, self.c2)
-
 		o = CorporationSpeculationOrder(
 			player=self.p,
 			corporation=self.c3,
@@ -250,7 +301,8 @@ class TaskTest(EngineTestCase):
 		dso = DerivativeSpeculationOrder(
                         player=self.p,
                         speculation=DerivativeSpeculationOrder.UP,
-                        investment=DerivativeSpeculationOrder.MAX_AMOUNT_SPECULATION - 1
+                        investment=DerivativeSpeculationOrder.MAX_AMOUNT_SPECULATION - 1,
+			derivative = self.d
                 )
                 self.assertRaises(OrderNotAvailable, dso.clean)
 
@@ -266,6 +318,7 @@ class TaskTest(EngineTestCase):
 		dso2 = DerivativeSpeculationOrder(
                         player=self.p3,
                         speculation=DerivativeSpeculationOrder.UP,
-                        investment=DerivativeSpeculationOrder.MAX_AMOUNT_SPECULATION - 1
+                        investment=DerivativeSpeculationOrder.MAX_AMOUNT_SPECULATION - 1,
+			derivative = self.d
                 )
 		dso2.clean()

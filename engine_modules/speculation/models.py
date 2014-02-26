@@ -27,6 +27,16 @@ class CorporationSpeculationOrder(Order):
 	corporation = models.ForeignKey(Corporation)
 	rank = models.PositiveSmallIntegerField()
 	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
+	winrate = models.PositiveSmallIntegerField(default=2)
+	lossrate = models.PositiveSmallIntegerField(default=1)
+
+	def set_winrate(self, rate):
+		self.winrate = rate
+		self.save()
+
+	def set_lossrate(self, rate):
+		self.lossrate = rate
+		self.save()
 
 	def get_cost(self):
 		return self.investment * self.BASE_COST
@@ -41,17 +51,18 @@ class CorporationSpeculationOrder(Order):
 			# Success
 			if self.corporation == ladder[0] or self.corporation == ladder[-1]:
 				# Speculation on first or last corpo
-				self.player.money += self.get_cost() * 2
+				self.player.money += self.get_cost() * self.winrate
 				self.player.save()
-				content = u"Vous êtes un bon spéculateur, vos investissements de %sk ¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.investment * 3)
+				content = u"Vous êtes un bon spéculateur, vos investissements de %sk ¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.investment * self.winrate)
 			else:
 				# Speculation on non first or non last corpo
-				self.player.money += self.get_cost() * 4
+				# Not sure about that, loophole in the rules, couldn't get Neamar, to be debated
+				self.player.money += self.get_cost() * (self.winrate + 2)
 				self.player.save()
-				content = u"Vous êtes un excellent spéculateur, vos investissements de %sk ¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.investment * 5)
+				content = u"Vous êtes un excellent spéculateur, vos investissements de %sk ¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.investment * (self.winrate + 2))
 		else:
 			# Failure
-			self.player.money -= self.get_cost()
+			self.player.money -= self.get_cost() * self.lossrate
 			self.player.save()
 			content = u"Vos spéculations de %sk ¥ sur la corporation %s n'ont malheureusement pas été concluantes" % (self.investment, self.corporation.base_corporation.name)
 
@@ -81,6 +92,16 @@ class DerivativeSpeculationOrder(Order):
 	speculation = models.BooleanField(choices=UPDOWN_CHOICES)
 	derivative = models.ForeignKey(Derivative)
 	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
+	winrate = models.PositiveSmallIntegerField(default=1)
+	lossrate = models.PositiveSmallIntegerField(default=1)
+
+	def set_winrate(self, rate):
+		self.winrate = rate
+		self.save()
+
+	def set_lossrate(self, rate):
+		self.lossrate = rate
+		self.save()
 
 	def get_cost(self):
 		return self.investment * self.BASE_COST
@@ -93,12 +114,12 @@ class DerivativeSpeculationOrder(Order):
 		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.corporations.all(), turn=self.player.game.current_turn - 1).aggregate(Sum('assets'))['assets__sum']
 		if current_turn_sum > previous_turn_sum and self.speculation == self.UP:
 			# Success
-			self.player.money += self.get_cost()
+			self.player.money += self.get_cost() * self.winrate
 			self.player.save()
-			content = u"Vous êtes un bon spéculateur, vos investissements de %sk ¥ sur le produit dérivé %s vous ont rapporté %sk ¥" % (self.investment, self.derivative.name, self.investment * 2)
+			content = u"Vous êtes un bon spéculateur, vos investissements de %sk ¥ sur le produit dérivé %s vous ont rapporté %sk ¥" % (self.investment, self.derivative.name, self.investment * self.winrate)
 		else:
 			# Failure
-			self.player.money -= self.get_cost()
+			self.player.money -= self.get_cost() * self.lossrate
 			self.player.save()
 			content = u"Vos spéculations de %sk ¥ sur le produit dérivé %s n'ont malheureusement pas été concluantes" % (self.investment, self.derivative.name)
 

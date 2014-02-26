@@ -64,6 +64,25 @@ def enforce_mdc_party_line_no_speculation(instance, **kwargs):
 		if player_vote == MDCVoteOrder.BANK:
                         raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 
+@receiver(validate_order)
+def enforce_mdc_party_line_speculation_rates(instance, **kwargs):
+
+	if not (isinstance(instance, CorporationSpeculationOrder) or isinstance(instance, DerivativeSpeculationOrder)):
+		return
+
+	party_line = instance.player.game.get_current_mdc_party_line()
+	player_vote = instance.player.get_last_mdc_vote()
+
+	if party_line == MDCVoteOrder.BANK:
+		if player_vote == MDCVoteOrder.BANK:
+			# This speculation should cost nothing if it fails
+			instance.set_lossrate(0)
+
+	if party_line == MDCVoteOrder.DERE:
+		if player_vote == MDCVoteOrder.DERE:
+			# This speculation should see its rate augmented if it succeeds
+			instance.set_winrate(instance.winrate + 1)
+
 @receiver(validate_order, sender=MDCVoteOrder)
 def limit_mdc_order(sender, instance, **kwargs):
 	"""
