@@ -108,13 +108,11 @@ class MDCLineDEVETask(ResolutionTask):
 
 		for winslug in winning_corporations:
 			c = game.corporation_set.get(base_corporation_slug=winslug)
-			c.assets += 1
-			c.save()
+			c.update_assets(1)
 
 		for loseslug in losing_corporations:
 			c = game.corporation_set.get(base_corporation_slug=loseslug)
-			c.assets -= 1
-			c.save()
+			c.update_assets(1)
 	
 
 tasks = (MDCVoteTask, MDCLineCPUBTask, MDCLineDEVETask)
