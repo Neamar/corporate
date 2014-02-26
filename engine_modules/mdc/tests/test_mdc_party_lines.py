@@ -60,7 +60,7 @@ class TaskTest(EngineTestCase):
 
 		self.g.disable_invisible_hand = True
 
-	def set_Turn_Line(self, L1, L2, L3):
+	def set_turn_line(self, L1, L2, L3):
 		"""
 		A little helper to set the Line each player has voted for this turn
 		"""
@@ -84,7 +84,7 @@ class TaskTest(EngineTestCase):
 		initial_assets2 = self.c2.assets
 		initial_assets3 = self.c3.assets
 
-		self.set_Turn_Line(MDCVoteOrder.CPUB, MDCVoteOrder.CPUB, MDCVoteOrder.DEVE)
+		self.set_turn_line(MDCVoteOrder.CPUB, MDCVoteOrder.CPUB, MDCVoteOrder.DEVE)
 		
 		self.g.resolve_current_turn()
 
@@ -101,7 +101,7 @@ class TaskTest(EngineTestCase):
 		initial_assets2 = self.c2.assets
 		initial_assets3 = self.c3.assets
 		
-		self.set_Turn_Line(MDCVoteOrder.CPUB, MDCVoteOrder.DEVE, MDCVoteOrder.DEVE)
+		self.set_turn_line(MDCVoteOrder.CPUB, MDCVoteOrder.DEVE, MDCVoteOrder.DEVE)
 
 		self.g.resolve_current_turn()
 
@@ -114,7 +114,7 @@ class TaskTest(EngineTestCase):
 		Test what happens to voters of the CCIB party line when it is chosen
 		"""
 
-		self.set_Turn_Line(MDCVoteOrder.CCIB, MDCVoteOrder.CCIB, MDCVoteOrder.TRAN)
+		self.set_turn_line(MDCVoteOrder.CCIB, MDCVoteOrder.CCIB, MDCVoteOrder.TRAN)
 		self.g.resolve_current_turn()
 
 		dso = DataStealOrder(
@@ -125,33 +125,14 @@ class TaskTest(EngineTestCase):
 		)
 		dso.clean()
 		dso.save()
-
-		so = SabotageOrder(
-			player=self.p,
-			target_corporation=self.c,
-			additional_percents=5,
-		)
-		so.clean()
-		so.save()
-
-		eo = ExtractionOrder(
-			player=self.p,
-			target_corporation=self.c,
-			kidnapper_corporation=self.c2
-		)
-		eo.clean()
-		eo.save()
-
 		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.PROBA_SUCCESS - 10)
-		self.assertEqual(so.get_raw_probability(), so.additional_percents * 10 + so.PROBA_SUCCESS - 10)
-		self.assertEqual(eo.get_raw_probability(), eo.additional_percents * 10 + eo.PROBA_SUCCESS - 10)
 
 	def test_MDC_CCIB_line_negative_effects(self):
 		"""
 		Test what happens when the CCIB party line is chosen to players who voted for transparency
 		"""
 
-		self.set_Turn_Line(MDCVoteOrder.CCIB, MDCVoteOrder.CCIB, MDCVoteOrder.TRAN)
+		self.set_turn_line(MDCVoteOrder.CCIB, MDCVoteOrder.CCIB, MDCVoteOrder.TRAN)
 		self.g.resolve_current_turn()
 
 		# Player 3 has voted transparency, so he should'nt be able to have a protection run
@@ -175,7 +156,7 @@ class TaskTest(EngineTestCase):
 		Test what happens when the TRAN party line is chosen
 		"""
 
-		self.set_Turn_Line(MDCVoteOrder.CCIB, MDCVoteOrder.TRAN, MDCVoteOrder.TRAN)
+		self.set_turn_line(MDCVoteOrder.CCIB, MDCVoteOrder.TRAN, MDCVoteOrder.TRAN)
 		self.g.resolve_current_turn()
 
 		dso = DataStealOrder(
@@ -186,26 +167,7 @@ class TaskTest(EngineTestCase):
 		)
 		dso.clean()
 		dso.save()
-
-		so = SabotageOrder(
-			player=self.p,
-			target_corporation=self.c,
-			additional_percents=5,
-		)
-		so.clean()
-		so.save()
-
-		eo = ExtractionOrder(
-			player=self.p,
-			target_corporation=self.c,
-			kidnapper_corporation=self.c2
-		)
-		eo.clean()
-		eo.save()
-
 		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.PROBA_SUCCESS - 10)
-		self.assertEqual(so.get_raw_probability(), so.additional_percents * 10 + so.PROBA_SUCCESS - 10)
-		self.assertEqual(eo.get_raw_probability(), eo.additional_percents * 10 + eo.PROBA_SUCCESS - 10)
 
 
 		dso2 = DataStealOrder(
@@ -216,33 +178,14 @@ class TaskTest(EngineTestCase):
 		)
 		dso2.clean()
 		dso2.save()
-
-		so2 = SabotageOrder(
-			player=self.p2,
-			target_corporation=self.c,
-			additional_percents=5,
-		)
-		so2.clean()
-		so2.save()
-
-		eo2 = ExtractionOrder(
-			player=self.p2,
-			target_corporation=self.c,
-			kidnapper_corporation=self.c2
-		)
-		eo2.clean()
-		eo2.save()
-
 		self.assertEqual(dso2.get_raw_probability(), dso2.additional_percents * 10 + dso2.PROBA_SUCCESS + 10)
-		self.assertEqual(so2.get_raw_probability(), so2.additional_percents * 10 + so2.PROBA_SUCCESS + 10)
-		self.assertEqual(eo2.get_raw_probability(), eo2.additional_percents * 10 + eo2.PROBA_SUCCESS + 10)
 
 	def test_MDC_BANK_line_negative_effect(self):
 		"""
 		Test what happens when BANK party line is chosen to people who voted deregulation
 		"""
 
-		self.set_Turn_Line(MDCVoteOrder.BANK, MDCVoteOrder.BANK, MDCVoteOrder.DERE)
+		self.set_turn_line(MDCVoteOrder.BANK, MDCVoteOrder.BANK, MDCVoteOrder.DERE)
 
 		self.g.resolve_current_turn()
 
@@ -287,7 +230,7 @@ class TaskTest(EngineTestCase):
 		Test what happens when the BANK party line is chosen
 		"""
 
-		self.set_Turn_Line(MDCVoteOrder.BANK, MDCVoteOrder.DERE, MDCVoteOrder.DERE)
+		self.set_turn_line(MDCVoteOrder.BANK, MDCVoteOrder.DERE, MDCVoteOrder.DERE)
 
 		self.g.resolve_current_turn()
 

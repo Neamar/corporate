@@ -72,13 +72,11 @@ class MDCLineCPUBTask(ResolutionTask):
 
 		for winslug in winning_corporations:
 			c = game.corporation_set.get(base_corporation_slug=winslug)
-			c.assets += 1
-			c.save()
+			c.update_assets(1)
 
 		for loseslug in losing_corporations:
 			c = game.corporation_set.get(base_corporation_slug=loseslug)
-			c.assets -= 1
-			c.save()
+			c.update_assets(-1)
 
 	
 class MDCLineDEVETask(ResolutionTask):
@@ -92,7 +90,7 @@ class MDCLineDEVETask(ResolutionTask):
 
 	def run(self, game):
 
-		# Because this is run the turn of the vote, we have to watch out for the next line
+		# Because this is ran the turn of the vote, we have to watch out for the next line
 		party_line = game.get_next_mdc_party_line()
 
 		if party_line != MDCVoteOrder.DEVE:
