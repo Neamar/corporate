@@ -3,7 +3,6 @@ Corporate game
 
 [![Build Status](https://travis-ci.org/Neamar/corporate.png?branch=master)](https://travis-ci.org/Neamar/corporate)
 [![Coverage Status](https://coveralls.io/repos/Neamar/corporate/badge.png?branch=master)](https://coveralls.io/r/Neamar/corporate?branch=master)
-[![Coverage Status](https://coveralls.io/repos/Neamar/corporate/badge.png?branch=master)](https://coveralls.io/r/Neamar/corporate?branch=master)
 
 > You think this is a game? This is not. This is only The Game.
 

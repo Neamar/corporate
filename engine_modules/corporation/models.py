@@ -15,7 +15,7 @@ class BaseCorporation:
 	Implemented as a separate non-model class to avoid cluttering the database
 	"""
 
-	BASE_CORPORATION_DIR = "%s/engine_modules/corporation/base_corporation" % (settings.BASE_DIR)
+	BASE_CORPORATION_DIR = "%s/datas/corporations" % (settings.BASE_DIR)
 
 	@classmethod
 	def build_dict(cls):
@@ -39,10 +39,6 @@ class BaseCorporation:
 		self.slug = slug
 		self.name = meta['name'][0]
 		self.description = mark_safe(content)
-		self.datasteal = meta['datasteal'][0]
-		self.sabotage = meta['sabotage'][0]
-		self.extraction = meta['extraction'][0]
-		self.detection = meta['detection'][0]
 
 		self.datasteal = int(meta['datasteal'][0])
 		self.sabotage = int(meta['sabotage'][0])
@@ -58,7 +54,6 @@ class BaseCorporation:
 		try:
 			self.initials_assets = int(meta['initials_assets'][0])
 		except KeyError:
-			# In the Model, the default value used to be 10
 			self.initials_assets = 10
 
 		try:
@@ -97,10 +92,17 @@ class Corporation(models.Model):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
 	def on_first_effect(self):
-		exec(self.base_corporation.on_first, {'game': self.game})
+		exec(self.base_corporation.on_first, {'game': self.game, 'corporation': self, 'corporations': self.game.corporation_set})
 
 	def on_last_effect(self):
-		exec(self.base_corporation.on_last, {'game': self.game})
+		exec(self.base_corporation.on_last, {'game': self.game, 'corporation': self, 'corporations': self.game.corporation_set})
+
+	def update_assets(self, delta):
+		"""
+		Update assets values, and save the model
+		"""
+		self.assets += delta
+		self.save()
 
 	def __unicode__(self):
 		return "%s (%s)" % (self.base_corporation.name, self.assets)

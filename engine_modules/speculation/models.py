@@ -26,7 +26,7 @@ class CorporationSpeculationOrder(Order):
 
 	corporation = models.ForeignKey(Corporation)
 	rank = models.PositiveSmallIntegerField()
-	investment = models.PositiveIntegerField()
+	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
 
 	def get_cost(self):
 		return self.investment * self.BASE_COST
@@ -43,17 +43,17 @@ class CorporationSpeculationOrder(Order):
 				# Speculation on first or last corpo
 				self.player.money += self.get_cost() * 2
 				self.player.save()
-				content = u"Vous êtes un bon spéculateur, vos investissements sur la corporation %s vous ont rapporté %sk ¥" % (self.corporation.base_corporation.name, self.investment * 3)
+				content = u"Vous êtes un bon spéculateur, vos investissements de %sk ¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.investment * 3)
 			else:
 				# Speculation on non first or non last corpo
 				self.player.money += self.get_cost() * 4
 				self.player.save()
-				content = u"Vous êtes un excellent spéculateur, vos investissements sur la corporation %s vous ont rapporté %sk ¥" % (self.corporation.base_corporation.name, self.investment * 5)
+				content = u"Vous êtes un excellent spéculateur, vos investissements de %sk ¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.investment * 5)
 		else:
 			# Failure
 			self.player.money -= self.get_cost()
 			self.player.save()
-			content = u"Vos spéculations sur la corporation %s n'ont malheureusement pas été concluantes" % self.corporation.base_corporation.name
+			content = u"Vos spéculations de %sk ¥ sur la corporation %s n'ont malheureusement pas été concluantes" % (self.investment, self.corporation.base_corporation.name)
 
 		self.player.add_note(category=category, content=content)
 
@@ -80,7 +80,7 @@ class DerivativeSpeculationOrder(Order):
 
 	speculation = models.BooleanField(choices=UPDOWN_CHOICES)
 	derivative = models.ForeignKey(Derivative)
-	investment = models.PositiveIntegerField()
+	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
 
 	def get_cost(self):
 		return self.investment * self.BASE_COST
@@ -95,12 +95,12 @@ class DerivativeSpeculationOrder(Order):
 			# Success
 			self.player.money += self.get_cost()
 			self.player.save()
-			content = u"Vous êtes un bon spéculateur, vos investissements sur le produit dérivé %s vous ont rapporté %sk ¥" % (self.derivative.name, self.investment * 2)
+			content = u"Vous êtes un bon spéculateur, vos investissements de %sk ¥ sur le produit dérivé %s vous ont rapporté %sk ¥" % (self.investment, self.derivative.name, self.investment * 2)
 		else:
 			# Failure
 			self.player.money -= self.get_cost()
 			self.player.save()
-			content = u"Vos spéculations sur le produit dérivé %s n'ont malheureusement pas été concluantes" % self.derivative.name
+			content = u"Vos spéculations de %sk ¥ sur le produit dérivé %s n'ont malheureusement pas été concluantes" % (self.investment, self.derivative.name)
 
 		self.player.add_note(category=category, content=content)
 

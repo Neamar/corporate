@@ -47,6 +47,8 @@ class WebsiteTest(EngineTestCase):
 			reverse('website.views.datas.corporations', args=[self.g.id]),
 			reverse('website.views.datas.players', args=[self.g.id]),
 			reverse('website.views.datas.shares', args=[self.g.id]),
+			reverse('website.views.datas.newsfeeds', args=[self.g.id]),
+			reverse('website.views.datas.comlink', args=[self.g.id]),
 		]
 
 		for page in pages:
@@ -63,6 +65,8 @@ class WebsiteTest(EngineTestCase):
 			reverse('website.views.datas.players', args=[self.g.id]),
 			reverse('website.views.datas.player', args=[self.g.id, self.p.id]),
 			reverse('website.views.datas.shares', args=[self.g.id]),
+			reverse('website.views.datas.newsfeeds', args=[self.g.id]),
+			reverse('website.views.datas.comlink', args=[self.g.id]),
 		]
 
 		for page in pages:

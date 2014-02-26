@@ -3,14 +3,6 @@ from engine.testcases import EngineTestCase
 
 
 class TasksTest(EngineTestCase):
-	"""
-	Unit tests for engine models
-	"""
-	def setUp(self):
-		super(TasksTest, self).setUp()
-
-		self.g.disable_invisible_hand = True
-
 	def test_assets_saved_on_resolution(self):
 		"""
 		The game should save the corporation assets on resolution

@@ -10,16 +10,14 @@ class VoteOrder(Order):
 	Order to vote for a Corporation
 	"""
 	title = "Voter"
-	
+
 	corporation_up = models.ForeignKey(Corporation, related_name="+")
 	corporation_down = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve(self):
-		self.corporation_up.assets += 1
-		self.corporation_up.save()
+		self.corporation_up.update_assets(1)
 
-		self.corporation_down.assets -= 1
-		self.corporation_down.save()
+		self.corporation_down.update_assets(-1)
 
 		# Send a note for final message
 		category = u"Votes"

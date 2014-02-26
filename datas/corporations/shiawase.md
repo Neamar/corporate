@@ -4,8 +4,12 @@ datasteal: 10
 sabotage: 10
 extraction: 30
 detection: 30
-on_first: "lol"
-on_last: "lol"
+on_first:
+    corporations.get(base_corporation_slug='renraku').update_assets(-1)
+    corporations.get(base_corporation_slug='sony').update_assets(1)
+on_last:
+    corporations.get(base_corporation_slug='sony').update_assets(-1)
+    game.get_ordered_corporations()[-2].update_assets(-1)
 derivative: Nikkei
 
 

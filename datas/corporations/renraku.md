@@ -4,8 +4,12 @@ datasteal: 20
 sabotage: 10
 extraction: 20
 detection: 30
-on_first: "lol"
-on_last: "lol"
+on_first:
+    corporations.get(base_corporation_slug='neonet').update_assets(-1)
+    corporations.get(base_corporation_slug='shiawase').update_assets(-1)
+on_last:
+    corporations.get(base_corporation_slug='sony').update_assets(-1)
+    corporations.get(base_corporation_slug='shiawase').update_assets(1)
 derivative: Nikkei
 
 

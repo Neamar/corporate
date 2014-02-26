@@ -10,7 +10,7 @@ class OrdersTest(EngineTestCase):
 
 		super(OrdersTest, self).setUp()
 		self.c3.delete()
-		
+
 		self.c.assets = 7
 		self.c.save()
 
@@ -65,11 +65,11 @@ class OrdersTest(EngineTestCase):
 		"""
 		self.o.resolve()
 		n = Note.objects.filter(category="Parts").last()
-		self.assertTrue(u'première' in n.content)
+		self.assertIn(u'première', n.content)
 
 		self.o.resolve()
 		n = Note.objects.filter(category="Parts").last()
-		self.assertTrue(u'2ème' in n.content)
+		self.assertIn(u'2ème', n.content)
 
 	def test_order_special_cost_for_first_corpo_and_not_citizen(self):
 		"""

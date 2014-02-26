@@ -13,7 +13,7 @@ class SignalsTest(EngineTestCase):
 
 	def test_derivatives_created(self):
 		nikkei = self.g.derivative_set.get(name="Nikkei")
-		self.assertTrue(self.c in nikkei.corporations.all())
+		self.assertIn(self.c, nikkei.corporations.all())
 
 	def test_max_speculation(self):
 		"""

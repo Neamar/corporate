@@ -25,12 +25,10 @@ class Newsfeed(models.Model):
 
 
 class Message(models.Model):
-	ORDER = 'ORD'
 	PRIVATE_MESSAGE = 'PM'
 	RESOLUTION = 'RE'
 
 	MESSAGE_CHOICES = (
-		(ORDER, 'Order'),
 		(PRIVATE_MESSAGE, 'Private Message'),
 		(RESOLUTION, 'Resolution'),
 	)
