@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
 from engine.dispatchs import validate_order
-from engine.models import Order
 from engine.exceptions import OrderNotAvailable
 from engine_modules.mdc.models import MDCVoteOrder
-from engine_modules.corporation_run.models import ProtectionOrder, SabotageOrder, DataStealOrder, OffensiveRunOrder
+from engine_modules.corporation_run.models import ProtectionOrder, OffensiveRunOrder
 from engine_modules.player_run.models import InformationOrder
 from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
 
 
-
 @receiver(validate_order)
 def enforce_mdc_party_line_offense(instance, **kwargs):
-
 	if not (isinstance(instance, InformationOrder) or isinstance(instance, OffensiveRunOrder)):
 		return
 
@@ -21,22 +18,23 @@ def enforce_mdc_party_line_offense(instance, **kwargs):
 
 	if isinstance(instance, OffensiveRunOrder):
 		if party_line == MDCVoteOrder.CCIB:
-			g =instance.player.game
+			g = instance.player.game
 			protected_corporations = []
 			# This call is going to be a DataBase catastrophe !!!!
 			right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
 			for vo in right_vote_orders:
 				protected_corporations.append(vo.get_friendly_corporations())
-			
+
 			if [instance.target_corporation.base_corporation_slug] in protected_corporations:
 				instance.hidden_percents -= 1
 
 	if party_line == MDCVoteOrder.TRAN:
 		if player_vote == MDCVoteOrder.CCIB:
 			instance.hidden_percents -= 1
-		
+
 		elif player_vote == MDCVoteOrder.TRAN:
 			instance.hidden_percents += 1
+
 
 @receiver(validate_order, sender=ProtectionOrder)
 def enforce_mdc_party_line_no_protection(sender, instance, **kwargs):
@@ -46,6 +44,7 @@ def enforce_mdc_party_line_no_protection(sender, instance, **kwargs):
 	if party_line == MDCVoteOrder.CCIB:
 		if instance.player.get_last_mdc_vote() == MDCVoteOrder.TRAN:
 			raise OrderNotAvailable("Vous avez voté pour la transparence au tour précédent, vous ne pouvez donc pas effectuer de run de protection ce tour-ci")
+
 
 @receiver(validate_order)
 def enforce_mdc_party_line_no_speculation(instance, **kwargs):
@@ -62,7 +61,8 @@ def enforce_mdc_party_line_no_speculation(instance, **kwargs):
 
 	elif party_line == MDCVoteOrder.DERE:
 		if player_vote == MDCVoteOrder.BANK:
-                        raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
+			raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
+
 
 @receiver(validate_order)
 def enforce_mdc_party_line_speculation_rates(instance, **kwargs):
@@ -82,6 +82,7 @@ def enforce_mdc_party_line_speculation_rates(instance, **kwargs):
 		if player_vote == MDCVoteOrder.DERE:
 			# This speculation should see its rate augmented if it succeeds
 			instance.set_winrate(instance.winrate + 1)
+
 
 @receiver(validate_order, sender=MDCVoteOrder)
 def limit_mdc_order(sender, instance, **kwargs):

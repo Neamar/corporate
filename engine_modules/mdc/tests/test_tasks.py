@@ -1,10 +1,7 @@
 from engine.models import Player
 from engine.testcases import EngineTestCase
-from engine_modules.share.models import Share
-from engine_modules.mdc.models import MDCVoteOrder, MDCVoteSession
-from engine_modules.corporation.models import Corporation
+from engine_modules.mdc.models import MDCVoteOrder
 
-from engine_modules.mdc.tasks import MDCLineCPUBTask
 
 class TaskTest(EngineTestCase):
 	def setUp(self):
@@ -26,7 +23,7 @@ class TaskTest(EngineTestCase):
 		Test the line is defined
 		"""
 		self.g.resolve_current_turn()
-		
+
 		mdc_vote_session = self.g.mdcvotesession_set.get(turn=self.g.current_turn)
 		self.assertEqual(mdc_vote_session.current_party_line, self.v.party_line)
 
@@ -44,4 +41,3 @@ class TaskTest(EngineTestCase):
 
 		mdc_vote_session = (self.g.mdcvotesession_set.get(turn=self.g.current_turn))
 		self.assertEqual(mdc_vote_session.current_party_line, None)
-

@@ -3,8 +3,6 @@ from django.db import models
 from collections import Counter
 
 from engine.models import Order, Game, Player
-from engine.exceptions import OrderNotAvailable
-from engine.models import Order, Game
 
 
 class MDCVoteOrder(Order):
@@ -30,7 +28,6 @@ class MDCVoteOrder(Order):
 
 	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
 	title = "Choisir une coalition"
-
 
 	def get_weight(self):
 		"""
@@ -91,6 +88,7 @@ class MDCVoteSession(models.Model):
 	def __unicode__(self):
 		return "%s line for %s on turn %s" % (self.current_party_line, self.game, self.turn)
 
+
 def get_current_mdc_party_line(self):
 	"""
 	Get the MDC party line voted last session
@@ -102,6 +100,7 @@ def get_current_mdc_party_line(self):
 
 	session = self.mdcvotesession_set.get(turn=self.current_turn)
 	return session.current_party_line
+
 
 def get_next_mdc_party_line(self):
 	"""
@@ -115,6 +114,7 @@ def get_next_mdc_party_line(self):
 		return None
 
 	return session.current_party_line
+
 
 def get_last_mdc_vote(self):
 	"""
