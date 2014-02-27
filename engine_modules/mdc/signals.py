@@ -26,9 +26,9 @@ def enforce_mdc_party_line_offense(instance, **kwargs):
 			# This call is going to be a DataBase catastrophe !!!!
 			right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
 			for vo in right_vote_orders:
-				protected_corporations.append(vo.get_friendly_corporations())
+				protected_corporations += vo.get_friendly_corporations()
 			
-			if [instance.target_corporation.base_corporation_slug] in protected_corporations:
+			if instance.target_corporation.base_corporation_slug in protected_corporations:
 				instance.hidden_percents -= 1
 
 	if party_line == MDCVoteOrder.TRAN:
