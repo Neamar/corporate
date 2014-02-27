@@ -2,7 +2,6 @@ from engine.models import Player
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share
 from engine_modules.mdc.models import MDCVoteOrder
-from engine_modules.corporation.models import Corporation
 
 
 class OrdersTest(EngineTestCase):
