@@ -2,7 +2,6 @@
 from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share, BuyShareOrder
-from engine_modules.corporation.models import Corporation
 from messaging.models import Note
 
 
@@ -10,12 +9,13 @@ class OrdersTest(EngineTestCase):
 	def setUp(self):
 
 		super(OrdersTest, self).setUp()
+		self.c3.delete()
 
-		self.g.corporation_set.all().delete()
-		self.c = Corporation(base_corporation_slug='renraku', assets=7)
-		self.c2 = Corporation(base_corporation_slug='shiawase', assets=8)
-		self.g.corporation_set.add(self.c)
-		self.g.corporation_set.add(self.c2)
+		self.c.assets = 7
+		self.c.save()
+
+		self.c2.assets = 8
+		self.c2.save()
 
 		self.o = BuyShareOrder(
 			player=self.p,
@@ -47,7 +47,7 @@ class OrdersTest(EngineTestCase):
 		"""
 		You can't buy more shares than your influence
 		"""
-		o2 =  BuyShareOrder(
+		o2 = BuyShareOrder(
 			player=self.p,
 			corporation=self.c
 		)
@@ -65,11 +65,11 @@ class OrdersTest(EngineTestCase):
 		"""
 		self.o.resolve()
 		n = Note.objects.filter(category="Parts").last()
-		self.assertTrue(u'première' in n.content)
+		self.assertIn(u'première', n.content)
 
 		self.o.resolve()
 		n = Note.objects.filter(category="Parts").last()
-		self.assertTrue(u'2ème' in n.content)
+		self.assertIn(u'2ème', n.content)
 
 	def test_order_special_cost_for_first_corpo_and_not_citizen(self):
 		"""

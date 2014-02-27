@@ -6,7 +6,7 @@ class VoteTask(OrderResolutionTask):
 	"""
 	Buy new Influence level
 	"""
-	resolution_order = 100
+	RESOLUTION_ORDER = 100
 	ORDER_TYPE = VoteOrder
 
 tasks = (VoteTask, )

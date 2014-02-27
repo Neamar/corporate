@@ -7,7 +7,8 @@ class OrdersTest(EngineTestCase):
 	def setUp(self):
 		super(OrdersTest, self).setUp()
 		self.o = RunOrder(
-			player=self.p
+			player=self.p,
+			additional_percents=0,
 		)
 		self.o.clean()
 		self.o.save()
@@ -36,7 +37,7 @@ class OrdersTest(EngineTestCase):
 		self.assertEqual(self.reload(self.p).money, self.initial_money)
 
 		self.o.additional_percents = 2
-		resolve(self.o)		
+		resolve(self.o)
 		self.assertEqual(self.reload(self.p).money, self.initial_money - RunOrder.BASE_COST * 2)
 
 	def test_run_probability(self):

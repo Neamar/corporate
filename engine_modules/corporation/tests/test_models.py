@@ -1,38 +1,39 @@
+from django.test import TestCase
+from engine.models import Game
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation, Corporation
 
 
-class ModelTest(EngineTestCase):
+class ModelTest(TestCase):
+	"""
+	Inherit from TestCase and not from EngineTestCase, since EngineTestCase overrides base corporation behavior for faster tests.
+	"""
+
 	def setUp(self):
 
-		super(ModelTest, self).setUp()
+		self.g = Game()
+		self.g.save()
 
 	def test_corporation_auto_created(self):
 		"""
 		Corporation should have been created alongside the game
 		"""
 
-		corporations = Corporation.objects.all()
+		corporations = Corporation.objects.all().order_by('base_corporation_slug')
 		self.assertEqual(len(corporations), len(BaseCorporation.retrieve_all()))
 
-	def test_corporation_deleted_when_asset_drops_to_zero(self):
-		"""
-		Corporation should crash when their assets are null
-		"""
-		
-		c = Corporation.objects.all()[0]
-		c.assets = 0
-		c.save()
+		self.assertEqual(corporations[0].base_corporation.slug, 'ares')
+		self.assertEqual(corporations[0].base_corporation.datasteal, 10)
 
-		self.assertRaises(Corporation.DoesNotExist, lambda: self.reload(c))
 
-	def test_corporation_deleted_when_asset_drops_below_zero(self):
+class ModelMethodTest(EngineTestCase):
+	def test_corporation_update_assets(self):
 		"""
-		Corporation should crash when their assets drops below 0, without raising IntegrityError.
+		Corporation assets should be updated
 		"""
 
-		c = Corporation.objects.all()[0]
-		c.assets = -1
-		c.save()
+		corporation = Corporation.objects.get(base_corporation_slug='ares')
 
-		self.assertRaises(Corporation.DoesNotExist, lambda: self.reload(c))
+		initial_assets = corporation.assets
+		corporation.update_assets(-5)
+		self.assertEqual(self.reload(corporation).assets, initial_assets - 5)

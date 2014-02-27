@@ -1,6 +1,5 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 
-from django.test import Client
 
 class DocTest(TestCase):
 	def setUp(self):
@@ -21,7 +20,7 @@ class DocTest(TestCase):
 		"""
 
 		r = self.c.get('/docs/index')
-		self.assertTrue('<p>' in r.content)
+		self.assertIn('<p>', r.content)
 
 	def test_doc_index(self):
 		"""

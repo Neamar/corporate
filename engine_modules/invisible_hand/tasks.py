@@ -1,5 +1,6 @@
 from engine.tasks import ResolutionTask
 
+
 class InvisibleHandTask(ResolutionTask):
 	"""
 	Give +1 and -1 asset to two corporation
@@ -7,8 +8,8 @@ class InvisibleHandTask(ResolutionTask):
 	RESOLUTION_ORDER = 400
 
 	def run(self, game):
-		# Invisible hand can be disabled, for instance to ease testing
-		if hasattr(game, 'disable_invisible_hand'):
+		# Invisible hand can be disabled, for instance to ease testing, by setting the "disable_side_effects" flag.
+		if hasattr(game, 'disable_side_effects') and not hasattr(game, 'force_invisible_hand'):
 			return
 
 		corpos = game.corporation_set.all().order_by('?')[0:2]
@@ -17,10 +18,9 @@ class InvisibleHandTask(ResolutionTask):
 		if len(corpos) == 0:
 			return
 
-		corpos[0].assets += 1
+		corpos[0].update_assets(1)
 
 		if len(corpos) >= 2:
-			corpos[1].assets -= 1
-		[corpo.save() for corpo in corpos]
+			corpos[1].update_assets(-1)
 
 tasks = (InvisibleHandTask,)

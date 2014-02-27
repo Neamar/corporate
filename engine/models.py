@@ -1,26 +1,24 @@
 # -*- coding: utf-8 -*-
-from django.db import models
+from django.db import models, transaction
 from django.conf import settings
+from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
-from messaging.models import Message, Note
+from messaging.models import Message, Note, Newsfeed
+
 
 class Game(models.Model):
 	city = models.CharField(max_length=50)
 	current_turn = models.PositiveSmallIntegerField(default=1)
-	total_turn = models.PositiveSmallIntegerField()
+	total_turn = models.PositiveSmallIntegerField(default=8)
 	started = models.DateTimeField(auto_now_add=True)
 
+	@transaction.atomic
 	def resolve_current_turn(self):
 		"""
 		Resolve all orders for this turn, increment current_turn by 1.
 		"""
-
-		# First step: build a message for each player containing order list.
-		for player in self.player_set.all():
-			player.build_order_message()
-
 		# Execute all tasks
 		from engine.modules import tasks_list
 		for task in tasks_list:
@@ -36,12 +34,11 @@ class Game(models.Model):
 		self.current_turn += 1
 		self.save()
 
-	def add_note(self, **kwargs):
+	def add_newsfeed(self, **kwargs):
 		"""
-		Create a note, to be used later for the resolution message
+		Create a newsfeed on the game
 		"""
-		n = Note.objects.create(turn = self.current_turn, **kwargs)
-		n.recipient_set = self.player_set.all()
+		n = Newsfeed.objects.create(turn=self.current_turn, game=self, **kwargs)
 		return n
 
 	def __unicode__(self):
@@ -89,35 +86,6 @@ class Player(models.Model):
 		"""
 		return sum([order.cost for order in self.get_current_orders()])
 
-	def build_order_message(self):
-		"""
-		Retrieve all orders for this turn, and build a message to remember them.
-		"""
-		orders = self.order_set.all()
-		message = "# Ordres de %s pour le tour %s\n\n" % (self.name, self.game.current_turn)
-		for order in orders:
-			# Retrieve associated order:
-			try:
-				details = getattr(order, order.type.lower())
-			except AttributeError:
-				try:
-					# TODO : CHANGE DAT SHIT
-					details = getattr(order.runorder, order.type.lower())
-				except AttributeError:
-					# TODO : CHANGE DAT SHIT (again)
-					details = getattr(order.runorder.offensiverunorder, order.type.lower())
-
-			message += "* %s\n" % details.description()
-
-		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
-
-		return self.add_message(
-			title="Ordres du tour",
-			content=message,
-			author=None,
-			flag=Message.ORDER,
-		)
-
 	def build_resolution_message(self):
 		"""
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
@@ -126,7 +94,6 @@ class Player(models.Model):
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=notes,
-			opening=u"# Résolution du tour %s\n" % self.game.current_turn,
 			title="Informations personnelles du tour %s" % self.game.current_turn,
 			turn=self.game.current_turn
 		)
@@ -138,14 +105,15 @@ class Player(models.Model):
 
 
 class Order(models.Model):
+	title = "Ordre"
+
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField(editable=False)
-	cost = models.PositiveSmallIntegerField(editable=False) # TODO : recompute from inheritance
-	type = models.CharField(max_length=80, blank=True, editable=False)
+	cost = models.PositiveSmallIntegerField(editable=False)
+	type = models.CharField(max_length=40, blank=True, editable=False)
 
 	def save(self):
 		# Save the current type to inflate later
-		# self.type = '%s.%s' % (self._meta.app_label, self._meta.object_name)
 		self.type = self._meta.object_name
 
 		# Turn default values is game current_turn
@@ -154,7 +122,6 @@ class Order(models.Model):
 
 		if not self.cost:
 			self.cost = self.get_cost()
-
 
 		super(Order, self).save()
 
@@ -180,6 +147,45 @@ class Order(models.Model):
 		Should return a full description of the order
 		"""
 		raise NotImplementedError("Abstract call.")
+
+	def get_form(self, datas=None):
+		"""
+		Retrieve a form to create / edit this order
+		"""
+		return self.get_form_class()(datas, instance=self)
+
+	def get_form_class(self):
+		"""
+		Build a new class for forms,
+		"""
+		class OrderForm(ModelForm):
+			class Meta(self.get_form_meta()):
+				pass
+
+		return OrderForm
+
+	def get_form_meta(self):
+		"""
+		Meta class to use for get_form()
+		"""
+		class Meta:
+			model = self.__class__
+			exclude = ['player']
+
+		return Meta
+
+	def to_child(self):
+		"""
+		By default, when we do player.order_set.all(), we retrieve Order instance.
+		In most case, we need to subclass all those orders to their correct orders type, and this function will convert a plain Order to the most specific Order subclass according to the stored `.type`.
+		"""
+		from engine.modules import orders_list
+
+		for ChildOrder in orders_list:
+			if ChildOrder.__name__ == self.type:
+				return ChildOrder.objects.get(pk=self.pk)
+
+		raise LookupError("No orders subclass match this base: %s" % self.type)
 
 
 # Import datas for all engine_modules

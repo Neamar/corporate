@@ -1,0 +1,68 @@
+{% extends "template.html" %}
+
+{% block title %}Wallstreet{% endblock %}
+{% block h1 %}Wallstreet{% endblock %}
+
+{% block content %}
+<table class="prop_table">
+<thead>
+<tr>
+  <th></th>
+  <th>Actif</th>
+  <th>Prec.</th>
+</tr>
+</thead>
+<tbody>
+{% for corporation in corporations %}
+<tr>
+  <td><a href="{% url "website.views.datas.corporation" game_id=1 corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
+  <td class="important"><strong style="color:{% if corporation.assets > corporation.last_assets %}green{% elif corporation.assets < corporation.last_assets %}red{% endif %}">{{ corporation.assets }}</strong></td>
+  <td>{{ corporation.last_assets }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<div id="chart_div" style="width: 90%; height: 300px; margin:15px auto;"></div>
+
+{% endblock content %}
+
+{% block scripts %}
+{% regroup assets_history by turn as assets_history_turn %}
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+	var data = google.visualization.arrayToDataTable([
+    ['Tour',
+		{% for c in sorted_corporations %}
+			'{{c.base_corporation.name}}',
+		{% endfor %}
+	],
+	{% for assets in assets_history_turn %}
+    ['{{ assets.grouper }}',
+		{% for a in assets.list %}
+			{{a.assets}},
+		{% endfor %}
+	],
+	{% endfor %}
+	]);
+
+	var options = {
+		title: 'Bourse',
+		backgroundColor: 'transparent',
+		pointSize: 4,
+		curveType: 'function',
+	};
+
+	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+	chart.draw(data, options);
+  }
+
+  window.onresize = drawChart;
+</script>
+{% endblock scripts %}
+
+

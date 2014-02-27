@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    #'debug_toolbar',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,13 +52,14 @@ INSTALLED_APPS = (
     'engine_modules.corporation_run',
     'engine_modules.corporation_asset_history',
     'engine_modules.player_run',
+    'engine_modules.speculation',
     'engine_modules.effects',
+    'engine_modules.mdc',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -70,7 +72,8 @@ WSGI_APPLICATION = 'corporate.wsgi.application'
 
 # settings.py
 AUTH_USER_MODEL = 'website.User'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'website.views.index.index'
+LOGIN_URL = 'django.contrib.auth.views.login'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases

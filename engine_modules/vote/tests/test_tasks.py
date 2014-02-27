@@ -1,13 +1,10 @@
 from engine.testcases import EngineTestCase
 from engine_modules.vote.models import VoteOrder
 
+
 class TaskTest(EngineTestCase):
 	def setUp(self):
-		
 		super(TaskTest, self).setUp()
-
-		self.c = self.g.corporation_set.get(base_corporation_slug="renraku")
-		self.c2 = self.g.corporation_set.get(base_corporation_slug="shiawase")
 
 		self.v = VoteOrder(
 			player=self.p,
@@ -15,9 +12,6 @@ class TaskTest(EngineTestCase):
 			corporation_down=self.c2
 		)
 		self.v.save()
-
-		# Disable invisible_hand for reliable results
-		self.g.disable_invisible_hand = True
 
 	def test_vote(self):
 		begin_assets_1 = self.c.assets

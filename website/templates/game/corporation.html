@@ -1,0 +1,92 @@
+{% extends "template.html" %}
+
+{% block title %}{{ corporation.base_corporation.name }}{% endblock %}
+{% block h1 %}{{ corporation.base_corporation.name }}{% endblock %}
+{% block favicon %}{{ STATIC_URL }}corporations/{{corporation.base_corporation.slug}}.png{% endblock %}
+
+{% block content %}
+<table class="prop_table">
+<thead>
+<tr>
+	<th></th>
+	<th>Actif</th>
+	<th>DS</th>
+	<th>S</th>
+	<th>E</th>
+	<th>D</th>
+	<th>Ligne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><a href="{% url "website.views.datas.corporation" game_id=1 corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
+	<td class="important">{{ corporation.assets }}</td>
+	<td>{{ corporation.base_corporation.datasteal }}</td>
+	<td>{{ corporation.base_corporation.sabotage }}</td>
+	<td>{{ corporation.base_corporation.extraction }}</td>
+	<td>{{ corporation.base_corporation.detection }}</td>
+	<td> TBD </td>
+</tr>
+</tbody>
+</table>
+
+<div id="chart_div" style="width: 530px; height: 300px; margin:15px auto;"></div>
+
+{% if players %}
+<h2>Parts possédées</h2>
+<table class="prop_table">
+<thead>
+<tr>
+	<th></th>
+	<th>Parts</th>
+</tr>
+</thead>
+<tbody>
+{% for player in players %}
+<tr>
+	<td><a href="{% url "website.views.datas.player" game_id=1 player_id=player.pk %}">{{ player.name }}</a></td>
+	{% if player.citizenship.corporation_id == corporation.pk %}
+	<td><strong>{{ player.qty_share }}</strong></td>
+	{% else %}
+	<td>{{ player.qty_share }}</td>
+	{% endif %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+<h2>Description</h2>
+<img src="{{ STATIC_URL }}corporations/{{corporation.base_corporation.slug}}.png" alt="{{ corporation.base_corporation.name" style="float:right; margin:0 30px"/>
+{{ corporation.base_corporation.description }}
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+function drawChart() {
+	var data = google.visualization.arrayToDataTable([
+		['Tour', 'Actifs'],
+		{% for asset_history in assets_history %}
+			[{{ asset_history.turn }}, {{ asset_history.assets }}],
+		{% endfor %}
+	]);
+
+	var options = {
+		title: 'Actifs',
+		backgroundColor: 'transparent',
+		theme: 'maximized',
+		pointSize: 4,
+		legend: 'none',
+		vAxis: {minValue:0, format:'#'},
+	};
+
+	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+	chart.draw(data, options);
+}
+</script>
+{% endblock scripts %}
+
+
