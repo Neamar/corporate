@@ -10,6 +10,10 @@ from engine_modules.speculation.models import CorporationSpeculationOrder, Deriv
 
 @receiver(validate_order)
 def enforce_mdc_party_line_offense(instance, **kwargs):
+	"""
+	Increase or decrease probability for CCIB and TRAN
+	"""
+	# Only validate for Offensive runs.
 	if not (isinstance(instance, InformationOrder) or isinstance(instance, OffensiveRunOrder)):
 		return
 
@@ -20,7 +24,6 @@ def enforce_mdc_party_line_offense(instance, **kwargs):
 		if party_line == MDCVoteOrder.CCIB:
 			g = instance.player.game
 			protected_corporations = []
-			# This call is going to be a DataBase catastrophe !!!!
 			right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
 			for vo in right_vote_orders:
 				protected_corporations.append(vo.get_friendly_corporations())
@@ -38,7 +41,9 @@ def enforce_mdc_party_line_offense(instance, **kwargs):
 
 @receiver(validate_order, sender=ProtectionOrder)
 def enforce_mdc_party_line_no_protection(sender, instance, **kwargs):
-
+	"""
+	CCIB disables protections
+	"""
 	party_line = instance.player.game.get_current_mdc_party_line()
 
 	if party_line == MDCVoteOrder.CCIB:
@@ -48,40 +53,41 @@ def enforce_mdc_party_line_no_protection(sender, instance, **kwargs):
 
 @receiver(validate_order)
 def enforce_mdc_party_line_no_speculation(instance, **kwargs):
+	"""
+	Block speculations for DERE and BANK lines
+	"""
 
+	# Only validate Speculations
 	if not (isinstance(instance, CorporationSpeculationOrder) or isinstance(instance, DerivativeSpeculationOrder)):
 		return
 
 	party_line = instance.player.game.get_current_mdc_party_line()
-	player_vote = instance.player.get_last_mdc_vote()
 
-	if party_line == MDCVoteOrder.BANK:
-		if player_vote == MDCVoteOrder.DERE:
-			raise OrderNotAvailable("Vous avez voté pour la dérégulation au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
-
-	elif party_line == MDCVoteOrder.DERE:
-		if player_vote == MDCVoteOrder.BANK:
-			raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
+	if party_line == MDCVoteOrder.BANK and instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
+		raise OrderNotAvailable("Vous avez voté pour la dérégulation au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
+	elif party_line == MDCVoteOrder.DERE and instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
+		raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 
 
 @receiver(validate_order)
 def enforce_mdc_party_line_speculation_rates(instance, **kwargs):
+	"""
+	Update speculation rates for BANK and DERE
+	"""
 
+	# Only validate Speculations
 	if not (isinstance(instance, CorporationSpeculationOrder) or isinstance(instance, DerivativeSpeculationOrder)):
 		return
 
 	party_line = instance.player.game.get_current_mdc_party_line()
-	player_vote = instance.player.get_last_mdc_vote()
 
-	if party_line == MDCVoteOrder.BANK:
-		if player_vote == MDCVoteOrder.BANK:
-			# This speculation should cost nothing if it fails
-			instance.set_lossrate(0)
+	if party_line == MDCVoteOrder.BANK and instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
+		# This speculation should cost nothing if it fails
+		instance.set_lossrate(0)
 
-	if party_line == MDCVoteOrder.DERE:
-		if player_vote == MDCVoteOrder.DERE:
-			# This speculation should see its rate augmented if it succeeds
-			instance.set_winrate(instance.winrate + 1)
+	if party_line == MDCVoteOrder.DERE and instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
+		# This speculation should see its rate augmented if it succeeds
+		instance.set_winrate(instance.winrate + 1)
 
 
 @receiver(validate_order, sender=MDCVoteOrder)
