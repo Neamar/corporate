@@ -108,10 +108,11 @@ def get_last_mdc_vote(self):
 
 	try:
 		vote = MDCVoteOrder.objects.get(turn=self.game.current_turn - 1, player=self)
+		return vote.party_line
 	except:
+		# No vote
 		return None
 
-	return vote.party_line
 
 Game.get_mdc_party_line = get_mdc_party_line
 Player.get_last_mdc_vote = get_last_mdc_vote

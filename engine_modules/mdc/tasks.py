@@ -7,7 +7,8 @@ from messaging.models import Newsfeed
 
 class MDCVoteTask(ResolutionTask):
 	"""
-	Choose the MDC party line
+	Choose the MDC party line,
+	Save it in an MDCVoteSession
 	"""
 	RESOLUTION_ORDER = 100
 	ORDER_TYPE = MDCVoteOrder
