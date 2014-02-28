@@ -16,4 +16,4 @@ Dès les années 2050, la ville ressemblait déjà beaucoup à sa forme actuelle
 
 Le crash 2.0 fut dévastateur à NYC : le commerce et les affaires étaient le sang qui coulait dans ses veines. Les infrastructures tombèrent en panne et des gens moururent, mais tout cela resta bien moins destructeur que ne l'avait été le Séisme. La reconstruction à mener après-Crash fut limitée, et les affaires reprirent étonnamment vite, et avec un volume important. Boston, au contraire, avait subit une explosion électromagnétique à l'échelle de toute la ville et des retombées radioactive. Les manigances de Manhattan Inc. (et de Neonet, nouvellement créée) permirent de convaincre l'ECSE de transférer son siège sur les ruines de l'ancien New York Stock Exchange.
 
-De retour à Wall Street, les trader sniffèrent un rail de Novacoke et ouvrirent grand les vannes.
+De retour à Wall Street, les traders sniffèrent un rail de Novacoke et ouvrirent grand les vannes.
