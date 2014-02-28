@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
-from engine.dispatchs import validate_order
+
+from engine.dispatchs import validate_order, post_create
 from engine.exceptions import OrderNotAvailable
 from engine.decorators import sender_instance_of
 from engine_modules.mdc.models import MDCVoteOrder
@@ -86,7 +87,7 @@ def enforce_mdc_bank_negative(sender, instance, **kwargs):
 		raise OrderNotAvailable("Vous avez voté pour la dérégulation au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 
 
-@receiver(validate_order)
+@receiver(post_create)
 @sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
 @expect_party_line(MDCVoteOrder.BANK)
 def enforce_mdc_bank_positive(sender, instance, **kwargs):
@@ -95,10 +96,10 @@ def enforce_mdc_bank_positive(sender, instance, **kwargs):
 	"""
 	if instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
 		# This speculation should cost nothing if it fails
-		instance.lossrate = 0
+		instance.on_loss_ratio = 0
 
 
-@receiver(validate_order)
+@receiver(post_create)
 @sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
 @expect_party_line(MDCVoteOrder.DERE)
 def enforce_mdc_dere_positive(sender, instance, **kwargs):
@@ -108,4 +109,4 @@ def enforce_mdc_dere_positive(sender, instance, **kwargs):
 
 	if instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
 		# This speculation should see its rate augmented if it succeeds
-		instance.winrate += 1
+		instance.on_win_ratio += 1

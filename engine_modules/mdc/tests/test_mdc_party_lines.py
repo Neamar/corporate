@@ -272,9 +272,9 @@ class MDCPartyLineTest(EngineTestCase):
 			rank=1,
 			investment=5
 		)
-		o.clean()
-		o.resolve()
+		o.save()
 
+		o.resolve()
 		self.assertEqual(self.reload(self.p2).money, self.initial_money + o.investment * 3)
 
 	def test_MDC_DERE_line_negative_effect(self):
