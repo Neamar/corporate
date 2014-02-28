@@ -9,19 +9,19 @@ from engine_modules.speculation.models import CorporationSpeculationOrder, Deriv
 
 
 @receiver(validate_order)
-def enforce_mdc_party_line_offense(instance, **kwargs):
+def enforce_mdc_ccib_positive(instance, **kwargs):
 	"""
 	Increase or decrease probability for CCIB and TRAN
 	"""
 	# Only validate for Offensive runs.
-	if not (isinstance(instance, InformationOrder) or isinstance(instance, OffensiveRunOrder)):
+	if not isinstance(instance, InformationOrder) and not isinstance(instance, OffensiveRunOrder):
 		return
 
 	party_line = instance.player.game.get_mdc_party_line()
 	player_vote = instance.player.get_last_mdc_vote()
 
-	if isinstance(instance, OffensiveRunOrder):
-		if party_line == MDCVoteOrder.CCIB:
+	if party_line == MDCVoteOrder.CCIB:
+		if isinstance(instance, OffensiveRunOrder):
 			g = instance.player.game
 			protected_corporations = []
 			right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
@@ -30,8 +30,7 @@ def enforce_mdc_party_line_offense(instance, **kwargs):
 
 			if instance.target_corporation.base_corporation_slug in protected_corporations:
 				instance.hidden_percents -= 1
-
-	if party_line == MDCVoteOrder.TRAN:
+	elif party_line == MDCVoteOrder.TRAN:
 		if player_vote == MDCVoteOrder.CCIB:
 			instance.hidden_percents -= 1
 
