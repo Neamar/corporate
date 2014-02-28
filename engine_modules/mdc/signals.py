@@ -95,7 +95,7 @@ def enforce_mdc_bank_positive(sender, instance, **kwargs):
 	"""
 	if instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
 		# This speculation should cost nothing if it fails
-		instance.set_lossrate(0)
+		instance.lossrate = 0
 
 
 @receiver(validate_order)
@@ -108,4 +108,4 @@ def enforce_mdc_dere_positive(sender, instance, **kwargs):
 
 	if instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
 		# This speculation should see its rate augmented if it succeeds
-		instance.set_winrate(instance.winrate + 1)
+		instance.winrate += 1

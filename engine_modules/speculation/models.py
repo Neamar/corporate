@@ -30,14 +30,6 @@ class CorporationSpeculationOrder(Order):
 	winrate = models.PositiveSmallIntegerField(default=2)
 	lossrate = models.PositiveSmallIntegerField(default=1)
 
-	def set_winrate(self, rate):
-		self.winrate = rate
-		self.save()
-
-	def set_lossrate(self, rate):
-		self.lossrate = rate
-		self.save()
-
 	def get_cost(self):
 		return self.investment * self.BASE_COST
 
@@ -94,14 +86,6 @@ class DerivativeSpeculationOrder(Order):
 	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
 	winrate = models.PositiveSmallIntegerField(default=1)
 	lossrate = models.PositiveSmallIntegerField(default=1)
-
-	def set_winrate(self, rate):
-		self.winrate = rate
-		self.save()
-
-	def set_lossrate(self, rate):
-		self.lossrate = rate
-		self.save()
 
 	def get_cost(self):
 		return self.investment * self.BASE_COST
