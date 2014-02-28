@@ -2,11 +2,12 @@
 from django.dispatch import receiver
 from engine.dispatchs import validate_order
 from engine.exceptions import OrderNotAvailable
+from engine.decorators import sender_instance_of
 from engine_modules.mdc.models import MDCVoteOrder
 from engine_modules.corporation_run.models import ProtectionOrder, OffensiveRunOrder
 from engine_modules.player_run.models import InformationOrder
 from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
-from engine_modules.mdc.decorators import expect_party_line, expect_orders
+from engine_modules.mdc.decorators import expect_party_line
 
 
 @receiver(validate_order, sender=MDCVoteOrder)
@@ -19,7 +20,7 @@ def limit_mdc_order(sender, instance, **kwargs):
 
 
 @receiver(validate_order)
-@expect_orders([OffensiveRunOrder])
+@sender_instance_of(OffensiveRunOrder)
 @expect_party_line(MDCVoteOrder.CCIB)
 def enforce_mdc_ccib_positive(instance, **kwargs):
 	"""
@@ -36,7 +37,7 @@ def enforce_mdc_ccib_positive(instance, **kwargs):
 
 
 @receiver(validate_order)
-@expect_orders([OffensiveRunOrder, InformationOrder])
+@sender_instance_of(OffensiveRunOrder, InformationOrder)
 @expect_party_line(MDCVoteOrder.TRAN)
 def enforce_mdc_tran(instance, **kwargs):
 	"""
@@ -63,7 +64,7 @@ def enforce_mdc_ccib_negative(instance, **kwargs):
 
 
 @receiver(validate_order)
-@expect_orders([CorporationSpeculationOrder, DerivativeSpeculationOrder])
+@sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
 @expect_party_line(MDCVoteOrder.DERE)
 def enforce_mdc_dere_negative(instance, **kwargs):
 	"""
@@ -74,7 +75,7 @@ def enforce_mdc_dere_negative(instance, **kwargs):
 
 
 @receiver(validate_order)
-@expect_orders([CorporationSpeculationOrder, DerivativeSpeculationOrder])
+@sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
 @expect_party_line(MDCVoteOrder.BANK)
 def enforce_mdc_bank_negative(instance, **kwargs):
 	"""
@@ -86,7 +87,7 @@ def enforce_mdc_bank_negative(instance, **kwargs):
 
 
 @receiver(validate_order)
-@expect_orders([CorporationSpeculationOrder, DerivativeSpeculationOrder])
+@sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
 @expect_party_line(MDCVoteOrder.BANK)
 def enforce_mdc_bank_positive(instance, **kwargs):
 	"""
@@ -98,7 +99,7 @@ def enforce_mdc_bank_positive(instance, **kwargs):
 
 
 @receiver(validate_order)
-@expect_orders([CorporationSpeculationOrder, DerivativeSpeculationOrder])
+@sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
 @expect_party_line(MDCVoteOrder.DERE)
 def enforce_mdc_dere_positive(instance, **kwargs):
 	"""
