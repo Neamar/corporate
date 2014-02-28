@@ -17,7 +17,7 @@ def enforce_mdc_party_line_offense(instance, **kwargs):
 	if not (isinstance(instance, InformationOrder) or isinstance(instance, OffensiveRunOrder)):
 		return
 
-	party_line = instance.player.game.get_current_mdc_party_line()
+	party_line = instance.player.game.get_mdc_party_line()
 	player_vote = instance.player.get_last_mdc_vote()
 
 	if isinstance(instance, OffensiveRunOrder):
@@ -27,7 +27,7 @@ def enforce_mdc_party_line_offense(instance, **kwargs):
 			right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
 			for vo in right_vote_orders:
 				protected_corporations += vo.get_friendly_corporations()
-			
+
 			if instance.target_corporation.base_corporation_slug in protected_corporations:
 				instance.hidden_percents -= 1
 
@@ -44,7 +44,7 @@ def enforce_mdc_party_line_no_protection(sender, instance, **kwargs):
 	"""
 	CCIB disables protections
 	"""
-	party_line = instance.player.game.get_current_mdc_party_line()
+	party_line = instance.player.game.get_mdc_party_line()
 
 	if party_line == MDCVoteOrder.CCIB:
 		if instance.player.get_last_mdc_vote() == MDCVoteOrder.TRAN:
@@ -61,7 +61,7 @@ def enforce_mdc_party_line_no_speculation(instance, **kwargs):
 	if not (isinstance(instance, CorporationSpeculationOrder) or isinstance(instance, DerivativeSpeculationOrder)):
 		return
 
-	party_line = instance.player.game.get_current_mdc_party_line()
+	party_line = instance.player.game.get_mdc_party_line()
 
 	if party_line == MDCVoteOrder.BANK and instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
 		raise OrderNotAvailable("Vous avez voté pour la dérégulation au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
@@ -79,7 +79,7 @@ def enforce_mdc_party_line_speculation_rates(instance, **kwargs):
 	if not (isinstance(instance, CorporationSpeculationOrder) or isinstance(instance, DerivativeSpeculationOrder)):
 		return
 
-	party_line = instance.player.game.get_current_mdc_party_line()
+	party_line = instance.player.game.get_mdc_party_line()
 
 	if party_line == MDCVoteOrder.BANK and instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
 		# This speculation should cost nothing if it fails

@@ -33,14 +33,14 @@ class MDCVoteTask(ResolutionTask):
 				official_line = top_line[0][0]
 
 		s = MDCVoteSession(
-			current_party_line=official_line,
+			party_line=official_line,
 			game=game,
 			turn=game.current_turn + 1
 		)
 		s.save()
 
 		if official_line is not None:
-			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté %s" % s.get_current_party_line_display())
+			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté %s" % s.get_party_line_display())
 
 
 class MDCLineCPUBTask(ResolutionTask):
@@ -55,7 +55,7 @@ class MDCLineCPUBTask(ResolutionTask):
 	def run(self, game):
 
 		# Because this is run the turn of the vote, we have to watch out for the next line
-		party_line = game.get_next_mdc_party_line()
+		party_line = game.get_mdc_party_line(turn=game.current_turn + 1)
 
 		if party_line != MDCVoteOrder.CPUB:
 			return
@@ -64,7 +64,7 @@ class MDCLineCPUBTask(ResolutionTask):
 		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.CPUB)
 		for o in win_votes:
 			winning_corporations += o.get_friendly_corporations()
-			
+
 		losing_corporations = []
 		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.DEVE)
 		for o in loss_votes:
@@ -78,7 +78,7 @@ class MDCLineCPUBTask(ResolutionTask):
 			c = game.corporation_set.get(base_corporation_slug=loseslug)
 			c.update_assets(-1)
 
-	
+
 class MDCLineDEVETask(ResolutionTask):
 	"""
 	Enforce the effects of the MDC CPUB party line
@@ -91,7 +91,7 @@ class MDCLineDEVETask(ResolutionTask):
 	def run(self, game):
 
 		# Because this is ran the turn of the vote, we have to watch out for the next line
-		party_line = game.get_next_mdc_party_line()
+		party_line = game.get_mdc_party_line(turn=game.current_turn + 1)
 
 		if party_line != MDCVoteOrder.DEVE:
 			return
@@ -100,7 +100,7 @@ class MDCLineDEVETask(ResolutionTask):
 		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.DEVE)
 		for o in win_votes:
 			winning_corporations += o.get_friendly_corporations()
-			
+
 		losing_corporations = []
 		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.CPUB)
 		for o in loss_votes:
@@ -113,6 +113,6 @@ class MDCLineDEVETask(ResolutionTask):
 		for loseslug in losing_corporations:
 			c = game.corporation_set.get(base_corporation_slug=loseslug)
 			c.update_assets(-1)
-	
+
 
 tasks = (MDCVoteTask, MDCLineCPUBTask, MDCLineDEVETask)
