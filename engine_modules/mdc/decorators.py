@@ -4,8 +4,9 @@ def expect_party_line(party_line):
 	To be used with valide_order
 	"""
 	def d(function):
-		def wrapper(instance, *args, **kwargs):
+		def wrapper(*args, **kwargs):
+			instance = kwargs['instance']
 			if instance.player.game.get_mdc_party_line() == party_line:
-				function(instance, *args, **kwargs)
+				function(*args, **kwargs)
 		return wrapper
 	return d
