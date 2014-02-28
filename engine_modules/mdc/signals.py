@@ -8,52 +8,91 @@ from engine_modules.player_run.models import InformationOrder
 from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
 
 
+@receiver(validate_order, sender=MDCVoteOrder)
+def limit_mdc_order(sender, instance, **kwargs):
+	"""
+	Can't vote twice the same turn
+	"""
+	if MDCVoteOrder.objects.filter(player=instance.player, turn=instance.player.game.current_turn).exists():
+		raise OrderNotAvailable("Vous ne pouvez pas voter deux fois dans le même tour.")
+
+
 @receiver(validate_order)
 def enforce_mdc_ccib_positive(instance, **kwargs):
 	"""
-	Increase or decrease probability for CCIB and TRAN
+	When CCIB line is active, corporation gives a 10%% malus to attackers
+	"""
+	# Only validate for Offensive runs.
+	if not isinstance(instance, OffensiveRunOrder):
+		return
+
+	party_line = instance.player.game.get_mdc_party_line()
+	if party_line != MDCVoteOrder.CCIB:
+		return
+
+	g = instance.player.game
+	protected_corporations = []
+	right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
+	for vo in right_vote_orders:
+		protected_corporations += vo.get_friendly_corporations()
+
+	if instance.target_corporation.base_corporation_slug in protected_corporations:
+		instance.hidden_percents -= 1
+
+
+@receiver(validate_order)
+def enforce_mdc_tran(instance, **kwargs):
+	"""
+	When TRAN line is active,
+	* +10%% for TRAN player
+	* -10%% for TRAN player
 	"""
 	# Only validate for Offensive runs.
 	if not isinstance(instance, InformationOrder) and not isinstance(instance, OffensiveRunOrder):
 		return
 
 	party_line = instance.player.game.get_mdc_party_line()
+	if party_line != MDCVoteOrder.TRAN:
+		return
+
 	player_vote = instance.player.get_last_mdc_vote()
+	if player_vote == MDCVoteOrder.CCIB:
+		instance.hidden_percents -= 1
 
-	if party_line == MDCVoteOrder.CCIB:
-		if isinstance(instance, OffensiveRunOrder):
-			g = instance.player.game
-			protected_corporations = []
-			right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
-			for vo in right_vote_orders:
-				protected_corporations += vo.get_friendly_corporations()
-
-			if instance.target_corporation.base_corporation_slug in protected_corporations:
-				instance.hidden_percents -= 1
-	elif party_line == MDCVoteOrder.TRAN:
-		if player_vote == MDCVoteOrder.CCIB:
-			instance.hidden_percents -= 1
-
-		elif player_vote == MDCVoteOrder.TRAN:
-			instance.hidden_percents += 1
+	elif player_vote == MDCVoteOrder.TRAN:
+		instance.hidden_percents += 1
 
 
 @receiver(validate_order, sender=ProtectionOrder)
-def enforce_mdc_party_line_no_protection(sender, instance, **kwargs):
+def enforce_mdc_ccib_negative(sender, instance, **kwargs):
 	"""
-	CCIB disables protections
+	When CCIB line is active, TRAN players can't protect.
 	"""
 	party_line = instance.player.game.get_mdc_party_line()
 
-	if party_line == MDCVoteOrder.CCIB:
-		if instance.player.get_last_mdc_vote() == MDCVoteOrder.TRAN:
-			raise OrderNotAvailable("Vous avez voté pour la transparence au tour précédent, vous ne pouvez donc pas effectuer de run de protection ce tour-ci")
+	if party_line == MDCVoteOrder.CCIB and instance.player.get_last_mdc_vote() == MDCVoteOrder.TRAN:
+		raise OrderNotAvailable("Vous avez voté pour la transparence au tour précédent, vous ne pouvez donc pas effectuer de run de protection ce tour-ci")
 
 
 @receiver(validate_order)
-def enforce_mdc_party_line_no_speculation(instance, **kwargs):
+def enforce_mdc_dere_negative(instance, **kwargs):
 	"""
-	Block speculations for DERE and BANK lines
+	When DERE line is active, BANK players can't speculate
+	"""
+
+	# Only validate Speculations
+	if not (isinstance(instance, CorporationSpeculationOrder) or isinstance(instance, DerivativeSpeculationOrder)):
+		return
+
+	party_line = instance.player.game.get_mdc_party_line()
+	if party_line == MDCVoteOrder.DERE and instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
+		raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
+
+
+@receiver(validate_order)
+def enforce_mdc_bank_negative(instance, **kwargs):
+	"""
+	When BANK line is active, DERE players can't speculate
 	"""
 
 	# Only validate Speculations
@@ -64,14 +103,12 @@ def enforce_mdc_party_line_no_speculation(instance, **kwargs):
 
 	if party_line == MDCVoteOrder.BANK and instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
 		raise OrderNotAvailable("Vous avez voté pour la dérégulation au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
-	elif party_line == MDCVoteOrder.DERE and instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
-		raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 
 
 @receiver(validate_order)
-def enforce_mdc_party_line_speculation_rates(instance, **kwargs):
+def enforce_mdc_bank_positive(instance, **kwargs):
 	"""
-	Update speculation rates for BANK and DERE
+	When BANK is active, BANK players can speculate without losing money
 	"""
 
 	# Only validate Speculations
@@ -84,15 +121,19 @@ def enforce_mdc_party_line_speculation_rates(instance, **kwargs):
 		# This speculation should cost nothing if it fails
 		instance.set_lossrate(0)
 
+
+@receiver(validate_order)
+def enforce_mdc_dere_positive(instance, **kwargs):
+	"""
+	When DERE is active, DERE players can speculate and gain more.
+	"""
+
+	# Only validate Speculations
+	if not (isinstance(instance, CorporationSpeculationOrder) or isinstance(instance, DerivativeSpeculationOrder)):
+		return
+
+	party_line = instance.player.game.get_mdc_party_line()
+
 	if party_line == MDCVoteOrder.DERE and instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
 		# This speculation should see its rate augmented if it succeeds
 		instance.set_winrate(instance.winrate + 1)
-
-
-@receiver(validate_order, sender=MDCVoteOrder)
-def limit_mdc_order(sender, instance, **kwargs):
-	"""
-	Can't vote twice the same turn
-	"""
-	if MDCVoteOrder.objects.filter(player=instance.player, turn=instance.player.game.current_turn).exists():
-		raise OrderNotAvailable("Vous ne pouvez pas voter deux fois dans le même tour.")
