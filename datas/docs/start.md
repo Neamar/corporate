@@ -133,7 +133,7 @@ Une fois votre Background choisi, vous pouvez attribuer à votre personnage une 
 
 Pour chaque Stratégie, choisissez :
 
-* Un Titre [(cf Titres)](endgame.md#titres).
+* Un Titre [(cf Titres)](endgame.md#points-de-titres).
 * Un nombre de PVs ne pouvant pas dépasser 6.
 
 Si à la fin de la partie le personnage a réussi son pari et s'est emparé du titre, il gagne le nombre de PVs indiqué. Les ex aequo comptent.
