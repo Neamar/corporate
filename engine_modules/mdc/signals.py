@@ -33,7 +33,7 @@ def enforce_mdc_ccib_positive(sender, instance, **kwargs):
 	for vo in right_vote_orders:
 		protected_corporations += vo.get_friendly_corporations()
 
-	if instance.target_corporation.base_corporation_slug in protected_corporations:
+	if instance.target_corporation in protected_corporations:
 		instance.hidden_percents -= 1
 
 

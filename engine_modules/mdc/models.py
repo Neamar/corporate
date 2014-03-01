@@ -60,11 +60,11 @@ class MDCVoteOrder(Order):
 			try:
 				# if they don't have the same number of shares, the first one gets a vote
 				if top_holders[0][1] != top_holders[1][1]:
-					vote_registry[top_holders[0][0]].append(c.base_corporation_slug)
+					vote_registry[top_holders[0][0]].append(c)
 			except(IndexError):
 				if len(top_holders) != 0:
 					# Only one has share
-					vote_registry[top_holders[0][0]].append(c.base_corporation_slug)
+					vote_registry[top_holders[0][0]].append(c)
 		return vote_registry
 
 	def description(self):
