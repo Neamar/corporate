@@ -105,7 +105,7 @@ def enforce_mdc_dere_positive(sender, instance, **kwargs):
 	"""
 	When DERE is active, DERE players can speculate and gain more.
 	"""
-
 	if instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
+		print "DETE", instance.on_win_ratio
 		# This speculation should see its rate augmented if it succeeds
 		instance.on_win_ratio += 1
