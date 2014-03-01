@@ -16,8 +16,6 @@ class TaskTest(EngineTestCase):
 		)
 		self.v.save()
 
-		self.g.disable_invisible_hand = True
-
 	def test_party_line_set(self):
 		"""
 		Test the line is defined

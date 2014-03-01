@@ -20,7 +20,7 @@ def limit_mdc_order(sender, instance, **kwargs):
 		raise OrderNotAvailable("Vous ne pouvez pas voter deux fois dans le même tour.")
 
 
-@receiver(validate_order)
+@receiver(post_create)
 @sender_instance_of(OffensiveRunOrder)
 @expect_party_line(MDCVoteOrder.CCIB)
 def enforce_mdc_ccib_positive(sender, instance, **kwargs):
@@ -32,12 +32,11 @@ def enforce_mdc_ccib_positive(sender, instance, **kwargs):
 	right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
 	for vo in right_vote_orders:
 		protected_corporations += vo.get_friendly_corporations()
-
 	if instance.target_corporation in protected_corporations:
 		instance.hidden_percents -= 1
 
 
-@receiver(validate_order)
+@receiver(post_create)
 @sender_instance_of(OffensiveRunOrder, InformationOrder)
 @expect_party_line(MDCVoteOrder.TRAN)
 def enforce_mdc_tran(sender, instance, **kwargs):
