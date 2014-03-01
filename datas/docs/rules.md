@@ -165,7 +165,7 @@ Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En
 ### Information
 * Base : 60 %
 
-Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les messages de résolution du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses Secrets [(cf Secrets)](start.md#secrets).
+Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les **messages de résolution** du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses **Secrets** [(cf Secrets)](start.md#secrets).
 
 > La Défense de Datasteal de la corpo dont la cible est citoyen est utilisée pour contrer les runs d'Information.
 > Même détectées, les runs d’Information n’apparaissent pas dans les Newsfeeds.
