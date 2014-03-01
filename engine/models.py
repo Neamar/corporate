@@ -22,6 +22,7 @@ class Game(models.Model):
 		# Execute all tasks
 		from engine.modules import tasks_list
 		for task in tasks_list:
+			# print task.RESOLUTION_ORDER, task.__name__
 			t = task()
 			t.run(self)
 

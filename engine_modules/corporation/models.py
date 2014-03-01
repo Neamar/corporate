@@ -92,10 +92,10 @@ class Corporation(models.Model):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
 	def on_first_effect(self):
-		exec(self.base_corporation.on_first, {'game': self.game, 'corporation': self, 'corporations': self.game.corporation_set})
+		exec(self.base_corporation.on_first, {'game': self.game, 'corporations': self.game.corporation_set})
 
 	def on_last_effect(self):
-		exec(self.base_corporation.on_last, {'game': self.game, 'corporation': self, 'corporations': self.game.corporation_set})
+		exec(self.base_corporation.on_last, {'game': self.game, 'corporations': self.game.corporation_set})
 
 	def update_assets(self, delta):
 		"""

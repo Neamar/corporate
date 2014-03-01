@@ -1,5 +1,23 @@
 # Corporate Game Manhattan.
 
+* 0 BuyShareTask
+* 100 VoteTask
+* 100 MDCVoteTask
+* 300 MDCLineCPUBTask
+* 300 MDCLineDEVETask
+* 349 ProtectionRunTask
+* 350 OffensiveRunTask
+* 350 InformationRunTask
+* 400 InvisibleHandTask
+* 600 FirstLastEffectsTask
+* 650 SaveCorporationAssetTask
+* 800 DividendTask
+* 900 CitizenshipTask
+* 900 CorporationSpeculationTask
+* 900 DerivativeSpeculationTask
+* 1000 BuyInfluenceTask
+* 1000 CrashCorporationTask
+ 
 ## Concepts
 ### Ordres disponibles
 * Acheter un point d'influence corpo *(une fois par tour)*

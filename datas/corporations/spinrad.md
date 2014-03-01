@@ -5,10 +5,10 @@ sabotage: 20
 extraction: 20
 detection: 30
 on_first:
-    corporation.update_assets(2)
+    corporations.get(base_corporation_slug='spinrad').update_assets(2)
 on_last:
-    corporation.update_assets(-1)
-    game.get_ordered_corporations()[-1].update_assets(-1)
+    corporations.get(base_corporation_slug='spinrad').update_assets(-1)
+    game.get_ordered_corporations()[-2].update_assets(-1)
 
 derivative: Dow Jones
 

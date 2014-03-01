@@ -18,7 +18,8 @@ class MDCVoteOrder(Order):
 	TRAN = "TRAN"
 
 	# Enumerate the party lines and their meanings
-	MDC_PARTY_LINE_CHOICES = (('CPUB', u'Contrats publics'),
+	MDC_PARTY_LINE_CHOICES = (
+		('CPUB', u'Contrats publics'),
 		('CCIB', u'Contrôles ciblés'),
 		('DERE', u'Dérégulation'),
 		('DEVE', u'Développement urbain'),
