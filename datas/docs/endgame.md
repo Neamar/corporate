@@ -98,8 +98,8 @@ Le joueur ayant réussit le plus grand nombre de runs d'Extraction.
 
 ## Points de Background
 
-Votre Background vous rapporte un nombre de PVs pouvant dépendre de vos actions au cour du jeu (cf Background).
+Votre Background vous rapporte un nombre de PVs pouvant dépendre de vos actions au cour du jeu [(cf Background)](start.md#background).
 
 ## Points de Stratégies
 
-Toutes vos Stratégies choisies au début du jeu vous rapportent ou font perdre les PVs que vous leur avez attribué. (cf Stratégies)
+Toutes vos Stratégies choisies au début du jeu vous rapportent ou font perdre les PVs que vous leur avez attribué. [(cf Stratégies)](start.md#stratégies)
