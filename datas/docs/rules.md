@@ -8,7 +8,7 @@ Vous incarnez un cadre corporatiste décidé à se tailler un empire dans une de
 
 Les **corporations, ou "corpos"**, sont au coeur du jeu. De gigantesques multinationales qui ont supplanté le pouvoir des nations et fait main basse sur l'économie planétaire. Elles sont innombrables, mais le Corporate Game ne tient compte que des dix plus grosses s’étant implantées à Manhattan.
 
-La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui évoluera en fonction des actions des joueurs et des caprices du marché. Plus une corpo possède d'actifs, plus elle engrange de bénéfices. Une corpo à 0 actifs à la fin d'un tour crashe définitivement (cf Crash). Au début de la partie, les actifs des 10 corpos sont tirés au hasard. (cf Classement initial)
+La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui évoluera en fonction des actions des joueurs et des caprices du marché. Plus une corpo possède d'actifs, plus elle engrange de bénéfices. Au début de la partie, les actifs des 10 corpos sont tirés au hasard. [(cf Classement initial)](rules.md#classement-initial)
 
 Le **classement** trie les corpos par nombre d'actifs et leur attribue un rang de 1 à 10, 1 correspondant à la corpo possédant le plus d'actifs, celle qui domine le marché.
 
@@ -16,7 +16,7 @@ Les joueurs commencent la partie avec 1 point d'**Influence corporatiste, ou "IC
 
 Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 1 million de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
 
-La partie se joue en 8 **tours** ; chaque tour correspondant à un trimestre. À la fin du jeu, chaque joueur compte ses **points de victoire**, et celui qui en possède le plus est déclaré vainqueur. (cf fin du jeu)
+La partie se joue en 8 **tours** ; chaque tour correspondant à un trimestre. À la fin du jeu, chaque joueur compte ses **points de victoire**, et celui qui en possède le plus est déclaré vainqueur. [(cf fin du jeu)](endgame.md)
 
 ## Structure d'un tour
 
@@ -24,7 +24,7 @@ Chacun des concepts suivants sera expliqué en détail.
 
 1. Chaque joueur remplit et envoie un **formulaire d'ordres**, où il peut effectuer des achats, spéculer et manipuler le marché.
 2. À midi tous les jours jusqu'à la fin du jeu, tous les ordres sont résolus simultanément, faisant gagner et perdre des actifs aux corpos.
-3. Chaque corpo est différente, et possède un **effet premier**, qui s'applique lorsque la corpo est en tête du classement, et un **effet dernier**, qui s'applique lorsque qu'elle est dernière du classement. Les deux effets sont résolus simultanément, une fois tous les modificateurs appliqués.
+3. Chaque corpo est différente, et possède un **effet premier**, qui s'applique lorsque la corpo est en tête du classement, et un **effet dernier**, qui s'applique lorsque qu'elle est dernière du classement. Les deux effets sont résolus simultanément, une fois tous les autres modificateurs appliqués.
 4. Chaque joueur touche ses divers retours sur investissements.
 5. Les onglets **Wall Street** et **Newsfeeds** révèlent respectivement le nouveau classement et les évènements publics du tour écoulé, et chaque joueur reçoit en plus un **message de résolution** personnalisé qui contient les informations plus confidentielles.
 
@@ -34,9 +34,9 @@ Un nouveau tour peut commencer.
 
 À chaque tour, les joueurs peuvent acheter des **parts** dans les corpos de leur choix. Le nombre maximum de parts qu'un joueur peut acheter par tour est égal à son IC (Influence Corporatiste, de 1 au début du jeu).
 
-Une part coûte 100 000 ny × (actifs de la corpo). Soit 500 000 ny pour une corpo de 5 actifs.
+Une part coûte 100 000 ny × (actifs de la corpo). Soit 500 000 ny pour une corpo de 5 actifs. 
 
-> Une part dans la corpo en tête du classement (rang 1) coûte 125 000 ny × actifs pour joueurs qui n’en ont pas la "nationalité" (cf citoyenneté corpo).
+> Une part dans la corpo en tête du classement (rang 1) coûte 125 000 ny × actifs pour joueurs qui n’en ont pas la "nationalité" [(cf citoyenneté corpo)](rules.md#citoyenneté-corpo).
 
 À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire 50 000 ny × (actifs de la corpo). Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc : (2 × 50 000 × 5 + 1 × 50 000 × 10), soit 1 million de ny.
 
@@ -63,7 +63,7 @@ Le reste des aléas de la bourse de Manhattan est laissé à la chance. À chaqu
 
 ### Effet premier / effet dernier
 
-Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tout autre modificateur, et peuvent chambouler les actifs des corpos. (cf corpos) pour une description individuelle de chaque corpo et (cf recap) pour une liste de leurs effets premiers / derniers.
+Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tout autre modificateur, et peuvent chambouler les actifs des corpos. [(cf corpos)](????????) pour une description individuelle de chaque corpo et [(cf recap)](recap.md) pour une liste de leurs effets premiers / derniers.
 
 ### Crash
 
@@ -81,12 +81,12 @@ Dans le sixième monde, les corporations ont tellement de pouvoir qu'elles sont 
 
 Un **citoyen corpo** :
 
-* Gagne davantage de points de victoire si sa corpo est bien placée dans le classement à la fin de la partie (cf fin du jeu).
+* Gagne davantage de points de victoire si sa corpo est bien placée dans le classement à la fin de la partie [(cf fin du jeu)](endgame.md#points-de-citoyen).
 * Paie les parts de sa corpo au prix usuel de 100 000 ny × actifs même si elle est en tête du classement (au lieu de 125 000 ny × actifs).
-* Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses actions (cf Information).
+* Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses actions [(cf Information)](rules.md#information).
 * Reçoit les informations détectée par sa corpo dans son message de résolution.
 
-Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste (cf mise en place).
+Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste [(cf mise en place)](start.md#citoyenneté-corpo).
 
 Si la corpo dont le joueur est citoyen Crashe, il en perd la citoyenneté et pourra s'il le souhaite en réclamer une nouvelle au tour suivant. Il subit normalement le malus de points de victoire.
 
@@ -100,7 +100,7 @@ Pour lancer une run, un joueur doit investir un minimum de 50 000 ny, soit +10%.
 
 Pour chaque point d'IC qu'il possède, un joueur peut gratuitement ajouter +30% à une run par tour. Un joueur possédant une IC de 3 pourra donc ajouter +30% à 3 runs par tour. Ces bonus ne peuvent pas être cumulés sur une même run.
 
-Une run a un maximum de 90% de chance de réussir, mais il est possible de payer un pourcentage supérieur pour contrebalancer des malus. (cf Malus de timing) et (cf Contrôles ciblés).
+Une run a un maximum de 90% de chance de réussir, mais il est possible de payer un pourcentage supérieur pour contrebalancer des malus. [(cf Malus de timing)](rules.md#malus-de-timing) et [(cf Contrôles ciblés)](rules.md#contrôles-ciblés).
 
 Si une run autre que Protection échoue ou est contrée (voir ci-dessous), son commanditaire récupère la moitié des nuyens investis.
 
@@ -133,7 +133,7 @@ Une run subit un malus de **-10%** pour chaque autre run qui **correspond aux 3 
 * A la **même cible**, joueur ou corpo.
 * A un **pourcentage de réussite supérieur ou égal** au sien (avant que les malus de timing ne soient appliqués).
 
-    2 runs de Sabotage (même type) sont lancées contre Renraku (même cible) le même tour : 
+    2 runs de Sabotage (même type) sont lancées contre Renraku (même cible) le même tour :
     * Si elles ont toutes les deux 70% de chance de réussite, chacune fait subir à l’autre un malus de timing de -10%.
     * En revanche, si la première a 80% de chance de réussite et la seconde 70%, seule la seconde subit un malus.
 
@@ -161,7 +161,7 @@ Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En
 ### Information
 * Base : 60 %
 
-Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les messages de résolution du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses Secrets (cf Secrets).
+Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les **messages de résolution** du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses **Secrets** [(cf Secrets)](start.md#secrets).
 
 > La Défense de Datasteal de la corpo dont la cible est citoyen est utilisée pour contrer les runs d'Information.
 > Même détectées, les runs d’Information n’apparaissent pas dans les Newsfeeds.
@@ -188,7 +188,7 @@ Le commanditaire choisit une **corpo bénéficiaire**, et lui attribue une Défe
 
 ## Spéculation &ndash; Le miracle de Wall Street
 
-Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché.
+Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
 
 Les joueurs qui veulent miser dans le grand casino de l’East Coast Stock Exchange peuvent effectuer un nombre de **spéculations** par tour égal à leur IC. Le nombre de spéculations qu’un joueur peut effectué est limité par son IC, et le montant de chaque spéculation ne peut dépasser 100 000 ny × (IC du spéculateur). Il est possible d’effectuer la même spéculation plusieurs fois.
 
@@ -197,7 +197,7 @@ Chaque spéculation peut viser :
 * La croissance ou la chute des actifs d'un **produit dérivé** (voir plus bas)
 * La place d’une corpo dans le classement de fin de tour.
 
-Si le spéculateur se trompe, il perd la somme misée.
+Si le spéculateur se trompe, il perd la somme misée. 
 
 Si sa spéculation est juste, il fait un bénéfice de :
 
@@ -228,61 +228,65 @@ Le MDC (ou Manhattan Inc.) n'est pas exactement une corporation, mais la structu
 
 Les corpos membres ont changées plusieurs fois depuis la fin de la reconstruction. Aujourd'hui, elles sont treize (seules 10 sont représentées dans le jeu), et ont chacune une voix lors des votes du consortium. Ces votes légifèrent sur tous les aspects de la vie et des affaires à Manhattan, des juteux contrats de la voirie, de la sécurité, du traitement des déchets ou du développement de la matrice aux lois de régulations des marchés qui ont le potentiel de bouleverser le cours des actions des corpos les plus stables. Les votes du MDC rythment la vie politique de Manhattan, et sont disputés par des coalitions fluctuantes qui ne reculent devant aucun coup bas pour rafler la mise.
 
-Chaque tour, les joueurs peuvent voter pour une **coalition** au MDC. Les options, détaillées plus bas, consistent en une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
+Chaque tour, les joueurs peuvent participer au cirque du MDC en rejoignant une **coalition** poussant un agenda particulier. Ces agendas, détaillés plus bas, peuvent être une redistribution des  **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
 
-Chaque joueur possède une voix, plus celle de toutes les corpos dans lesquels il possède plus de parts que n'importe quel autre joueur. Ces corpos comptent comme ayant voté comme lui (voir Contrats publics, Développement urbain et Contrôles ciblés ci dessous).
+Un joueur qui possède **le plus de parts** dans une corpo peut influencer ses décisions politiques : la corpo rejoint la même coalition que lui.
 
-> En cas d'égalité sur le nombre de parts possédées, aucun joueur ne récupère la voix de la corpo. 
-> De même, en cas d'égalité sur le vote de coalition, aucune coalition ne l'emporte.
-> Les gains et pertes d’actifs prennent effet le tour du vote, avant les effets premier/dernier. Tous les autres effets prennent effet le tour suivant.
+> Les parts achetées ce tour ci sont prises en compte.
+> En cas d'égalité sur le nombre de parts possédées, la corpo reste neutre. 
+
+La coalition à laquelle le plus de (joueurs + corpos) appartiennent domine le MDC pour ce tour, et est libre d’appliquer sa ligne politique. Voir pus bas pour les effets spécifiques.
+
+> En cas d'égalité, aucune coalition ne l'emporte.
+> Les gains et pertes d’actifs prennent effet le tour même, avant les effets premier/dernier. Tous les autres effets sont appliqués le tour suivant.
 
 ### Contrats publics
 De gros contrats d'entretien et de sécurité sont redistribués entre les corpos du MDC.
 
 Effets :
 
-* Les **corpos** ayant voté **Contrats publics** gagnent immédiatement **+1 actif**. 
-* Les **corpos** ayant voté **Développement urbain** subissent **-1 actif**.
+* Les **corpos** appartenant à la coalition **Contrats publics** gagnent immédiatement **+1 actif**. 
+* Les **corpos** appartenant à la coalition **Développement urbain** subissent **-1 actif**.
 
 ### Développement urbain
 De grands travaux sont lancés par le MDC, redessinant la carte de Manhattan au profit de certaines corpos.
 
 Effets :
 
-* Les **corpos** ayant voté **Développement urbain** gagnent immédiatement **+1 actif**. 
-* Les **corpos** ayant voté **Contrats publics** subissent **-1 actif**.
+* Les **corpos** appartenant à la coalition **Développement urbain** gagnent immédiatement **+1 actif**. 
+* Les **corpos** appartenant à la coalition **Contrats publics** subissent **-1 actif**.
 
 ### Contrôles ciblés
 De nouvelles lois sont votées, renforçant certains contrôles ciblés au détriment de certaines zones.
 
-Effets :
+Effets : 
 
-* Au prochain tour, les **corpos** ayant voté **Contrôles ciblés** gagnent une seconde **Défense de 20%** en Datasteal, Sabotage et Extraction.
-* Les **joueurs** ayant voté **Transparence** ne pourront pas effectuer de runs de protection au prochain tour.
+* Au prochain tour, les runs de **Datasteal**, **Sabotage** et **Extraction** ciblant les **corpos** appartenant à la coalition **Contrôles ciblés** subissent un malus de **-10%**.
+* Les **joueurs** appartenant à la coalition **Transparence** ne pourront pas effectuer de runs de protection au prochain tour.
 
 ### Transparence
 L'ouverture de bases de données privées offre de nouvelles possibilités de runs pour ceux qui y ont accès.
 
-Effets :
+Effets : 
 
-* Au prochain tour, les **joueurs** ayant voté **Transparence** gagnent un bonus de **+10%** sur toutes leurs runs de **Datasteal**, **Sabotage**, **Extraction** et **Information**. 
-* Les **joueurs** ayant voté **Contrôles ciblés** subissent **-10%** sur toutes leurs runs **Datasteal**, **Sabotage**, **Extraction** et **Information**.
+* Au prochain tour, les **joueurs** appartenant à la coalition **Transparence** gagnent un bonus de **+10%** sur toutes leurs runs de **Datasteal**, **Sabotage**, **Extraction**. 
+* Les **joueurs** appartenant à la coalition **Contrôles ciblés** subissent **-10%** sur toutes leurs runs **Datasteal**, **Sabotage**, **Extraction** et **Information**.
 
 ### Gardes fous bancaires
 Malgré les protestations de Wall Street, de nouvelles régulations pour la ECSE entrent en action. Elles garantissent davantage de sécurité pour ceux en mesure d'en tirer profit mais limitent les opérations de certains.
 
 Effets :
 
-* Au prochain tour, les **joueurs** ayant voté **Garde fous bancaires** **gardent l'intégralité des mises** de leurs spéculations manquées.
-* Les **joueurs** ayant voté **Dérégulation** ne pourront pas effectuer de **spéculations**.
+* Au prochain tour, les **joueurs** appartenant à la coalition **Garde fous bancaires** **gardent l'intégralité des mises** de leurs spéculations manquées.
+* Les **joueurs** appartenant à la coalition **Dérégulation** ne pourront pas effectuer de **spéculations**.
 
 ### Dérégulation
 De nouvelles barrières sautent, repoussant encore les limites de l'avidité boursière mais en laissant certains à la traîne.
 
 Effets :
 
-* Au prochain tour, les spéculations des **joueurs** ayant voté **Dérégulation** voient les **côtes augmentées de 1** (1 pour 2 devient 1 pour 3, 1 pour 5 devient 1 pour 6...)
-* Les **joueurs** ayant voté **Gardes fous bancaires** ne pourront pas effectuer de **spéculations**.
+* Au prochain tour, les spéculations des **joueurs** appartenant à la coalition **Dérégulation** voient les **côtes augmentées de 1** (1 pour 2 devient 1 pour 3, 1 pour 5 devient 1 pour 6...)
+* Les **joueurs** appartenant à la coalition **Gardes fous bancaires** ne pourront pas effectuer de **spéculations**.
 
 Autrement dit, de grosses possibilités de coopération pour d'énormes opportunités de backstab.
 
