@@ -4,7 +4,7 @@ from engine_modules.speculation.models import CorporationSpeculationOrder, Deriv
 
 class CorporationSpeculationTask(OrderResolutionTask):
 	"""
-	Speculate on a corporation's rank
+	Resolve corporations speculations
 	"""
 	RESOLUTION_ORDER = 900
 	ORDER_TYPE = CorporationSpeculationOrder
@@ -12,7 +12,7 @@ class CorporationSpeculationTask(OrderResolutionTask):
 
 class DerivativeSpeculationTask(OrderResolutionTask):
 	"""
-	Speculate on a corporation's rank
+	Resolve derivatives speculations
 	"""
 	RESOLUTION_ORDER = 900
 	ORDER_TYPE = DerivativeSpeculationOrder

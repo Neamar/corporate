@@ -4,7 +4,7 @@ from messaging.models import Newsfeed
 
 class FirstLastEffectsTask(ResolutionTask):
 	"""
-	App first and last corporations effects
+	Apply first and last corporations effects
 	"""
 
 	RESOLUTION_ORDER = 600

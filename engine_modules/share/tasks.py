@@ -4,7 +4,7 @@ from engine_modules.share.models import Share, BuyShareOrder
 
 class BuyShareTask(OrderResolutionTask):
 	"""
-	Buy new Influence level
+	Buy all shares for all players
 	"""
 	RESOLUTION_ORDER = 0
 	ORDER_TYPE = BuyShareOrder

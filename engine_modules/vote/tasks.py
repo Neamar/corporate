@@ -4,7 +4,7 @@ from engine_modules.vote.models import VoteOrder
 
 class VoteTask(OrderResolutionTask):
 	"""
-	Buy new Influence level
+	Resolve player's corporation votes
 	"""
 	RESOLUTION_ORDER = 100
 	ORDER_TYPE = VoteOrder
