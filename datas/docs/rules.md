@@ -137,7 +137,7 @@ Une run subit un malus de **-10%** pour chaque autre run qui **correspond aux 3 
 * A la **même cible**, joueur ou corpo.
 * A un **pourcentage de réussite supérieur ou égal** au sien (avant que les malus de timing ne soient appliqués).
 
-    2 runs de Sabotage (même type) sont lancées contre Renraku (même cible) le même tour : 
+    2 runs de Sabotage (même type) sont lancées contre Renraku (même cible) le même tour :
     * Si elles ont toutes les deux 70% de chance de réussite, chacune fait subir à l’autre un malus de timing de -10%.
     * En revanche, si la première a 80% de chance de réussite et la seconde 70%, seule la seconde subit un malus.
 
