@@ -15,10 +15,16 @@ class Derivative(models.Model):
 		return self.name
 
 
-class SpeculationMixin:
+class AbstractSpeculation(Order):
 	"""
-	Expect 3 properties: investment, win_ratio, on_loss_ratio
+	Base class for speculation.
 	"""
+	class Meta:
+		abstract = True
+
+	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
+	on_win_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
+	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 
 	def get_cost(self):
 		return self.investment * self.BASE_COST
@@ -36,7 +42,7 @@ class SpeculationMixin:
 		return self.get_cost() * self.on_loss_ratio
 
 
-class CorporationSpeculationOrder(SpeculationMixin, Order):
+class CorporationSpeculationOrder(AbstractSpeculation):
 	"""
 	Order to speculate on a corporation's rank
 	"""
@@ -47,9 +53,10 @@ class CorporationSpeculationOrder(SpeculationMixin, Order):
 
 	corporation = models.ForeignKey(Corporation)
 	rank = models.PositiveSmallIntegerField()
-	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
-	on_win_ratio = models.PositiveSmallIntegerField(default=4, editable=False)
-	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
+
+	def __init__(self, *args, **kwargs):
+		kwargs.setdefault('on_win_ratio', 4)
+		super(CorporationSpeculationOrder, self).__init__(*args, **kwargs)
 
 	def resolve(self):
 		ladder = self.player.game.get_ladder()
@@ -73,7 +80,7 @@ class CorporationSpeculationOrder(SpeculationMixin, Order):
 		return u"Miser sur la position %s de la corporation %s (gain : %s, perte : %s)" % (self.rank, self.corporation.base_corporation.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
 
 
-class DerivativeSpeculationOrder(SpeculationMixin, Order):
+class DerivativeSpeculationOrder(AbstractSpeculation):
 	"""
 	Order to speculate on a derivative up or down
 	"""
@@ -92,9 +99,6 @@ class DerivativeSpeculationOrder(SpeculationMixin, Order):
 
 	speculation = models.BooleanField(choices=UPDOWN_CHOICES)
 	derivative = models.ForeignKey(Derivative)
-	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
-	on_win_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
-	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 
 	def resolve(self):
 		# Build message
