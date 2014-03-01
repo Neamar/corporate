@@ -194,6 +194,11 @@ td a
    background: rgba(100, 89, 95, .2)
 }
 
+.prop_table th.large
+{
+  width:350px;
+}
+
 .slanted_head thead tr {
    border: none;
 }

@@ -11,11 +11,12 @@ urlpatterns = patterns('',
 urlpatterns += patterns('',
 	url(r'^game/(?P<game_id>[0-9]+)/newsfeeds$', datas.newsfeeds),
 	url(r'^game/(?P<game_id>[0-9]+)/comlink$', datas.comlink),
+	url(r'^game/(?P<game_id>[0-9]+)/comlink/(?P<message_id>[0-9]+)$', datas.message),
 	url(r'^game/(?P<game_id>[0-9]+)/wallstreet$', datas.wallstreet),
 	url(r'^game/(?P<game_id>[0-9]+)/corporations$', datas.corporations),
 	url(r'^game/(?P<game_id>[0-9]+)/corporations/(?P<corporation_slug>[a-z-]+)$', datas.corporation),
 	url(r'^game/(?P<game_id>[0-9]+)/players$', datas.players),
-	url(r'^game/(?P<game_id>[0-9]+)/players/(?P<player_id>[0-9])$', datas.player),
+	url(r'^game/(?P<game_id>[0-9]+)/players/(?P<player_id>[0-9]+)$', datas.player),
 	url(r'^game/(?P<game_id>[0-9]+)/shares$', datas.shares),
 )
 

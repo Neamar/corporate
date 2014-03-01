@@ -146,7 +146,19 @@ def comlink(request, game_id):
 
 	messages = player.message_set.all().order_by("-turn")
 
-	for message in messages:
-		message.html, _ = parse_markdown(message.content)
-		message.html = mark_safe(message.html)
 	return render(request, 'game/comlink.html', {"messages": messages})
+
+
+@login_required
+def message(request, game_id, message_id):
+	"""
+	Display message
+	"""
+	player = get_player(request, game_id)
+
+	message = player.message_set.get(pk=message_id)
+
+	message.html, _ = parse_markdown(message.content)
+	message.html = mark_safe(message.html)
+
+	return render(request, 'game/message.html', {"message": message})
