@@ -14,7 +14,7 @@ Si vous le désirez, votre personnage peut commencer la partie avec une citoyenn
 
 Cela signifie que votre personnage a accompli son ascension au sein de cette corpo, peut-être même depuis son premier jour si ses parents en avaient la nationalité. Ses valeurs et sa personnalité ont probablement été en partie façonnées par la culture corporatiste dans laquelle il a lutté pour en arriver là où il est. 
 
-(cf corpos) pour plus d'information sur les spécificités des différentes corpos.
+[(cf corpos)](????????????????????????) pour plus d'information sur les spécificités des différentes corpos.
 
 ## Background
 
@@ -98,7 +98,7 @@ Gigolo, maître chanteur ou amuseur des soirées dépravées de la crème de Man
 
 Une longue expérience de PR, de spin doctor, de publicitaire ou de gourou des médias a appris au personnage que le *paraître* est primordial, et que la meilleure stratégie pour se défaire d’un ennemi est de retourner contre lui ses propres excès.
 
-> Gagnez +1 PV pour chaque run de Sabotage ou d'Extraction réussie contre la corpo pour laquelle vous avez voté +1 ce tour ci (cf Vote). Vos propres runs ne comptent pas.
+> Gagnez +1 PV pour chaque run de Sabotage ou d'Extraction réussie contre la corpo pour laquelle vous avez voté +1 ce tour ci [(cf Vote)](rules.md#le-vote). Vos propres runs ne comptent pas.
 
 ### Homme d'honneur
 
@@ -133,7 +133,7 @@ Une fois votre Background choisi, vous pouvez attribuer à votre personnage une 
 
 Pour chaque Stratégie, choisissez :
 
-* Un Titre (cf Titres).
+* Un Titre [(cf Titres)](endgame.md#titres).
 * Un nombre de PVs ne pouvant pas dépasser 6.
 
 Si à la fin de la partie le personnage a réussi son pari et s'est emparé du titre, il gagne le nombre de PVs indiqué. Les ex aequo comptent.
@@ -179,6 +179,9 @@ En public, Jack déborde de confiance et de charisme. En privé, cependant, il s
 Stratégies :
 * Big Boss : 4 PVs. Jack se croit plus malin que les rois actuels du monde corporatiste, et entend bien le leur prouver.
 * Maître espion : 4 PVs. Il a apprit très tôt que l'Information prend chaque jour plus d'importance dans le 6<sup>ème</sup> monde, et il compte rester à la pointe du progrès.
+
+
+***
 
 
 Nom : Shiro Kuboka
