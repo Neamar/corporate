@@ -32,8 +32,10 @@ def enforce_mdc_ccib_positive(sender, instance, **kwargs):
 	right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
 	for vo in right_vote_orders:
 		protected_corporations += vo.get_friendly_corporations()
+
 	if instance.target_corporation in protected_corporations:
 		instance.hidden_percents -= 1
+		instance.save()
 
 
 @receiver(post_create)
@@ -48,9 +50,10 @@ def enforce_mdc_tran(sender, instance, **kwargs):
 	player_vote = instance.player.get_last_mdc_vote()
 	if player_vote == MDCVoteOrder.CCIB:
 		instance.hidden_percents -= 1
-
+		instance.save()
 	elif player_vote == MDCVoteOrder.TRAN:
 		instance.hidden_percents += 1
+		instance.save()
 
 
 @receiver(validate_order, sender=ProtectionOrder)
