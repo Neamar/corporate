@@ -21,7 +21,7 @@ def wallstreet(request, game_id):
 	player = get_player(request, game_id)
 
 	# Table datas
-	corporations = player.game.get_ordered_corporations()
+	corporations = player.game.get_ladder()
 	if player.game.current_turn > 1:
 		delta = AssetHistory.objects.filter(corporation__game=player.game, turn=player.game.current_turn - 2)
 		delta_hash = {ah.corporation_id: ah.assets for ah in delta}

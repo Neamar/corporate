@@ -14,7 +14,7 @@ class FirstLastEffectsTask(ResolutionTask):
 		if hasattr(game, 'disable_side_effects') and not hasattr(game, "force_first_last_effects"):
 			return
 
-		ladder = game.get_ordered_corporations()
+		ladder = game.get_ladder()
 
 		# Retrieve first and last before applying any effect
 		first_corporation = ladder[0]

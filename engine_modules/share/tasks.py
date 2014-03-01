@@ -26,7 +26,7 @@ class DividendTask(ResolutionTask):
 		TODO: megaoptimize queries
 		"""
 		shares = Share.objects.filter(player__game=game)
-		ladder = game.get_ordered_corporations()
+		ladder = game.get_ladder()
 
 		for share in shares:
 			dividend = self.SHARE_BASE_VALUE * share.corporation.assets

@@ -52,7 +52,7 @@ class CorporationSpeculationOrder(SpeculationMixin, Order):
 	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 
 	def resolve(self):
-		ladder = self.player.game.get_ordered_corporations()
+		ladder = self.player.game.get_ladder()
 
 		# Build message
 		category = u"Spéculations"

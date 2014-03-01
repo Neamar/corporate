@@ -18,7 +18,7 @@ class ModelTest(TestCase):
         """
         Checking for all corporation first_effects
         """
-        ladder = self.g.get_ordered_corporations()
+        ladder = self.g.get_ladder()
         for corporation in self.g.corporation_set.all():
             sid = transaction.savepoint()
             try:
@@ -33,7 +33,7 @@ class ModelTest(TestCase):
         """
         Checking for all corporation first_effects
         """
-        ladder = self.g.get_ordered_corporations()
+        ladder = self.g.get_ladder()
         for corporation in self.g.corporation_set.all():
             sid = transaction.savepoint()
             try:
