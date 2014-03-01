@@ -8,8 +8,7 @@ on_first:
     corporations.get(base_corporation_slug='spinrad').update_assets(2)
 on_last:
     corporations.get(base_corporation_slug='spinrad').update_assets(-1)
-    game.get_ordered_corporations()[-2].update_assets(-1)
-
+    ladder[-2].update_assets(-1)
 derivative: Dow Jones
 
 Spin est surtout connue pour ses augmentations dernier cri et son propriétaire flamboyant, Johnny Spinrad. Des Spin Shop sont visibles partout à Manhattan et dans ses boroughs. Ceux-ci font généralement dans le cyber haute gamme, en particulier la gamme Spin-X de suites cybernétiques pour les modes de vie extrêmes. Évidemment, ils sont également prêts à créer des suites personnalisées pour leur clients, avec un prix lui aussi sur mesure.
