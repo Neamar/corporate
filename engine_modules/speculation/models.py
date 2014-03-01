@@ -15,7 +15,28 @@ class Derivative(models.Model):
 		return self.name
 
 
-class CorporationSpeculationOrder(Order):
+class SpeculationMixin:
+	"""
+	Expect 3 properties: investment, win_ratio, on_loss_ratio
+	"""
+
+	def get_cost(self):
+		return self.investment * self.BASE_COST
+
+	def on_win_money(self):
+		"""
+		Money gained when speculation worked
+		"""
+		return self.get_cost() * self.on_win_ratio
+
+	def on_loss_money(self):
+		"""
+		Money losed when speculation failed
+		"""
+		return self.get_cost() * self.on_loss_ratio
+
+
+class CorporationSpeculationOrder(SpeculationMixin, Order):
 	"""
 	Order to speculate on a corporation's rank
 	"""
@@ -30,9 +51,6 @@ class CorporationSpeculationOrder(Order):
 	on_win_ratio = models.PositiveSmallIntegerField(default=4, editable=False)
 	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 
-	def get_cost(self):
-		return self.investment * self.BASE_COST
-
 	def resolve(self):
 		ladder = self.player.game.get_ordered_corporations()
 
@@ -40,22 +58,22 @@ class CorporationSpeculationOrder(Order):
 		category = u"Spéculations"
 
 		if ladder.index(self.corporation) + 1 == self.rank:
-			self.player.money += self.get_cost() * self.on_win_ratio
+			self.player.money += self.on_win_money()
 			self.player.save()
-			content = u"Vos investissements de %sk ¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.investment * self.on_win_ratio)
+			content = u"Vos investissements de %sk ¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.on_win_money())
 		else:
 			# Failure
-			self.player.money -= self.get_cost() * self.on_loss_ratio
+			self.player.money -= self.on_loss_money()
 			self.player.save()
 			content = u"Vos spéculations de %sk ¥ sur la corporation %s n'ont malheureusement pas été concluantes" % (self.investment, self.corporation.base_corporation.name)
 
 		self.player.add_note(category=category, content=content)
 
 	def description(self):
-		return u"Miser sur la position %s de la corporation %s (gain : %s, perte : %s)" % (self.rank, self.corporation.base_corporation.name, self.on_win_ratio * self.investment, self.on_loss_ratio * self.investment)
+		return u"Miser sur la position %s de la corporation %s (gain : %s, perte : %s)" % (self.rank, self.corporation.base_corporation.name, self.on_win_money(), self.on_loss_money())
 
 
-class DerivativeSpeculationOrder(Order):
+class DerivativeSpeculationOrder(SpeculationMixin, Order):
 	"""
 	Order to speculate on a derivative up or down
 	"""
@@ -78,9 +96,6 @@ class DerivativeSpeculationOrder(Order):
 	on_win_ratio = models.PositiveSmallIntegerField(default=1)
 	on_loss_ratio = models.PositiveSmallIntegerField(default=1)
 
-	def get_cost(self):
-		return self.investment * self.BASE_COST
-
 	def resolve(self):
 		# Build message
 		category = u"Spéculations"
@@ -88,19 +103,19 @@ class DerivativeSpeculationOrder(Order):
 		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.corporations.all(), turn=self.player.game.current_turn - 1).aggregate(Sum('assets'))['assets__sum']
 		if current_turn_sum > previous_turn_sum and self.speculation == self.UP:
 			# Success
-			self.player.money += self.get_cost() * self.on_win_ratio
+			self.player.money += self.on_win_money()
 			self.player.save()
-			content = u"Vous êtes un bon spéculateur, vos investissements de %sk ¥ sur le produit dérivé %s vous ont rapporté %sk ¥" % (self.investment, self.derivative.name, self.investment * self.on_win_ratio)
+			content = u"Vos spéculations de %sk ¥ sur le produit dérivé %s vous ont rapporté %sk ¥" % (self.investment, self.derivative.name, self.on_win_money())
 		else:
 			# Failure
-			self.player.money -= self.get_cost() * self.on_loss_ratio
+			self.player.money -= self.on_loss_money()
 			self.player.save()
 			content = u"Vos spéculations de %sk ¥ sur le produit dérivé %s n'ont malheureusement pas été concluantes" % (self.investment, self.derivative.name)
 
 		self.player.add_note(category=category, content=content)
 
 	def description(self):
-		return u"Miser %s du produit dérivé %s (gain : %s, perte : %s)" % (self.get_speculation_display(), self.derivative.name, self.on_win_ratio * self.investment, self.on_loss_ratio * self.investment)
+		return u"Miser %s du produit dérivé %s (gain : %s, perte : %s)" % (self.get_speculation_display(), self.derivative.name, self.on_win_money(), self.on_loss_money())
 
 
 orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)
