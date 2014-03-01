@@ -93,8 +93,8 @@ class DerivativeSpeculationOrder(SpeculationMixin, Order):
 	speculation = models.BooleanField(choices=UPDOWN_CHOICES)
 	derivative = models.ForeignKey(Derivative)
 	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
-	on_win_ratio = models.PositiveSmallIntegerField(default=1)
-	on_loss_ratio = models.PositiveSmallIntegerField(default=1)
+	on_win_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
+	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 
 	def resolve(self):
 		# Build message
