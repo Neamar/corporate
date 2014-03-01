@@ -82,7 +82,6 @@ class DerivativeSpeculationOrder(Order):
 		return self.investment * self.BASE_COST
 
 	def resolve(self):
-
 		# Build message
 		category = u"Spéculations"
 		current_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.corporations.all(), turn=self.player.game.current_turn).aggregate(Sum('assets'))['assets__sum']
