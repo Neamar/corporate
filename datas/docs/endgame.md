@@ -4,6 +4,8 @@ Pour gagner le Corporate Game, il faut avoir plus de points de victoires (PVs) �
 
 Il y a plusieurs manières de gagner des PVs, et il est recommandé de les examiner en détail avant le début de la partie. Ils ne seront d’ailleurs pas comptés automatiquement, et les joueurs vont devoir sortir leurs calculatrices à la fin du 8<sup>ème</sup> tour.
 
+[TOC]
+
 ## Points de parts
 
 Une fois le classement final révélé :

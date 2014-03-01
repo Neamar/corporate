@@ -6,7 +6,9 @@ Chaque joueur doit trouver un avatar pour son PJ et rédiger un paragraphe ou de
 
 Une fois le jeu lancé, n'hésitez pas à donner vie à votre PJ en l'interprétant dans vos messages privés ou sur le forum. Ce n'est en rien obligatoire, mais un brin de roleplay peut ajouter beaucoup à l'expérience.
 
-Avant de vous lancer, il vous reste des choix à faire pour donner une ossature à votre personnage :
+Avant de vous lancer, il vous reste des choix à faire pour donner une ossature à votre personnage.
+
+[TOC]
 
 ## Citoyenneté corpo
 
@@ -65,6 +67,7 @@ Tout droit sorti de l'école dans un costume flambant neuf, le personnage incarn
 Malgré la légende bien enracinée du *self made man* new-yorkais, beaucoup des puissants de la ville n'ont pas eu à travailler d'arrache pied pour arriver là où il sont. Être né avec une cuillère en argent dans la bouche a beaucoup d'avantages, mais se montrer digne de son nom et des attentes de sa famille peut être une responsabilité écrasante.
 
 > À la fin de la partie, gagnez :
+> 
 > * 2 PVs si votre IC est de 3.
 > * 4 PVs si votre IC est de 4.
 > * 8 PVs si votre IC est de 5.
@@ -117,6 +120,7 @@ Rockstar, gourou, sportif de haut niveau, présentateur vedette ou playboy de ta
 Il a eu une vie, une carrière, des rêves, des projets... mais tout cela appartient au passé, balayé par le désir de vengeance qui lui brûle les tripes. La corpo qui lui a fait perdre ce qu'il avait de plus cher a affiché des bénéfices records le trimestre dernier, et c'est la seule motivation dont il a besoin. Il leur fera payer. Il leur fera payer au centuple. Et lorsqu'ils auront tout perdu, lorsqu'ils connaîtront enfin sa douleur, il les regardera dans les yeux et ils sauront pourquoi.
 
 > Choisissez une corpo parmi deux tirées au hasard. À la fin de la partie, gagnez :
+> 
 > * +4 PVs si la corpo à un rang inférieur à 5.
 > * ou alors +8 PVs si la corpo est dernière.
 > * ou bien +12 PVs si la corpo s'est crashée.
@@ -154,59 +158,41 @@ Lorsqu'un joueur réussit une run d'Information, il reçoit les Secrets du joueu
 
 ## Exemple de personnages
 
-Nom : Jack Finn
+### Jack Finn
+    Sexe : Masculin
+    Âge : 25 ans
+    Race : nain
+    Background : Jeune loup
+    Citoyen d'Horizon
 
-sexe : Masculin
+    Public :
+    Lorsqu'on est un nain, il n'est pas facile d'être prit au sérieux, ne serait-ce que parce que tout le monde vous regarde de haut. Pour être traité comme des hommes, beaucoup se laissent pousser la barbe et adoptent une attitude bourrue et virile. Pas Jack. Jack s'impose par son sourire, son charme, la complicité qu'il arrive à créer d'un simple clin d'oeil amical. Jack à le don de mettre les autres à l'aise, de leur donner l'impression qu’ils ont droit à un traitement de faveur, et il lui en sont reconnaissants.
 
-Age : 25 ans
+    Dès ses débuts à Orange County, Los Angeles, il a su exploiter les passerelles qu'Horizon propose à ceux qui brillent dans les réseaux sociaux, qui parviennent à influencer le consensus. Après quelques années de formation de première qualité aux frais de la corpo qui lui ont apprit les arcanes du monde corporatiste, il a été promu à un poste de manager qui lui a permit de cultiver son réseau et d'amasser suffisamment de ressources pour se lancer dans un défi à la hauteur de ses ambitions : devenir un des puissants de Manhattan.
 
-Race : nain
+    Secrets :
+    En public, Jack déborde de confiance et de charisme. En privé, cependant, il subit de terribles crises d'angoisses  qui le font suer à grosses goûtes et trembler comme une feuille. Avant chaque réunion d'importance, il doit aller aux toilettes pour vomir tripes et boyaux. Pour gérer son problème, il voit en secret un thérapeute de Boston qui l'aide à faire face à sa peur de l'échec. En plus des prescriptions, cependant, il s'auto médicamente avec toutes sortes de drogues qu'il achète au marché noir, avec de l'urine sans traces pour déjouer les tests de sa corpo. Ces tests, bien sûr, ne font qu'augmenter son stress.
 
-Background : Jeune loup
+    Stratégies :
+    * Big Boss : 4 PVs. Jack se croit plus malin que les rois actuels du monde corporatiste, et entend bien le leur prouver.
+    * Maître espion : 4 PVs. Il a apprit très tôt que l'Information prend chaque jour plus d'importance dans le 6<sup>ème</sup> monde, et il compte rester à la pointe du progrès.
 
-Citoyen d'Horizon
+### Shiro Kuboka
+    Sexe : Masculin
+    Âge : 30 ans
+    Race : Humain
+    Background : Golden boy
+    Citoyen de Renraku
 
-Public :
+    Public :
+    Shiro Kuboka est une anomalie. Là où ses collègues traders ont des personnalité exubérantes et jurent comme des charretiers, il est calme, studieux et d'une politesse maladive. Là où ils ont le goût du risque et surfent sur l'adrénaline du matin au soir, il est patient, minutieux et perfectionniste. Bosseur dans l'âme, il passe ses nuits le nez dans ses feuilles de calcul alors que les autres se ruent dans les karaoke et les boîtes de nuit pour se remplir d'alcool et de drogues avant de s'effondrer au côté d'une prostituée hors de prix.
 
-Lorsqu'on est un nain, il n'est pas facile d'être prit au sérieux, ne serait-ce que parce que tout le monde vous regarde de haut. Pour être traité comme des hommes, beaucoup se laissent pousser la barbe et adoptent une attitude bourrue et virile. Pas Jack. Jack s'impose par son sourire, son charme, la complicité qu'il arrive à créer d'un simple clin d'oeil amical. Jack à le don de mettre les autres à l'aise, de leur donner l'impression qu’ils ont droit à un traitement de faveur, et il lui en sont reconnaissants.
+    Heureusement pour lui, dans une corpo aussi traditionaliste que Renraku, un trader propre sur lui est une anomalie appréciée. Malgré son manque de sociabilité, les promotions ne se sont pas faites attendre et il s'est vu confier des objectifs de plus en plus ambitieux, qu'il a toujours atteint avec brio, parfois au nuyen prêt. Cependant, il est fatigué de l'incompétence de ses supérieurs, et son mode de vie modeste lui a permit d'accumuler un trésors de guerre qu'il aimerait utiliser à son avantage. Ne s'étant pas fait que des amis sur la scène de Neo Toyko, son regard se tourne vers Manhattan...
 
-Dès ses débuts à Orange County, Los Angeles, il a su exploiter les passerelles qu'Horizon propose à ceux qui brillent dans les réseaux sociaux, qui parviennent à influencer le consensus. Après quelques années de formation de première qualité aux frais de la corpo qui lui ont apprit les arcanes du monde corporatiste, il a été promu à un poste de manager qui lui a permit de cultiver son réseau et d'amasser suffisamment de ressources pour se lancer dans un défi à la hauteur de ses ambitions : devenir un des puissants de Manhattan.
+    Secrets :
+    Shiro Kuboka est très intelligent, bien plus intelligent que ses patrons. Depuis des années, il a détourné des sommes colossales sous leur nez, puisant parfois dans les gains de ses collègues trop absorbés par les remous du marché. Tout cet argent est soigneusement entreposé dans un compte offshore d'une banque d'Antigua. 5 milliards de nuyens, c'est la limite qu'il s'est fixé avant disparaître sans laisser de trace avec sa famille pour couler des jours tranquilles dans un paradis tropical sous une fausse identité. Ce qui l'inquiète, c'est que son travail le passionne tellement qu'il n'est pas certain de pouvoir y renoncer le moment venu.
 
-Secrets :
-
-En public, Jack déborde de confiance et de charisme. En privé, cependant, il subit de terribles crises d'angoisses  qui le font suer à grosses goûtes et trembler comme une feuille. Avant chaque réunion d'importance, il doit aller aux toilettes pour vomir tripes et boyaux. Pour gérer son problème, il voit en secret un thérapeute de Boston qui l'aide à faire face à sa peur de l'échec. En plus des prescriptions, cependant, il s'auto médicamente avec toutes sortes de drogues qu'il achète au marché noir, avec de l'urine sans traces pour déjouer les tests de sa corpo. Ces tests, bien sûr, ne font qu'augmenter son stress.
-
-Stratégies :
-* Big Boss : 4 PVs. Jack se croit plus malin que les rois actuels du monde corporatiste, et entend bien le leur prouver.
-* Maître espion : 4 PVs. Il a apprit très tôt que l'Information prend chaque jour plus d'importance dans le 6<sup>ème</sup> monde, et il compte rester à la pointe du progrès.
-
-
-***
-
-
-Nom : Shiro Kuboka
-
-sexe : Masculin
-
-Age : 30 ans
-
-Race : Humain
-
-Background : Golden boy
-
-Citoyen de Renraku
-
-Public :
-
-Shiro Kuboka est une anomalie. Là où ses collègues traders ont des personnalité exubérantes et jurent comme des charretiers, il est calme, studieux et d'une politesse maladive. Là où ils ont le goût du risque et surfent sur l'adrénaline du matin au soir, il est patient, minutieux et perfectionniste. Bosseur dans l'âme, il passe ses nuits le nez dans ses feuilles de calcul alors que les autres se ruent dans les karaoke et les boîtes de nuit pour se remplir d'alcool et de drogues avant de s'effondrer au côté d'une prostituée hors de prix.
-
-Heureusement pour lui, dans une corpo aussi traditionaliste que Renraku, un trader propre sur lui est une anomalie appréciée. Malgré son manque de sociabilité, les promotions ne se sont pas faites attendre et il s'est vu confier des objectifs de plus en plus ambitieux, qu'il a toujours atteint avec brio, parfois au nuyen prêt. Cependant, il est fatigué de l'incompétence de ses supérieurs, et son mode de vie modeste lui a permit d'accumuler un trésors de guerre qu'il aimerait utiliser à son avantage. Ne s'étant pas fait que des amis sur la scène de Neo Toyko, son regard se tourne vers Manhattan...
-
-Secrets :
-
-Shiro Kuboka est très intelligent, bien plus intelligent que ses patrons. Depuis des années, il a détourné des sommes colossales sous leur nez, puisant parfois dans les gains de ses collègues trop absorbés par les remous du marché. Tout cet argent est soigneusement entreposé dans un compte offshore d'une banque d'Antigua. 5 milliards de nuyens, c'est la limite qu'il s'est fixé avant disparaître sans laisser de trace avec sa famille pour couler des jours tranquilles dans un paradis tropical sous une fausse identité. Ce qui l'inquiète, c'est que son travail le passionne tellement qu'il n'est pas certain de pouvoir y renoncer le moment venu.
-
-Stratégies :
-* L'Homme de Wall Street. 6PVs. Jouer en bourse est sa passion et son plus  grand talent.
-* Opportuniste. 4 PVs. Shiro Kuboka est quelqu'un de prudent, qui ne met jamais tous ses œufs dans le même panier.
-* Rentier. 4 PVs. Il ne perd pas de vu son objectif de 5 milliards.
+    Stratégies :
+    * L'Homme de Wall Street. 6PVs. Jouer en bourse est sa passion et son plus  grand talent.
+    * Opportuniste. 4 PVs. Shiro Kuboka est quelqu'un de prudent, qui ne met jamais tous ses œufs dans le même panier.
+    * Rentier. 4 PVs. Il ne perd pas de vu son objectif de 5 milliards.
