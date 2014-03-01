@@ -96,6 +96,7 @@ def enforce_mdc_bank_positive(sender, instance, **kwargs):
 	if instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
 		# This speculation should cost nothing if it fails
 		instance.on_loss_ratio = 0
+		instance.save()
 
 
 @receiver(post_create)
@@ -106,6 +107,6 @@ def enforce_mdc_dere_positive(sender, instance, **kwargs):
 	When DERE is active, DERE players can speculate and gain more.
 	"""
 	if instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
-		print "DETE", instance.on_win_ratio
 		# This speculation should see its rate augmented if it succeeds
 		instance.on_win_ratio += 1
+		instance.save()
