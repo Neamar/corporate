@@ -14,7 +14,7 @@ Le **classement** trie les corpos par nombre d'actifs et leur attribue un rang d
 
 Les joueurs commencent la partie avec 1 point d'**Influence corporatiste, ou "IC"**. Cette caractéristique représente l'étendue de leur pouvoir et de leurs réseaux dans l'île de Manhattan et sert de limite à certaines de leurs actions. Elle pourra être augmentée en cours de partie.
 
-Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 2 millions de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
+Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 1 million de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
 
 La partie se joue en 8 **tours** ; chaque tour correspondant à un trimestre. À la fin du jeu, chaque joueur compte ses **points de victoire**, et celui qui en possède le plus est déclaré vainqueur. (cf fin du jeu)
 
@@ -23,13 +23,9 @@ La partie se joue en 8 **tours** ; chaque tour correspondant à un trimestre. À
 Chacun des concepts suivants sera expliqué en détail.
 
 1. Chaque joueur remplit et envoie un **formulaire d'ordres**, où il peut effectuer des achats, spéculer et manipuler le marché.
-
 2. À midi tous les jours jusqu'à la fin du jeu, tous les ordres sont résolus simultanément, faisant gagner et perdre des actifs aux corpos.
-
 3. Chaque corpo est différente, et possède un **effet premier**, qui s'applique lorsque la corpo est en tête du classement, et un **effet dernier**, qui s'applique lorsque qu'elle est dernière du classement. Les deux effets sont résolus simultanément, une fois tous les modificateurs appliqués.
-
 4. Chaque joueur touche ses divers retours sur investissements.
-
 5. Les onglets **Wall Street** et **Newsfeeds** révèlent respectivement le nouveau classement et les évènements publics du tour écoulé, et chaque joueur reçoit en plus un **message de résolution** personnalisé qui contient les informations plus confidentielles.
 
 Un nouveau tour peut commencer.
@@ -53,7 +49,7 @@ Une part coûte 100 000 ny × (actifs de la corpo). Soit 500 000 ny pour une cor
 
 ### Les Votes
 
-En tant qu'acteur majeur du marché, chaque joueur à droit à un **Vote** par tour. Il choisit :
+En tant qu'acteur majeur du marché, chaque joueur a droit à un **Vote** par tour. Il choisit :
 
 * Une corpo qui gagne 1 actif.
 * Une corpo qui perd 1 actif.
@@ -277,7 +273,7 @@ Malgré les protestations de Wall Street, de nouvelles régulations pour la ECSE
 
 Effets :
 
-* Au prochain tour, les **joueurs** ayant votés **Garde fous bancaires** peuvent **garder l'intégralité des mises** de leurs spéculations manquées.
+* Au prochain tour, les **joueurs** ayant voté **Garde fous bancaires** **gardent l'intégralité des mises** de leurs spéculations manquées.
 * Les **joueurs** ayant voté **Dérégulation** ne pourront pas effectuer de **spéculations**.
 
 ### Dérégulation

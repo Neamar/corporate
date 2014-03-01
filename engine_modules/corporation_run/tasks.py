@@ -4,7 +4,7 @@ from engine_modules.corporation_run.models import DataStealOrder, SabotageOrder,
 
 class OffensiveRunTask(OrderResolutionTask):
 	"""
-	A Task to resolve all Offensive Runs (DataSteal and Sabotage)
+	Resolve Offensive corporations runs (DataSteal, Sabotage, Extraction)
 	"""
 	RESOLUTION_ORDER = 350
 	ORDER_TYPES = [DataStealOrder, SabotageOrder, ExtractionOrder]
@@ -20,7 +20,7 @@ class OffensiveRunTask(OrderResolutionTask):
 
 class ProtectionRunTask(OrderResolutionTask):
 	"""
-	A Task to deduce costs of Protection Runs
+	Debit Protection runs from players
 	"""
 	RESOLUTION_ORDER = 349
 	ORDER_TYPE = ProtectionOrder

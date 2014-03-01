@@ -5,7 +5,7 @@ from engine_modules.player_run.models import InformationOrder
 
 class InformationRunTask(OrderResolutionTask):
 	"""
-	Resolve information runs
+	Resolve Information runs
 	"""
 	RESOLUTION_ORDER = 350
 	ORDER_TYPE = InformationOrder
