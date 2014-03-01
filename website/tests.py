@@ -1,6 +1,7 @@
 from django.test import Client
 from django.core.urlresolvers import reverse
 
+from messaging.models import Message
 from engine.testcases import EngineTestCase
 from website.models import User
 
@@ -16,6 +17,13 @@ class WebsiteTest(EngineTestCase):
 
 		self.p.user = self.u
 		self.p.save()
+		m = Message.objects.create(
+			author=None,
+			title="test",
+			content="hi",
+			turn=self.g.current_turn
+		)
+		m.recipient_set.add(self.p)
 
 		self.client = Client()
 
@@ -49,6 +57,7 @@ class WebsiteTest(EngineTestCase):
 			reverse('website.views.datas.shares', args=[self.g.id]),
 			reverse('website.views.datas.newsfeeds', args=[self.g.id]),
 			reverse('website.views.datas.comlink', args=[self.g.id]),
+			reverse('website.views.datas.message', args=[self.g.id, self.p.message_set.get().pk]),
 		]
 
 		for page in pages:
@@ -67,6 +76,7 @@ class WebsiteTest(EngineTestCase):
 			reverse('website.views.datas.shares', args=[self.g.id]),
 			reverse('website.views.datas.newsfeeds', args=[self.g.id]),
 			reverse('website.views.datas.comlink', args=[self.g.id]),
+			reverse('website.views.datas.message', args=[self.g.id, self.p.message_set.get().pk]),
 		]
 
 		for page in pages:
