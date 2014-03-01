@@ -54,9 +54,8 @@ class MDCVoteOrder(Order):
 
 		# For each corporation, get the 2 players that have the most shares
 		for c in corporations:
-			# We have to filter out the turns after that of the order, in case
-			# the situation has changed since then
-			shareholders = (s.player for s in c.share_set.filter(turn__lte=self.turn))
+			# Filter to shares bought up to the turn this order was passed + 1
+			shareholders = (s.player for s in c.share_set.filter(turn__lte=self.turn + 1))
 			top_holders = Counter(shareholders).most_common(2)
 			try:
 				# if they don't have the same number of shares, the first one gets a vote
