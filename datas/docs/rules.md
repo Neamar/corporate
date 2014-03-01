@@ -67,7 +67,7 @@ Le reste des aléas de la bourse de Manhattan est laissé à la chance. À chaqu
 
 ### Effet premier / effet dernier
 
-Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tout autre modificateur, et peuvent chambouler les actifs des corpos. (cf corpos) pour une description individuelle de chaque corpo et (cf recap) pour une liste de leurs effets premiers / derniers.
+Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tout autre modificateur, et peuvent chambouler les actifs des corpos. [(cf corpos)](????????) pour une description individuelle de chaque corpo et [(cf recap)](recap.md) pour une liste de leurs effets premiers / derniers.
 
 ### Crash
 
@@ -90,7 +90,7 @@ Un **citoyen corpo** :
 * Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses actions [(cf Information)](rules.md#information).
 * Reçoit les informations détectée par sa corpo dans son message de résolution.
 
-Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste [(cf mise en place)](start.
+Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste [(cf mise en place)](start.md#citoyenneté-corpo).
 
 Si la corpo dont le joueur est citoyen Crashe, il en perd la citoyenneté et pourra s'il le souhaite en réclamer une nouvelle au tour suivant. Il subit normalement le malus de points de victoire.
 
@@ -104,7 +104,7 @@ Pour lancer une run, un joueur doit investir un minimum de 50 000 ny, soit +10%.
 
 Pour chaque point d'IC qu'il possède, un joueur peut gratuitement ajouter +30% à une run par tour. Un joueur possédant une IC de 3 pourra donc ajouter +30% à 3 runs par tour. Ces bonus ne peuvent pas être cumulés sur une même run.
 
-Une run a un maximum de 90% de chance de réussir, mais il est possible de payer un pourcentage supérieur pour contrebalancer des malus. (cf Malus de timing) et (cf Contrôles ciblés).
+Une run a un maximum de 90% de chance de réussir, mais il est possible de payer un pourcentage supérieur pour contrebalancer des malus. [(cf Malus de timing)]()rules.md#malus-de-timing) et [(cf Contrôles ciblés)](rules.md#contrôles-ciblés).
 
 Si une run autre que Protection échoue ou est contrée (voir ci-dessous), son commanditaire récupère la moitié des nuyens investis.
 
@@ -165,7 +165,7 @@ Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En
 ### Information
 * Base : 60 %
 
-Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les messages de résolution du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses Secrets (cf Secrets).
+Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les messages de résolution du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses Secrets [(cf Secrets)](start.md#secrets).
 
 > La Défense de Datasteal de la corpo dont la cible est citoyen est utilisée pour contrer les runs d'Information.
 > Même détectées, les runs d’Information n’apparaissent pas dans les Newsfeeds.
