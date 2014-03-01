@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from itertools import chain
+
 from collections import Counter
 from engine.tasks import ResolutionTask
 from engine_modules.mdc.models import MDCVoteSession, MDCVoteOrder
@@ -15,7 +17,7 @@ class MDCVoteTask(ResolutionTask):
 	def run(self, game):
 		orders = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
 		votes = {}
-		for t in MDCVoteOrder.MDC_PARTY_LINE_CHOICES:
+		for t in chain.from_iterable(dict(MDCVoteOrder.MDC_PARTY_LINE_CHOICES).values()):
 			votes[t[0]] = 0
 
 		for order in orders:

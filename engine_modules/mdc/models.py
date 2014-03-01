@@ -19,12 +19,27 @@ class MDCVoteOrder(Order):
 
 	# Enumerate the party lines and their meanings
 	MDC_PARTY_LINE_CHOICES = (
-		('CPUB', u'Contrats publics'),
-		('CCIB', u'Contrôles ciblés'),
-		('DERE', u'Dérégulation'),
-		('DEVE', u'Développement urbain'),
-		('BANK', u'Garde-fous bancaires'),
-		('TRAN', u'Transparence'),
+		(
+			'Contrats publics / Contrôles ciblés',
+			(
+				('CPUB', 'Contrats publics'),
+				('CCIB', 'Contrôles ciblés'),
+			)
+		),
+		(
+			'Dérégulation / Développement urbain',
+			(
+				('DERE', u'Dérégulation'),
+				('DEVE', u'Développement urbain'),
+			)
+		),
+		(
+			'Garde-fous bancaires / Transparence',
+			(
+				('BANK', u'Garde-fous bancaires'),
+				('TRAN', u'Transparence'),
+			)
+		)
 	)
 	title = "Choisir une coalition"
 
