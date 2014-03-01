@@ -4,7 +4,7 @@ from engine_modules.share.models import Share, BuyShareOrder
 
 class BuyShareTask(OrderResolutionTask):
 	"""
-	Buy new Influence level
+	Buy all shares for all players
 	"""
 	RESOLUTION_ORDER = 0
 	ORDER_TYPE = BuyShareOrder
@@ -26,7 +26,7 @@ class DividendTask(ResolutionTask):
 		TODO: megaoptimize queries
 		"""
 		shares = Share.objects.filter(player__game=game)
-		ladder = game.get_ordered_corporations()
+		ladder = game.get_ladder()
 
 		for share in shares:
 			dividend = self.SHARE_BASE_VALUE * share.corporation.assets

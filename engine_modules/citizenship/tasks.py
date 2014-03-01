@@ -5,7 +5,7 @@ from engine_modules.citizenship.models import CitizenShipOrder
 
 class CitizenshipTask(OrderResolutionTask):
 	"""
-	Update player citizenship
+	Update players citizenships
 	"""
 	RESOLUTION_ORDER = 900
 	ORDER_TYPE = CitizenShipOrder

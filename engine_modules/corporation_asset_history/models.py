@@ -20,7 +20,7 @@ class AssetHistory(models.Model):
 		return "%s assets for %s on turn %s" % (self.assets, self.corporation.base_corporation.name, self.turn)
 
 
-def get_ordered_corporations(self):
+def get_ladder(self):
 	"""
 	order corporation by assets
 	if ex-aequo order by assets the turn before and the turn even before until the turn 1
@@ -37,4 +37,4 @@ def get_ordered_corporations(self):
 
 	ordered_corporation = sorted(ranking, key=lambda c: ranking[c], reverse=True)
 	return ordered_corporation
-Game.get_ordered_corporations = get_ordered_corporations
+Game.get_ladder = get_ladder

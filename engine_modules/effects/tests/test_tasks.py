@@ -36,7 +36,7 @@ class TasksTest(EngineTestCase):
 		initial_assets = self.first_corporation.assets
 
 		# Change the default code
-		self.update_effect(self.first_corporation, 'on_first', "corporation.update_assets(5)")
+		self.update_effect(self.first_corporation, 'on_first', "corporations.get(base_corporation_slug='%s').update_assets(5)" % self.first_corporation.base_corporation_slug)
 		self.update_effect(self.last_corporation, 'on_last', "")
 
 		self.g.resolve_current_turn()
@@ -50,7 +50,7 @@ class TasksTest(EngineTestCase):
 		initial_assets = self.last_corporation.assets
 
 		# Change the default code
-		self.update_effect(self.last_corporation, 'on_last', "corporation.update_assets(-5)")
+		self.update_effect(self.last_corporation, 'on_last', "corporations.get(base_corporation_slug='%s').update_assets(-5)" % self.last_corporation.base_corporation_slug)
 		self.update_effect(self.first_corporation, 'on_first', "")
 
 		self.g.resolve_current_turn()

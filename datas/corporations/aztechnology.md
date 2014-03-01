@@ -6,7 +6,7 @@ extraction: 10
 detection: 60
 on_first:
     corporations.get(base_corporation_slug='horizon').update_assets(-1)
-    game.get_ordered_corporations()[-1].update_assets(-1)
+    ladder[-1].update_assets(-1)
 on_last:
     corporations.get(base_corporation_slug='horizon').update_assets(+2)
 

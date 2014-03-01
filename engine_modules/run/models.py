@@ -28,8 +28,9 @@ class RunOrder(Order):
 		if self.has_influence_bonus:
 			proba += 30
 		proba += self.additional_percents * 10
-
+	
 		proba += self.hidden_percents * 10
+
 		return proba
 
 	def is_successful(self):

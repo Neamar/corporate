@@ -3,7 +3,7 @@ from engine.tasks import ResolutionTask
 
 class InvisibleHandTask(ResolutionTask):
 	"""
-	Give +1 and -1 asset to two corporation
+	Give +1 and -1 asset for two random corporations
 	"""
 	RESOLUTION_ORDER = 400
 

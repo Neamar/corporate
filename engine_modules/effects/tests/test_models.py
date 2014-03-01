@@ -18,10 +18,11 @@ class ModelTest(TestCase):
         """
         Checking for all corporation first_effects
         """
+        ladder = self.g.get_ladder()
         for corporation in self.g.corporation_set.all():
             sid = transaction.savepoint()
             try:
-                corporation.on_first_effect()
+                corporation.on_first_effect(ladder)
             except:
                 e = sys.exc_value
                 message = "[%s.on_first_effect] %s" % (corporation.base_corporation_slug, str(e))
@@ -32,10 +33,11 @@ class ModelTest(TestCase):
         """
         Checking for all corporation first_effects
         """
+        ladder = self.g.get_ladder()
         for corporation in self.g.corporation_set.all():
             sid = transaction.savepoint()
             try:
-                corporation.on_last_effect()
+                corporation.on_last_effect(ladder)
             except:
                 e = sys.exc_value
                 message = "[%s.on_last_effect] %s" % (corporation.base_corporation_slug, str(e))

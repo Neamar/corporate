@@ -11,7 +11,7 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		self.assertEqual(self.c.assethistory_set.get(turn=1).assets, self.reload(self.c).assets)
 
-	def test_get_ordered_corporations(self):
+	def test_get_ladder(self):
 		"""
 		Test rank of turn if no ex-aequo
 		"""
@@ -24,7 +24,7 @@ class TasksTest(EngineTestCase):
 		self.c.save()
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.g.get_ordered_corporations(), [self.c3, self.c2, self.c])
+		self.assertEqual(self.g.get_ladder(), [self.c3, self.c2, self.c])
 
 	def test_ex_aequo(self):
 		"""
@@ -46,15 +46,15 @@ class TasksTest(EngineTestCase):
 		self.c.assets = 11
 		self.c.save()
 
-		self.assertEqual(self.g.get_ordered_corporations(), [self.c2, self.c3, self.c])
+		self.assertEqual(self.g.get_ladder(), [self.c2, self.c3, self.c])
 
 	def test_stability(self):
 		"""
 		Test stability of ordering corporation with equals assets from the start
 		"""
-		basic_setup = self.g.get_ordered_corporations()
+		basic_setup = self.g.get_ladder()
 		self.g.resolve_current_turn()
-		turn1 = self.g.get_ordered_corporations()
+		turn1 = self.g.get_ladder()
 
 		self.assertEqual(basic_setup, turn1)
 
@@ -85,4 +85,4 @@ class TasksTest(EngineTestCase):
 		self.c.assets = 11
 		self.c.save()
 
-		self.assertEqual(self.g.get_ordered_corporations(), [self.c2, self.c3, self.c])
+		self.assertEqual(self.g.get_ladder(), [self.c2, self.c3, self.c])
