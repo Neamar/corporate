@@ -81,12 +81,12 @@ Dans le sixième monde, les corporations ont tellement de pouvoir qu'elles sont 
 
 Un **citoyen corpo** :
 
-* Gagne davantage de points de victoire si sa corpo est bien placée dans le classement à la fin de la partie [(cf. fin du jeu)](endgame.md#points-de-citoyen).
+* Gagne davantage de points de victoire si sa corpo est bien placée dans le classement à la fin de la partie [(cf. Fin du jeu)](endgame.md#points-de-citoyen).
 * Paie les parts de sa corpo au prix usuel de `100 000 ny × actifs` même si elle est en tête du classement (au lieu de `125 000 ny × actifs`).
 * Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses actions [(cf. Information)](rules.md#information).
 * Reçoit les informations détectées par sa corpo dans son message de résolution.
 
-Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste [(cf. mise en place)](start.md#citoyenneté-corpo).
+Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste [(cf. Mise en place)](start.md#citoyenneté-corpo).
 
 Si la corpo dont le joueur est citoyen Crashe, il en perd la citoyenneté et pourra s'il le souhaite en réclamer une nouvelle au tour suivant. Il subit normalement le malus de points de victoire.
 
