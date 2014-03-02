@@ -22,8 +22,8 @@ datasteal_messages = {
 sabotage_messages = {
 	'success': {
 		'sponsor': u"Votre équipe a réussi à saboter les opérations de %s",
-		'newsfeed': u"Un sabotage a été effectué sur %s",
-		'citizens': u"Un sabotage a été effectué sur %s",
+		'newsfeed': u"Un sabotage a réussi sur %s",
+		'citizens': u"Un sabotage a réussi sur %s",
 	},
 	'fail': {
 		'sponsor': u"Votre équipe a échoué lors de la tentative de sabotage sur %s",
@@ -34,7 +34,7 @@ sabotage_messages = {
 
 extraction_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a extrait un scientifique de %s pour le compte de %s",
+		'sponsor': u"Votre équipe a réalisé une extraction de %s pour le compte de %s",
 		'newsfeed': u"Une extraction a été effectuée sur %s",
 		'citizens': u"Une extraction a été effectuée sur %s pour le compte de %s",
 	},
@@ -297,7 +297,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 			self.player.game.add_newsfeed(category=category, content=content)
 
 	def description(self):
-		return u"Envoyer une équipe kidnapper un scientifique renommé de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Réaliser une extraction de %s vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
 
 
 class ProtectionOrder(RunOrder):

@@ -20,23 +20,23 @@ class MDCVoteOrder(Order):
 	# Enumerate the party lines and their meanings
 	MDC_PARTY_LINE_CHOICES = (
 		(
-			'Contrats publics / Contrôles ciblés',
+			'Contrats publics / Développement urbain',
 			(
 				('CPUB', 'Contrats publics'),
-				('CCIB', 'Contrôles ciblés'),
-			)
-		),
-		(
-			'Dérégulation / Développement urbain',
-			(
-				('DERE', u'Dérégulation'),
 				('DEVE', u'Développement urbain'),
 			)
 		),
 		(
-			'Garde-fous bancaires / Transparence',
+			'Garde-fous bancaires / Dérégulation',
 			(
 				('BANK', u'Garde-fous bancaires'),
+				('DERE', u'Dérégulation'),
+			)
+		),
+		(
+			'Contrôles ciblés / Transparence',
+			(
+				('CCIB', 'Contrôles ciblés'),
 				('TRAN', u'Transparence'),
 			)
 		)
