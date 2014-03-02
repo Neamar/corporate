@@ -22,6 +22,9 @@ class AbstractSpeculation(Order):
 	class Meta:
 		abstract = True
 
+	MAX_AMOUNT_SPECULATION = 100
+	BASE_COST = 1
+
 	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
 	on_win_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
@@ -46,8 +49,6 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 	"""
 	Order to speculate on a corporation's rank
 	"""
-	MAX_AMOUNT_SPECULATION = 50
-	BASE_COST = 1
 
 	title = "Spéculer sur une corporation"
 
@@ -84,8 +85,6 @@ class DerivativeSpeculationOrder(AbstractSpeculation):
 	"""
 	Order to speculate on a derivative up or down
 	"""
-	MAX_AMOUNT_SPECULATION = 50
-	BASE_COST = 1
 
 	UP = True
 	DOWN = False

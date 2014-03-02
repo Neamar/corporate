@@ -1,5 +1,5 @@
 name: Neonet
-initial_assets: 12
+initials_assets: 12
 datasteal: 30
 sabotage: 10
 extraction: 10
