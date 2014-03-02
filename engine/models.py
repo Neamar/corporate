@@ -97,7 +97,7 @@ class Player(models.Model):
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=notes,
-			title="Informations personnelles du tour %s" % self.game.current_turn,
+			title="Message de résolution du tour %s" % self.game.current_turn,
 			turn=self.game.current_turn
 		)
 		m.recipient_set.add(self)
