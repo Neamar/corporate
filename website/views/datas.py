@@ -41,7 +41,7 @@ def corporations(request, game_id):
 	corporations datas
 	"""
 	player = get_player(request, game_id)
-	corporations = player.game.corporation_set.all().order_by('base_corporation_slug')
+	corporations = player.game.corporation_set.all()
 	return render(request, 'game/corporations.html', {"corporations": corporations})
 
 

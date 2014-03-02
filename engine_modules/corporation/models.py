@@ -82,6 +82,7 @@ class Corporation(models.Model):
 	"""
 	class Meta:
 		unique_together = (('base_corporation_slug', 'game'), )
+		ordering = ['base_corporation_slug']
 
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
