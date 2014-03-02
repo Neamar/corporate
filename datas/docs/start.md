@@ -87,7 +87,7 @@ Gigolo, maître chanteur ou amuseur des soirées dépravées de la crème de Man
 ### Génie de l'image
 Une longue expérience de PR, de spin doctor, de publicitaire ou de gourou des médias a appris au personnage que le *paraître* est primordial, et que la meilleure stratégie pour se défaire d’un ennemi est de retourner contre lui ses propres excès.
 
-> Gagnez +1 PV pour chaque run de Sabotage ou d'Extraction réussie contre la corpo pour laquelle vous avez voté +1 ce tour ci [(cf Vote)](rules.md#le-vote). Vos propres runs ne comptent pas.
+> Gagnez +1 PV pour chaque run de Sabotage ou d'Extraction réussie contre la corpo pour laquelle vous avez voté +1 ce tour ci [(cf. Vote)](rules.md#le-vote). Vos propres runs ne comptent pas.
 
 ### Homme d'honneur
 Le personnage est la preuve vivante qu'il est possible de réussir en travaillant dur et en faisant preuve d'une loyauté à toute épreuve. L'appréciation de ses supérieurs lui a permis de gravir les échelons un à un, jusqu'à une position où il peut réellement prouver sa valeur. Il est décidé à ne pas trahir cette confiance.
@@ -118,7 +118,7 @@ Une fois votre Background choisi, vous pouvez attribuer à votre personnage une 
 
 Pour chaque Stratégie, choisissez :
 
-* Un Titre [(cf Titres)](endgame.md#points-de-titres).
+* Un Titre [(cf. Titres)](endgame.md#points-de-titres).
 * Un nombre de PVs ne pouvant pas dépasser 6.
 
 Si à la fin de la partie le personnage a réussi son pari et s'est emparé du titre, il gagne le nombre de PVs indiqué. Les ex aequo comptent.

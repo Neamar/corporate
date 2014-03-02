@@ -8,7 +8,7 @@ Vous incarnez un cadre corporatiste décidé à se tailler un empire dans une de
 
 Les **corporations, ou "corpos"**, sont au coeur du jeu. De gigantesques multinationales qui ont supplanté le pouvoir des nations et fait main basse sur l'économie planétaire. Elles sont innombrables, mais le Corporate Game ne tient compte que des dix plus grosses s’étant implantées à Manhattan.
 
-La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui évoluera en fonction des actions des joueurs et des caprices du marché. Plus une corpo possède d'actifs, plus elle engrange de bénéfices. Au début de la partie, les actifs des 10 corpos sont tirés au hasard. [(cf Classement initial)](rules.md#classement-initial)
+La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui évoluera en fonction des actions des joueurs et des caprices du marché. Plus une corpo possède d'actifs, plus elle engrange de bénéfices. Au début de la partie, les actifs des 10 corpos sont tirés au hasard. [(cf. Classement initial)](rules.md#classement-initial)
 
 Le **classement** trie les corpos par nombre d'actifs et leur attribue un rang de 1 à 10, 1 correspondant à la corpo possédant le plus d'actifs, celle qui domine le marché.
 
@@ -16,7 +16,7 @@ Les joueurs commencent la partie avec 1 point d'**Influence corporatiste, ou "IC
 
 Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 2 millions de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
 
-La partie se joue en 8 **tours**, chaque tour correspondant à un trimestre. À la fin du jeu, chaque joueur compte ses **points de victoire**, et celui qui en possède le plus est déclaré vainqueur. [(cf fin du jeu)](endgame.md)
+La partie se joue en 8 **tours**, chaque tour correspondant à un trimestre. À la fin du jeu, chaque joueur compte ses **points de victoire**, et celui qui en possède le plus est déclaré vainqueur. [(cf. fin du jeu)](endgame.md)
 
 ## Structure d'un tour
 
@@ -36,7 +36,7 @@ Un nouveau tour peut commencer.
 
 Une part coûte `100 000 ny × (actifs de la corpo)`. Soit 500 000 ny pour une corpo de 5 actifs. 
 
-> Une part dans la corpo en tête du classement (rang 1) coûte `125 000 ny × actifs` pour joueurs qui n’en ont pas la "nationalité" [(cf citoyenneté corpo)](rules.md#citoyenneté-corpo).
+> Une part dans la corpo en tête du classement (rang 1) coûte `125 000 ny × actifs` pour joueurs qui n’en ont pas la "nationalité" [(cf. citoyenneté corpo)](rules.md#citoyenneté-corpo).
 
 À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire `50 000 ny ny × (actifs de la corpo)`. Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc `2 × (50 000 × 5) + 1 × (50 000 × 10)`, soit 1 million de ny.
 
@@ -63,7 +63,7 @@ Le reste des aléas de la bourse de Manhattan est laissé à la chance. À chaqu
 
 ### Effet premier / effet dernier
 
-Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tous les autres modificateurs, et peuvent chambouler les actifs des corpos. [(cf corpos)](????????) pour une description individuelle de chaque corpo et [(cf recap)](recap.md) pour une liste de leurs effets premiers / derniers.
+Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tous les autres modificateurs, et peuvent chambouler les actifs des corpos. Voir la page des corporations pour une description individuelle de chaque corpo et [le recap](recap.md) pour une liste de leurs effets premiers / derniers.
 
 ### Crash
 
@@ -81,12 +81,12 @@ Dans le sixième monde, les corporations ont tellement de pouvoir qu'elles sont 
 
 Un **citoyen corpo** :
 
-* Gagne davantage de points de victoire si sa corpo est bien placée dans le classement à la fin de la partie [(cf fin du jeu)](endgame.md#points-de-citoyen).
+* Gagne davantage de points de victoire si sa corpo est bien placée dans le classement à la fin de la partie [(cf. fin du jeu)](endgame.md#points-de-citoyen).
 * Paie les parts de sa corpo au prix usuel de `100 000 ny × actifs` même si elle est en tête du classement (au lieu de `125 000 ny × actifs`).
-* Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses actions [(cf Information)](rules.md#information).
+* Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses actions [(cf. Information)](rules.md#information).
 * Reçoit les informations détectées par sa corpo dans son message de résolution.
 
-Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste [(cf mise en place)](start.md#citoyenneté-corpo).
+Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste [(cf. mise en place)](start.md#citoyenneté-corpo).
 
 Si la corpo dont le joueur est citoyen Crashe, il en perd la citoyenneté et pourra s'il le souhaite en réclamer une nouvelle au tour suivant. Il subit normalement le malus de points de victoire.
 
@@ -100,7 +100,7 @@ Pour lancer une run, un joueur doit investir un minimum de 50 000 ny, soit +10%.
 
 Pour chaque point d'IC qu'il possède, un joueur peut gratuitement ajouter +30% à une run par tour. Un joueur possédant une IC de 3 pourra donc ajouter +30% à 3 runs par tour. Ces bonus ne peuvent pas être cumulés sur une même run.
 
-Une run a un maximum de 90% de chances de réussir, mais il est possible de payer un pourcentage supérieur pour contrebalancer des malus. [(cf Malus de timing)](rules.md#malus-de-timing) et [(cf Contrôles ciblés)](rules.md#contrôles-ciblés).
+Une run a un maximum de 90% de chances de réussir, mais il est possible de payer un pourcentage supérieur pour contrebalancer des malus. [(cf. Malus de timing)](rules.md#malus-de-timing) et [(cf. Contrôles ciblés)](rules.md#contrôles-ciblés).
 
 Si une run autre que Protection échoue ou est contrée (voir ci-dessous), son commanditaire récupère la moitié des nuyens investis.
 
@@ -161,7 +161,7 @@ Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En
 ### Information
 * Base : 60 %
 
-Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les **messages de résolution** du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses **Secrets** [(cf Secrets)](start.md#secrets).
+Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les **messages de résolution** du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses **Secrets** [(cf. Secrets)](start.md#secrets).
 
 > La Défense de Datasteal de la corpo dont la cible est citoyen est utilisée pour contrer les runs d'Information.
 > Même détectées, les runs d’Information n’apparaissent pas dans les Newsfeeds.
