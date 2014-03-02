@@ -22,7 +22,7 @@ Sur un plan plus politique, Renraku est très impliquée dans le conflit qui opp
 
 Les japanocorps sont connues pour leur tendance à être rancunières, et Renraku n'a jamais vraiment digéré la prise par NeoNET du contrôle matriciel des Tours qui constituent les bâtiments de la Cour corporatiste. Les anciens cadres de Fuchi qui bossent encore chez Renraku se servent toujours de leur influence pour harceler NeoNET à la moindre occasion.
 
-# Effet premier
+## Effet premier
 Renraku prend enfin le dessus sur ses rivaux et lave fièrement son honneur.
 
 * -1 actif pour Neonet.

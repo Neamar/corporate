@@ -75,10 +75,14 @@ Le joueur ayant réussi le plus grand nombre de runs de Sabotage.
 Le joueur ayant réussi le plus grand nombre de runs d'Extraction.
 
 ### Le(s) Paranoïaque(s)
-* +3 PVs chacun
-* Le joueur ayant lancé le plus grand nombre de runs de Protection (Datasteal).
-* Le joueur ayant lancé le plus grand nombre de runs de Protection (Sabotage).
-* Le joueur ayant lancé le plus grand nombre de runs de Protection (Extraction).
+* +3 PVs
+Le joueur ayant lancé le plus grand nombre de runs de Protection (Datasteal).
+
+* +3 PVs
+Le joueur ayant lancé le plus grand nombre de runs de Protection (Sabotage).
+
+* +3 PVs
+Le joueur ayant lancé le plus grand nombre de runs de Protection (Extraction).
 
 ## Points de Background
 Votre Background vous rapporte un nombre de PVs pouvant dépendre de vos actions au cour du jeu [(cf. Background)](start.md#background).
