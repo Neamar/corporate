@@ -7,7 +7,7 @@ Après un demi siècle à se remettre du Séisme qui l'a mise à genoux, la City
 Vous êtes l'un d'entre eux. Depuis votre penthouse cinq étoiles, vous planifiez froidement votre ascension, en contemplant les trottoirs sur lesquels celle de beaucoup avant vous a connue une fin brutale.
 
 * [**Le Seisme et le MDC**](seisme.md)
-* [**De la reconstruction à nos jours**](reconstruction.md)
+* [**De la Reconstruction à nos jours**](reconstruction.md)
 
 ## Règles
 
