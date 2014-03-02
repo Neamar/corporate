@@ -13,7 +13,7 @@ datasteal_messages = {
 		'citizens': u"Un vol de données a été effectué sur %s pour le compte de %s",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe a échoué lors de la tentative de DataSteal sur %s pour %s",
+		'sponsor': u"Votre équipe n'a pas réussi son DataSteal sur %s pour %s",
 		'newsfeed': u"Une tentative de vol de données a été effectuée sur %s",
 		'citizens': u"Une tentative de vol de données a été effectuée sur %s pour le compte de %s",
 	},
@@ -26,7 +26,7 @@ sabotage_messages = {
 		'citizens': u"Un sabotage a réussi sur %s",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe a échoué lors de la tentative de sabotage sur %s",
+		'sponsor': u"Votre équipe n'a pas réussi le sabotage sur %s",
 		'newsfeed': u"Une tentative de sabotage à été effectuée sur %s",
 		'citizens': u"Une tentative de sabotage à été effectuée sur %s",
 	},
@@ -39,7 +39,7 @@ extraction_messages = {
 		'citizens': u"Une extraction a été effectuée sur %s pour le compte de %s",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe a échoué lors de la tentative d'Extraction sur %s pour %s",
+		'sponsor': u"Votre équipe n'a pas réussi l'Extraction sur %s pour %s",
 		'newsfeed': u"Une tentative d'extraction a été effectuée sur %s",
 		'citizens': u"Une tentative d'extraction a été effectuée sur %s pour le compte de %s",
 	},
@@ -282,7 +282,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 
 	def resolve_fail(self, detected):
 		# Send a note to the one who ordered the DataSteal
-		category = u"Run d'Extraction'"
+		category = u"Run d'Extraction"
 		content = extraction_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
