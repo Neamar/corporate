@@ -34,14 +34,14 @@ Un nouveau tour peut commencer.
 
 À chaque tour, les joueurs peuvent acheter des **parts** dans les corpos de leur choix. Le nombre maximum de parts qu'un joueur peut acheter par tour est égal à son IC (Influence Corporatiste, de 1 au début du jeu).
 
-Une part coûte 100 000 ny × (actifs de la corpo). Soit 500 000 ny pour une corpo de 5 actifs. 
+Une part coûte `100 000 ny × (actifs de la corpo)`. Soit 500 000 ny pour une corpo de 5 actifs. 
 
-> Une part dans la corpo en tête du classement (rang 1) coûte 125 000 ny × actifs pour joueurs qui n’en ont pas la "nationalité" [(cf citoyenneté corpo)](rules.md#citoyenneté-corpo).
+> Une part dans la corpo en tête du classement (rang 1) coûte `125 000 ny × actifs` pour joueurs qui n’en ont pas la "nationalité" [(cf citoyenneté corpo)](rules.md#citoyenneté-corpo).
 
-À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire 50 000 ny ny × (actifs de la corpo). Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc : (2 × (50 000 × 5) + 1 × (50 000 × 10)), soit 1 million de ny.
+À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire `50 000 ny ny × (actifs de la corpo)`. Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc `2 × (50 000 × 5) + 1 × (50 000 × 10)`, soit 1 million de ny.
 
-> Les parts de la corpo en tête du classement rapportent 75 000 ny × actifs.
-> Les parts de la dernière corpo rapportent 25 000 ny × actifs.
+> Les parts de la corpo en tête du classement rapportent `75 000 ny × actifs`.
+> Les parts de la dernière corpo rapportent `25 000 ny × actifs`.
 
 ## Évolution du marché
 
@@ -71,7 +71,7 @@ Au cours de la résolution du tour, une corpo peut descendre à 0 actifs ou moin
 
 ## Achat d'Influence
 
-Un fois par tour, les joueurs peuvent payer pour augmenter leur Influence corporatiste d'un point. Le coût est de 400 000 ny × nouvel indice, soit 1 200 000 ny pour passer de 2 à 3. 
+Un fois par tour, les joueurs peuvent payer pour augmenter leur Influence corporatiste d'un point. Le coût est de `400 000 ny × nouvel indice`, soit 1 200 000 ny pour passer de 2 à 3. 
 
 La nouvelle valeur d’IC ne prendra effet qu’au tour suivant.
 
@@ -82,7 +82,7 @@ Dans le sixième monde, les corporations ont tellement de pouvoir qu'elles sont 
 Un **citoyen corpo** :
 
 * Gagne davantage de points de victoire si sa corpo est bien placée dans le classement à la fin de la partie [(cf fin du jeu)](endgame.md#points-de-citoyen).
-* Paie les parts de sa corpo au prix usuel de 100 000 ny × actifs même si elle est en tête du classement (au lieu de 125 000 ny × actifs).
+* Paie les parts de sa corpo au prix usuel de `100 000 ny × actifs` même si elle est en tête du classement (au lieu de `125 000 ny × actifs`).
 * Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses actions [(cf Information)](rules.md#information).
 * Reçoit les informations détectées par sa corpo dans son message de résolution.
 
@@ -94,7 +94,7 @@ Si la corpo dont le joueur est citoyen Crashe, il en perd la citoyenneté et pou
 
 Les requins corpos ont tendance à ne pas jouer selon les règles. Pour manipuler le marché et gagner un avantage sur la concurrence, ils n'hésitent pas à engager des agents indépendants, appelés shadowrunners, pour effectuer toutes sortes d'opérations clandestines, ou shadowruns. **Runs**, pour les intimes.
 
-Il existe 5 type de runs: **Datasteal**, **Sabotage**, **Extraction**, **Information** et **Protection**. Elles ont chacune des résultats spécifiques et une chance de réussite de base en pourcentage (%): par exemple, 30% pour les runs de Sabotage. Le joueur **commanditaire** peut augmenter les chances de réussite de sa run à raison de 50 000 ny pour 10% supplémentaires. Un joueur qui investit 150 000 ny dans une run de Sabotage aura donc 60% de chance de la voir réussir (30% de base + 3 × 10%).
+Il existe 5 type de runs: **Datasteal**, **Sabotage**, **Extraction**, **Information** et **Protection**. Elles ont chacune des résultats spécifiques et une chance de réussite de base en pourcentage (%): par exemple, 30% pour les runs de Sabotage. Le joueur **commanditaire** peut augmenter les chances de réussite de sa run à raison de 50 000 ny pour 10% supplémentaires. Un joueur qui investit 150 000 ny dans une run de Sabotage aura donc 60% de chance de la voir réussir (`30% de base + 3 × 10%``).
 
 Pour lancer une run, un joueur doit investir un minimum de 50 000 ny, soit +10%.
 
@@ -190,7 +190,7 @@ Le commanditaire choisit une **corpo bénéficiaire**, et lui attribue une Défe
 
 Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
 
-Les joueurs qui veulent miser dans le grand casino de l’East Coast Stock Exchange peuvent effectuer un nombre de **spéculations** par tour égal à leur IC. Le nombre de spéculations qu’un joueur peut effectuer est limité par son IC, et le montant de chaque spéculation ne peut dépasser 100 000 ny × (IC du spéculateur). Il est possible d’effectuer la même spéculation plusieurs fois.
+Les joueurs qui veulent miser dans le grand casino de l’East Coast Stock Exchange peuvent effectuer un nombre de **spéculations** par tour égal à leur IC. Le nombre de spéculations qu’un joueur peut effectuer est limité par son IC, et le montant de chaque spéculation ne peut dépasser `100 000 ny × (IC du spéculateur)`. Il est possible d’effectuer la même spéculation plusieurs fois.
 
 Chaque spéculation peut viser :
 
