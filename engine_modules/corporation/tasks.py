@@ -13,6 +13,6 @@ class CrashCorporationTask(ResolutionTask):
 		corporations_to_crash = game.corporation_set.filter(assets__lte=0)
 		for corporation in corporations_to_crash:
 			corporation.delete()
-			game.add_newsfeed(category=Newsfeed.ECONOMY, content=u"La corporation %s a crashée" % corporation.base_corporation.name)
+			game.add_newsfeed(category=Newsfeed.ECONOMY, content=u"La corporation %s a crashé." % corporation.base_corporation.name)
 
 tasks = (CrashCorporationTask,)
