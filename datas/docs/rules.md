@@ -36,7 +36,7 @@ Un nouveau tour peut commencer.
 
 Une part coûte `100 000 ny × (actifs de la corpo)`. Soit 500 000 ny pour une corpo de 5 actifs. 
 
-> Une part dans la corpo en tête du classement (rang 1) coûte `125 000 ny × actifs` pour joueurs qui n’en ont pas la "nationalité" [(cf. citoyenneté corpo)](rules.md#citoyenneté-corpo).
+> Une part dans la corpo en tête du classement (rang 1) coûte `125 000 ny × actifs` pour joueurs qui n’en ont pas la "nationalité" [(cf. Citoyenneté corpo)](rules.md#citoyenneté-corpo).
 
 À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire `50 000 ny ny × (actifs de la corpo)`. Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc `2 × (50 000 × 5) + 1 × (50 000 × 10)`, soit 1 million de ny.
 
