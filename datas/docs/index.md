@@ -13,4 +13,4 @@ Vous êtes l'un d'entre eux. Depuis votre penthouse cinq étoiles, vous planifie
 
 * [**Comment jouer**](rules.md)
 * [**Fin du jeu**](endgame.md)
-* [**mise en place**](start.md)
+* [**Mise en place**](start.md)
