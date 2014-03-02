@@ -17,7 +17,7 @@ def limit_mdc_order(sender, instance, **kwargs):
 	Can't vote twice the same turn
 	"""
 	if MDCVoteOrder.objects.filter(player=instance.player, turn=instance.player.game.current_turn).exists():
-		raise OrderNotAvailable("Vous ne pouvez pas voter deux fois dans le même tour.")
+		raise OrderNotAvailable("Vous ne pouvez pas rejoindre deux coalitions dans le même tour.")
 
 
 @receiver(post_create)
