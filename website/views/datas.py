@@ -64,7 +64,7 @@ def players(request, game_id):
 	player = get_player(request, game_id)
 	game = player.game
 
-	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('pk')
+	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('name')
 	corporations = list(game.corporation_set.all().order_by('pk'))
 	shares = Share.objects.filter(player__game=game)
 	player_shares = []
