@@ -8,7 +8,7 @@ class InformationRunOrderTest(RunOrdersTest):
 	def setUp(self):
 		super(InformationRunOrderTest, self).setUp()
 
-		self.p2 = Player(game=self.g)
+		self.p2 = Player(game=self.g, secrets="Some nasty sfuff")
 		self.p2.save()
 		self.p2.citizenship.corporation = self.c
 		self.p2.citizenship.save()
@@ -50,6 +50,7 @@ class InformationRunOrderTest(RunOrdersTest):
 		p_results = self.p.message_set.get(flag=Message.PRIVATE_MESSAGE).content
 
 		self.assertIn("Tour 1", p_results)
+		self.assertIn(self.p2.secrets, p_results)
 		self.assertNotIn("Tour 2", p_results)  # Current turn not included
 
 		self.assertIn(p2_resolution_message, p_results)

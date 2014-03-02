@@ -34,9 +34,12 @@ class InformationOrder(OffensiveRunOrder):
 	def resolve_success(self, detected):
 		target_orders = self.target.message_set.filter(flag=Message.RESOLUTION).order_by('-turn')
 
+		secrets = self.target.secrets
+		messages = "\n".join(["### Tour %s\n\n%s" % (o.turn, o.content) for o in target_orders])
+
 		self.player.add_message(
 			title="Run d'information sur %s" % (self.target),
-			content="\n".join(["## Tour %s\n\n%s" % (o.turn, o.content) for o in target_orders]),
+			content="## Secrets du joueur\n%s\n\n## Feuilles d'Ordres\n%s" % (secrets, messages),
 			author=None,
 			flag=Message.PRIVATE_MESSAGE,
 		)
