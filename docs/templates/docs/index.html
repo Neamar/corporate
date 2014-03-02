@@ -1,8 +1,7 @@
 {% extends "template.html" %}
 
-{% block h1 %}
-{{ title }}
-{% endblock %}
+{% block title %} {{ title }} {% endblock %}
+{% block h1 %} {{ title }} {% endblock %}
 
 {% block content %}
 {{ content }}

@@ -1,4 +1,4 @@
-title: Reconstruction
+title: De la Reconstruction à nos jours
 
 La période qui suivit le Séisme était synonyme de lutte pour la survie. Même trouver un abris était difficile. Les bâtiments qui n'étaient pas tombés étaient des pièges mortels : certains s'effondrèrent même trois ans après le séisme. Les galeries du métros, les réseaux d'égouts, les tunnels de ventilation, de gaz et de maintenance étaient tous endommagés ou détruits. Le travail nécessaire était herculéen, et au bout du compte, on préféra passer la ville au bulldozer et la recouvrir d'une couche fraîche d'asphalte et de béton plutôt que de tout réparer.
 
@@ -16,4 +16,4 @@ Dès les années 2050, la ville ressemblait déjà beaucoup à sa forme actuelle
 
 Le crash 2.0 fut dévastateur à NYC : le commerce et les affaires étaient le sang qui coulait dans ses veines. Les infrastructures tombèrent en panne et des gens moururent, mais tout cela resta bien moins destructeur que ne l'avait été le Séisme. La reconstruction à mener après-Crash fut limitée, et les affaires reprirent étonnamment vite, et avec un volume important. Boston, au contraire, avait subit une explosion électromagnétique à l'échelle de toute la ville et des retombées radioactive. Les manigances de Manhattan Inc. (et de Neonet, nouvellement créée) permirent de convaincre l'ECSE de transférer son siège sur les ruines de l'ancien New York Stock Exchange.
 
-De retour à Wall Street, les trader sniffèrent un rail de Novacoke et ouvrirent grand les vannes.
+De retour à Wall Street, les traders sniffèrent un rail de Novacoke et ouvrirent grand les vannes.

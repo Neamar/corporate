@@ -5,3 +5,12 @@ Alléchante et volatile comme ses produits dérivés, Manhattan est une gigantes
 Après un demi siècle à se remettre du Séisme qui l'a mise à genoux, la City a reconquise sa place centrale dans le monde des affaires. L'air est vibrant de cupidité et de pales d'hélicoptères, et les façades de verre miroir ont retrouvée leur teinte conquérante. Des requins corpos venus du monde entier rejoignent chaque jour la frénésie de la bourse, avides de mettre leur ambition à l'épreuve. Dans une effervescence frisant l'hystérie, ils s'arrachent les actifs corpos qui font pulser le cœur de la ville, gagnant et perdant des sommes colossales en quelques nanosecondes de spéculation débridée.
 
 Vous êtes l'un d'entre eux. Depuis votre penthouse cinq étoiles, vous planifiez froidement votre ascension, en contemplant les trottoirs sur lesquels celle de beaucoup avant vous a connue une fin brutale.
+
+* [**Le Seisme et le MDC**](seisme.md)
+* [**De la Reconstruction à nos jours**](reconstruction.md)
+
+## Règles
+
+* [**Comment jouer?**](rules.md)
+* [**Fin du jeu**](endgame.md)
+* [**Mise en place**](start.md)

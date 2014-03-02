@@ -38,7 +38,7 @@
 
 ## Effets derniers :
 ### Ares Macrotechnology
->-1 actifs pour les deux premières corpos.
+>-1 actif pour les deux premières corpos.
 
 ### NeoNET
 >+1 actif pour NeoNET.
@@ -71,34 +71,3 @@
 
 ### Prometheus Engineering
 >+2 actifs pour la première corpo.
-
-## Récap des Défenses :
-### Ares Macrotechnology
-D : 10 ; S : 30 ; E : 10 ; Detection : 30
-
-### NeoNET
-D :30 ; S : 10 ; E : 10 ; Detection : 30
-
-### Shiawase Corporation
-D : 10 ; S : 10 ; E : 30 ; Detection : 30
-
-### Renraku Computer Systems
-D : 20 ; S : 10 ; E : 20 ; Detection : 30
-
-### Sony Corporation
-D : 10 ; S : 10 ; E : 20 ; Detection : 60
-
-### Aztechnology
-D : 10 ; S : 20 ; E : 10 ; Detection : 60
-
-### Horizon Corporation
-D : 10 ; S : 10 ; E : 20 ; Detection : 90
-
-### Saeder Krupp
-D : 20 ; S : 10 ; E : 10 ; Detection : 60
-
-### Spinrad industries
-D : 10 ; S : 20 ; E : 20 ; Detection : 30
-
-### Prometheus Engineering
-D : 20 ; S : 20 ; E : 10 ; Detection : 30
