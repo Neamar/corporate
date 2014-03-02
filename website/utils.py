@@ -43,6 +43,7 @@ def get_order_availability(Order, player):
 		"type": order_class,
 		"name": order_class_name_string
 		"available": bool
+		"reason": reason_not_available
 		"title": order_title
 		"form": ModelForm
 	}
@@ -58,8 +59,9 @@ def get_order_availability(Order, player):
 	try:
 		instance.clean()
 		status['available'] = True
-	except OrderNotAvailable:
+	except OrderNotAvailable as e:
 		status['available'] = False
+		status['reason'] = e.message
 	except:
 		status['available'] = None
 

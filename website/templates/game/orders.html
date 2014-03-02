@@ -52,7 +52,7 @@
 		</table>
 	</form>
 	{% else %}
-		Unavailable !
+		<span title="{{order.reason }}">Unavailable</span> !
 	{% endif %}
 {% endfor %}
 </ul>
