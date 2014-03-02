@@ -1,4 +1,4 @@
-name: Horizon Corporation
+name: Horizon
 initials_assets: 9
 datasteal: 10
 sabotage: 10

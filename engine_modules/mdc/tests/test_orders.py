@@ -73,7 +73,7 @@ class OrdersTest(EngineTestCase):
 		s2.save()
 
 		self.assertEqual(self.v.get_weight(), 3)
-		self.assertEqual(self.v.get_friendly_corporations(), [self.c, self.c2])
+		self.assertItemsEqual(self.v.get_friendly_corporations(), [self.c, self.c2])
 
 	def test_mdc_party_line(self):
 		"""
