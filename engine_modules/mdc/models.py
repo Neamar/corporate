@@ -27,19 +27,19 @@ class MDCVoteOrder(Order):
 			)
 		),
 		(
+			'Contrôles ciblés / Transparence',
+			(
+				('CCIB', 'Contrôles ciblés'),
+				('TRAN', u'Transparence'),
+			)
+		),
+		(
 			'Garde-fous bancaires / Dérégulation',
 			(
 				('BANK', u'Garde-fous bancaires'),
 				('DERE', u'Dérégulation'),
 			)
 		),
-		(
-			'Contrôles ciblés / Transparence',
-			(
-				('CCIB', 'Contrôles ciblés'),
-				('TRAN', u'Transparence'),
-			)
-		)
 	)
 	title = "Choisir une coalition"
 
