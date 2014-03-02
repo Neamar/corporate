@@ -1,5 +1,5 @@
 name: Shiawase Corporation
-initials_assets: 15
+initials_assets: 11
 datasteal: 10
 sabotage: 10
 extraction: 30

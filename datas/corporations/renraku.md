@@ -1,5 +1,5 @@
 name: Renraku Computer Systems
-initials_assets: 15
+initials_assets: 10
 datasteal: 20
 sabotage: 10
 extraction: 20

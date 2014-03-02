@@ -1,5 +1,5 @@
 name: Spinrad Industries
-initials_assets: 15
+initials_assets: 8
 datasteal: 10
 sabotage: 20
 extraction: 20

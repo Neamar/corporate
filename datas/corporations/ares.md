@@ -1,5 +1,5 @@
 name: Ares Macrotechnology
-initials_assets: 15
+initials_assets: 13
 datasteal: 10
 sabotage: 30
 extraction: 10

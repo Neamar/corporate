@@ -1,5 +1,5 @@
 name: Aztechnology
-initials_assets: 15
+initials_assets: 9
 datasteal: 10
 sabotage: 20
 extraction: 10

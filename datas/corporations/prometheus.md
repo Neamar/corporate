@@ -1,5 +1,5 @@
 name: Prometheus Engineering
-initials_assets: 15
+initials_assets: 7
 datasteal: 20
 sabotage: 20
 extraction: 10

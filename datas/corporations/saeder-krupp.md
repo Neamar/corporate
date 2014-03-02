@@ -1,5 +1,5 @@
 name: Saeder Krupp
-initials_assets: 15
+initials_assets: 8
 datasteal: 20
 sabotage: 10
 extraction: 10
