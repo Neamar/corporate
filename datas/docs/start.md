@@ -16,11 +16,9 @@ Si vous le désirez, votre personnage peut commencer la partie avec une citoyenn
 
 Cela signifie que votre personnage a accompli son ascension au sein de cette corpo, peut-être même depuis son premier jour si ses parents en avaient la nationalité. Ses valeurs et sa personnalité ont probablement été en partie façonnées par la culture corporatiste dans laquelle il a lutté pour en arriver là où il est. 
 
-[(cf corpos)](????????????????????????) pour plus d'information sur les spécificités des différentes corpos.
-
 ## Background
 
-En plus d'une éventuelle nationalité corporatiste, vous pouvez choisir un et un seul **Background** pour votre personnage. Le Background d'un PJ détermine son passé, le genre de personne qu'il est ou du moins qu’il était avant de rassembler assez de fonds et d’influence pour se lancer à la conquête de Manhattan.
+En plus d'une éventuelle nationalité corporatiste, vous *pouvez* choisir un et un seul **Background** pour votre personnage. Le Background d'un PJ détermine son passé, le genre de personne qu'il est ou du moins qu’il était avant de rassembler assez de fonds et d’influence pour se lancer à la conquête de Manhattan.
 
 Le Background de votre personnage récompense en points de victoire (PVs) une certaine façon de jouer au Corporate Game. Assurez vous qu'elle correspond à vos préférences.
 
