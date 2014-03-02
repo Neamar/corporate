@@ -14,7 +14,7 @@ Le **classement** trie les corpos par nombre d'actifs et leur attribue un rang d
 
 Les joueurs commencent la partie avec 1 point d'**Influence corporatiste, ou "IC"**. Cette caractéristique représente l'étendue de leur pouvoir et de leurs réseaux dans l'île de Manhattan et sert de limite à certaines de leurs actions. Elle pourra être augmentée en cours de partie.
 
-Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 1 million de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
+Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 2 millions de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
 
 La partie se joue en 8 **tours**, chaque tour correspondant à un trimestre. À la fin du jeu, chaque joueur compte ses **points de victoire**, et celui qui en possède le plus est déclaré vainqueur. [(cf fin du jeu)](endgame.md)
 
@@ -38,7 +38,7 @@ Une part coûte 100 000 ny × (actifs de la corpo). Soit 500 000 ny pour une cor
 
 > Une part dans la corpo en tête du classement (rang 1) coûte 125 000 ny × actifs pour joueurs qui n’en ont pas la "nationalité" [(cf citoyenneté corpo)](rules.md#citoyenneté-corpo).
 
-À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire 50 000 ny par actif. Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc : (2 × (50 000 × 5) + 1 × (50 000 × 10)), soit 1 million de ny.
+À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire 50 000 ny ny × (actifs de la corpo). Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc : (2 × (50 000 × 5) + 1 × (50 000 × 10)), soit 1 million de ny.
 
 > Les parts de la corpo en tête du classement rapportent 75 000 ny × actifs.
 > Les parts de la dernière corpo rapportent 25 000 ny × actifs.
@@ -106,7 +106,7 @@ Si une run autre que Protection échoue ou est contrée (voir ci-dessous), son c
 
 ### Défense
 
-Les corporations n'apprécient pas particulièrement être la cible de runs, et investissent des sommes colossales dans leur sécurité. Chaque corpo possède un indice de **Défense** qui lui est propre en Datasteal, Sabotage et Extraction. La Défense en Datasteal est également utilisée pour contrer les runs d'Information (voir plus bas).
+Les corporations n'apprécient pas particulièrement d'être la cible de runs, et investissent des sommes colossales dans leur sécurité. Chaque corpo possède un indice de **Défense** qui lui est propre en Datasteal, Sabotage et Extraction. La Défense en Datasteal est également utilisée pour contrer les runs d'Information (voir plus bas).
 
 > Par exemple, la corpo Renraku a une Défense de 20 en Datasteal, de 10 en Sabotage et de 20 en Extraction.
 
@@ -197,7 +197,7 @@ Chaque spéculation peut viser :
 * La croissance ou la chute des actifs d'un **produit dérivé** (voir plus bas)
 * La place d’une corpo dans le classement de fin de tour.
 
-Si le spéculateur se trompe, il perd la somme misée (sauf cas particulier, voir plus bas).
+Si le spéculateur se trompe, il perd la somme misée.
 
 Si sa spéculation est juste, il fait un bénéfice de :
 
