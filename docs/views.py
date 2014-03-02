@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
 from django.conf import settings
 from django.utils.safestring import mark_safe
@@ -25,3 +25,7 @@ def index(request, page):
 	content = mark_safe(content)
 
 	return render(request, 'docs/index.html', {"content": content, "title": title})
+
+
+def redirect_md(request, page):
+	return redirect('docs.views.index', page=page)
