@@ -2,7 +2,7 @@ title: Mise en place
 
 En tant que joueurs du Corporate Game, vous aurez le privilège d'incarner une brochette de cadres corpos prêts à s’étriper pour la domination de Manhattan. Tous ces personnages (ou **PJs** pour Personnages Joueurs) ont en commun d'avoir 2 millions en poche et une ambition dévorante. Vous êtes cependant invités à donner à votre champion une identité qui lui est propre, qui le démarquera de ses rivaux et vous donnera envie de le jouer.
 
-Chaque joueur doit trouver un avatar pour son PJ et rédiger un paragraphe ou deux détaillant son histoire, son apparence et sa réputation aux autres joueurs. Une connaissance basique de l'univers de Shadowrun dans lequel se déroule le jeu est vivement recommandée, mais pas strictement obligatoire.
+Chaque joueur doit trouver un avatar pour son PJ et rédiger un paragraphe ou deux détaillant son histoire, son apparence et sa réputation aux autres joueurs. Une connaissance basique de l'univers de Shadowrun dans lequel se déroule le jeu est vivement recommandée.
 
 Une fois le jeu lancé, n'hésitez pas à donner vie à votre PJ en l'interprétant dans vos messages privés ou sur le forum. Ce n'est en rien obligatoire, mais un brin de roleplay peut ajouter beaucoup à l'expérience.
 
