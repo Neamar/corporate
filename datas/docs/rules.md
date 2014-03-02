@@ -1,4 +1,4 @@
-title: Règles du jeu
+title: Comment jouer?
 
 Vous incarnez un cadre corporatiste décidé à se tailler un empire dans une des places financières les plus concurrentielles du 6<sup>ème</sup> monde : l’île de Manhattan.
 
