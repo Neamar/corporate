@@ -32,9 +32,9 @@ class InformationOrder(OffensiveRunOrder):
 		return self.target.citizenship.corporation
 
 	def resolve_success(self, detected):
-		target_orders = self.target.message_set.filter(flag=Message.RESOLUTION).order_by('-turn')
-
 		secrets = self.target.secrets
+
+		target_orders = self.target.message_set.filter(flag=Message.RESOLUTION).order_by('-turn')
 		messages = "\n".join(["### Tour %s\n\n%s" % (o.turn, o.content) for o in target_orders])
 
 		self.player.add_message(

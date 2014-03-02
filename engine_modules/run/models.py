@@ -10,6 +10,8 @@ class RunOrder(Order):
 	"""
 	Base model for all runs
 	"""
+	MAX_PERCENTS = 90
+
 	BASE_COST = 50
 	INFLUENCE_BONUS = 30
 
@@ -28,16 +30,17 @@ class RunOrder(Order):
 		if self.has_influence_bonus:
 			proba += 30
 		proba += self.additional_percents * 10
-	
+
 		proba += self.hidden_percents * 10
 
 		return proba
 
 	def is_successful(self):
 		"""
-		Return true if the run is is_successful (random call)
+		Return true if the run is successful (random call)
 		"""
-		return randint(1, 100) <= self.get_success_probability()
+		probability = min(self.MAX_PERCENTS, self.get_success_probability())
+		return randint(1, 100) <= probability
 
 	def resolve(self):
 		"""

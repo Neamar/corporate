@@ -50,3 +50,11 @@ class EngineTestCase(TestCase):
 
 		# Disable all side effects for the game (first and last effects, invisible hand)
 		self.g.disable_side_effects = True
+
+		# TODO: move to another place, in engine_modules/runs
+		# TODO : add test for 90% restriction
+		from engine_modules.run.models import RunOrder
+		RunOrder.MAX_PERCENTS = 100
+
+		from engine_modules.corporation_run.models import ProtectionOrder
+		ProtectionOrder.MAX_PERCENTS = 100

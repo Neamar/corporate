@@ -305,6 +305,7 @@ class ProtectionOrder(RunOrder):
 	Model for Protection Runs
 	"""
 	title = "Lancer une run de Protection"
+	MAX_PERCENTS = 50
 
 	EXTRACTION = "extraction"
 	DATASTEAL = "datasteal"
