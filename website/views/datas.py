@@ -29,7 +29,7 @@ def wallstreet(request, game_id):
 			corporation.last_assets = delta_hash[corporation.pk]
 
 	# Graph datas
-	sorted_corporations = sorted(corporations, key=lambda c: c.pk)
+	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
 	assets_history = AssetHistory.objects.filter(corporation__game=player.game).order_by('turn', 'corporation')
 
 	return render(request, 'game/wallstreet.html', {"corporations": corporations, "assets_history": assets_history, "sorted_corporations": sorted_corporations})

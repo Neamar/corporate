@@ -115,6 +115,7 @@ Une run détectée sera également mentionnée dans les Newsfeeds de fin de tour
 Lorsque plusieurs équipes de shadowrunners sont engagées pour des runs similaires, elles risquent d’entrer en concurrence et de se marcher sur les pieds.
 
 Une run subit un malus de **-10%** pour chaque autre run qui **correspond aux 3 critères** suivants :
+
 * Est du **même type** (Datasteal, Sabotage, Extraction ou Information).
 * A la **même cible**, joueur ou corpo.
 * A un **pourcentage de réussite supérieur ou égal** au sien (avant que les malus de timing ne soient appliqués).
