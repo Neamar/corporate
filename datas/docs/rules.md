@@ -255,7 +255,7 @@ L'ouverture de bases de données privées offre de nouvelles possibilités de ru
 Effets : 
 
 * Au prochain tour, les **joueurs** appartenant à la coalition **Transparence** gagnent un bonus de **+10%** sur toutes leurs runs de **Datasteal**, **Sabotage**, **Extraction**. 
-* Les **joueurs** appartenant à la coalition **Contrôles ciblés** subissent **-10%** sur toutes leurs runs **Datasteal**, **Sabotage**, **Extraction** et **Information**.
+* Les **joueurs** appartenant à la coalition **Contrôles ciblés** subissent **-10%** sur toutes leurs runs **Datasteal**, **Sabotage** et **Extraction**.
 
 ### Garde-fous bancaires
 Malgré les protestations de Wall Street, de nouvelles régulations pour l'ECSE entrent en action. Elles garantissent davantage de sécurité pour ceux en mesure d'en tirer profit, mais limitent les opérations de certains.
