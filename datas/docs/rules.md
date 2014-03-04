@@ -278,7 +278,7 @@ Autrement dit, de grosses possibilités de coopération pour d'énormes opportun
     Jack Finn a acheté 3 parts dans Horizon, ce qui est davantage que n'importe quel autre joueur. Lorsqu'au tour 4 il choisit de rejoindre la coalition Contrat public, la corpo est donc considérée comme membre cette coalition pour ce tour. 
     Shiro Kuboka étant le seul a avoir investit dans les corpos Renraku et Sony, et elles le suivent lorsqu'il opte pour la coalition Dévelopement urbain.
     Si aucun autre joueur n'intervient dans le MDC ce tour, la coalition Dévelopement urbain a une valeur de 3 (1 joueur + 2 corpos), ce qui l'emporte sur la coalition Contrat public (1 joueur + 1 corpo = 2).
-    le Developement urbain voté au MDC rappore 1 actif à  Renraku et Sony. Horizon, en opposition directe, est malmenée et perd 1 acti.
+    le Developement urbain voté au MDC rappore 1 actif à  Renraku et Sony. Horizon, en opposition directe, est malmenée et perd 1 actif.
 
 ## Classement initial
 Au début du jeu, les corpos reçoivent respectivement 13, 12, 11, 11, 10, 10, 9, 9, 8 et 7 actifs, dans l'ordre décroissant du classement. Le classement initial est laissé au hasard à deux exceptions près : 
