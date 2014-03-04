@@ -19,6 +19,9 @@ information_messages = {
 
 
 class InformationOrder(OffensiveRunOrder):
+	"""
+	Order for Information runs
+	"""
 	title = "Lancer une run d'Information"
 
 	TIMING_MALUS_SIMILAR = 'player'

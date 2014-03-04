@@ -7,7 +7,7 @@ from engine.models import Order, Game, Player
 
 class MDCVoteOrder(Order):
 	"""
-	Order to vote for the party line of the MDC
+	Order to vote for the MDC coalition
 	"""
 
 	CPUB = "CPUB"

@@ -42,6 +42,5 @@ for app in settings.INSTALLED_APPS:
 	# Autoload signals as a convenience
 	try_import("%s.signals" % app, 'none')
 
-
 # Sort tasks in place, by resolution_order
 tasks_list.sort(key=lambda t: t.RESOLUTION_ORDER)

@@ -1,25 +1,5 @@
 # Corporate Game Manhattan
 
-## Tasks orders
-* [0] **BuyShareTask** : Buy all shares for all players
-* [100] **VoteTask** : Resolve player's corporation votes
-* [100] **MDCVoteTask** : Choose the MDC party line, and save it in an MDCVoteSession
-* [300] **MDCLineCPUBTask** : Enforce the effects of the MDC CPUB party line
-* [300] **MDCLineDEVETask** : Enforce the effects of the MDC DEVE party line
-* [349] **ProtectionRunTask** : Debit Protection runs from players
-* [350] **OffensiveRunTask** : Resolve Offensive corporations runs (DataSteal, Sabotage, Extraction)
-* [350] **InformationRunTask** : Resolve Information runs
-* [400] **InvisibleHandTask** : Give +1 and -1 asset for two random corporations
-* [600] **FirstLastEffectsTask** : Apply first and last corporations effects
-* [650] **SaveCorporationAssetTask** : Save the assets of all corporations after the turn resolution
-* [800] **DividendTask** : It's time to get money!
-* [900] **CitizenshipTask** : Update players citizenships
-* [900] **CorporationSpeculationTask** : Resolve corporations speculations
-* [900] **DerivativeSpeculationTask** : Resolve derivatives speculations
-* [1000] **BuyInfluenceTask** : Buy new Influence level
-* [1000] **CrashCorporationTask** : Let's crash corporations that didn't made it through the turn
-
-
 ## Frontend
 ### Docs
 Documentation
