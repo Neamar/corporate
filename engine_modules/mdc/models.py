@@ -18,7 +18,7 @@ class MDCVoteOrder(Order):
 	TRAN = "TRAN"
 
 	# Enumerate the party lines and their meanings
-	MDC_PARTY_LINE_CHOICES = (
+	MDC_COALITION_CHOICES = (
 		(
 			'Contrats publics / Développement urbain',
 			(
@@ -43,7 +43,7 @@ class MDCVoteOrder(Order):
 	)
 	title = "Choisir une coalition"
 
-	party_line = models.CharField(max_length=4, choices=MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
+	coalition = models.CharField(max_length=4, choices=MDC_COALITION_CHOICES, blank=True, null=True, default=None)
 
 	def get_weight(self):
 		"""
@@ -83,7 +83,7 @@ class MDCVoteOrder(Order):
 		return vote_registry
 
 	def description(self):
-		return u"Apporter %d voix pour la coalition « %s » du MDC" % (self.get_weight(), self.get_party_line_display())
+		return u"Apporter %d voix pour la coalition « %s » du MDC" % (self.get_weight(), self.get_coalition_display())
 
 
 class MDCVoteSession(models.Model):
@@ -92,16 +92,16 @@ class MDCVoteSession(models.Model):
 	Used to keep track of the current MDC line
 	"""
 
-	party_line = models.CharField(max_length=4,
-		choices=MDCVoteOrder.MDC_PARTY_LINE_CHOICES, blank=True, null=True, default=None)
+	coalition = models.CharField(max_length=4,
+		choices=MDCVoteOrder.MDC_COALITION_CHOICES, blank=True, null=True, default=None)
 	game = models.ForeignKey(Game)
 	turn = models.PositiveSmallIntegerField(editable=False)
 
 	def __unicode__(self):
-		return "%s line for %s on turn %s" % (self.party_line, self.game, self.turn)
+		return "%s line for %s on turn %s" % (self.coalition, self.game, self.turn)
 
 
-def get_mdc_party_line(self, turn=None):
+def get_mdc_coalition(self, turn=None):
 	"""
 	Get the MDC party line voted on turn session (defaults to current turn).
 	Return None on the first turn.
@@ -113,7 +113,7 @@ def get_mdc_party_line(self, turn=None):
 		return None
 
 	session = self.mdcvotesession_set.get(turn=turn)
-	return session.party_line
+	return session.coalition
 
 
 def get_last_mdc_vote(self):
@@ -123,13 +123,13 @@ def get_last_mdc_vote(self):
 
 	try:
 		vote = MDCVoteOrder.objects.get(turn=self.game.current_turn - 1, player=self)
-		return vote.party_line
+		return vote.coalition
 	except:
 		# No vote
 		return None
 
 
-Game.get_mdc_party_line = get_mdc_party_line
+Game.get_mdc_coalition = get_mdc_coalition
 Player.get_last_mdc_vote = get_last_mdc_vote
 
 orders = (MDCVoteOrder,)

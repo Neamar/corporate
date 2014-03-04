@@ -10,7 +10,7 @@ class OrdersTest(EngineTestCase):
 
 		self.v = MDCVoteOrder(
 			player=self.p,
-			party_line=MDCVoteOrder.DERE
+			coalition=MDCVoteOrder.DERE
 		)
 		self.v.save()
 
@@ -75,15 +75,15 @@ class OrdersTest(EngineTestCase):
 		self.assertEqual(self.v.get_weight(), 3)
 		self.assertItemsEqual(self.v.get_friendly_corporations(), [self.c, self.c2])
 
-	def test_mdc_party_line(self):
+	def test_mdc_coalition(self):
 		"""
 		Check party line is returned correctly
 		"""
-		self.assertIsNone(self.g.get_mdc_party_line())
+		self.assertIsNone(self.g.get_mdc_coalition())
 
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.g.get_mdc_party_line(), self.v.party_line)
+		self.assertEqual(self.g.get_mdc_coalition(), self.v.coalition)
 
 	def test_get_last_mdv_vote(self):
 		"""
@@ -93,4 +93,4 @@ class OrdersTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.p.get_last_mdc_vote(), self.v.party_line)
+		self.assertEqual(self.p.get_last_mdc_vote(), self.v.coalition)

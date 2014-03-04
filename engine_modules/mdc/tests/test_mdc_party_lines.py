@@ -50,19 +50,19 @@ class MDCPartyLineTest(EngineTestCase):
 
 		v = MDCVoteOrder(
 			player=self.p,
-			party_line=L1
+			coalition=L1
 		)
 		v.save()
 
 		v2 = MDCVoteOrder(
 			player=self.p2,
-			party_line=L2
+			coalition=L2
 		)
 		v2.save()
 
 		v3 = MDCVoteOrder(
 			player=self.p3,
-			party_line=L3
+			coalition=L3
 		)
 		v3.save()
 

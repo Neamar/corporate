@@ -8,7 +8,7 @@ from engine_modules.mdc.models import MDCVoteOrder
 from engine_modules.corporation_run.models import ProtectionOrder, OffensiveRunOrder
 from engine_modules.player_run.models import InformationOrder
 from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
-from engine_modules.mdc.decorators import expect_party_line
+from engine_modules.mdc.decorators import expect_coalition
 
 
 @receiver(validate_order, sender=MDCVoteOrder)
@@ -22,14 +22,14 @@ def limit_mdc_order(sender, instance, **kwargs):
 
 @receiver(post_create)
 @sender_instance_of(OffensiveRunOrder)
-@expect_party_line(MDCVoteOrder.CCIB)
+@expect_coalition(MDCVoteOrder.CCIB)
 def enforce_mdc_ccib_positive(sender, instance, **kwargs):
 	"""
 	When CCIB line is active, corporation gives a 10%% malus to attackers
 	"""
 	g = instance.player.game
 	protected_corporations = []
-	right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, party_line=MDCVoteOrder.CCIB)
+	right_vote_orders = MDCVoteOrder.objects.filter(player__game=g, turn=g.current_turn - 1, coalition=MDCVoteOrder.CCIB)
 	for vo in right_vote_orders:
 		protected_corporations += vo.get_friendly_corporations()
 
@@ -40,7 +40,7 @@ def enforce_mdc_ccib_positive(sender, instance, **kwargs):
 
 @receiver(post_create)
 @sender_instance_of(OffensiveRunOrder, InformationOrder)
-@expect_party_line(MDCVoteOrder.TRAN)
+@expect_coalition(MDCVoteOrder.TRAN)
 def enforce_mdc_tran(sender, instance, **kwargs):
 	"""
 	When TRAN line is active,
@@ -57,7 +57,7 @@ def enforce_mdc_tran(sender, instance, **kwargs):
 
 
 @receiver(validate_order, sender=ProtectionOrder)
-@expect_party_line(MDCVoteOrder.CCIB)
+@expect_coalition(MDCVoteOrder.CCIB)
 def enforce_mdc_ccib_negative(sender, instance, **kwargs):
 	"""
 	When CCIB line is active, TRAN players can't protect.
@@ -68,7 +68,7 @@ def enforce_mdc_ccib_negative(sender, instance, **kwargs):
 
 @receiver(validate_order)
 @sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
-@expect_party_line(MDCVoteOrder.DERE)
+@expect_coalition(MDCVoteOrder.DERE)
 def enforce_mdc_dere_negative(sender, instance, **kwargs):
 	"""
 	When DERE line is active, BANK players can't speculate
@@ -79,7 +79,7 @@ def enforce_mdc_dere_negative(sender, instance, **kwargs):
 
 @receiver(validate_order)
 @sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
-@expect_party_line(MDCVoteOrder.BANK)
+@expect_coalition(MDCVoteOrder.BANK)
 def enforce_mdc_bank_negative(sender, instance, **kwargs):
 	"""
 	When BANK line is active, DERE players can't speculate
@@ -91,7 +91,7 @@ def enforce_mdc_bank_negative(sender, instance, **kwargs):
 
 @receiver(post_create)
 @sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
-@expect_party_line(MDCVoteOrder.BANK)
+@expect_coalition(MDCVoteOrder.BANK)
 def enforce_mdc_bank_positive(sender, instance, **kwargs):
 	"""
 	When BANK is active, BANK players can speculate without losing money
@@ -104,7 +104,7 @@ def enforce_mdc_bank_positive(sender, instance, **kwargs):
 
 @receiver(post_create)
 @sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
-@expect_party_line(MDCVoteOrder.DERE)
+@expect_coalition(MDCVoteOrder.DERE)
 def enforce_mdc_dere_positive(sender, instance, **kwargs):
 	"""
 	When DERE is active, DERE players can speculate and gain more.

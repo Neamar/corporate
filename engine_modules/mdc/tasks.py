@@ -17,11 +17,11 @@ class MDCVoteTask(ResolutionTask):
 	def run(self, game):
 		orders = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
 		votes = {}
-		for t in chain.from_iterable(dict(MDCVoteOrder.MDC_PARTY_LINE_CHOICES).values()):
+		for t in chain.from_iterable(dict(MDCVoteOrder.MDC_COALITION_CHOICES).values()):
 			votes[t[0]] = 0
 
 		for order in orders:
-			votes[order.party_line] += order.get_weight()
+			votes[order.coalition] += order.get_weight()
 
 		top_line = Counter(votes).most_common(2)
 		# Default to None
@@ -35,14 +35,14 @@ class MDCVoteTask(ResolutionTask):
 				official_line = top_line[0][0]
 
 		s = MDCVoteSession(
-			party_line=official_line,
+			coalition=official_line,
 			game=game,
 			turn=game.current_turn + 1
 		)
 		s.save()
 
 		if official_line is not None:
-			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté %s" % s.get_party_line_display())
+			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté %s" % s.get_coalition_display())
 
 
 class MDCLineCPUBTask(ResolutionTask):
@@ -55,17 +55,17 @@ class MDCLineCPUBTask(ResolutionTask):
 
 	def run(self, game):
 		# Because this is run the turn of the vote, we have to ask for the next line, not the current one
-		party_line = game.get_mdc_party_line(turn=game.current_turn + 1)
+		coalition = game.get_mdc_coalition(turn=game.current_turn + 1)
 
-		if party_line != MDCVoteOrder.CPUB:
+		if coalition != MDCVoteOrder.CPUB:
 			return
 
-		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.CPUB)
+		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.CPUB)
 		for o in win_votes:
 			for c in o.get_friendly_corporations():
 				c.update_assets(1)
 
-		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.DEVE)
+		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.DEVE)
 		for o in loss_votes:
 			for c in o.get_friendly_corporations():
 				c.update_assets(-1)
@@ -82,17 +82,17 @@ class MDCLineDEVETask(ResolutionTask):
 	def run(self, game):
 
 		# Because this is ran the turn of the vote, we have to watch out for the next line
-		party_line = game.get_mdc_party_line(turn=game.current_turn + 1)
+		coalition = game.get_mdc_coalition(turn=game.current_turn + 1)
 
-		if party_line != MDCVoteOrder.DEVE:
+		if coalition != MDCVoteOrder.DEVE:
 			return
 
-		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.DEVE)
+		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.DEVE)
 		for o in win_votes:
 			for c in o.get_friendly_corporations():
 				c.update_assets(1)
 
-		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, party_line=MDCVoteOrder.CPUB)
+		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.CPUB)
 		for o in loss_votes:
 			for c in o.get_friendly_corporations():
 				c.update_assets(-1)

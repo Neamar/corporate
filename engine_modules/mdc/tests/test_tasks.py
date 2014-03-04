@@ -12,30 +12,30 @@ class TaskTest(EngineTestCase):
 
 		self.v = MDCVoteOrder(
 			player=self.p,
-			party_line=MDCVoteOrder.DERE
+			coalition=MDCVoteOrder.DERE
 		)
 		self.v.save()
 
-	def test_party_line_set(self):
+	def test_coalition_set(self):
 		"""
 		Test the line is defined
 		"""
 		self.g.resolve_current_turn()
 
 		mdc_vote_session = self.g.mdcvotesession_set.get(turn=self.g.current_turn)
-		self.assertEqual(mdc_vote_session.party_line, self.v.party_line)
+		self.assertEqual(mdc_vote_session.coalition, self.v.coalition)
 
-	def test_equality_no_party_line(self):
+	def test_equality_no_coalition(self):
 		"""
 		When an equality occurs, no line is set
 		"""
 		self.v2 = MDCVoteOrder(
 			player=self.p2,
-			party_line=MDCVoteOrder.DEVE
+			coalition=MDCVoteOrder.DEVE
 		)
 		self.v2.save()
 
 		self.g.resolve_current_turn()
 
 		mdc_vote_session = (self.g.mdcvotesession_set.get(turn=self.g.current_turn))
-		self.assertEqual(mdc_vote_session.party_line, None)
+		self.assertEqual(mdc_vote_session.coalition, None)
