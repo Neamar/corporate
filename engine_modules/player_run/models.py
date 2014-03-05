@@ -74,6 +74,7 @@ class InformationOrder(OffensiveRunOrder):
 		form.fields['base_percents'] = forms.CharField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY, widget=PlainTextWidget)
 
 		return form
+
 	def description(self):
 		return "Lancer une run d'information sur %s" % self.target
 
