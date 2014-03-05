@@ -352,6 +352,9 @@ class ProtectionOrder(RunOrder):
 	def get_form(self, datas=None):
 		form = super(ProtectionOrder, self).get_form(datas)
 		form.fields['protected_corporation'].queryset = self.player.game.corporation_set.all()
+		form.fields['base_extraction_percents'] = forms.CharField(initial="%s%%" % self.PROBA_EXTRACTION_SUCCESS, widget=PlainTextWidget)
+		form.fields['base_datasteal_percents'] = forms.CharField(initial="%s%%" % self.PROBA_DATASTEAL_SUCCESS, widget=PlainTextWidget)
+		form.fields['base_sabotage_percents'] = forms.CharField(initial="%s%%" % self.PROBA_SABOTAGE_SUCCESS, widget=PlainTextWidget)
 
 		return form
 

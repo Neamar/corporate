@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django import forms
 from django.utils.functional import cached_property
 
 from engine_modules.corporation_run.models import OffensiveRunOrder
 from engine.models import Player
 from messaging.models import Message
+from website.widgets import PlainTextWidget
 
 information_messages = {
 	'success': {
@@ -67,6 +69,11 @@ class InformationOrder(OffensiveRunOrder):
 			content = information_messages['fail']['citizens'] % (self.target.name, self.player.name)
 			self.notify_citizens(content)
 
+	def get_form(self, datas=None):
+		form = super(InformationOrder, self).get_form(datas)
+		form.fields['base_percents'] = forms.CharField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY, widget=PlainTextWidget)
+
+		return form
 	def description(self):
 		return "Lancer une run d'information sur %s" % self.target
 
