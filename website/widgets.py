@@ -2,6 +2,7 @@ from django import forms
 from django.utils.safestring import mark_safe
 
 
-class PlainTextWidget(forms.Widget):
-    def render(self, _name, value, _attrs):
-        return mark_safe(value) if value is not None else '-'
+class PlainTextWidget(forms.TextInput):
+	def render(self, name, value, attrs):
+		return "%s" % value
+		return super(PlainTextWidget, self).render(name, value, attrs)

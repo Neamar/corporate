@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django import forms
 from random import randint
 from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
 from messaging.models import Note
 from engine.models import Player
+from website.widgets import PlainTextWidget
+
 
 datasteal_messages = {
 	'success': {
@@ -152,6 +155,7 @@ class OffensiveCorporationRunOrder(OffensiveRunOrder):
 	def get_form(self, datas=None):
 		form = super(OffensiveRunOrder, self).get_form(datas)
 		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
+		form.fields['base_percents'] = forms.CharField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY, widget=PlainTextWidget)
 
 		return form
 
