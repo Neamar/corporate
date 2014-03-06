@@ -32,6 +32,8 @@ class EngineTestCase(TestCase):
 		BaseCorporation.base_corporations = {}
 		try:
 			self.g = Game()
+			# Disable all side effects for the game (first and last effects, invisible hand)
+			self.g.disable_side_effects = True
 			self.g.save()
 		except:
 			raise
@@ -47,9 +49,6 @@ class EngineTestCase(TestCase):
 		self.initial_money = Player._meta.get_field_by_name('money')[0].default
 		self.p = Player(game=self.g, money=self.initial_money)
 		self.p.save()
-
-		# Disable all side effects for the game (first and last effects, invisible hand)
-		self.g.disable_side_effects = True
 
 		# TODO: move to another place, in engine_modules/runs
 		# TODO : add test for 90% restriction

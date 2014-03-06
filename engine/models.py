@@ -12,6 +12,7 @@ class Game(models.Model):
 	city = models.CharField(max_length=50)
 	current_turn = models.PositiveSmallIntegerField(default=1)
 	total_turn = models.PositiveSmallIntegerField(default=8)
+	disable_side_effects = models.BooleanField(default=False, help_text="Disable all side effects (invisible hand, first and last effects, ...)")
 	started = models.DateTimeField(auto_now_add=True)
 
 	@transaction.atomic
