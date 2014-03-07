@@ -6,7 +6,7 @@ from django.utils.functional import cached_property
 from engine_modules.corporation_run.models import OffensiveRunOrder
 from engine.models import Player
 from messaging.models import Message
-from website.widgets import PlainTextWidget
+from website.widgets import PlainTextField
 
 information_messages = {
 	'success': {
@@ -71,7 +71,7 @@ class InformationOrder(OffensiveRunOrder):
 
 	def get_form(self, datas=None):
 		form = super(InformationOrder, self).get_form(datas)
-		form.fields['base_percents'] = forms.CharField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY, widget=PlainTextWidget)
+		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		return form
 

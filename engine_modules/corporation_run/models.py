@@ -6,7 +6,7 @@ from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
 from messaging.models import Note
 from engine.models import Player
-from website.widgets import PlainTextWidget
+from website.widgets import PlainTextField
 
 
 datasteal_messages = {
@@ -155,7 +155,7 @@ class OffensiveCorporationRunOrder(OffensiveRunOrder):
 	def get_form(self, datas=None):
 		form = super(OffensiveRunOrder, self).get_form(datas)
 		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
-		form.fields['base_percents'] = forms.CharField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY, widget=PlainTextWidget)
+		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		return form
 
@@ -352,9 +352,9 @@ class ProtectionOrder(RunOrder):
 	def get_form(self, datas=None):
 		form = super(ProtectionOrder, self).get_form(datas)
 		form.fields['protected_corporation'].queryset = self.player.game.corporation_set.all()
-		form.fields['base_extraction_percents'] = forms.CharField(initial="%s%%" % self.PROBA_EXTRACTION_SUCCESS, widget=PlainTextWidget)
-		form.fields['base_datasteal_percents'] = forms.CharField(initial="%s%%" % self.PROBA_DATASTEAL_SUCCESS, widget=PlainTextWidget)
-		form.fields['base_sabotage_percents'] = forms.CharField(initial="%s%%" % self.PROBA_SABOTAGE_SUCCESS, widget=PlainTextWidget)
+		form.fields['base_extraction_percents'] = PlainTextField(initial="%s%%" % self.PROBA_EXTRACTION_SUCCESS)
+		form.fields['base_datasteal_percents'] = PlainTextField(initial="%s%%" % self.PROBA_DATASTEAL_SUCCESS)
+		form.fields['base_sabotage_percents'] = PlainTextField(initial="%s%%" % self.PROBA_SABOTAGE_SUCCESS)
 
 		return form
 

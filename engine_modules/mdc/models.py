@@ -4,7 +4,7 @@ from django import forms
 from collections import Counter
 
 from engine.models import Order, Game, Player
-from website.widgets import PlainTextWidget
+from website.widgets import PlainTextField
 
 
 class MDCVoteOrder(Order):
@@ -86,7 +86,7 @@ class MDCVoteOrder(Order):
 
 	def get_form(self, datas=None):
 		form = super(MDCVoteOrder, self).get_form(datas)
-		form.fields['coalition_weight'] = forms.CharField(initial=str(self.get_weight()), widget=PlainTextWidget)
+		form.fields['coalition_weight'] = PlainTextField(initial=str(self.get_weight()))
 
 		return form
 
