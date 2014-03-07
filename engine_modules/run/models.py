@@ -10,11 +10,13 @@ class RunOrder(Order):
 	"""
 	Base model for all runs
 	"""
+	MAX_PERCENTS = 90
+
 	BASE_COST = 50
 	INFLUENCE_BONUS = 30
 
 	has_influence_bonus = models.BooleanField(default=False, help_text="Accorder à cette run un bonus de 30% gratuit")
-	additional_percents = models.PositiveSmallIntegerField(default=1, validators=[MaxValueValidator(9), MinValueValidator(1)])
+	additional_percents = models.PositiveSmallIntegerField(default=1, validators=[MaxValueValidator(9), MinValueValidator(1)], help_text="Palier de 10% supplémentaires.")
 	hidden_percents = models.SmallIntegerField(default=0, editable=False)
 
 	def clean(self):
@@ -30,13 +32,15 @@ class RunOrder(Order):
 		proba += self.additional_percents * 10
 
 		proba += self.hidden_percents * 10
+
 		return proba
 
 	def is_successful(self):
 		"""
-		Return true if the run is is_successful (random call)
+		Return true if the run is successful (random call)
 		"""
-		return randint(1, 100) <= self.get_success_probability()
+		probability = min(self.MAX_PERCENTS, self.get_success_probability())
+		return randint(1, 100) <= probability
 
 	def resolve(self):
 		"""

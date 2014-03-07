@@ -32,12 +32,14 @@ class EngineTestCase(TestCase):
 		BaseCorporation.base_corporations = {}
 		try:
 			self.g = Game()
+			# Disable all side effects for the game (first and last effects, invisible hand)
+			self.g.disable_side_effects = True
 			self.g.save()
 		except:
 			raise
 		finally:
 			BaseCorporation.base_corporations = original_base_corporations
-	
+
 		# Create base corporations
 		self.c = Corporation(base_corporation_slug='shiawase', assets=10)
 		self.c2 = Corporation(base_corporation_slug='renraku', assets=10)
@@ -47,3 +49,11 @@ class EngineTestCase(TestCase):
 		self.initial_money = Player._meta.get_field_by_name('money')[0].default
 		self.p = Player(game=self.g, money=self.initial_money)
 		self.p.save()
+
+		# TODO: move to another place, in engine_modules/runs
+		# TODO : add test for 90% restriction
+		from engine_modules.run.models import RunOrder
+		RunOrder.MAX_PERCENTS = 100
+
+		from engine_modules.corporation_run.models import ProtectionOrder
+		ProtectionOrder.MAX_PERCENTS = 100

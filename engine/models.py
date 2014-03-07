@@ -12,6 +12,7 @@ class Game(models.Model):
 	city = models.CharField(max_length=50)
 	current_turn = models.PositiveSmallIntegerField(default=1)
 	total_turn = models.PositiveSmallIntegerField(default=8)
+	disable_side_effects = models.BooleanField(default=False, help_text="Disable all side effects (invisible hand, first and last effects, ...)")
 	started = models.DateTimeField(auto_now_add=True)
 
 	@transaction.atomic
@@ -19,14 +20,10 @@ class Game(models.Model):
 		"""
 		Resolve all orders for this turn, increment current_turn by 1.
 		"""
-
-		# First step: build a message for each player containing order list.
-		for player in self.player_set.all():
-			player.build_order_message()
-
 		# Execute all tasks
 		from engine.modules import tasks_list
 		for task in tasks_list:
+			# print "* [%s] **%s** : %s" % (task.RESOLUTION_ORDER, task.__name__, task.__doc__.strip())
 			t = task()
 			t.run(self)
 
@@ -58,6 +55,8 @@ class Player(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
 	game = models.ForeignKey(Game)
 	money = models.PositiveIntegerField(default=2000)
+	background = models.CharField(default=None, blank=True, null=True, max_length=150)
+	secrets = models.TextField(default="", blank=True)
 
 	def add_message(self, **kwargs):
 		"""
@@ -91,26 +90,6 @@ class Player(models.Model):
 		"""
 		return sum([order.cost for order in self.get_current_orders()])
 
-	def build_order_message(self):
-		"""
-		Retrieve all orders for this turn, and build a message to remember them.
-		"""
-		orders = self.order_set.filter(turn=self.game.current_turn)
-		message = ""
-		for order in orders:
-			details = order.to_child()
-
-			message += "* %s\n" % details.description()
-
-		message += "\nArgent initial : %s\nArgent restant: %s" % (self.money, self.money - self.get_current_orders_cost())
-
-		return self.add_message(
-			title="Ordres pour le tour %s" % self.game.current_turn,
-			content=message,
-			author=None,
-			flag=Message.ORDER,
-		)
-
 	def build_resolution_message(self):
 		"""
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
@@ -119,7 +98,7 @@ class Player(models.Model):
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=notes,
-			title="Informations personnelles du tour %s" % self.game.current_turn,
+			title="Message de résolution du tour %s" % self.game.current_turn,
 			turn=self.game.current_turn
 		)
 		m.recipient_set.add(self)

@@ -1,0 +1,29 @@
+{% extends "template.html" %}
+
+{% block title %}Joueurs{% endblock %}
+{% block h1 %}Joueurs{% endblock %}
+
+{% block content %}
+
+<table class="prop_table">
+<thead>
+<tr>
+	<th></th>
+	<th>IC</th>
+	<th>Coalition</th>
+	<th>Citoyen</th>
+</tr>
+</thead>
+<tbody>
+{% for player in players %}
+<tr>
+	<td><a href="{% url "website.views.datas.player" game_id=1 player_id=player.id %}">{{ player.name }}</a></td>
+	<td class="important">{{ player.influence.level }}</td>
+	<td>{{ player.get_last_mdc_vote }}</td>
+	<td>{{ player.citizenship.corporation.base_corporation.slug|title }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock content %}

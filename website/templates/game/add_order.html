@@ -1,8 +1,11 @@
 {% extends "template.html" %}
 
+{% block title %} {{ order.title }}  {% endblock %}
+{% block h1 %} Ajouter un ordre  {% endblock %}
+
 {% block content %}
 <h3>{{ order.title }}</h3>
-<form method="post" action="{% url "website.views.add_order" game_id=1 order_type=order.name %}">
+<form method="post" action="{% url "website.views.orders.add_order" game_id=1 order_type=order.name %}">
 	<table>
 	{{ order.form.as_table }}
 	<tr>

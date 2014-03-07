@@ -3,6 +3,7 @@ from os import listdir
 from django.db import models
 from django.conf import settings
 from django.utils.functional import cached_property
+from django.utils.safestring import mark_safe
 
 from utils.read_markdown import read_markdown
 from engine.models import Game
@@ -14,7 +15,7 @@ class BaseCorporation:
 	Implemented as a separate non-model class to avoid cluttering the database
 	"""
 
-	BASE_CORPORATION_DIR = "%s/engine_modules/corporation/base_corporation" % (settings.BASE_DIR)
+	BASE_CORPORATION_DIR = "%s/datas/corporations" % (settings.BASE_DIR)
 
 	@classmethod
 	def build_dict(cls):
@@ -35,8 +36,9 @@ class BaseCorporation:
 		content, meta = read_markdown(path)
 		self.meta = meta
 
-		self.name = meta['name'][0]
 		self.slug = slug
+		self.name = meta['name'][0]
+		self.description = mark_safe(content)
 
 		self.datasteal = int(meta['datasteal'][0])
 		self.sabotage = int(meta['sabotage'][0])
@@ -52,7 +54,6 @@ class BaseCorporation:
 		try:
 			self.initials_assets = int(meta['initials_assets'][0])
 		except KeyError:
-			# In the Model, the default value used to be 10
 			self.initials_assets = 10
 
 		try:
@@ -81,6 +82,7 @@ class Corporation(models.Model):
 	"""
 	class Meta:
 		unique_together = (('base_corporation_slug', 'game'), )
+		ordering = ['base_corporation_slug']
 
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
@@ -90,11 +92,18 @@ class Corporation(models.Model):
 	def base_corporation(self):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
-	def on_first_effect(self):
-		exec(self.base_corporation.on_first, {'game': self.game})
+	def on_first_effect(self, ladder):
+		exec(self.base_corporation.on_first, {'game': self.game, 'corporations': self.game.corporation_set, 'ladder': ladder})
 
-	def on_last_effect(self):
-		exec(self.base_corporation.on_last, {'game': self.game})
+	def on_last_effect(self, ladder):
+		exec(self.base_corporation.on_last, {'game': self.game, 'corporations': self.game.corporation_set, 'ladder': ladder})
+
+	def update_assets(self, delta):
+		"""
+		Update assets values, and save the model
+		"""
+		self.assets += delta
+		self.save()
 
 	def __unicode__(self):
 		return "%s (%s)" % (self.base_corporation.name, self.assets)

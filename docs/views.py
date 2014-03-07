@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
 from django.conf import settings
 from django.utils.safestring import mark_safe
@@ -10,7 +10,7 @@ def index(request, page):
 	if(page == ''):
 		page = 'index'
 
-	page = '%s/docs/markdown/%s.md' % (settings.BASE_DIR, page.replace('.', ''))
+	page = '%s/datas/docs/%s.md' % (settings.BASE_DIR, page.replace('.', ''))
 
 	try:
 		content, metas = read_markdown(page)
@@ -25,3 +25,7 @@ def index(request, page):
 	content = mark_safe(content)
 
 	return render(request, 'docs/index.html', {"content": content, "title": title})
+
+
+def redirect_md(request, page):
+	return redirect('docs.views.index', page=page)

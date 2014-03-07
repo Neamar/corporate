@@ -20,7 +20,7 @@ class DocTest(TestCase):
 		"""
 
 		r = self.c.get('/docs/index')
-		self.assertTrue('<p>' in r.content)
+		self.assertIn('<p>', r.content)
 
 	def test_doc_index(self):
 		"""

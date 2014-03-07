@@ -13,6 +13,9 @@ class Share(models.Model):
 	player = models.ForeignKey(Player)
 	turn = models.PositiveSmallIntegerField()
 
+	def __unicode__(self):
+		return "%s share for %s" % (self.corporation, self.player)
+
 
 class BuyShareOrder(Order):
 	"""
@@ -26,7 +29,7 @@ class BuyShareOrder(Order):
 	corporation = models.ForeignKey(Corporation)
 
 	def get_cost(self):
-		if self.corporation == self.player.game.get_ordered_corporations()[0]:
+		if self.corporation == self.player.game.get_ladder()[0]:
 			if self.player.citizenship.corporation != self.corporation:
 				return BuyShareOrder.FIRST_COST * self.corporation.assets
 			else:
@@ -51,8 +54,8 @@ class BuyShareOrder(Order):
 			content = u"Vous avez acheté votre première part dans %s." % self.corporation.base_corporation.name
 			newsfeed_content = u"%s a acheté sa première part dans %s." % (self.player, self.corporation.base_corporation.name)
 		else:
-			content = u"Vous avez acheté votre %ième part dans %s." % (nb_shares, self.corporation)
-			newsfeed_content = u"%s a acheté sa %ième part dans %s." % (self.player, nb_shares, self.corporation)
+			content = u"Vous avez acheté votre %ième part dans %s." % (nb_shares, self.corporation.base_corporation.name)
+			newsfeed_content = u"%s a acheté sa %ième part dans %s." % (self.player, nb_shares, self.corporation.base_corporation.name)
 		self.player.add_note(category="Parts", content=content)
 		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=newsfeed_content)
 

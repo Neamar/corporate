@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, ExtractionOrder
-from messaging.models import Newsfeed
+from engine_modules.corporation.testcases import override_base_corporations
 
 
 class RunOrdersTest(EngineTestCase):
-	def setUp(self):
-		super(RunOrdersTest, self).setUp()
-
-		self.g.disable_invisible_hand = True
-
 	def set_to_zero(self, corporation):
 		"""
 		Set corporation protection values to 0, to ease testing.
@@ -29,7 +24,7 @@ class RunOrdersTest(EngineTestCase):
 		bc.datasteal = self._values[0]
 
 
-class OffensiveRunOrderTest(RunOrdersTest):
+class OffensiveCorporationRunOrderTest(RunOrdersTest):
 	def test_get_raw_probability(self):
 		"""
 		Check raw probability values (without timing malus)
@@ -42,7 +37,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 			hidden_percents=3
 		)
 
-		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.hidden_percents * 10 + dso.PROBA_SUCCESS)
+		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.hidden_percents * 10 + dso.BASE_SUCCESS_PROBABILITY)
 
 	def test_get_success_probability_with_timing_malus(self):
 		"""
@@ -67,14 +62,14 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		dso4 = create_order(7)
 
 		# -30 : three similar runs above
-		self.assertEqual(dso.get_success_probability(), dso.additional_percents * 10 - 30 + DataStealOrder.PROBA_SUCCESS)
+		self.assertEqual(dso.get_success_probability(), dso.additional_percents * 10 - 30 + DataStealOrder.BASE_SUCCESS_PROBABILITY)
 
 		# -20 : two similar runs above or equal
-		self.assertEqual(dso2.get_success_probability(), dso2.additional_percents * 10 - 20 + DataStealOrder.PROBA_SUCCESS)
-		self.assertEqual(dso3.get_success_probability(), dso3.additional_percents * 10 - 20 + DataStealOrder.PROBA_SUCCESS)
+		self.assertEqual(dso2.get_success_probability(), dso2.additional_percents * 10 - 20 + DataStealOrder.BASE_SUCCESS_PROBABILITY)
+		self.assertEqual(dso3.get_success_probability(), dso3.additional_percents * 10 - 20 + DataStealOrder.BASE_SUCCESS_PROBABILITY)
 
 		# No malus
-		self.assertEqual(dso4.get_success_probability(), dso4.additional_percents * 10 + DataStealOrder.PROBA_SUCCESS)
+		self.assertEqual(dso4.get_success_probability(), dso4.additional_percents * 10 + DataStealOrder.BASE_SUCCESS_PROBABILITY)
 
 	def test_repay(self):
 		"""
@@ -92,6 +87,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money - dso.get_cost() / 2)
 
+	@override_base_corporations
 	def test_is_detected(self):
 		"""
 		Check detection use corporation base values
@@ -104,16 +100,13 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		)
 		dso.save()
 
-		save_value = dso.target_corporation.base_corporation.detection
-		try:
-			dso.target_corporation.base_corporation.detection = 0
-			self.assertFalse(dso.is_detected())
+		dso.target_corporation.base_corporation.detection = 0
+		self.assertFalse(dso.is_detected())
 
-			dso.target_corporation.base_corporation.detection = 100
-			self.assertTrue(dso.is_detected())
-		finally:
-			dso.target_corporation.base_corporation.detection = save_value
+		dso.target_corporation.base_corporation.detection = 100
+		self.assertTrue(dso.is_detected())
 
+	@override_base_corporations
 	def test_is_protected(self):
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
@@ -123,15 +116,11 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		)
 		dso.save()
 
-		save_value = dso.target_corporation.base_corporation.datasteal
-		try:
-			dso.target_corporation.base_corporation.datasteal = 0
-			self.assertFalse(dso.is_protected())
+		dso.target_corporation.base_corporation.datasteal = 0
+		self.assertFalse(dso.is_protected())
 
-			dso.target_corporation.base_corporation.datasteal = 100
-			self.assertTrue(dso.is_protected())
-		finally:
-			dso.target_corporation.base_corporation.datasteal = save_value
+		dso.target_corporation.base_corporation.datasteal = 100
+		self.assertTrue(dso.is_protected())
 
 	def test_get_protection_values(self):
 		"""
@@ -157,6 +146,7 @@ class OffensiveRunOrderTest(RunOrdersTest):
 
 		self.assertEqual(dso.get_protection_values(), [po.get_success_probability(), dso.target_corporation.base_corporation.datasteal])
 
+	@override_base_corporations
 	def test_detected_create_newsfeed(self):
 		"""
 		Check detection use corporation base values
@@ -169,15 +159,10 @@ class OffensiveRunOrderTest(RunOrdersTest):
 		)
 		dso.save()
 
-		save_value = dso.target_corporation.base_corporation.detection
-		try:
-			dso.target_corporation.base_corporation.detection = 100
+		dso.target_corporation.base_corporation.detection = 100
 
-			dso.resolve()
-
-			self.assertTrue(dso.target_corporation.base_corporation.name in self.g.newsfeed_set.get().content)
-		finally:
-			dso.target_corporation.base_corporation.detection = save_value
+		dso.resolve()
+		self.assertIn(dso.target_corporation.base_corporation.name, self.g.newsfeed_set.get().content)
 
 
 class DatastealRunOrderTest(RunOrdersTest):
@@ -416,8 +401,9 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		)
 		po.save()
 
-		self.assertEqual(po.get_success_probability(), po.additional_percents * 10 + po.PROBA_SUCCESS[po.defense])
+		self.assertEqual(po.get_success_probability(), po.additional_percents * 10 + po.BASE_SUCCESS_PROBABILITY[po.defense])
 
+	@override_base_corporations
 	def test_corpo_can_protect_alone(self):
 		"""
 		Corporations can protect themselves
@@ -425,15 +411,11 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 		begin_assets_stolen = self.dso.target_corporation.assets
 
-		base_value = self.dso.target_corporation.base_corporation.datasteal
-		try:
-			self.dso.target_corporation.base_corporation.datasteal = 100
+		self.dso.target_corporation.base_corporation.datasteal = 100
 
-			self.dso.additional_percents = 10
-			self.dso.save()
+		self.dso.additional_percents = 10
+		self.dso.save()
 
-			self.dso.resolve()
-			self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
-			self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)
-		finally:
-			self.dso.target_corporation.base_corporation.datasteal = base_value
+		self.dso.resolve()
+		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
+		self.assertEqual(self.reload(self.dso.target_corporation).assets, begin_assets_stolen)

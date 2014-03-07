@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.http import Http404
 
 from engine.exceptions import OrderNotAvailable
 from engine.models import Player
@@ -10,7 +10,10 @@ def get_player(request, game_id):
 	Retrieve a player associated with the user and the game.
 	Returns 404 exception if the user has no access to this game, or the game does not exists.
 	"""
-	return get_object_or_404(Player, user=request.user, game=game_id)
+	try:
+		return Player.objects.select_related('game').get(user=request.user, game=game_id)
+	except:
+		raise Http404("You have no access to this game.")
 
 
 def get_order_by_name(order_name):
@@ -40,6 +43,7 @@ def get_order_availability(Order, player):
 		"type": order_class,
 		"name": order_class_name_string
 		"available": bool
+		"reason": reason_not_available
 		"title": order_title
 		"form": ModelForm
 	}
@@ -55,12 +59,21 @@ def get_order_availability(Order, player):
 	try:
 		instance.clean()
 		status['available'] = True
-	except OrderNotAvailable:
+	except OrderNotAvailable as e:
 		status['available'] = False
+		status['reason'] = e.message
 	except:
 		status['available'] = None
-	
+
 	if status['available'] is not False:
 		status['form'] = instance.get_form()
 
 	return status
+
+
+def get_shares_count(corporation, player, shares):
+	"""
+	Retrieve the number of shares owned by player in corporation
+	"""
+
+	return len([s for s in shares if s.player_id == player.pk and s.corporation_id == corporation.pk])

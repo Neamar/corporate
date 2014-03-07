@@ -1,0 +1,34 @@
+{% extends "template.html" %}
+
+{% block title %}Corporations{% endblock %}
+{% block h1 %}Corporations{% endblock %}
+
+{% block content %}
+<table class="prop_table">
+<thead>
+<tr>
+	<th></th>
+	<th>Actifs</th>
+	<th>DS</th>
+	<th>S</th>
+	<th>E</th>
+	<th>D</th>
+</tr>
+</thead>
+<tbody>
+{% for corporation in corporations %}
+<tr>
+	<td><a href="{% url "website.views.datas.corporation" game_id=1 corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
+	<td class="important">{{ corporation.assets }}</td>
+	<td>{{ corporation.base_corporation.datasteal }}</td>
+	<td>{{ corporation.base_corporation.sabotage }}</td>
+	<td>{{ corporation.base_corporation.extraction }}</td>
+	<td>{{ corporation.base_corporation.detection }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock content %}
+
+

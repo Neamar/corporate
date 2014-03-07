@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    #'debug_toolbar',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,7 +72,7 @@ WSGI_APPLICATION = 'corporate.wsgi.application'
 
 # settings.py
 AUTH_USER_MODEL = 'website.User'
-LOGIN_REDIRECT_URL = 'website.views.index'
+LOGIN_REDIRECT_URL = 'website.views.index.index'
 LOGIN_URL = 'django.contrib.auth.views.login'
 
 # Database
@@ -97,6 +98,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),

@@ -5,10 +5,23 @@
 
 {% block content %}
 
+<table class="prop_table">
+<thead>
+<tr>
+	<th></th>
+	<th>Tour</th>
+	<th class="large">Titre</th>
+</tr>
+</thead>
+<tbody>
 {% for message in messages %}
-<h2>{{ message.title }}</h2>
-{{ message.html }}
-
+<tr>
+	<td>(<a href="{% url "website.views.datas.message" game_id=1 message_id=message.pk %}">voir</a>)</td>
+	<td>{{ message.turn }}</td>
+	<td>{{ message.title }}</td>
+</tr>
 {% endfor %}
+</tbody>
+</table>
 
 {% endblock content %}

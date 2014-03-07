@@ -2,15 +2,8 @@ from __future__ import absolute_import
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.utils.safestring import mark_safe
-
 from engine.models import Order
 from website.utils import get_player, get_orders_availability, get_order_by_name
-from utils.read_markdown import parse_markdown
-
-
-def index(request):
-	return render(request, 'index.html', {})
 
 
 @login_required
@@ -47,7 +40,7 @@ def add_order(request, game_id, order_type):
 		form = instance.get_form(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect('website.views.orders', game_id=game_id)
+			return redirect('website.views.orders.orders', game_id=game_id)
 	else:
 		form = instance.get_form()
 
@@ -67,55 +60,4 @@ def delete_order(request, game_id, order_id):
 	order = get_object_or_404(Order, pk=order_id, player=player)
 	order.delete()
 
-	return redirect('website.views.orders', game_id=game_id)
-
-
-@login_required
-def wallstreet(request, game_id):
-	"""
-	Wallstreet datas
-	"""
-	return render(request, 'game/wallstreet.html', {})
-
-
-@login_required
-def corporations(request, game_id):
-	"""
-	Wallstreet datas
-	"""
-	return render(request, 'game/wallstreet.html', {})
-
-
-@login_required
-def players(request, game_id):
-	"""
-	Wallstreet datas
-	"""
-	return render(request, 'game/wallstreet.html', {})
-
-
-@login_required
-def newsfeeds(request, game_id):
-	"""
-	Display newsfeed
-	"""
-	player = get_player(request, game_id)
-
-	newsfeeds = player.game.newsfeed_set.filter(turn=player.game.current_turn - 1).order_by('category')
-
-	return render(request, 'game/newsfeeds.html', {"newsfeeds": newsfeeds})
-
-
-@login_required
-def comlink(request, game_id):
-	"""
-	Display newsfeed
-	"""
-	player = get_player(request, game_id)
-
-	messages = player.message_set.all().order_by("-turn")
-
-	for message in messages:
-		message.html, _ = parse_markdown(message.content)
-		message.html = mark_safe(message.html)
-	return render(request, 'game/comlink.html', {"messages": messages})
+	return redirect('website.views.orders.orders', game_id=game_id)

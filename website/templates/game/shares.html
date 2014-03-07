@@ -1,0 +1,33 @@
+{% extends "template.html" %}
+
+{% block title %}Parts possédées{% endblock %}
+{% block h1 %}Parts possédées{% endblock %}
+
+{% block content %}
+<table class="prop_table slanted_head">
+<thead>
+<tr>
+	<th></th>
+	{% for corporation in corporations %}
+	<th><div><span>{{ corporation.base_corporation.slug|title }}</span></div></th>
+	{% endfor %}
+</tr>
+</thead>
+<tbody>
+{% for player_shares in shares %}
+<tr>
+	<td><a href="{% url "website.views.datas.player" game_id=1 player_id=player_shares.player.id %}">{{ player_shares.player.name }}</a></td>
+	{% for share in player_shares.shares %}
+		{% if player_shares.citizenship_index == forloop.counter0 %}
+			<td class="important">{{ share }}</td>
+		{% elif share != 0 %}
+			<td>{{ share }}</td>
+		{% else %}
+			<td></td>
+		{% endif %}
+	{% endfor %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock content %}
