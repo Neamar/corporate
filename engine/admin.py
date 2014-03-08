@@ -4,6 +4,8 @@ from engine.models import Game, Player, Order
 
 class PlayerInline(admin.TabularInline):
 	model = Player
+	exclude = ('secrets',)
+	extra = 1
 
 
 class GameAdmin(admin.ModelAdmin):
