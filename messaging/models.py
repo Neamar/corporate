@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from utils.read_markdown import parse_markdown
 
 
 class Newsfeed(models.Model):
@@ -22,6 +23,9 @@ class Newsfeed(models.Model):
 
 	def __unicode__(self):
 		return "%s newsfeeds" % self.get_category_display()
+
+	def as_html(self):
+		return parse_markdown(self.content)
 
 
 class Message(models.Model):

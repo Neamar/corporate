@@ -11,7 +11,7 @@
 
 <ul>
 {% for newsfeed in category.list %}
-	<li>{{ newsfeed.content }}</li>
+	<li>{{ newsfeed.as_html }}</li>
 {% endfor %}
 </ul>
 {% endfor %}
