@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django import forms
 from random import randint
 from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
@@ -11,39 +10,40 @@ from website.widgets import PlainTextField
 
 datasteal_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a réussi à voler des données de %s pour le compte de %s",
-		'newsfeed': u"Un vol de données a été effectué sur %s",
-		'citizens': u"Un vol de données, commandité par %s, a été effectué sur %s pour le compte de %s avec %s chances de réussite",
+		'sponsor': u"Votre équipe a réussi un **datasteal** de %s pour le compte de %s",
+		'newsfeed': u"Un **datasteal** a réussi sur %s",
+		'citizens': u"Un **datasteal**, commandité par %s, a réussi sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe n'a pas réussi son DataSteal sur %s pour %s",
-		'newsfeed': u"Une tentative de vol de données a été effectuée sur %s",
-		'citizens': u"Une tentative de vol de données, commanditée par %s, a été effectuée sur %s pour le compte de %s avec %s chances de réussite",
+		'sponsor': u"Votre équipe a echoué son **datasteal** sur %s pour %s",
+		'newsfeed': u"Un **datasteal** a échoué sur %s",
+		'citizens': u"Un **datasteal**, commandité par %s, a échoué sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 }
 
 sabotage_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a réussi à saboter les opérations de %s",
-		'newsfeed': u"Un sabotage a réussi sur %s",
-		'citizens': u"Un sabotage, commandité par %s, a réussi sur %s avec %s chances de réussite",
+		'sponsor': u"Votre équipe a réussi un **sabotage** sur les opérations de %s",
+		'newsfeed': u"Un **sabotage** a réussi sur %s",
+		'citizens': u"Un **sabotage**, commandité par %s, a réussi sur %s avec %s%% chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe a échoué lors de la tentative de DataSteal sur %s",
-		'citizens': u"Une tentative de sabotage, commanditée par %s, à été effectuée sur %s avec %s chances de réussite",
+		'sponsor': u"Votre équipe a échoué son **sabotage** sur %s",
+		'newsfeed': u"Un **sabotage** a échoué sur %s",
+		'citizens': u"Un **sabotage**, commandité par %s, à échoué sur %s avec %s%% chances de réussite",
 	},
 }
 
 extraction_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a réalisé une extraction de %s pour le compte de %s",
-		'newsfeed': u"Une extraction a été effectuée sur %s",
-		'citizens': u"Une extraction,commanditée par %s, a été effectuée sur %s pour le compte de %s avec %s chances de réussite",
+		'sponsor': u"Votre équipe a réalisé une **extraction** de %s pour le compte de %s",
+		'newsfeed': u"Une **extraction** a réussi sur %s",
+		'citizens': u"Une **extraction**, commanditée par %s, a réussi sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe n'a pas réussi l'Extraction sur %s pour %s",
-		'newsfeed': u"Une tentative d'extraction a été effectuée sur %s",
-		'citizens': u"Une tentative d'extraction, commanditée par %s, a été effectuée sur %s pour le compte de %s avec %s chances de réussite",
+		'sponsor': u"Votre équipe a échoué son **extraction** sur %s pour %s",
+		'newsfeed': u"Une **extraction** a échoué sur %s",
+		'citizens': u"Une **extraction**, commanditée par %s, a échoué sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 }
 
@@ -248,6 +248,11 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 			# Send a note to citizens
 			content = sabotage_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.get_success_probability())
 			self.notify_citizens(content)
+
+			# Send a note to everybody
+			category = u"matrix-buzz"
+			content = sabotage_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
+			self.player.game.add_newsfeed(category=category, content=content)
 
 	def description(self):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
