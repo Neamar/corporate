@@ -247,7 +247,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = sabotage_messages['success']['citizens'] % (self.target_corporation.base_corporation.name)
+			content = sabotage_messages['fail']['citizens'] % (self.target_corporation.base_corporation.name)
 			self.notify_citizens(content)
 
 	def description(self):
