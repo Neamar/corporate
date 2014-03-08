@@ -13,12 +13,12 @@ datasteal_messages = {
 	'success': {
 		'sponsor': u"Votre équipe a réussi à voler des données de %s pour le compte de %s",
 		'newsfeed': u"Un vol de données a été effectué sur %s",
-		'citizens': u"Un vol de données a été effectué sur %s pour le compte de %s",
+		'citizens': u"Un vol de données, commandité par %s, a été effectué sur %s pour le compte de %s avec %s chances de réussite",
 	},
 	'fail': {
 		'sponsor': u"Votre équipe n'a pas réussi son DataSteal sur %s pour %s",
 		'newsfeed': u"Une tentative de vol de données a été effectuée sur %s",
-		'citizens': u"Une tentative de vol de données a été effectuée sur %s pour le compte de %s",
+		'citizens': u"Une tentative de vol de données, commanditée par %s, a été effectuée sur %s pour le compte de %s avec %s chances de réussite",
 	},
 }
 
@@ -26,12 +26,11 @@ sabotage_messages = {
 	'success': {
 		'sponsor': u"Votre équipe a réussi à saboter les opérations de %s",
 		'newsfeed': u"Un sabotage a réussi sur %s",
-		'citizens': u"Un sabotage a réussi sur %s",
+		'citizens': u"Un sabotage, commandité par %s, a réussi sur %s avec %s chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe n'a pas réussi le sabotage sur %s",
-		'newsfeed': u"Une tentative de sabotage à été effectuée sur %s",
-		'citizens': u"Une tentative de sabotage à été effectuée sur %s",
+		'sponsor': u"Votre équipe a échoué lors de la tentative de DataSteal sur %s",
+		'citizens': u"Une tentative de sabotage, commanditée par %s, à été effectuée sur %s avec %s chances de réussite",
 	},
 }
 
@@ -39,12 +38,12 @@ extraction_messages = {
 	'success': {
 		'sponsor': u"Votre équipe a réalisé une extraction de %s pour le compte de %s",
 		'newsfeed': u"Une extraction a été effectuée sur %s",
-		'citizens': u"Une extraction a été effectuée sur %s pour le compte de %s",
+		'citizens': u"Une extraction,commanditée par %s, a été effectuée sur %s pour le compte de %s avec %s chances de réussite",
 	},
 	'fail': {
 		'sponsor': u"Votre équipe n'a pas réussi l'Extraction sur %s pour %s",
 		'newsfeed': u"Une tentative d'extraction a été effectuée sur %s",
-		'citizens': u"Une tentative d'extraction a été effectuée sur %s pour le compte de %s",
+		'citizens': u"Une tentative d'extraction, commanditée par %s, a été effectuée sur %s pour le compte de %s avec %s chances de réussite",
 	},
 }
 
@@ -180,7 +179,7 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = datasteal_messages['success']['citizens'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			content = datasteal_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_success_probability())
 			self.notify_citizens(content)
 			# Send a note to everybody
 			category = u"matrix-buzz"
@@ -195,7 +194,7 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = datasteal_messages['fail']['citizens'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			content = datasteal_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_success_probability())
 			self.notify_citizens(content)
 
 			# Send a note to everybody
@@ -231,7 +230,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 		self.player.add_note(category=category, content=content)
 
 		# Send a note to citizens
-		content = sabotage_messages['success']['citizens'] % (self.target_corporation.base_corporation.name)
+		content = sabotage_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.get_success_probability())
 		self.notify_citizens(content)
 
 		# Send a note to everybody
@@ -247,7 +246,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = sabotage_messages['fail']['citizens'] % (self.target_corporation.base_corporation.name)
+			content = sabotage_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.get_success_probability())
 			self.notify_citizens(content)
 
 	def description(self):
@@ -276,7 +275,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = extraction_messages['success']['citizens'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
+			content = extraction_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_success_probability())
 			self.notify_citizens(content)
 
 			# Send a note to everybody
@@ -292,7 +291,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = extraction_messages['fail']['citizens'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
+			content = extraction_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_success_probability())
 			self.notify_citizens(content)
 
 			# Send a note to everybody
