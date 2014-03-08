@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.utils.safestring import mark_safe
 from utils.read_markdown import parse_markdown
 
 
@@ -25,7 +26,8 @@ class Newsfeed(models.Model):
 		return "%s newsfeeds" % self.get_category_display()
 
 	def as_html(self):
-		return parse_markdown(self.content)
+		content, _ = parse_markdown(self.content)
+		return mark_safe(content)
 
 
 class Message(models.Model):
