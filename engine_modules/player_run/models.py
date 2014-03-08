@@ -39,7 +39,7 @@ class InformationOrder(OffensiveRunOrder):
 		secrets = self.target.secrets
 
 		target_orders = self.target.message_set.filter(flag=Message.RESOLUTION).order_by('-turn')
-		messages = "\n".join(["### Tour %s\n\n%s" % (o.turn, o.content) for o in target_orders])
+		messages = "\n".join(["### Tour %s\n\n%s" % (o.turn, o.content.replace('# ', '## ')) for o in target_orders])
 
 		self.player.add_message(
 			title="Run d'information sur %s" % (self.target),
@@ -65,7 +65,7 @@ class InformationOrder(OffensiveRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = information_messages['fail']['citizens'] % (self.player, self.target, self.player.name, self.get_raw_probability())
+			content = information_messages['fail']['citizens'] % (self.player, self.target, self.get_raw_probability())
 			self.notify_citizens(content)
 
 	def get_form(self, datas=None):
