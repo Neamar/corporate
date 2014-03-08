@@ -75,6 +75,6 @@ class InformationOrder(OffensiveRunOrder):
 		return form
 
 	def description(self):
-		return "Lancer une run d'information sur %s" % self.target
+		return "Lancer une run d'information sur %s (%s%%)" % (self.target, self.get_raw_probability())
 
 orders = (InformationOrder, )
