@@ -112,7 +112,8 @@ class OffensiveRunOrder(RunOrder):
 		raw_proba = self.get_raw_probability()
 
 		kwargs = {
-			self.TIMING_MALUS_SIMILAR: getattr(self, self.TIMING_MALUS_SIMILAR)
+			self.TIMING_MALUS_SIMILAR: getattr(self, self.TIMING_MALUS_SIMILAR),
+			"turn": self.player.game.current_turn
 		}
 		similar_runs = self.__class__.objects.filter(**kwargs).exclude(pk=self.pk)
 		better_runs = [run for run in similar_runs if run.get_raw_probability() >= raw_proba]
