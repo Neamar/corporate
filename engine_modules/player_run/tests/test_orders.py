@@ -44,6 +44,7 @@ class InformationRunOrderTest(RunOrdersTest):
 		self.io.save()
 		# Save message
 		p2_resolution_message = self.p2.message_set.get(flag=Message.RESOLUTION, turn=1).content
+		p2_resolution_message_formatted = p2_resolution_message.replace('# ', '## ')
 
 		self.g.resolve_current_turn()
 
@@ -53,7 +54,7 @@ class InformationRunOrderTest(RunOrdersTest):
 		self.assertIn(self.p2.secrets, p_results)
 		self.assertNotIn("Tour 2", p_results)  # Current turn not included
 
-		self.assertIn(p2_resolution_message, p_results)
+		self.assertIn(p2_resolution_message_formatted, p_results)
 
 	def test_information_failure(self):
 		"""

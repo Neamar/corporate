@@ -10,8 +10,8 @@ class FirstLastEffectsTask(ResolutionTask):
 	RESOLUTION_ORDER = 600
 
 	def run(self, game):
-		# Effects can be disabled, for instance to ease testing, by setting the "disable_side_effects" flag.
-		if hasattr(game, 'disable_side_effects') and not hasattr(game, "force_first_last_effects"):
+		# We can force the first and last effects using the force_first_last_effects flag
+		if game.disable_side_effects and not hasattr(game, "force_first_last_effects"):
 			return
 
 		ladder = game.get_ladder()

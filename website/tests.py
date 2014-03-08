@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.test.utils import override_settings
 from django.test import Client
 from django.core.urlresolvers import reverse
 
@@ -7,6 +8,7 @@ from engine.testcases import EngineTestCase
 from website.models import User
 
 
+@override_settings(PASSWORD_HASHERS=('django.contrib.auth.hashers.SHA1PasswordHasher',))
 class WebsiteTest(EngineTestCase):
 	def setUp(self):
 		super(WebsiteTest, self).setUp()

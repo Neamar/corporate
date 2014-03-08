@@ -1,4 +1,4 @@
-title: Comment jouer?
+title: Comment jouer ?
 
 Vous incarnez un cadre corporatiste décidé à se tailler un empire dans une des places financières les plus concurrentielles du 6<sup>ème</sup> monde : l’île de Manhattan.
 
@@ -103,7 +103,7 @@ L'indice de Défense représente le pourcentage de chances qu'une run du même n
 > Renraku a donc 20% de chance de contrer toute run d'Extraction qui la cible.
 
 ### Détection
-En plus de leurs indices de Défense, les corpos possèdent un indice de **Détection** (30 pour Renraku). Ce nombre correspond au pourcentage de chances que la corpo détecte les runs qui la ciblent. Une run détectée est déclarée dans le message de résolution de tous les citoyens de la corpo ciblée avec tous les détails, commanditaire et chances de réussite inclus.
+En plus de leurs indices de Défense, les corpos possèdent un indice de **Détection** (30 pour Renraku). Ce nombre correspond au pourcentage de chances que la corpo détecte les runs qui la ciblent. Une run détectée est déclarée dans le message de résolution de tous les citoyens de la corpo ciblée avec tous les détails ; bénéficiaire, commanditaire et chances de réussite inclus.
 
 Une run détectée sera également mentionnée dans les Newsfeeds de fin de tour, mais sans davantage d’information que la corpo ciblée.
 
@@ -126,25 +126,25 @@ Une run subit un malus de **-10%** pour chaque autre run qui **correspond aux 3 
 
 > Les runs de Protection n'entrent pas en concurrence.
 
-## Les types de runs
-### Datasteal
+### Les types de runs
+#### Datasteal
 * Base : 30 %
 
 Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, la corpo bénéficiaire gagne **+1 actif** grâce aux précieuses informations dérobées à la concurrence.
 
-### Sabotage
+#### Sabotage
 * Base : 30 %
 
 Le commanditaire choisit une **corpo cible**, et tente de saboter une de ses opérations. En cas de réussite, la corpo subit **-2 actifs**.
 
 > Qu'elles aient été détectées ou non, les runs de Sabotage réussies sont révélées dans les Newsfeeds.
 
-### Extraction
+#### Extraction
 * Base : 10 %
 
 Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui subit **-1 actif**, et rejoint la corpo bénéficiaire, lui faisant gagner **+1 actif**.
 
-### Information
+#### Information
 * Base : 60 %
 
 Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les **messages de résolution** du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses **Secrets** ([cf. Secrets](start.md#secrets)).
@@ -152,7 +152,7 @@ Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête 
 > La Défense de Datasteal de la corpo dont la cible est citoyen est utilisée pour contrer les runs d'Information.
 > Même détectées, les runs d’Information n’apparaissent pas dans les Newsfeeds.
 
-### Protection
+#### Protection
 * Base Datasteal : 40 %
 * Base Sabotage : 0 %
 * Base Extraction : 10 %

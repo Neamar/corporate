@@ -5,43 +5,45 @@ from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
 from messaging.models import Note
 from engine.models import Player
+from website.widgets import PlainTextField
+
 
 datasteal_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a réussi à voler des données de %s pour le compte de %s",
-		'newsfeed': u"Un vol de données a été effectué sur %s",
-		'citizens': u"Un vol de données a été effectué sur %s pour le compte de %s",
+		'sponsor': u"Votre équipe a *réussi* un **datasteal** de %s pour le compte de %s",
+		'newsfeed': u"Un **datasteal** a *réussi* sur %s",
+		'citizens': u"Un **datasteal**, commandité par %s, a *réussi* sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe n'a pas réussi son DataSteal sur %s pour %s",
-		'newsfeed': u"Une tentative de vol de données a été effectuée sur %s",
-		'citizens': u"Une tentative de vol de données a été effectuée sur %s pour le compte de %s",
+		'sponsor': u"Votre équipe a *échoué* son **datasteal** sur %s pour %s",
+		'newsfeed': u"Un **datasteal** a *échoué* sur %s",
+		'citizens': u"Un **datasteal**, commandité par %s, a *échoué* sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 }
 
 sabotage_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a réussi à saboter les opérations de %s",
-		'newsfeed': u"Un sabotage a réussi sur %s",
-		'citizens': u"Un sabotage a réussi sur %s",
+		'sponsor': u"Votre équipe a *réussi* un **sabotage** sur les opérations de %s",
+		'newsfeed': u"Un **sabotage** a *réussi* sur %s",
+		'citizens': u"Un **sabotage**, commandité par %s, a *réussi* sur %s avec %s%% chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe n'a pas réussi le sabotage sur %s",
-		'newsfeed': u"Une tentative de sabotage à été effectuée sur %s",
-		'citizens': u"Une tentative de sabotage à été effectuée sur %s",
+		'sponsor': u"Votre équipe a *échoué* son **sabotage** sur %s",
+		'newsfeed': u"Un **sabotage** a *échoué* sur %s",
+		'citizens': u"Un **sabotage**, commandité par %s, à *échoué* sur %s avec %s%% chances de réussite",
 	},
 }
 
 extraction_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a réalisé une extraction de %s pour le compte de %s",
-		'newsfeed': u"Une extraction a été effectuée sur %s",
-		'citizens': u"Une extraction a été effectuée sur %s pour le compte de %s",
+		'sponsor': u"Votre équipe a *réussi* une **extraction** de %s pour le compte de %s",
+		'newsfeed': u"Une **extraction** a *réussi* sur %s",
+		'citizens': u"Une **extraction**, commanditée par %s, a *réussi* sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe n'a pas réussi l'Extraction sur %s pour %s",
-		'newsfeed': u"Une tentative d'extraction a été effectuée sur %s",
-		'citizens': u"Une tentative d'extraction a été effectuée sur %s pour le compte de %s",
+		'sponsor': u"Votre équipe a *échoué* son **extraction** sur %s pour %s",
+		'newsfeed': u"Une **extraction** a *échoué* sur %s",
+		'citizens': u"Une **extraction**, commanditée par %s, a *échoué* sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 }
 
@@ -110,7 +112,8 @@ class OffensiveRunOrder(RunOrder):
 		raw_proba = self.get_raw_probability()
 
 		kwargs = {
-			self.TIMING_MALUS_SIMILAR: getattr(self, self.TIMING_MALUS_SIMILAR)
+			self.TIMING_MALUS_SIMILAR: getattr(self, self.TIMING_MALUS_SIMILAR),
+			"turn": self.player.game.current_turn
 		}
 		similar_runs = self.__class__.objects.filter(**kwargs).exclude(pk=self.pk)
 		better_runs = [run for run in similar_runs if run.get_raw_probability() >= raw_proba]
@@ -152,6 +155,7 @@ class OffensiveCorporationRunOrder(OffensiveRunOrder):
 	def get_form(self, datas=None):
 		form = super(OffensiveRunOrder, self).get_form(datas)
 		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
+		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		return form
 
@@ -176,7 +180,7 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = datasteal_messages['success']['citizens'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			content = datasteal_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 			self.notify_citizens(content)
 			# Send a note to everybody
 			category = u"matrix-buzz"
@@ -191,7 +195,7 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = datasteal_messages['fail']['citizens'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
+			content = datasteal_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 			self.notify_citizens(content)
 
 			# Send a note to everybody
@@ -226,9 +230,10 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 		content = sabotage_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=category, content=content)
 
-		# Send a note to citizens
-		content = sabotage_messages['success']['citizens'] % (self.target_corporation.base_corporation.name)
-		self.notify_citizens(content)
+		if detected:
+			# Send a note to citizens
+			content = sabotage_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.get_raw_probability())
+			self.notify_citizens(content)
 
 		# Send a note to everybody
 		category = u"matrix-buzz"
@@ -243,8 +248,13 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = sabotage_messages['success']['citizens'] % (self.target_corporation.base_corporation.name)
+			content = sabotage_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.get_raw_probability())
 			self.notify_citizens(content)
+
+			# Send a note to everybody
+			category = u"matrix-buzz"
+			content = sabotage_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
+			self.player.game.add_newsfeed(category=category, content=content)
 
 	def description(self):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
@@ -272,7 +282,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = extraction_messages['success']['citizens'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
+			content = extraction_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
 			self.notify_citizens(content)
 
 			# Send a note to everybody
@@ -288,7 +298,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 
 		if detected:
 			# Send a note to citizens
-			content = extraction_messages['fail']['citizens'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
+			content = extraction_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
 			self.notify_citizens(content)
 
 			# Send a note to everybody
@@ -348,6 +358,9 @@ class ProtectionOrder(RunOrder):
 	def get_form(self, datas=None):
 		form = super(ProtectionOrder, self).get_form(datas)
 		form.fields['protected_corporation'].queryset = self.player.game.corporation_set.all()
+		form.fields['base_extraction_percents'] = PlainTextField(initial="%s%%" % self.PROBA_EXTRACTION_SUCCESS)
+		form.fields['base_datasteal_percents'] = PlainTextField(initial="%s%%" % self.PROBA_DATASTEAL_SUCCESS)
+		form.fields['base_sabotage_percents'] = PlainTextField(initial="%s%%" % self.PROBA_SABOTAGE_SUCCESS)
 
 		return form
 

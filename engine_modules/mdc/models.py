@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django import forms
 from collections import Counter
 
 from engine.models import Order, Game, Player
+from website.widgets import PlainTextField
 
 
 class MDCVoteOrder(Order):
@@ -70,7 +72,7 @@ class MDCVoteOrder(Order):
 		# For each corporation, get the 2 players that have the most shares
 		for c in corporations:
 			# Filter to shares bought up to the turn this order was passed + 1
-			shareholders = (s.player for s in c.share_set.filter(turn__lte=self.turn + 1))
+			shareholders = (s.player for s in c.share_set.filter(turn__lte=self.player.game.current_turn + 1))
 			top_holders = Counter(shareholders).most_common(2)
 			try:
 				# if they don't have the same number of shares, the first one gets a vote
@@ -81,6 +83,12 @@ class MDCVoteOrder(Order):
 					# Only one has share
 					vote_registry[top_holders[0][0]].append(c)
 		return vote_registry
+
+	def get_form(self, datas=None):
+		form = super(MDCVoteOrder, self).get_form(datas)
+		form.fields['coalition_weight'] = PlainTextField(initial=str(self.get_weight()))
+
+		return form
 
 	def description(self):
 		return u"Apporter %d voix pour la coalition « %s » du MDC" % (self.get_weight(), self.get_coalition_display())

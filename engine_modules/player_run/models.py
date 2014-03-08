@@ -5,15 +5,16 @@ from django.utils.functional import cached_property
 from engine_modules.corporation_run.models import OffensiveRunOrder
 from engine.models import Player
 from messaging.models import Message
+from website.widgets import PlainTextField
 
 information_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a réussi à retrouver les rapports de %s",
-		'citizens': u"Les informations personnelles de %s ont été dérobées par %s.",
+		'sponsor': u"Votre équipe a *réussi* une run d'**information** sur %s",
+		'citizens': u"Une run d'**information**, commanditée par %s, a *réussi* sur %s avec %s%% chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe a échoué et n'a rien trouvé concernant les agissements de %s",
-		'citizens': u"Une tentative de vol d'informations personnelles a été effectuée sur %s pour le compte de %s",
+		'sponsor': u"Votre équipe a *échoué* sa run d'*information** sur %s",
+		'citizens': u"Une run d'**information**, commanditée par %s, a *échoué* sur %s avec %s%% chances de réussite",
 	},
 }
 
@@ -38,7 +39,7 @@ class InformationOrder(OffensiveRunOrder):
 		secrets = self.target.secrets
 
 		target_orders = self.target.message_set.filter(flag=Message.RESOLUTION).order_by('-turn')
-		messages = "\n".join(["### Tour %s\n\n%s" % (o.turn, o.content) for o in target_orders])
+		messages = "\n".join(["### Tour %s\n\n%s" % (o.turn, o.content.replace('# ', '## ')) for o in target_orders])
 
 		self.player.add_message(
 			title="Run d'information sur %s" % (self.target),
@@ -48,24 +49,30 @@ class InformationOrder(OffensiveRunOrder):
 		)
 
 		category = u"Run d'Information"
-		content = information_messages['success']['sponsor'] % (self.target.name)
+		content = information_messages['success']['sponsor'] % (self.target)
 		self.player.add_note(category=category, content=content)
 
 		if detected:
 			# Send a note to citizens
-			content = information_messages['success']['citizens'] % (self.target.name, self.player.name)
+			content = information_messages['success']['citizens'] % (self.player, self.target, self.get_raw_probability())
 			self.notify_citizens(content)
 
 	def resolve_fail(self, detected):
 		# Send a note to the one who ordered the DataSteal
 		category = u"Run d'Information"
-		content = information_messages['fail']['sponsor'] % (self.target.name)
+		content = information_messages['fail']['sponsor'] % (self.target)
 		self.player.add_note(category=category, content=content)
 
 		if detected:
 			# Send a note to citizens
-			content = information_messages['fail']['citizens'] % (self.target.name, self.player.name)
+			content = information_messages['fail']['citizens'] % (self.player, self.target, self.get_raw_probability())
 			self.notify_citizens(content)
+
+	def get_form(self, datas=None):
+		form = super(InformationOrder, self).get_form(datas)
+		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
+
+		return form
 
 	def description(self):
 		return "Lancer une run d'information sur %s" % self.target
