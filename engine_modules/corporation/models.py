@@ -59,8 +59,7 @@ class BaseCorporation:
 		try:
 			self.derivative = meta['derivative'][0]
 		except KeyError:
-			# In the Model, the default value used to be 10
-			self.derivative = 10
+			self.derivative = None
 
 	def compile_effect(self, code, effect):
 		"""

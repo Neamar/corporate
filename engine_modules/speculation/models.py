@@ -14,6 +14,9 @@ class Derivative(models.Model):
 	def __unicode__(self):
 		return self.name
 
+	def get_sum(self, turn):
+		return AssetHistory.objects.filter(corporation__in=self.corporations.all(), turn=turn).aggregate(Sum('assets'))['assets__sum']
+
 
 class AbstractSpeculation(Order):
 	"""
@@ -102,8 +105,8 @@ class DerivativeSpeculationOrder(AbstractSpeculation):
 	def resolve(self):
 		# Build message
 		category = u"Spéculations"
-		current_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.corporations.all(), turn=self.player.game.current_turn).aggregate(Sum('assets'))['assets__sum']
-		previous_turn_sum = AssetHistory.objects.filter(corporation__in=self.derivative.corporations.all(), turn=self.player.game.current_turn - 1).aggregate(Sum('assets'))['assets__sum']
+		current_turn_sum = self.derivative.get_sum(self.player.game.current_turn)
+		previous_turn_sum = self.derivative.get_sum(self.player.game.current_turn - 1)
 		if current_turn_sum > previous_turn_sum and self.speculation == self.UP:
 			# Success
 			self.player.money += self.on_win_money()
@@ -119,6 +122,5 @@ class DerivativeSpeculationOrder(AbstractSpeculation):
 
 	def description(self):
 		return u"Miser %s du produit dérivé %s (gain : %s, perte : %s)" % (self.get_speculation_display(), self.derivative.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
-
 
 orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)

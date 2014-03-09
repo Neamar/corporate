@@ -7,23 +7,42 @@
 <table class="prop_table">
 <thead>
 <tr>
-  <th></th>
-  <th>Actifs</th>
-  <th>Prec.</th>
+	<th></th>
+	<th>Actifs</th>
+	<th title="Actifs du tour précédent">Préc.</th>
 </tr>
 </thead>
 <tbody>
 {% for corporation in corporations %}
 <tr>
-  <td><a href="{% url "website.views.datas.corporation" game_id=1 corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
-  <td class="important"><strong style="color:{% if corporation.assets > corporation.last_assets %}green{% elif corporation.assets < corporation.last_assets %}red{% endif %}">{{ corporation.assets }}</strong></td>
-  <td>{{ corporation.last_assets }}</td>
+	<td><a href="{% url "website.views.datas.corporation" game_id=1 corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
+	<td class="important"><strong style="color:{% if corporation.assets > corporation.last_assets %}green{% elif corporation.assets < corporation.last_assets %}red{% endif %}">{{ corporation.assets }}</strong></td>
+	<td>{{ corporation.last_assets }}</td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
 
 <div id="chart_div" style="width: 90%; height: 300px; margin:15px auto;"></div>
+
+<table class="prop_table">
+<thead>
+<tr>
+	<th></th>
+	<th>Actifs</th>
+	<th title="Actifs du tour précédent">Préc.</th>
+</tr>
+</thead>
+<tbody>
+{% for derivative in derivatives %}
+<tr>
+	<td title="{{ derivative.corporations.all|join:", " }}">{{ derivative.name|title }}</td>
+	<td><strong style="color:{% if derivative.assets > derivative.last_assets %}green{% elif derivative.assets < derivative.last_assets %}red{% endif %}">{{ derivative.assets }}</strong></td>
+	<td>{{ derivative.last_assets }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
 
 {% endblock content %}
 
@@ -32,17 +51,17 @@
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
-  google.load("visualization", "1", {packages:["corechart"]});
-  google.setOnLoadCallback(drawChart);
-  function drawChart() {
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+function drawChart() {
 	var data = google.visualization.arrayToDataTable([
-    ['Tour',
+	['Tour',
 		{% for c in sorted_corporations %}
 			'{{c.base_corporation.name}}',
 		{% endfor %}
 	],
 	{% for assets in assets_history_turn %}
-    ['{{ assets.grouper }}',
+	['{{ assets.grouper }}',
 		{% for a in assets.list %}
 			{{a.assets}},
 		{% endfor %}
@@ -59,9 +78,9 @@
 
 	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 	chart.draw(data, options);
-  }
+}
 
-  window.onresize = drawChart;
+window.onresize = drawChart;
 </script>
 {% endblock scripts %}
 
