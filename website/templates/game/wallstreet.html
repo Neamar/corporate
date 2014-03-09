@@ -61,7 +61,7 @@ function drawChart() {
 		{% endfor %}
 	],
 	{% for assets in assets_history_turn %}
-	['{{ assets.grouper }}',
+	['Tour #{{ assets.grouper }}',
 		{% for a in assets.list %}
 			{{a.assets}},
 		{% endfor %}
@@ -70,7 +70,7 @@ function drawChart() {
 	]);
 
 	var options = {
-		title: 'Bourse',
+		title: 'Wallstreet',
 		backgroundColor: 'transparent',
 		pointSize: 4,
 		curveType: 'function',
