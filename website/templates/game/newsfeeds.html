@@ -17,6 +17,10 @@
 {% endfor %}
 </p>
 
+{% if not newsfeeds %}
+	<p>Rien à signaler !</p>
+{% endif %}
+
 {% regroup newsfeeds by get_category_display as categories %}
 
 {% for category in categories %}
