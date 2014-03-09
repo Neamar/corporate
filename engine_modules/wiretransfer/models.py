@@ -21,4 +21,7 @@ class WiretransferOrder(Order):
 		self.recipient.money += self.amount
 		self.recipient.save()
 
+	def get_cost(self):
+		return self.amount
+
 orders = (WiretransferOrder,)
