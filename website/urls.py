@@ -10,6 +10,7 @@ urlpatterns = patterns('',
 # Datas views
 urlpatterns += patterns('',
 	url(r'^game/(?P<game_id>[0-9]+)/newsfeeds$', datas.newsfeeds),
+	url(r'^game/(?P<game_id>[0-9]+)/newsfeeds/(?P<turn>[0-9]+)$', datas.newsfeeds),
 	url(r'^game/(?P<game_id>[0-9]+)/comlink$', datas.comlink),
 	url(r'^game/(?P<game_id>[0-9]+)/comlink/(?P<message_id>[0-9]+)$', datas.message),
 	url(r'^game/(?P<game_id>[0-9]+)/wallstreet$', datas.wallstreet),

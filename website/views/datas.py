@@ -126,15 +126,17 @@ def shares(request, game_id):
 
 
 @login_required
-def newsfeeds(request, game_id):
+def newsfeeds(request, game_id, turn=None):
 	"""
 	Display newsfeed
 	"""
 	player = get_player(request, game_id)
 
-	newsfeeds = player.game.newsfeed_set.filter(turn=player.game.current_turn - 1).order_by('category')
+	if turn is None:
+		turn = player.game.current_turn - 1
+	newsfeeds = player.game.newsfeed_set.filter(turn=turn).order_by('category')
 
-	return render(request, 'game/newsfeeds.html', {"newsfeeds": newsfeeds})
+	return render(request, 'game/newsfeeds.html', {"newsfeeds": newsfeeds, "current_turn": int(turn), "turns": range(1, player.game.current_turn)})
 
 
 @login_required
