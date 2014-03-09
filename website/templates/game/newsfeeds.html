@@ -4,6 +4,23 @@
 {% block h1 %}Newsfeeds{% endblock %}
 
 {% block content %}
+<p class="top">
+{% for turn in turns %}
+ 	{% if current_turn == turn %}
+ 		{{ turn }}
+	{% else %}
+		<a href="{% url "website.views.datas.newsfeeds" game_id=1 turn=turn %}" title="Consulter les newsfeed du tour #{{ turn }}">{{ turn }}</a>
+ 	{% endif %}
+ 	{% if not forloop.last %}
+ 	&ndash;
+ 	{% endif %}
+{% endfor %}
+</p>
+
+{% if not newsfeeds %}
+	<p>Rien à signaler !</p>
+{% endif %}
+
 {% regroup newsfeeds by get_category_display as categories %}
 
 {% for category in categories %}

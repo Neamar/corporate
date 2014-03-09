@@ -62,6 +62,7 @@ class WebsiteTest(EngineTestCase):
 			reverse('website.views.datas.players', args=[self.g.id]),
 			reverse('website.views.datas.shares', args=[self.g.id]),
 			reverse('website.views.datas.newsfeeds', args=[self.g.id]),
+			reverse('website.views.datas.newsfeeds', args=[self.g.id, self.g.current_turn - 1]),
 			reverse('website.views.datas.comlink', args=[self.g.id]),
 			reverse('website.views.datas.message', args=[self.g.id, self.p.message_set.get().pk]),
 		]
@@ -84,6 +85,7 @@ class WebsiteTest(EngineTestCase):
 			reverse('website.views.datas.player', args=[self.g.id, self.p.id]),
 			reverse('website.views.datas.shares', args=[self.g.id]),
 			reverse('website.views.datas.newsfeeds', args=[self.g.id]),
+			reverse('website.views.datas.newsfeeds', args=[self.g.id, self.g.current_turn - 1]),
 			reverse('website.views.datas.comlink', args=[self.g.id]),
 			reverse('website.views.datas.message', args=[self.g.id, self.p.message_set.get().pk]),
 		]
@@ -104,6 +106,7 @@ class WebsiteTest(EngineTestCase):
 
 		pages = [
 			reverse('website.views.orders.delete_order', args=[self.g.id, 1]),
+			reverse('website.views.datas.newsfeeds', args=[self.g.id, self.g.current_turn + 1]),
 		]
 
 		for page in pages:

@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
@@ -126,15 +126,22 @@ def shares(request, game_id):
 
 
 @login_required
-def newsfeeds(request, game_id):
+def newsfeeds(request, game_id, turn=None):
 	"""
 	Display newsfeed
 	"""
 	player = get_player(request, game_id)
 
-	newsfeeds = player.game.newsfeed_set.filter(turn=player.game.current_turn - 1).order_by('category')
+	if turn is None:
+		turn = player.game.current_turn - 1
+	turn = int(turn)
 
-	return render(request, 'game/newsfeeds.html', {"newsfeeds": newsfeeds})
+	if turn >= player.game.current_turn:
+		return redirect('website.views.datas.newsfeeds', game_id=game_id)
+
+	newsfeeds = player.game.newsfeed_set.filter(turn=turn).order_by('category')
+
+	return render(request, 'game/newsfeeds.html', {"newsfeeds": newsfeeds, "current_turn": turn, "turns": range(1, player.game.current_turn)})
 
 
 @login_required
