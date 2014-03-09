@@ -98,6 +98,11 @@ body
    text-indent:2em;
 }
 
+#content li p {
+  text-indent: 0;
+  margin-bottom: 0;
+}
+
 #content h1, h2, h3, h4, h5
 {
    font-family:Syncopate, sans-serif;
