@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+from collections import Counter
 from django.db import models
 from django import forms
-from collections import Counter
+from django.core.exceptions import ValidationError
 
 from engine.models import Order, Game, Player
 from website.widgets import PlainTextField
@@ -89,6 +90,17 @@ class MDCVoteOrder(Order):
 		form.fields['coalition_weight'] = PlainTextField(initial=str(self.get_weight()))
 
 		return form
+
+	def get_form_class(self):
+		ParentOrderForm = super(MDCVoteOrder, self).get_form_class()
+
+		class OrderForm(ParentOrderForm):
+			def clean_coalition(self):
+				if self.cleaned_data['coalition'] is None:
+					raise ValidationError("Vous devez choisir une coalition.")
+				return self.cleaned_data['coalition']
+
+		return OrderForm
 
 	def description(self):
 		return u"Apporter %d voix pour la coalition « %s » du MDC" % (self.get_weight(), self.get_coalition_display())
