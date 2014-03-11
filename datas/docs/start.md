@@ -1,6 +1,6 @@
 title: Mise en place
 
-En tant que joueurs du Corporate Game, vous aurez le privilège d'incarner une brochette de cadres corpos prêts à s’étriper pour la domination de Manhattan. Tous ces personnages (ou **PJs** pour Personnages Joueurs) ont en commun d'avoir 2 millions en poche et une ambition dévorante. Vous êtes cependant invités à donner à votre champion une identité qui lui est propre, qui le démarquera de ses rivaux et vous donnera envie de le jouer.
+En tant que joueurs du Corporate Game, vous aurez le privilège d'incarner une brochette de cadres corpos prêts à s'étriper pour la domination de Manhattan. Tous ces personnages (ou **PJs** pour Personnages Joueurs) ont en commun d'avoir 2 millions en poche et une ambition dévorante. Vous êtes cependant invités à donner à votre champion une identité qui lui est propre, qui le démarquera de ses rivaux et vous donnera envie de le jouer.
 
 Chaque joueur doit trouver un avatar pour son PJ et rédiger un paragraphe ou deux détaillant son histoire, son apparence et sa réputation aux autres joueurs. Une connaissance basique de l'univers de Shadowrun dans lequel se déroule le jeu est vivement recommandée, mais pas strictement obligatoire.
 
@@ -18,7 +18,7 @@ Si vous le désirez, votre personnage peut commencer la partie avec une citoyenn
 Cela signifie que votre personnage a accompli son ascension au sein de cette corpo, peut-être même depuis son premier jour si ses parents en avaient la nationalité. Ses valeurs et sa personnalité ont probablement été en partie façonnées par la culture corporatiste dans laquelle il a lutté pour en arriver là où il est. 
 
 ## Background
-En plus d'une éventuelle nationalité corporatiste, vous *pouvez* choisir un et un seul **Background** pour votre personnage. Le Background d'un PJ détermine son passé, le genre de personne qu'il est ou du moins qu’il était avant de rassembler assez de fonds et d’influence pour se lancer à la conquête de Manhattan.
+En plus d'une éventuelle nationalité corporatiste, vous *pouvez* choisir un et un seul **Background** pour votre personnage. Le Background d'un PJ détermine son passé, le genre de personne qu'il est ou du moins qu'il était avant de rassembler assez de fonds et d'influence pour se lancer à la conquête de Manhattan.
 
 Le Background de votre personnage récompense en points de victoire (PVs) une certaine façon de jouer au Corporate Game. Assurez vous qu'elle correspond à vos préférences.
 
@@ -35,12 +35,12 @@ Le personnage est ancien shadowrunner, fixer, espion ou n'importe quelle autre r
 > Chaque tour, gagnez +1 PV si vous avez lancé un nombre de runs supérieur à votre IC.
 
 ### Vétéran galonné
-Le personnage a tourné le dos à une brillante carrière dans la police, l'armée ou les forces de sécurité corporatistes pour se lancer dans les affaires. Même si des conseillers en costard ont remplacés les officiers en uniforme, Manhattan n’est pour lui qu’un champ de bataille de plus.
+Le personnage a tourné le dos à une brillante carrière dans la police, l'armée ou les forces de sécurité corporatistes pour se lancer dans les affaires. Même si des conseillers en costard ont remplacés les officiers en uniforme, Manhattan n'est pour lui qu'un champ de bataille de plus.
 
 > Chaque tour, gagnez +1 PV si vous avez lancé un nombre de runs de Protection supérieur ou égal à votre IC.
 
 ### Affranchi
-En tant que boss du Yakuza, de la Triade, de la Mafia italienne, russe, irlandaise ou n'importe quel autre puissant syndicat du crime, le personnage compte appliquer les leçons qu’il apprise dans la rue : pour imposer le respect, il faut d'abord inspirer la peur.
+En tant que boss du Yakuza, de la Triade, de la Mafia italienne, russe, irlandaise ou n'importe quel autre puissant syndicat du crime, le personnage compte appliquer les leçons qu'il apprise dans la rue : pour imposer le respect, il faut d'abord inspirer la peur.
 
 > Chaque tour, gagnez +1 PV si vous avez lancé un nombre de runs de Sabotage supérieur ou égal à votre IC.
 
@@ -75,7 +75,7 @@ Homme politique, puissant syndicaliste ou membre du Rotary club, le personnage c
 > Gagnez +1 PV à chaque fois que vous avez voté dans la coalition gagnante du MDC.
 
 ### Homme de Loi
-Lorsqu’il était juge, avocat ou juriste, l'un des meilleurs de la ville, il gagnait sa vie en manipulant les lois pour satisfaire la volonté de ses maîtres. Maintenant qu’il a fait fortune, il les utilise comme une arme contre ceux qui voudraient l'empêcher de faire fructifier son pactole.
+Lorsqu'il était juge, avocat ou juriste, l'un des meilleurs de la ville, il gagnait sa vie en manipulant les lois pour satisfaire la volonté de ses maîtres. Maintenant qu'il a fait fortune, il les utilise comme une arme contre ceux qui voudraient l'empêcher de faire fructifier son pactole.
 
 > Si vous avez voté pour la coalition gagnante, gagnez +1 PV pour chaque joueur et chaque corpo dans la coalition opposée (celle qui subit les effets négatifs).
 
@@ -85,7 +85,7 @@ Gigolo, maître chanteur ou amuseur des soirées dépravées de la crème de Man
 > +2 PVs. De plus, à la fin de la partie, chaque joueur sur lequel vous avez réussi au moins une run d'Information vous rapporte 1 PV.
 
 ### Génie de l'image
-Une longue expérience de PR, de spin doctor, de publicitaire ou de gourou des médias a appris au personnage que le *paraître* est primordial, et que la meilleure stratégie pour se défaire d’un ennemi est de retourner contre lui ses propres excès.
+Une longue expérience de PR, de spin doctor, de publicitaire ou de gourou des médias a appris au personnage que le *paraître* est primordial, et que la meilleure stratégie pour se défaire d'un ennemi est de retourner contre lui ses propres excès.
 
 > Gagnez +1 PV pour chaque run de Sabotage ou d'Extraction réussie contre la corpo pour laquelle vous avez voté +1 ce tour ci ([cf. Vote](rules.md#le-vote)). Vos propres runs ne comptent pas.
 
@@ -95,7 +95,7 @@ Le personnage est la preuve vivante qu'il est possible de réussir en travaillan
 > À la fin de la partie, gagnez +6 PVs si vous avez plus de parts dans la corpo dont vous êtes citoyen que dans n'importe quelle autre corpo. Changer de nationalité corpo vous coûte 2 fois plus de PVs.
 
 ### Célébrité
-Rockstar, gourou, sportif de haut niveau, présentateur vedette ou playboy de tabloïd, le personnage est le chouchou du public new-yorkais. Son visage est sur tous les écrans et les médias s'arrachent l’exclusivité de ses derniers hauts faits. Cette renommée est une drogue puissante, qui le pousse en avant et l'incite à faire étalage de son succès à chaque occasion dans l'espoir de rester sous le feu des projecteurs.
+Rockstar, gourou, sportif de haut niveau, présentateur vedette ou playboy de tabloïd, le personnage est le chouchou du public new-yorkais. Son visage est sur tous les écrans et les médias s'arrachent l'exclusivité de ses derniers hauts faits. Cette renommée est une drogue puissante, qui le pousse en avant et l'incite à faire étalage de son succès à chaque occasion dans l'espoir de rester sous le feu des projecteurs.
 
 > À la fin de la partie, doublez vos points de nuyens.
 
@@ -109,7 +109,7 @@ Il a eu une vie, une carrière, des rêves, des projets... mais tout cela appart
 > * ou bien +12 PVs si la corpo s'est crashée.
 
 ### Effacé
-Le personnage est une page blanche, une énigme qui rend fou les curieux de la presse new-yorkaise. D'où vient-il? D'où sort-il tout cet argent? Est-ce seulement son vrai nom? Ceux qui se connectent sur la matrice pour dénicher des informations sur son passé n’en ressortent qu’avec des questions supplémentaires.
+Le personnage est une page blanche, une énigme qui rend fou les curieux de la presse new-yorkaise. D'où vient-il? D'où sort-il tout cet argent? Est-ce seulement son vrai nom? Ceux qui se connectent sur la matrice pour dénicher des informations sur son passé n'en ressortent qu'avec des questions supplémentaires.
 
 > -1 PV. Choisissez un autre Background, qui sera dissimulé dans vos **Secrets** (voir plus bas) au lieu d'être rendu public.
 
@@ -153,7 +153,7 @@ En résumé, pour concevoir un personnage, il vous faudra :
     Citoyen d'Horizon
 
     Public :
-    Lorsqu'on est un nain, il n'est pas facile d'être prit au sérieux, ne serait-ce que parce que tout le monde vous regarde de haut. Pour être traité comme des hommes, beaucoup se laissent pousser la barbe et adoptent une attitude bourrue et virile. Pas Jack. Jack s'impose par son sourire, son charme, la complicité qu'il arrive à créer d'un simple clin d'oeil amical. Jack à le don de mettre les autres à l'aise, de leur donner l'impression qu’ils ont droit à un traitement de faveur, et il lui en sont reconnaissants.
+    Lorsqu'on est un nain, il n'est pas facile d'être prit au sérieux, ne serait-ce que parce que tout le monde vous regarde de haut. Pour être traité comme des hommes, beaucoup se laissent pousser la barbe et adoptent une attitude bourrue et virile. Pas Jack. Jack s'impose par son sourire, son charme, la complicité qu'il arrive à créer d'un simple clin d'oeil amical. Jack à le don de mettre les autres à l'aise, de leur donner l'impression qu'ils ont droit à un traitement de faveur, et il lui en sont reconnaissants.
 
     Dès ses débuts à Orange County, Los Angeles, il a su exploiter les passerelles qu'Horizon propose à ceux qui brillent dans les réseaux sociaux, qui parviennent à influencer le consensus. Après quelques années de formation de première qualité aux frais de la corpo qui lui ont apprit les arcanes du monde corporatiste, il a été promu à un poste de manager qui lui a permit de cultiver son réseau et d'amasser suffisamment de ressources pour se lancer dans un défi à la hauteur de ses ambitions : devenir un des puissants de Manhattan.
 
