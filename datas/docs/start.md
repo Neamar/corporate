@@ -69,7 +69,7 @@ Rien ne destinait le personnage à rejoindre l'élite de Manhattan. Un héritage
 
 > Chaque tour, gagnez +1 PV si vous n'avez ni lancé de run ni effectué de spéculation.
 
-###  Power broker
+### Power broker
 Homme politique, puissant syndicaliste ou membre du Rotary club, le personnage connaît son chemin dans les couloirs du MDC, et sait quelle main serrer, quel bras tordre et quelle paume graisser pour arriver à ses fins.
 
 > Gagnez +1 PV à chaque fois que vous avez voté dans la coalition gagnante du MDC.
@@ -158,7 +158,7 @@ En résumé, pour concevoir un personnage, il vous faudra :
     Dès ses débuts à Orange County, Los Angeles, il a su exploiter les passerelles qu'Horizon propose à ceux qui brillent dans les réseaux sociaux, qui parviennent à influencer le consensus. Après quelques années de formation de première qualité aux frais de la corpo qui lui ont apprit les arcanes du monde corporatiste, il a été promu à un poste de manager qui lui a permit de cultiver son réseau et d'amasser suffisamment de ressources pour se lancer dans un défi à la hauteur de ses ambitions : devenir un des puissants de Manhattan.
 
     Secrets :
-    En public, Jack déborde de confiance et de charisme. En privé, cependant, il subit de terribles crises d'angoisses  qui le font suer à grosses goûtes et trembler comme une feuille. Avant chaque réunion d'importance, il doit aller aux toilettes pour vomir tripes et boyaux. Pour gérer son problème, il voit en secret un thérapeute de Boston qui l'aide à faire face à sa peur de l'échec. En plus des prescriptions, cependant, il s'auto médicamente avec toutes sortes de drogues qu'il achète au marché noir, avec de l'urine sans traces pour déjouer les tests de sa corpo. Ces tests, bien sûr, ne font qu'augmenter son stress.
+    En public, Jack déborde de confiance et de charisme. En privé, cependant, il subit de terribles crises d'angoisses qui le font suer à grosses goûtes et trembler comme une feuille. Avant chaque réunion d'importance, il doit aller aux toilettes pour vomir tripes et boyaux. Pour gérer son problème, il voit en secret un thérapeute de Boston qui l'aide à faire face à sa peur de l'échec. En plus des prescriptions, cependant, il s'auto médicamente avec toutes sortes de drogues qu'il achète au marché noir, avec de l'urine sans traces pour déjouer les tests de sa corpo. Ces tests, bien sûr, ne font qu'augmenter son stress.
 
     Stratégies :
     * Big Boss : 4 PVs. Jack se croit plus malin que les rois actuels du monde corporatiste, et entend bien le leur prouver.
@@ -180,6 +180,6 @@ En résumé, pour concevoir un personnage, il vous faudra :
     Shiro Kuboka est très intelligent, bien plus intelligent que ses patrons. Depuis des années, il a détourné des sommes colossales sous leur nez, puisant parfois dans les gains de ses collègues trop absorbés par les remous du marché. Tout cet argent est soigneusement entreposé dans un compte offshore d'une banque d'Antigua. 5 milliards de nuyens, c'est la limite qu'il s'est fixé avant disparaître sans laisser de trace avec sa famille pour couler des jours tranquilles dans un paradis tropical sous une fausse identité. Ce qui l'inquiète, c'est que son travail le passionne tellement qu'il n'est pas certain de pouvoir y renoncer le moment venu.
 
     Stratégies :
-    * L'Homme de Wall Street. 6PVs. Jouer en bourse est sa passion et son plus  grand talent.
+    * L'Homme de Wall Street. 6PVs. Jouer en bourse est sa passion et son plus grand talent.
     * Opportuniste. 4 PVs. Shiro Kuboka est quelqu'un de prudent, qui ne met jamais tous ses œufs dans le même panier.
     * Rentier. 4 PVs. Il ne perd pas de vu son objectif de 5 milliards.
