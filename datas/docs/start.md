@@ -109,7 +109,7 @@ Il a eu une vie, une carrière, des rêves, des projets... mais tout cela appart
 > * ou bien +12 PVs si la corpo s'est crashée.
 
 ### Effacé
-Le personnage est une page blanche, une énigme qui rend fou les curieux de la presse new-yorkaise. D'où vient-il? D'où sort-il tout cet argent? Est-ce seulement son vrai nom? Ceux qui se connectent sur la matrice pour dénicher des informations sur son passé n'en ressortent qu'avec des questions supplémentaires.
+Le personnage est une page blanche, une énigme qui rend fou les curieux de la presse new-yorkaise. D'où vient-il ? D'où sort-il tout cet argent ? Est-ce seulement son vrai nom ? Ceux qui se connectent sur la matrice pour dénicher des informations sur son passé n'en ressortent qu'avec des questions supplémentaires.
 
 > -1 PV. Choisissez un autre Background, qui sera dissimulé dans vos **Secrets** (voir plus bas) au lieu d'être rendu public.
 
