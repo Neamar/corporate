@@ -20,8 +20,8 @@ Ces nuyens sont comptés après les spéculations, mais avant les dividendes.
 
 ## Points de citoyen
 * À la fin de la partie, gagnez `+10 - (rang de la corpo dont vous êtes citoyen) PVs`, soit 4 PVs si votre corpo a fini rang 6.  
-*  `-(tour du changement) PVs` si vous avez changé de citoyenneté corpo en cours de jeu, soit -3 si vous avez changé de nationalité au tour 3.
-*  `-3 PVs` pour chaque autre joueur citoyen de la même corpo que vous à la fin du 8<sup>ème</sup> tour.
+* `-(tour du changement) PVs` si vous avez changé de citoyenneté corpo en cours de jeu, soit -3 si vous avez changé de nationalité au tour 3.
+* `-3 PVs` pour chaque autre joueur citoyen de la même corpo que vous à la fin du 8<sup>ème</sup> tour.
 
 ## Points de titres
 Si plus d'un joueur se disputent un même titre, les points associés sont divisés entre eux (arrondi à l'entier inférieur).
