@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from collections import Counter
 from django.db import models
-from django import forms
 from django.core.exceptions import ValidationError
 
 from engine.models import Order, Game, Player
@@ -79,7 +78,7 @@ class MDCVoteOrder(Order):
 				# if they don't have the same number of shares, the first one gets a vote
 				if top_holders[0][1] != top_holders[1][1]:
 					vote_registry[top_holders[0][0]].append(c)
-			except(IndexError):
+			except IndexError:
 				if len(top_holders) != 0:
 					# Only one has share
 					vote_registry[top_holders[0][0]].append(c)

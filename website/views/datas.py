@@ -38,7 +38,12 @@ def wallstreet(request, game_id):
 		derivative.assets = derivative.get_sum(player.game.current_turn - 1)
 		derivative.last_assets = derivative.get_sum(player.game.current_turn - 2)
 
-	return render(request, 'game/wallstreet.html', {"corporations": corporations, "assets_history": assets_history, "sorted_corporations": sorted_corporations, "derivatives": derivatives})
+	return render(request, 'game/wallstreet.html', {
+		"corporations": corporations,
+		"assets_history": assets_history,
+		"sorted_corporations": sorted_corporations,
+		"derivatives": derivatives
+	})
 
 
 @login_required
@@ -48,7 +53,9 @@ def corporations(request, game_id):
 	"""
 	player = get_player(request, game_id)
 	corporations = player.game.corporation_set.all()
-	return render(request, 'game/corporations.html', {"corporations": corporations})
+	return render(request, 'game/corporations.html', {
+		"corporations": corporations
+	})
 
 
 @login_required
@@ -57,9 +64,15 @@ def corporation(request, game_id, corporation_slug):
 	Corporation datas
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game_id)
-	players = Player.objects.filter(game_id=game_id, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share').select_related('citizenship')
+	players = Player.objects.filter(game_id=game_id, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
+	players = players.select_related('citizenship')
+
 	assets_history = corporation.assethistory_set.all()
-	return render(request, 'game/corporation.html', {"corporation": corporation, "players": players, "assets_history": assets_history})
+	return render(request, 'game/corporation.html', {
+		"corporation": corporation,
+		"players": players,
+		"assets_history": assets_history
+	})
 
 
 @login_required
@@ -88,7 +101,11 @@ def players(request, game_id):
 
 		player_shares.append(player_share)
 
-	return render(request, 'game/players.html', {"players": players, "corporations": corporations, "shares": player_shares})
+	return render(request, 'game/players.html', {
+		"players": players,
+		"corporations": corporations,
+		"shares": player_shares
+	})
 
 
 @login_required
@@ -99,7 +116,10 @@ def player(request, game_id, player_id):
 	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id, game_id=game_id)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
-	return render(request, 'game/player.html', {"player": player, "corporations": corporations})
+	return render(request, 'game/player.html', {
+		"player": player,
+		"corporations": corporations
+	})
 
 
 @login_required
@@ -128,7 +148,10 @@ def shares(request, game_id):
 
 		player_shares.append(player_share)
 
-	return render(request, 'game/shares.html', {"corporations": corporations, "shares": player_shares})
+	return render(request, 'game/shares.html', {
+		"corporations": corporations,
+		"shares": player_shares
+	})
 
 
 @login_required
@@ -147,7 +170,11 @@ def newsfeeds(request, game_id, turn=None):
 
 	newsfeeds = player.game.newsfeed_set.filter(turn=turn).order_by('category')
 
-	return render(request, 'game/newsfeeds.html', {"newsfeeds": newsfeeds, "current_turn": turn, "turns": range(1, player.game.current_turn)})
+	return render(request, 'game/newsfeeds.html', {
+		"newsfeeds": newsfeeds,
+		"current_turn": turn,
+		"turns": range(1, player.game.current_turn)
+	})
 
 
 @login_required
@@ -159,7 +186,9 @@ def comlink(request, game_id):
 
 	messages = player.message_set.all().order_by("-turn")
 
-	return render(request, 'game/comlink.html', {"messages": messages})
+	return render(request, 'game/comlink.html', {
+		"messages": messages
+	})
 
 
 @login_required
@@ -174,4 +203,6 @@ def message(request, game_id, message_id):
 	message.html, _ = parse_markdown(message.content)
 	message.html = mark_safe(message.html)
 
-	return render(request, 'game/message.html', {"message": message})
+	return render(request, 'game/message.html', {
+		"message": message
+	})
