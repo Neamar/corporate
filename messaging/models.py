@@ -32,11 +32,13 @@ class Newsfeed(models.Model):
 
 class Message(models.Model):
 	PRIVATE_MESSAGE = 'PM'
+	CASH_TRANSFER = 'CT'
 	RESOLUTION = 'RE'
 
 	MESSAGE_CHOICES = (
-		(PRIVATE_MESSAGE, 'Private Message'),
-		(RESOLUTION, 'Resolution'),
+		(PRIVATE_MESSAGE, 'Message privé'),
+		(RESOLUTION, 'Résolution'),
+		(CASH_TRANSFER, 'Envoi d\'argent'),
 	)
 
 	title = models.CharField(max_length=256)

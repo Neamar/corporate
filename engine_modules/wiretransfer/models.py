@@ -26,7 +26,7 @@ class WiretransferOrder(Order):
 			title="Transfert d'argent",
 			content="Un transfert de %s ¥ a été effectué de %s vers %s" % (self.amount, self.player, self.recipient),
 			turn=self.player.game.current_turn,
-			flag=Message.PRIVATE_MESSAGE,
+			flag=Message.CASH_TRANSFER,
 		)
 		m.save()
 		m.recipient_set.add(self.player, self.recipient)
