@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'engine_modules.speculation',
     'engine_modules.effects',
     'engine_modules.mdc',
+    'engine_modules.wiretransfer',
 )
 
 MIDDLEWARE_CLASSES = (
