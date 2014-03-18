@@ -7,7 +7,7 @@ from utils.read_markdown import read_markdown
 
 
 def index(request, page):
-	if(page == ''):
+	if page == '':
 		page = 'index'
 
 	page = '%s/datas/docs/%s.md' % (settings.BASE_DIR, page.replace('.', ''))

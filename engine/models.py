@@ -181,7 +181,9 @@ class Order(models.Model):
 	def to_child(self):
 		"""
 		By default, when we do player.order_set.all(), we retrieve Order instance.
-		In most case, we need to subclass all those orders to their correct orders type, and this function will convert a plain Order to the most specific Order subclass according to the stored `.type`.
+		In most case, we need to subclass all those orders to their correct orders type,
+		and this function will convert a plain Order to the most specific Order subclass
+		according to the stored `.type`.
 		"""
 		from engine.modules import orders_list
 
