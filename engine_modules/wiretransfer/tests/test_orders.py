@@ -12,7 +12,7 @@ class WiretransterOrderTest(EngineTestCase):
 
 	def test_wiretransfer_immediate(self):
 		"""
-		Wiretransfer sends data immediately
+		Wiretransfer sends money immediately
 		"""
 		wo = WiretransferOrder(
 			player=self.p,

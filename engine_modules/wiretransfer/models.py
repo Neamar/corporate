@@ -2,6 +2,7 @@
 from django.db import models
 
 from engine.models import Order, Player
+from messaging.models import Message
 
 
 class WiretransferOrder(Order):
@@ -20,6 +21,15 @@ class WiretransferOrder(Order):
 		self.player.save()
 		self.recipient.money += self.amount
 		self.recipient.save()
+
+		m = Message(
+			title="Transfert d'argent",
+			content="Un transfert de %s ¥ a été effectué de %s vers %s" % (self.amount, self.player, self.recipient),
+			turn=self.player.game.current_turn,
+			flag=Message.PRIVATE_MESSAGE,
+		)
+		m.save()
+		m.recipient_set.add(self.player, self.recipient)
 
 	def get_cost(self):
 		return self.amount
