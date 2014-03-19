@@ -26,6 +26,7 @@ sabotage_messages = {
 		'sponsor': u"Votre équipe a *réussi* un **sabotage** sur les opérations de %s",
 		'newsfeed': u"Un **sabotage** a *réussi* sur %s",
 		'citizens': u"Un **sabotage**, commandité par %s, a *réussi* sur %s avec %s%% chances de réussite",
+		'citizens_undetected': u"Un **sabotage** a *réussi* sur %s.",
 	},
 	'fail': {
 		'sponsor': u"Votre équipe a *échoué* son **sabotage** sur %s",
@@ -233,6 +234,11 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 		if detected:
 			# Send a note to citizens
 			content = sabotage_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.get_raw_probability())
+			self.notify_citizens(content)
+		else:
+			# Sabotage are public, even when not detected.
+			# Send another note to citizens, with less details
+			content = sabotage_messages['success']['citizens_undetected'] % (self.target_corporation.base_corporation.name)
 			self.notify_citizens(content)
 
 		# Send a note to everybody

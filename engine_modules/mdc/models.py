@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from django.db import models
-from django import forms
 from collections import Counter
+from django.db import models
+from django.core.exceptions import ValidationError
 
 from engine.models import Order, Game, Player
 from website.widgets import PlainTextField
@@ -78,7 +78,7 @@ class MDCVoteOrder(Order):
 				# if they don't have the same number of shares, the first one gets a vote
 				if top_holders[0][1] != top_holders[1][1]:
 					vote_registry[top_holders[0][0]].append(c)
-			except(IndexError):
+			except IndexError:
 				if len(top_holders) != 0:
 					# Only one has share
 					vote_registry[top_holders[0][0]].append(c)
@@ -89,6 +89,17 @@ class MDCVoteOrder(Order):
 		form.fields['coalition_weight'] = PlainTextField(initial=str(self.get_weight()))
 
 		return form
+
+	def get_form_class(self):
+		ParentOrderForm = super(MDCVoteOrder, self).get_form_class()
+
+		class OrderForm(ParentOrderForm):
+			def clean_coalition(self):
+				if self.cleaned_data['coalition'] is None:
+					raise ValidationError("Vous devez choisir une coalition.")
+				return self.cleaned_data['coalition']
+
+		return OrderForm
 
 	def description(self):
 		return u"Apporter %d voix pour la coalition « %s » du MDC" % (self.get_weight(), self.get_coalition_display())
