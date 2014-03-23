@@ -59,7 +59,7 @@ class ModelTest(EngineTestCase):
 
 	def test_game_resolve_current_turn_removes_notes(self):
 		"""
-		Check resolve_current_turn creates Resolution messages.
+		Check resolve_current_turn removes Note objects
 		"""
 
 		self.p.add_note(content="private")

@@ -52,30 +52,21 @@ class Message(models.Model):
 		return "%s (%s-%s)" % (self.title, self.flag, self.turn)
 
 	@staticmethod
-	def build_message_from_notes(message_type, notes, title, turn, opening="", ending=""):
+	def build_message_from_notes(message_type, notes, title, turn, opening=""):
 		"""
-		Generate from QuerySet notes a message, aggregating by notes titles. Will also remove notes from DB.
-		With notes category T1 and content C1, note T1 C2 and T2 C3 final message will be (markdown):
-
-		## T1
-		* C1
-		* C2
-
-		## T2
-		* C3
+		Generate from notes a message, aggregating by notes category (using order defined by Note.NOTE_CHOICES).
 		"""
 
-		notes = notes.order_by('category')
-		resolution_message = opening + "\n"
-		last_title = ""
+		notes = sorted(notes, key=lambda n: Note.NOTE_CHOICES.index((n.category, n.get_category_display())))
+
+		resolution_message = opening + "\n\n"
+		last_title = Note.GLOBAL
 
 		for note in notes:
 			if note.category != last_title:
-				resolution_message += u"\n### %s\n" % note.category
+				resolution_message += u"\n### %s\n" % note.get_category_display()
 			resolution_message += u"* %s\n" % note.content
 			last_title = note.category
-
-		resolution_message += "\n" + ending + "\n"
 
 		m = Message.objects.create(
 			title=title,
@@ -96,11 +87,11 @@ class Note(models.Model):
 	DIVIDEND = 'dividend'
 
 	NOTE_CHOICES = (
-		(GLOBAL, ''),
-		(RUNS, 'Runs'),
-		(MDC, 'MDC'),
-		(SPECULATION, 'Spéculations'),
-		(DIVIDEND, 'Dividendes'),
+		(GLOBAL, u'Global'),
+		(RUNS, u'Runs'),
+		(MDC, u'MDC'),
+		(SPECULATION, u'Spéculations'),
+		(DIVIDEND, u'Dividendes'),
 	)
 
 	category = models.CharField(max_length=15, choices=NOTE_CHOICES, default=GLOBAL)
