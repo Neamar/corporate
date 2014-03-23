@@ -89,7 +89,21 @@ class Message(models.Model):
 
 
 class Note(models.Model):
-	category = models.CharField(max_length=256)
+	GLOBAL = 'global'
+	RUNS = 'runs'
+	MDC = 'mdc'
+	SPECULATION = 'speculation'
+	DIVIDEND = 'dividend'
+
+	NOTE_CHOICES = (
+		(GLOBAL, ''),
+		(RUNS, 'Runs'),
+		(MDC, 'MDC'),
+		(SPECULATION, 'Spéculations'),
+		(DIVIDEND, 'Dividendes'),
+	)
+
+	category = models.CharField(max_length=15, choices=NOTE_CHOICES, default=GLOBAL)
 	content = models.TextField(blank=True)
 	recipient_set = models.ManyToManyField('engine.Player')
 	turn = models.PositiveSmallIntegerField()
