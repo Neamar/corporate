@@ -184,7 +184,7 @@ def comlink(request, game_id):
 	"""
 	player = get_player(request, game_id)
 
-	messages = player.message_set.all().order_by("-turn")
+	messages = player.message_set.all().order_by("-turn", "-pk")
 
 	return render(request, 'game/comlink.html', {
 		"messages": messages
