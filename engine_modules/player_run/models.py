@@ -4,7 +4,7 @@ from django.utils.functional import cached_property
 
 from engine_modules.corporation_run.models import OffensiveRunOrder
 from engine.models import Player
-from messaging.models import Message
+from messaging.models import Message, Note
 from website.widgets import PlainTextField
 
 information_messages = {
@@ -48,9 +48,8 @@ class InformationOrder(OffensiveRunOrder):
 			flag=Message.PRIVATE_MESSAGE,
 		)
 
-		category = u"Run d'Information"
 		content = information_messages['success']['sponsor'] % (self.target)
-		self.player.add_note(category=category, content=content)
+		self.player.add_note(category=Note.RUNS, content=content)
 
 		if detected:
 			# Send a note to citizens
@@ -59,9 +58,8 @@ class InformationOrder(OffensiveRunOrder):
 
 	def resolve_fail(self, detected):
 		# Send a note to the one who ordered the DataSteal
-		category = u"Run d'Information"
 		content = information_messages['fail']['sponsor'] % (self.target)
-		self.player.add_note(category=category, content=content)
+		self.player.add_note(category=Note.RUNS, content=content)
 
 		if detected:
 			# Send a note to citizens

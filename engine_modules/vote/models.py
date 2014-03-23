@@ -20,9 +20,8 @@ class VoteOrder(Order):
 		self.corporation_down.update_assets(-1)
 
 		# Send a note for final message
-		category = u"Votes"
 		content = u"Vous avez voté pour avantager %s au détriment de %s." % (self.corporation_up.base_corporation.name, self.corporation_down.base_corporation.name)
-		self.player.add_note(category=category, content=content)
+		self.player.add_note(content=content)
 
 	def description(self):
 		return u"Voter pour l'augmentation des actifs de %s et la diminution de %s" % (self.corporation_up.base_corporation.name, self.corporation_down.base_corporation.name)
