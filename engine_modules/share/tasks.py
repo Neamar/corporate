@@ -25,7 +25,6 @@ class DividendTask(ResolutionTask):
 	def run(self, game):
 		"""
 		Retrieve all Share from all players
-		TODO: megaoptimize queries
 		"""
 		all_shares = Share.objects.filter(player__game=game).select_related('corporation')
 
