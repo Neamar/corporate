@@ -50,7 +50,8 @@ class DividendTask(ResolutionTask):
 			if share.corporation == ladder[-1]:
 				dividend *= self.LAST_BONUS
 
-			share.player.money += int(dividend)
+			dividend = int(dividend)
+			share.player.money += dividend
 			share.player.save()
 
 			if share.count == 1:
