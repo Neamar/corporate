@@ -33,7 +33,7 @@ class DividendTask(ResolutionTask):
 		# Group shares by corporation and players
 		for share in all_shares:
 			# Reduce to keep non duplicate only
-			key = "%s,%s" % (share.corporation_id, share.player_id)
+			key = (share.corporation_id, share.player_id)
 			if key in shares:
 				shares[key].count += 1
 			else:
