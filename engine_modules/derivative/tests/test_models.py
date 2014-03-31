@@ -13,7 +13,7 @@ class OrdersTest(EngineTestCase):
 
 	def test_derivative_get_sum(self):
 		"""
-		Order should cost money
+		Should return assets
 		"""
 		initial_assets = self.c.assets
 
