@@ -121,15 +121,20 @@ body
 }
 
 @media screen and (max-width: 960px) {
-   body
-   {
-      background-image:none;
-   }
+  body
+  {
+    background-image:none;
+  }
 
-   #wrapper
-   {
-      width: 100%;
-   }
+  #wrapper
+  {
+    width: 100%;
+  }
+
+  #content
+  {
+   text-align: initial;
+  }
 }
 
 
