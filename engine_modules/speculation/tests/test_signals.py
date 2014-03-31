@@ -1,5 +1,6 @@
 from engine.testcases import EngineTestCase
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder, Derivative
+from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.derivative.models import Derivative
 from engine.exceptions import OrderNotAvailable
 
 

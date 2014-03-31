@@ -1,3 +1,5 @@
 from django.contrib import admin
+from engine_modules.derivative.models import Derivative
 
-# Register your models here.
+
+admin.site.register(Derivative)

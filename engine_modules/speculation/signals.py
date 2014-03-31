@@ -5,7 +5,8 @@ from engine.decorators import sender_instance_of
 from engine.dispatchs import validate_order, post_create
 from engine.exceptions import OrderNotAvailable
 from engine_modules.corporation.models import Corporation
-from engine_modules.speculation.models import Derivative, CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.derivative.models import Derivative
 
 
 @receiver(post_create, sender=Corporation)
