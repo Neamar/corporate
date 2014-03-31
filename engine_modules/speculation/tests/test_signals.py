@@ -12,10 +12,6 @@ class SignalsTest(EngineTestCase):
 		self.d.save()
 		self.d.corporations.add(self.c, self.c2)
 
-	def test_derivatives_created(self):
-		nikkei = self.g.derivative_set.get(name="Nikkei")
-		self.assertIn(self.c, nikkei.corporations.all())
-
 	def test_max_speculation(self):
 		"""
 		Can't speculate more than influence
