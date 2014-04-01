@@ -47,16 +47,16 @@ class Game(models.Model):
 		"""
 		Construct the content of a newsfeed, avoiding the messages already diplayed within the same game.
 		"""
-		nb_already_displayed_messages=Newsfeed.objects.filter(category=category, game=self,path=path).count() #requête pour compter le nombre de newsfeed qui ont déjà le même chemin sur la game
+		nb_already_displayed_messages = Newsfeed.objects.filter(category=category, game=self, path=path).count()
 		try:
-			fichier=open(settings.BASE_DIR+'/datas/newsfeeds/'+category+'/'+path+'/'+unicode(nb_already_displayed_messages+1)+'.md')
+			fichier = open(settings.BASE_DIR + '/datas/newsfeeds/' + category + '/' + path + '/' + unicode(nb_already_displayed_messages + 1) + '.md')
 		except IOError:
-			try :
-				fichier=open(settings.BASE_DIR+'/datas/newsfeeds/'+category+'/'+path+'/_'+'.md')
+			try:
+				fichier = open(settings.BASE_DIR + '/datas/newsfeeds/' + category + '/' + path + '/_' + '.md')
 			except IOError:
-				print 'Inexistent path : %s' % path+'/_'+'.md'
+				print 'Inexistent path : %s' % path + '/_' + '.md'
 
-		kwargs['content']=fichier.readlines()
+		kwargs['content'] = fichier.readlines()
 		fichier.close()
 		self.add_newsfeed(**kwargs)
 

@@ -21,7 +21,7 @@ class Newsfeed(models.Model):
 	content = models.TextField(blank=True)
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
-	path =  models.CharField(max_length=250) #used to pick the right message (and not a previouly displayed message)
+	path =  models.CharField(max_length=250)
 
 	def __unicode__(self):
 		return "%s newsfeeds" % self.get_category_display()
