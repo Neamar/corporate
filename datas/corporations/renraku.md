@@ -5,11 +5,11 @@ sabotage: 10
 extraction: 20
 detection: 30
 on_first:
-    corporations.get(base_corporation_slug='neonet').update_assets(-1)
-    corporations.get(base_corporation_slug='shiawase').update_assets(-1)
+    update(corporations.get(base_corporation_slug='neonet'), -1)
+    update(corporations.get(base_corporation_slug='shiawase'), -1)
 on_last:
-    corporations.get(base_corporation_slug='sony').update_assets(-1)
-    corporations.get(base_corporation_slug='shiawase').update_assets(1)
+    update(corporations.get(base_corporation_slug='sony'), -1)
+    update(corporations.get(base_corporation_slug='shiawase'), 1)
 derivative: Nikkei
 
 Renraku, encore sous le choc de la débâcle de l'arcologie de Seattle, ne s'est pas encore complètement remise du Crash. La corpo y a perdu un paquet de pognon, et plus important encore, la possibilité de prendre le dessus sur le marché de la réalité augmentée. Dans le monde des megacorps, le second à l'arrivée est également le premier perdant, et Renraku n'a même pas fini second.

@@ -5,11 +5,11 @@ sabotage: 10
 extraction: 30
 detection: 30
 on_first:
-    corporations.get(base_corporation_slug='renraku').update_assets(-1)
-    corporations.get(base_corporation_slug='sony').update_assets(1)
+    update(corporations.get(base_corporation_slug='renraku'), -1)
+    update(corporations.get(base_corporation_slug='sony'), 1)
 on_last:
-    corporations.get(base_corporation_slug='sony').update_assets(-1)
-    ladder[-2].update_assets(-1)
+    update(corporations.get(base_corporation_slug='sony'), -1)
+    update(ladder[-2], -1)
 derivative: Nikkei
 
 La plus vieille de toutes les mégas, Shiawase s'est fait connaître comme l'entreprise à l'origine de la décision de justice qui a mené le monde vers la loi d'extraterritorialité que les corpos adorent encore aujourd'hui. En tant que *zaibatsu* japonaise classique, Shiawase est gérée comme une entreprise "familiale", avec des employés qui signent des contrats à vie et qui vont souvent jusqu'à se marier au sein de la corpo.
