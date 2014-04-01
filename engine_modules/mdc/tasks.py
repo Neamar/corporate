@@ -5,7 +5,7 @@ from collections import Counter
 from engine.tasks import ResolutionTask
 from engine_modules.corporation.models import AssetDelta
 from engine_modules.mdc.models import MDCVoteSession, MDCVoteOrder
-from messaging.models import Newsfeed
+from messaging.models import Newsfeed, Note
 
 
 class MDCVoteTask(ResolutionTask):
@@ -23,6 +23,7 @@ class MDCVoteTask(ResolutionTask):
 
 		for order in orders:
 			votes[order.coalition] += order.get_weight()
+			order.player.add_note(category=Note.MDC, content="Vous avez rejoint la coalition *%s*." % order.get_coalition_display())
 
 		top_line = Counter(votes).most_common(2)
 		# Default to None
@@ -44,6 +45,21 @@ class MDCVoteTask(ResolutionTask):
 
 		if official_line is not None:
 			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté %s" % s.get_coalition_display())
+
+			# Message all player who voted for this line
+			n = Note.objects.create(
+				category=Note.MDC,
+				content="Le MDC a suivi votre coalition.",
+				turn=game.current_turn,
+			)
+			n.recipient_set = [order.player for order in orders if order.coalition == official_line]
+
+			n = Note.objects.create(
+				category=Note.MDC,
+				content="Le MDC a rejoint la coalition %s." % s.get_coalition_display(),
+				turn=game.current_turn,
+			)
+			n.recipient_set = [order.player for order in orders if order.coalition == MDCVoteOrder.MDC_OPPOSITIONS[official_line]]
 
 
 class MDCLineCPUBTask(ResolutionTask):

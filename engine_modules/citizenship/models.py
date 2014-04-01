@@ -25,11 +25,9 @@ class CitizenShipOrder(Order):
 		self.player.citizenship.corporation = self.corporation
 		self.player.citizenship.save()
 
-		# Send a note for final message
-		category = u"Citoyenneté"
 		content = u"Vous êtes désormais citoyen de la mégacorporation %s." % self.corporation.base_corporation.name
+		self.player.add_note(content=content)
 		newsfeed_content = u"%s est maintenant citoyen de la mégacorporation %s" % (self.player, self.corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
 		self.player.game.add_newsfeed(category=Newsfeed.PEOPLE, content=newsfeed_content)
 
 	def description(self):

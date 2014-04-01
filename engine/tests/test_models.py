@@ -59,10 +59,10 @@ class ModelTest(EngineTestCase):
 
 	def test_game_resolve_current_turn_removes_notes(self):
 		"""
-		Check resolve_current_turn creates Resolution messages.
+		Check resolve_current_turn removes Note objects
 		"""
 
-		self.p.add_note(category="category", content="private")
+		self.p.add_note(content="private")
 
 		# sanity check
 		self.assertEqual(1, Note.objects.count())
@@ -237,7 +237,7 @@ class ModelTest(EngineTestCase):
 		Check add_note on Player
 		"""
 
-		n = self.p.add_note(category="category", content="something")
+		n = self.p.add_note(content="something")
 		self.assertEqual(list(n.recipient_set.all()), [self.p])
 
 	def test_player_build_resolution_message(self):
@@ -245,7 +245,7 @@ class ModelTest(EngineTestCase):
 		Check build_resolution_message on Player
 		"""
 
-		self.p.add_note(category="category", content="private")
+		self.p.add_note(content="private")
 
 		m = self.p.build_resolution_message()
 		self.assertEqual(m.flag, Message.RESOLUTION)

@@ -2,8 +2,8 @@
 from django.db import models
 from random import randint
 from engine_modules.run.models import RunOrder
+from messaging.models import Newsfeed, Note
 from engine_modules.corporation.models import Corporation, AssetDelta
-from messaging.models import Note
 from engine.models import Player
 from website.widgets import PlainTextField
 
@@ -135,9 +135,8 @@ class OffensiveRunOrder(RunOrder):
 		"""
 		Send a message to target_corporation citizens
 		"""
-		category = u"matrix-buzz"
 		n = Note(
-			category=category,
+			category=Note.RUNS,
 			content=content,
 			turn=self.player.game.current_turn,
 		)
@@ -175,24 +174,21 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 		self.stealer_corporation.update_assets(+1)
 
 		# Send a note to the one who ordered the DataSteal
-		category = u"Run de Datasteal"
 		content = datasteal_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
+		self.player.add_note(category=Note.RUNS, content=content)
 
 		if detected:
 			# Send a note to citizens
 			content = datasteal_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 			self.notify_citizens(content)
 			# Send a note to everybody
-			category = u"matrix-buzz"
 			content = datasteal_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=category, content=content)
+			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
 	def resolve_fail(self, detected):
 		# Send a note to the one who ordered the DataSteal
-		category = u"Run de Datasteal"
 		content = datasteal_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
+		self.player.add_note(category=Note.RUNS, content=content)
 
 		if detected:
 			# Send a note to citizens
@@ -200,9 +196,8 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 			self.notify_citizens(content)
 
 			# Send a note to everybody
-			category = u"matrix-buzz"
 			content = datasteal_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=category, content=content)
+			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
 	def description(self):
 		return u"Envoyer une équipe voler des données de %s pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
@@ -227,9 +222,8 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 		self.target_corporation.update_assets(-2, category=AssetDelta.RUN_SABOTAGE)
 
 		# Send a note to the one who ordered the Sabotage
-		category = u"Run de Sabotage"
 		content = sabotage_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
+		self.player.add_note(category=Note.RUNS, content=content)
 
 		if detected:
 			# Send a note to citizens
@@ -242,15 +236,13 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 			self.notify_citizens(content)
 
 		# Send a note to everybody
-		category = u"matrix-buzz"
 		content = sabotage_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
-		self.player.game.add_newsfeed(category=category, content=content)
+		self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
 	def resolve_fail(self, detected):
 		# Send a note to the one who ordered the Sabotage
-		category = u"Run de Sabotage"
 		content = sabotage_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
+		self.player.add_note(category=Note.RUNS, content=content)
 
 		if detected:
 			# Send a note to citizens
@@ -258,9 +250,8 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 			self.notify_citizens(content)
 
 			# Send a note to everybody
-			category = u"matrix-buzz"
 			content = sabotage_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=category, content=content)
+			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
 	def description(self):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
@@ -282,9 +273,8 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 		self.kidnapper_corporation.update_assets(1)
 
 		# Send a note to the one who ordered the Extraction
-		category = u"Run d'Extraction"
 		content = extraction_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
+		self.player.add_note(category=Note.RUNS, content=content)
 
 		if detected:
 			# Send a note to citizens
@@ -292,15 +282,13 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 			self.notify_citizens(content)
 
 			# Send a note to everybody
-			category = u"matrix-buzz"
 			content = extraction_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=category, content=content)
+			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
 	def resolve_fail(self, detected):
 		# Send a note to the one who ordered the DataSteal
-		category = u"Run d'Extraction"
 		content = extraction_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
-		self.player.add_note(category=category, content=content)
+		self.player.add_note(category=Note.RUNS, content=content)
 
 		if detected:
 			# Send a note to citizens
@@ -308,9 +296,8 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 			self.notify_citizens(content)
 
 			# Send a note to everybody
-			category = u"matrix-buzz"
 			content = extraction_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=category, content=content)
+			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
 	def description(self):
 		return u"Réaliser une extraction de %s vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())

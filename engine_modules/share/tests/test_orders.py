@@ -64,11 +64,11 @@ class OrdersTest(EngineTestCase):
 		Note differ after first share
 		"""
 		self.o.resolve()
-		n = Note.objects.filter(category="Parts").last()
+		n = Note.objects.filter(category=Note.GLOBAL).last()
 		self.assertIn(u'première', n.content)
 
 		self.o.resolve()
-		n = Note.objects.filter(category="Parts").last()
+		n = Note.objects.filter(category=Note.GLOBAL).last()
 		self.assertIn(u'2ème', n.content)
 
 	def test_order_special_cost_for_first_corpo_and_not_citizen(self):
