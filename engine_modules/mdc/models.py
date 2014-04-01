@@ -43,6 +43,16 @@ class MDCVoteOrder(Order):
 			)
 		),
 	)
+
+	MDC_OPPOSITIONS = {
+		CPUB: DEVE,
+		DEVE: CPUB,
+		CCIB: TRAN,
+		TRAN: CCIB,
+		BANK: DERE,
+		DERE: BANK
+	}
+
 	title = "Choisir une coalition"
 
 	coalition = models.CharField(max_length=4, choices=MDC_COALITION_CHOICES, blank=True, null=True, default=None)
