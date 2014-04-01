@@ -281,6 +281,7 @@ Autrement dit, de grosses possibilités de coopération pour d'énormes opportun
     Le Developement Urbain voté au MDC rapporte 1 actif à  Renraku et Sony. Horizon, en opposition directe, est malmenée et perd 1 actif.
 
 ## Classement initial
-Au début du jeu, les corpos reçoivent respectivement 13, 12, 11, 11, 10, 10, 9, 9, 8 et 7 actifs, dans l'ordre décroissant du classement. Le classement initial est laissé au hasard à deux exceptions près : 
+Au début du jeu, les corpos reçoivent respectivement 13, 12, 11, 11, 10, 10, 9, 9, 8 et 7 actifs, dans l'ordre décroissant du classement. Le classement initial est laissé au hasard à deux exceptions près :
+
 * Ares fait partie des 3 premières corpos.
 * Spinrad et Prometheus ne peuvent pas recevoir un rang supérieur à 5, pour un maximum de 10 actifs.
