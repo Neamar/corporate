@@ -5,10 +5,10 @@ sabotage: 20
 extraction: 10
 detection: 60
 on_first:
-    corporations.get(base_corporation_slug='horizon').update_assets(-1)
-    ladder[-1].update_assets(-1)
+    update(corporations.get(base_corporation_slug='horizon'), -1)
+    update(ladder[-1], -1)
 on_last:
-    corporations.get(base_corporation_slug='horizon').update_assets(+2)
+    update(corporations.get(base_corporation_slug='horizon'), 2)
 
 Basée à Atzlan (le Mexique avant qu'elle n'en prenne totalement le contrôle), Aztechnology a des oeufs dans bien plus de paniers que n'importe quelle autre megacorp. Elle produit de tout, des jeux tridéos aux armements militaires, des accessoires pour mage à la nourriture pour chiens. Acheter n'importe quel article de consommation courante a de bonnes chances de contribuer à sa cagnotte.
 

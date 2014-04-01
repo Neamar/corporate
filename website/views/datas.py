@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
 
-from engine_modules.corporation.models import Corporation, AssetDelta
+from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 from engine_modules.share.models import Share
 from engine.models import Player
@@ -33,7 +33,7 @@ def wallstreet(request, game_id):
 		for corporation in corporations:
 			corporation.last_assets = delta_hash[corporation.pk]
 
-			detailed_delta = corporation.assetdelta_set.filter(turn=game.current_turn - 2)
+			detailed_delta = corporation.assetdelta_set.filter(turn=game.current_turn - 1)
 			for detail in detailed_delta:
 				setattr(corporation, detail.category, getattr(corporation, detail.category, 0) + detail.delta)
 				delta_categories[detail.category] = {
@@ -42,7 +42,7 @@ def wallstreet(request, game_id):
 				}
 
 			unknown = corporation.assets - corporation.last_assets - sum([ad.delta for ad in detailed_delta])
-			setattr(corporation, 'unknown', unknown)
+			setattr(corporation, 'unknown', unknown if unknown != 0 else "")
 		delta_categories['unknown'] = {
 			'shortcut': '?',
 			'display': 'Modifications non publiques'
