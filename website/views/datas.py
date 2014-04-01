@@ -23,12 +23,12 @@ def wallstreet(request, game_id):
 
 	# Table datas
 	corporations = game.get_ladder()
+	delta_categories = set()
 	if game.current_turn > 1:
 		# Insert last turn assets
 		delta = AssetHistory.objects.filter(corporation__game=game, turn=game.current_turn - 2)
 		delta_hash = {ah.corporation_id: ah.assets for ah in delta}
 
-		delta_categories = set([])
 		for corporation in corporations:
 			corporation.last_assets = delta_hash[corporation.pk]
 			detailed_delta = corporation.assetdelta_set.filter(turn=game.current_turn - 2)
