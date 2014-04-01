@@ -64,7 +64,6 @@ def wallstreet(request, game_id):
 		"sorted_corporations": sorted_corporations,
 		"derivatives": derivatives,
 		"delta_categories": delta_categories,
-		"AssetDelta": AssetDelta,
 	})
 
 
