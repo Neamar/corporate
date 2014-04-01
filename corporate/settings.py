@@ -26,6 +26,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+RAVEN_CONFIG = {
+    'dsn': 'https://e07c2d0b4b994a79b74dbfe78fe91629:a996f7f6c7c74a3cafcacdbe7d51411c@app.getsentry.com/21834',
+}
 
 # Application definition
 
@@ -38,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'raven.contrib.django.raven_compat',
     'website',
     'docs',
     'engine',
