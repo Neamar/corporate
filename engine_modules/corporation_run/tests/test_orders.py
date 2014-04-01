@@ -162,8 +162,41 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		dso.target_corporation.base_corporation.detection = 100
 
 		dso.resolve()
-		self.assertIn(dso.target_corporation.base_corporation.name, self.g.newsfeed_set.get().content)
 
+		previous_message=self.g.newsfeed_set.get().content
+		self.assertIn('Shiawase', self.g.newsfeed_set.get().content) #test bon fichier
+		dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c,
+			additional_percents=7,
+		)
+		dso.save()
+
+		dso.target_corporation.base_corporation.detection = 100
+
+		dso.resolve()
+		self.assertEqual(previous_message, self.g.newsfeed_set.last().content) # test si premier message différent du deuxième
+
+		a = 0
+		while a < 4:
+			a += 1
+			self.p.money=2000
+			previous_message=self.g.newsfeed_set.last().content
+			self.assertIn('Shiawase', self.g.newsfeed_set.last().content)
+			dso = DataStealOrder(
+				stealer_corporation=self.c2,
+				player=self.p,
+				target_corporation=self.c,
+				additional_percents=7,
+			)
+			dso.save()
+
+			dso.target_corporation.base_corporation.detection = 100
+
+			dso.resolve()
+		self.maxDiff=None
+		self.assertEqual(previous_message, self.g.newsfeed_set.last().content) #test butoir
 
 class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):
