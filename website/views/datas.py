@@ -23,7 +23,8 @@ def wallstreet(request, game_id):
 
 	# Table datas
 	corporations = game.get_ladder()
-	delta_categories = set()
+	delta_categories = {}
+
 	if game.current_turn > 1:
 		# Insert last turn assets
 		delta = AssetHistory.objects.filter(corporation__game=game, turn=game.current_turn - 2)
@@ -34,8 +35,10 @@ def wallstreet(request, game_id):
 			detailed_delta = corporation.assetdelta_set.filter(turn=game.current_turn - 2)
 			for detail in detailed_delta:
 				setattr(corporation, detail.category, getattr(corporation, detail.category, 0) + detail.delta)
-				delta_categories.add(detail.category)
-		print delta_categories
+				delta_categories[detail.category] = {
+					"shortcut": detail.get_category_shortcut(),
+					"display": detail.get_category_display()
+				}
 
 	# Graph datas
 	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
@@ -52,7 +55,8 @@ def wallstreet(request, game_id):
 		"assets_history": assets_history,
 		"sorted_corporations": sorted_corporations,
 		"derivatives": derivatives,
-		"delta_categories": delta_categories
+		"delta_categories": delta_categories,
+		"AssetDelta": AssetDelta,
 	})
 
 

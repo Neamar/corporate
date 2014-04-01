@@ -129,7 +129,18 @@ class AssetDelta(models.Model):
 		(MDC, 'MDC'),
 	)
 
+	SHORTCUTS = (
+		(EFFECT_FIRST, 'P'),
+		(EFFECT_LAST, 'D'),
+		(RUN_SABOTAGE, 'S'),
+		(RUN_EXTRACTION, 'E'),
+		(MDC, 'M'),
+	)
+
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
 	corporation = models.ForeignKey(Corporation)
 	delta = models.SmallIntegerField()
 	turn = models.SmallIntegerField(default=0)
+
+	def get_category_shortcut(self):
+		return dict(AssetDelta.SHORTCUTS)[self.category]

@@ -4,4 +4,4 @@ register = template.Library()
 
 @register.filter
 def get_item(object, key):
-    return getattr(object, key, None)
+	return getattr(object, key, "")
