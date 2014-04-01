@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
 
-from engine_modules.corporation.models import Corporation
+from engine_modules.corporation.models import Corporation, AssetDelta
 from engine_modules.corporation_asset_history.models import AssetHistory
 from engine_modules.share.models import Share
 from engine.models import Player
@@ -19,30 +19,39 @@ def wallstreet(request, game_id):
 	Wallstreet datas
 	"""
 	player = get_player(request, game_id)
+	game = player.game
 
 	# Table datas
-	corporations = player.game.get_ladder()
-	if player.game.current_turn > 1:
-		delta = AssetHistory.objects.filter(corporation__game=player.game, turn=player.game.current_turn - 2)
+	corporations = game.get_ladder()
+	if game.current_turn > 1:
+		# Insert last turn assets
+		delta = AssetHistory.objects.filter(corporation__game=game, turn=game.current_turn - 2)
 		delta_hash = {ah.corporation_id: ah.assets for ah in delta}
+
+		delta_categories = set([])
 		for corporation in corporations:
 			corporation.last_assets = delta_hash[corporation.pk]
+			detailed_delta = corporation.assetdelta_set.filter(turn=game.current_turn - 2)
+			for detail in detailed_delta:
+				corporation[detail.category] = getattr(corporation, detail.category, 0)
+				delta_categories.append(detail.category)
 
 	# Graph datas
 	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
-	assets_history = AssetHistory.objects.filter(corporation__game=player.game).order_by('turn', 'corporation')
+	assets_history = AssetHistory.objects.filter(corporation__game=game).order_by('turn', 'corporation')
 
 	# Derivatives
-	derivatives = player.game.derivative_set.all()
+	derivatives = game.derivative_set.all()
 	for derivative in derivatives:
-		derivative.assets = derivative.get_sum(player.game.current_turn - 1)
-		derivative.last_assets = derivative.get_sum(player.game.current_turn - 2)
+		derivative.assets = derivative.get_sum(game.current_turn - 1)
+		derivative.last_assets = derivative.get_sum(game.current_turn - 2)
 
 	return render(request, 'game/wallstreet.html', {
 		"corporations": corporations,
 		"assets_history": assets_history,
 		"sorted_corporations": sorted_corporations,
-		"derivatives": derivatives
+		"derivatives": derivatives,
+		"delta_categories": delta_categories
 	})
 
 
