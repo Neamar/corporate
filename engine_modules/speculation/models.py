@@ -1,22 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.db.models import Sum
-from engine.models import Order, Game
+from engine.models import Order
 from engine_modules.corporation.models import Corporation
-from engine_modules.corporation_asset_history.models import AssetHistory
+from engine_modules.derivative.models import Derivative
 from messaging.models import Note
-
-
-class Derivative(models.Model):
-	name = models.CharField(max_length=30)
-	game = models.ForeignKey(Game)
-	corporations = models.ManyToManyField(Corporation)
-
-	def __unicode__(self):
-		return self.name
-
-	def get_sum(self, turn):
-		return AssetHistory.objects.filter(corporation__in=self.corporations.all(), turn=turn).aggregate(Sum('assets'))['assets__sum']
 
 
 class AbstractSpeculation(Order):
@@ -34,7 +21,7 @@ class AbstractSpeculation(Order):
 	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 
 	def get_cost(self):
-		return self.investment * self.BASE_COST
+		return (self.investment or 0) * self.BASE_COST
 
 	def on_win_money(self):
 		"""

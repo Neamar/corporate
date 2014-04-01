@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.speculation.models import Derivative
+from engine_modules.derivative.models import Derivative
 
 
 class OrdersTest(EngineTestCase):
@@ -13,7 +13,7 @@ class OrdersTest(EngineTestCase):
 
 	def test_derivative_get_sum(self):
 		"""
-		Order should cost money
+		Should return assets
 		"""
 		initial_assets = self.c.assets
 
