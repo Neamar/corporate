@@ -91,11 +91,20 @@ class Corporation(models.Model):
 	def base_corporation(self):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
+	def apply_effect(self, code, ladder):
+		context = {
+			'game': self.game,
+			'corporations': self.game.corporation_set,
+			'ladder': ladder
+		}
+
+		exec(code, context)
+
 	def on_first_effect(self, ladder):
-		exec(self.base_corporation.on_first, {'game': self.game, 'corporations': self.game.corporation_set, 'ladder': ladder})
+		self.apply_effect(self.base_corporation.on_first, ladder)
 
 	def on_last_effect(self, ladder):
-		exec(self.base_corporation.on_last, {'game': self.game, 'corporations': self.game.corporation_set, 'ladder': ladder})
+		self.apply_effect(self.base_corporation.on_last, ladder)
 
 	def update_assets(self, delta, category=None):
 		"""
