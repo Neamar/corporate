@@ -43,6 +43,22 @@ class Game(models.Model):
 		n = Newsfeed.objects.create(turn=self.current_turn, game=self, **kwargs)
 		return n
 
+	def add_newsfeed_from_template(self, path, **kwargs):
+		"""
+		Construct the content of a newsfeed, avoiding the messages already diplayed within the same game.
+		"""
+		nb_already_displayed_messages=Newsfeed.Object.filter(category=category, game=self.game,path=path).count() #requête pour compter le nombre de newsfeed qui ont déjà le même chemin sur la game
+		try:
+			fichier=open(BASE_DIR+'/datas/newsfeeds/'+category+'/'+path+'/'+(nb_already_displayed_messages+1)+'.md')
+		except IOError:
+			try :
+				fichier=open(BASE_DIR+'/datas/newsfeeds/'+category+'/'+path+'/_'+'.md')
+			except IOError:
+				print 'Inexistent path : %s' % path+'/_'+'.md'
+
+		content=fichier.readlines()
+		self.add_newsfeed(content,**kwargs)
+
 	def __unicode__(self):
 		return "Corporate Game: %s" % self.city
 
