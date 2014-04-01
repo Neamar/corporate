@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from itertools import chain
-
 from collections import Counter
 from engine.tasks import ResolutionTask
 from engine_modules.corporation.models import AssetDelta
@@ -18,8 +16,8 @@ class MDCVoteTask(ResolutionTask):
 	def run(self, game):
 		orders = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
 		votes = {}
-		for t in chain.from_iterable(dict(MDCVoteOrder.MDC_COALITION_CHOICES).values()):
-			votes[t[0]] = 0
+		for t in MDCVoteOrder.MDC_OPPOSITIONS.values():
+			votes[t] = 0
 
 		for order in orders:
 			votes[order.coalition] += order.get_weight()
