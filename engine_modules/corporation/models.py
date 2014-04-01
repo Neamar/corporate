@@ -92,10 +92,15 @@ class Corporation(models.Model):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
 	def apply_effect(self, code, delta_category, ladder):
+
+		def update(corporation, delta):
+			corporation.update_assets(delta, category=delta_category)
+
 		context = {
 			'game': self.game,
 			'corporations': self.game.corporation_set,
-			'ladder': ladder
+			'ladder': ladder,
+			'update': update
 		}
 
 		exec code in {}, context

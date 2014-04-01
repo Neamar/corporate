@@ -5,11 +5,11 @@ sabotage: 30
 extraction: 10
 detection: 30
 on_first:
-    ladder[-1].update_assets(+1)
-    ladder[-2].update_assets(+1)
+    update(ladder[-1], 1)
+    update(ladder[-2], 1)
 on_last:
-    ladder[0].update_assets(-1)
-    ladder[1].update_assets(-1)
+    update(ladder[0], -1)
+    update(ladder[1], -1)
 derivative: Dow Jones
 
 Dirigée depuis Détroit par le playboy multimilliardaire Damien Knight, Ares a la réputation d'être très "américaine" dans sa conception : enthousiaste, militariste, patriote et individualiste. Cette nostalgie de la "bonne vieille Amérique d'autrefois" fait que Manhattan lui va comme un gant.
