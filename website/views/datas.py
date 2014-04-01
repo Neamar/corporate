@@ -56,7 +56,8 @@ def wallstreet(request, game_id):
 	derivatives = game.derivative_set.all()
 	for derivative in derivatives:
 		derivative.assets = derivative.get_sum(game.current_turn - 1)
-		derivative.last_assets = derivative.get_sum(game.current_turn - 2)
+		if game.current_turn > 1:
+			derivative.last_assets = derivative.get_sum(game.current_turn - 2)
 
 	return render(request, 'game/wallstreet.html', {
 		"corporations": corporations,
