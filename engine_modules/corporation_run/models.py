@@ -2,7 +2,7 @@
 from django.db import models
 from random import randint
 from engine_modules.run.models import RunOrder
-from engine_modules.corporation.models import Corporation
+from engine_modules.corporation.models import Corporation, AssetDelta
 from messaging.models import Note
 from engine.models import Player
 from website.widgets import PlainTextField
@@ -224,7 +224,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 	PROTECTION_TYPE = "sabotage"
 
 	def resolve_success(self, detected):
-		self.target_corporation.update_assets(-2)
+		self.target_corporation.update_assets(-2, category=AssetDelta.RUN_SABOTAGE)
 
 		# Send a note to the one who ordered the Sabotage
 		category = u"Run de Sabotage"
@@ -278,7 +278,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 	kidnapper_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve_success(self, detected):
-		self.target_corporation.update_assets(-1)
+		self.target_corporation.update_assets(-1, category=AssetDelta.RUN_EXTRACTION)
 		self.kidnapper_corporation.update_assets(1)
 
 		# Send a note to the one who ordered the Extraction
