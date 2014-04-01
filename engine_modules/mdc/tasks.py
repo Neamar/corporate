@@ -3,6 +3,7 @@ from itertools import chain
 
 from collections import Counter
 from engine.tasks import ResolutionTask
+from engine_modules.corporation.models import AssetDelta
 from engine_modules.mdc.models import MDCVoteSession, MDCVoteOrder
 from messaging.models import Newsfeed, Note
 
@@ -79,12 +80,12 @@ class MDCLineCPUBTask(ResolutionTask):
 		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.CPUB)
 		for o in win_votes:
 			for c in o.get_friendly_corporations():
-				c.update_assets(1)
+				c.update_assets(1, category=AssetDelta.MDC)
 
 		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.DEVE)
 		for o in loss_votes:
 			for c in o.get_friendly_corporations():
-				c.update_assets(-1)
+				c.update_assets(-1, category=AssetDelta.MDC)
 
 
 class MDCLineDEVETask(ResolutionTask):
@@ -106,12 +107,12 @@ class MDCLineDEVETask(ResolutionTask):
 		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.DEVE)
 		for o in win_votes:
 			for c in o.get_friendly_corporations():
-				c.update_assets(1)
+				c.update_assets(1, category=AssetDelta.MDC)
 
 		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.CPUB)
 		for o in loss_votes:
 			for c in o.get_friendly_corporations():
-				c.update_assets(-1)
+				c.update_assets(-1, category=AssetDelta.MDC)
 
 
 tasks = (MDCVoteTask, MDCLineCPUBTask, MDCLineDEVETask)

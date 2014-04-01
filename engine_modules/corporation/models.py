@@ -97,12 +97,50 @@ class Corporation(models.Model):
 	def on_last_effect(self, ladder):
 		exec(self.base_corporation.on_last, {'game': self.game, 'corporations': self.game.corporation_set, 'ladder': ladder})
 
-	def update_assets(self, delta):
+	def update_assets(self, delta, category=None):
 		"""
 		Update assets values, and save the model
 		"""
 		self.assets += delta
 		self.save()
 
+		if category is not None:
+			self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
+
 	def __unicode__(self):
 		return "%s (%s)" % (self.base_corporation.name, self.assets)
+
+
+class AssetDelta(models.Model):
+	"""
+	Store delta for assets
+	"""
+	EFFECT_FIRST = 'effect-first'
+	EFFECT_LAST = 'effect-last'
+	RUN_SABOTAGE = 'sabotage'
+	RUN_EXTRACTION = 'extraction'
+	MDC = 'mdc'
+
+	CATEGORY_CHOICES = (
+		(EFFECT_FIRST, 'Effet premier'),
+		(EFFECT_LAST, 'Effet dernier'),
+		(RUN_SABOTAGE, 'Runs de Sabotage'),
+		(RUN_EXTRACTION, 'Runs d\'Extraction'),
+		(MDC, 'MDC'),
+	)
+
+	SHORTCUTS = (
+		(EFFECT_FIRST, 'P'),
+		(EFFECT_LAST, 'D'),
+		(RUN_SABOTAGE, 'S'),
+		(RUN_EXTRACTION, 'E'),
+		(MDC, 'M'),
+	)
+
+	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
+	corporation = models.ForeignKey(Corporation)
+	delta = models.SmallIntegerField()
+	turn = models.SmallIntegerField(default=0)
+
+	def get_category_shortcut(self):
+		return dict(AssetDelta.SHORTCUTS)[self.category]
