@@ -48,6 +48,7 @@ class Game(models.Model):
 		Construct the content of a newsfeed, avoiding the messages already diplayed within the same game.
 		"""
 		nb_already_displayed_messages=Newsfeed.Object.filter(category=category, game=self.game,path=path).count() #requête pour compter le nombre de newsfeed qui ont déjà le même chemin sur la game
+		print BASE_DIR+'/datas/newsfeeds/'+category+'/'+path+'/'+(nb_already_displayed_messages+1)+'.md'
 		try:
 			fichier=open(BASE_DIR+'/datas/newsfeeds/'+category+'/'+path+'/'+(nb_already_displayed_messages+1)+'.md')
 		except IOError:
