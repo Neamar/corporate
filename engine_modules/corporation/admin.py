@@ -18,5 +18,5 @@ admin.site.register(Corporation, CorporationAdmin)
 
 
 class AssetDeltaAdmin(admin.ModelAdmin):
-	list_display = ('corporation', 'delta', 'category')
+	list_display = ('corporation', 'delta', 'category', 'turn')
 admin.site.register(AssetDelta, AssetDeltaAdmin)

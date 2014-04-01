@@ -33,8 +33,9 @@ def wallstreet(request, game_id):
 			corporation.last_assets = delta_hash[corporation.pk]
 			detailed_delta = corporation.assetdelta_set.filter(turn=game.current_turn - 2)
 			for detail in detailed_delta:
-				corporation[detail.category] = getattr(corporation, detail.category, 0)
-				delta_categories.append(detail.category)
+				setattr(corporation, detail.category, getattr(corporation, detail.category, 0) + detail.delta)
+				delta_categories.add(detail.category)
+		print delta_categories
 
 	# Graph datas
 	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
