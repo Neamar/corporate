@@ -105,7 +105,7 @@ class Corporation(models.Model):
 		self.save()
 
 		if category is not None:
-			self.assetdelta_set.create(category=category, delta=delta)
+			self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
 
 	def __unicode__(self):
 		return "%s (%s)" % (self.base_corporation.name, self.assets)
@@ -132,3 +132,4 @@ class AssetDelta(models.Model):
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
 	corporation = models.ForeignKey(Corporation)
 	delta = models.SmallIntegerField()
+	turn = models.SmallIntegerField(default=0)
