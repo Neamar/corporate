@@ -184,11 +184,11 @@ Chaque spéculation peut viser :
 
 Si le spéculateur se trompe, il perd la somme misée.
 
-Si sa spéculation est juste, il fait un bénéfice de :
+Si sa spéculation est juste, il fait un bénéfice d'une côte de :
 
-* 1 fois la somme misée s'il a spéculé sur la **fluctuation d'un produit dérivé** -- soit une cote de **1 pour 2**. (S’il a placé 100 000 ny, il en récupère 200 000)
-* 2 fois la somme misée s'il a spéculé qu’une corpo finirait le tour **première ou dernière** -- soit une cote de **1 pour 3**.
-* 4 fois la somme misée s’il a spéculé qu’une corpo finirait le tour à un autre rang (**de deuxième à avant-dernière**) -- soit une cote de **1 pour 5**.
+* **1 pour 2** s'il a spéculé sur la **fluctuation d'un produit dérivé**. (S’il a placé 100 000 ny, il les conserve et gagne 200 000 ny suplémentaires)
+* **1 pour 3** s'il a spéculé qu’une corpo finirait le tour **première ou dernière**.
+* **1 pour 5** s’il a spéculé qu’une corpo finirait le tour à un autre rang (**de deuxième à avant-dernière**) .
 
 Le MDC peut modifier ces côtes, voir plus bas.
 
@@ -255,7 +255,7 @@ L'ouverture de bases de données privées offre de nouvelles possibilités de ru
 Effets : 
 
 * Au prochain tour, les **joueurs** appartenant à la coalition **Transparence** gagnent un bonus de **+10%** sur toutes leurs runs de **Datasteal**, **Sabotage**, **Extraction**. 
-* Les **joueurs** appartenant à la coalition **Contrôles ciblés** subissent **-10%** sur toutes leurs runs **Datasteal**, **Sabotage**, **Extraction** et **Information**.
+* Les **joueurs** appartenant à la coalition **Contrôles ciblés** subissent **-10%** sur toutes leurs runs **Datasteal**, **Sabotage** et **Extraction**.
 
 ### Garde-fous bancaires
 Malgré les protestations de Wall Street, de nouvelles régulations pour l'ECSE entrent en action. Elles garantissent davantage de sécurité pour ceux en mesure d'en tirer profit, mais limitent les opérations de certains.
@@ -275,5 +275,13 @@ Effets :
 
 Autrement dit, de grosses possibilités de coopération pour d'énormes opportunités de backstab.
 
+    Jack Finn a acheté 3 parts dans Horizon, ce qui est davantage que n'importe quel autre joueur. Lorsqu'au tour 4 il choisit de rejoindre la coalition Contrats Publics, la corpo est donc considérée comme membre de cette coalition pour le tour. 
+    Shiro Kuboka étant le seul a avoir investi dans les corpos Renraku et Sony, elles le suivent lorsqu'il opte pour la coalition Dévelopement Urbain.
+    Si aucun autre joueur n'intervient dans le MDC ce tour, la coalition Dévelopement Urbain a une valeur de 3 (1 joueur + 2 corpos), ce qui l'emporte sur la coalition Contrats Publics (1 joueur + 1 corpo = 2).
+    Le Developement Urbain voté au MDC rapporte 1 actif à  Renraku et Sony. Horizon, en opposition directe, est malmenée et perd 1 actif.
+
 ## Classement initial
-Au début du jeu, les corpos reçoivent respectivement 13, 12, 11, 11, 10, 10, 9, 9, 8 et 7 actifs, dans l'ordre décroissant du classement. Le classement initial est laissé au hasard à deux exceptions près : Spinrad et Prometheus ne peuvent pas recevoir un rang supérieur à 5, pour un maximum de 10 actifs.
+Au début du jeu, les corpos reçoivent respectivement 13, 12, 11, 11, 10, 10, 9, 9, 8 et 7 actifs, dans l'ordre décroissant du classement. Le classement initial est laissé au hasard à deux exceptions près :
+
+* Ares fait partie des 3 premières corpos.
+* Spinrad et Prometheus ne peuvent pas recevoir un rang supérieur à 5, pour un maximum de 10 actifs.
