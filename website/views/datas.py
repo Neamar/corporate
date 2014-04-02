@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-
+from collections import OrderedDict
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
@@ -23,7 +23,7 @@ def wallstreet(request, game_id):
 
 	# Table datas
 	corporations = game.get_ladder()
-	delta_categories = {}
+	delta_categories = OrderedDict()
 
 	if game.current_turn > 1:
 		# Insert last turn assets
@@ -33,7 +33,7 @@ def wallstreet(request, game_id):
 		for corporation in corporations:
 			corporation.last_assets = delta_hash[corporation.pk]
 
-			detailed_delta = corporation.assetdelta_set.filter(turn=game.current_turn - 1)
+			detailed_delta = corporation.assetdelta_set.filter(turn=game.current_turn - 1).order_by('category')
 			for detail in detailed_delta:
 				setattr(corporation, detail.category, getattr(corporation, detail.category, 0) + detail.delta)
 				delta_categories[detail.category] = {
