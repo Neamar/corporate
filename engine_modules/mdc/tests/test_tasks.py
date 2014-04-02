@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from engine.models import Player
 from engine.testcases import EngineTestCase
+from engine_modules.share.models import Share
 from engine_modules.mdc.models import MDCVoteOrder
 
 
@@ -39,3 +41,21 @@ class TaskTest(EngineTestCase):
 
 		mdc_vote_session = (self.g.mdcvotesession_set.get(turn=self.g.current_turn))
 		self.assertEqual(mdc_vote_session.coalition, None)
+
+	def test_coalition_newsfeed(self):
+		"""
+		Beneficiary and victims get a newsfeed message
+		"""
+		v2 = MDCVoteOrder(
+			player=self.p2,
+			coalition=MDCVoteOrder.BANK
+		)
+		v2.save()
+
+		# Give priority to player 1
+		Share(corporation=self.c, player=self.p, turn=self.g.current_turn).save()
+
+		self.g.resolve_current_turn()
+
+		self.assertIn("MDC a suivi", self.p.message_set.get().content)
+		self.assertIn(u"MDC a rejoint la coalition opposée", self.p2.message_set.get().content)

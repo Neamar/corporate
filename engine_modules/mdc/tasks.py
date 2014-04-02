@@ -54,7 +54,7 @@ class MDCVoteTask(ResolutionTask):
 
 			n = Note.objects.create(
 				category=Note.MDC,
-				content="Le MDC a rejoint la coalition %s." % s.get_coalition_display(),
+				content=u"Le MDC a rejoint la coalition opposée %s." % s.get_coalition_display(),
 				turn=game.current_turn,
 			)
 			n.recipient_set = [order.player for order in orders if order.coalition == MDCVoteOrder.MDC_OPPOSITIONS[official_line]]
