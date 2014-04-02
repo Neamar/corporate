@@ -105,7 +105,7 @@ class WebsiteTest(EngineTestCase):
 		o.save()
 
 		pages = [
-			reverse('website.views.orders.delete_order', args=[self.g.id, 1]),
+			reverse('website.views.orders.delete_order', args=[self.g.id, o.pk]),
 			reverse('website.views.datas.newsfeeds', args=[self.g.id, self.g.current_turn + 1]),
 		]
 
