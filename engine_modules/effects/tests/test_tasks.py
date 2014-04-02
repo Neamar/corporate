@@ -36,7 +36,7 @@ class TasksTest(EngineTestCase):
 		initial_assets = self.first_corporation.assets
 
 		# Change the default code
-		self.update_effect(self.first_corporation, 'on_first', "corporations.get(base_corporation_slug='%s').update_assets(5)" % self.first_corporation.base_corporation_slug)
+		self.update_effect(self.first_corporation, 'on_first', "update(corporations.get(base_corporation_slug='%s'), 5)" % self.first_corporation.base_corporation_slug)
 		self.update_effect(self.last_corporation, 'on_last', "")
 
 		self.g.resolve_current_turn()
@@ -50,8 +50,23 @@ class TasksTest(EngineTestCase):
 		initial_assets = self.last_corporation.assets
 
 		# Change the default code
-		self.update_effect(self.last_corporation, 'on_last', "corporations.get(base_corporation_slug='%s').update_assets(-5)" % self.last_corporation.base_corporation_slug)
+		self.update_effect(self.last_corporation, 'on_last', "update(corporations.get(base_corporation_slug='%s'), -5)" % self.last_corporation.base_corporation_slug)
 		self.update_effect(self.first_corporation, 'on_first', "")
 
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.last_corporation).assets, initial_assets - 5)
+
+	@override_base_corporations
+	def test_update_create_assetdelta(self):
+		"""
+		Using update() function in code creates AssetDelta
+		"""
+		# Change the default code
+		self.update_effect(self.last_corporation, 'on_last', "update(corporations.get(base_corporation_slug='%s'), -5)" % self.last_corporation.base_corporation_slug)
+		self.update_effect(self.first_corporation, 'on_first', "")
+
+		self.g.resolve_current_turn()
+		asset_delta = self.last_corporation.assetdelta_set.get()
+		self.assertEqual(asset_delta.category, asset_delta.EFFECT_LAST)
+		self.assertEqual(asset_delta.delta, -5)
+		self.assertEqual(asset_delta.corporation, self.last_corporation)
