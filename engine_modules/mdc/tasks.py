@@ -16,10 +16,10 @@ class MDCVoteTask(ResolutionTask):
 	def run(self, game):
 		orders = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
 
-		votes_count = {}
+		official_line = self.get_official_line(orders)
+
 		votes_details = {}
 		for t in MDCVoteOrder.MDC_OPPOSITIONS.values():
-			votes_count[t] = 0
 			votes_details[t] = {
 				"players": [],
 				"corporations": []
@@ -27,22 +27,10 @@ class MDCVoteTask(ResolutionTask):
 
 		# Build global dict
 		for order in orders:
-			votes_count[order.coalition] += order.get_weight()
 			votes_details[order.coalition]["players"].append(order.player)
 			votes_details[order.coalition]["corporations"] += order.get_friendly_corporations()
 
 			order.player.add_note(category=Note.MDC, content="Vous avez rejoint la coalition *%s*." % order.get_coalition_display())
-
-		top_line = Counter(votes_count).most_common(2)
-		# Default to None
-		official_line = None
-		try:
-			if top_line[0][1] != top_line[1][1]:
-				official_line = top_line[0][0]
-		except IndexError:
-			# Only one line voted for
-			if len(top_line) != 0:
-				official_line = top_line[0][0]
 
 		s = MDCVoteSession(
 			coalition=official_line,
@@ -68,6 +56,30 @@ class MDCVoteTask(ResolutionTask):
 				turn=game.current_turn,
 			)
 			n.recipient_set = [order.player for order in orders if order.coalition == MDCVoteOrder.MDC_OPPOSITIONS[official_line]]
+
+	def get_official_line(self, orders):
+		"""
+		With specified orders, retrieve official line.
+		"""
+
+		votes_count = {}
+		for t in MDCVoteOrder.MDC_OPPOSITIONS.values():
+			votes_count[t] = 0
+
+		for order in orders:
+			votes_count[order.coalition] += order.get_weight()
+
+		top_line = Counter(votes_count).most_common(2)
+		# Default to None
+		official_line = None
+		try:
+			if top_line[0][1] != top_line[1][1]:
+				official_line = top_line[0][0]
+		except IndexError:
+			# Only one line voted for
+			if len(top_line) != 0:
+				official_line = top_line[0][0]
+		return official_line
 
 
 class MDCLineCPUBTask(ResolutionTask):
