@@ -3,6 +3,7 @@ from engine.models import Player
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share
 from engine_modules.mdc.models import MDCVoteOrder
+from messaging.models import Newsfeed
 
 
 class TaskTest(EngineTestCase):
@@ -42,9 +43,9 @@ class TaskTest(EngineTestCase):
 		mdc_vote_session = (self.g.mdcvotesession_set.get(turn=self.g.current_turn))
 		self.assertEqual(mdc_vote_session.coalition, None)
 
-	def test_coalition_newsfeed(self):
+	def test_coalition_resolution_message(self):
 		"""
-		Beneficiary and victims get a newsfeed message
+		Beneficiary and victims get a note in resolution message
 		"""
 		v2 = MDCVoteOrder(
 			player=self.p2,

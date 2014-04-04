@@ -15,15 +15,25 @@ class MDCVoteTask(ResolutionTask):
 
 	def run(self, game):
 		orders = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
-		votes = {}
-		for t in MDCVoteOrder.MDC_OPPOSITIONS.values():
-			votes[t] = 0
 
+		votes_count = {}
+		votes_details = {}
+		for t in MDCVoteOrder.MDC_OPPOSITIONS.values():
+			votes_count[t] = 0
+			votes_details[t] = {
+				"players": [],
+				"corporations": []
+			}
+
+		# Build global dict
 		for order in orders:
-			votes[order.coalition] += order.get_weight()
+			votes_count[order.coalition] += order.get_weight()
+			votes_details[order.coalition]["players"].append(order.player)
+			votes_details[order.coalition]["corporations"] += order.get_friendly_corporations()
+
 			order.player.add_note(category=Note.MDC, content="Vous avez rejoint la coalition *%s*." % order.get_coalition_display())
 
-		top_line = Counter(votes).most_common(2)
+		top_line = Counter(votes_count).most_common(2)
 		# Default to None
 		official_line = None
 		try:
@@ -42,7 +52,7 @@ class MDCVoteTask(ResolutionTask):
 		s.save()
 
 		if official_line is not None:
-			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté %s" % s.get_coalition_display())
+			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté *%s*" % s.get_coalition_display())
 
 			# Message all player who voted for this line
 			n = Note.objects.create(
