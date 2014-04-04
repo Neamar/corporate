@@ -16,21 +16,8 @@ class MDCVoteTask(ResolutionTask):
 	def run(self, game):
 		orders = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
 
+		self.send_resolution_message(orders)
 		official_line = self.get_official_line(orders)
-
-		votes_details = {}
-		for t in MDCVoteOrder.MDC_OPPOSITIONS.values():
-			votes_details[t] = {
-				"players": [],
-				"corporations": []
-			}
-
-		# Build global dict
-		for order in orders:
-			votes_details[order.coalition]["players"].append(order.player)
-			votes_details[order.coalition]["corporations"] += order.get_friendly_corporations()
-
-			order.player.add_note(category=Note.MDC, content="Vous avez rejoint la coalition *%s*." % order.get_coalition_display())
 
 		s = MDCVoteSession(
 			coalition=official_line,
@@ -39,9 +26,9 @@ class MDCVoteTask(ResolutionTask):
 		)
 		s.save()
 
-		if official_line is not None:
-			game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté *%s*" % s.get_coalition_display())
+		self.send_newsfeed(orders, s)
 
+		if official_line is not None:
 			# Message all player who voted for this line
 			n = Note.objects.create(
 				category=Note.MDC,
@@ -80,6 +67,45 @@ class MDCVoteTask(ResolutionTask):
 			if len(top_line) != 0:
 				official_line = top_line[0][0]
 		return official_line
+
+	def send_resolution_message(self, orders):
+		"""
+		Send a note to each player, to remember his choice.
+		"""
+		for order in orders:
+			order.player.add_note(category=Note.MDC, content="Vous avez rejoint la coalition *%s*." % order.get_coalition_display())
+
+	def send_newsfeed(self, orders, mdc_vote_session):
+		"""
+		Build newsfeed message. Contains official line, and breakdown for each coalition.
+		"""
+
+		if mdc_vote_session.coalition is not None:
+			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté *%s*" % mdc_vote_session.get_coalition_display())
+
+		votes_details = {}
+
+		# Build global dict
+		for order in orders:
+			if(order.coalition not in votes_details):
+				votes_details[order.coalition] = {
+					"display": order.get_coalition_display(),
+					"players": [],
+					"corporations": []
+				}
+			votes_details[order.coalition]["players"].append(order.player)
+			votes_details[order.coalition]["corporations"] += order.get_friendly_corporations()
+
+		for voters in votes_details.values():
+			coalition = voters["display"]
+			players = ", ".join([unicode(p) for p in voters["players"]])
+			corporations = ", ".join([unicode(c.base_corporation.name) for c in voters["corporations"]])
+
+			content = u"La ligne %s a été votée par %s" % (coalition, players)
+			if corporations:
+				content += " et %s" % corporations
+
+			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=content)
 
 
 class MDCLineCPUBTask(ResolutionTask):

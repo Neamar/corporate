@@ -60,3 +60,34 @@ class TaskTest(EngineTestCase):
 
 		self.assertIn("MDC a suivi", self.p.message_set.get().content)
 		self.assertIn(u"MDC a rejoint la coalition opposée", self.p2.message_set.get().content)
+
+	def test_coalition_newsfeed(self):
+		"""
+		Newsfeeds describes everything.
+		"""
+		self.p.name = "p1"
+		self.p.save()
+		self.p2.name = "p2"
+		self.p2.save()
+
+		v2 = MDCVoteOrder(
+			player=self.p2,
+			coalition=MDCVoteOrder.BANK
+		)
+		v2.save()
+
+		# Give priority to player 1
+		s = Share(corporation=self.c, player=self.p, turn=self.g.current_turn)
+		s.save()
+
+		self.g.resolve_current_turn()
+
+		self.assertEqual(3, Newsfeed.objects.count())
+
+		all_ns = "\n".join([n.content for n in Newsfeed.objects.all()])
+
+		self.assertIn(self.p.name, all_ns)
+		self.assertIn(self.p2.name, all_ns)
+		self.assertIn(s.corporation.base_corporation.name, all_ns)
+		self.assertIn(self.v.get_coalition_display(), all_ns)
+		self.assertIn(v2.get_coalition_display(), all_ns)
