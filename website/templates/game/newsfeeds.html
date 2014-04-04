@@ -9,7 +9,7 @@
  	{% if current_turn == turn %}
  		{{ turn }}
 	{% else %}
-		<a href="{% url "website.views.datas.newsfeeds" game_id=1 turn=turn %}" title="Consulter les newsfeed du tour #{{ turn }}">{{ turn }}</a>
+		<a href="{% url "website.views.datas.newsfeeds" game_id=game.pk turn=turn %}" title="Consulter les newsfeed du tour #{{ turn }}">{{ turn }}</a>
  	{% endif %}
  	{% if not forloop.last %}
  	&ndash;

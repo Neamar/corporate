@@ -60,6 +60,7 @@ def wallstreet(request, game_id):
 			derivative.last_assets = derivative.get_sum(game.current_turn - 2)
 
 	return render(request, 'game/wallstreet.html', {
+		"game": game,
 		"corporations": corporations,
 		"assets_history": assets_history,
 		"sorted_corporations": sorted_corporations,
@@ -76,6 +77,7 @@ def corporations(request, game_id):
 	player = get_player(request, game_id)
 	corporations = player.game.corporation_set.all()
 	return render(request, 'game/corporations.html', {
+		"game": player.game,
 		"corporations": corporations
 	})
 
@@ -91,6 +93,7 @@ def corporation(request, game_id, corporation_slug):
 
 	assets_history = corporation.assethistory_set.all()
 	return render(request, 'game/corporation.html', {
+		"game": corporation.game,
 		"corporation": corporation,
 		"players": players,
 		"assets_history": assets_history
@@ -124,6 +127,7 @@ def players(request, game_id):
 		player_shares.append(player_share)
 
 	return render(request, 'game/players.html', {
+		"game": game,
 		"players": players,
 		"corporations": corporations,
 		"shares": player_shares
@@ -139,6 +143,7 @@ def player(request, game_id, player_id):
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
 	return render(request, 'game/player.html', {
+		"game": player.game,
 		"player": player,
 		"corporations": corporations
 	})
@@ -171,6 +176,7 @@ def shares(request, game_id):
 		player_shares.append(player_share)
 
 	return render(request, 'game/shares.html', {
+		"game": game,
 		"corporations": corporations,
 		"shares": player_shares
 	})
@@ -182,20 +188,22 @@ def newsfeeds(request, game_id, turn=None):
 	Display newsfeed
 	"""
 	player = get_player(request, game_id)
+	game = player.game
 
 	if turn is None:
-		turn = player.game.current_turn - 1
+		turn = game.current_turn - 1
 	turn = int(turn)
 
-	if turn >= player.game.current_turn:
+	if turn >= game.current_turn:
 		return redirect('website.views.datas.newsfeeds', game_id=game_id)
 
-	newsfeeds = player.game.newsfeed_set.filter(turn=turn).order_by('category')
+	newsfeeds = game.newsfeed_set.filter(turn=turn).order_by('category')
 
 	return render(request, 'game/newsfeeds.html', {
+		"game": game,
 		"newsfeeds": newsfeeds,
 		"current_turn": turn,
-		"turns": range(1, player.game.current_turn)
+		"turns": range(1, game.current_turn)
 	})
 
 
@@ -209,6 +217,7 @@ def comlink(request, game_id):
 	messages = player.message_set.all().order_by("-turn", "-pk")
 
 	return render(request, 'game/comlink.html', {
+		"game": player.game,
 		"messages": messages
 	})
 
@@ -226,5 +235,6 @@ def message(request, game_id, message_id):
 	message.html = mark_safe(message.html)
 
 	return render(request, 'game/message.html', {
+		"game": player.game,
 		"message": message
 	})

@@ -16,7 +16,7 @@
 <tbody>
 {% for message in messages %}
 <tr>
-	<td>(<a href="{% url "website.views.datas.message" game_id=1 message_id=message.pk %}">voir</a>)</td>
+	<td>(<a href="{% url "website.views.datas.message" game_id=game.pk message_id=message.pk %}">voir</a>)</td>
 	<td>{{ message.turn }}</td>
 	<td>{{ message.title }}</td>
 </tr>

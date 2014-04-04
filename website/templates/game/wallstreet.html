@@ -19,7 +19,7 @@
 <tbody>
 {% for corporation in corporations %}
 <tr>
-	<td><a href="{% url "website.views.datas.corporation" game_id=1 corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
+	<td><a href="{% url "website.views.datas.corporation" game_id=game.pk corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
 	<td class="important"><strong style="color:{% if corporation.assets > corporation.last_assets %}green{% elif corporation.assets < corporation.last_assets %}red{% endif %}">{{ corporation.assets }}</strong></td>
 	<td>{{ corporation.last_assets }}</td>
 {% for category in delta_categories.keys %}

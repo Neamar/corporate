@@ -17,7 +17,7 @@
 <tbody>
 {% for player in players %}
 <tr>
-	<td><a href="{% url "website.views.datas.player" game_id=1 player_id=player.id %}">{{ player.name }}</a></td>
+	<td><a href="{% url "website.views.datas.player" game_id=game.pk player_id=player.id %}">{{ player.name }}</a></td>
 	<td class="important">{{ player.influence.level }}</td>
 	<td>{{ player.get_last_mdc_vote }}</td>
 	<td>{{ player.citizenship.corporation.base_corporation.slug|title }}</td>
