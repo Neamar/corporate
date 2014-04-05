@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -41,7 +42,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
-    'raven.contrib.django.raven_compat',
     'website',
     'docs',
     'engine',
@@ -62,6 +62,10 @@ INSTALLED_APPS = (
     'engine_modules.mdc',
     'engine_modules.wiretransfer',
 )
+
+
+if 1 in sys.argv and sys.argv[1] != 'test':
+    INSTALLED_APPS += 'raven.contrib.django.raven_compat'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
