@@ -9,14 +9,15 @@ from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 from engine_modules.share.models import Share
 from engine.models import Player
-from website.utils import get_player, get_shares_count
-from website.decorators import render, find_player_from_game_id
+from website.utils import get_shares_count
+from website.decorators import render, find_player_from_game_id, inject_game_into_response
 from utils.read_markdown import parse_markdown
 
 
 @login_required
 @render('game/wallstreet.html')
 @find_player_from_game_id
+@inject_game_into_response
 def wallstreet(request, game, player):
 	"""
 	Wallstreet datas
@@ -61,7 +62,6 @@ def wallstreet(request, game, player):
 			derivative.last_assets = derivative.get_sum(game.current_turn - 2)
 
 	return {
-		"game": game,
 		"corporations": corporations,
 		"assets_history": assets_history,
 		"sorted_corporations": sorted_corporations,
@@ -73,13 +73,13 @@ def wallstreet(request, game, player):
 @login_required
 @render('game/corporations.html')
 @find_player_from_game_id
+@inject_game_into_response
 def corporations(request, game, player):
 	"""
 	corporations datas
 	"""
 	corporations = game.corporation_set.all()
 	return {
-		"game": player.game,
 		"corporations": corporations
 	}
 
@@ -87,6 +87,7 @@ def corporations(request, game, player):
 @login_required
 @render('game/corporation.html')
 @find_player_from_game_id
+@inject_game_into_response
 def corporation(request, player, game, corporation_slug):
 	"""
 	Corporation datas
@@ -97,7 +98,6 @@ def corporation(request, player, game, corporation_slug):
 
 	assets_history = corporation.assethistory_set.all()
 	return {
-		"game": corporation.game,
 		"corporation": corporation,
 		"players": players,
 		"assets_history": assets_history
@@ -107,6 +107,7 @@ def corporation(request, player, game, corporation_slug):
 @login_required
 @render('game/players.html')
 @find_player_from_game_id
+@inject_game_into_response
 def players(request, game, player):
 	"""
 	Players datas
@@ -131,7 +132,6 @@ def players(request, game, player):
 		player_shares.append(player_share)
 
 	return {
-		"game": game,
 		"players": players,
 		"corporations": corporations,
 		"shares": player_shares
@@ -141,6 +141,7 @@ def players(request, game, player):
 @login_required
 @render('game/player.html')
 @find_player_from_game_id
+@inject_game_into_response
 def player(request, game, player, player_id):
 	"""
 	Player datas
@@ -149,7 +150,6 @@ def player(request, game, player, player_id):
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
 	return {
-		"game": player.game,
 		"player": player,
 		"corporations": corporations
 	}
@@ -158,6 +158,7 @@ def player(request, game, player, player_id):
 @login_required
 @render('game/shares.html')
 @find_player_from_game_id
+@inject_game_into_response
 def shares(request, game, player):
 	"""
 	Shares datas
@@ -182,7 +183,6 @@ def shares(request, game, player):
 		player_shares.append(player_share)
 
 	return {
-		"game": game,
 		"corporations": corporations,
 		"shares": player_shares
 	}
@@ -191,6 +191,7 @@ def shares(request, game, player):
 @login_required
 @render('game/newsfeeds.html')
 @find_player_from_game_id
+@inject_game_into_response
 def newsfeeds(request, game, player, turn=None):
 	"""
 	Display newsfeed
@@ -206,7 +207,6 @@ def newsfeeds(request, game, player, turn=None):
 	newsfeeds = game.newsfeed_set.filter(turn=turn).order_by('category')
 
 	return {
-		"game": game,
 		"newsfeeds": newsfeeds,
 		"current_turn": turn,
 		"turns": range(1, game.current_turn)
@@ -216,6 +216,7 @@ def newsfeeds(request, game, player, turn=None):
 @login_required
 @render('game/comlink.html')
 @find_player_from_game_id
+@inject_game_into_response
 def comlink(request, game, player):
 	"""
 	Display comlink
@@ -224,7 +225,6 @@ def comlink(request, game, player):
 	messages = player.message_set.all().order_by("-turn", "-pk")
 
 	return {
-		"game": game,
 		"messages": messages
 	}
 
@@ -232,6 +232,7 @@ def comlink(request, game, player):
 @login_required
 @render('game/message.html')
 @find_player_from_game_id
+@inject_game_into_response
 def message(request, game, player, message_id):
 	"""
 	Display message
@@ -243,6 +244,5 @@ def message(request, game, player, message_id):
 	message.html = mark_safe(message.html)
 
 	return {
-		"game": game,
 		"message": message
 	}

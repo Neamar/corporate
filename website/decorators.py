@@ -26,3 +26,12 @@ def find_player_from_game_id(func):
 
 		return func(request, game=game, player=player, **kwargs)
 	return wrap
+
+
+def inject_game_into_response(func):
+	def wrap(*args, **kwargs):
+		response = func(*args, **kwargs)
+		if isinstance(response, dict):
+			response['game'] = kwargs["game"]
+		return response
+	return wrap
