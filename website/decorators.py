@@ -1,7 +1,7 @@
 from django.shortcuts import render as django_render
 
 
-def renderer(page):
+def render(page):
 	"""
 	Render the page with returned dict.
 	"""

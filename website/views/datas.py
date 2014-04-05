@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from collections import OrderedDict
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
@@ -10,12 +10,12 @@ from engine_modules.corporation_asset_history.models import AssetHistory
 from engine_modules.share.models import Share
 from engine.models import Player
 from website.utils import get_player, get_shares_count
-from website.decorators import renderer
+from website.decorators import render
 from utils.read_markdown import parse_markdown
 
 
 @login_required
-@renderer('game/wallstreet.html')
+@render('game/wallstreet.html')
 def wallstreet(request, game_id):
 	"""
 	Wallstreet datas
@@ -72,19 +72,21 @@ def wallstreet(request, game_id):
 
 
 @login_required
+@render('game/corporations.html')
 def corporations(request, game_id):
 	"""
 	corporations datas
 	"""
 	player = get_player(request, game_id)
 	corporations = player.game.corporation_set.all()
-	return render(request, 'game/corporations.html', {
+	return {
 		"game": player.game,
 		"corporations": corporations
-	})
+	}
 
 
 @login_required
+@render('game/corporation.html')
 def corporation(request, game_id, corporation_slug):
 	"""
 	Corporation datas
@@ -94,15 +96,16 @@ def corporation(request, game_id, corporation_slug):
 	players = players.select_related('citizenship')
 
 	assets_history = corporation.assethistory_set.all()
-	return render(request, 'game/corporation.html', {
+	return {
 		"game": corporation.game,
 		"corporation": corporation,
 		"players": players,
 		"assets_history": assets_history
-	})
+	}
 
 
 @login_required
+@render('game/players.html')
 def players(request, game_id):
 	"""
 	Players datas
@@ -128,15 +131,16 @@ def players(request, game_id):
 
 		player_shares.append(player_share)
 
-	return render(request, 'game/players.html', {
+	return {
 		"game": game,
 		"players": players,
 		"corporations": corporations,
 		"shares": player_shares
-	})
+	}
 
 
 @login_required
+@render('game/player.html')
 def player(request, game_id, player_id):
 	"""
 	Player datas
@@ -144,14 +148,15 @@ def player(request, game_id, player_id):
 	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id, game_id=game_id)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
-	return render(request, 'game/player.html', {
+	return {
 		"game": player.game,
 		"player": player,
 		"corporations": corporations
-	})
+	}
 
 
 @login_required
+@render('game/shares.html')
 def shares(request, game_id):
 	"""
 	Shares datas
@@ -177,14 +182,15 @@ def shares(request, game_id):
 
 		player_shares.append(player_share)
 
-	return render(request, 'game/shares.html', {
+	return {
 		"game": game,
 		"corporations": corporations,
 		"shares": player_shares
-	})
+	}
 
 
 @login_required
+@render('game/newsfeeds.html')
 def newsfeeds(request, game_id, turn=None):
 	"""
 	Display newsfeed
@@ -201,15 +207,16 @@ def newsfeeds(request, game_id, turn=None):
 
 	newsfeeds = game.newsfeed_set.filter(turn=turn).order_by('category')
 
-	return render(request, 'game/newsfeeds.html', {
+	return {
 		"game": game,
 		"newsfeeds": newsfeeds,
 		"current_turn": turn,
 		"turns": range(1, game.current_turn)
-	})
+	}
 
 
 @login_required
+@render('game/comlink.html')
 def comlink(request, game_id):
 	"""
 	Display comlink
@@ -218,13 +225,14 @@ def comlink(request, game_id):
 
 	messages = player.message_set.all().order_by("-turn", "-pk")
 
-	return render(request, 'game/comlink.html', {
+	return {
 		"game": player.game,
 		"messages": messages
-	})
+	}
 
 
 @login_required
+@render('game/message.html')
 def message(request, game_id, message_id):
 	"""
 	Display message
@@ -236,7 +244,7 @@ def message(request, game_id, message_id):
 	message.html, _ = parse_markdown(message.content)
 	message.html = mark_safe(message.html)
 
-	return render(request, 'game/message.html', {
+	return {
 		"game": player.game,
 		"message": message
-	})
+	}
