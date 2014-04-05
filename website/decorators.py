@@ -1,5 +1,7 @@
 from django.shortcuts import render as django_render
 
+from website.utils import get_player
+
 
 def render(page):
 	"""
@@ -7,11 +9,20 @@ def render(page):
 	"""
 
 	def decorator(func):
-		def wrap(request, *a, **kw):
-			response = func(request, *a, **kw)
+		def wrap(request, *args, **kwargs):
+			response = func(request, *args, **kwargs)
 			if isinstance(response, dict):
 				return django_render(request, page, response)
 			else:
 				return response
 		return wrap
 	return decorator
+
+
+def find_player_from_game_id(func):
+	def wrap(request, game_id, **kwargs):
+		player = get_player(request, game_id)
+		game = player.game
+
+		return func(request, game=game, player=player, **kwargs)
+	return wrap

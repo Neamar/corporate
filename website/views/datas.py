@@ -10,18 +10,17 @@ from engine_modules.corporation_asset_history.models import AssetHistory
 from engine_modules.share.models import Share
 from engine.models import Player
 from website.utils import get_player, get_shares_count
-from website.decorators import render
+from website.decorators import render, find_player_from_game_id
 from utils.read_markdown import parse_markdown
 
 
 @login_required
 @render('game/wallstreet.html')
-def wallstreet(request, game_id):
+@find_player_from_game_id
+def wallstreet(request, game, player):
 	"""
 	Wallstreet datas
 	"""
-	player = get_player(request, game_id)
-	game = player.game
 
 	# Table datas
 	corporations = game.get_ladder()
