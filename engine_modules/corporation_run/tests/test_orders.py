@@ -151,6 +151,17 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		"""
 		Check detection use corporation base values
 		"""
+		self.g.add_newsfeed(content='Shiawase', category='detection', path= 'test path')
+
+		self.assertIn('Shiawase', self.g.newsfeed_set.get().content)
+		self.assertIn('detection', self.g.newsfeed_set.get().category)
+		self.assertIn('test path', self.g.newsfeed_set.get().path)
+
+
+	def test_detected_create_newsfeed_from_file(self):	
+		"""
+		Check detection use corporation base values
+		"""
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
@@ -164,7 +175,7 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		dso.resolve()
 
 		previous_message=self.g.newsfeed_set.get().content
-		self.assertIn('Shiawase', self.g.newsfeed_set.get().content) #test bon fichier
+		self.assertIn('Shiawase', self.g.newsfeed_set.get().content) #test bon fichier	
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
