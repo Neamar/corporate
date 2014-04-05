@@ -32,7 +32,6 @@ def read_file_from_path(path):
 		content = fichier.readlines()
 		fichier.close()
 	except IOError:
-		print 'Inexistent path : %s' % path
-		content='This file does not exists'
+		content='This file does not exists : (%s)' % path
 
 	return content

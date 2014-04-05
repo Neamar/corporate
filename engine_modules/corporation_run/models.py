@@ -184,7 +184,7 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 			self.notify_citizens(content)
 			# Send a note to everybody
 			category = u"matrix-buzz"
-			path = u'datasteal' + '/' + self.target_corporation.base_corporation.slug + '/success'
+			path = u'datasteal/%s/success' % self.target_corporation.base_corporation.slug
 			self.player.game.add_newsfeed_from_template(category=category, path=path)
 
 	def resolve_fail(self, detected):
@@ -200,7 +200,7 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 
 			# Send a note to everybody
 			category = u"matrix-buzz"
-			path = u'datasteal' + '/' + self.target_corporation.base_corporation.slug + '/failure'
+			path = u'datasteal/%s/failure' % self.target_corporation.base_corporation.slug
 			self.player.game.add_newsfeed_from_template(category=category, path=path)
 
 	def description(self):
@@ -237,7 +237,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 
 		# Send a note to everybody
 		category = u"matrix-buzz"
-		path = u'sabotage' + '/' + self.target_corporation.base_corporation.slug + '/success'
+		path = u'sabotage/%s/success' % self.target_corporation.base_corporation.slug 
 		self.player.game.add_newsfeed_from_template(category=category, path=path)
 
 	def resolve_fail(self, detected):
@@ -253,7 +253,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 
 			# Send a note to everybody
 			category = u"matrix-buzz"
-			path = u'sabotage' + '/' + self.target_corporation.base_corporation.slug + '/failure'
+			path = u'sabotage/%s/failure' % self.target_corporation.base_corporation.slug
 			self.player.game.add_newsfeed_from_template(category=category, path=path)
 
 	def description(self):
@@ -287,7 +287,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 
 			# Send a note to everybody
 			category = u"matrix-buzz"
-			path = u'extraction' + '/' + self.target_corporation.base_corporation.slug + '/success'
+			path = u'extraction/%s/success' % self.target_corporation.base_corporation.slug
 			self.player.game.add_newsfeed_from_template(category=category, path=path)
 
 	def resolve_fail(self, detected):
@@ -303,7 +303,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 
 			# Send a note to everybody
 			category = u"matrix-buzz"
-			path = u'extraction' + '/' + self.target_corporation.base_corporation.slug + '/failure'
+			path = u'extraction/%s/failure' % self.target_corporation.base_corporation.slug
 			self.player.game.add_newsfeed_from_template(category=category, path=path)
 
 	def description(self):
