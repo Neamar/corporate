@@ -72,12 +72,12 @@ def wallstreet(request, game, player):
 
 @login_required
 @render('game/corporations.html')
-def corporations(request, game_id):
+@find_player_from_game_id
+def corporations(request, game, player):
 	"""
 	corporations datas
 	"""
-	player = get_player(request, game_id)
-	corporations = player.game.corporation_set.all()
+	corporations = game.corporation_set.all()
 	return {
 		"game": player.game,
 		"corporations": corporations
@@ -86,12 +86,13 @@ def corporations(request, game_id):
 
 @login_required
 @render('game/corporation.html')
-def corporation(request, game_id, corporation_slug):
+@find_player_from_game_id
+def corporation(request, player, game, corporation_slug):
 	"""
 	Corporation datas
 	"""
-	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game_id)
-	players = Player.objects.filter(game_id=game_id, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
+	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game.pk)
+	players = Player.objects.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
 	players = players.select_related('citizenship')
 
 	assets_history = corporation.assethistory_set.all()
@@ -105,12 +106,11 @@ def corporation(request, game_id, corporation_slug):
 
 @login_required
 @render('game/players.html')
-def players(request, game_id):
+@find_player_from_game_id
+def players(request, game, player):
 	"""
 	Players datas
 	"""
-	player = get_player(request, game_id)
-	game = player.game
 
 	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('name')
 	corporations = list(game.corporation_set.all().order_by('pk'))
@@ -140,11 +140,12 @@ def players(request, game_id):
 
 @login_required
 @render('game/player.html')
-def player(request, game_id, player_id):
+@find_player_from_game_id
+def player(request, game, player, player_id):
 	"""
 	Player datas
 	"""
-	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id, game_id=game_id)
+	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id, game_id=game.pk)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
 	return {
@@ -156,12 +157,11 @@ def player(request, game_id, player_id):
 
 @login_required
 @render('game/shares.html')
-def shares(request, game_id):
+@find_player_from_game_id
+def shares(request, game, player):
 	"""
 	Shares datas
 	"""
-	player = get_player(request, game_id)
-	game = player.game
 
 	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('pk')
 	corporations = list(game.corporation_set.all().order_by('pk'))
@@ -190,19 +190,18 @@ def shares(request, game_id):
 
 @login_required
 @render('game/newsfeeds.html')
-def newsfeeds(request, game_id, turn=None):
+@find_player_from_game_id
+def newsfeeds(request, game, player, turn=None):
 	"""
 	Display newsfeed
 	"""
-	player = get_player(request, game_id)
-	game = player.game
 
 	if turn is None:
 		turn = game.current_turn - 1
 	turn = int(turn)
 
 	if turn >= game.current_turn:
-		return redirect('website.views.datas.newsfeeds', game_id=game_id)
+		return redirect('website.views.datas.newsfeeds', game_id=game.pk)
 
 	newsfeeds = game.newsfeed_set.filter(turn=turn).order_by('category')
 
@@ -216,27 +215,27 @@ def newsfeeds(request, game_id, turn=None):
 
 @login_required
 @render('game/comlink.html')
-def comlink(request, game_id):
+@find_player_from_game_id
+def comlink(request, game, player):
 	"""
 	Display comlink
 	"""
-	player = get_player(request, game_id)
 
 	messages = player.message_set.all().order_by("-turn", "-pk")
 
 	return {
-		"game": player.game,
+		"game": game,
 		"messages": messages
 	}
 
 
 @login_required
 @render('game/message.html')
-def message(request, game_id, message_id):
+@find_player_from_game_id
+def message(request, game, player, message_id):
 	"""
 	Display message
 	"""
-	player = get_player(request, game_id)
 
 	message = player.message_set.get(pk=message_id)
 
@@ -244,6 +243,6 @@ def message(request, game_id, message_id):
 	message.html = mark_safe(message.html)
 
 	return {
-		"game": player.game,
+		"game": game,
 		"message": message
 	}
