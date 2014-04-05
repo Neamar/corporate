@@ -10,10 +10,12 @@ from engine_modules.corporation_asset_history.models import AssetHistory
 from engine_modules.share.models import Share
 from engine.models import Player
 from website.utils import get_player, get_shares_count
+from website.decorators import renderer
 from utils.read_markdown import parse_markdown
 
 
 @login_required
+@renderer('game/wallstreet.html')
 def wallstreet(request, game_id):
 	"""
 	Wallstreet datas
@@ -59,14 +61,14 @@ def wallstreet(request, game_id):
 		if game.current_turn > 1:
 			derivative.last_assets = derivative.get_sum(game.current_turn - 2)
 
-	return render(request, 'game/wallstreet.html', {
+	return {
 		"game": game,
 		"corporations": corporations,
 		"assets_history": assets_history,
 		"sorted_corporations": sorted_corporations,
 		"derivatives": derivatives,
 		"delta_categories": delta_categories,
-	})
+	}
 
 
 @login_required
