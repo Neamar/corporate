@@ -151,7 +151,7 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		"""
 		Check detection use corporation base values
 		"""
-		self.g.add_newsfeed(content='Shiawase', category='detection', path= 'test path')
+		self.g.add_newsfeed(content='Shiawase', category='detection', path='test path')
 
 		self.assertIn('Shiawase', self.g.newsfeed_set.get().content)
 		self.assertIn('detection', self.g.newsfeed_set.get().category)
@@ -160,7 +160,9 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 
 	def test_detected_create_newsfeed_from_file(self):	
 		"""
-		Check detection use corporation base values
+		test if we use the right path to get the right file
+		then test that we use a different message each time in a game.
+		finally test for looping on the _.md file
 		"""
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
@@ -174,8 +176,10 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 
 		dso.resolve()
 
-		previous_message=self.g.newsfeed_set.get().content
-		self.assertIn('Shiawase', self.g.newsfeed_set.get().content) #test bon fichier	
+		previous_message = self.g.newsfeed_set.get().content
+		
+		self.assertIn('Shiawase', self.g.newsfeed_set.get().content)
+
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
@@ -187,15 +191,16 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		dso.target_corporation.base_corporation.detection = 100
 		dso.target_corporation.base_corporation.datasteal = 100
 		dso.resolve()
-		self.maxDiff=None
-		self.assertNotEqual(previous_message, self.g.newsfeed_set.last().content) # test si premier message différent du deuxième
+		self.max_diff = None
+		
+		self.assertNotEqual(previous_message, self.g.newsfeed_set.last().content) 
 
 		a = 0
 		while a < 4:
 			a += 1
-			self.p.money=2000
+			self.p.money = 2000
 			
-			previous_message=self.g.newsfeed_set.last().content
+			previous_message = self.g.newsfeed_set.last().content
 
 			self.assertIn('Shiawase', self.g.newsfeed_set.last().content)
 			dso = DataStealOrder(
@@ -211,7 +216,7 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 			dso.resolve()
 
 		
-		self.assertEqual(previous_message, self.g.newsfeed_set.last().content) #test butoir
+		self.assertEqual(previous_message, self.g.newsfeed_set.last().content)
 
 class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):
