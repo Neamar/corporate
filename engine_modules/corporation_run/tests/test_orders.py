@@ -147,22 +147,11 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		self.assertEqual(dso.get_protection_values(), [po.get_success_probability(), dso.target_corporation.base_corporation.datasteal])
 
 	@override_base_corporations
-	def test_detected_create_newsfeed(self):
+	def test_detected_create_newsfeed_from_file(self):
 		"""
-		Check detection use corporation base values
-		"""
-		self.g.add_newsfeed(content='Shiawase', category='detection', path='test path')
-
-		self.assertIn('Shiawase', self.g.newsfeed_set.get().content)
-		self.assertIn('detection', self.g.newsfeed_set.get().category)
-		self.assertIn('test path', self.g.newsfeed_set.get().path)
-
-
-	def test_detected_create_newsfeed_from_file(self):	
-		"""
-		test if we use the right path to get the right file
-		then test that we use a different message each time in a game.
-		finally test for looping on the _.md file
+		Should use the right path to get the right file
+		Should render a different message each time in a game.
+		Should finally loop on the _.md file
 		"""
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
@@ -177,7 +166,7 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		dso.resolve()
 
 		previous_message = self.g.newsfeed_set.get().content
-		
+
 		self.assertIn('Shiawase', self.g.newsfeed_set.get().content)
 
 		dso = DataStealOrder(
@@ -192,14 +181,14 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		dso.target_corporation.base_corporation.datasteal = 100
 		dso.resolve()
 		self.max_diff = None
-		
-		self.assertNotEqual(previous_message, self.g.newsfeed_set.last().content) 
+
+		self.assertNotEqual(previous_message, self.g.newsfeed_set.last().content)
 
 		a = 0
 		while a < 4:
 			a += 1
 			self.p.money = 2000
-			
+
 			previous_message = self.g.newsfeed_set.last().content
 
 			self.assertIn('Shiawase', self.g.newsfeed_set.last().content)
@@ -215,7 +204,7 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 
 			dso.resolve()
 
-		
+
 		self.assertEqual(previous_message, self.g.newsfeed_set.last().content)
 
 class DatastealRunOrderTest(RunOrdersTest):
