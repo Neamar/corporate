@@ -37,6 +37,13 @@ class Newsfeed(models.Model):
 		else:
 			return self.path.split('/')[0]
 
+	@property
+	def state(self):
+		if self.path is None:
+			return ''
+		else:
+			return self.path.split('/')[-1]
+
 
 class Message(models.Model):
 	PRIVATE_MESSAGE = 'PM'

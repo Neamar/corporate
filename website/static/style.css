@@ -147,6 +147,9 @@ body
   height:50px;
 }
 
+#content .newsfeed img.failure {
+  border: 1px solid red;
+}
 
 /********************
  * TABLES
