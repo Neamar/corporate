@@ -93,7 +93,7 @@ class DerivativeSpeculationOrder(AbstractSpeculation):
 		# Build message
 		current_turn_sum = self.derivative.get_sum(self.player.game.current_turn)
 		previous_turn_sum = self.derivative.get_sum(self.player.game.current_turn - 1)
-		if current_turn_sum > previous_turn_sum and self.speculation == self.UP:
+		if (current_turn_sum > previous_turn_sum and self.speculation == self.UP) or (current_turn_sum < previous_turn_sum and self.speculation == self.DOWN):
 			# Success
 			self.player.money += self.on_win_money()
 			self.player.save()
