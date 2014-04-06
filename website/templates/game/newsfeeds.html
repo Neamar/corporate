@@ -4,6 +4,13 @@
 {% block h1 %}Newsfeeds{% endblock %}
 
 {% block content %}
+
+{% include "_pager.html" with base_url="website.views.datas.newsfeeds" base_title="Consulter les newsfeeds du tour" %}
+
+{% if not newsfeeds %}
+	<p>Rien à signaler {{current_turn}} !</p>
+{% endif %}
+
 {% regroup newsfeeds by get_category_display as categories %}
 
 {% for category in categories %}

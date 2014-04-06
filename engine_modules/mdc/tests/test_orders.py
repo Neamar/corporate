@@ -94,3 +94,14 @@ class OrdersTest(EngineTestCase):
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.p.get_last_mdc_vote(), self.v.coalition)
+
+	def test_get_form_forbids_none_value(self):
+		self.v.delete()
+
+		instance = MDCVoteOrder(player=self.p)
+
+		form = instance.get_form({'coalition': MDCVoteOrder.DERE, 'player': self.p})
+		self.assertTrue(form.is_valid())
+
+		form = instance.get_form({'coalition': None, 'player': self.p})
+		self.assertFalse(form.is_valid())

@@ -7,7 +7,7 @@ from utils.read_markdown import read_markdown
 
 
 def index(request, page):
-	if(page == ''):
+	if page == '':
 		page = 'index'
 
 	page = '%s/datas/docs/%s.md' % (settings.BASE_DIR, page.replace('.', ''))
@@ -22,6 +22,7 @@ def index(request, page):
 	except:
 		title = "Corporate Game"
 
+	title = mark_safe(title)
 	content = mark_safe(content)
 
 	return render(request, 'docs/index.html', {"content": content, "title": title})

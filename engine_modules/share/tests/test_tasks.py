@@ -91,3 +91,31 @@ class TasksTest(EngineTestCase):
 		expected = money + DividendTask.SHARE_BASE_VALUE * self.reload(self.last_corporation).assets * DividendTask.LAST_BONUS
 
 		self.assertEqual(self.reload(self.p).money, int(expected))
+
+	def test_complex_dividend_task(self):
+		"""
+		The player should get dividend for previous shares, with malus if corporation is last
+		"""
+		s = Share(
+			player=self.p,
+			corporation=self.medium_corporation
+		)
+		s.save()
+		s2 = Share(
+			player=self.p,
+			corporation=self.medium_corporation
+		)
+		s2.save()
+		s3 = Share(
+			player=self.p,
+			corporation=self.medium_corporation
+		)
+		s3.save()
+
+		money = self.reload(self.p).money
+
+		self.g.resolve_current_turn()
+		# We expect dividend on all shares
+		expected = money + 3 * DividendTask.SHARE_BASE_VALUE * self.reload(self.medium_corporation).assets
+
+		self.assertEqual(self.reload(self.p).money, int(expected))

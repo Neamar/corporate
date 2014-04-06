@@ -1,5 +1,6 @@
 from engine.testcases import EngineTestCase
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder, Derivative
+from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.derivative.models import Derivative
 from engine.exceptions import OrderNotAvailable
 
 
@@ -10,10 +11,6 @@ class SignalsTest(EngineTestCase):
 		self.d = Derivative(name="first and last", game=self.g)
 		self.d.save()
 		self.d.corporations.add(self.c, self.c2)
-
-	def test_derivatives_created(self):
-		nikkei = self.g.derivative_set.get(name="Nikkei")
-		self.assertIn(self.c, nikkei.corporations.all())
 
 	def test_max_speculation(self):
 		"""

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from engine_modules.corporation.models import Corporation
+from engine_modules.corporation.models import Corporation, AssetDelta
 from engine_modules.corporation_asset_history.models import AssetHistory
 
 
@@ -15,3 +15,8 @@ class CorporationAdmin(admin.ModelAdmin):
 	def name(self, instance):
 		return instance.base_corporation.name
 admin.site.register(Corporation, CorporationAdmin)
+
+
+class AssetDeltaAdmin(admin.ModelAdmin):
+	list_display = ('corporation', 'delta', 'category', 'turn')
+admin.site.register(AssetDelta, AssetDeltaAdmin)

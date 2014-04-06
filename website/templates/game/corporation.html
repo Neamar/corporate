@@ -19,7 +19,7 @@
 </thead>
 <tbody>
 <tr>
-	<td><a href="{% url "website.views.datas.corporation" game_id=1 corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
+	<td><a href="{% url "website.views.datas.corporation" game_id=game.pk corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
 	<td class="important">{{ corporation.assets }}</td>
 	<td>{{ corporation.base_corporation.datasteal }}</td>
 	<td>{{ corporation.base_corporation.sabotage }}</td>
@@ -44,7 +44,7 @@
 <tbody>
 {% for player in players %}
 <tr>
-	<td><a href="{% url "website.views.datas.player" game_id=1 player_id=player.pk %}">{{ player.name }}</a></td>
+	<td><a href="{% url "website.views.datas.player" game_id=game.pk player_id=player.pk %}">{{ player.name }}</a></td>
 	{% if player.citizenship.corporation_id == corporation.pk %}
 	<td><strong>{{ player.qty_share }}</strong></td>
 	{% else %}

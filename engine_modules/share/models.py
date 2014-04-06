@@ -56,7 +56,7 @@ class BuyShareOrder(Order):
 		else:
 			content = u"Vous avez acheté votre %ième part dans %s." % (nb_shares, self.corporation.base_corporation.name)
 			newsfeed_content = u"%s a acheté sa %ième part dans %s." % (self.player, nb_shares, self.corporation.base_corporation.name)
-		self.player.add_note(category="Parts", content=content)
+		self.player.add_note(content=content)
 		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=newsfeed_content)
 
 	def description(self):
