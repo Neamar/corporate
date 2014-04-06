@@ -23,12 +23,15 @@
 </tbody>
 </table>
 
+<p>{{ player.background }}</p>
+
 <h2>Parts possédées</h2>
 <table class="prop_table">
 <thead>
 <tr>
 	<th></th>
 	<th>Parts</th>
+	<th>Actifs</th>
 </tr>
 </thead>
 <tbody>
@@ -36,6 +39,7 @@
 <tr>
 	<td><a href="{% url "website.views.datas.corporation" game_id=game.pk corporation_slug=corporation.base_corporation.slug %}">{{ corporation.base_corporation.name }}</a></td>
 	<td>{{ corporation.qty_share }}</td>
+	<td>{{ corporation.assets }}</td>
 </tr>
 {% endfor %}
 </tbody>
