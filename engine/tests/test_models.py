@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
+from django.conf import settings
 
 from messaging.models import Newsfeed
 from engine.testcases import EngineTestCase
 from engine.models import Player, Order
 from messaging.models import Message, Note
 from website.models import User
+from utils.read_markdown import read_file_from_path
 
 
 class ModelTest(EngineTestCase):
@@ -83,6 +85,36 @@ class ModelTest(EngineTestCase):
 		self.assertEqual(Newsfeed.objects.count(), 0)
 		self.g.add_newsfeed(category=Newsfeed.MDC_REPORT, content="something")
 		self.assertEqual(Newsfeed.objects.count(), 1)
+
+	def test_game_add_newsfeed_from_template(self):
+		"""
+		Should store used path
+		"""
+		self.g.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path='datasteal/shiawase/success')
+
+		newsfeed = self.g.newsfeed_set.get()
+
+		self.assertEqual(newsfeed.content, read_file_from_path('%s/datas/newsfeeds/matrix-buzz/datasteal/shiawase/success/1.md' % settings.BASE_DIR))
+
+	def test_game_add_newsfeed_from_template_read_directory(self):
+		"""
+		Should read all directory until failure, then loop on '_.md'
+		"""
+
+		for i in range(1, 10):
+			self.g.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path='datasteal/shiawase/success')
+
+			newsfeed = self.g.newsfeed_set.last()
+
+			try:
+				expected_content = read_file_from_path('%s/datas/newsfeeds/matrix-buzz/datasteal/shiawase/success/%s.md' % (settings.BASE_DIR, i))
+				self.assertEqual(newsfeed.content, expected_content)
+			except IOError:
+				expected_content = read_file_from_path('%s/datas/newsfeeds/matrix-buzz/datasteal/shiawase/success/_.md' % settings.BASE_DIR)
+				self.assertEqual(newsfeed.content, expected_content)
+				break
+		else:
+			raise Exception("Never looped :(")
 
 	def test_order_clean_is_abstract(self):
 		"""

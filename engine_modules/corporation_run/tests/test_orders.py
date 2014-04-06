@@ -146,60 +146,6 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 
 		self.assertEqual(dso.get_protection_values(), [po.get_success_probability(), dso.target_corporation.base_corporation.datasteal])
 
-	@override_base_corporations
-	def test_detected_create_newsfeed_from_file(self):
-		"""
-		Should use the right path to get the right file
-		Should render a different message each time in a game.
-		Should finally loop on the _.md file
-		"""
-		dso = DataStealOrder(
-			stealer_corporation=self.c2,
-			player=self.p,
-			target_corporation=self.c,
-			additional_percents=7,
-		)
-		dso.save()
-
-		dso.target_corporation.base_corporation.detection = 100
-
-		dso.resolve()
-
-		first_message = self.g.newsfeed_set.get()
-
-		self.assertIn(self.c.base_corporation.name, first_message.content)
-
-		dso = DataStealOrder(
-			stealer_corporation=self.c2,
-			player=self.p,
-			target_corporation=self.c,
-			additional_percents=7,
-		)
-		dso.save()
-
-		dso.target_corporation.base_corporation.detection = 100
-		dso.target_corporation.base_corporation.datasteal = 100
-		dso.resolve()
-
-		self.max_diff = None
-
-		second_message = self.g.newsfeed_set.last()
-		self.assertNotEqual(first_message, second_message)
-		self.assertIn(self.c.base_corporation.name, second_message.content)
-
-		a = 0
-		while a < 4:
-			a += 1
-			self.p.money = 2000
-
-			previous_message = self.g.newsfeed_set.last().content
-
-			self.assertIn(self.c.base_corporation.name, self.g.newsfeed_set.last().content)
-
-			dso.resolve()
-
-		self.assertEqual(previous_message, self.g.newsfeed_set.last().content)
-
 
 class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):
