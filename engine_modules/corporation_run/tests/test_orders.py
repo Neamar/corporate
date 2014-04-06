@@ -165,9 +165,9 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 
 		dso.resolve()
 
-		previous_message = self.g.newsfeed_set.get().content
+		first_message = self.g.newsfeed_set.get()
 
-		self.assertIn('Shiawase', self.g.newsfeed_set.get().content)
+		self.assertIn(self.c.base_corporation.name, first_message.content)
 
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
@@ -180,9 +180,12 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		dso.target_corporation.base_corporation.detection = 100
 		dso.target_corporation.base_corporation.datasteal = 100
 		dso.resolve()
+
 		self.max_diff = None
 
-		self.assertNotEqual(previous_message, self.g.newsfeed_set.last().content)
+		second_message = self.g.newsfeed_set.last()
+		self.assertNotEqual(first_message, second_message)
+		self.assertIn(self.c.base_corporation.name, second_message.content)
 
 		a = 0
 		while a < 4:
@@ -191,21 +194,12 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 
 			previous_message = self.g.newsfeed_set.last().content
 
-			self.assertIn('Shiawase', self.g.newsfeed_set.last().content)
-			dso = DataStealOrder(
-				stealer_corporation=self.c2,
-				player=self.p,
-				target_corporation=self.c,
-				additional_percents=7,
-			)
-			dso.save()
-			dso.target_corporation.base_corporation.datasteal = 100
-			dso.target_corporation.base_corporation.detection = 100
+			self.assertIn(self.c.base_corporation.name, self.g.newsfeed_set.last().content)
 
 			dso.resolve()
 
-
 		self.assertEqual(previous_message, self.g.newsfeed_set.last().content)
+
 
 class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):

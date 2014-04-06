@@ -1,4 +1,4 @@
-name: Shiawase Corporation
+name: Shiawase
 initials_assets: 11
 datasteal: 10
 sabotage: 10
