@@ -1,8 +1,8 @@
 title: Fin du jeu
 
-Pour gagner le Corporate Game, il faut avoir plus de points de victoires (PVs) à la fin du dernier tour que n’importe quel autre joueur. Il n’y a pas de “victoire en équipe”, pas de gloire à finir deuxième, à s’être assuré que son allié finisse premier ou que son ennemi juré finisse dernier. Ce qui compte, c’est la première place et il faudra se battre bec et ongles pour l’obtenir.
+Pour gagner le Corporate Game, il faut avoir plus de points de victoires (PVs) à la fin du dernier tour que n'importe quel autre joueur. Il n'y a pas de “victoire en équipe”, pas de gloire à finir deuxième, à s'être assuré que son allié finisse premier ou que son ennemi juré finisse dernier. Ce qui compte, c'est la première place et il faudra se battre bec et ongles pour l'obtenir.
 
-Il y a plusieurs manières de gagner des PVs, et il est recommandé de les examiner en détail avant le début de la partie. Ils ne seront d’ailleurs pas comptés automatiquement, et les joueurs vont devoir sortir leurs calculatrices à la fin du 8<sup>ème</sup> tour.
+Il y a plusieurs manières de gagner des PVs, et il est recommandé de les examiner en détail avant le début de la partie. Ils ne seront d'ailleurs pas comptés automatiquement, et les joueurs vont devoir sortir leurs calculatrices à la fin du 8<sup>ème</sup> tour.
 
 [TOC]
 
@@ -20,8 +20,8 @@ Ces nuyens sont comptés après les spéculations, mais avant les dividendes.
 
 ## Points de citoyen
 * À la fin de la partie, gagnez `+10 - (rang de la corpo dont vous êtes citoyen) PVs`, soit 4 PVs si votre corpo a fini rang 6.  
-*  `-(tour du changement) PVs` si vous avez changé de citoyenneté corpo en cours de jeu, soit -3 si vous avez changé de nationalité au tour 3.
-*  `-3 PVs` pour chaque autre joueur citoyen de la même corpo que vous à la fin du 8<sup>ème</sup> tour.
+* `-(tour du changement) PVs` si vous avez changé de citoyenneté corpo en cours de jeu, soit -3 si vous avez changé de nationalité au tour 3.
+* `-3 PVs` pour chaque autre joueur citoyen de la même corpo que vous à la fin du 8<sup>ème</sup> tour.
 
 ## Points de titres
 Si plus d'un joueur se disputent un même titre, les points associés sont divisés entre eux (arrondi à l'entier inférieur).

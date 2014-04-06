@@ -146,24 +146,6 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 
 		self.assertEqual(dso.get_protection_values(), [po.get_success_probability(), dso.target_corporation.base_corporation.datasteal])
 
-	@override_base_corporations
-	def test_detected_create_newsfeed(self):
-		"""
-		Check detection use corporation base values
-		"""
-		dso = DataStealOrder(
-			stealer_corporation=self.c2,
-			player=self.p,
-			target_corporation=self.c,
-			additional_percents=7,
-		)
-		dso.save()
-
-		dso.target_corporation.base_corporation.detection = 100
-
-		dso.resolve()
-		self.assertIn(dso.target_corporation.base_corporation.name, self.g.newsfeed_set.get().content)
-
 
 class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):

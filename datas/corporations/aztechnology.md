@@ -31,6 +31,6 @@ Le big A utilise le MDC pour gêner les opérations de ses concurrents manquant 
 * -1 actif pour la dernière corpo.
 
 ## Effet dernier
-Aztechnology lâchant prise, Horizon s’engouffre dans la brèche.
+Aztechnology lâchant prise, Horizon s'engouffre dans la brèche.
 
 * +2 actifs pour Horizon.

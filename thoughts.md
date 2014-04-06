@@ -21,9 +21,9 @@ Documentation
 Tableau des corpos :
 (nom, actifs, anciens actifs, changements inconnus, premier, dernier, sabotage, mdc, ds, s, e)
 
-| Nom     | Ac | Old|  ? | P  |  D | Sab| MDC| DS | S | E
+| Nom     | Ac | Old| ? | P |  D | Sab| MDC| DS | S | E
 |---------|----|----|----|----|----|----|----|----|---|--:|
-| Renraku | 15 | 12 | +2 | +1 | -1 | +5 | -2 | 2  | 0 | 2 |
+| Renraku | 15 | 12 | +2 | +1 | -1 | +5 | -2 | 2 | 0 | 2 |
 
 (Le 15 est en gras rouge ou vert selon le delta)
 
@@ -31,9 +31,9 @@ Graphique de la bourse
 
 Tableau des produits dérivés :
 
-| Nom  | Ac | Old| Delta |
+| Nom | Ac | Old| Delta |
 |------|----|----|------:|
-| Nikkei | 45 | 38 | +7  |
+| Nikkei | 45 | 38 | +7 |
 
 Graphique des produits dérivés
 
@@ -52,7 +52,7 @@ Tableau des corpos:
 * Défense Extraction
 * Détection
 
-| Nom   | Actif  | DS | S  | E  | D  |
+| Nom   | Actif | DS | S | E | D |
 |-------|--------|----|----|----|---:|
 |Renraku| **15** | 20 | 10 | 20 | 30 |
 
@@ -64,7 +64,7 @@ Actifs actuels
 Ligne votée
 Défenses
 
-| Nom   | Actif  | DS | S  | E  | D  |
+| Nom   | Actif | DS | S | E | D |
 |-------|--------|----|----|----|---:|
 |Renraku| **15** | 20 | 10 | 20 | 30 |
 
@@ -73,7 +73,7 @@ Description
 Parts possédées
 Citoyens corpos
 
-|Renraku    | Parts   | Citoyen  |
+|Renraku    | Parts   | Citoyen |
 |-----------|---------|---------:|
 Tiroshi     | 18      | KING     |
 Remi        | 12      | Oui      |
@@ -102,7 +102,7 @@ IC
 Vote de ligne
 Citoyenneté
 
-| Nom    |  IC   | Ligne        | Citoyen |
+| Nom    | IC   | Ligne        | Citoyen |
 |--------|-------|--------------|--------:|
 |Tiroshi | **2** | Transparence | Renraku |
 
@@ -112,7 +112,7 @@ Citoyenneté
 * ic
 * vote
 
-| Nom    |  IC   | Ligne        | Citoyen |
+| Nom    | IC   | Ligne        | Citoyen |
 |--------|-------|--------------|--------:|
 |Tiroshi | **2** | Transparence | Renraku |
 

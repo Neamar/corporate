@@ -17,10 +17,22 @@
 {% for category in categories %}
 <h2>{{ category.grouper }}</h2>
 
-<ul>
-{% for newsfeed in category.list %}
-	<li>{{ newsfeed.as_html }}</li>
-{% endfor %}
-</ul>
+{% if not category.list.0.subcategory %}
+	<ul>
+	{% for newsfeed in category.list %}
+		<li>{{ newsfeed.as_html }}</li>
+	{% endfor %}
+	</ul>
+{% else %}
+	{% for newsfeed in category.list %}
+		<div class="newsfeed">
+			<img src="{{ STATIC_URL }}newsfeeds/{{ newsfeed.subcategory }}.png" alt="{{ newsfeed.subcategory|title}}" class="{{ newsfeed.state }}" />
+			{{ newsfeed.as_html }}
+		</div>
+		{% if not forloop.last %}
+		<hr />
+		{% endif %}
+	{% endfor %}
+{% endif %}
 {% endfor %}
 {% endblock content %}

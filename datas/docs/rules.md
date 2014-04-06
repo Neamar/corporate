@@ -1,11 +1,11 @@
 title: Comment jouer ?
 
-Vous incarnez un cadre corporatiste décidé à se tailler un empire dans une des places financières les plus concurrentielles du 6<sup>ème</sup> monde : l’île de Manhattan.
+Vous incarnez un cadre corporatiste décidé à se tailler un empire dans une des places financières les plus concurrentielles du 6<sup>ème</sup> monde : l'île de Manhattan.
 
 [TOC]
 
 ## Concepts de base
-Les **corporations, ou "corpos"**, sont au coeur du jeu. De gigantesques multinationales qui ont supplanté le pouvoir des nations et fait main basse sur l'économie planétaire. Elles sont innombrables, mais le Corporate Game ne tient compte que des dix plus grosses s’étant implantées à Manhattan.
+Les **corporations, ou "corpos"**, sont au coeur du jeu. De gigantesques multinationales qui ont supplanté le pouvoir des nations et fait main basse sur l'économie planétaire. Elles sont innombrables, mais le Corporate Game ne tient compte que des dix plus grosses s'étant implantées à Manhattan.
 
 La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui évoluera en fonction des actions des joueurs et des caprices du marché. Plus une corpo possède d'actifs, plus elle engrange de bénéfices. Au début de la partie, les actifs des 10 corpos sont tirés au hasard. ([cf. Classement initial](rules.md#classement-initial))
 
@@ -33,7 +33,7 @@ Un nouveau tour peut commencer.
 
 Une part coûte `100 000 ny × (actifs de la corpo)`. Soit 500 000 ny pour une corpo de 5 actifs. 
 
-> Une part dans la corpo en tête du classement (rang 1) coûte `125 000 ny × actifs` pour joueurs qui n’en ont pas la "nationalité" ([cf. Citoyenneté corpo](rules.md#citoyenneté-corpo)).
+> Une part dans la corpo en tête du classement (rang 1) coûte `125 000 ny × actifs` pour joueurs qui n'en ont pas la "nationalité" ([cf. Citoyenneté corpo](rules.md#citoyenneté-corpo)).
 
 À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire `50 000 ny ny × (actifs de la corpo)`. Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc `2 × (50 000 × 5) + 1 × (50 000 × 10)`, soit 1 million de ny.
 
@@ -64,7 +64,7 @@ Au cours de la résolution du tour, une corpo peut descendre à 0 actifs ou moin
 ## Achat d'Influence
 Un fois par tour, les joueurs peuvent payer pour augmenter leur Influence corporatiste d'un point. Le coût est de `400 000 ny × nouvel indice`, soit 1 200 000 ny pour passer de 2 à 3. 
 
-La nouvelle valeur d’IC ne prendra effet qu’au tour suivant.
+La nouvelle valeur d'IC ne prendra effet qu'au tour suivant.
 
 ## Citoyenneté corpo
 Dans le sixième monde, les corporations ont tellement de pouvoir qu'elles sont de véritables états, avec leurs propres lois et leur propres citoyens. À chaque tour, un joueur peut réclamer la citoyenneté d'une corpo dans laquelle il possède au moins une part.
@@ -105,14 +105,14 @@ L'indice de Défense représente le pourcentage de chances qu'une run du même n
 ### Détection
 En plus de leurs indices de Défense, les corpos possèdent un indice de **Détection** (30 pour Renraku). Ce nombre correspond au pourcentage de chances que la corpo détecte les runs qui la ciblent. Une run détectée est déclarée dans le message de résolution de tous les citoyens de la corpo ciblée avec tous les détails ; bénéficiaire, commanditaire et chances de réussite inclus.
 
-Une run détectée sera également mentionnée dans les Newsfeeds de fin de tour, mais sans davantage d’information que la corpo ciblée.
+Une run détectée sera également mentionnée dans les Newsfeeds de fin de tour, mais sans davantage d'information que la corpo ciblée.
 
 > Les runs de Protection ne sont jamais détectées.
-> Les runs de Sabotage réussies sont particulièrement voyantes, et apparaissent dans les Newsfeeds même si elles n’ont pas été détectées.
-> Même détectées, les runs d’Information ne font pas de vagues et ne sont pas révélées dans les Newsfeeds.
+> Les runs de Sabotage réussies sont particulièrement voyantes, et apparaissent dans les Newsfeeds même si elles n'ont pas été détectées.
+> Même détectées, les runs d'Information ne font pas de vagues et ne sont pas révélées dans les Newsfeeds.
 
 ### Malus de timing
-Lorsque plusieurs équipes de shadowrunners sont engagées pour des runs similaires, elles risquent d’entrer en concurrence et de se marcher sur les pieds.
+Lorsque plusieurs équipes de shadowrunners sont engagées pour des runs similaires, elles risquent d'entrer en concurrence et de se marcher sur les pieds.
 
 Une run subit un malus de **-10%** pour chaque autre run qui **correspond aux 3 critères** suivants :
 
@@ -121,7 +121,7 @@ Une run subit un malus de **-10%** pour chaque autre run qui **correspond aux 3 
 * A un **pourcentage de réussite supérieur ou égal** au sien (avant que les malus de timing ne soient appliqués).
 
     2 runs de Sabotage (même type) sont lancées contre Renraku (même cible) le même tour :
-    * Si elles ont toutes les deux 70% de chance de réussite, chacune fait subir à l’autre un malus de timing de -10%.
+    * Si elles ont toutes les deux 70% de chance de réussite, chacune fait subir à l'autre un malus de timing de -10%.
     * En revanche, si la première a 80% de chance de réussite et la seconde 70%, seule la seconde subit un malus.
 
 > Les runs de Protection n'entrent pas en concurrence.
@@ -150,7 +150,7 @@ Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En
 Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les **messages de résolution** du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses **Secrets** ([cf. Secrets](start.md#secrets)).
 
 > La Défense de Datasteal de la corpo dont la cible est citoyen est utilisée pour contrer les runs d'Information.
-> Même détectées, les runs d’Information n’apparaissent pas dans les Newsfeeds.
+> Même détectées, les runs d'Information n'apparaissent pas dans les Newsfeeds.
 
 #### Protection
 * Base Datasteal : 40 %
@@ -163,24 +163,24 @@ Le commanditaire choisit une **corpo bénéficiaire**, et lui attribue une Défe
 
     Il paye 250 000 ny pour ajouter 50% de chance de réussite à sa run, et utilise un de ses bonus d'IC pour 30% supplémentaire. Sa run a donc 90% de chance de réussite (10% de base + 50% de ny + 30% de bonus d'IC).
 
-    Shiro Kuboka, devinant la manoeuvre, paye 50 000 ny pour organiser une Protection en Extraction en faveur de Renraku. Il ajoute un de ses propres bonus d'IC pour atteindre 50%, (10% de base + 10% de ny + 30% d’IC ; 50 % étant le maximum pour une Protection).
+    Shiro Kuboka, devinant la manoeuvre, paye 50 000 ny pour organiser une Protection en Extraction en faveur de Renraku. Il ajoute un de ses propres bonus d'IC pour atteindre 50%, (10% de base + 10% de ny + 30% d'IC ; 50 % étant le maximum pour une Protection).
 
     Test de réussite de l'Extraction, 90% : réussite
     Test de Défense de Renraku contre les Extractions, 20% : échec
     Test de la Protection de Shiro Kuboka, 50% : échec
     Test de Détection, 30% : réussite
 
-    Un scientifique de renom est arraché à son laboratoire. Renraku perd 1 actif, Horizon en gagne 1. La run a cependant été détectée, et tout Manhattan est au courant qu'elle a eu lieu, sans savoir que Jack Finn est son commanditaire ou qu’Horizon en a bénéficié. Shiro Kuboka, en revanche, est citoyen de Renraku, et apprend donc l'ensemble de la vérité. Maudissant l'incompétence de ses employés, il rassemble ses fonds pour un Sabotage bien senti contre Horizon...
+    Un scientifique de renom est arraché à son laboratoire. Renraku perd 1 actif, Horizon en gagne 1. La run a cependant été détectée, et tout Manhattan est au courant qu'elle a eu lieu, sans savoir que Jack Finn est son commanditaire ou qu'Horizon en a bénéficié. Shiro Kuboka, en revanche, est citoyen de Renraku, et apprend donc l'ensemble de la vérité. Maudissant l'incompétence de ses employés, il rassemble ses fonds pour un Sabotage bien senti contre Horizon...
 
 ## Spéculation &ndash; Le miracle de Wall Street
 Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
 
-Les joueurs qui veulent miser dans le grand casino de l’East Coast Stock Exchange peuvent effectuer un nombre de **spéculations** par tour égal à leur IC. Le nombre de spéculations qu’un joueur peut effectuer est limité par son IC, et le montant de chaque spéculation ne peut dépasser `100 000 ny × (IC du spéculateur)`. Il est possible d’effectuer la même spéculation plusieurs fois.
+Les joueurs qui veulent miser dans le grand casino de l'East Coast Stock Exchange peuvent effectuer un nombre de **spéculations** par tour égal à leur IC. Le nombre de spéculations qu'un joueur peut effectuer est limité par son IC, et le montant de chaque spéculation ne peut dépasser `100 000 ny × (IC du spéculateur)`. Il est possible d'effectuer la même spéculation plusieurs fois.
 
 Chaque spéculation peut viser :
 
 * La croissance ou la chute des actifs d'un **produit dérivé** (voir plus bas)
-* La place d’une corpo dans le classement de fin de tour.
+* La place d'une corpo dans le classement de fin de tour.
 
 Si le spéculateur se trompe, il perd la somme misée.
 
@@ -198,7 +198,7 @@ Le MDC peut modifier ces côtes, voir plus bas.
 Un produit dérivé est la somme des actifs d'un ensemble de corpos. 
 
 * Le **Nikkei** (indice de Bourse de Neo Tokyo) est la somme des actifs des corpos Sony, Shiawase et Renraku
-*  Le **Dow Jones** est la somme des actifs d’Ares, Neonet, Spinrad et Prometheus.
+* Le **Dow Jones** est la somme des actifs d'Ares, Neonet, Spinrad et Prometheus.
 
     Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il effectue deux spéculations :
     * 200 000 ny sur une chute du Nikkei. Après tout, il a un sabotage prévu sur Renraku...
@@ -213,17 +213,17 @@ Le MDC (ou Manhattan Inc.) n'est pas exactement une corporation, mais la structu
 
 Les corpos membres ont changé plusieurs fois depuis la fin de la reconstruction. Aujourd'hui, elles sont dix, et ont chacune une voix lors des votes du consortium. Ces votes légifèrent sur tous les aspects de la vie et des affaires à Manhattan, des juteux contrats de la voirie, de la sécurité, du traitement des déchets ou du développement de la matrice aux lois de régulations des marchés qui ont le potentiel de bouleverser le cours des actions des corpos les plus stables. Les votes du MDC rythment la vie politique de Manhattan, et sont disputés par des coalitions fluctuantes qui ne reculent devant aucun coup bas pour rafler la mise.
 
-Chaque tour, les joueurs peuvent participer au cirque du MDC en rejoignant une **coalition** défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des  **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
+Chaque tour, les joueurs peuvent participer au cirque du MDC en rejoignant une **coalition** défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
 
 Un joueur qui possède **le plus de parts** dans une corpo peut influencer ses décisions politiques : la corpo rejoint la même coalition que lui.
 
 > Les parts achetées ce tour-ci sont prises en compte.
 > En cas d'égalité sur le nombre de parts possédées, la corpo reste neutre. 
 
-La coalition à laquelle le plus de `(joueurs + corpos)` appartiennent domine le MDC pour ce tour, et est libre d’appliquer sa ligne politique. Voir pus bas pour les effets spécifiques.
+La coalition à laquelle le plus de `(joueurs + corpos)` appartiennent domine le MDC pour ce tour, et est libre d'appliquer sa ligne politique. Voir pus bas pour les effets spécifiques.
 
 > En cas d'égalité, aucune coalition ne l'emporte.
-> Les gains et pertes d’actifs prennent effet le tour même, avant les effets premier/dernier. Tous les autres effets sont appliqués le tour suivant.
+> Les gains et pertes d'actifs prennent effet le tour même, avant les effets premier/dernier. Tous les autres effets sont appliqués le tour suivant.
 
 ### Contrats publics
 De gros contrats d'entretien et de sécurité sont redistribués entre les corpos du MDC.

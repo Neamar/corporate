@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
 from messaging.models import Message, Note, Newsfeed
+from utils.read_markdown import read_file_from_path
 
 
 class Game(models.Model):
@@ -43,6 +44,22 @@ class Game(models.Model):
 		"""
 		n = Newsfeed.objects.create(turn=self.current_turn, game=self, **kwargs)
 		return n
+
+	def add_newsfeed_from_template(self, category, path, **kwargs):
+		"""
+		Construct the content of a newsfeed, avoiding messages already displayed within the same game.
+		"""
+		message_number = Newsfeed.objects.filter(category=category, game=self, path=path).count() + 1
+
+		try:
+			content = read_file_from_path("%s/datas/newsfeeds/%s/%s/%s.md" % (settings.BASE_DIR, category, path, message_number))
+		except IOError:
+			content = read_file_from_path("%s/datas/newsfeeds/%s/%s/_.md" % (settings.BASE_DIR, category, path))
+
+		kwargs['content'] = content
+		kwargs['category'] = category
+		kwargs['path'] = path
+		self.add_newsfeed(**kwargs)
 
 	def __unicode__(self):
 		return "Corporate Game: %s" % self.city

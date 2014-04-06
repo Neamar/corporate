@@ -1,4 +1,4 @@
-name: Shiawase Corporation
+name: Shiawase
 initials_assets: 11
 datasteal: 10
 sabotage: 10
@@ -14,7 +14,7 @@ derivative: Nikkei
 
 La plus vieille de toutes les mégas, Shiawase s'est fait connaître comme l'entreprise à l'origine de la décision de justice qui a mené le monde vers la loi d'extraterritorialité que les corpos adorent encore aujourd'hui. En tant que *zaibatsu* japonaise classique, Shiawase est gérée comme une entreprise "familiale", avec des employés qui signent des contrats à vie et qui vont souvent jusqu'à se marier au sein de la corpo.
 
-La PDG de la corpo a récemment fait entrer un mari prestigieux dans le clan Shiawase : rien de moins que l’ Empereur du Japon, le jeune Yasuhito. Depuis son arrivée sur le trône, il est devenu le champion du peuple en lançant un audacieux mouvement de réforme au pays du soleil levant, menaçant une hégémonie nationaliste bien enracinée dans la société japonaise. Le Japon est maintenant divisé, et Shiawase se retrouve opposée aux corpos les plus traditionalistes, dont Sony et particulièrement Renraku font partie. À Manhattan, où les japanocorps sont pourtant interdépendantes sur le plan économique face aux corpos gaijins, le conflit prend parfois le dessus.
+La PDG de la corpo a récemment fait entrer un mari prestigieux dans le clan Shiawase : rien de moins que l' Empereur du Japon, le jeune Yasuhito. Depuis son arrivée sur le trône, il est devenu le champion du peuple en lançant un audacieux mouvement de réforme au pays du soleil levant, menaçant une hégémonie nationaliste bien enracinée dans la société japonaise. Le Japon est maintenant divisé, et Shiawase se retrouve opposée aux corpos les plus traditionalistes, dont Sony et particulièrement Renraku font partie. À Manhattan, où les japanocorps sont pourtant interdépendantes sur le plan économique face aux corpos gaijins, le conflit prend parfois le dessus.
 
 Comme pour toutes les corpos de cette taille, pour savoir ce que fait Shiawase, il faudrait plutôt demander ce qu'elle ne fait pas. Que ce soit directement ou au travers de ses filiales, Shiawase est présente dans le nucléaire, la recherche environnementale, la biotechnologie, l'industrie lourde, les services liés aux technologies, l'extraction minière, et bien d'autres choses encore.
 
