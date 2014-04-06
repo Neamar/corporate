@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 from collections import OrderedDict
-from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
@@ -10,7 +9,7 @@ from engine_modules.corporation_asset_history.models import AssetHistory
 from engine_modules.share.models import Share
 from engine.models import Player
 from website.utils import get_shares_count
-from website.decorators import render, find_player_from_game_id, inject_game_into_response
+from website.decorators import render, find_player_from_game_id, inject_game_into_response, turn_by_turn_view
 from utils.read_markdown import parse_markdown
 
 
@@ -192,24 +191,16 @@ def shares(request, game, player):
 @render('game/newsfeeds.html')
 @find_player_from_game_id
 @inject_game_into_response
-def newsfeeds(request, game, player, turn=None):
+@turn_by_turn_view
+def newsfeeds(request, game, player, turn):
 	"""
 	Display newsfeed
 	"""
-
-	if turn is None:
-		turn = game.current_turn - 1
-	turn = int(turn)
-
-	if turn >= game.current_turn:
-		return redirect('website.views.datas.newsfeeds', game_id=game.pk)
 
 	newsfeeds = game.newsfeed_set.filter(turn=turn).order_by('category')
 
 	return {
 		"newsfeeds": newsfeeds,
-		"current_turn": turn,
-		"turns": range(1, game.current_turn)
 	}
 
 
