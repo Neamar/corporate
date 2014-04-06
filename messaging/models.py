@@ -30,6 +30,13 @@ class Newsfeed(models.Model):
 		content, _ = parse_markdown(self.content)
 		return mark_safe(content)
 
+	@property
+	def subcategory(self):
+		if self.path is None:
+			return ''
+		else:
+			return self.path.split('/')[0]
+
 
 class Message(models.Model):
 	PRIVATE_MESSAGE = 'PM'
