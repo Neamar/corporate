@@ -73,7 +73,7 @@ class Player(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
 	game = models.ForeignKey(Game)
 	money = models.PositiveIntegerField(default=2000)
-	background = models.CharField(default=None, blank=True, null=True, max_length=150)
+	background = models.TextField(default="", blank=True)
 	secrets = models.TextField(default="", blank=True)
 
 	def add_message(self, **kwargs):
