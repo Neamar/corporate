@@ -29,7 +29,7 @@ def wallstreet(request, game, player, turn):
 
 	if turn > 1:
 		# Insert last turn assets
-		delta = AssetHistory.objects.filter(corporation__game=game, turn=turn - 2)
+		delta = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
 		delta_hash = {ah.corporation_id: ah.assets for ah in delta}
 
 		for corporation in corporations:
@@ -52,7 +52,7 @@ def wallstreet(request, game, player, turn):
 
 	# Graph datas
 	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
-	assets_history = AssetHistory.objects.filter(corporation__game=game, turn__lt=turn).order_by('turn', 'corporation')
+	assets_history = AssetHistory.objects.filter(corporation__game=game, turn__lte=turn).order_by('turn', 'corporation')
 
 	# Derivatives
 	derivatives = game.derivative_set.all()
