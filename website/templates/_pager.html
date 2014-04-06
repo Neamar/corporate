@@ -1,0 +1,12 @@
+<p class="top">
+{% for turn in turns %}
+ 	{% if current_turn == turn %}
+ 		{{ turn }}
+	{% else %}
+		<a href="{% url base_url game_id=game.pk turn=turn %}" title="{{ base_title }} #{{ turn }}">{{ turn }}</a>
+ 	{% endif %}
+ 	{% if not forloop.last %}
+ 	&ndash;
+ 	{% endif %}
+{% endfor %}
+</p>

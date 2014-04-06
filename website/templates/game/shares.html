@@ -4,6 +4,8 @@
 {% block h1 %}Parts possédées{% endblock %}
 
 {% block content %}
+{% include "_pager.html" with base_url="website.views.datas.shares" base_title="Consulter les parts au tour" %}
+
 <table class="prop_table slanted_head">
 <thead>
 <tr>
