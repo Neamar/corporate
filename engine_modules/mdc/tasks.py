@@ -134,5 +134,4 @@ class MDCLineCPUBDEVETask(ResolutionTask):
 				c.update_assets(-1, category=AssetDelta.MDC)
 
 
-
 tasks = (MDCVoteTask, MDCLineCPUBDEVETask)
