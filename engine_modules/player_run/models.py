@@ -70,6 +70,7 @@ class InformationOrder(OffensiveRunOrder):
 		form = super(InformationOrder, self).get_form(datas)
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
+		form.fields['target'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
 		return form
 
 	def description(self):

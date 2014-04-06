@@ -24,18 +24,24 @@ def wallstreet(request, game, player, turn):
 	"""
 
 	# Table datas
-	corporations = game.get_ladder()
+	corporations = game.get_ladder(turn=turn)
 	delta_categories = OrderedDict()
 
-	if turn > 1:
-		# Insert last turn assets
-		delta = AssetHistory.objects.filter(corporation__game=game, turn=turn - 2)
-		delta_hash = {ah.corporation_id: ah.assets for ah in delta}
+	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn)
+	assets_hash = {ah.corporation_id: ah.assets for ah in assets}
 
+	for corporation in corporations:
+		corporation.current_assets = assets_hash[corporation.pk]
+
+	# Insert last turn assets
+	last_assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
+	last_assets_hash = {ah.corporation_id: ah.assets for ah in last_assets}
+
+	if game.current_turn > 1:
 		for corporation in corporations:
-			corporation.last_assets = delta_hash[corporation.pk]
+			corporation.last_assets = last_assets_hash[corporation.pk]
 
-			detailed_delta = corporation.assetdelta_set.filter(turn=turn - 1).order_by('category')
+			detailed_delta = corporation.assetdelta_set.filter(turn=turn).order_by('category')
 			for detail in detailed_delta:
 				setattr(corporation, detail.category, getattr(corporation, detail.category, 0) + detail.delta)
 				delta_categories[detail.category] = {
@@ -43,7 +49,7 @@ def wallstreet(request, game, player, turn):
 					"display": detail.get_category_display()
 				}
 
-			unknown = corporation.assets - corporation.last_assets - sum([ad.delta for ad in detailed_delta])
+			unknown = corporation.current_assets - corporation.last_assets - sum([ad.delta for ad in detailed_delta])
 			setattr(corporation, 'unknown', unknown if unknown != 0 else "")
 		delta_categories['unknown'] = {
 			'shortcut': '?',
@@ -52,14 +58,13 @@ def wallstreet(request, game, player, turn):
 
 	# Graph datas
 	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
-	assets_history = AssetHistory.objects.filter(corporation__game=game, turn__lt=turn).order_by('turn', 'corporation')
+	assets_history = AssetHistory.objects.filter(corporation__game=game, turn__lte=turn).order_by('turn', 'corporation')
 
 	# Derivatives
 	derivatives = game.derivative_set.all()
 	for derivative in derivatives:
-		derivative.assets = derivative.get_sum(turn - 1)
-		if turn > 1:
-			derivative.last_assets = derivative.get_sum(turn - 2)
+		derivative.assets = derivative.get_sum(turn)
+		derivative.last_assets = derivative.get_sum(turn - 1)
 
 	return {
 		"corporations": corporations,
