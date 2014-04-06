@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import IntegrityError
 
 from engine.testcases import EngineTestCase
@@ -30,49 +31,54 @@ class ModelTest(EngineTestCase):
 
 		m2 = Message(title="titre1", author=self.p, turn=self.g.current_turn)
 		m2.save()
-		
+
 		self.assertRaises(IntegrityError, lambda: m2.recipient_set.add(p3))
 
 	def test_message_building_content(self):
 		"""
-		Check if the content is built properly
+		Check content is built in right order
 		"""
+
 		Note.objects.create(
-			category="T1",
-			content="C1",
+			content="global",
 			turn=self.g.current_turn
 		)
 		Note.objects.create(
-			category="T2",
-			content="C3",
+			category=Note.SPECULATION,
+			content="speculation",
 			turn=self.g.current_turn
 		)
 		Note.objects.create(
-			category="T1",
-			content="C2",
+			category=Note.RUNS,
+			content="runs",
+			turn=self.g.current_turn
+		)
+		Note.objects.create(
+			category=Note.DIVIDEND,
+			content="dividend",
 			turn=self.g.current_turn
 		)
 
 		opening = "Opening"
-		ending = "Ending"
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,
 			notes=Note.objects.all(),
 			opening=opening,
-			ending=ending,
 			title="test",
 			turn=self.g.current_turn
 		)
 
-		expected = """Opening
+		expected = u"""Opening
 
-### T1
-* C1
-* C2
+* global
 
-### T2
-* C3
+### Runs
+* runs
 
-Ending
-"""
-		self.assertEquals(m.content, expected)
+### Spéculations
+* speculation
+
+### Dividendes
+* dividend"""
+
+		self.assertEqual(m.content.strip(), expected)

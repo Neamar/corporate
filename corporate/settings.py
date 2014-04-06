@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -26,6 +27,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+RAVEN_CONFIG = {
+    'dsn': 'https://e07c2d0b4b994a79b74dbfe78fe91629:a996f7f6c7c74a3cafcacdbe7d51411c@app.getsentry.com/21834',
+}
 
 # Application definition
 
@@ -51,12 +55,17 @@ INSTALLED_APPS = (
     'engine_modules.run',
     'engine_modules.corporation_run',
     'engine_modules.corporation_asset_history',
+    'engine_modules.derivative',
     'engine_modules.player_run',
     'engine_modules.speculation',
     'engine_modules.effects',
     'engine_modules.mdc',
     'engine_modules.wiretransfer',
 )
+
+
+if 1 in sys.argv and sys.argv[1] != 'test':
+    INSTALLED_APPS += 'raven.contrib.django.raven_compat'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

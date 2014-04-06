@@ -32,10 +32,9 @@ class BuyInfluenceOrder(Order):
 		self.player.influence.save()
 
 		# Send a note for final message
-		category = u"Influence"
 		content = u"Votre Influence dans le milieu corporatiste monte à %i." % self.player.influence.level
+		self.player.add_note(content=content)
 		newsfeed_content = u"L'Influence Corporatiste de %s monte à %i." % (self.player.name, self.player.influence.level)
-		self.player.add_note(category=category, content=content)
 		self.player.game.add_newsfeed(category=Newsfeed.PEOPLE, content=newsfeed_content)
 
 	def description(self):

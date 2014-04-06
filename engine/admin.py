@@ -23,6 +23,7 @@ admin.site.register(Game, GameAdmin)
 
 class PlayerAdmin(admin.ModelAdmin):
 	list_display = ('name', 'user', 'game')
+	list_filter = ('game',)
 	ordering = ('name',)
 admin.site.register(Player, PlayerAdmin)
 
@@ -30,5 +31,6 @@ admin.site.register(Player, PlayerAdmin)
 class OrderAdmin(admin.ModelAdmin):
 	list_display = ('type', 'player', 'turn')
 	readonly_fields = ('turn',)
+	list_filter = ('player__game',)
 	ordering = ('player',)
 admin.site.register(Order, OrderAdmin)

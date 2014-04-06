@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from engine.tasks import ResolutionTask, OrderResolutionTask
 from engine_modules.share.models import Share, BuyShareOrder
+from messaging.models import Note
 
 
 class BuyShareTask(OrderResolutionTask):
@@ -23,19 +25,39 @@ class DividendTask(ResolutionTask):
 	def run(self, game):
 		"""
 		Retrieve all Share from all players
-		TODO: megaoptimize queries
 		"""
-		shares = Share.objects.filter(player__game=game)
+		all_shares = Share.objects.filter(player__game=game).select_related('corporation')
+
+		shares = {}
+
+		# Group shares by corporation and players
+		for share in all_shares:
+			# Reduce to keep non duplicate only
+			key = (share.corporation_id, share.player_id)
+			if key in shares:
+				shares[key].count += 1
+			else:
+				shares[key] = share
+				share.count = 1
+
 		ladder = game.get_ladder()
 
-		for share in shares:
-			dividend = self.SHARE_BASE_VALUE * share.corporation.assets
+		for share in shares.values():
+			dividend = share.count * self.SHARE_BASE_VALUE * share.corporation.assets
+
 			if share.corporation == ladder[0]:
 				dividend *= self.FIRST_BONUS
 			if share.corporation == ladder[-1]:
 				dividend *= self.LAST_BONUS
 
-			share.player.money += int(dividend)
+			dividend = int(dividend)
+			share.player.money += dividend
 			share.player.save()
+
+			if share.count == 1:
+				content = u"Votre part dans %s vous rapporte %s k¥" % (share.corporation.base_corporation.name, dividend)
+			else:
+				content = u"Vos %s parts dans %s vous rapportent %s k¥" % (share.count, share.corporation.base_corporation.name, dividend)
+			share.player.add_note(category=Note.DIVIDEND, content=content)
 
 tasks = (BuyShareTask, DividendTask)

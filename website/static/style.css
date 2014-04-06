@@ -3,11 +3,11 @@
  */
 a:visited
 {
-   color:#0000EE;
+  color:#0000EE;
 }
 
 pre {
-   white-space: pre-wrap;
+  white-space: pre-wrap;
 }
 
 /********************
@@ -15,7 +15,7 @@ pre {
  */
 body
 {
-   background:url("city.jpg") no-repeat fixed center top #64595f;
+  background:url("city.jpg") no-repeat fixed center top #64595f;
 }
 
 .top
@@ -26,76 +26,76 @@ body
 
 .spacer
 {
-   margin:90% 0;
+  margin:90% 0;
 }
 
 #wrapper
 {
-   width:650px;
-   margin:auto;
+  width:650px;
+  margin:auto;
 }
 
 #sidebar
 {
-   font-family:Audiowide, cursive;
-   text-shadow:0.1em 0 0.2em white;
+  font-family:Audiowide, cursive;
+  text-shadow:0.1em 0 0.2em white;
 }
 
 #sidebar ul
 {
-   list-style:none;
-   float:right;
-   clear: both;
-   margin: 0;
+  list-style:none;
+  float:right;
+  clear: both;
+  margin: 0;
 }
 
 #sidebar li
 {
-   float:left;
-   padding-right:5px;
-   padding-bottom:10px;
+  float:left;
+  padding-right:5px;
+  padding-bottom:10px;
 }
 
 #sidebar li:after
 {
-   padding-left:5px;
-   content:"|";
+  padding-left:5px;
+  content:"|";
 }
 
 #sidebar li:last-child:after
 {
-   padding-left:0;
-   content:''
+  padding-left:0;
+  content:''
 }
 
 #end
 {
-   text-align:center;
-   font-family:Audiowide, cursive;
+  text-align:center;
+  font-family:Audiowide, cursive;
 }
 
 #end a
 {
-   color:white;
-   text-shadow:0px 3px 3px blue;
+  color:white;
+  text-shadow:0px 3px 3px blue;
 }
 
 #content
 {
-   clear:both;
-   border:1px solid #AAB123;
-   border-radius:5px;
-   box-shadow:0 0 20px rgba(0, 0, 0, 0.2);
-   padding:10px;
-   text-align:justify;
-   font: Helvetica,arial,freesans,clean,sans-serif;
-   text-shadow:-2px 1px 3px #DDDDDD;
-   background-color:rgb(220,220,220);
+  clear:both;
+  border:1px solid #AAB123;
+  border-radius:5px;
+  box-shadow:0 0 20px rgba(0, 0, 0, 0.2);
+  padding:10px;
+  text-align:justify;
+  font: Helvetica,arial,freesans,clean,sans-serif;
+  text-shadow:-2px 1px 3px #DDDDDD;
+  background-color:rgb(220,220,220);
 }
 
 #content p
 {
-   text-indent:2em;
+  text-indent:2em;
 }
 
 #content li p {
@@ -105,36 +105,36 @@ body
 
 #content h1, h2, h3, h4, h5
 {
-   font-family:Syncopate, sans-serif;
-   text-align:left;
+  font-family:Syncopate, sans-serif;
+  text-align:left;
 }
 
 #content h1 a, h2 a, h3 a, h4 a, h5 a, h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited
 {
-   color:black;
-   text-decoration:none;
+  color:black;
+  text-decoration:none;
 }
 
 #content h1
 {
-   text-align:center;
+  text-align:center;
 }
 
 #content h2, h3, h4, h5
 {
-   border-bottom:1px solid #23AAB1;
+  border-bottom:1px solid #23AAB1;
 }
 
 @media screen and (max-width: 960px) {
-   body
-   {
-      background-image:none;
-   }
+  body
+  {
+   background-image:none;
+  }
 
-   #wrapper
-   {
-      width: 100%;
-   }
+  #wrapper
+  {
+   width: 100%;
+  }
 }
 
 
@@ -143,60 +143,60 @@ body
  */
 table
 {
-   margin:auto;
-   border-collapse:collapse;
-   max-width:90%;
+  margin:auto;
+  border-collapse:collapse;
+  max-width:90%;
 }
 
 table caption
 {
-   text-align:right;
-   font-variant:small-caps;
+  text-align:right;
+  font-variant:small-caps;
 }
 
 tr, td, th
 {
-   border:1px solid black;
+  border:1px solid black;
 }
 
 tbody tr:nth-child(odd)
 
 {
-   background:rgba(255, 255, 255, .3)
+  background:rgba(255, 255, 255, .3)
 }
 
 td a
 {
-   color:black !important;
-   text-decoration:none;
+  color:black !important;
+  text-decoration:none;
 }
 
 .prop_table td:not(:first-child)
 {
-   width:50px;
+  width:50px;
 }
 
 .prop_table tr, th
 {
-   text-align:center;
+  text-align:center;
 }
 
 .prop_table th:first-child
 {
-   border-top:1px solid transparent;
-   border-left:1px solid transparent;
+  border-top:1px solid transparent;
+  border-left:1px solid transparent;
 }
 
 .prop_table td:first-child
 {
-   font-weight:bold;
-   text-align:left;
-   padding:0 20px;
+  font-weight:bold;
+  text-align:left;
+  padding:0 20px;
 }
 
 .prop_table td.important
 {
-   background: rgba(100, 89, 95, .2)
+  background: rgba(100, 89, 95, .2)
 }
 
 .prop_table th.large
@@ -205,11 +205,11 @@ td a
 }
 
 .slanted_head thead tr {
-   border: none;
+  border: none;
 }
 
 .slanted_head td:not(:first-child) {
-   max-width:30px;
+  max-width:30px;
 }
 
 .slanted_head th {

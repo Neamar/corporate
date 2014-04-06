@@ -28,8 +28,9 @@ class Game(models.Model):
 			t.run(self)
 
 		# Build resolution messages for each player
-		for player in self.player_set.all():
+		for player in self.player_set.all().select_related('game'):
 			player.build_resolution_message()
+		# Remove all Notes
 		Note.objects.filter(recipient_set__game=self).delete()
 
 		# Increment current turn and terminate.
@@ -94,6 +95,8 @@ class Player(models.Model):
 		"""
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
+		self.add_note(content="Argent disponible pour le tour : %sk¥" % self.money)
+
 		notes = Note.objects.filter(recipient_set=self, turn=self.game.current_turn)
 		m = Message.build_message_from_notes(
 			message_type=Message.RESOLUTION,

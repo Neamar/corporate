@@ -4,12 +4,12 @@ def sender_instance_of(*args):
 	"""
 	Orders = args
 
-	def d(function):
+	def d(func):
 		def wrapper(*args, **kwargs):
 			# Only validate for Offensive runs.
 			for Order in Orders:
 				if isinstance(kwargs['instance'], Order):
-					function(*args, **kwargs)
+					func(*args, **kwargs)
 					return
 		return wrapper
 	return d

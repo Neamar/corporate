@@ -2,6 +2,7 @@
 from collections import Counter
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.functional import cached_property
 
 from engine.models import Order, Game, Player
 from website.widgets import PlainTextField
@@ -43,6 +44,16 @@ class MDCVoteOrder(Order):
 			)
 		),
 	)
+
+	MDC_OPPOSITIONS = {
+		CPUB: DEVE,
+		DEVE: CPUB,
+		CCIB: TRAN,
+		TRAN: CCIB,
+		BANK: DERE,
+		DERE: BANK
+	}
+
 	title = "Choisir une coalition"
 
 	coalition = models.CharField(max_length=4, choices=MDC_COALITION_CHOICES, blank=True, null=True, default=None)
@@ -57,10 +68,10 @@ class MDCVoteOrder(Order):
 		"""
 		Find all corporations where the player is top shareholder.
 		"""
-		vote_registry = self.build_vote_registry()
-		return vote_registry[self.player]
+		return self.vote_registry[self.player]
 
-	def build_vote_registry(self):
+	@cached_property
+	def vote_registry(self):
 		"""
 		Build a registry of the top shareholders for each corporation that will be used in calculation of weight
 		"""

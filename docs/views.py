@@ -22,6 +22,7 @@ def index(request, page):
 	except:
 		title = "Corporate Game"
 
+	title = mark_safe(title)
 	content = mark_safe(content)
 
 	return render(request, 'docs/index.html', {"content": content, "title": title})

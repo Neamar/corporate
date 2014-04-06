@@ -6,4 +6,14 @@
 <p>Le <strong>Corporate Game: Manhattan</strong> est un jeu par navigateur en tour par tour (un tour par jour, huit tours par partie).<br />
 Rejoignez la danse pour devenir le roi d'un instant !</p>
 
+{% if players %}
+<hr />
+<p>Vos parties en cours :</p>
+<ul>
+{% for player in players %}
+	<li><a href="{% url "website.views.datas.newsfeeds" game_id=player.game_id %}">{{ player.name}}, {{ player.game.city }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
 {% endblock content %}

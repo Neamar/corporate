@@ -45,6 +45,7 @@ def add_order(request, game_id, order_type):
 		form = instance.get_form()
 
 	order = {
+		"game": player.game,
 		"title": instance.title,
 		"name": SubOrder.__name__,
 		"form": form

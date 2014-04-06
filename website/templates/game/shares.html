@@ -4,6 +4,8 @@
 {% block h1 %}Parts possédées{% endblock %}
 
 {% block content %}
+{% include "_pager.html" with base_url="website.views.datas.shares" base_title="Consulter les parts au tour" %}
+
 <table class="prop_table slanted_head">
 <thead>
 <tr>
@@ -16,7 +18,7 @@
 <tbody>
 {% for player_shares in shares %}
 <tr>
-	<td><a href="{% url "website.views.datas.player" game_id=1 player_id=player_shares.player.id %}">{{ player_shares.player.name }}</a></td>
+	<td><a href="{% url "website.views.datas.player" game_id=game.pk player_id=player_shares.player.id %}">{{ player_shares.player.name }}</a></td>
 	{% for share in player_shares.shares %}
 		{% if player_shares.citizenship_index == forloop.counter0 %}
 			<td class="important">{{ share }}</td>
