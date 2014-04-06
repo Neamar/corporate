@@ -24,16 +24,22 @@ def wallstreet(request, game, player, turn):
 	"""
 
 	# Table datas
-	corporations = game.get_ladder()
+	corporations = game.get_ladder(turn=turn)
 	delta_categories = OrderedDict()
 
-	if turn > 1:
+	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn)
+	assets_hash = {ah.corporation_id: ah.assets for ah in assets}
+
+	for corporation in corporations:
+		corporation.current_assets = assets_hash[corporation.pk]
+
+	if turn >= 1:
 		# Insert last turn assets
-		delta = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
-		delta_hash = {ah.corporation_id: ah.assets for ah in delta}
+		last_assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
+		last_assets_hash = {ah.corporation_id: ah.assets for ah in last_assets}
 
 		for corporation in corporations:
-			corporation.last_assets = delta_hash[corporation.pk]
+			corporation.last_assets = last_assets_hash[corporation.pk]
 
 			detailed_delta = corporation.assetdelta_set.filter(turn=turn - 1).order_by('category')
 			for detail in detailed_delta:
@@ -43,7 +49,7 @@ def wallstreet(request, game, player, turn):
 					"display": detail.get_category_display()
 				}
 
-			unknown = corporation.assets - corporation.last_assets - sum([ad.delta for ad in detailed_delta])
+			unknown = corporation.current_assets - corporation.last_assets - sum([ad.delta for ad in detailed_delta])
 			setattr(corporation, 'unknown', unknown if unknown != 0 else "")
 		delta_categories['unknown'] = {
 			'shortcut': '?',
