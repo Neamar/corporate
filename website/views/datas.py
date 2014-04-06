@@ -17,7 +17,8 @@ from utils.read_markdown import parse_markdown
 @render('game/wallstreet.html')
 @find_player_from_game_id
 @inject_game_into_response
-def wallstreet(request, game, player):
+@turn_by_turn_view
+def wallstreet(request, game, player, turn):
 	"""
 	Wallstreet datas
 	"""
@@ -26,15 +27,15 @@ def wallstreet(request, game, player):
 	corporations = game.get_ladder()
 	delta_categories = OrderedDict()
 
-	if game.current_turn > 1:
+	if turn > 1:
 		# Insert last turn assets
-		delta = AssetHistory.objects.filter(corporation__game=game, turn=game.current_turn - 2)
+		delta = AssetHistory.objects.filter(corporation__game=game, turn=turn - 2)
 		delta_hash = {ah.corporation_id: ah.assets for ah in delta}
 
 		for corporation in corporations:
 			corporation.last_assets = delta_hash[corporation.pk]
 
-			detailed_delta = corporation.assetdelta_set.filter(turn=game.current_turn - 1).order_by('category')
+			detailed_delta = corporation.assetdelta_set.filter(turn=turn - 1).order_by('category')
 			for detail in detailed_delta:
 				setattr(corporation, detail.category, getattr(corporation, detail.category, 0) + detail.delta)
 				delta_categories[detail.category] = {
@@ -51,14 +52,14 @@ def wallstreet(request, game, player):
 
 	# Graph datas
 	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
-	assets_history = AssetHistory.objects.filter(corporation__game=game).order_by('turn', 'corporation')
+	assets_history = AssetHistory.objects.filter(corporation__game=game, turn__lt=turn).order_by('turn', 'corporation')
 
 	# Derivatives
 	derivatives = game.derivative_set.all()
 	for derivative in derivatives:
-		derivative.assets = derivative.get_sum(game.current_turn - 1)
-		if game.current_turn > 1:
-			derivative.last_assets = derivative.get_sum(game.current_turn - 2)
+		derivative.assets = derivative.get_sum(turn - 1)
+		if turn > 1:
+			derivative.last_assets = derivative.get_sum(turn - 2)
 
 	return {
 		"corporations": corporations,
