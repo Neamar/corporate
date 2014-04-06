@@ -21,6 +21,7 @@ class Newsfeed(models.Model):
 	content = models.TextField(blank=True)
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
+	path = models.CharField(max_length=250)
 
 	def __unicode__(self):
 		return "%s newsfeeds" % self.get_category_display()
@@ -28,6 +29,20 @@ class Newsfeed(models.Model):
 	def as_html(self):
 		content, _ = parse_markdown(self.content)
 		return mark_safe(content)
+
+	@property
+	def subcategory(self):
+		if self.path is None:
+			return ''
+		else:
+			return self.path.split('/')[0]
+
+	@property
+	def state(self):
+		if self.path is None:
+			return ''
+		else:
+			return self.path.split('/')[-1]
 
 
 class Message(models.Model):
