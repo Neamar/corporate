@@ -33,7 +33,7 @@ Un nouveau tour peut commencer.
 
 Une part coûte `100 000 ny × (actifs de la corpo)`. Soit 500 000 ny pour une corpo de 5 actifs. 
 
-> Une part dans la corpo en tête du classement (rang 1) coûte `125 000 ny × actifs` pour joueurs qui n'en ont pas la "nationalité" ([cf. Citoyenneté corpo](rules.md#citoyenneté-corpo)).
+> Une part dans la corpo en tête du classement (rang 1) coûte `125 000 ny × actifs` pour joueurs qui n'en ont pas la "nationalité" ([cf. Citoyenneté corpo](rules.md#citoyennete-corpo)).
 
 À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire `50 000 ny ny × (actifs de la corpo)`. Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc `2 × (50 000 × 5) + 1 × (50 000 × 10)`, soit 1 million de ny.
 
@@ -76,20 +76,20 @@ Un **citoyen corpo** :
 * Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses actions ([cf. Information](rules.md#information)).
 * Reçoit les informations détectées par sa corpo dans son message de résolution.
 
-Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste ([cf. Mise en place](start.md#citoyenneté-corpo)).
+Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste ([cf. Mise en place](start.md#citoyennete-corpo)).
 
 Si la corpo dont le joueur est citoyen Crashe, il en perd la citoyenneté et pourra s'il le souhaite en réclamer une nouvelle au tour suivant. Il subit normalement le malus de points de victoire.
 
 ## Runs
 Les requins corpos ont tendance à ne pas jouer selon les règles. Pour manipuler le marché et gagner un avantage sur la concurrence, ils n'hésitent pas à engager des agents indépendants, appelés shadowrunners, pour effectuer toutes sortes d'opérations clandestines, ou shadowruns. **Runs**, pour les intimes.
 
-Il existe 5 type de runs : **Datasteal**, **Sabotage**, **Extraction**, **Information** et **Protection**. Elles ont chacune des résultats spécifiques et une chance de réussite de base en pourcentage (%): par exemple, 30% pour les runs de Sabotage. Le joueur **commanditaire** peut augmenter les chances de réussite de sa run à raison de 50 000 ny pour 10% supplémentaires. Un joueur qui investit 150 000 ny dans une run de Sabotage aura donc 60% de chance de la voir réussir (`30% de base + 3 × 10%``).
+Il existe 5 type de runs : **Datasteal**, **Sabotage**, **Extraction**, **Information** et **Protection**. Elles ont chacune des résultats spécifiques et une chance de réussite de base en pourcentage (%): par exemple, 30% pour les runs de Sabotage. Le joueur **commanditaire** peut augmenter les chances de réussite de sa run à raison de 50 000 ny pour 10% supplémentaires. Un joueur qui investit 150 000 ny dans une run de Sabotage aura donc 60% de chance de la voir réussir (`30% de base + 3 × 10%`).
 
 Pour lancer une run, un joueur doit investir un minimum de 50 000 ny, soit +10%.
 
 Pour chaque point d'IC qu'il possède, un joueur peut gratuitement ajouter +30% à une run par tour. Un joueur possédant une IC de 3 pourra donc ajouter +30% à 3 runs par tour. Ces bonus ne peuvent pas être cumulés sur une même run.
 
-Une run a un maximum de 90% de chances de réussir, mais il est possible de payer un pourcentage supérieur pour contrebalancer des malus. ([cf. Malus de timing](rules.md#malus-de-timing)) et ([cf. Contrôles ciblés](rules.md#contrôles-ciblés)).
+Une run a un maximum de 90% de chances de réussir, mais il est possible de payer un pourcentage supérieur pour contrebalancer des malus. ([cf. Malus de timing](rules.md#malus-de-timing)) et ([cf. Contrôles ciblés](rules.md#controles-cibles)).
 
 Si une run autre que Protection échoue ou est contrée (voir ci-dessous), son commanditaire récupère la moitié des nuyens investis.
 
@@ -247,7 +247,7 @@ De nouvelles lois sont votées, renforçant certains contrôles ciblés au détr
 Effets : 
 
 * Au prochain tour, les runs de **Datasteal**, **Sabotage** et **Extraction** ciblant les **corpos** appartenant à la coalition **Contrôles ciblés** subissent un malus de **-10%**.
-* Les **joueurs** appartenant à la coalition **Transparence** ne pourront pas effectuer de runs de protection au prochain tour.
+* Les **joueurs** appartenant à la coalition **Transparence** ne pourront pas effectuer de runs de Protection au prochain tour.
 
 ### Transparence
 L'ouverture de bases de données privées offre de nouvelles possibilités de runs pour ceux qui y ont accès.
