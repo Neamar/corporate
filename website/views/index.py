@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 
 from website.decorators import render
-from website.models import User
 
 
 @render('index.html')
@@ -11,7 +10,8 @@ def index(request):
 	"""
 
 	players = []
-	if type(request.user) == User:
+
+	if request.user.is_authenticated():
 		players = request.user.player_set.all().select_related('game')
 
 	return {
