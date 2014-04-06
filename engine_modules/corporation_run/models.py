@@ -302,6 +302,12 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 	def description(self):
 		return u"Réaliser une extraction de %s vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
 
+	def get_form(self, datas=None):
+		form = super(ExtractionOrder, self).get_form(datas)
+		form.fields['kidnapper_corporation'].queryset = self.player.game.corporation_set.all()
+
+		return form
+
 
 class ProtectionOrder(RunOrder):
 	"""

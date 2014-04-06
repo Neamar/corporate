@@ -95,7 +95,7 @@ class Player(models.Model):
 		"""
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
-		self.add_note(content="Argent disponible pour le tour : %s" % self.money)
+		self.add_note(content="Argent disponible pour le tour : %sk¥" % self.money)
 
 		notes = Note.objects.filter(recipient_set=self, turn=self.game.current_turn)
 		m = Message.build_message_from_notes(
