@@ -36,7 +36,7 @@ class TasksTest(EngineTestCase):
 		initial_assets = self.first_corporation.assets
 
 		# Change the default code
-		self.update_effect(self.first_corporation, 'on_first', "update(corporations.get(base_corporation_slug='%s'), 5)" % self.first_corporation.base_corporation_slug)
+		self.update_effect(self.first_corporation, 'on_first', "update('%s', 5)" % self.first_corporation.base_corporation_slug)
 		self.update_effect(self.last_corporation, 'on_last', "")
 
 		self.g.resolve_current_turn()
@@ -50,7 +50,7 @@ class TasksTest(EngineTestCase):
 		initial_assets = self.last_corporation.assets
 
 		# Change the default code
-		self.update_effect(self.last_corporation, 'on_last', "update(corporations.get(base_corporation_slug='%s'), -5)" % self.last_corporation.base_corporation_slug)
+		self.update_effect(self.last_corporation, 'on_last', "update('%s', -5)" % self.last_corporation.base_corporation_slug)
 		self.update_effect(self.first_corporation, 'on_first', "")
 
 		self.g.resolve_current_turn()
@@ -62,7 +62,7 @@ class TasksTest(EngineTestCase):
 		Using update() function in code creates AssetDelta
 		"""
 		# Change the default code
-		self.update_effect(self.last_corporation, 'on_last', "update(corporations.get(base_corporation_slug='%s'), -5)" % self.last_corporation.base_corporation_slug)
+		self.update_effect(self.last_corporation, 'on_last', "update('%s', -5)" % self.last_corporation.base_corporation_slug)
 		self.update_effect(self.first_corporation, 'on_first', "")
 
 		self.g.resolve_current_turn()
@@ -70,3 +70,14 @@ class TasksTest(EngineTestCase):
 		self.assertEqual(asset_delta.category, asset_delta.EFFECT_LAST)
 		self.assertEqual(asset_delta.delta, -5)
 		self.assertEqual(asset_delta.corporation, self.last_corporation)
+
+	@override_base_corporations
+	def test_crashed_corporations(self):
+		"""
+		Test errors are gracefully handled whe the corporation to affect does not exist anymore
+		"""
+		self.update_effect(self.last_corporation, 'on_last', "update('unknown_corporation', -5)")
+		self.update_effect(self.first_corporation, 'on_first', "")
+
+		# assertNoRaise
+		self.g.resolve_current_turn()

@@ -7,7 +7,7 @@ detection: 60
 on_first:
     update(ladder[1], -2)
 on_last:
-    update(corporations.get(base_corporation_slug='saeder-krupp'), 2)
+    update('saeder-krupp', 2)
 
 Plus grosse corpo du monde, Saeder Krupp Heavy Industries peut se résumer en un seul mot : Lofwyr. Le Grand dragon n'est pas loin de posséder 100% des parts de cette corporation allemande, et il la dirige avec toute l'attention dont peuvent faire preuve ceux de sa race. Il n'est pas impossible de doubler Lofwyr, mais c'est très difficile, et en général, c'est même fatal. Le grand ver ne tolère pas les imbéciles, et ceux qui se mettent en travers de son chemin (ou qui échouent dans les tâches qu'il leur confie) se retrouvent dans ses petits papiers, des papiers qui font également office de menus du jour.
 

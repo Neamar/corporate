@@ -7,7 +7,7 @@ detection: 90
 on_first:
     update(ladder[-1], -2)
 on_last:
-    update(corporations.get(base_corporation_slug='aztechnology'), 1)
+    update('aztechnology', 1)
     update(ladder[0], -1)
 
 Horizon est la petite dernière des AAA, entrée à la cour corporatiste dans les tumultes qui ont suivi le crash. Basée dans ce paradis des médias qu'est Los Angeles, elle est spécialisée dans tout ce qui peut manipuler l'opinion (personnelle ou publique), ce qui inclut la gestion des relations publiques, la publicité, le marketing viral, l'analyse conjoncturelle et l'élaboration de réseaux relationnels. Sa structure corporatiste est connue pour être moins hiérarchisée que celle des autres mégas, lui préférant les consensus, les groupes de travail, l'analyse des tendances et le management "personnalisé". Les employés sont encouragés à développer leurs talents et à poursuivre leurs recherches pendant leur temps de travail -- à condition bien sûr qu'Horizon puisse en tirer profit plus tard.

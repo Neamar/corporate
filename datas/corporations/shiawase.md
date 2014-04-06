@@ -5,10 +5,10 @@ sabotage: 10
 extraction: 30
 detection: 30
 on_first:
-    update(corporations.get(base_corporation_slug='renraku'), -1)
-    update(corporations.get(base_corporation_slug='sony'), 1)
+    update('renraku', -1)
+    update('sony', 1)
 on_last:
-    update(corporations.get(base_corporation_slug='sony'), -1)
+    update('sony', -1)
     update(ladder[-2], -1)
 derivative: Nikkei
 

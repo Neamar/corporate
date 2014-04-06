@@ -5,7 +5,7 @@ sabotage: 20
 extraction: 10
 detection: 30
 on_first:
-    update(corporations.get(base_corporation_slug='prometheus'), 1)
+    update('prometheus', 1)
     update(ladder[1], 1)
 on_last:
     update(ladder[0], 2)

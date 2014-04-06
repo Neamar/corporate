@@ -5,8 +5,8 @@ sabotage: 10
 extraction: 20
 detection: 60
 on_first:
-    update(corporations.get(base_corporation_slug='renraku'), 1)
-    update(corporations.get(base_corporation_slug='shiawase'), 1)
+    update('renraku', 1)
+    update('shiawase', 1)
 on_last:
     update(ladder[-2], -2)
 derivative: Nikkei
