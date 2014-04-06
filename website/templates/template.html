@@ -20,7 +20,7 @@
 			{% endif %}
 			</ul>
 
-			{% if user.is_authenticated %}
+			{% if user.is_authenticated and game %}
 			<ul class="game">
 				<li><a href="{% url 'website.views.datas.newsfeeds' game_id=game.pk %}">newsfeeds</a></li>
 				<li><a href="{% url 'website.views.orders.orders' game_id=game.pk %}">ordres</a></li>
