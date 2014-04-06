@@ -4,7 +4,7 @@
 {% block h1 %} Ajouter un ordre  {% endblock %}
 
 {% block content %}
-<h3>{{ order.title }}</h3>
+<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">{{ order.title }}</h3>
 <form method="post" action="{% url "website.views.orders.add_order" game_id=game.pk order_type=order.name %}">
 	<table>
 	{{ order.form.as_table }}
