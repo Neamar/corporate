@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
 from messaging.models import Message, Note, Newsfeed
-from utils.read_markdown import *
+from utils.read_markdown import read_file_from_path
 
 
 class Game(models.Model):
@@ -52,7 +52,7 @@ class Game(models.Model):
 		content = read_file_from_path("%s/datas/newsfeeds/%s/%s/%s.md" % (settings.BASE_DIR, category, path, (nb_already_displayed_messages + 1)))
 		if content == 'This file does not exists : (%s/datas/newsfeeds/%s/%s/%s.md)' % (settings.BASE_DIR, category, path, (nb_already_displayed_messages + 1)):
 			content = read_file_from_path("%s/datas/newsfeeds/%s/%s/_.md" % (settings.BASE_DIR, category, path))
-		
+
 		kwargs['content'] = content
 		kwargs['category'] = category
 		kwargs['path'] = path
