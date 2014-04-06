@@ -39,7 +39,7 @@
 <p>Fonds : {{ remaining_money }}k&nbsp;¥</p>
 
 {% for order in available_orders %}
-	<h3>{{ order.title }}</h3>
+	<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">{{ order.title }}</h3>
 	{% if order.available != False %}
 	<form method="post" action="{% url "website.views.orders.add_order" game_id=game.pk order_type=order.name %}">
 		<table>

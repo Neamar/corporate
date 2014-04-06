@@ -31,7 +31,7 @@ body
 
 #wrapper
 {
-  width:650px;
+  width:680px;
   margin:auto;
 }
 
@@ -149,6 +149,14 @@ body
 
 #content .newsfeed img.failure {
   border: 1px solid red;
+}
+
+#content h3.order {
+  background-repeat: no-repeat;
+  background-size: 50px 50px;
+  background-position: right bottom;
+  padding-right: 55px;
+  padding-top: 28px;
 }
 
 /********************
