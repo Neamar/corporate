@@ -46,11 +46,13 @@ class Game(models.Model):
 
 	def add_newsfeed_from_template(self, category, path, **kwargs):
 		"""
-		Construct the content of a newsfeed, avoiding the messages already diplayed within the same game.
+		Construct the content of a newsfeed, avoiding messages already displayed within the same game.
 		"""
-		nb_already_displayed_messages = Newsfeed.objects.filter(category=category, game=self, path=path).count()
-		content = read_file_from_path("%s/datas/newsfeeds/%s/%s/%s.md" % (settings.BASE_DIR, category, path, (nb_already_displayed_messages + 1)))
-		if content == 'This file does not exists : (%s/datas/newsfeeds/%s/%s/%s.md)' % (settings.BASE_DIR, category, path, (nb_already_displayed_messages + 1)):
+		message_number = Newsfeed.objects.filter(category=category, game=self, path=path).count() + 1
+
+		try:
+			content = read_file_from_path("%s/datas/newsfeeds/%s/%s/%s.md" % (settings.BASE_DIR, category, path, message_number))
+		except IOError:
 			content = read_file_from_path("%s/datas/newsfeeds/%s/%s/_.md" % (settings.BASE_DIR, category, path))
 
 		kwargs['content'] = content

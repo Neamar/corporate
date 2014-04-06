@@ -28,11 +28,6 @@ def parse_markdown(text):
 
 
 def read_file_from_path(path):
-	try:
-		fichier = codecs.open(path, encoding='utf-8')
-		content = fichier.readlines()
-		fichier.close()
-	except IOError:
-		content = 'This file does not exists : (%s)' % path
-
-	return content
+	with codecs.open(path, encoding='utf-8') as f:
+		content = f.readlines()
+		return content
