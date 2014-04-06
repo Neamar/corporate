@@ -18,7 +18,7 @@
 </p>
 
 {% if not newsfeeds %}
-	<p>Rien à signaler !</p>
+	<p>Rien à signaler {{current_turn}} !</p>
 {% endif %}
 
 {% regroup newsfeeds by get_category_display as categories %}

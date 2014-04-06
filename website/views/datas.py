@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 from collections import OrderedDict
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
@@ -9,17 +8,19 @@ from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 from engine_modules.share.models import Share
 from engine.models import Player
-from website.utils import get_player, get_shares_count
+from website.utils import get_shares_count
+from website.decorators import render, find_player_from_game_id, inject_game_into_response, turn_by_turn_view
 from utils.read_markdown import parse_markdown
 
 
 @login_required
-def wallstreet(request, game_id):
+@render('game/wallstreet.html')
+@find_player_from_game_id
+@inject_game_into_response
+def wallstreet(request, game, player):
 	"""
 	Wallstreet datas
 	"""
-	player = get_player(request, game_id)
-	game = player.game
 
 	# Table datas
 	corporations = game.get_ladder()
@@ -59,54 +60,57 @@ def wallstreet(request, game_id):
 		if game.current_turn > 1:
 			derivative.last_assets = derivative.get_sum(game.current_turn - 2)
 
-	return render(request, 'game/wallstreet.html', {
-		"game": game,
+	return {
 		"corporations": corporations,
 		"assets_history": assets_history,
 		"sorted_corporations": sorted_corporations,
 		"derivatives": derivatives,
 		"delta_categories": delta_categories,
-	})
+	}
 
 
 @login_required
-def corporations(request, game_id):
+@render('game/corporations.html')
+@find_player_from_game_id
+@inject_game_into_response
+def corporations(request, game, player):
 	"""
 	corporations datas
 	"""
-	player = get_player(request, game_id)
-	corporations = player.game.corporation_set.all()
-	return render(request, 'game/corporations.html', {
-		"game": player.game,
+	corporations = game.corporation_set.all()
+	return {
 		"corporations": corporations
-	})
+	}
 
 
 @login_required
-def corporation(request, game_id, corporation_slug):
+@render('game/corporation.html')
+@find_player_from_game_id
+@inject_game_into_response
+def corporation(request, player, game, corporation_slug):
 	"""
 	Corporation datas
 	"""
-	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game_id)
-	players = Player.objects.filter(game_id=game_id, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
+	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game.pk)
+	players = Player.objects.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
 	players = players.select_related('citizenship')
 
 	assets_history = corporation.assethistory_set.all()
-	return render(request, 'game/corporation.html', {
-		"game": corporation.game,
+	return {
 		"corporation": corporation,
 		"players": players,
 		"assets_history": assets_history
-	})
+	}
 
 
 @login_required
-def players(request, game_id):
+@render('game/players.html')
+@find_player_from_game_id
+@inject_game_into_response
+def players(request, game, player):
 	"""
 	Players datas
 	"""
-	player = get_player(request, game_id)
-	game = player.game
 
 	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('name')
 	corporations = list(game.corporation_set.all().order_by('pk'))
@@ -126,36 +130,38 @@ def players(request, game_id):
 
 		player_shares.append(player_share)
 
-	return render(request, 'game/players.html', {
-		"game": game,
+	return {
 		"players": players,
 		"corporations": corporations,
 		"shares": player_shares
-	})
+	}
 
 
 @login_required
-def player(request, game_id, player_id):
+@render('game/player.html')
+@find_player_from_game_id
+@inject_game_into_response
+def player(request, game, player, player_id):
 	"""
 	Player datas
 	"""
-	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id, game_id=game_id)
+	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id, game_id=game.pk)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
-	return render(request, 'game/player.html', {
-		"game": player.game,
+	return {
 		"player": player,
 		"corporations": corporations
-	})
+	}
 
 
 @login_required
-def shares(request, game_id):
+@render('game/shares.html')
+@find_player_from_game_id
+@inject_game_into_response
+def shares(request, game, player):
 	"""
 	Shares datas
 	"""
-	player = get_player(request, game_id)
-	game = player.game
 
 	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('pk')
 	corporations = list(game.corporation_set.all().order_by('pk'))
@@ -175,66 +181,59 @@ def shares(request, game_id):
 
 		player_shares.append(player_share)
 
-	return render(request, 'game/shares.html', {
-		"game": game,
+	return {
 		"corporations": corporations,
 		"shares": player_shares
-	})
+	}
 
 
 @login_required
-def newsfeeds(request, game_id, turn=None):
+@render('game/newsfeeds.html')
+@find_player_from_game_id
+@inject_game_into_response
+@turn_by_turn_view
+def newsfeeds(request, game, player, turn):
 	"""
 	Display newsfeed
 	"""
-	player = get_player(request, game_id)
-	game = player.game
-
-	if turn is None:
-		turn = game.current_turn - 1
-	turn = int(turn)
-
-	if turn >= game.current_turn:
-		return redirect('website.views.datas.newsfeeds', game_id=game_id)
 
 	newsfeeds = game.newsfeed_set.filter(turn=turn).order_by('category')
 
-	return render(request, 'game/newsfeeds.html', {
-		"game": game,
+	return {
 		"newsfeeds": newsfeeds,
-		"current_turn": turn,
-		"turns": range(1, game.current_turn)
-	})
+	}
 
 
 @login_required
-def comlink(request, game_id):
+@render('game/comlink.html')
+@find_player_from_game_id
+@inject_game_into_response
+def comlink(request, game, player):
 	"""
 	Display comlink
 	"""
-	player = get_player(request, game_id)
 
 	messages = player.message_set.all().order_by("-turn", "-pk")
 
-	return render(request, 'game/comlink.html', {
-		"game": player.game,
+	return {
 		"messages": messages
-	})
+	}
 
 
 @login_required
-def message(request, game_id, message_id):
+@render('game/message.html')
+@find_player_from_game_id
+@inject_game_into_response
+def message(request, game, player, message_id):
 	"""
 	Display message
 	"""
-	player = get_player(request, game_id)
 
 	message = player.message_set.get(pk=message_id)
 
 	message.html, _ = parse_markdown(message.content)
 	message.html = mark_safe(message.html)
 
-	return render(request, 'game/message.html', {
-		"game": player.game,
+	return {
 		"message": message
-	})
+	}
