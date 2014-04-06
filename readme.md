@@ -52,3 +52,4 @@ Rules can be found in [datas/docs/index.md](datas/docs/index.md).
 * **CorporationSpeculationOrder** : Order to speculate on a corporation's rank
 * **DerivativeSpeculationOrder** : Order to speculate on a derivative up or down
 * **MDCVoteOrder** : Order to vote for the MDC coalition
+* **WiretransferOrder** : Send money to another player
