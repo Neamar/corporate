@@ -112,6 +112,18 @@ class WebsiteTest(EngineTestCase):
 			r = self.authenticated_client.get(page)
 			self.assertEqual(r.status_code, 302)
 
+	def test_pages_down(self):
+		"""
+		Check invalid page render 404
+		"""
+		pages = [
+			reverse('website.views.datas.newsfeeds', args=[self.g.id, self.g.current_turn + 1]),
+		]
+
+		for page in pages:
+			r = self.authenticated_client.get(page)
+			self.assertEqual(r.status_code, 404)
+
 	def test_post_order(self):
 		"""
 		Check we can create an order
