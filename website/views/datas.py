@@ -159,14 +159,15 @@ def player(request, game, player, player_id):
 @render('game/shares.html')
 @find_player_from_game_id
 @inject_game_into_response
-def shares(request, game, player):
+@turn_by_turn_view
+def shares(request, game, player, turn):
 	"""
 	Shares datas
 	"""
 
 	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('pk')
 	corporations = list(game.corporation_set.all().order_by('pk'))
-	shares = Share.objects.filter(player__game=game)
+	shares = Share.objects.filter(player__game=game, turn__lte=turn)
 	player_shares = []
 
 	for player in players:

@@ -20,6 +20,7 @@ urlpatterns += patterns('',
 	url(r'^game/(?P<game_id>[0-9]+)/players$', datas.players),
 	url(r'^game/(?P<game_id>[0-9]+)/players/(?P<player_id>[0-9]+)$', datas.player),
 	url(r'^game/(?P<game_id>[0-9]+)/shares$', datas.shares),
+	url(r'^game/(?P<game_id>[0-9]+)/shares/(?P<turn>[0-9]+)$', datas.shares),
 )
 
 # Orders views
