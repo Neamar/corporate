@@ -68,7 +68,7 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 		self.player.add_note(category=Note.SPECULATION, content=content)
 
 	def description(self):
-		return u"Miser sur la position %s de la corporation %s (gain : %s, perte : %s)" % (self.rank, self.corporation.base_corporation.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
+		return u"Miser sur la position %s de la corporation %s (gain : %sk¥, perte : %sk¥)" % (self.rank, self.corporation.base_corporation.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
 
 
 class DerivativeSpeculationOrder(AbstractSpeculation):
@@ -107,6 +107,6 @@ class DerivativeSpeculationOrder(AbstractSpeculation):
 		self.player.add_note(category=Note.SPECULATION, content=content)
 
 	def description(self):
-		return u"Miser %s du produit dérivé %s (gain : %s, perte : %s)" % (self.get_speculation_display(), self.derivative.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
+		return u"Miser %s du produit dérivé %s (gain : %sk¥, perte : %sk¥)" % (self.get_speculation_display(), self.derivative.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
 
 orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)
