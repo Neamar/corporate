@@ -79,6 +79,7 @@ class WebsiteTest(EngineTestCase):
 			reverse('website.views.orders.orders', args=[self.g.id]),
 			reverse('website.views.orders.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
 			reverse('website.views.datas.wallstreet', args=[self.g.id]),
+			reverse('website.views.datas.wallstreet', args=[self.g.id, self.g.current_turn - 1]),
 			reverse('website.views.datas.corporations', args=[self.g.id]),
 			reverse('website.views.datas.corporation', args=[self.g.id, self.c.base_corporation_slug]),
 			reverse('website.views.datas.players', args=[self.g.id]),
@@ -118,6 +119,7 @@ class WebsiteTest(EngineTestCase):
 		"""
 		pages = [
 			reverse('website.views.datas.newsfeeds', args=[self.g.id, self.g.current_turn + 1]),
+			reverse('website.views.datas.wallstreet', args=[self.g.id, self.g.current_turn + 1]),
 		]
 
 		for page in pages:
