@@ -153,6 +153,7 @@ class Order(models.Model):
 		if self.__class__.__name__ == "Order":
 			raise ValidationError("You can't save raw Order, only subclasses")
 		validate_order.send(sender=self.__class__, instance=self)
+		super(Order, self).clean()
 
 	def resolve(self):
 		"""

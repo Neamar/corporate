@@ -1,3 +1,4 @@
+from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
 from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
 from engine_modules.derivative.models import Derivative
@@ -88,9 +89,22 @@ class OrdersTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money + o.get_cost() * 2)
 
+	def test_corporation_rank_limited(self):
+		"""
+		Can't speculate on non existing rank
+		"""
+		o = CorporationSpeculationOrder(
+			player=self.p,
+			corporation=self.last_corporation,
+			rank=self.g.corporation_set.count() + 1,
+			investment=5
+		)
+
+		self.assertRaises(OrderNotAvailable, o.clean)
+
 	def test_derivative_failure_remove_money(self):
 		"""
-		Derivative speculation failure  cost money
+		Derivative speculation failure cost money
 		"""
 		self.g.resolve_current_turn()
 

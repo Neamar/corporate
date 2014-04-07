@@ -36,3 +36,12 @@ def decrease_ratio_when_speculating_first_last(sender, instance, **kwargs):
 	if instance.rank == 1 or instance.rank == instance.player.game.corporation_set.count():
 		instance.on_win_ratio -= 2
 		instance.save()
+
+
+@receiver(validate_order, sender=CorporationSpeculationOrder)
+def forbind_nonexisting_rank(sender, instance, **kwargs):
+	"""
+	You get less money for speculating on first / last
+	"""
+	if instance.rank > instance.player.game.corporation_set.count():
+		raise OrderNotAvailable("Aucune corporation ne peut être à ce rang.")
