@@ -154,9 +154,10 @@ body
 #content h3.order {
   background-repeat: no-repeat;
   background-size: 50px 50px;
-  background-position: right bottom;
+  background-position: left bottom;
   padding-right: 55px;
   padding-top: 28px;
+  padding-left: 55px;
 }
 
 /********************
