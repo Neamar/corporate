@@ -81,7 +81,7 @@ class MDCVoteTask(ResolutionTask):
 		"""
 
 		if mdc_vote_session.coalition is not None:
-			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition du MDC pour ce tour a voté *%s*" % mdc_vote_session.get_coalition_display())
+			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition *%s* a été votée par le MDC." % mdc_vote_session.get_coalition_display())
 
 		votes_details = {}
 

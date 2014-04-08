@@ -11,7 +11,7 @@ class Newsfeed(models.Model):
 	ECONOMY = 'economy'
 
 	CATEGORY_CHOICES = (
-		(MDC_REPORT, 'Rapport du MDC'),
+		(MDC_REPORT, 'Bulletin du MDC'),
 		(MATRIX_BUZZ, 'Matrix Buzz'),
 		(PEOPLE, 'People'),
 		(ECONOMY, 'Économie'),
