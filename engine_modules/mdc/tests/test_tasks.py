@@ -79,6 +79,8 @@ class TaskTest(EngineTestCase):
 		# Give priority to player 1
 		s = Share(corporation=self.c, player=self.p, turn=self.g.current_turn)
 		s.save()
+		s2 = Share(corporation=self.c2, player=self.p, turn=self.g.current_turn)
+		s2.save()
 
 		self.g.resolve_current_turn()
 
@@ -89,5 +91,6 @@ class TaskTest(EngineTestCase):
 		self.assertIn(self.p.name, all_ns)
 		self.assertIn(self.p2.name, all_ns)
 		self.assertIn(s.corporation.base_corporation.name, all_ns)
+		self.assertIn(s2.corporation.base_corporation.name, all_ns)
 		self.assertIn(self.v.get_coalition_display(), all_ns)
 		self.assertIn(v2.get_coalition_display(), all_ns)

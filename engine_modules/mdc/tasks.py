@@ -90,20 +90,27 @@ class MDCVoteTask(ResolutionTask):
 			if(order.coalition not in votes_details):
 				votes_details[order.coalition] = {
 					"display": order.get_coalition_display(),
-					"players": [],
-					"corporations": []
+					"members": [],
 				}
-			votes_details[order.coalition]["players"].append(order.player)
-			votes_details[order.coalition]["corporations"] += order.get_friendly_corporations()
+			votes_details[order.coalition]["members"].append({
+				'player':
+				order.player,
+				'corporations': order.get_friendly_corporations()
+			})
 
-		for voters in votes_details.values():
-			coalition = voters["display"]
-			players = ", ".join([unicode(p) for p in voters["players"]])
-			corporations = ", ".join([unicode(c.base_corporation.name) for c in voters["corporations"]])
+		for vote in votes_details.values():
+			coalition = vote["display"]
 
-			content = u"La ligne %s a été votée par %s" % (coalition, players)
-			if corporations:
-				content += " et %s" % corporations
+			siders = []
+			for member in vote["members"]:
+				member_string = unicode(member['player'])
+				if len(member['corporations']) > 0:
+					member_string += " (%s)" % (", ".join(unicode(c.base_corporation.name) for c in member['corporations']))
+				siders.append(member_string)
+
+			siders = ", ".join(siders)
+
+			content = u"La ligne %s a été votée par %s" % (coalition, siders)
 
 			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=content)
 
