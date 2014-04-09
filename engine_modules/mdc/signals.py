@@ -25,7 +25,7 @@ def limit_mdc_order(sender, instance, **kwargs):
 @expect_coalition(MDCVoteOrder.CCIB)
 def enforce_mdc_ccib_positive(sender, instance, **kwargs):
 	"""
-	When CCIB line is active, corporation gives a 10%% malus to attackers
+	When CCIB line is active, corporation gives a 20%% malus to attackers
 	"""
 	g = instance.player.game
 	protected_corporations = []
@@ -34,7 +34,7 @@ def enforce_mdc_ccib_positive(sender, instance, **kwargs):
 		protected_corporations += vo.get_friendly_corporations()
 
 	if instance.target_corporation in protected_corporations:
-		instance.hidden_percents -= 1
+		instance.hidden_percents -= 2
 		instance.save()
 
 
@@ -44,15 +44,15 @@ def enforce_mdc_ccib_positive(sender, instance, **kwargs):
 def enforce_mdc_tran(sender, instance, **kwargs):
 	"""
 	When TRAN line is active,
-	* +10%% for TRAN player
-	* -10%% for TRAN player
+	* +20%% for TRAN players
+	* -20%% for CCIB players
 	"""
 	player_vote = instance.player.get_last_mdc_vote()
 	if player_vote == MDCVoteOrder.CCIB:
-		instance.hidden_percents -= 1
+		instance.hidden_percents -= 2
 		instance.save()
 	elif player_vote == MDCVoteOrder.TRAN:
-		instance.hidden_percents += 1
+		instance.hidden_percents += 2
 		instance.save()
 
 

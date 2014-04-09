@@ -116,7 +116,8 @@ class MDCPartyLineTest(EngineTestCase):
 		)
 		dso.save()
 
-		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.BASE_SUCCESS_PROBABILITY - 10)
+		# 20% malus
+		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.BASE_SUCCESS_PROBABILITY - 20)
 
 		# Other have no bonus
 		dso2 = DataStealOrder(
@@ -169,8 +170,8 @@ class MDCPartyLineTest(EngineTestCase):
 		)
 		dso.save()
 
-		# 10% bonus
-		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.BASE_SUCCESS_PROBABILITY - 10)
+		# 20% bonus
+		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.BASE_SUCCESS_PROBABILITY - 20)
 
 		dso2 = DataStealOrder(
 			stealer_corporation=self.c2,
@@ -180,8 +181,8 @@ class MDCPartyLineTest(EngineTestCase):
 		)
 		dso2.save()
 
-		# 10% malus
-		self.assertEqual(dso2.get_raw_probability(), dso2.additional_percents * 10 + dso2.BASE_SUCCESS_PROBABILITY + 10)
+		# 20% malus
+		self.assertEqual(dso2.get_raw_probability(), dso2.additional_percents * 10 + dso2.BASE_SUCCESS_PROBABILITY + 20)
 
 	def test_mdc_BANK_line_positive_effect(self):
 		"""
