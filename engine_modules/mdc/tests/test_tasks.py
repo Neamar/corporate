@@ -84,13 +84,12 @@ class TaskTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 
-		self.assertEqual(3, Newsfeed.objects.count())
-
-		all_ns = "\n".join([n.content for n in Newsfeed.objects.all()])
-
-		self.assertIn(self.p.name, all_ns)
-		self.assertIn(self.p2.name, all_ns)
-		self.assertIn(s.corporation.base_corporation.name, all_ns)
-		self.assertIn(s2.corporation.base_corporation.name, all_ns)
-		self.assertIn(self.v.get_coalition_display(), all_ns)
-		self.assertIn(v2.get_coalition_display(), all_ns)
+		ns = Newsfeed.objects.last().content
+		self.assertIn(self.p.name, ns)
+		self.assertIn(self.p2.name, ns)
+		self.assertIn(s.corporation.base_corporation.name, ns)
+		self.assertIn(s2.corporation.base_corporation.name, ns)
+		self.assertIn(self.v.get_coalition_display(), ns)
+		self.assertIn(v2.get_coalition_display(), ns)
+		self.assertIn("3 voix", ns)
+		self.assertIn("1 voix", ns)

@@ -86,20 +86,24 @@ class MDCVoteTask(ResolutionTask):
 		votes_details = {}
 
 		# Build global dict
+		coalition_breakdown = []
 		for order in orders:
 			if(order.coalition not in votes_details):
 				votes_details[order.coalition] = {
 					"display": order.get_coalition_display(),
 					"members": [],
+					"count": 0
 				}
 			votes_details[order.coalition]["members"].append({
 				'player':
 				order.player,
-				'corporations': order.get_friendly_corporations()
+				'corporations': order.get_friendly_corporations(),
 			})
+			votes_details[order.coalition]["count"] += order.get_weight()
 
 		for vote in votes_details.values():
 			coalition = vote["display"]
+			count = vote["count"]
 
 			siders = []
 			for member in vote["members"]:
@@ -110,9 +114,12 @@ class MDCVoteTask(ResolutionTask):
 
 			siders = ", ".join(siders)
 
-			content = u"La ligne %s a été votée par %s" % (coalition, siders)
+			content = u"La coalition *%s* a reçu %s voix : %s" % (coalition, count, siders)
 
-			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=content)
+			coalition_breakdown.append(content)
+
+		if len(coalition_breakdown) > 0:
+			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"Répartition des coalitions : \n\t* %s" % ("\n\t* ".join(coalition_breakdown)))
 
 
 class MDCLineCPUBDEVETask(ResolutionTask):
