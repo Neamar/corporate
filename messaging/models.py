@@ -5,15 +5,15 @@ from utils.read_markdown import parse_markdown
 
 
 class Newsfeed(models.Model):
-	MDC_REPORT = 'mdc-report'
-	MATRIX_BUZZ = 'matrix-buzz'
-	PEOPLE = 'people'
-	ECONOMY = 'economy'
+	MDC_REPORT = '1-mdc'
+	ECONOMY = '2-economy'
+	PEOPLE = '3-people'
+	MATRIX_BUZZ = '4-matrix-buzz'
 
 	CATEGORY_CHOICES = (
 		(MDC_REPORT, 'Bulletin du MDC'),
 		(MATRIX_BUZZ, 'Matrix Buzz'),
-		(PEOPLE, 'People'),
+		(PEOPLE, 'Flash People'),
 		(ECONOMY, 'Économie'),
 	)
 
