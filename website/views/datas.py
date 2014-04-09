@@ -204,10 +204,12 @@ def newsfeeds(request, game, player, turn):
 	Display newsfeed
 	"""
 
-	newsfeeds = game.newsfeed_set.filter(turn=turn).order_by('category')
+	newsfeeds = game.newsfeed_set.filter(turn=turn, path="").order_by('category')
+	newsfeeds_rp = game.newsfeed_set.filter(turn=turn).exclude(path="").order_by('category')
 
 	return {
 		"newsfeeds": newsfeeds,
+		"newsfeeds_rp": newsfeeds_rp,
 	}
 
 
