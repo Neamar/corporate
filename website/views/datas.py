@@ -25,7 +25,7 @@ def wallstreet(request, game, player, turn):
 
 	# Table datas
 	corporations = game.get_ladder(turn=turn)
-	delta_categories = OrderedDict()
+	delta_categories = {}
 
 	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn)
 	assets_hash = {ah.corporation_id: ah.assets for ah in assets}
@@ -71,7 +71,7 @@ def wallstreet(request, game, player, turn):
 		"assets_history": assets_history,
 		"sorted_corporations": sorted_corporations,
 		"derivatives": derivatives,
-		"delta_categories": delta_categories,
+		"delta_categories": OrderedDict(sorted(delta_categories.items())),
 	}
 
 
