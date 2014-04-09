@@ -119,7 +119,7 @@ class MDCVoteTask(ResolutionTask):
 			coalition_breakdown.append(content)
 
 		if len(coalition_breakdown) > 0:
-			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"Répartition des coalitions : \n\t* %s" % ("\n\t* ".join(coalition_breakdown)))
+			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"Répartition des coalitions :\n\n  * %s" % ("\n  * ".join(coalition_breakdown)))
 
 
 class MDCLineCPUBDEVETask(ResolutionTask):
