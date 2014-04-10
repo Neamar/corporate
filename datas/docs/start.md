@@ -90,7 +90,7 @@ Une longue expérience de PR, de spin doctor, de publicitaire ou de gourou des m
 ### Homme d'honneur
 Le personnage est la preuve vivante qu'il est possible de réussir en travaillant dur et en faisant preuve d'une loyauté à toute épreuve. L'appréciation de ses supérieurs lui a permis de gravir les échelons un à un, jusqu'à une position où il peut réellement prouver sa valeur. Il est décidé à ne pas trahir cette confiance.
 
-> À la fin de la partie, gagnez +7 PVs si vous avez plus de parts dans la corpo dont vous êtes citoyen que dans n'importe quelle autre corpo. Changer de nationalité corpo vous coûte 2 fois plus de PVs.
+> À la fin de la partie, gagnez +6 PVs si vous avez plus de parts dans la corpo dont vous êtes citoyen que dans n'importe quelle autre corpo. Changer de nationalité corpo vous coûte 2 fois plus de PVs.
 
 ### Célébrité
 Rockstar, gourou, sportif de haut niveau, présentateur vedette ou playboy de tabloïd, le personnage est le chouchou du public new-yorkais. Son visage est sur tous les écrans et les médias s'arrachent l'exclusivité de ses derniers hauts faits. Cette renommée est une drogue puissante, qui le pousse en avant et l'incite à faire étalage de son succès à chaque occasion dans l'espoir de rester sous le feu des projecteurs.
