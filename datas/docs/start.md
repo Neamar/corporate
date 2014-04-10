@@ -80,7 +80,7 @@ Lorsqu'il était juge, avocat ou juriste, l'un des meilleurs de la ville, il gag
 ### Parasite mondain
 Gigolo, maître chanteur ou amuseur des soirées dépravées de la crème de Manhattan, son atout le plus précieux n'est pas son talent pour se faire des amis bien placés, mais de savoir comment utiliser leurs vilains secrets à son avantage. 
 
-> +1 PVs. De plus, à la fin de la partie, chaque joueur sur lequel vous avez réussi au moins une run d'Information vous rapporte 1 PV.
+> +1 PV. De plus, à la fin de la partie, chaque joueur sur lequel vous avez réussi au moins une run d'Information vous rapporte 1 PV.
 
 ### Génie de l'image
 Une longue expérience de PR, de spin doctor, de publicitaire ou de gourou des médias a appris au personnage que le *paraître* est primordial, et que la meilleure stratégie pour se défaire d'un ennemi est de retourner contre lui ses propres excès.
