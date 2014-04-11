@@ -18,6 +18,7 @@
 				<li><a href="{% url 'docs.views.index' page='' %}">docs</a></li>
 			{% if not user.is_authenticated %}
 				<li><a href="{% url 'django.contrib.auth.views.login' %}">login</a></li>
+				<li><a href="{% url 'website.views.index.signup' %}">inscription</a></li>
 			{% endif %}
 			</ul>
 

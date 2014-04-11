@@ -6,6 +6,7 @@ urlpatterns = patterns('',
 	url(r'^$', index.index),
 	url(r'^login$', 'django.contrib.auth.views.login'),
 	url(r'^logout$', 'django.contrib.auth.views.logout_then_login'),
+	url(r'^signup$', 'website.views.index.signup'),
 )
 
 # Datas views

@@ -1,5 +1,8 @@
-from __future__ import absolute_import
+from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login
+from django.db import transaction
 
+from website.forms import UserCreationForm
 from website.decorators import render
 
 
@@ -18,4 +21,30 @@ def index(request):
 		"is_authenticated": request.user.is_authenticated(),
 		"user": request.user,
 		"players": players
+	}
+
+
+@render('signup.html')
+@transaction.atomic
+def signup(request):
+	"""
+	Signup page, for new users.
+	"""
+
+	if request.user.is_authenticated():
+		return redirect('website.views.index.index')
+
+	if request.POST:
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			user = authenticate(username=request.POST.get('username'), password=request.POST.get('password1'))
+			login(request, user)
+
+			return redirect('website.views.index.index')
+	else:
+		form = UserCreationForm()
+
+	return {
+		"form": form
 	}

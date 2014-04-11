@@ -34,7 +34,7 @@ class WebsiteTest(EngineTestCase):
 		is_logged_in = self.authenticated_client.login(username=self.u.username, password=password)
 		self.assertTrue(is_logged_in)
 
-	def test_index_and_admin_up_nologin(self):
+	def test_pages_up_nologin(self):
 		"""
 		Checking index also checks admin forms are properly configured
 		"""
@@ -42,6 +42,7 @@ class WebsiteTest(EngineTestCase):
 		pages = [
 			'website.views.index.index',
 			'django.contrib.auth.views.login',
+			'website.views.index.signup',
 			'admin:index',
 		]
 
