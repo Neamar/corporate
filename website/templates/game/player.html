@@ -8,6 +8,7 @@
 <thead>
 <tr>
 	<th></th>
+	<th>Contact</th>
 	<th>IC</th>
 	<th>Ligne</th>
 	<th>Citoyen</th>
@@ -16,6 +17,7 @@
 <tbody>
 <tr>
 	<td>{{ player.name }}</td>
+	<td><a href="tel:{{ player.user.phone|default:"" }}" title="Téléphoner">☏</a> / <a href="sms:{{ player.user.phone|default:"" }}" title="Envoyer un SMS">✉</a> / <a href="skype:{{ player.user.skype|default:"" }}?call" title="Appeler sur Skype">✆</a></td>
 	<td class="important">{{ player.influence.level }}</td>
 	<td>{{ player.get_last_mdc_vote }}</td>
 	<td>{{ player.citizenship.corporation.base_corporation.name }}</td>
