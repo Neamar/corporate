@@ -15,5 +15,7 @@ def index(request):
 		players = request.user.player_set.all().select_related('game')
 
 	return {
+		"is_authenticated": request.user.is_authenticated(),
+		"user": request.user,
 		"players": players
 	}

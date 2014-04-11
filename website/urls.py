@@ -4,7 +4,8 @@ from website.views import index, datas, orders
 # Index views
 urlpatterns = patterns('',
 	url(r'^$', index.index),
-	url(r'^login/$', 'django.contrib.auth.views.login'),
+	url(r'^login$', 'django.contrib.auth.views.login'),
+	url(r'^logout$', 'django.contrib.auth.views.logout_then_login'),
 )
 
 # Datas views
