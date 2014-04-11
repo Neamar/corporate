@@ -10,9 +10,11 @@ Il y a plusieurs manières de gagner des PVs, et il est recommandé de les exami
 Une fois le classement final révélé :
 
 * Chacune de vos part dans la 1<sup>ère</sup> corpo vous rapporte 5 PVs.
-* Chacune de vos parts dans la 2<sup>ème</sup> corpo vous rapporte 3 PVs.
-* Chacune de vos parts dans la 3<sup>ème</sup> corpo vous rapporte 1 PVs.
-
+* Chacune de vos parts dans la 2<sup>ème</sup> corpo vous rapporte 4 PVs.
+* Chacune de vos parts dans la 3<sup>ème</sup> corpo vous rapporte 3 PVs.
+* Chacune de vos parts dans la 4<sup>ème</sup> corpo vous rapporte 2 PVs.
+* Chacune de vos parts dans la 5<sup>ème</sup> corpo vous rapporte 1 PV.
+ 
 ## Points de nuyens
 * Le joueur ayant le plus de nuyens en fin de partie gagne 1 PV par joueur du Corporate Game, soit 8 PV dans une partie à 8 joueurs. Le second gagne ce montant -1 (7), le troisième gagne ce montant -2 (6) et ainsi de suite, pour 1PV seulement pour le joueur ayant le moins de nuyens.
 
@@ -76,13 +78,13 @@ Le joueur ayant réussi le plus grand nombre de runs d'Extraction.
 
 ### Le(s) Paranoïaque(s)
 * +3 PVs
-Le joueur ayant lancé le plus grand nombre de runs de Protection (Datasteal).
+Le joueur ayant, pour le plus grand nombre de tour, lancé au moins une run de Protection (Datasteal).
 
 * +3 PVs
-Le joueur ayant lancé le plus grand nombre de runs de Protection (Sabotage).
+Le joueur ayant, pour le plus grand nombre de tour, lancé au moins une run de Protection (Sabotage).
 
 * +3 PVs
-Le joueur ayant lancé le plus grand nombre de runs de Protection (Extraction).
+Le joueur ayant, pour le plus grand nombre de tour, lancé au moins une run de Protection (Extraction).
 
 ## Points de Background
 Votre Background vous rapporte un nombre de PVs pouvant dépendre de vos actions au cour du jeu ([cf. Background](start.md#background)).

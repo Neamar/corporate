@@ -45,12 +45,12 @@ En tant que boss du Yakuza, de la Triade, de la Mafia italienne, russe, irlandai
 ### Vieux briscard
 Ce renard de la vieille école a passé sa vie entière dans les entrailles du monde corporatiste, et les connaît à présent comme sa poche. Son expérience et son instinct aiguisé lui permettent de repérer les opportunités en or qui échappent à la jeune garde et tous ses diplômes.
 
-> Chaque tour, gagnez +1 PV si vous n'avez acheté aucune part dans la même corpo qu'un autre joueur.
+> Chaque tour, gagnez +1 PV si vous avez acheté au moins une part dans une corpo dans laquelle aucun autre joueur n'a investi.
 
 ### Jeune loup
 Tout droit sorti de l'école dans un costume flambant neuf, le personnage incarne l'avenir, cette nouvelle génération avide de succès qui entend bien en remontrer aux dinosaures de Wall Street. Il vise le sommet, et ne laissera rien ni personne stopper son ascension.
 
-> À la fin de la partie, chacune de vos parts dans les 3 premières corpos vous rapporte 1 PV supplémentaire.
+> À la fin de la partie, chacune de vos parts dans les 3 premières corpos vous rapporte 2 PV supplémentaires.
 
 ### Héritier
 Malgré la légende bien enracinée du *self made man* new-yorkais, beaucoup des puissants de la ville n'ont pas eu à travailler d'arrache pied pour arriver là où il sont. Être né avec une cuillère en argent dans la bouche a beaucoup d'avantages, mais se montrer digne de son nom et des attentes de sa famille peut être une responsabilité écrasante.
@@ -70,7 +70,7 @@ Rien ne destinait le personnage à rejoindre l'élite de Manhattan. Un héritage
 ### Power broker
 Homme politique, puissant syndicaliste ou membre du Rotary club, le personnage connaît son chemin dans les couloirs du MDC, et sait quelle main serrer, quel bras tordre et quelle paume graisser pour arriver à ses fins.
 
-> Gagnez +1 PV à chaque fois que vous avez voté dans la coalition gagnante du MDC.
+> Gagnez +2 PV à chaque fois que vous avez voté dans la coalition gagnante du MDC.
 
 ### Homme de Loi
 Lorsqu'il était juge, avocat ou juriste, l'un des meilleurs de la ville, il gagnait sa vie en manipulant les lois pour satisfaire la volonté de ses maîtres. Maintenant qu'il a fait fortune, il les utilise comme une arme contre ceux qui voudraient l'empêcher de faire fructifier son pactole.
@@ -80,7 +80,7 @@ Lorsqu'il était juge, avocat ou juriste, l'un des meilleurs de la ville, il gag
 ### Parasite mondain
 Gigolo, maître chanteur ou amuseur des soirées dépravées de la crème de Manhattan, son atout le plus précieux n'est pas son talent pour se faire des amis bien placés, mais de savoir comment utiliser leurs vilains secrets à son avantage. 
 
-> +2 PVs. De plus, à la fin de la partie, chaque joueur sur lequel vous avez réussi au moins une run d'Information vous rapporte 1 PV.
+> +1 PV. De plus, à la fin de la partie, chaque joueur sur lequel vous avez réussi au moins une run d'Information vous rapporte 1 PV.
 
 ### Génie de l'image
 Une longue expérience de PR, de spin doctor, de publicitaire ou de gourou des médias a appris au personnage que le *paraître* est primordial, et que la meilleure stratégie pour se défaire d'un ennemi est de retourner contre lui ses propres excès.
