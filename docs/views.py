@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 from utils.read_markdown import read_markdown
+from engine_modules.corporation.models import BaseCorporation
 
 
 def index(request, page):
@@ -29,4 +30,20 @@ def index(request, page):
 
 
 def redirect_md(request, page):
+	"""
+	.md pages (for github compatibility)
+	"""
 	return redirect('docs.views.index', page=page)
+
+
+def corporation(request, corporation_slug):
+	"""
+	Corporation pages
+	"""
+
+	try:
+		base_corporation = BaseCorporation.base_corporations[corporation_slug]
+	except IOError:
+		raise Http404("No matching corporation.")
+
+	return render(request, 'docs/corporation.html', {"base_corporation": base_corporation})
