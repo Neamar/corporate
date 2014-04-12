@@ -22,6 +22,7 @@ class BuyShareOrder(Order):
 	Order to buy a corporation share
 	"""
 	title = "Acheter une part dans une corporation"
+	ORDER = 100
 	BASE_COST = 100
 	FIRST_COST = 125
 	FIRST_AND_CITIZEN_COST = 100

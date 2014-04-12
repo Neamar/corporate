@@ -17,6 +17,7 @@ class CitizenShipOrder(Order):
 	"""
 	Order to become citizen from a new corporation
 	"""
+	ORDER = 400
 	title = "Changer de citoyenneté corpo"
 
 	corporation = models.ForeignKey(Corporation)

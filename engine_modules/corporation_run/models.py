@@ -164,6 +164,7 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 	"""
 	Order for DataSteal runs
 	"""
+	ORDER = 500
 	BASE_SUCCESS_PROBABILITY = 30
 	PROTECTION_TYPE = "datasteal"
 
@@ -221,6 +222,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 	"""
 	Order for Sabotage runs
 	"""
+	ORDER = 600
 	title = "Lancer une run de Sabotage"
 
 	BASE_SUCCESS_PROBABILITY = 30
@@ -277,6 +279,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 	"""
 	Order for Extraction runs
 	"""
+	ORDER = 700
 	title = "Lancer une run d'Extraction"
 
 	BASE_SUCCESS_PROBABILITY = 10
@@ -337,6 +340,7 @@ class ProtectionOrder(RunOrder):
 	"""
 	Order for Protection runs
 	"""
+	ORDER = 850
 	title = "Lancer une run de Protection"
 	MAX_PERCENTS = 50
 

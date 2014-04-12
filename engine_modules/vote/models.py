@@ -10,6 +10,7 @@ class VoteOrder(Order):
 	Order to vote for a Corporation
 	"""
 	title = "Voter"
+	ORDER = 0
 
 	corporation_up = models.ForeignKey(Corporation, related_name="+")
 	corporation_down = models.ForeignKey(Corporation, related_name="+")
