@@ -25,5 +25,5 @@ Vous êtes l'un d'entre eux. Depuis votre penthouse cinq étoiles, vous planifie
 * [Horizon](corporations/horizon.md)
 * [Aztechnology](corporations/aztechnology.md)
 * [Spinrad](corporations/spinrad.md)
-* [Saeder-Krupp](corporations/saeder-Krupp.md)
-* [Prometheus](corporations/Prometheus.md)
+* [Saeder-Krupp](corporations/saeder-krupp.md)
+* [Prometheus](corporations/prometheus.md)
