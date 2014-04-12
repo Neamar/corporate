@@ -8,6 +8,7 @@
 <thead>
 <tr>
 	<th></th>
+	<th>Joueur</th>
 	<th>Contact</th>
 	<th>IC</th>
 	<th>Ligne</th>
@@ -17,6 +18,7 @@
 <tbody>
 <tr>
 	<td>{{ player.name }}</td>
+	<td>{{ player.user.username }}</td>
 	<td><a href="tel:{{ player.user.phone|default:"" }}" title="Téléphoner">☏</a> / <a href="sms:{{ player.user.phone|default:"" }}" title="Envoyer un SMS">✉</a> / <a href="skype:{{ player.user.skype|default:"" }}?call" title="Appeler sur Skype">✆</a></td>
 	<td class="important">{{ player.influence.level }}</td>
 	<td>{{ player.get_last_mdc_vote }}</td>

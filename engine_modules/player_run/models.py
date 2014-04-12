@@ -23,6 +23,7 @@ class InformationOrder(OffensiveRunOrder):
 	"""
 	Order for Information runs
 	"""
+	ORDER = 800
 	title = "Lancer une run d'Information"
 
 	TIMING_MALUS_SIMILAR = 'player'

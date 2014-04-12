@@ -16,6 +16,7 @@ class BuyInfluenceOrder(Order):
 	"""
 	Order to increase Player Influence
 	"""
+	ORDER = 300
 	BASE_COST = 400
 	title = "Acheter un point d'Influence Corporatiste"
 

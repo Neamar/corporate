@@ -48,3 +48,21 @@ class DocTest(TestCase):
 		r = self.c.get('/docs/hello-not-here')
 		self.assertEqual(r.status_code, 404)
 		self.assertTemplateNotUsed('/docs/index.html')
+
+	def test_doc_corporation(self):
+		"""
+		Corporation should be served
+		"""
+
+		r = self.c.get('/docs/corporations/ares')
+		self.assertEqual(r.status_code, 200)
+		self.assertTemplateUsed('/docs/corporation.html')
+
+	def test_doc_unknown_corporation(self):
+		"""
+		Corporation should be 404 when not existing
+		"""
+
+		r = self.c.get('/docs/corporations/arespublica')
+		self.assertEqual(r.status_code, 404)
+		self.assertTemplateNotUsed('/docs/corporation.html')

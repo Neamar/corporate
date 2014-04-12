@@ -12,6 +12,7 @@ class MDCVoteOrder(Order):
 	"""
 	Order to vote for the MDC coalition
 	"""
+	ORDER = 200
 
 	CPUB = "CPUB"
 	CCIB = "CCIB"

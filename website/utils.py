@@ -32,6 +32,9 @@ def get_orders_availability(player):
 	"""
 	orders_availability = [get_order_availability(Order, player) for Order in orders_list]
 
+	# Sort by ORDER
+	orders_availability = sorted(orders_availability, key=lambda oa: oa['type'].ORDER)
+
 	return orders_availability
 
 

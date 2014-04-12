@@ -40,7 +40,7 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 	"""
 	Order to speculate on a corporation's rank
 	"""
-
+	ORDER = 900
 	title = "Spéculer sur une corporation"
 
 	corporation = models.ForeignKey(Corporation)
@@ -75,7 +75,7 @@ class DerivativeSpeculationOrder(AbstractSpeculation):
 	"""
 	Order to speculate on a derivative up or down
 	"""
-
+	ORDER = 1000
 	UP = True
 	DOWN = False
 

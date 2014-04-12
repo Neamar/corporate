@@ -10,6 +10,7 @@ class WiretransferOrder(Order):
 	Send money to another player.
 	Immediate effect.
 	"""
+	ORDER = 1100
 	title = "Envoyer de l'argent à un joueur"
 
 	recipient = models.ForeignKey(Player)
