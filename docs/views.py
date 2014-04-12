@@ -43,7 +43,7 @@ def corporation(request, corporation_slug):
 
 	try:
 		base_corporation = BaseCorporation.base_corporations[corporation_slug]
-	except IOError:
+	except KeyError:
 		raise Http404("No matching corporation.")
 
 	return render(request, 'docs/corporation.html', {"base_corporation": base_corporation})
