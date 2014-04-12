@@ -23,3 +23,12 @@ def limit_citizenship_order(sender, instance, **kwargs):
 	"""
 	if CitizenShipOrder.objects.filter(player=instance.player, turn=instance.player.game.current_turn).exists():
 		raise OrderNotAvailable("Vous ne pouvez pas demander une citoyenneté deux fois dans le même tour.")
+
+
+@receiver(validate_order, sender=CitizenShipOrder)
+def citizenship_need_one_share(sender, instance, **kwargs):
+	"""
+	You need at least one share to get a citizenship
+	"""
+	if not instance.player.share_set.filter(corporation=instance.corporation).exists():
+		raise OrderNotAvailable("Vous devez avoir au moins une part dans la corporation dont vous souhaitez devenir citoyen.")
