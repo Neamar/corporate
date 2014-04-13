@@ -127,6 +127,9 @@ Chaque Titre ne peut évidement être choisi qu'une fois, et la somme des PVs as
 
 Contrairement au Background et à la citoyenneté, les Stratégies ne sont pas rendues publiques (voir ci-dessous).
 
+    Jack Finn prend la stratégie associée au titre Big Boss, pour 6 points.
+    En fin de partie, s'il détient le titre, il gagnera les 12 points associés au titre "Big Boss", ainsi que les 6 points qu'il a misé en stratégie. Dans le cas contraire, il en perd 3.
+
 ## Secrets
 Il est mentionné plus haut que les joueurs sont tenus de décrire dans un texte bref ce que le reste de Manhattan sait de leur personnage.
 
@@ -140,7 +143,7 @@ En résumé, pour concevoir un personnage, il vous faudra :
 * un avatar
 * un unique Background, qui sera public
 * une liste de Statégies, qui seront privées
-* un texte de Secrets, qui contient aussi les stratégies
+* un texte de Secrets, qui sert de justification *roleplay* aux Stratégies.
 
 ## Exemple de personnages
 ### Jack Finn

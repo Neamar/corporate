@@ -120,11 +120,12 @@ Une run subit un malus de **-10%** pour chaque autre run qui **correspond aux 3 
 * A la **même cible**, joueur ou corpo.
 * A un **pourcentage de réussite supérieur ou égal** au sien (avant que les malus de timing ne soient appliqués).
 
-    2 runs de Sabotage (même type) sont lancées contre Renraku (même cible) le même tour :
-    * Si elles ont toutes les deux 70% de chance de réussite, chacune fait subir à l'autre un malus de timing de -10%.
-    * En revanche, si la première a 80% de chance de réussite et la seconde 70%, seule la seconde subit un malus.
-
 > Les runs de Protection n'entrent pas en concurrence.
+
+    2 runs de Sabotage (même type) sont lancées contre Renraku (même cible) le même tour.
+    Si elles ont toutes les deux 70% de chance de réussite, chacune fait subir à l'autre un malus de timing de -10%.
+    En revanche, si la première a 80% de chance de réussite et la seconde 70%, seule la seconde subit un malus.
+
 
 ### Les types de runs
 #### Datasteal
@@ -200,7 +201,10 @@ Un produit dérivé est la somme des actifs d'un ensemble de corpos.
 * Le **Nikkei** (indice de Bourse de Neo Tokyo) est la somme des actifs des corpos Sony, Shiawase et Renraku
 * Le **Dow Jones** est la somme des actifs d'Ares, Neonet, Spinrad et Prometheus.
 
+> Si une corporation crashe dans un produit dérivé, elle n'est pas remplacée.
+
     Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il effectue deux spéculations :
+    
     * 200 000 ny sur une chute du Nikkei. Après tout, il a un sabotage prévu sur Renraku...
     * 100 000 ny sur la position d'Horizon, dont il pense qu'elle sera 2ème à la fin du trimestre.
 
@@ -215,7 +219,7 @@ Les corpos membres ont changé plusieurs fois depuis la fin de la reconstruction
 
 Chaque tour, les joueurs peuvent participer au cirque du MDC en rejoignant une **coalition** défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
 
-Un joueur qui possède **le plus de parts** dans une corpo peut influencer ses décisions politiques : la corpo rejoint la même coalition que lui.
+Le joueur qui possède **le plus de parts** dans une corpo peut influencer ses décisions politiques : la corpo rejoint la même coalition que lui.
 
 > Les parts achetées ce tour-ci sont prises en compte.
 > En cas d'égalité sur le nombre de parts possédées, la corpo reste neutre. 
