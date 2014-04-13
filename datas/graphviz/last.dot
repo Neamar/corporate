@@ -1,6 +1,8 @@
+# dot -T svg datas/graphviz/last.dot > website/static/graphviz/last.svg
 digraph g{
   graph [
       rankdir = "LR"
+      bgcolor=transparent
   ];
 
 ares [shape=ellipse,fillcolor="burlywood",style="filled"];
