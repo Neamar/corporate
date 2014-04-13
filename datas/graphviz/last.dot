@@ -1,51 +1,59 @@
 # dot -T svg datas/graphviz/last.dot > website/static/graphviz/last.svg
 digraph g{
-  graph [
-      rankdir = "LR"
-      bgcolor=transparent
-  ];
+	graph [
+		rankdir = "LR"
+		bgcolor=transparent
+	];
 
-ares [shape=ellipse,fillcolor="burlywood",style="filled"];
-aztechnology [shape=ellipse,fillcolor="burlywood",style="filled"];
-horizon [shape=ellipse,fillcolor="burlywood",style="filled"];
-neonet [shape=ellipse,fillcolor="burlywood",style="filled"];
-prometheus [shape=ellipse,fillcolor="burlywood",style="filled"];
-renraku [shape=ellipse,fillcolor="burlywood",style="filled"];
-saederkrupp [shape=ellipse,fillcolor="burlywood",style="filled"];
-shiawase [shape=ellipse,fillcolor="burlywood",style="filled"];
-sony [shape=ellipse,fillcolor="burlywood",style="filled"];
-spinrad [shape=ellipse,fillcolor="burlywood",style="filled"];
-premier [shape=square,fillcolor="#FCD975",style="filled"];
-second [shape=square,fillcolor="#FCD975",style="filled"];
-avantdernier [shape=square,fillcolor="#FCD975",style="filled"];
+	aztechnology [shape=ellipse, fillcolor="burlywood", style="filled", label="Aztechnology"];
+	horizon [shape=ellipse, fillcolor="burlywood", style="filled", label="Horizon"];
+	spinrad [shape=ellipse, fillcolor="burlywood", style="filled", label="Spinrad"];
+	saederkrupp [shape=ellipse, fillcolor="burlywood", style="filled", label="Saeder-Krupp"];
+  premier [shape=square, fillcolor="#FCD975", style="filled", label="Première"];
+	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
+	avantdernier [shape=square, fillcolor="#FCD975", style="filled", label="Avant-dernière"];
 
-ares -> premier [color="red"];
-ares -> second [color="red"];
+	subgraph cluster_nikkei {
+		label = "Nikkei";
+		sony [shape=ellipse, fillcolor="burlywood", style="filled", label="Sony"];
+		shiawase [shape=ellipse, fillcolor="burlywood",style="filled", label="Shiawase"];
+		renraku [shape=ellipse, fillcolor="burlywood", style="filled", label="Renraku"];
+	}
 
-aztechnology -> horizon [color="green"];
-aztechnology -> horizon [color="green"];
+	subgraph cluster_dowjones {
+		label = "Dow Jones";
+		ares [shape=ellipse, fillcolor="burlywood", style="filled", label="Ares"];
+		neonet [shape=ellipse, fillcolor="burlywood", style="filled", label="NeoNET"];
+		prometheus [shape=ellipse, fillcolor="burlywood", style="filled", label="Prometheus"];
+	}
 
-horizon-> aztechnology [color="green"];
-horizon-> premier [color="red"];
+	ares -> premier [color="red"];
+	ares -> second [color="red"];
 
-neonet -> neonet [color="green"];
-neonet -> renraku [color="green"];
+	aztechnology -> horizon [color="green"];
+	aztechnology -> horizon [color="green"];
 
-prometheus -> premier [color="green"];
-prometheus -> premier [color="green"];
+	horizon-> aztechnology [color="green"];
+	horizon-> premier [color="red"];
 
-renraku -> sony [color="red"];
-renraku -> shiawase [color="green"];
+	neonet -> neonet [color="green"];
+	neonet -> renraku [color="green"];
 
-saederkrupp -> saederkrupp [color="green"];
-saederkrupp -> saederkrupp [color="green"];
+	prometheus -> premier [color="green"];
+	prometheus -> premier [color="green"];
 
-shiawase -> avantdernier [color="red"];
-shiawase -> sony [color="red"];
+	renraku -> sony [color="red"];
+	renraku -> shiawase [color="green"];
 
-sony -> avantdernier [color="red"];
-sony -> avantdernier [color="red"];
+	saederkrupp -> saederkrupp [color="green"];
+	saederkrupp -> saederkrupp [color="green"];
 
-spinrad -> spinrad [color="red"];
-spinrad -> avantdernier [color="green"];
+	shiawase -> avantdernier [color="red"];
+	shiawase -> sony [color="red"];
+
+	sony -> avantdernier [color="red"];
+	sony -> avantdernier [color="red"];
+
+	spinrad -> spinrad [color="red"];
+	spinrad -> avantdernier [color="green"];
 }
