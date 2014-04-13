@@ -1,0 +1,49 @@
+digraph g{
+  graph [
+      rankdir = "LR"
+  ];
+
+  ares [shape=ellipse,fillcolor="burlywood",style="filled"];
+  aztechnology [shape=ellipse,fillcolor="burlywood",style="filled"];
+  horizon [shape=ellipse,fillcolor="burlywood",style="filled"];
+  neonet [shape=ellipse,fillcolor="burlywood",style="filled"];
+  prometheus [shape=ellipse,fillcolor="burlywood",style="filled"];
+  renraku [shape=ellipse,fillcolor="burlywood",style="filled"];
+  saederkrupp [shape=ellipse,fillcolor="burlywood",style="filled"];
+  shiawase [shape=ellipse,fillcolor="burlywood",style="filled"];
+  sony [shape=ellipse,fillcolor="burlywood",style="filled"];
+  spinrad [shape=ellipse,fillcolor="burlywood",style="filled"];
+  second [shape=square,fillcolor="#FCD975",style="filled"];
+  avantdernier [shape=square,fillcolor="#FCD975",style="filled"];
+  dernier [shape=square,fillcolor="#FCD975",style="filled"];
+
+  ares -> avantdernier [color="green"];
+  ares -> dernier [color="green"];
+
+  aztechnology -> horizon [color="red"];
+  aztechnology -> dernier [color="red"];
+
+  horizon-> dernier [color="red"];
+  horizon-> dernier [color="red"];
+
+  neonet -> spinrad [color="red"];
+  neonet -> second [color="red"];
+
+  prometheus -> prometheus [color="green"];
+  prometheus -> second [color="green"];
+
+  renraku -> neonet [color="red"];
+  renraku -> shiawase [color="red"];
+
+  saederkrupp -> second [color="red"];
+  saederkrupp -> second [color="red"];
+
+  shiawase -> renraku [color="red"];
+  shiawase -> sony [color="green"];
+
+  sony -> renraku [color="green"];
+  sony -> shiawase [color="green"];
+
+  spinrad -> spinrad [color="green"];
+  spinrad -> spinrad [color="green"];
+}
