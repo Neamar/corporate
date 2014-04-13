@@ -27,6 +27,10 @@ digraph g{
 		prometheus [shape=ellipse, fillcolor="burlywood", style="filled", label="Prometheus"];
 	}
 
+	subgraph {
+		rank = same; ares; aztechnology; neonet; prometheus
+	}
+
 	ares -> premier [color="red"];
 	ares -> second [color="red"];
 
