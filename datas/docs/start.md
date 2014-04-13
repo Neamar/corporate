@@ -11,7 +11,7 @@ Avant de vous lancer, il vous reste des choix à faire pour donner une ossature 
 [TOC]
 
 ## Citoyenneté corpo
-Si vous le désirez, votre personnage peut commencer la partie avec une citoyenneté corporatiste (cf. Citoyenneté). Le cas échéant, vous devrez obligatoirement acheter votre première part dans la corpo choisie.
+Si vous le désirez, votre personnage peut commencer la partie avec une citoyenneté corporatiste ([cf. Citoyenneté](rules.md#citoyennete-corpo)). Dans ce cas, vous devrez obligatoirement acheter votre première part dans la corpo choisie.
 
 Cela signifie que votre personnage a accompli son ascension au sein de cette corpo, peut-être même depuis son premier jour si ses parents en avaient la nationalité. Ses valeurs et sa personnalité ont probablement été en partie façonnées par la culture corporatiste dans laquelle il a lutté pour en arriver là où il est. 
 

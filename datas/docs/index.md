@@ -11,9 +11,9 @@ Vous êtes l'un d'entre eux. Depuis votre penthouse cinq étoiles, vous planifie
 
 ## Règles
 
-* [Comment jouer ?](rules.md)
-* [Fin du jeu](endgame.md)
-* [Mise en place](start.md)
+* [Comment jouer](rules.md) : les règles du jeu, les différents ordres disponibles ;
+* [Fin du jeu](endgame.md) : comment sont comptés les points en fin de partie ;
+* [Mise en place](start.md) : comment créer son personnage en début de partie.
 
 ## Corporations
 
