@@ -27,15 +27,15 @@
 
 <ul>
 	{% if player.user.phone %}
-	<li><a href="tel:{{ player.user.phone }}" title="Téléphoner">{{ player.user.phone }}</a></li>
+	<li>Téléphone : <a href="tel:{{ player.user.phone }}" title="Téléphoner">{{ player.user.phone }}</a></li>
 	{% endif %}
 	{% if player.user.skype %}
-	<li><a href="skype:{{ player.user.skype }}?call" title="Appeler sur Skype">{{ player.user.skype }}</a></li>
+	<li>Skype : <a href="skype:{{ player.user.skype }}?call" title="Appeler sur Skype">{{ player.user.skype }}</a></li>
 	{% endif %}
-
+	<li>Background : {{ player.background }}</li>
 </ul>
 
-<p>{{ player.background }}</p>
+<p>{{ player.rp }}</p>
 
 <h2>Parts possédées</h2>
 <table class="prop_table">
