@@ -32,10 +32,10 @@
 	{% if player.user.skype %}
 	<li>Skype : <a href="skype:{{ player.user.skype }}?call" title="Appeler sur Skype">{{ player.user.skype }}</a></li>
 	{% endif %}
-	<li>Background : {{ player.background }}</li>
+	<li>Background : <strong>{{ player.background }}</strong></li>
 </ul>
 
-<p>{{ player.rp }}</p>
+<p>{{ rp }}</p>
 
 <h2>Parts possédées</h2>
 <table class="prop_table">

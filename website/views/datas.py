@@ -154,8 +154,12 @@ def player(request, game, player, player_id):
 	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id, game_id=game.pk)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
+	rp, _ = parse_markdown(player.rp)
+	rp = mark_safe(rp)
+
 	return {
 		"player": player,
+		"rp": rp,
 		"corporations": corporations
 	}
 
