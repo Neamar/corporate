@@ -27,3 +27,7 @@ Vous êtes l'un d'entre eux. Depuis votre penthouse cinq étoiles, vous planifie
 * [Spinrad](corporations/spinrad.md)
 * [Saeder-Krupp](corporations/saeder-krupp.md)
 * [Prometheus](corporations/prometheus.md)
+
+## Récapitulatif
+
+* [Récapitulatif](recap.md)

@@ -1,16 +1,43 @@
 ## Valeurs numériques (en k¥)
-* Parts
-    * Achat d'une part : `100 × (actifs)`
-    * Achat d'une part dans la première corpo : `125 × (actifs)` (sauf si citoyen corpo)
+* **Parts**
+    * Achat : `100 × (actifs)`
+    * Achat dans la première corpo : `125 × (actifs)` (sauf si citoyen corpo)
     * Dividendes : `50 × (actifs)`
     * Dividendes de la première corpo: `75 × (actifs)`
-    * Dividendes de la première corpo: `25 × (actifs)`
-* Influence : `400 × (nouvel indice)`
-* Runs : `50 × (paliers de 10%)`
-* Spéculation : limite de `100 × (influence)`
+    * Dividendes de la dernière corpo: `25 × (actifs)`
+* **Influence** : 
+    * Achat : `400 × (nouvel indice)`
+* **Runs** :
+    * `50 × (paliers de 10%)`
+    * Autant de bonus de `30%` que d'IC
+* **Spéculation** :
+    * Limite de `100 × (influence)`
+    * Côte de 1 pour 2 pour les produits dérivés
+        - *Nikkei* : Sony, Shiawase, Renraku
+        - *Dow Jones* : Ares, NeoNET, Spinrad, Prometheus
+    * Côte de 1 pour 3 pour les première et dernière corporation
+    * Côte de 1 pour 5 pour les autres
+* **MDC** :
+    * Nombre de voix : `1 + (nb corpo majoritaire)`
+    * *Contrats Publics* :
+        - `+1` pour les corpos dans la coalition,
+        - `-1` pour les corpos dans *Développement Urbain*,
+    * *Développement Urbain* :
+        - `-1` pour les corpos dans *Contrats publics*,
+    * *Contrôles Ciblés*
+        - Pas de Protection pour les joueurs dans *Transparence*
+    * *Transparence* :
+        - `+20%`  pour les runs contre les corpos,
+        - `-20%` pour les runs ciblant les corpos dans *Contrôles Ciblés*
+    * *Garde-fous bancaires* :
+        - Les spéculations ratées ne font pas perdre d'argent pour les joueurs dans la coalition
+    * *Dérégulation*
+        - Côtes augmentées de `1` pour les joueurs dans la coalition
+        - Pas de spéculation pour les joueurs dans la coalition *Garde-fous bancaires*
 
 ## Effets
 ### Effets premiers
+<img src="/static/graphviz/first.svg" alt="Effets premiers" style="width:95%"/>
 
 #### Ares Macrotechnology
 * +1 actif pour les deux dernières corpos.
@@ -49,9 +76,10 @@
 * +1 actif pour la deuxième corpo.
 
 ### Effets derniers :
+<img src="/static/graphviz/last.svg" alt="Effets derniers" style="width:95%"/>
 #### Ares Macrotechnology
 * -1 actif pour les deux premières corpos.
-
+>
 #### NeoNET
 * +1 actif pour NeoNET.
 * +1 actif pour Renraku.
