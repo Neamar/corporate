@@ -1,73 +1,85 @@
-## Effets premiers :
+## Valeurs numériques (en k¥)
+* Parts
+    * Achat d'une part : `100 × (actifs)`
+    * Achat d'une part dans la première corpo : `125 × (actifs)` (sauf si citoyen corpo)
+    * Dividendes : `50 × (actifs)`
+    * Dividendes de la première corpo: `75 × (actifs)`
+    * Dividendes de la première corpo: `25 × (actifs)`
+* Influence : `400 × (nouvel indice)`
+* Runs : `50 × (paliers de 10%)`
+* Spéculation : limite de `100 × (influence)`
 
-### Ares Macrotechnology
->+1 actifs pour les deux dernières corpos.
+## Effets
+### Effets premiers
 
-### NeoNET
->-1 actif pour Spinrad Industries.
->-1 actif pour la 2eme corpo.
+#### Ares Macrotechnology
+* +1 actif pour les deux dernières corpos.
 
-### Shiawase Corporation
->-1 actif pour Renraku.
->+1 actif pour Sony.
+#### NeoNET
+* -1 actif pour Spinrad Industries.
+* -1 actif pour la 2eme corpo.
 
-### Renraku Computer Systems
->-1 actif pour Neonet.
->-1 actif pour Shiawase.
+#### Shiawase Corporation
+* -1 actif pour Renraku.
+* +1 actif pour Sony.
 
-### Sony Corporation
->+1 actif pour Renraku.
->+1 actif pour Shiawase.
+#### Renraku Computer Systems
+* -1 actif pour Neonet.
+* -1 actif pour Shiawase.
 
-### Aztechnology
->-1 actif pour Horizon 
->-1 actif pour la dernière corpo.
+#### Sony Corporation
+* +1 actif pour Renraku.
+* +1 actif pour Shiawase.
 
-### Horizon Corporation
->-2 actifs pour la dernière corpo.
+#### Aztechnology
+* -1 actif pour Horizon 
+* -1 actif pour la dernière corpo.
 
-### Saeder Krupp
->-2 actifs pour la 2eme corpo.
+#### Horizon Corporation
+* -2 actifs pour la dernière corpo.
 
-### Spinrad industries
->+2 actifs pour Spinrad.
+#### Saeder Krupp
+* -2 actifs pour la 2eme corpo.
 
-### Prometheus Engineering
->+1 actif pour Prometheus
->+1 actif pour la deuxième corpo.
+#### Spinrad industries
+* +2 actifs pour Spinrad.
 
-## Effets derniers :
-### Ares Macrotechnology
->-1 actif pour les deux premières corpos.
+#### Prometheus Engineering
+* +1 actif pour Prometheus
+* +1 actif pour la deuxième corpo.
 
-### NeoNET
->+1 actif pour NeoNET.
->+1 actif pour Renraku.
+### Effets derniers :
+#### Ares Macrotechnology
+* -1 actif pour les deux premières corpos.
 
-### Shiawase Corporation
->-1 actif pour l'avant-dernière corpo.
->-1 actif pour Sony.
+#### NeoNET
+* +1 actif pour NeoNET.
+* +1 actif pour Renraku.
 
-### Renraku Computer Systems
->-1 actif pour Sony.
->+1 actif pour Shiawase.
+#### Shiawase Corporation
+* -1 actif pour l'avant-dernière corpo.
+* -1 actif pour Sony.
 
-### Sony Corporation
->-2 actifs à l'avant dernière corpo.
+#### Renraku Computer Systems
+* -1 actif pour Sony.
+* +1 actif pour Shiawase.
 
-### Aztechnology
->+2 actifs pour Horizon.
+#### Sony Corporation
+* -2 actifs à l'avant dernière corpo.
 
-### Horizon Corporation
->+1 actif pour Aztechnology.
->-1 actif pour la première corpo.
+#### Aztechnology
+* +2 actifs pour Horizon.
 
-### Saeder Krupp
->+2 actifs pour Saeder Krupp.
+#### Horizon Corporation
+* +1 actif pour Aztechnology.
+* -1 actif pour la première corpo.
 
-### Spinrad industries
->-1 actif pour Spinrad.
->+1 actif pour l'avant dernière corpo.
+#### Saeder Krupp
+* +2 actifs pour Saeder Krupp.
 
-### Prometheus Engineering
->+2 actifs pour la première corpo.
+#### Spinrad industries
+* -1 actif pour Spinrad.
+* +1 actif pour l'avant dernière corpo.
+
+#### Prometheus Engineering
+* +2 actifs pour la première corpo.
