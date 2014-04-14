@@ -7,11 +7,10 @@ digraph g{
 
 	aztechnology [shape=ellipse, fillcolor="burlywood", style="filled", label="Aztechnology"];
 	horizon [shape=ellipse, fillcolor="burlywood", style="filled", label="Horizon"];
-	spinrad [shape=ellipse, fillcolor="burlywood", style="filled", label="Spinrad"];
 	saederkrupp [shape=ellipse, fillcolor="burlywood", style="filled", label="Saeder-Krupp"];
-	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
 	avantdernier [shape=square, fillcolor="#FCD975", style="filled", label="Avant-dernière"];
-  dernier [shape=square, fillcolor="#FCD975", style="filled", label="Dernière"];
+	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
+	dernier [shape=square, fillcolor="#FCD975", style="filled", label="Dernière"];
 
 	subgraph cluster_nikkei {
 		label = "Nikkei";
@@ -25,6 +24,7 @@ digraph g{
 		ares [shape=ellipse, fillcolor="burlywood", style="filled", label="Ares"];
 		neonet [shape=ellipse, fillcolor="burlywood", style="filled", label="NeoNET"];
 		prometheus [shape=ellipse, fillcolor="burlywood", style="filled", label="Prometheus"];
+		spinrad [shape=ellipse, fillcolor="burlywood", style="filled", label="Spinrad"];
 	}
 
 	ares -> avantdernier [color="green"];

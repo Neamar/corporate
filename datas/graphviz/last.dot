@@ -7,9 +7,8 @@ digraph g{
 
 	aztechnology [shape=ellipse, fillcolor="burlywood", style="filled", label="Aztechnology"];
 	horizon [shape=ellipse, fillcolor="burlywood", style="filled", label="Horizon"];
-	spinrad [shape=ellipse, fillcolor="burlywood", style="filled", label="Spinrad"];
 	saederkrupp [shape=ellipse, fillcolor="burlywood", style="filled", label="Saeder-Krupp"];
-  premier [shape=square, fillcolor="#FCD975", style="filled", label="Première"];
+	premier [shape=square, fillcolor="#FCD975", style="filled", label="Première"];
 	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
 	avantdernier [shape=square, fillcolor="#FCD975", style="filled", label="Avant-dernière"];
 
@@ -25,10 +24,11 @@ digraph g{
 		ares [shape=ellipse, fillcolor="burlywood", style="filled", label="Ares"];
 		neonet [shape=ellipse, fillcolor="burlywood", style="filled", label="NeoNET"];
 		prometheus [shape=ellipse, fillcolor="burlywood", style="filled", label="Prometheus"];
+		spinrad [shape=ellipse, fillcolor="burlywood", style="filled", label="Spinrad"];
 	}
 
 	subgraph {
-		rank = same; ares; aztechnology; neonet; prometheus
+		rank = same; ares; aztechnology; neonet; prometheus; spinrad
 	}
 
 	ares -> premier [color="red"];
