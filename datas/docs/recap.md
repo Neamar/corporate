@@ -15,19 +15,21 @@
     * Côte de 1 pour 2 pour les produits dérivés
         - *Nikkei* : Sony, Shiawase, Renraku
         - *Dow Jones* : Ares, NeoNET, Spinrad, Prometheus
-    * Côte de 1 pour 3 pour les première et dernière corporation
+    * Côte de 1 pour 3 pour les première et dernière corporations
     * Côte de 1 pour 5 pour les autres
 * **MDC** :
     * Nombre de voix : `1 + (nb corpo majoritaire)`
     * *Contrats Publics* :
-        - `+1` pour les corpos dans la coalition,
-        - `-1` pour les corpos dans *Développement Urbain*,
+        - `+1` pour les corpos dans la coalition
+        - `-1` pour les corpos dans *Développement Urbain*
     * *Développement Urbain* :
-        - `-1` pour les corpos dans *Contrats publics*,
+        - `+1` pour les corpos dans la coalition
+        - `-1` pour les corpos dans *Contrats publics*
     * *Contrôles Ciblés*
+        - `-20%` pour les runs ciblant les corpos dans la coalition,
         - Pas de Protection pour les joueurs dans *Transparence*
     * *Transparence* :
-        - `+20%`  pour les runs contre les corpos,
+        - `+20%` pour toutes les runs contre les corpos,
         - `-20%` pour les runs ciblant les corpos dans *Contrôles Ciblés*
     * *Garde-fous bancaires* :
         - Les spéculations ratées ne font pas perdre d'argent pour les joueurs dans la coalition
