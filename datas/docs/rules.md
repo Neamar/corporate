@@ -187,7 +187,7 @@ Si le spéculateur se trompe, il perd la somme misée.
 
 Si sa spéculation est juste, il fait un bénéfice d'une côte de :
 
-* **1 pour 2** s'il a spéculé sur la **fluctuation d'un produit dérivé**. (S’il a placé 100 000 ny, il les conserve et gagne 200 000 ny suplémentaires)
+* **1 pour 2** s'il a spéculé sur la **fluctuation d'un produit dérivé**. (S’il a placé 100 000 ny, il les conserve et gagne 100 000 ny suplémentaires)
 * **1 pour 3** s'il a spéculé qu’une corpo finirait le tour **première ou dernière**.
 * **1 pour 5** s’il a spéculé qu’une corpo finirait le tour à un autre rang (**de deuxième à avant-dernière**) .
 
