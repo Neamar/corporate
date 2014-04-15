@@ -58,12 +58,12 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 		if ladder.index(self.corporation) + 1 == self.rank:
 			self.player.money += self.on_win_money()
 			self.player.save()
-			content = u"Vos investissements de %sk ¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.on_win_money())
+			content = u"Vos investissements de %sk¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.on_win_money())
 		else:
 			# Failure
 			self.player.money -= self.on_loss_money()
 			self.player.save()
-			content = u"Vos spéculations de %sk ¥ sur la corporation %s n'ont malheureusement pas été concluantes" % (self.investment, self.corporation.base_corporation.name)
+			content = u"Vos spéculations de %sk¥ sur la corporation %s n'ont malheureusement pas été concluantes" % (self.investment, self.corporation.base_corporation.name)
 
 		self.player.add_note(category=Note.SPECULATION, content=content)
 
@@ -97,12 +97,12 @@ class DerivativeSpeculationOrder(AbstractSpeculation):
 			# Success
 			self.player.money += self.on_win_money()
 			self.player.save()
-			content = u"Vos spéculations de %sk ¥ sur le produit dérivé %s vous ont rapporté %sk ¥" % (self.investment, self.derivative.name, self.on_win_money())
+			content = u"Vos spéculations de %sk¥ sur le produit dérivé %s vous ont rapporté %sk¥" % (self.investment, self.derivative.name, self.on_win_money())
 		else:
 			# Failure
 			self.player.money -= self.on_loss_money()
 			self.player.save()
-			content = u"Vos spéculations de %sk ¥ sur le produit dérivé %s n'ont malheureusement pas été concluantes" % (self.investment, self.derivative.name)
+			content = u"Vos spéculations de %sk¥ sur le produit dérivé %s n'ont malheureusement pas été concluantes" % (self.investment, self.derivative.name)
 
 		self.player.add_note(category=Note.SPECULATION, content=content)
 
