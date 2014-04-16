@@ -153,14 +153,25 @@ def get_last_mdc_vote(self):
 	"""
 
 	try:
-		vote = MDCVoteOrder.objects.get(turn=self.game.current_turn - 1, player=self)
-		return vote.coalition
+		return MDCVoteOrder.objects.get(turn=self.game.current_turn - 1, player=self)
 	except:
 		# No vote
 		return None
 
 
+def get_last_mdc_coalition(self):
+	"""
+	Get what a player voted in the last MDC Vote session
+	"""
+
+	vote = self.get_last_mdc_vote()
+	if vote:
+		return vote.coalition
+	else:
+		return None
+
 Game.get_mdc_coalition = get_mdc_coalition
 Player.get_last_mdc_vote = get_last_mdc_vote
+Player.get_last_mdc_coalition = get_last_mdc_coalition
 
 orders = (MDCVoteOrder,)

@@ -89,11 +89,11 @@ class OrdersTest(EngineTestCase):
 		"""
 		Check player last vote is returned correctly
 		"""
-		self.assertIsNone(self.p.get_last_mdc_vote())
+		self.assertIsNone(self.p.get_last_mdc_coalition())
 
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.p.get_last_mdc_vote(), self.v.coalition)
+		self.assertEqual(self.p.get_last_mdc_coalition(), self.v.coalition)
 
 	def test_get_form_forbids_none_value(self):
 		self.v.delete()

@@ -47,7 +47,7 @@ def enforce_mdc_tran(sender, instance, **kwargs):
 	* +20%% for TRAN players
 	* -20%% for CCIB players
 	"""
-	player_vote = instance.player.get_last_mdc_vote()
+	player_vote = instance.player.get_last_mdc_coalition()
 	if player_vote == MDCVoteOrder.CCIB:
 		instance.hidden_percents -= 2
 		instance.save()
@@ -62,7 +62,7 @@ def enforce_mdc_ccib_negative(sender, instance, **kwargs):
 	"""
 	When CCIB line is active, TRAN players can't protect.
 	"""
-	if instance.player.get_last_mdc_vote() == MDCVoteOrder.TRAN:
+	if instance.player.get_last_mdc_coalition() == MDCVoteOrder.TRAN:
 		raise OrderNotAvailable("Vous avez voté pour la transparence au tour précédent, vous ne pouvez donc pas effectuer de run de protection ce tour-ci")
 
 
@@ -73,7 +73,7 @@ def enforce_mdc_dere_negative(sender, instance, **kwargs):
 	"""
 	When DERE line is active, BANK players can't speculate
 	"""
-	if instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
+	if instance.player.get_last_mdc_coalition() == MDCVoteOrder.BANK:
 		raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 
 
@@ -85,7 +85,7 @@ def enforce_mdc_bank_negative(sender, instance, **kwargs):
 	When BANK line is active, DERE players can't speculate
 	"""
 
-	if instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
+	if instance.player.get_last_mdc_coalition() == MDCVoteOrder.DERE:
 		raise OrderNotAvailable("Vous avez voté pour la dérégulation au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 
 
@@ -96,7 +96,7 @@ def enforce_mdc_bank_positive(sender, instance, **kwargs):
 	"""
 	When BANK is active, BANK players can speculate without losing money
 	"""
-	if instance.player.get_last_mdc_vote() == MDCVoteOrder.BANK:
+	if instance.player.get_last_mdc_coalition() == MDCVoteOrder.BANK:
 		# This speculation should cost nothing if it fails
 		instance.on_loss_ratio = 0
 		instance.save()
@@ -109,7 +109,7 @@ def enforce_mdc_dere_positive(sender, instance, **kwargs):
 	"""
 	When DERE is active, DERE players can speculate and gain more.
 	"""
-	if instance.player.get_last_mdc_vote() == MDCVoteOrder.DERE:
+	if instance.player.get_last_mdc_coalition() == MDCVoteOrder.DERE:
 		# This speculation should see its rate augmented if it succeeds
 		instance.on_win_ratio += 1
 		instance.save()
