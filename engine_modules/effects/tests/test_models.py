@@ -6,7 +6,7 @@ from django.test import TestCase
 from engine.models import Game
 
 
-class ModelTest(TestCase):
+class ModelsTest(TestCase):
 	"""
 	Inherit from test case, to retrieve all corporations
 	"""

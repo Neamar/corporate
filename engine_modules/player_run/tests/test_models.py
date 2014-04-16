@@ -3,7 +3,7 @@ from engine.exceptions import OrderNotAvailable
 from engine_modules.player_run.models import InformationOrder
 
 
-class ModelTest(EngineTestCase):
+class ModelsTest(EngineTestCase):
 
 	def test_information_run_cant_target_self(self):
 		"""

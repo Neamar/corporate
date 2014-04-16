@@ -1,7 +1,7 @@
 from engine.testcases import EngineTestCase
 
 
-class ModelTest(EngineTestCase):
+class ModelsTest(EngineTestCase):
 	def test_corporation_crashing_removes_citizenship(self):
 		"""
 		Corporation should have been created alongside the game

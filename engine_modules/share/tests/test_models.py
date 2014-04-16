@@ -5,10 +5,10 @@ from engine.models import Game
 from engine_modules.share.models import Share
 
 
-class ModelTest(EngineTestCase):
+class ModelsTest(EngineTestCase):
 	def setUp(self):
 
-		super(ModelTest, self).setUp()
+		super(ModelsTest, self).setUp()
 
 	def test_share_creation_automatically_set_turn(self):
 		"""

@@ -1,7 +1,7 @@
 from engine.testcases import EngineTestCase
 
 
-class ModelTest(EngineTestCase):
+class ModelsTest(EngineTestCase):
 	def test_influence_auto_created(self):
 		"""
 		The new player should have influence of 1

@@ -2,9 +2,9 @@ from engine.testcases import EngineTestCase
 from engine_modules.mdc.models import MDCVoteOrder
 
 
-class ModelTest(EngineTestCase):
+class ModelsTest(EngineTestCase):
 	def setUp(self):
-		super(ModelTest, self).setUp()
+		super(ModelsTest, self).setUp()
 
 		self.v = MDCVoteOrder(
 			player=self.p,

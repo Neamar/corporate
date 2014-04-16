@@ -11,7 +11,7 @@ from website.models import User
 from utils.read_markdown import read_file_from_path
 
 
-class ModelTest(EngineTestCase):
+class ModelsTest(EngineTestCase):
 	"""
 	Unit tests for engine models
 	"""

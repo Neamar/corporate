@@ -2,7 +2,7 @@ from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import Corporation
 
 
-class ModelTest(EngineTestCase):
+class ModelsTest(EngineTestCase):
 	def test_corporation_deleted_when_asset_drops_to_zero(self):
 		"""
 		Corporation should crash when their assets are null

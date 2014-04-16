@@ -6,7 +6,7 @@ from engine.models import Game, Player
 from messaging.models import Message, Note
 
 
-class ModelTest(EngineTestCase):
+class ModelsTest(EngineTestCase):
 	"""
 	Unit tests for engine models
 	"""
