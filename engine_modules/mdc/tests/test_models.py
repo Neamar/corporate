@@ -29,3 +29,12 @@ class ModelsTest(EngineTestCase):
 		self.assertIsNone(self.p.get_last_mdc_coalition())
 		self.g.resolve_current_turn()
 		self.assertEqual(self.v.coalition, self.p.get_last_mdc_coalition())
+
+	def test_game_get_mdc_coalition(self):
+		"""
+		Get mdc coalition should return coalition from specified turn
+		"""
+		self.g.resolve_current_turn()
+		self.g.resolve_current_turn()
+		self.assertIsNone(self.g.get_mdc_coalition())
+		self.assertEqual(self.g.get_mdc_coalition(turn=self.g.current_turn - 1), self.v.coalition)
