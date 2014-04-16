@@ -9,12 +9,12 @@ from website.widgets import PlainTextField
 
 information_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a *réussi* une run d'**information** sur %s",
-		'citizens': u"Une run d'**information**, commanditée par %s, a *réussi* sur %s avec %s%% chances de réussite",
+		'sponsor': u"Votre équipe a *réussi* une run d'**Information** sur %s",
+		'citizens': u"Une run d'**Information**, commanditée par %s, a *réussi* sur %s avec %s%% chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe a *échoué* sa run d'*information** sur %s",
-		'citizens': u"Une run d'**information**, commanditée par %s, a *échoué* sur %s avec %s%% chances de réussite",
+		'sponsor': u"Votre équipe a *échoué* sa run d'**Information** sur %s",
+		'citizens': u"Une run d'**Information**, commanditée par %s, a *échoué* sur %s avec %s%% chances de réussite",
 	},
 }
 

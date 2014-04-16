@@ -10,41 +10,41 @@ from website.widgets import PlainTextField
 
 datasteal_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a *réussi* un **datasteal** de %s pour le compte de %s",
-		'newsfeed': u"Un **datasteal** a *réussi* sur %s",
-		'citizens': u"Un **datasteal**, commandité par %s, a *réussi* sur %s pour le compte de %s avec %s%% chances de réussite",
+		'sponsor': u"Votre équipe a *réussi* un **Datasteal** de %s pour le compte de %s",
+		'newsfeed': u"Un **Datasteal** a *réussi* sur %s",
+		'citizens': u"Un **Datasteal**, commandité par %s, a *réussi* sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe a *échoué* son **datasteal** sur %s pour %s",
-		'newsfeed': u"Un **datasteal** a *échoué* sur %s",
-		'citizens': u"Un **datasteal**, commandité par %s, a *échoué* sur %s pour le compte de %s avec %s%% chances de réussite",
+		'sponsor': u"Votre équipe a *échoué* son **Datasteal** sur %s pour %s",
+		'newsfeed': u"Un **Datasteal** a *échoué* sur %s",
+		'citizens': u"Un **Datasteal**, commandité par %s, a *échoué* sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 }
 
 sabotage_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a *réussi* un **sabotage** sur les opérations de %s",
-		'newsfeed': u"Un **sabotage** a *réussi* sur %s",
-		'citizens': u"Un **sabotage**, commandité par %s, a *réussi* sur %s avec %s%% chances de réussite",
-		'citizens_undetected': u"Un **sabotage** a *réussi* sur %s.",
+		'sponsor': u"Votre équipe a *réussi* un **Sabotage** sur les opérations de %s",
+		'newsfeed': u"Un **Sabotage** a *réussi* sur %s",
+		'citizens': u"Un **Sabotage**, commandité par %s, a *réussi* sur %s avec %s%% chances de réussite",
+		'citizens_undetected': u"Un **Sabotage** a *réussi* sur %s.",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe a *échoué* son **sabotage** sur %s",
-		'newsfeed': u"Un **sabotage** a *échoué* sur %s",
-		'citizens': u"Un **sabotage**, commandité par %s, à *échoué* sur %s avec %s%% chances de réussite",
+		'sponsor': u"Votre équipe a *échoué* son **Sabotage** sur %s",
+		'newsfeed': u"Un **Sabotage** a *échoué* sur %s",
+		'citizens': u"Un **Sabotage**, commandité par %s, à *échoué* sur %s avec %s%% chances de réussite",
 	},
 }
 
 extraction_messages = {
 	'success': {
-		'sponsor': u"Votre équipe a *réussi* une **extraction** de %s pour le compte de %s",
-		'newsfeed': u"Une **extraction** a *réussi* sur %s",
-		'citizens': u"Une **extraction**, commanditée par %s, a *réussi* sur %s pour le compte de %s avec %s%% chances de réussite",
+		'sponsor': u"Votre équipe a *réussi* une **Extraction** de %s pour le compte de %s",
+		'newsfeed': u"Une **Extraction** a *réussi* sur %s",
+		'citizens': u"Une **Extraction**, commanditée par %s, a *réussi* sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 	'fail': {
-		'sponsor': u"Votre équipe a *échoué* son **extraction** sur %s pour %s",
-		'newsfeed': u"Une **extraction** a *échoué* sur %s",
-		'citizens': u"Une **extraction**, commanditée par %s, a *échoué* sur %s pour le compte de %s avec %s%% chances de réussite",
+		'sponsor': u"Votre équipe a *échoué* son **Extraction** sur %s pour %s",
+		'newsfeed': u"Une **Extraction** a *échoué* sur %s",
+		'citizens': u"Une **Extraction**, commanditée par %s, a *échoué* sur %s pour le compte de %s avec %s%% chances de réussite",
 	},
 }
 

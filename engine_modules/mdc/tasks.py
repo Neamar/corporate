@@ -32,14 +32,14 @@ class MDCVoteTask(ResolutionTask):
 			# Message all player who voted for this line
 			n = Note.objects.create(
 				category=Note.MDC,
-				content="Le MDC a suivi votre coalition.",
+				content="Le MDC a suivi votre coalition",
 				turn=game.current_turn,
 			)
 			n.recipient_set = [order.player for order in orders if order.coalition == official_line]
 
 			n = Note.objects.create(
 				category=Note.MDC,
-				content=u"Le MDC a rejoint la coalition opposée %s." % s.get_coalition_display(),
+				content=u"Le MDC a rejoint la coalition opposée %s" % s.get_coalition_display(),
 				turn=game.current_turn,
 			)
 			n.recipient_set = [order.player for order in orders if order.coalition == MDCVoteOrder.MDC_OPPOSITIONS[official_line]]

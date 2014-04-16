@@ -42,7 +42,7 @@ Le joueur ayant le plus de parts dans une seule et même corpo.
 
 ### Le Conquérant
 * +10 PVs
-Le joueur ayant plus de parts que les autres joueur dans le plus grand nombre de corpos.
+Le joueur ayant plus de parts que les autres joueurs dans le plus grand nombre de corpos.
 
 ### L'Opportuniste
 * +10 PVs
@@ -87,7 +87,7 @@ Le joueur ayant, pour le plus grand nombre de tour, lancé au moins une run de P
 Le joueur ayant, pour le plus grand nombre de tour, lancé au moins une run de Protection (Extraction).
 
 ## Points de Background
-Votre Background vous rapporte un nombre de PVs pouvant dépendre de vos actions au cour du jeu ([cf. Background](start.md#background)).
+Votre Background vous rapporte un nombre de PVs pouvant dépendre de vos actions au cours du jeu ([cf. Background](start.md#background)).
 
 ## Points de Stratégies
 Toutes vos Stratégies choisies au début du jeu vous rapportent ou font perdre les PVs que vous leur avez attribué. ([cf. Stratégies](start.md#stratégies))
