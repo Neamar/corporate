@@ -81,7 +81,7 @@ def wallstreet(request, game, player, turn):
 @inject_game_into_response
 def corporations(request, game, player):
 	"""
-	corporations datas
+	Corporations datas
 	"""
 	corporations = game.corporation_set.all()
 	return {
