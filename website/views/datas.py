@@ -8,7 +8,7 @@ from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 from engine_modules.share.models import Share
 from engine.models import Player
-from website.utils import get_shares_count
+from website.utils import get_shares_count, is_top_shareholder
 from website.decorators import render, find_player_from_game_id, inject_game_into_response, turn_by_turn_view
 from utils.read_markdown import parse_markdown
 
@@ -177,13 +177,13 @@ def shares(request, game, player, turn):
 
 	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('pk')
 	corporations = list(game.corporation_set.all().order_by('pk'))
-	shares = Share.objects.filter(player__game=game, turn__lte=turn)
+	shares = Share.objects.filter(player__game=game, turn__lte=turn).select_related('corporation', 'player')
 	player_shares = []
 
 	for player in players:
 		player_share = {
 			"player": player,
-			"shares": [get_shares_count(c, player, shares) for c in corporations]
+			"shares": [{"count": get_shares_count(c, player, shares), "top": is_top_shareholder(c, player, shares)} for c in corporations]
 		}
 
 		try:

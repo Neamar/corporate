@@ -79,4 +79,23 @@ def get_shares_count(corporation, player, shares):
 	Retrieve the number of shares owned by player in corporation
 	"""
 
-	return len([s for s in shares if s.player_id == player.pk and s.corporation_id == corporation.pk])
+	return len([s for s in shares if s.player_id == player.pk and s.corporation == corporation])
+
+def is_top_shareholder(corporation, player, shares):
+	"""
+	Return true if player is top shareholder
+	"""
+	players = set([s.player for s in shares if s.corporation == corporation])
+
+	max_share_count = 0
+	is_alone = False
+
+	for p in players:
+		share_count = get_shares_count(corporation, p, shares)
+		if share_count == max_share_count:
+			is_alone = False
+		elif share_count > max_share_count:
+			max_share_count = share_count
+			is_alone = True
+
+	return is_alone and get_shares_count(corporation, player, shares) == max_share_count

@@ -21,12 +21,18 @@
 	<td><a href="{% url "website.views.datas.player" game_id=game.pk player_id=player_shares.player.id %}">{{ player_shares.player.name }}</a></td>
 	{% for share in player_shares.shares %}
 		{% if player_shares.citizenship_index == forloop.counter0 %}
-			<td class="important">{{ share }}</td>
-		{% elif share != 0 %}
-			<td>{{ share }}</td>
+			<td class="important">
 		{% else %}
-			<td></td>
+			<td>
 		{% endif %}
+		{% if share.count != 0 %}
+		{% if share.top %}
+			<strong title="Actionnaire majoritaire">{{ share.count }}</strong>
+		{% else %}
+			{{ share.count }}
+		{% endif %}
+		{% endif %}
+		</td>
 	{% endfor %}
 </tr>
 {% endfor %}
