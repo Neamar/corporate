@@ -83,6 +83,7 @@ def corporations(request, game, player):
 	"""
 	Corporations datas
 	"""
+
 	corporations = game.corporation_set.all()
 	return {
 		"corporations": corporations

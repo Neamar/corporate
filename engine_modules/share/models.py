@@ -30,7 +30,9 @@ class BuyShareOrder(Order):
 	corporation = models.ForeignKey(Corporation)
 
 	def get_cost(self):
-		if self.corporation == self.player.game.get_ladder()[0]:
+		if not hasattr(self, "corporation"):
+			return 0
+		elif self.corporation == self.player.game.get_ladder()[0]:
 			if self.player.citizenship.corporation != self.corporation:
 				return BuyShareOrder.FIRST_COST * self.corporation.assets
 			else:
