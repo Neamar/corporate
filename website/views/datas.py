@@ -120,27 +120,9 @@ def players(request, game, player):
 	"""
 
 	players = game.player_set.all().annotate(Count('share')).select_related('citizenship__corporation', 'influence').order_by('name')
-	corporations = list(game.corporation_set.all().order_by('pk'))
-	shares = Share.objects.filter(player__game=game)
-	player_shares = []
-
-	for player in players:
-		player_share = {
-			"player": player,
-			"shares": [get_shares_count(c, player, shares) for c in corporations]
-		}
-
-		try:
-			player_share["citizenship_index"] = corporations.index(player.citizenship.corporation)
-		except ValueError:
-			pass
-
-		player_shares.append(player_share)
 
 	return {
 		"players": players,
-		"corporations": corporations,
-		"shares": player_shares
 	}
 
 
