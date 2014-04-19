@@ -119,7 +119,7 @@ def players(request, game, player):
 	Players datas
 	"""
 
-	players = game.player_set.all().annotate(Count('share')).select_related('citizenship__corporation', 'influence').order_by('name')
+	players = game.player_set.all().annotate(Count('share')).select_related('citizenship__corporation', 'influence', 'user').order_by('name')
 
 	return {
 		"players": players,
