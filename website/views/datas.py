@@ -84,7 +84,7 @@ def corporations(request, game, player):
 	Corporations datas
 	"""
 
-	corporations = game.corporation_set.all()
+	corporations = game.corporation_set.all().annotate(Count('share'))
 	return {
 		"corporations": corporations
 	}
