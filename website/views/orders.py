@@ -11,7 +11,7 @@ def orders(request, game_id):
 	player = get_player(request, game_id)
 
 	existing_orders = [order.to_child() for order in player.order_set.filter(turn=player.game.current_turn)]
-	existing_orders_cost = sum(o.get_cost() for o in existing_orders)
+	existing_orders_cost = sum(o.cost for o in existing_orders)
 
 	available_orders = get_orders_availability(player)
 

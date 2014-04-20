@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models, transaction
+from django.db.models import Sum
 from django.conf import settings
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
@@ -107,7 +108,7 @@ class Player(models.Model):
 		"""
 		Get the cost for all orders on this turn
 		"""
-		return sum([order.cost for order in self.get_current_orders()])
+		return self.get_current_orders().aggregate(Sum('cost'))['cost__sum'] or 0
 
 	def build_resolution_message(self):
 		"""
