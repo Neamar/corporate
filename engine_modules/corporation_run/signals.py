@@ -12,6 +12,9 @@ def datasteal_target_stealer_differ(sender, instance, **kwargs):
 	"""
 	Datasteal target and stealer must be different
 	"""
+	if not hasattr(instance, 'target_corporation'):
+		return
+
 	if instance.target_corporation == instance.stealer_corporation:
 		raise OrderNotAvailable("La cible et le bénéficiaire doivent être différents !")
 
@@ -21,5 +24,8 @@ def extraction_target_stealer_differ(sender, instance, **kwargs):
 	"""
 	Extraction target and kidnapper must be different
 	"""
+	if not hasattr(instance, 'target_corporation'):
+		return
+
 	if instance.target_corporation == instance.kidnapper_corporation:
 		raise OrderNotAvailable("La cible et le bénéficiaire doivent être différents !")

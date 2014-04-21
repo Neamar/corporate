@@ -33,6 +33,6 @@ class WiretransferOrder(Order):
 		m.recipient_set.add(self.player, self.recipient)
 
 	def get_cost(self):
-		return self.amount
+		return self.amount or 0
 
 orders = (WiretransferOrder,)

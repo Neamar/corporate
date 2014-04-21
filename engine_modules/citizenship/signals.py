@@ -30,5 +30,8 @@ def citizenship_need_one_share(sender, instance, **kwargs):
 	"""
 	You need at least one share to get a citizenship
 	"""
+	if not hasattr(instance, 'corporation'):
+		return
+
 	if not instance.player.share_set.filter(corporation=instance.corporation).exists():
 		raise OrderNotAvailable("Vous devez avoir au moins une part dans la corporation dont vous souhaitez devenir citoyen.")
