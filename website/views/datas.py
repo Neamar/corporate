@@ -44,17 +44,11 @@ def wallstreet(request, game, player, turn):
 			detailed_delta = corporation.assetdelta_set.filter(turn=turn).order_by('category')
 			for detail in detailed_delta:
 				setattr(corporation, detail.category, getattr(corporation, detail.category, 0) + detail.delta)
-				delta_categories[detail.category] = {
-					"shortcut": detail.get_category_shortcut(),
-					"display": detail.get_category_display()
-				}
+				delta_categories[detail.category] = detail.get_category_display()
 
 			unknown = corporation.current_assets - corporation.last_assets - sum([ad.delta for ad in detailed_delta])
 			setattr(corporation, 'unknown', unknown if unknown != 0 else "")
-		delta_categories['unknown'] = {
-			'shortcut': '?',
-			'display': 'Modifications non publiques'
-		}
+		delta_categories['unknown'] = '?'
 
 	# Graph datas
 	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)

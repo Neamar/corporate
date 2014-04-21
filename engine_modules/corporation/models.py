@@ -142,19 +142,11 @@ class AssetDelta(models.Model):
 	MDC = 'mdc'
 
 	CATEGORY_CHOICES = (
-		(EFFECT_FIRST, 'Effet premier'),
-		(EFFECT_LAST, 'Effet dernier'),
-		(RUN_SABOTAGE, 'Runs de Sabotage'),
-		(RUN_EXTRACTION, 'Runs d\'Extraction'),
+		(EFFECT_FIRST, 'Eff. premier'),
+		(EFFECT_LAST, 'Eff. dernier'),
+		(RUN_SABOTAGE, 'Sabotage'),
+		(RUN_EXTRACTION, 'Extraction'),
 		(MDC, 'MDC'),
-	)
-
-	SHORTCUTS = (
-		(EFFECT_FIRST, 'P'),
-		(EFFECT_LAST, 'D'),
-		(RUN_SABOTAGE, 'S'),
-		(RUN_EXTRACTION, 'E'),
-		(MDC, 'M'),
 	)
 
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)

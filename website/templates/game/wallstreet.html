@@ -8,16 +8,16 @@
 {% include "_pager.html" with base_url="website.views.datas.wallstreet" base_title="Consulter la bourse du tour" %}
 
 
-<table class="prop_table">
+<table class="prop_table slanted_head">
 <thead>
 <tr>
 	<th></th>
-	<th>Actifs</th>
+	<th><div><span>Actifs</span></div></th>
 {% if corporations.0.last_assets %}
-	<th title="Actifs du tour précédent">Préc.</th>
+	<th title="Actifs du tour précédent"><div><span>Précédents</span></div></th>
 {% endif %}
 {% for category in delta_categories.values %}
-	<th title="{{ category.display }}">{{ category.shortcut }}</th>
+	<th><div><span>{{ category }}</span></div></th>
 {% endfor %}
 </tr>
 </thead>
