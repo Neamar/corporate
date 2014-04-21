@@ -69,7 +69,7 @@ class OrdersTest(EngineTestCase):
 
 		self.o.resolve()
 		n = Note.objects.filter(category=Note.GLOBAL).last()
-		self.assertIn(u'2ème', n.content)
+		self.assertIn(u'2<sup>ème</sup>', n.content)
 
 	def test_order_special_cost_for_first_corpo_and_not_citizen(self):
 		"""
