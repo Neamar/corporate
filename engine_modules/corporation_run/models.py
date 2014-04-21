@@ -380,7 +380,7 @@ class ProtectionOrder(RunOrder):
 		self.player.save()
 
 	def description(self):
-		return u"Envoyer une équipe protéger les intérêts de %s (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_success_probability())
+		return u"Envoyer une équipe protéger %s des %ss (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_defense_display(), self.get_success_probability())
 
 	def get_form(self, datas=None):
 		form = super(ProtectionOrder, self).get_form(datas)

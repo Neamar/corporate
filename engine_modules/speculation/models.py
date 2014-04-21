@@ -58,7 +58,7 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 		if ladder.index(self.corporation) + 1 == self.rank:
 			self.player.money += self.on_win_money()
 			self.player.save()
-			content = u"Vos investissements de %sk¥ sur la corporation %s vous ont rapporté %sk ¥" % (self.investment, self.corporation.base_corporation.name, self.on_win_money())
+			content = u"Vos investissements de %sk¥ sur la corporation %s vous ont rapporté %sk¥" % (self.investment, self.corporation.base_corporation.name, self.on_win_money())
 		else:
 			# Failure
 			self.player.money -= self.on_loss_money()
