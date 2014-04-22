@@ -11,7 +11,7 @@ Rejoignez la danse pour devenir le roi d'un instant !</p>
 <p>Vos parties en cours :</p>
 <ul>
 {% for player in players %}
-	<li><a href="{% url "website.views.datas.newsfeeds" game_id=player.game_id %}">{{ player.name}}, {{ player.game.city }}</li>
+	<li><a href="{% url "website.views.datas.newsfeeds" game_id=player.game_id %}">{{ player.name}}, {{ player.game.city }}</a></li>
 {% endfor %}
 </ul>
 {% endif %}
