@@ -51,7 +51,7 @@ Le vote est séparé en deux ordres distincts (un +, un -)
 ## MDC
 Le calcul des voix n'inclut que les parts actuelles, pas les changements de majorité potentiels pendant le tour.
 
-Contrôles Ciblés est renommé en XXX ?
+Contrôles Ciblés est renommé en Couvre Feu.
 
 ## Dividendes
 Les dividendes de la dernière corpo sont de `40 * actifs`.
