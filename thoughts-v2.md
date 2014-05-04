@@ -9,11 +9,12 @@ Un fixer se définit par :
 * Son pourcentage en Datasteal (et Information)
 * Son pourcentage en Sabotage
 * Son prix de base
+* Sa valeur de connectivité
 * Ses corporations alliées
 * Ses corporations ennemies
 
 ### Mises
-Les joueurs peuvent miser une fois par IC et par type de run sur un fixer pour lui faire réaliser une run (donc au début une mise sabotage, une mise datasteal, une mise information, une extraction et une protection). Le joueur avec la plus grosse mise remporte le fixer et émet une run avec le pourcentage de chance du fixer. Le second plus haut miseur remporte une run avec pourcentage - 10%, etc. Seule exception : si la mise d'un joueur est deux fois inférieure au miseur directement supérieur, le fixer ne prend même pas la peine d'envoyer la run.
+Les joueurs peuvent miser une fois par IC et par type de run sur un fixer pour lui faire réaliser une run (donc au début une mise sabotage, une mise datasteal, une mise information, une extraction et une protection). Le joueur avec la plus grosse mise remporte le fixer et émet une run avec le pourcentage de chance du fixer. Le second plus haut miseur remporte une run avec pourcentage - 10%, etc. Au total, le fixer peut envoyer autant de run que sa connectivité.
 
 * La mise minimum est le prix de base du fixer. Ensuite, il faut miser par incrément sur le prix de base (pour un prix de base de 150k¥, on peut miser 150, 300, 450...)
 * Si la run échoue, on est remboursé à 50%.
