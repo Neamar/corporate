@@ -29,6 +29,7 @@ La valeur de protection vient s'additionner avec la valeur de base des corpos (p
 
 ## Spéculation
 Une seule spéculation par tour, de valeur max `200 * IC`.
+Suppression des spéculations sur produits dérivés.
 
 ## Citoyenneté corpo
 Possible de s'affilier à une corpo au tour 0 : il faudra ensuite prendre la citoyenneté indiquée ou perdre 4 PV.
