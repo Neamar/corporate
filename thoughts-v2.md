@@ -31,7 +31,7 @@ La valeur de protection vient s'additionner avec la valeur de base des corpos (p
 Une seule spéculation par tour, de valeur max `200 * IC`.
 
 ## Citoyenneté corpo
-Impossible à prendre au tour 0.
+Possible de s'affilier à une corpo au tour 0 : il faudra ensuite prendre la citoyenneté indiquée ou perdre 4 PV.
 PV : -6 + tour de prise de citoyenneté
 -6PV si pas de citoyenneté corpo en fin de jeu
 Augmenter les points de citoyenneté en fin de jeu.
