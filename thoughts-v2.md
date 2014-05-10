@@ -76,6 +76,25 @@ Une corporation qui crashe applique un effet spécial sur les autres corpos, plu
 * Les runs d'Information ne comptent que sur joueur distincts.
 * Le titre Opportuniste disparaît
 
+---
+# Alternative : Not so Lite Version
+Chaque fixer a une valeur de base dans les différents types de runs.
+Pour faire une run, on choisit un fixer, puis on mise pour augmenter les probas par paliers de 10%.
+Le fixer réalisera autant de runs que sa connectivité lui permet, en prenant les mises les plus hautes.
+
+En début de jeu, on n'a accès qu'à une dizaine de fixers.
+À chaque tour, on peut "débloquer" un fixer donné pour un certain prix (tous les fixers sont publics, on en choisit juste un auquel on n'a pas encore accès).
+
+Pas de limite sur le nombre de runs lancées par tour.
+Une run échouée n'est pas remboursée, en revanche une enchère insuffisante l'est.
+Pas de malus de timing.
+
+Pour la protection, on ne passe pas par les fixers.
+On peut juste payer sur une corpo pour la protéger d'un évènement donné (DS / E / S).
+La valeur de base est la défense de la corpo, ce qu'on paie vient s'ajouter au dessus et ne peut pas dépasser 60% de protection.
+Le palier est de 10k¥ * actifs / 10%.
+Si A et B protègent à hauteur de 20% une corpo protégée de base à 10%, il n'y a qu'une protection à hauteur 20 + 20 + 10 = 50.
+
 
 -----
 # Lite Version
