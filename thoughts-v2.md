@@ -69,3 +69,58 @@ Une corporation qui crashe applique un effet spécial sur les autres corpos, plu
 * 7 tours de jeu uniquement, au lieu de 8.
 * Les runs d'Informations ne comptent que sur joueur distincts.
 * Le titre Opportuniste disparaît
+
+
+-----
+# Lite Version
+Les corporations ont :
+* leur nombre d'actifs
+* leur classement
+* plus de valeur de défense spécifiques. Les chances de succès sont prises en compte uniquement dans les runs.
+
+Acheter une part dans une corporation et les bénéfices que la corporation génère dépendent de sa position dans le classement :
+
+|rank| Coût part| Dividendes |
+|----|---------|--------|
+| 1  |   2M    |  1M    |
+| 2  |   1M4   |  700k  |
+| 3  |   1M3   |  650k  |
+| 4  |   1M2   |  600k  |
+| 5  |   1M1   |  550k  |
+| 6  |   1M0   |  500k  |
+| 7  |   900K  |  450k  |
+| 8  |   800k  |  400k  |
+| 9  |   700k  |  350k  |
+| 10 |   600k  |  300k  |
+
+Les run ont un prix fixe :
+
+* Information 100k
+* Sabotage    200k
+* Datasteal   300k
+* Extraction  400k
+
+Le pourcentage de chance qu'elle passe est de `90%-10%`` par autre run de même type ayant la même cible avec un minimum de 25%. 
+
+    Trois personnes qui font un sabotage sur Horizon ont 70% de chance chacun.
+    10 run de sabotage sur Horizon ont 25% chacune.
+
+Pour info, stastistiquement ça donne :
+
+    nombre de run       1   2   3   4   5   6   7   8   9   10  11  12  13  14
+    % de chance/run     90  80  70  60  50  40  30  25  25  25  25  25  25  25
+    %total sur cible    90  160 210 240 250 240 210 200 225 250 275 300 325 350
+
+L'influence corporatiste a un effet dès le tour où on l'achète. Le prix est de `indice actuel x 750K` (750 pour le niveau 2, 1m5 pour le niveau 3...)
+
+On a le triangle suivant :
+
+* Vos parts dans les corporations vous rapportent comme si elle étaient un rang plus haut. Aucun effet sur la corpo au top Exemple : une part dans Renraku 5eme vous rapporterai 600k au lieu de 550k.
+* Les corporations dans lequelle vous êtes majoritaires gagnent +1 actif
+* Vous gagnez +3 Points de Victoire pour la fin de la partie
+
+Et avec les effets des perdants qui est l'exact opposé :
+
+* Vos parts vous rapportent comme si elles étaient un rang plus bas. Sans effet sur la dernière corpo. 
+* Les corporations dans lequelles vous êtes majoritaires perdent un actif
+* Vous perdez 3 points de victoire.
