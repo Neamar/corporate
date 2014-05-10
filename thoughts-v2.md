@@ -99,6 +99,7 @@ Acheter une part dans une corporation et les bénéfices que la corporation gén
 | 9  |   700k  |  350k  |
 | 10 |   600k  |  300k  |
 
+## Runs
 Les run ont un prix fixe :
 
 * Information 100k
@@ -106,19 +107,21 @@ Les run ont un prix fixe :
 * Datasteal   300k
 * Extraction  400k
 
-Le pourcentage de chance qu'elle passe est de `90%-10%`` par autre run de même type ayant la même cible avec un minimum de 25%. 
+Le pourcentage de chance qu'elle passe est de `90%-10%` par autre run de même type ayant la même cible avec un minimum de 25%. 
 
     Trois personnes qui font un sabotage sur Horizon ont 70% de chance chacun.
     10 run de sabotage sur Horizon ont 25% chacune.
 
-Pour info, stastistiquement ça donne :
+Pour info, statistiquement ça donne :
 
     nombre de run       1   2   3   4   5   6   7   8   9   10  11  12  13  14
     % de chance/run     90  80  70  60  50  40  30  25  25  25  25  25  25  25
     %total sur cible    90  160 210 240 250 240 210 200 225 250 275 300 325 350
 
+## IC
 L'influence corporatiste a un effet dès le tour où on l'achète. Le prix est de `indice actuel x 750K` (750 pour le niveau 2, 1m5 pour le niveau 3...)
 
+## MDC
 On a le triangle suivant :
 
 * Vos parts dans les corporations vous rapportent comme si elle étaient un rang plus haut. Aucun effet sur la corpo au top Exemple : une part dans Renraku 5eme vous rapporterai 600k au lieu de 550k.
