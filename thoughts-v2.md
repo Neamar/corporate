@@ -137,6 +137,10 @@ Pour info, statistiquement ça donne :
     % de chance/run     90  80  70  60  50  40  30  25  25  25  25  25  25  25
     %total sur cible    90  160 210 240 250 240 210 200 225 250 275 300 325 350
 
+Une corpo ne peut pas gagner ou perdre plus de 4 actifs par tour par le biais de runs.
+
+    Ares prend 2 sabotage (-4), 3 extraction (-3) et réussit 2 datasteal sur d'autres (+2), elle ne perd que 4 actifs au lieu de 5.
+
 ## IC
 L'influence corporatiste a un effet dès le tour où on l'achète. Le prix est de `indice actuel x 750K` (750 pour le niveau 2, 1m5 pour le niveau 3...)
 
