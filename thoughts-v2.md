@@ -156,3 +156,83 @@ Et avec les effets des perdants qui est l'exact opposé :
 * Vos parts vous rapportent comme si elles étaient un rang plus bas. Sans effet sur la dernière corpo. 
 * Les corporations dans lequelles vous êtes majoritaires perdent un actif
 * Vous perdez 3 points de victoire.
+
+--------------
+# Not So Lite Version
+
+Même règles que Manahttan mais...
+
+Evidences d'abbord : Un "MDC" triangulaire et une absence de produits dérivés.
+
+Si on réduit le nombre de spéculations à 1, il faudrait une option pour spéculer sur plusieurs positions à la fois, avec une cote plus basse. Pour que ceux qui ne veulent pas se prendre la tête sur la spéculation puissent se la jouer safe.
+
+Révision du prix de l'IC, mais suppression de la limite d'un point acheté par tour. Pas nécessaire, et ça empèche de rattraper son retard.
+
+Les runs :
+
+Précision : 50k pour 10 %. Maximum 100% après bonus (très important!). La défense, alllant de 10 à 30 %, se soustrait à la précision.
+Un indice de Préparation, de 0 à 5 qui peut être décidé sans coût.
+Bonus d'IC à 50%.
+La thune dans les runs échouées est perdue.
+
+Les runs de même type sur une même corpo sont résolues par ordre de Préparation croissante. Random en cas d'égalité, ou éventuellement priorité au plus haut score de Précision (pas fan).
+
+Malus de timing de 20% pour les runs de sabotage, 40% pour Extraction et Datasteal. Il s'applique pour chaque run de ce type déjà réussie.
+
+Possibilité de mettre des Protections sur une corpo dans laquelle on a au moins une part. Une protection coûte 200 k. Lors de la résolution du tour, une corpo aura x Protections sur elle. Les runs sont résolues dans l'ordre suivant : Sabotage, Extraction puis Datasteal. Tant que x>1, toute run qui passe a 70% de chance d'être contrée -10% par point de préparation. Si une run est contrée, on retire 1 à x. "Système cartouches".
+Autre possibilité qui peut être viable : une unique protection par palier, qui diminue à chaque run bloquée.
+
+
+Si un joueur a mis une protection sur une corpo, il en reçoit les détections comme s'il en avait la nationalité.
+
+Voilà en gros pour la base. Plusieurs options pour le reste.
+
+Pour les runs, soit :
+
+* 2 fois plus de bonus d'IC à chaque tour, en réajustant peut-être le bonus.
+* Des fixers.
+
+Pour les fixers : une douzaine avec des score en Datasteal ( comptant eventuellement pour les runs d'Information), Sabotage et Extraction. Bonus allant de +10 à +50%.
+
+Possibilité de choisir un fixer pour booster sa run. Si le fixer "refuse", la run se fait quand même, mais avec un malus de 10%.
+
+Chaque tour, les joueurs, peuvent acheter des points de Loyauté. Chaque achat est un ordre distinct. Le prix est de 100k, plus 100k par point déjà acheté ce tour ci. Le premier à 100k, le second à 200k, le troisième à 300k... peu importe qu'ils soient tous achetés dans le mêmes fixer ou non. Annuler l'achat d'un point annule tous les autres, sauf si coût des autres points peut être recalculé. A voir.
+
+Un fixer ne peut soutenir qu'une run par tour. Il donne la priorité au joueur qui y a le plus de points de Loyauté. En cas d'égalité, la run qui a la plus haute précision. Puis random.
+Autre options : moins de fixer, mais ils peuvent soutenir 2 runs par tour ou plus. Ca me parait plus compliqué, cela dit.
+
+Les fixers ont des alliés et des ennemis.
+
+Alliés :
+Ils refusent les runs qui ciblent la corpo.
+Les Johnsons citoyens de la corpos comptent comme ayant un point de Loyauté supplémentaire.
+
+Ennemis :
+Ils refusent toutes les runs proposées par les citoyens de la corpo.
+
+Si on fait tout ça, la hard limit de +4/-4 me parait superflue. Un malus de timing de 40% sur les datasteal, c'est raide.
+
+Information, mère de toute stratégie. Volet crucial s'il en est.
+
+J'ai quelques idées, mais je préfererai qu'on en cause plus longuement avant de rentrer dans le détail. En gros, je suis pour :
+
+* Supprimer les runs d'Information.
+* Donner aux joueurs le choix d'investir dans une carac Renseignement similaire à l'IC, qui est boostée d'une manière ou d'une autre par la Détéction de la corpo du joueur.
+* Les joueurs choisissent les joueurs sur lesquels ils veulent se renseigner. Ils reçoivent des informations partielles sur les fiches ordres, loyautés et secrets des joueurs ciblés. La quantité d'information reçue dépend du Score de Renseignement, de la défense Datasteal des joueurs ciblés et le nombre de joueurs ciblés.
+
+Quelques idées de plus qui me paraissent interessantes :
+
+* Lorsque la ligne Opération clandestine passe, toutes les corpos perdent un actif.
+* A chaque corpo est associée une coalition. Un joueur citoyen de la corpo pèse +1 quand il rejoint la coalition corespondant à sa corpo.
+* Au début du jeu, chaque joueur reçoit un allié et un ennemi parmi les joueurs. Réciproques, donc ça marche qu'avec un nombre pair de joueur. On laisse le temps à ceux qui veulent se mettre d'accord, et le reste est tiré random. -3 points si un allié termine dans les 3 derniers en fin de partie. -3 si un ennemi termine dans les 3 premiers. Possiblement plus graduel, tu as compris l'idée. Fait partie des Secrets.
+
+D'autres idées dont je ne suis pas trop sur, mais qui méritent d'être mises sur la table :
+
+* Les joueurs reçoivent des bonus à leurs runs correspondants aux Défense des corpos dont ils sont citoyen.
+* Des effets randoms qui twistent le jeu pour un tour, placés en secret à des tours random. Possibilité de se renseigner sur la nature du prochain event, et, séparément, sur le tour auquel il arrive. Exemple d'event : Deux corpos entrent en guerre ouverte. Celle qui termine le tour au dessus de l'autre gagne 2 actifs, l'autre en perd 2.
+* Des "groupes" dans lesquels il est possible d'acheter des points pour gagner +10% par point dans les runs associées pour le reste de la partie / réduisent le coût de la Protection. Police, pegre, agences d'espionage...
+Des CROCs, qui fonctionnent en gros comme un fixer perso.
+
+Un autre système complètement diférent pour les runs. Beaucoup plus simple d'un point de vue prog', mais beaucoup plus chiant à apréhender pour les joueurs. En gros je suis pas pour, mais je te le donne quand même :
+
+Pas de Préparation, et elles se résolvent toutes en même temps. On garde le malus de timing actuel. Les joueurs peuvent payer 50k pour ajouter 10% de Protection à la corpo. La Protection est soustraite au % de toutes les runs sans distinction de type, mais est réduite de 10% pour chaque tranche de 30% de précision dirigée contre la corpo. Le malus sur une même run ne peut pas dépasser -50%.
