@@ -158,7 +158,7 @@ Et avec les effets des perdants qui est l'exact opposé :
 * Vous perdez 3 points de victoire.
 
 --------------
-# Not So Lite Version
+# Overweight Version
 
 Même règles que Manahttan mais...
 
