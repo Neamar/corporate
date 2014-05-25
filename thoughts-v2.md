@@ -1,6 +1,32 @@
 # CG 4
 
+## Classement des corporations
+Cinq "marchés" sont définis sur le jeu, par exemple "Militaire", "Transport", etc.
+
+Chaque corporation possède des actifs dans certains marchés en début de jeu. Elle a 2 "interdictions" de marché et un marché "principal".
+
 ## Runs
+Les runs ont un coût de base de 350k¥ pour 50%, puis coûtent 50k¥ / 10% additionnels.
+
+Le coût de base est annulé pour autant de runs que l'on a d'IC.
+Les runs sont résolues par précision décroissantes.
+
+### Sabotage
+Cible un marché et une corpo. Ne peut passer qu'une fois par marché / corpo / tour. -2 actifs, sans descendre en dessous de 0.
+
+### Extraction
+Cible un marché et deux corpos. Ne peut passer qu'une fois par marché / corpo / tour. -1 actif / +1 actif. Si la cible a 0 dans le marché, échec.
+
+### Datasteal
+Cible un marché et deux corpos. Ne peut passer qu'une fois par marché / corpo / tour. +1 actif. Si la cible a 0 dans le marché, échec.
+
+### Protection
+Cible un marché et une corpo. La protection permet de diminuer la précision maximum des runs attaquantes. Contrairement aux autres runs, elle part à 90% et il faut payer pour descendre (le prix de base reste de 250k¥).
+
+Coût Protection (+ prix de base)      50k¥   100k¥   150k¥   200k¥
+Valeur maximale des runs attaquantes  80%    70%     60%     50%
+
+Toute run de précision supérieure est maxée par la valeur de protection.
 
 ## Spéculation
 Une seule spéculation par tour, de valeur max `200 * IC`.
