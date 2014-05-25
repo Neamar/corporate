@@ -28,6 +28,11 @@ Valeur maximale des runs attaquantes  80%    70%     60%     50%
 
 Toute run de précision supérieure est maxée par la valeur de protection.
 
+### Information
+Coût de base 0, 50k¥ par palier de 10%, maximum 50%.
+
+Donne accès à N% des logs "globaux" (tout compris : main invisible, runs, vote, ...)
+
 ## Spéculation
 Une seule spéculation par tour, de valeur max `200 * IC`.
 Suppression des spéculations sur produits dérivés.
