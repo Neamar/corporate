@@ -1,9 +1,9 @@
 # CG 4
 
 ## Classement des corporations
-Cinq<sup>(en discussion)</sup> "marchés" sont définis sur le jeu, par exemple "Militaire", "Transport", etc.
+Dix "marchés" sont définis sur le jeu, par exemple "Militaire", "Transport", etc.
 
-Chaque corporation possède des actifs dans certains marchés en début de jeu. Elle a 2 "interdictions" de marché<sup>(en discussion)</sup> et un marché "principal".
+Chaque corporation possède des actifs dans certains marchés en début de jeu. Elle a 6 "interdictions" de marché et un marché "principal".
 
 Toute corporation strictement majoritaire sur un marché gagne un actif "de bulle" qui disparaîtra lorsqu'elle ne sera plus majoritaire.
 
