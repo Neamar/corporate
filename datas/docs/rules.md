@@ -7,9 +7,21 @@ Vous incarnez un cadre corporatiste décidé à se tailler un empire dans une de
 ## Concepts de base
 Les **corporations, ou "corpos"**, sont au coeur du jeu. De gigantesques multinationales qui ont supplanté le pouvoir des nations et fait main basse sur l'économie planétaire. Elles sont innombrables, mais le Corporate Game ne tient compte que des dix plus grosses s'étant implantées à Manhattan.
 
-La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui évoluera en fonction des actions des joueurs et des caprices du marché. Plus une corpo possède d'actifs, plus elle engrange de bénéfices. Au début de la partie, les actifs des 10 corpos sont tirés au hasard. ([cf. Classement initial](rules.md#classement-initial))
+La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui évoluera en fonction des actions des joueurs et des caprices de la bourse.
+
+Plus une corpo possède d'actifs, plus elle engrange de bénéfices. Au début de la partie, les actifs des 10 corpos sont tirés au hasard (entre 7 et 12). ([cf. Classement initial](rules.md#classement-initial))
 
 Le **classement** trie les corpos par nombre d'actifs et leur attribue un rang de 1 à 10, 1 correspondant à la corpo possédant le plus d'actifs, celle qui domine le marché.
+
+Chaque corporation voit ses actifs répartis en quatre **marchés**. Par exemple Ares pourrait avoir :
+*5 en Militaire
+*2 en Alimentaire
+*3 en Sécurité
+*0 en Magie
+
+Ces marchés sont définis au début de la partie. Une corporation ne pourra donc jamais ouvrir un marché dans lequel elle n'est pas compétente (en tout cas, pas dans cette ville). Il existe 10 marchés différents répartis entre les différentes corporations.
+
+Si une corporation a plus d'actifs que toutes les autres sur un marché, elle **domine** ce marché et gagne un actif. Attention cependant, cet actif est perdu dès l'instant où la corporation ne domine plus le marché.
 
 Les joueurs commencent la partie avec 1 point d'**Influence corporatiste, ou "IC"**. Cette caractéristique représente l'étendue de leur pouvoir et de leurs réseaux dans l'île de Manhattan et sert de limite à certaines de leurs actions. Elle pourra être augmentée en cours de partie.
 
@@ -35,10 +47,9 @@ Une part coûte `100 000 ny × (actifs de la corpo)`. Soit 500 000 ny pour une c
 
 > Une part dans la corpo en tête du classement (rang 1) coûte `125 000 ny × actifs` pour joueurs qui n'en ont pas la "nationalité" ([cf. Citoyenneté corpo](rules.md#citoyennete-corpo)).
 
-À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire `50 000 ny ny × (actifs de la corpo)`. Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc `2 × (50 000 × 5) + 1 × (50 000 × 10)`, soit 1 million de ny.
+À la fin de chaque tour, les joueurs touchent les **dividendes** de leurs parts. Chaque part rapporte à son propriétaire `50 000 ny × (actifs de la corpo)`. Un joueur possédant 2 parts dans une corpo de 5 actifs et 1 part dans une corpo de 10 actifs touchera donc `2 × (50 000 × 5) + 1 × (50 000 × 10)`, soit 1 million de ny.
 
 > Les parts de la corpo en tête du classement rapportent `75 000 ny × actifs`.
-> Les parts de la dernière corpo rapportent `25 000 ny × actifs`.
 
 ## Évolution du marché
 À chaque tour, les corpos vont gagner et perdre des actifs. Ce n'est qu'après toutes les modifications effectuées que sont calculés les dividendes.
@@ -46,8 +57,8 @@ Une part coûte `100 000 ny × (actifs de la corpo)`. Soit 500 000 ny pour une c
 ### Les Votes
 En tant qu'acteur majeur du marché, chaque joueur a droit à un **Vote** par tour. Il choisit :
 
-* Une corpo qui gagne 1 actif.
-* Une corpo qui perd 1 actif.
+* Un marché d'une corpo qui gagne 1 actif.
+* Un marché d'une corpo qui perd 1 actif.
 
 ### La main invisible du marché
 Le reste des aléas de la bourse de Manhattan est laissé à la chance. À chaque tour :
