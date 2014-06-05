@@ -173,25 +173,19 @@ Le commanditaire choisit une **corpo bénéficiaire**, et lui attribue une Défe
 
     Un scientifique de renom est arraché à son laboratoire. Renraku perd 1 actif, Horizon en gagne 1. La run a cependant été détectée, et tout Manhattan est au courant qu'elle a eu lieu, sans savoir que Jack Finn est son commanditaire ou qu'Horizon en a bénéficié. Shiro Kuboka, en revanche, est citoyen de Renraku, et apprend donc l'ensemble de la vérité. Maudissant l'incompétence de ses employés, il rassemble ses fonds pour un Sabotage bien senti contre Horizon...
 
-## Spéculation &ndash; Le miracle de Wall Street
+## Spéculation
 Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
 
-Les joueurs qui veulent miser dans le grand casino de l'East Coast Stock Exchange peuvent effectuer un nombre de **spéculations** par tour égal à leur IC. Le nombre de spéculations qu'un joueur peut effectuer est limité par son IC, et le montant de chaque spéculation ne peut dépasser `100 000 ny × (IC du spéculateur)`. Il est possible d'effectuer la même spéculation plusieurs fois.
+Les joueurs qui veulent miser dans le grand casino de la bourse peuvent effectuer une **spéculation**. Le montant de cette spéculation ne peut dépasser `200 000 ny × (IC du spéculateur)`.
 
-Chaque spéculation peut viser :
-
-* La croissance ou la chute des actifs d'un **produit dérivé** (voir plus bas)
-* La place d'une corpo dans le classement de fin de tour.
+Dans sa spéculation, le joueur choisit une corporation et mise sur son classement en fin de tour.
 
 Si le spéculateur se trompe, il perd la somme misée.
 
 Si sa spéculation est juste, il fait un bénéfice d'une côte de :
 
-* **1 pour 2** s'il a spéculé sur la **fluctuation d'un produit dérivé**. (S’il a placé 100 000 ny, il les conserve et gagne 100 000 ny suplémentaires)
-* **1 pour 3** s'il a spéculé qu’une corpo finirait le tour **première ou dernière**.
-* **1 pour 5** s’il a spéculé qu’une corpo finirait le tour à un autre rang (**de deuxième à avant-dernière**) .
-
-Le MDC peut modifier ces côtes, voir plus bas.
+* **1 pour 3** s'il a spéculé qu’une corpo finirait le tour **première ou dernière**. (S’il a placé 100 000 ny, il les conserve et gagne 150 000 ny suplémentaires)
+* **1 pour 5** s’il a spéculé qu’une corpo finirait le tour à un autre rang (**de seconde à avant-dernière**) .
 
 > Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la corpo étant le plus loin dans le négatif est considéré dernière.
 
