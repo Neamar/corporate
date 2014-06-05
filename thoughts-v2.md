@@ -48,7 +48,9 @@ Possible de s'affilier à une corpo au tour 0 : il faudra ensuite prendre la cit
 * Deux personnes dans la même corpo prennent -6.
 
 ## IC
-Prix IC : 750k¥ * indice actuel
+Prix IC : 750k¥ * indice actuel.
+
+Achetable plusieurs fois par tour.
 
 ## Vote
 Le vote est séparé en deux ordres distincts (un +, un -)

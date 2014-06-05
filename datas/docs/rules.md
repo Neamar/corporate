@@ -62,7 +62,7 @@ Les effets premier et dernier des corpos en tête et en fin de classement s'appl
 Au cours de la résolution du tour, une corpo peut descendre à 0 actifs ou moins. Son effet dernier peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle **Crashe** et est définitivement retirée du classement. Pas de remboursement pour les parts investies.
 
 ## Achat d'Influence
-Un fois par tour, les joueurs peuvent payer pour augmenter leur Influence corporatiste d'un point. Le coût est de `400 000 ny × nouvel indice`, soit 1 200 000 ny pour passer de 2 à 3. 
+Les joueurs peuvent payer pour augmenter leur Influence Corporatiste d'un point. Le coût est de `750 000 ny × indice`, soit 1 500 000 ny pour passer de 2 à 3. 
 
 La nouvelle valeur d'IC ne prendra effet qu'au tour suivant.
 
