@@ -22,12 +22,13 @@ Chaque corporation voit ses actifs répartis en quatre **marchés**.
 > * 3 en Sécurité
 > * 0 en Magie
 
-Ces marchés sont définis au début de la partie. Une corporation ne pourra donc jamais ouvrir un marché dans lequel elle n'est pas compétente (en tout cas, pas dans cette ville). 
-Chaque corporation a un **marché historique**. Certains effet de jeu le cible lui particlulièrement. Il existe 10 marchés différents répartis entre les différentes corporations et chaque corporation a un marché historique différent.
+Ces marchés sont définis au début de la partie. Une corporation ne pourra donc jamais ouvrir un marché dans lequel elle n'est pas compétente (en tout cas, pas dans cette ville ni dans cette partie). 
+Chaque corporation a un **marché historique**, qui est ciblé par certains effets de jeu.
+Au total, il existe 10 marchés différents répartis entre les corporations. Chacune possède un marché historique différent.
 
-Si une corporation a plus d'actifs que toutes les autres sur un marché, elle **domine** ce marché et gagne un actif. Attention cependant, cet actif est perdu dès l'instant où la corporation ne domine plus le marché.
+Si une corporation a plus d'actifs que toutes les autres sur un marché, elle **domine** ce marché et gagne un actif. Attention cependant, cet actif est perdu dès l'instant où la corporation ne domine plus le marché. En cas d'égalité, aucune corpo ne domine.
 
-Les joueurs commencent la partie avec 1 point d'**Influence corporatiste, ou "IC"**. Cette caractéristique représente l'étendue de leur pouvoir et de leurs réseaux dans l'île de Manhattan et sert de limite à certaines de leurs actions. Elle pourra être augmentée en cours de partie.
+Les joueurs commencent la partie avec 1 point d'**Influence corporatiste**, ou **"IC"**. Cette caractéristique représente l'étendue de leur pouvoir et de leurs réseaux dans l'île de Manhattan et sert de limite à certaines de leurs actions. Elle pourra être augmentée en cours de partie.
 
 Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 2 millions de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
 
@@ -68,10 +69,12 @@ En tant qu'acteur majeur du marché, chaque joueur a droit à un **Vote** par to
 Le reste des aléas de la bourse de Manhattan est laissé à la chance. À chaque tour :
 
 * Une corpo au hasard gagne 1 actif sur son marché historique.
-* Une corpo au hasard perd 1 actif sur son marché historique.
+* Une corpo au hasard perd 1 actif sur son marché historique. Le marché ne peut pas tomber en dessous de 0.
 
 ### Effet premier / effet dernier
-Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tous les autres modificateurs, et peuvent chambouler les actifs des corpos. Les bonus ou malus sur les actifs s'appliquent sur les marchés historiques. Voir la page des corporations pour une description individuelle de chaque corpo et [le recap](recap.md) pour une liste de leurs effets premiers / derniers. 
+Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tous les autres modificateurs, et viennent chambouler les actifs des corpos en s'appliquant sur leurs marchés historiques.
+
+Voir la page des corporations pour une description individuelle de chaque corpo et [le recap](recap.md) pour une liste de leurs effets premiers / derniers. 
 
 ### Crash
 Au cours de la résolution du tour, une corpo peut descendre à 0 actifs ou moins. Son effet dernier peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle **Crashe** et est définitivement retirée du classement. Pas de remboursement pour les parts investies.
@@ -226,7 +229,7 @@ Le MDC (Manhattan Development Consortium) n'est pas exactement une corporation, 
 
 Les corpos membres ont changé plusieurs fois depuis la fin de la reconstruction. Aujourd'hui, elles sont dix, et ont chacune une voix lors des votes du consortium. Ces votes légifèrent sur tous les aspects de la vie et des affaires à Manhattan, des juteux contrats de la voirie, de la sécurité, du traitement des déchets ou du développement de la matrice aux lois de régulations des marchés qui ont le potentiel de bouleverser le cours des actions des corpos les plus stables. Les votes du MDC rythment la vie politique de Manhattan, et sont disputés par des coalitions fluctuantes qui ne reculent devant aucun coup bas pour rafler la mise.
 
-Chaque tour, les joueurs peuvent participer au cirque du MDC en rejoignant une **coalition** défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des **Contrats publics**, une restrictions des **Opérations Clandestines** ou des **Consolidation**.
+Chaque tour, les joueurs peuvent participer au cirque du MDC en rejoignant une **coalition** défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des **Contrats publics**, une restriction des **Opérations Clandestines** ou des **Consolidations**.
 
 Le joueur qui possède **le plus de parts** dans une corpo peut influencer ses décisions politiques : la corpo rejoint la même coalition que lui.
 
@@ -241,8 +244,8 @@ De gros contrats d'entretien et de sécurité sont redistribués entre les corpo
 
 Effets :
 
-* Les **corpos** appartenant à la coalition **Contrats publics** gagnent immédiatement **+1 actif**. 
-* Les **corpos** appartenant à la coalition **Consolidation** subissent **-1 actif**.
+* Les **corpos** appartenant à la coalition **Contrats publics** gagnent immédiatement **+1 actif** dans leur marché historique. 
+* Les **corpos** appartenant à la coalition **Consolidation** subissent **-1 actif** dans leur marché historique, sans pouvoir descendre en dessous de 0.
 
 ### Opérations Clandestines
 De nouvelles lois sont votées, renforçant les contrôles militaires au détriment de certaines zones.
@@ -262,13 +265,13 @@ Effets :
 
 Autrement dit, de grosses possibilités de coopération pour d'énormes opportunités de backstab.
 
-    Jack Finn a acheté 3 parts dans Horizon, ce qui est davantage que n'importe quel autre joueur. Lorsqu'au tour 4 il choisit de rejoindre la coalition Consolidation, la corpo est donc considérée comme membre de cette coalition pour le tour.
+    Jack Finn a 3 parts dans Horizon, ce qui est davantage que n'importe quel autre joueur. Lorsqu'au tour 4 il choisit de rejoindre la coalition Consolidation, la corpo l'appuie dans cette coalition pour le tour.
     Shiro Kuboka étant le seul a avoir investi dans les corpos Renraku et Sony, elles le suivent lorsqu'il opte pour la coalition Contrats Publics.
     Si aucun autre joueur n'intervient dans le MDC ce tour, la coalition Contrats Publics a une valeur de 3 (1 joueur + 2 corpos), ce qui l'emporte sur la coalition Contrats Publics (1 joueur + 1 corpo = 2).
-    Les Contrats Publics votés au MDC rapportent 1 actif à  Renraku et Sony. Horizon, en opposition, est malmenée et perd 1 actif.
+    Les Contrats Publics votés au MDC rapportent 1 actif dans leurs marchés historiques à Renraku et Sony. Horizon, en opposition, est malmenée et perd 1 actif dans son marché historique.
 
 ## Classement initial
 Au début du jeu, les corpos reçoivent respectivement 13, 12, 11, 11, 10, 10, 9, 9, 8 et 7 actifs, dans l'ordre décroissant du classement. Le classement initial est laissé au hasard à deux exceptions près :
 
 * Ares fait partie des 3 premières corpos.
-* Spinrad et Prometheus ne peuvent pas recevoir un rang supérieur à 5, pour un maximum de 10 actifs.
+* Spinrad et Prometheus ne peuvent pas recevoir un rang supérieur à 5 (soit un maximum de 10 actifs).
