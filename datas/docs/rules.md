@@ -13,13 +13,17 @@ Plus une corpo possède d'actifs, plus elle engrange de bénéfices. Au début d
 
 Le **classement** trie les corpos par nombre d'actifs et leur attribue un rang de 1 à 10, 1 correspondant à la corpo possédant le plus d'actifs, celle qui domine le marché.
 
-Chaque corporation voit ses actifs répartis en quatre **marchés**. Par exemple Ares pourrait avoir :
-*5 en Militaire
-*2 en Alimentaire
-*3 en Sécurité
-*0 en Magie
+Chaque corporation voit ses actifs répartis en quatre **marchés**. 
 
-Ces marchés sont définis au début de la partie. Une corporation ne pourra donc jamais ouvrir un marché dans lequel elle n'est pas compétente (en tout cas, pas dans cette ville). Il existe 10 marchés différents répartis entre les différentes corporations.
+> Par exemple, Ares possède 10 actifs répartis comme suit :
+>
+> * 5 en Militaire
+> * 2 en Alimentaire
+> * 3 en Sécurité
+> * 0 en Magie
+
+Ces marchés sont définis au début de la partie. Une corporation ne pourra donc jamais ouvrir un marché dans lequel elle n'est pas compétente (en tout cas, pas dans cette ville). 
+Chaque corporation a un **marché historique**. Certains effet de jeu le cible lui particlulièrement. Il existe 10 marchés différents répartis entre les différentes corporations et chaque corporation a un marché historique différent.
 
 Si une corporation a plus d'actifs que toutes les autres sur un marché, elle **domine** ce marché et gagne un actif. Attention cependant, cet actif est perdu dès l'instant où la corporation ne domine plus le marché.
 
@@ -63,11 +67,11 @@ En tant qu'acteur majeur du marché, chaque joueur a droit à un **Vote** par to
 ### La main invisible du marché
 Le reste des aléas de la bourse de Manhattan est laissé à la chance. À chaque tour :
 
-* Une corpo au hasard gagne 1 actif.
-* Une corpo au hasard perd 1 actif.
+* Une corpo au hasard gagne 1 actif sur son marché historique.
+* Une corpo au hasard perd 1 actif sur son marché historique.
 
 ### Effet premier / effet dernier
-Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tous les autres modificateurs, et peuvent chambouler les actifs des corpos. Voir la page des corporations pour une description individuelle de chaque corpo et [le recap](recap.md) pour une liste de leurs effets premiers / derniers.
+Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tous les autres modificateurs, et peuvent chambouler les actifs des corpos. Les bonus ou malus sur les actifs s'appliquent sur les marchés historiques. Voir la page des corporations pour une description individuelle de chaque corpo et [le recap](recap.md) pour une liste de leurs effets premiers / derniers. 
 
 ### Crash
 Au cours de la résolution du tour, une corpo peut descendre à 0 actifs ou moins. Son effet dernier peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle **Crashe** et est définitivement retirée du classement. Pas de remboursement pour les parts investies.
