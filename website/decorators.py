@@ -1,3 +1,4 @@
+from functools import wraps
 from django.shortcuts import render as django_render
 from django.http import Http404
 
@@ -10,6 +11,7 @@ def render(page):
 	"""
 
 	def decorator(func):
+		@wraps(func)
 		def wrap(request, *args, **kwargs):
 			response = func(request, *args, **kwargs)
 			if isinstance(response, dict):
@@ -21,6 +23,7 @@ def render(page):
 
 
 def find_player_from_game_id(func):
+	@wraps(func)
 	def wrap(request, game_id, **kwargs):
 		player = get_player(request, game_id)
 		game = player.game
@@ -30,6 +33,7 @@ def find_player_from_game_id(func):
 
 
 def inject_game_into_response(func):
+	@wraps(func)
 	def wrap(*args, **kwargs):
 		response = func(*args, **kwargs)
 		if isinstance(response, dict):
@@ -43,6 +47,7 @@ def turn_by_turn_view(func):
 	Decorator for view that let user browse datas page by page.
 	Should be chained after @find_player_from_game_id.
 	"""
+	@wraps(func)
 	def wrap(request, game, player, turn=None, *args, **kwargs):
 		if turn is None:
 			turn = game.current_turn - 1
