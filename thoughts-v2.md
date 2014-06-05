@@ -68,9 +68,6 @@ Les dividendes de la dernière corpo n'ont pas de prix spécial.
 ## Wiretransfer
 Affiche une popup de validation "définitive"
 
-## Effet crash
-Une corporation qui crashe applique un effet spécial sur les autres corpos, plus puissant que les effets premiers derniers.
-
 ## Points de Victoire
 
 * Une spéculation n'est réussie que si misée à son niveau max
