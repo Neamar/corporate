@@ -32,9 +32,9 @@ Cible un marché et une corpo. La protection permet de diminuer la précision ma
 Toute run de précision supérieure est maxée par la valeur de protection.
 
 ### Information
-Coût de base 0, 50k¥ par palier de 10%, maximum 50%.
+Une run d'information sur une corporation coûte 50k¥. Elle a 100% de chances de réussite. Le joueur reçoit tous les effets de jeu qui ont affecté la corporation ce tour-ci et qui ne sont pas publics.
 
-Donne accès à N% des logs "globaux"<sup>(en discussion)</sup> (tout compris : main invisible, runs, vote, ...)
+Une run d'information sur un joueur coute 150k¥. Elle a 100% de chances de réussite. Vous recevez tous les ordres du joueur de ce tour qui ne sont pas publics. Vous recevez aussi tous les secrets de ce joueur.
 
 ## Spéculation
 Une seule spéculation par tour, de valeur max `200 * IC`.
