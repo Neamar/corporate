@@ -187,7 +187,7 @@ Le commanditaire choisit une **corpo bénéficiaire**, et lui attribue une Défe
 ## Spéculation
 Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
 
-Les joueurs qui veulent miser dans le grand casino de la bourse peuvent effectuer une **spéculation**. Le montant de cette spéculation ne peut dépasser `200 000 ny × (IC du spéculateur)`.
+Les joueurs qui veulent miser dans le grand casino de l'East Coast Stock Exchange peuvent effectuer une **spéculation**. Le montant de cette spéculation ne peut dépasser `200 000 ny × (IC du spéculateur)`.
 
 Dans sa spéculation, le joueur choisit une corporation et mise sur son classement en fin de tour.
 
@@ -218,21 +218,19 @@ Un produit dérivé est la somme des actifs d'un ensemble de corpos.
 
 
 ## Le Manhattan Development Consortium
-Le MDC (ou Manhattan Inc.) n'est pas exactement une corporation, mais la structure à travers laquelle des corpos se sont alliées pour coordonner la reconstruction, assurer l'extraterritorialité de Manhattan et partager sa gouvernance entre ses membres. Cet équivalent corporatiste d'un conseil municipal tente de maintenir un contrôle absolu sur presque toutes les activités de Manhattan.
+Le MDC (Manhattan Development Consortium) n'est pas exactement une corporation, mais la structure à travers laquelle des corpos se sont alliées pour coordonner la reconstruction, assurer l'extraterritorialité de Manhattan et partager sa gouvernance entre ses membres. Cet équivalent corporatiste d'un conseil municipal tente de maintenir un contrôle absolu sur presque toutes les activités de Manhattan.
 
 Les corpos membres ont changé plusieurs fois depuis la fin de la reconstruction. Aujourd'hui, elles sont dix, et ont chacune une voix lors des votes du consortium. Ces votes légifèrent sur tous les aspects de la vie et des affaires à Manhattan, des juteux contrats de la voirie, de la sécurité, du traitement des déchets ou du développement de la matrice aux lois de régulations des marchés qui ont le potentiel de bouleverser le cours des actions des corpos les plus stables. Les votes du MDC rythment la vie politique de Manhattan, et sont disputés par des coalitions fluctuantes qui ne reculent devant aucun coup bas pour rafler la mise.
 
-Chaque tour, les joueurs peuvent participer au cirque du MDC en rejoignant une **coalition** défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des **Contrats publics**, un projet de **Développement urbain**, des **Contrôles ciblés**, de nouvelles lois de **Transparence**, de **Gardes fous bancaires** ou de **Dérégulation**.
+Chaque tour, les joueurs peuvent participer au cirque du MDC en rejoignant une **coalition** défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des **Contrats publics**, une restrictions des **Opérations Clandestines** ou des **Consolidation**.
 
 Le joueur qui possède **le plus de parts** dans une corpo peut influencer ses décisions politiques : la corpo rejoint la même coalition que lui.
 
-> Les parts achetées ce tour-ci sont prises en compte.
 > En cas d'égalité sur le nombre de parts possédées, la corpo reste neutre. 
 
-La coalition à laquelle le plus de `(joueurs + corpos)` appartiennent domine le MDC pour ce tour, et est libre d'appliquer sa ligne politique. Voir pus bas pour les effets spécifiques.
+La coalition rejointe par le plus de `(joueurs + corpos)` domine le MDC pour ce tour, et est libre d'appliquer sa ligne politique détaillée plus bas.
 
 > En cas d'égalité, aucune coalition ne l'emporte.
-> Les gains et pertes d'actifs prennent effet le tour même, avant les effets premier/dernier. Tous les autres effets sont appliqués le tour suivant.
 
 ### Contrats publics
 De gros contrats d'entretien et de sécurité sont redistribués entre les corpos du MDC.
@@ -240,54 +238,30 @@ De gros contrats d'entretien et de sécurité sont redistribués entre les corpo
 Effets :
 
 * Les **corpos** appartenant à la coalition **Contrats publics** gagnent immédiatement **+1 actif**. 
-* Les **corpos** appartenant à la coalition **Développement urbain** subissent **-1 actif**.
+* Les **corpos** appartenant à la coalition **Consolidation** subissent **-1 actif**.
 
-### Développement urbain
-De grands travaux sont lancés par le MDC, redessinant la carte de Manhattan au profit de certaines corpos.
+### Opérations Clandestines
+De nouvelles lois sont votées, renforçant les contrôles militaires au détriment de certaines zones.
 
 Effets :
 
-* Les **corpos** appartenant à la coalition **Développement urbain** gagnent immédiatement **+1 actif**. 
-* Les **corpos** appartenant à la coalition **Contrats publics** subissent **-1 actif**.
+* Au prochain tour, les **joueurs** appartenant à la coalition **Opérations Clandestines** gagnent **+20%** sur chacune de leurs runs. Ce bonus peut permettre de dépasser les 100%, améliorant la vitesse de la run.
+* Au prochain tour, les **joueurs** appartenant à la coalition **Contrats publics** subissent un malus de **-20%**.
 
-### Contrôles ciblés
-De nouvelles lois sont votées, renforçant certains contrôles ciblés au détriment de certaines zones.
+### Consolidation
+Des opérations de presse et des réunions avec les citoyens permettent à certaines personnes de se faire connaître et apprécier du grand public.
 
 Effets : 
 
-* Au prochain tour, les runs de **Datasteal**, **Sabotage** et **Extraction** ciblant les **corpos** appartenant à la coalition **Contrôles ciblés** subissent un malus de **-20%**.
-* Les **joueurs** appartenant à la coalition **Transparence** ne pourront pas effectuer de runs de Protection au prochain tour.
-
-### Transparence
-L'ouverture de bases de données privées offre de nouvelles possibilités de runs pour ceux qui y ont accès.
-
-Effets : 
-
-* Au prochain tour, les **joueurs** appartenant à la coalition **Transparence** gagnent un bonus de **+20%** sur toutes leurs runs de **Datasteal**, **Sabotage**, **Extraction**. 
-* Les **joueurs** appartenant à la coalition **Contrôles ciblés** subissent **-20%** sur toutes leurs runs de **Datasteal**, **Sabotage** et **Extraction**.
-
-### Garde-fous bancaires
-Malgré les protestations de Wall Street, de nouvelles régulations pour l'ECSE entrent en action. Elles garantissent davantage de sécurité pour ceux en mesure d'en tirer profit, mais limitent les opérations de certains.
-
-Effets :
-
-* Au prochain tour, les **joueurs** appartenant à la coalition **Garde-fous bancaires** **gardent l'intégralité des mises** de leurs spéculations manquées.
-* Les **joueurs** appartenant à la coalition **Dérégulation** ne pourront pas effectuer de **spéculations**.
-
-### Dérégulation
-De nouvelles barrières sautent, repoussant encore les limites de l'avidité boursière mais en laissant certains à la traîne.
-
-Effets :
-
-* Au prochain tour, les spéculations des **joueurs** appartenant à la coalition **Dérégulation** voient les **côtes augmentées de 1** (1 pour 2 devient 1 pour 3, 1 pour 5 devient 1 pour 6...)
-* Les **joueurs** appartenant à la coalition **Garde-fous bancaires** ne pourront pas effectuer de **spéculations**.
+* Les **joueurs** appartenant à la coalition **Consolidation** gagnent **+3PV** pour la fin de partie.
+* Les **joueurs** appartenant à la coalition **Opérations Clandestines** subissent un malus de **-3PV** pour la fin de partie.
 
 Autrement dit, de grosses possibilités de coopération pour d'énormes opportunités de backstab.
 
-    Jack Finn a acheté 3 parts dans Horizon, ce qui est davantage que n'importe quel autre joueur. Lorsqu'au tour 4 il choisit de rejoindre la coalition Contrats Publics, la corpo est donc considérée comme membre de cette coalition pour le tour. 
-    Shiro Kuboka étant le seul a avoir investi dans les corpos Renraku et Sony, elles le suivent lorsqu'il opte pour la coalition Dévelopement Urbain.
-    Si aucun autre joueur n'intervient dans le MDC ce tour, la coalition Dévelopement Urbain a une valeur de 3 (1 joueur + 2 corpos), ce qui l'emporte sur la coalition Contrats Publics (1 joueur + 1 corpo = 2).
-    Le Developement Urbain voté au MDC rapporte 1 actif à  Renraku et Sony. Horizon, en opposition directe, est malmenée et perd 1 actif.
+    Jack Finn a acheté 3 parts dans Horizon, ce qui est davantage que n'importe quel autre joueur. Lorsqu'au tour 4 il choisit de rejoindre la coalition Consolidation, la corpo est donc considérée comme membre de cette coalition pour le tour.
+    Shiro Kuboka étant le seul a avoir investi dans les corpos Renraku et Sony, elles le suivent lorsqu'il opte pour la coalition Contrats Publics.
+    Si aucun autre joueur n'intervient dans le MDC ce tour, la coalition Contrats Publics a une valeur de 3 (1 joueur + 2 corpos), ce qui l'emporte sur la coalition Contrats Publics (1 joueur + 1 corpo = 2).
+    Les Contrats Publics votés au MDC rapportent 1 actif à  Renraku et Sony. Horizon, en opposition, est malmenée et perd 1 actif.
 
 ## Classement initial
 Au début du jeu, les corpos reçoivent respectivement 13, 12, 11, 11, 10, 10, 9, 9, 8 et 7 actifs, dans l'ordre décroissant du classement. Le classement initial est laissé au hasard à deux exceptions près :
