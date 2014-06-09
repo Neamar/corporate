@@ -91,34 +91,41 @@ Un **citoyen corpo** :
 
 * Gagne davantage de points de victoire si sa corpo est bien placée dans le classement à la fin de la partie ([cf. Fin du jeu](endgame.md#points-de-citoyen)).
 * Paie les parts de sa corpo au prix usuel de `100 000 ny × actifs` même si elle est en tête du classement (au lieu de `125 000 ny × actifs`).
-* Bénéficie de la protection de sa corpo contre ceux qui voudraient en apprendre plus sur ses actions ([cf. Information](rules.md#information)).
-* Reçoit les informations détectées par sa corpo dans son message de résolution.
 
-Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au tour en cours, soit -6 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste ([cf. Mise en place](start.md#citoyennete-corpo)).
+Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au double du tour en cours, soit -12 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste ([cf. Mise en place](start.md#citoyennete-corpo)).
+
+A la fin de la partie, si un joueur n'a pas de nationalité corpo, il perd 6 points de victoire.
 
 Si la corpo dont le joueur est citoyen Crashe, il en perd la citoyenneté et pourra s'il le souhaite en réclamer une nouvelle au tour suivant. Il subit normalement le malus de points de victoire.
 
 ## Runs
 Les requins corpos ont tendance à ne pas jouer selon les règles. Pour manipuler le marché et gagner un avantage sur la concurrence, ils n'hésitent pas à engager des agents indépendants, appelés shadowrunners, pour effectuer toutes sortes d'opérations clandestines, ou shadowruns. **Runs**, pour les intimes.
 
-Il existe 5 type de runs : **Datasteal**, **Sabotage**, **Extraction**, **Information** et **Protection**. Elles ont chacune des résultats spécifiques et une chance de réussite de base en pourcentage (%): par exemple, 30% pour les runs de Sabotage. Le joueur **commanditaire** peut augmenter les chances de réussite de sa run à raison de 50 000 ny pour 10% supplémentaires. Un joueur qui investit 150 000 ny dans une run de Sabotage aura donc 60% de chance de la voir réussir (`30% de base + 3 × 10%`).
+Il existe 5 type de runs : **Datasteal**, **Sabotage**, **Extraction**, **Information** et **Protection**. Elles ont chacune des résultats spécifiques, coûtent 350 000 ny et ont 50% de chances de réussir. Le joueur **commanditaire** peut augmenter les chances de réussite de sa run à raison de 50 000 ny pour 10% supplémentaires. Un joueur qui investit 400 000 ny dans une run de Sabotage aura donc 60% de chance de la voir réussir (`50% de base + 1 × 10%`).
 
-Pour lancer une run, un joueur doit investir un minimum de 50 000 ny, soit +10%.
+Le pourcentage de chances maximum qu'une run peut atteindre est de 90%. Ce chiffre peut être baissé par les runs de protection.
 
-Pour chaque point d'IC qu'il possède, un joueur peut gratuitement ajouter +30% à une run par tour. Un joueur possédant une IC de 3 pourra donc ajouter +30% à 3 runs par tour. Ces bonus ne peuvent pas être cumulés sur une même run.
+Pour chaque point d'IC qu'il possède, un joueur peut réduire le coût de base d'une run à 50 000 ny (au lieu de 350 000 ny).
 
-Une run a un maximum de 90% de chances de réussir, mais il est possible de payer un pourcentage supérieur pour contrebalancer des malus. ([cf. Malus de timing](rules.md#malus-de-timing)) et ([cf. Contrôles ciblés](rules.md#controles-cibles)).
+Les runs sont résolues par % de réussite décroissants. Donc une run qui a 70% de chances de réussir passera toujours avant une run qui a 60% de chances de réussir.
 
-Si une run autre que Protection échoue ou est contrée (voir ci-dessous), son commanditaire récupère la moitié des nuyens investis.
+Un run cible un marché au sein d'une corpo. Une seule run de chaque type peut passer par cible. 
+
+Exemple :
+Jules, Mathieu et BOM cherchent à lancer une extraction sur le marché 'Militaire' de Renraku.
+-Jules lance une run à 70% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base + 100 000 ny d'améliorations)
+-Mathieu lance une run à 60% de chances de réussite sans son bonus d'IC qu'il a utilisé pour une autre run (350 000 ny de base + 50 000 ny d'amélioration)
+-BOM lance une run à 50% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base)
+
+
 
 ### Défense
-Les corporations n'apprécient pas particulièrement d'être la cible de runs, et investissent des sommes colossales dans leur sécurité. Chaque corpo possède un indice de **Défense** qui lui est propre en Datasteal, Sabotage et Extraction. La Défense en Datasteal est également utilisée pour contrer les runs d'Information (voir plus bas).
+Les corporations n'apprécient pas particulièrement d'être la cible de runs, et investissent des sommes colossales dans leur sécurité. Vous pouvez lancer une run de protection sur un marché d'une corporation pour réduire le pourcentage de chances que les runs passent. Son coût de base est de 350 000 ny comme les autres run et plus vous payez, plus le pourcentage de chances maximum que les runs réussissent est diminué.
 
-> Par exemple, la corpo Renraku a une Défense de 20 en Datasteal, de 10 en Sabotage et de 20 en Extraction.
+| Coût Protection                      |  50k¥ | 100k¥ | 150k¥ | 200k¥ |
+|--------------------------------------|-------|-------|-------|-------|
+| Valeur maximale des runs attaquantes |  80%  |  70%  |  60%  |  50%  |
 
-L'indice de Défense représente le pourcentage de chances qu'une run du même nom soit contrée par la sécurité de la corpo.
-
-> Renraku a donc 20% de chance de contrer toute run d'Extraction qui la cible.
 
 ### Détection
 En plus de leurs indices de Défense, les corpos possèdent un indice de **Détection** (30 pour Renraku). Ce nombre correspond au pourcentage de chances que la corpo détecte les runs qui la ciblent. Une run détectée est déclarée dans le message de résolution de tous les citoyens de la corpo ciblée avec tous les détails ; bénéficiaire, commanditaire et chances de réussite inclus.
