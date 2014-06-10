@@ -143,6 +143,7 @@ Vous pouvez lancer une run de protection sur un marché d'une corporation pour r
 |--------------------------------------|-------|-------|-------|-------|
 | Valeur maximale des runs attaquantes |  80%  |  70%  |  60%  |  50%  |
 
+> Vous pouvez utiliser la réduction du prix de base de la run à 50 000 ny avec l'IC comme pour les autres runs. Si vous avez 1 d'IC, vous pouvez avoir la réduction sur un sabotage, un datasteal, une extraction ou une protection. Vous n'aurez pas deux réductions.
 
 #### Information
 
