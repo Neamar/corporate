@@ -106,8 +106,8 @@ Les requins corpos ont tendance à ne pas jouer selon les règles. Pour manipule
 
 Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, le marché de la corpo bénéficiaire gagne **+1 actif** grâce aux précieuses informations dérobées à la concurrence. 
 
--Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
--Vous ne pouvez pas lancer cette run si la corpo bénéficiaire avez plus d'actif dans le marché que la corpo cible. 
+*Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
+*Vous ne pouvez pas lancer cette run si la corpo bénéficiaire avez plus d'actif dans le marché que la corpo cible. 
 > Vous pouvez lancer la run si les deux corporations ont le même nombre d'actifs.
 
 #### Sabotage
@@ -117,15 +117,15 @@ Le commanditaire choisit **un marché** d'une **corpo cible**, et tente de sabot
 
 #### Extraction
 
-Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui subit **-1 actif** sur le marché, et rejoint la corpo bénéficiaire, lui faisant gagner **+1 actif** sur le marché.
+Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui subit **-1 actif** sur ce marché, et rejoint la corpo bénéficiaire, lui faisant gagner **+1 actif** sur ce marché.
 
--Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
--Vous ne pouvez pas lancer cette run si la corpo bénéficiaire avez plus d'actif dans le marché que la corpo cible. 
+*Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
+*Vous ne pouvez pas lancer cette run si la corpo bénéficiaire avez plus d'actif dans le marché que la corpo cible. 
 > Vous pouvez lancer la run si les deux corporations ont le même nombre d'actifs.
 
 ###Coût d'une run
 
-Chaque run coûte 350 000 ny et ont 50% de chances de réussir. Le joueur **commanditaire** peut augmenter la **précision** (les chances de réussite de sa run) à raison de 50 000 ny par tranche de 10% supplémentaires.  
+Chaque run coûte 350 000 ny et a 50% de chances de réussir. Le joueur **commanditaire** peut augmenter la **précision** (les chances de réussite de sa run) à raison de 50 000 ny par tranche de 10% supplémentaires.  
 
 > Un joueur qui investit 450 000 ny dans une run de Sabotage aura donc 70% de chance de la voir réussir (`50% de base + 2 × 10%`)
 Attention, on ne peux pas payer plus de 250 000 ny pour augmenter la précision de sa run (et donc atteindre les 100%).
