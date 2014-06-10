@@ -101,102 +101,83 @@ Si la corpo dont le joueur est citoyen Crashe, il en perd la citoyenneté et pou
 ## Runs
 Les requins corpos ont tendance à ne pas jouer selon les règles. Pour manipuler le marché et gagner un avantage sur la concurrence, ils n'hésitent pas à engager des agents indépendants, appelés shadowrunners, pour effectuer toutes sortes d'opérations clandestines, ou shadowruns. **Runs**, pour les intimes.
 
-Il existe 5 type de runs : **Datasteal**, **Sabotage**, **Extraction**, **Information** et **Protection**. Elles ont chacune des résultats spécifiques, coûtent 350 000 ny et ont 50% de chances de réussir. Le joueur **commanditaire** peut augmenter les chances de réussite de sa run à raison de 50 000 ny pour 10% supplémentaires. Un joueur qui investit 400 000 ny dans une run de Sabotage aura donc 60% de chance de la voir réussir (`50% de base + 1 × 10%`).
+### Les runs classiques
+#### Datasteal
 
-Le pourcentage de chances maximum qu'une run peut atteindre est de 90%. Ce chiffre peut être baissé par les runs de protection.
+Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, le marché de la corpo bénéficiaire gagne **+1 actif** grâce aux précieuses informations dérobées à la concurrence. 
 
-Pour chaque point d'IC qu'il possède, un joueur peut réduire le coût de base d'une run à 50 000 ny (au lieu de 350 000 ny).
+-Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
+-Vous ne pouvez pas lancer cette run si la corpo bénéficiaire avez plus d'actif dans le marché que la corpo cible. 
+> Vous pouvez lancer la run si les deux corporations ont le même nombre d'actifs.
 
-Les runs sont résolues par % de réussite décroissants. Donc une run qui a 70% de chances de réussir passera toujours avant une run qui a 60% de chances de réussir.
+#### Sabotage
 
-Un run cible un marché au sein d'une corpo. Une seule run de chaque type peut passer par cible. 
-
-Exemple :
-Jules, Mathieu et BOM cherchent à lancer une extraction sur le marché 'Militaire' de Renraku.
--Jules lance une run à 70% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base + 100 000 ny d'améliorations)
--Mathieu lance une run à 60% de chances de réussite sans son bonus d'IC qu'il a utilisé pour une autre run (350 000 ny de base + 50 000 ny d'amélioration)
--BOM lance une run à 50% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base)
+Le commanditaire choisit **un marché** d'une **corpo cible**, et tente de saboter une de ses opérations. En cas de réussite, le marché de la corpo cible subit **-2 actifs**.
 
 
+#### Extraction
 
-### Défense
-Les corporations n'apprécient pas particulièrement d'être la cible de runs, et investissent des sommes colossales dans leur sécurité. Vous pouvez lancer une run de protection sur un marché d'une corporation pour réduire le pourcentage de chances que les runs passent. Son coût de base est de 350 000 ny comme les autres run et plus vous payez, plus le pourcentage de chances maximum que les runs réussissent est diminué.
+Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui subit **-1 actif** sur le marché, et rejoint la corpo bénéficiaire, lui faisant gagner **+1 actif** sur le marché.
 
-| Coût Protection                      |  50k¥ | 100k¥ | 150k¥ | 200k¥ |
+-Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
+-Vous ne pouvez pas lancer cette run si la corpo bénéficiaire avez plus d'actif dans le marché que la corpo cible. 
+> Vous pouvez lancer la run si les deux corporations ont le même nombre d'actifs.
+
+###Coût d'une run
+
+Chaque run coûte 350 000 ny et ont 50% de chances de réussir. Le joueur **commanditaire** peut augmenter la **précision** (les chances de réussite de sa run) à raison de 50 000 ny par tranche de 10% supplémentaires.  
+
+> Un joueur qui investit 450 000 ny dans une run de Sabotage aura donc 70% de chance de la voir réussir (`50% de base + 2 × 10%`)
+Attention, on ne peux pas payer plus de 250 000 ny pour augmenter la précision de sa run (et donc atteindre les 100%).
+
+Pour chaque point d'IC qu'il possède, un joueur peut réduire le coût de base d'une run à 50 000 ny (au lieu de 350 000 ny). Il paye normalement les bonus de précision apportés à sa run
+
+###les runs spéciales
+#### Protection
+
+Les corporations n'apprécient pas particulièrement d'être la cible de runs, et investissent des sommes colossales dans leur sécurité. 
+Vous pouvez lancer une run de protection sur un marché d'une corporation pour réduire la précision maximale des runs qui le cible. Son coût de base est de 350 000 ny comme les autres run et plus vous payez, plus la précision maximum baisse :
+
+
+| Coût amélioration de la protection   |  0k¥  |  50k¥ | 100k¥ | 150k¥ |
 |--------------------------------------|-------|-------|-------|-------|
 | Valeur maximale des runs attaquantes |  80%  |  70%  |  60%  |  50%  |
 
 
-### Détection
-En plus de leurs indices de Défense, les corpos possèdent un indice de **Détection** (30 pour Renraku). Ce nombre correspond au pourcentage de chances que la corpo détecte les runs qui la ciblent. Une run détectée est déclarée dans le message de résolution de tous les citoyens de la corpo ciblée avec tous les détails ; bénéficiaire, commanditaire et chances de réussite inclus.
-
-Une run détectée sera également mentionnée dans les Newsfeeds de fin de tour, mais sans davantage d'information que la corpo ciblée.
-
-> Les runs de Protection ne sont jamais détectées.
-> Les runs de Sabotage réussies sont particulièrement voyantes, et apparaissent dans les Newsfeeds même si elles n'ont pas été détectées.
-> Même détectées, les runs d'Information ne font pas de vagues et ne sont pas révélées dans les Newsfeeds.
-
-### Malus de timing
-Lorsque plusieurs équipes de shadowrunners sont engagées pour des runs similaires, elles risquent d'entrer en concurrence et de se marcher sur les pieds.
-
-Une run subit un malus de **-10%** pour chaque autre run qui **correspond aux 3 critères** suivants :
-
-* Est du **même type** (Datasteal, Sabotage, Extraction ou Information).
-* A la **même cible**, joueur ou corpo.
-* A un **pourcentage de réussite supérieur ou égal** au sien (avant que les malus de timing ne soient appliqués).
-
-> Les runs de Protection n'entrent pas en concurrence.
-
-    2 runs de Sabotage (même type) sont lancées contre Renraku (même cible) le même tour.
-    Si elles ont toutes les deux 70% de chance de réussite, chacune fait subir à l'autre un malus de timing de -10%.
-    En revanche, si la première a 80% de chance de réussite et la seconde 70%, seule la seconde subit un malus.
-
-
-### Les types de runs
-#### Datasteal
-* Base : 30 %
-
-Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, la corpo bénéficiaire gagne **+1 actif** grâce aux précieuses informations dérobées à la concurrence.
-
-#### Sabotage
-* Base : 30 %
-
-Le commanditaire choisit une **corpo cible**, et tente de saboter une de ses opérations. En cas de réussite, la corpo subit **-2 actifs**.
-
-> Qu'elles aient été détectées ou non, les runs de Sabotage réussies sont révélées dans les Newsfeeds.
-
-#### Extraction
-* Base : 10 %
-
-Le commanditaire choisit une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui subit **-1 actif**, et rejoint la corpo bénéficiaire, lui faisant gagner **+1 actif**.
-
 #### Information
-* Base : 60 %
 
-Le commanditaire choisit un **joueur cible**. En cas de réussite, une enquête approfondie lui fournit tous les **messages de résolution** du joueur ciblé depuis le début de la partie (à l'exception des éventuels résultats de runs d'Information), ainsi que ses **Secrets** ([cf. Secrets](start.md#secrets)).
+Le commanditaire choisit des **joueurs cible** et des **corpo cible**
 
-> La Défense de Datasteal de la corpo dont la cible est citoyen est utilisée pour contrer les runs d'Information.
-> Même détectées, les runs d'Information n'apparaissent pas dans les Newsfeeds.
+Vous receverez un message contenant toutes les action faites par les joueurs cible ce tour-ci ainsi que leurs  **Secrets** ([cf. Secrets](start.md#secrets)).
+Vous recevez un détail de toutes les actions réussies et échouées sur les corpo cible.
 
-#### Protection
-* Base Datasteal : 40 %
-* Base Sabotage : 0 %
-* Base Extraction : 10 %
+Cette run d'information a un coût particulier :
+* 150 000 ny par joueur selectionné
+* 50 000 ny par joueur selectionné
 
-Le commanditaire choisit une **corpo bénéficiaire**, et lui attribue une Défense supplémentaire en Datasteal, Sabotage ou Extraction. Cette seconde Défense s'applique en complément de celle de la corpo (elles ne s'additionnent pas, elles s'enchaînent), et ne peut pas dépasser 50%. Il est possible de lancer plusieurs Protections similaires sur une même corpo.
+###Résolution
 
-    Jack Finn, un requin sans scrupule, désire effectuer une Extraction contre Renraku, la corpo de son rival Shiro Kuboka, afin de booster les actifs d'Horizon dans laquelle il a largement investi.
+Le pourcentage de chances maximum qu'une run peut atteindre est de 90%. Ce chiffre peut être baissé par les runs de protection.
+> Une run d'extraction qui a 100% de chances de réussite n'aura donc que 90% en réalité. Une run qui a 70% aura 70% en réalité.
 
-    Il paye 250 000 ny pour ajouter 50% de chance de réussite à sa run, et utilise un de ses bonus d'IC pour 30% supplémentaire. Sa run a donc 90% de chance de réussite (10% de base + 50% de ny + 30% de bonus d'IC).
+Les runs sont résolues par % de réussite décroissants. Une seule run de chaque type peut être réussie par cible.
 
-    Shiro Kuboka, devinant la manoeuvre, paye 50 000 ny pour organiser une Protection en Extraction en faveur de Renraku. Il ajoute un de ses propres bonus d'IC pour atteindre 50%, (10% de base + 10% de ny + 30% d'IC ; 50 % étant le maximum pour une Protection).
+> Donc une run qui a 70% de chances de réussir passera toujours avant une run qui a 60% de chances de réussir. Si la première run passe, la seconde écoute automatiquement.
 
-    Test de réussite de l'Extraction, 90% : réussite
-    Test de Défense de Renraku contre les Extractions, 20% : échec
-    Test de la Protection de Shiro Kuboka, 50% : échec
-    Test de Détection, 30% : réussite
 
-    Un scientifique de renom est arraché à son laboratoire. Renraku perd 1 actif, Horizon en gagne 1. La run a cependant été détectée, et tout Manhattan est au courant qu'elle a eu lieu, sans savoir que Jack Finn est son commanditaire ou qu'Horizon en a bénéficié. Shiro Kuboka, en revanche, est citoyen de Renraku, et apprend donc l'ensemble de la vérité. Maudissant l'incompétence de ses employés, il rassemble ses fonds pour un Sabotage bien senti contre Horizon...
+> **Exemple** :
+> Jules, Mathieu et BOM cherchent à lancer une extraction qui a pour cible le marché 'Militaire' de Renraku. Yoann, qui a des parts dans cette corpo, les a vu venir et lance une run de protection pour les en empecher.
+> * Mathieu lance une run avec Horizon en bénéficiaire à 60% de chances de réussite sans son bonus d'IC qu'il a utilisé pour une autre run (350 000 ny de base + 50 000 ny d'amélioration)
+> * Jules lance une run avec Ares en bénéficiaire à 70% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base + 100 000 ny d'améliorations)
+> * BOM lance une run avec Ares en bénéficiaire à 50% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base)
+> * Yoann lance une run de protection à 50% de chances de réussite maximum sur le marché 'Militaire' de Renraku sans son bonus d'IC. (350 000 ny de base + 150 000 ny d'améliorations)
+
+> La run de Jules s'éxecute en premier puisqu'elle a plus de précision. La run de protection de Yoann s'applique, la run de Jules a donc 50% de chances de réussite. La chance n'est pas avec lui et la run échoue. La run de Mathieu s'exécute alors (avec 50% de chances puis la run de protection est active tout le tour) et la chance est avec lui puisque la run est un succès. La branche Militaire de Renraku perd un actif et la branche 'Militaire' de Horizon gagne un actif. BOM arrive en dernier mais comme un run d'extraction a déjà eu lieu sur cette cible, sa run échoue automatiquement.
+
+
+
+
+
 
 ## Spéculation
 Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
@@ -214,21 +195,12 @@ Si sa spéculation est juste, il fait un bénéfice d'une côte de :
 
 > Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la corpo étant le plus loin dans le négatif est considéré dernière.
 
-### Produits dérivés
-Un produit dérivé est la somme des actifs d'un ensemble de corpos. 
 
-* Le **Nikkei** (indice de Bourse de Neo Tokyo) est la somme des actifs des corpos Sony, Shiawase et Renraku
-* Le **Dow Jones** est la somme des actifs d'Ares, Neonet, Spinrad et Prometheus.
-
-> Si une corporation crashe dans un produit dérivé, elle n'est pas remplacée.
-
-    Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il effectue deux spéculations :
+    Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il peut miser jusqu'à 400 000 :
     
-    * 200 000 ny sur une chute du Nikkei. Après tout, il a un sabotage prévu sur Renraku...
-    * 100 000 ny sur la position d'Horizon, dont il pense qu'elle sera 2ème à la fin du trimestre.
+    * il mise 100 000 ny sur la position d'Horizon, dont il pense qu'elle sera 2ème à la fin du trimestre.
 
-    Son sabotage échoue, et la Bourse de Néo Tokyo croît de 2 actifs ce trimestre. Il ne reverra pas ses 200 000 ny.
-    Horizon, malgré une Extraction vicieuse, finit en seconde position. Il garde ses 100 000 ny et en touche 400 000 de plus qui le font largement rentrer dans ses frais.
+    Horizon, malgré une Extraction vicieuse, finit en seconde position. Il garde ses 100 000 ny et en touche 400 000 de plus qui le font largement rentrer dans ses frais. Si Horizon avait finit 3eme, il aurait perdu ses 100 000ny.
 
 
 ## Le Manhattan Development Consortium
