@@ -32,7 +32,7 @@ Les joueurs commencent la partie avec 1 point d'**Influence corporatiste**, ou *
 
 Pour leur permettre de démarrer, chaque joueur reçoit au début du jeu 2 millions de **nuyens (ny)**, la monnaie globale du 6<sup>ème</sup> Monde.
 
-La partie se joue en 8 **tours**, chaque tour correspondant à un trimestre. À la fin du jeu, chaque joueur compte ses **points de victoire**, et celui qui en possède le plus est déclaré vainqueur. ([cf. Fin du jeu](endgame.md))
+La partie se joue en 7 **tours**, chaque tour correspondant à un trimestre. À la fin du jeu, chaque joueur compte ses **points de victoire**, et celui qui en possède le plus est déclaré vainqueur. ([cf. Fin du jeu](endgame.md))
 
 ## Structure d'un tour
 Chacune des étapes suivantes sera expliquée en détails.
