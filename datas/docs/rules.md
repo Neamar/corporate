@@ -94,7 +94,7 @@ Un **citoyen corpo** :
 
 Changer de nationalité corpo coûte au joueur un nombre de points de victoire égal au double du tour en cours, soit -12 s'il change de nationalité au tour 6. Il est possible de commencer la partie avec une nationalité corporatiste ([cf. Mise en place](start.md#citoyennete-corpo)).
 
-A la fin de la partie, si un joueur n'a pas de nationalité corpo, il perd 6 points de victoire.
+À la fin de la partie, si un joueur n'a pas de nationalité corpo, il perd 6 points de victoire.
 
 Si la corpo dont le joueur est citoyen Crashe, il en perd la citoyenneté et pourra s'il le souhaite en réclamer une nouvelle au tour suivant. Il subit normalement le malus de points de victoire.
 
@@ -106,9 +106,8 @@ Les requins corpos ont tendance à ne pas jouer selon les règles. Pour manipule
 
 Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, le marché de la corpo bénéficiaire gagne **+1 actif** grâce aux précieuses informations dérobées à la concurrence. 
 
-*Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
-*Vous ne pouvez pas lancer cette run si la corpo bénéficiaire avez plus d'actif dans le marché que la corpo cible. 
-> Vous pouvez lancer la run si les deux corporations ont le même nombre d'actifs.
+* Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
+* Vous ne pouvez pas lancer cette run si la corpo bénéficiaire possède plus d'actif dans le marché que la corpo cible
 
 #### Sabotage
 
@@ -119,27 +118,25 @@ Le commanditaire choisit **un marché** d'une **corpo cible**, et tente de sabot
 
 Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui subit **-1 actif** sur ce marché, et rejoint la corpo bénéficiaire, lui faisant gagner **+1 actif** sur ce marché.
 
-*Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
-*Vous ne pouvez pas lancer cette run si la corpo bénéficiaire avez plus d'actif dans le marché que la corpo cible. 
-> Vous pouvez lancer la run si les deux corporations ont le même nombre d'actifs.
+* Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
+* Vous ne pouvez pas lancer cette run si la corpo bénéficiaire possède plus d'actif dans le marché que la corpo cible. 
 
-###Coût d'une run
+### Coût d'une run
 
 Chaque run coûte 350 000 ny et a 50% de chances de réussir. Le joueur **commanditaire** peut augmenter la **précision** (les chances de réussite de sa run) à raison de 50 000 ny par tranche de 10% supplémentaires.  
 
 > Un joueur qui investit 450 000 ny dans une run de Sabotage aura donc 70% de chance de la voir réussir (`50% de base + 2 × 10%`)
-Attention, on ne peux pas payer plus de 250 000 ny pour augmenter la précision de sa run (et donc atteindre les 100%).
+Attention, on ne peut pas payer plus de 250 000 ny pour augmenter la précision de sa run (et donc dépasser les 100%).
 
-Pour chaque point d'IC qu'il possède, un joueur peut réduire le coût de base d'une run à 50 000 ny (au lieu de 350 000 ny). Il paye normalement les bonus de précision apportés à sa run
+Pour chaque point d'IC, un joueur peut réduire le coût de base d'une run à 50 000 ny (au lieu de 350 000 ny). Il paye normalement les bonus de précision apportés à sa run.
 
-###les runs spéciales
+### Les runs spéciales
 #### Protection
 
 Les corporations n'apprécient pas particulièrement d'être la cible de runs, et investissent des sommes colossales dans leur sécurité. 
-Vous pouvez lancer une run de protection sur un marché d'une corporation pour réduire la précision maximale des runs qui le cible. Son coût de base est de 350 000 ny comme les autres run et plus vous payez, plus la précision maximum baisse :
+Vous pouvez lancer une run de protection sur un marché d'une corporation pour réduire la précision maximale des runs qui le cible. Son coût de base est de 350 000 ny comme les autres run. La précision maximum des runs attaquantes sur ce marché baisse en fonction du coût payé :
 
-
-| Coût amélioration de la protection   |  0k¥  |  50k¥ | 100k¥ | 150k¥ |
+| Coût amélioration de la protection   | 350k¥ | 400k¥ | 450k¥ | 500k¥ |
 |--------------------------------------|-------|-------|-------|-------|
 | Valeur maximale des runs attaquantes |  80%  |  70%  |  60%  |  50%  |
 
@@ -149,35 +146,32 @@ Vous pouvez lancer une run de protection sur un marché d'une corporation pour r
 
 Le commanditaire choisit des **joueurs cible** et des **corpo cible**
 
-Vous receverez un message contenant toutes les action faites par les joueurs cible ce tour-ci ainsi que leurs  **Secrets** ([cf. Secrets](start.md#secrets)).
+Vous recevrez un message contenant toutes les actions faites par les joueurs cibles ce tour-ci ainsi que leurs  **Secrets** ([cf. Secrets](start.md#secrets)).
 Vous recevez un détail de toutes les actions réussies et échouées sur les corpo cible.
 
 Cette run d'information a un coût particulier :
 * 150 000 ny par joueur selectionné
 * 50 000 ny par joueur selectionné
 
-###Résolution
+### Résolution
 
 Le pourcentage de chances maximum qu'une run peut atteindre est de 90%. Ce chiffre peut être baissé par les runs de protection.
+
 > Une run d'extraction qui a 100% de chances de réussite n'aura donc que 90% en réalité. Une run qui a 70% aura 70% en réalité.
 
 Les runs sont résolues par % de réussite décroissants. Une seule run de chaque type peut être réussie par cible.
 
-> Donc une run qui a 70% de chances de réussir passera toujours avant une run qui a 60% de chances de réussir. Si la première run passe, la seconde écoute automatiquement.
+> Une run qui a 70% de chances de réussir passera toujours avant une run qui a 60% de chances de réussir. Si la première run passe, la seconde échoue automatiquement.
 
 
-> **Exemple** :
-> Jules, Mathieu et BOM cherchent à lancer une extraction qui a pour cible le marché 'Militaire' de Renraku. Yoann, qui a des parts dans cette corpo, les a vu venir et lance une run de protection pour les en empecher.
-> * Mathieu lance une run avec Horizon en bénéficiaire à 60% de chances de réussite sans son bonus d'IC qu'il a utilisé pour une autre run (350 000 ny de base + 50 000 ny d'amélioration)
-> * Jules lance une run avec Ares en bénéficiaire à 70% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base + 100 000 ny d'améliorations)
-> * BOM lance une run avec Ares en bénéficiaire à 50% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base)
-> * Yoann lance une run de protection à 50% de chances de réussite maximum sur le marché 'Militaire' de Renraku sans son bonus d'IC. (350 000 ny de base + 150 000 ny d'améliorations)
+    Jules, Matthieu et BOM cherchent à lancer une extraction qui a pour cible le marché Militaire de Renraku.
+    Yoann, qui a des parts dans cette corpo, les a vu venir et lance une run de Protection sur ce marché.
+    Matthieu lance une run en mettant Horizon comme bénéficiaire à 60% de chances de réussite sans son bonus d'IC qu'il a utilisé pour une autre run (350 000 ny de base + 50 000 ny d'amélioration)
+    Jules lance une run avec Ares en bénéficiaire avec 70% de chance de réussite avec son bonus d'IC (50 000 ny de coût de base + 100 000 ny d'améliorations)
+    BOM lance une run avec Ares en bénéficiaire avec 50% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base)
+    Yoann lance une run de protection à 50% de chances de réussite maximum sur le marché Militaire de Renraku sans son bonus d'IC. (350 000 ny de base + 150 000 ny d'améliorations)
 
-> La run de Jules s'éxecute en premier puisqu'elle a plus de précision. La run de protection de Yoann s'applique, la run de Jules a donc 50% de chances de réussite. La chance n'est pas avec lui et la run échoue. La run de Mathieu s'exécute alors (avec 50% de chances puis la run de protection est active tout le tour) et la chance est avec lui puisque la run est un succès. La branche Militaire de Renraku perd un actif et la branche 'Militaire' de Horizon gagne un actif. BOM arrive en dernier mais comme un run d'extraction a déjà eu lieu sur cette cible, sa run échoue automatiquement.
-
-
-
-
+    La run de Jules s'éxecute en premier puisqu'elle a plus de précision. La run de protection de Yoann s'applique, la run de Jules a donc 50% de chances de réussite. La chance n'est pas avec lui et la run échoue. La run de Matthieu s'exécute alors (avec 50% de chances puis la run de protection est active tout le tour) et la run est un succès. La branche Militaire de Renraku perd un actif et la branche Militaire de Horizon gagne un actif. BOM arrive en dernier. Une run d'extraction a déjà eu lieu sur cette cible, sa run échoue automatiquement.
 
 
 ## Spéculation
