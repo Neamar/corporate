@@ -245,7 +245,7 @@ Autrement dit, de grosses possibilités de coopération pour d'énormes opportun
     Les Contrats Publics votés au MDC rapportent 1 actif dans leurs marchés historiques à Renraku et Sony. Horizon, en opposition, est malmenée et perd 1 actif dans son marché historique.
 
 ## Classement initial
-Au début du jeu, les corpos reçoivent respectivement 13, 12, 11, 11, 10, 10, 9, 9, 8 et 7 actifs, dans l'ordre décroissant du classement. Le classement initial est laissé au hasard à deux exceptions près :
+Au début du jeu, les corpos reçoivent respectivement 12, 11, 11, 10, 10, 9, 9, 8, 8 et 7 actifs, dans l'ordre décroissant du classement. Le classement initial est laissé au hasard à deux exceptions près :
 
 * Ares fait partie des 3 premières corpos.
 * Spinrad et Prometheus ne peuvent pas recevoir un rang supérieur à 5 (soit un maximum de 10 actifs).
