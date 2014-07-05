@@ -177,9 +177,9 @@ Les runs sont résolues par % de réussite décroissants. Une seule run de chaqu
 ## Spéculation
 Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
 
-Les joueurs qui veulent miser dans le grand casino de l'East Coast Stock Exchange peuvent effectuer une **spéculation**. Le montant de cette spéculation ne peut dépasser `200 000 ny × (IC du spéculateur)`.
+Les joueurs qui veulent miser dans le grand casino de l'East Coast Stock Exchange peuvent effectuer autant de **spéculation** qu'ils veulent. Le montant de ces spéculation ne peut dépasser `200 000 ny × (IC du spéculateur)`.
 
-Dans sa spéculation, le joueur choisit une corporation et mise sur son classement en fin de tour.
+Dans chaque spéculation, le joueur choisit une corporation et mise sur son classement en fin de tour.
 
 Si le spéculateur se trompe, il perd la somme misée.
 
