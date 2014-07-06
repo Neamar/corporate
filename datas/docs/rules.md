@@ -113,7 +113,6 @@ Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bén
 
 Le commanditaire choisit **un marché** d'une **corpo cible**, et tente de saboter une de ses opérations. En cas de réussite, le marché de la corpo cible subit **-2 actifs**.
 
-
 #### Extraction
 
 Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui subit **-1 actif** sur ce marché, et rejoint la corpo bénéficiaire, lui faisant gagner **+1 actif** sur ce marché.
@@ -157,22 +156,20 @@ Cette run d'information a un coût particulier :
 
 Le pourcentage de chances maximum qu'une run peut atteindre est de 90%. Ce chiffre peut être baissé par les runs de protection.
 
-> Une run d'extraction qui a 100% de chances de réussite n'aura donc que 90% en réalité. Une run qui a 70% aura 70% en réalité.
+> Une run d'extraction qui a 100% de chances de réussite sera donc maxée à 90%.
 
-Les runs sont résolues par % de réussite décroissants. Une seule run de chaque type peut être réussie par cible.
+Les runs sont résolues par % de réussite décroissants. Une seule run de chaque type peut être réussie par cible et par marché.
 
 > Une run qui a 70% de chances de réussir passera toujours avant une run qui a 60% de chances de réussir. Si la première run passe, la seconde échoue automatiquement.
 
-
-    Jules, Matthieu et BOM cherchent à lancer une extraction qui a pour cible le marché Militaire de Renraku.
+    Jules, Matthieu et Bom cherchent à lancer une extraction qui a pour cible le marché Militaire de Renraku.
     Yoann, qui a des parts dans cette corpo, les a vu venir et lance une run de Protection sur ce marché.
     Matthieu lance une run en mettant Horizon comme bénéficiaire à 60% de chances de réussite sans son bonus d'IC qu'il a utilisé pour une autre run (350 000 ny de base + 50 000 ny d'amélioration)
     Jules lance une run avec Ares en bénéficiaire avec 70% de chance de réussite avec son bonus d'IC (50 000 ny de coût de base + 100 000 ny d'améliorations)
-    BOM lance une run avec Ares en bénéficiaire avec 50% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base)
+    Bom lance une run avec Ares en bénéficiaire avec 50% de chances de réussite avec son bonus d'IC (50 000 ny de coût de base)
     Yoann lance une run de protection à 50% de chances de réussite maximum sur le marché Militaire de Renraku sans son bonus d'IC. (350 000 ny de base + 150 000 ny d'améliorations)
 
-    La run de Jules s'éxecute en premier puisqu'elle a plus de précision. La run de protection de Yoann s'applique, la run de Jules a donc 50% de chances de réussite. La chance n'est pas avec lui et la run échoue. La run de Matthieu s'exécute alors (avec 50% de chances puis la run de protection est active tout le tour) et la run est un succès. La branche Militaire de Renraku perd un actif et la branche Militaire de Horizon gagne un actif. BOM arrive en dernier. Une run d'extraction a déjà eu lieu sur cette cible, sa run échoue automatiquement.
-
+    La run de Jules s'éxecute en premier puisqu'elle a plus de précision. La run de protection de Yoann s'applique, la run de Jules a donc 50% de chances de réussite. La chance n'est pas avec lui et la run échoue. La run de Matthieu s'exécute alors (avec 50% de chances puis la run de protection est active tout le tour) et la run est un succès. La branche Militaire de Renraku perd un actif et la branche Militaire de Horizon gagne un actif. Bom arrive en dernier. Une run d'extraction a déjà eu lieu sur cette cible, sa run échoue automatiquement.
 
 ## Spéculation
 Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
