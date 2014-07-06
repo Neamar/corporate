@@ -21,9 +21,9 @@ Une fois le classement final révélé :
 Ces nuyens sont comptés après les spéculations, mais avant les dividendes. 
 
 ## Points de citoyen
-* À la fin de la partie, si vous avez une nationalité corporatiste, gagnez `+20 - 2 x (rang de la corpo dont vous êtes citoyen) PVs`, soit 8 PVs si votre corpo a fini rang 6 (20 -12).  Si vous n'avez pas de citoyenneté corporatiste, perdez 6 PVs à la place
-* `- 2 x(tour du changement) PVs` si vous avez changé de citoyenneté corpo en cours de jeu, soit -6 si vous avez changé de nationalité au tour 3.
-* `-6 PVs` pour chaque autre joueur citoyen de la même corpo que vous à la fin du 8<sup>ème</sup> tour.
+* À la fin de la partie, si vous avez une nationalité corporatiste, gagnez `+20 - 2 × (rang de la corpo dont vous êtes citoyen) PVs`, soit 8 PVs si votre corpo a fini rang 6 (20 -12).  Si vous n'avez pas de citoyenneté corporatiste, perdez 6 PVs à la place
+* `- 2 × (tour du changement) PVs` si vous avez changé de citoyenneté corpo en cours de jeu, soit -6 si vous avez changé de nationalité au tour 3.
+* `-6 PVs` pour chaque autre joueur citoyen de la même corpo que vous à la fin du 7<sup>ème</sup> tour.
 
 ## Points de titres
 Si plus d'un joueur se disputent un même titre, les points associés sont divisés entre eux (arrondi à l'entier inférieur).
@@ -62,7 +62,7 @@ Le joueur ayant réussi le plus grand nombre de spéculations. Il n'y a que les 
 
 ### Le Maître espion
 * +5 PVs
-Le joueur ayant réussi dépensé le plus d'argent dans nombre de runs d'Information. (ne compte pas pour la partie test)
+Le joueur ayant dépensé le plus d'argent dans des runs d'Information. (ne compte pas pour la partie test)
 
 ### Le Casseur de code
 * +5 PVs

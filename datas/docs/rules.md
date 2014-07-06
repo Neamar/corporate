@@ -7,9 +7,9 @@ Vous incarnez un cadre corporatiste décidé à se tailler un empire dans une de
 ## Concepts de base
 Les **corporations, ou "corpos"**, sont au coeur du jeu. De gigantesques multinationales qui ont supplanté le pouvoir des nations et fait main basse sur l'économie planétaire. Elles sont innombrables, mais le Corporate Game ne tient compte que des dix plus grosses s'étant implantées à Manhattan.
 
-La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui évoluera en fonction des actions des joueurs et des caprices de la bourse.
+La taille de ces dix corpos est représentée par leur nombre d'**actifs**, qui évoluera en fonction des actions des joueurs et des caprices de la bourse. Plus une corpo possède d'actifs, plus elle engrange de bénéfices.
 
-Plus une corpo possède d'actifs, plus elle engrange de bénéfices. Au début de la partie, les actifs des 10 corpos sont tirés au hasard (entre 7 et 12). ([cf. Classement initial](rules.md#classement-initial))
+Au début de la partie, les actifs des 10 corpos sont tirés au hasard (entre 7 et 12). ([cf. Classement initial](rules.md#classement-initial))
 
 Le **classement** trie les corpos par nombre d'actifs et leur attribue un rang de 1 à 10, 1 correspondant à la corpo possédant le plus d'actifs, celle qui domine le marché.
 
@@ -26,7 +26,7 @@ Ces marchés sont définis au début de la partie. Une corporation ne pourra don
 Chaque corporation a un **marché historique**, qui est ciblé par certains effets de jeu.
 Au total, il existe 10 marchés différents répartis entre les corporations. Chacune possède un marché historique différent.
 
-Si une corporation a plus d'actifs que toutes les autres sur un marché, elle **domine** ce marché et gagne un actif. Attention cependant, cet actif est perdu dès l'instant où la corporation ne domine plus le marché. En cas d'égalité, aucune corpo ne domine.
+Si une corporation a plus d'actifs que toutes les autres sur un marché, elle **domine** ce marché et gagne un actif. Attention cependant, cet actif est perdu dès la fin du tour où la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine.
 
 Les joueurs commencent la partie avec 1 point d'**Influence corporatiste**, ou **"IC"**. Cette caractéristique représente l'étendue de leur pouvoir et de leurs réseaux dans l'île de Manhattan et sert de limite à certaines de leurs actions. Elle pourra être augmentée en cours de partie.
 
@@ -69,7 +69,7 @@ En tant qu'acteur majeur du marché, chaque joueur a droit à un **Vote** par to
 Le reste des aléas de la bourse de Manhattan est laissé à la chance. À chaque tour :
 
 * Une corpo au hasard gagne 1 actif sur son marché historique.
-* Une corpo au hasard perd 1 actif sur son marché historique. Le marché ne peut pas tomber en dessous de 0.
+* Une corpo au hasard perd 1 actif sur son marché historique sans pouvoir descendre en dessous de 0.
 
 ### Effet premier / effet dernier
 Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tous les autres modificateurs, et viennent chambouler les actifs des corpos en s'appliquant sur leurs marchés historiques.
@@ -107,7 +107,7 @@ Les requins corpos ont tendance à ne pas jouer selon les règles. Pour manipule
 Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, le marché de la corpo bénéficiaire gagne **+1 actif** grâce aux précieuses informations dérobées à la concurrence. 
 
 * Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
-* Vous ne pouvez pas lancer cette run si la corpo bénéficiaire possède plus d'actif dans le marché que la corpo cible
+* Vous ne pouvez pas lancer cette run si la corpo bénéficiaire possède plus d'actifs dans le marché que la corpo cible
 
 #### Sabotage
 
@@ -118,7 +118,7 @@ Le commanditaire choisit **un marché** d'une **corpo cible**, et tente de sabot
 Le commanditaire choisit **un marché**, une **corpo cible** et une **corpo bénéficiaire**. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui subit **-1 actif** sur ce marché, et rejoint la corpo bénéficiaire, lui faisant gagner **+1 actif** sur ce marché.
 
 * Vous pouvez lancer cette run uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
-* Vous ne pouvez pas lancer cette run si la corpo bénéficiaire possède plus d'actif dans le marché que la corpo cible. 
+* Vous ne pouvez pas lancer cette run si la corpo bénéficiaire possède plus d'actifs dans le marché que la corpo cible. 
 
 ### Coût d'une run
 
@@ -143,20 +143,20 @@ Vous pouvez lancer une run de protection sur un marché d'une corporation pour r
 
 #### Information
 
-Le commanditaire choisit des **joueurs cible** et des **corpo cible**
+Le commanditaire choisit des **joueurs cible** et des **corpos cible**
 
 Vous recevrez un message contenant toutes les actions faites par les joueurs cibles ce tour-ci ainsi que leurs  **Secrets** ([cf. Secrets](start.md#secrets)).
 Vous recevez un détail de toutes les actions réussies et échouées sur les corpo cible.
 
-Cette run d'information a un coût particulier :
+Cette run d'Information a un coût particulier :
 * 150 000 ny par joueur selectionné
 * 50 000 ny par joueur selectionné
 
 ### Résolution
 
-Le pourcentage de chances maximum qu'une run peut atteindre est de 90%. Ce chiffre peut être baissé par les runs de protection.
+Le pourcentage de chances maximum qu'une run peut atteindre est de 90%. Ce chiffre peut être baissé par les runs de Protection.
 
-> Une run d'extraction qui a 100% de chances de réussite sera donc maxée à 90%.
+> Une run d'Extraction qui a 100% de chances de réussite sera donc maxée à 90%.
 
 Les runs sont résolues par % de réussite décroissants. Une seule run de chaque type peut être réussie par cible et par marché.
 
