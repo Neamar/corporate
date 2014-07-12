@@ -7,7 +7,7 @@ from engine.decorators import sender_instance_of
 from engine_modules.mdc.models import MDCVoteOrder
 from engine_modules.corporation_run.models import ProtectionOrder, OffensiveRunOrder
 from engine_modules.player_run.models import InformationOrder
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder
 from engine_modules.mdc.decorators import expect_coalition
 
 
@@ -66,8 +66,7 @@ def enforce_mdc_ccib_negative(sender, instance, **kwargs):
 		raise OrderNotAvailable("Vous avez voté pour la transparence au tour précédent, vous ne pouvez donc pas effectuer de run de protection ce tour-ci")
 
 
-@receiver(validate_order)
-@sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
+@receiver(validate_order, sender=CorporationSpeculationOrder)
 @expect_coalition(MDCVoteOrder.DERE)
 def enforce_mdc_dere_negative(sender, instance, **kwargs):
 	"""
@@ -77,8 +76,7 @@ def enforce_mdc_dere_negative(sender, instance, **kwargs):
 		raise OrderNotAvailable("Vous avez voté pour l'instauration de garde-fous bancaires au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 
 
-@receiver(validate_order)
-@sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
+@receiver(validate_order, sender=CorporationSpeculationOrder)
 @expect_coalition(MDCVoteOrder.BANK)
 def enforce_mdc_bank_negative(sender, instance, **kwargs):
 	"""
@@ -89,8 +87,7 @@ def enforce_mdc_bank_negative(sender, instance, **kwargs):
 		raise OrderNotAvailable("Vous avez voté pour la dérégulation au tour précédent, vous ne pouvez donc pas spéculer ce tour-ci")
 
 
-@receiver(post_create)
-@sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
+@receiver(post_create, sender=CorporationSpeculationOrder)
 @expect_coalition(MDCVoteOrder.BANK)
 def enforce_mdc_bank_positive(sender, instance, **kwargs):
 	"""
@@ -102,8 +99,7 @@ def enforce_mdc_bank_positive(sender, instance, **kwargs):
 		instance.save()
 
 
-@receiver(post_create)
-@sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
+@receiver(post_create, sender=CorporationSpeculationOrder)
 @expect_coalition(MDCVoteOrder.DERE)
 def enforce_mdc_dere_positive(sender, instance, **kwargs):
 	"""

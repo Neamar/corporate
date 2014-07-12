@@ -71,42 +71,4 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 		return u"Miser sur la position %s de la corporation %s (gain : %sk¥, perte : %sk¥)" % (self.rank, self.corporation.base_corporation.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
 
 
-class DerivativeSpeculationOrder(AbstractSpeculation):
-	"""
-	Order to speculate on a derivative up or down
-	"""
-	ORDER = 1000
-	UP = True
-	DOWN = False
-
-	UPDOWN_CHOICES = (
-		(UP, 'à la hausse'),
-		(DOWN, 'à la baisse')
-	)
-
-	title = "Spéculer sur un produit dérivé"
-
-	speculation = models.BooleanField(choices=UPDOWN_CHOICES)
-	derivative = models.ForeignKey(Derivative)
-
-	def resolve(self):
-		# Build message
-		current_turn_sum = self.derivative.get_sum(self.player.game.current_turn)
-		previous_turn_sum = self.derivative.get_sum(self.player.game.current_turn - 1)
-		if (current_turn_sum > previous_turn_sum and self.speculation == self.UP) or (current_turn_sum < previous_turn_sum and self.speculation == self.DOWN):
-			# Success
-			self.player.money += self.on_win_money()
-			self.player.save()
-			content = u"Vos spéculations de %sk¥ sur le produit dérivé %s vous ont rapporté %sk¥" % (self.investment, self.derivative.name, self.on_win_money())
-		else:
-			# Failure
-			self.player.money -= self.on_loss_money()
-			self.player.save()
-			content = u"Vos spéculations de %sk¥ sur le produit dérivé %s n'ont malheureusement pas été concluantes" % (self.investment, self.derivative.name)
-
-		self.player.add_note(category=Note.SPECULATION, content=content)
-
-	def description(self):
-		return u"Miser %s du produit dérivé %s (gain : %sk¥, perte : %sk¥)" % (self.get_speculation_display(), self.derivative.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
-
-orders = (CorporationSpeculationOrder, DerivativeSpeculationOrder)
+orders = (CorporationSpeculationOrder, )

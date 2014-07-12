@@ -1,6 +1,6 @@
 from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder
 from engine_modules.derivative.models import Derivative
 
 
@@ -101,43 +101,3 @@ class OrdersTest(EngineTestCase):
 		)
 
 		self.assertRaises(OrderNotAvailable, o.clean)
-
-	def test_derivative_failure_remove_money(self):
-		"""
-		Derivative speculation failure cost money
-		"""
-		self.g.resolve_current_turn()
-
-		self.first_corporation.update_assets(-5)
-
-		dso = DerivativeSpeculationOrder(
-			player=self.p,
-			speculation=DerivativeSpeculationOrder.UP,
-			investment=5,
-			derivative=self.d
-		)
-		dso.save()
-
-		self.g.resolve_current_turn()
-
-		self.assertEqual(self.reload(self.p).money, self.initial_money - dso.get_cost())
-
-	def test_derivative_success_give_money(self):
-		"""
-		Success when speculate on derivative should give money
-		"""
-		self.g.resolve_current_turn()
-
-		self.first_corporation.update_assets(5)
-
-		dso = DerivativeSpeculationOrder(
-			player=self.p,
-			speculation=DerivativeSpeculationOrder.UP,
-			investment=5,
-			derivative=self.d
-		)
-		dso.save()
-
-		self.g.resolve_current_turn()
-
-		self.assertEqual(self.reload(self.p).money, self.initial_money + dso.get_cost())

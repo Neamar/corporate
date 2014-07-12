@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
 
-from engine.decorators import sender_instance_of
 from engine.dispatchs import validate_order, post_create
 from engine.exceptions import OrderNotAvailable
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder
 
 
-@receiver(validate_order)
-@sender_instance_of(CorporationSpeculationOrder, DerivativeSpeculationOrder)
+@receiver(validate_order, sender=CorporationSpeculationOrder)
 def limit_speculation_amount_by_influence(sender, instance, **kwargs):
 	"""
 	Total speculation amount can't be more than {{influence}} * MAX_AMOUNT_SPECULATION ¥ per turn
