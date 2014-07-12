@@ -9,7 +9,6 @@ on_first:
     update(ladder[1], 1)
 on_last:
     update(ladder[0], 2)
-derivative: Dow Jones
 
 Le West Side de Manhattan accueille le siège mondial en forme de double hélice de Prometheus Engineering. Son activité première concerne l'ingénierie des matériaux, et la corpo a assurée la sous-traitance de quasiment tous les projets de construction de grande envergure de Manhattan. Les bâtiments ont beau être couverts des logos et des visuels des AAA, les polymères avancés et les techniques de conceptions employées viennent des labos de Prometheus. À cause de son manque de notoriété publique, la corporation s'est démenée depuis une petite dizaine d'année pour devenir une référence dans les foyers des UCAS. Le principal projet lancé sous son propre nom n'est autre que l'arcologie qui prend forme sous Grand Central.
 

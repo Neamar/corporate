@@ -1,16 +1,11 @@
 from engine.testcases import EngineTestCase
 from engine_modules.speculation.models import CorporationSpeculationOrder
-from engine_modules.derivative.models import Derivative
 from engine.exceptions import OrderNotAvailable
 
 
 class SignalsTest(EngineTestCase):
 	def setUp(self):
 		super(SignalsTest, self).setUp()
-
-		self.d = Derivative(name="first and last", game=self.g)
-		self.d.save()
-		self.d.corporations.add(self.c, self.c2)
 
 	def test_max_corporation_speculation_amount_in_single_instance(self):
 		"""

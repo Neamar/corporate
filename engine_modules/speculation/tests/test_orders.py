@@ -1,7 +1,6 @@
 from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
 from engine_modules.speculation.models import CorporationSpeculationOrder
-from engine_modules.derivative.models import Derivative
 
 
 class OrdersTest(EngineTestCase):
@@ -20,10 +19,6 @@ class OrdersTest(EngineTestCase):
 		self.c3.assets = 1
 		self.c3.save()
 		self.last_corporation = self.c3
-
-		self.d = Derivative(name="first and last", game=self.g)
-		self.d.save()
-		self.d.corporations.add(self.first_corporation, self.last_corporation)
 
 	def test_corporation_speculation_order_cost_money(self):
 		"""

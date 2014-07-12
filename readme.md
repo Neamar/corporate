@@ -35,7 +35,6 @@ Rules can be found in [data/docs/index.md](data/docs/index.md).
 * [800] **DividendTask** : It's time to get money!
 * [900] **CitizenshipTask** : Update players citizenships
 * [900] **CorporationSpeculationTask** : Resolve corporations speculations
-* [900] **DerivativeSpeculationTask** : Resolve derivatives speculations
 * [1000] **BuyInfluenceTask** : Buy new Influence level
 * [1000] **CrashCorporationTask** : Let's crash corporations that didn't made it through the turn
 
@@ -50,6 +49,5 @@ Rules can be found in [data/docs/index.md](data/docs/index.md).
 * **ExtractionOrder** : Order for Extraction runs
 * **InformationOrder** : Order for information runs
 * **CorporationSpeculationOrder** : Order to speculate on a corporation's rank
-* **DerivativeSpeculationOrder** : Order to speculate on a derivative up or down
 * **MDCVoteOrder** : Order to vote for the MDC coalition
 * **WiretransferOrder** : Send money to another player

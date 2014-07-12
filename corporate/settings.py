@@ -55,7 +55,6 @@ INSTALLED_APPS = (
     'engine_modules.run',
     'engine_modules.corporation_run',
     'engine_modules.corporation_asset_history',
-    'engine_modules.derivative',
     'engine_modules.player_run',
     'engine_modules.speculation',
     'engine_modules.effects',

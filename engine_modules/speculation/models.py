@@ -2,7 +2,6 @@
 from django.db import models
 from engine.models import Order
 from engine_modules.corporation.models import Corporation
-from engine_modules.derivative.models import Derivative
 from messaging.models import Note
 
 
