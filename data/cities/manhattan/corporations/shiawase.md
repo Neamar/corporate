@@ -1,5 +1,5 @@
 name: Shiawase
-marches:
+market:
     nanotechnologie - 2
     alimentaire - 2
     magie - 2

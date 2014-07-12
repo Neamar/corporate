@@ -1,5 +1,5 @@
 name: Aztechnology
-marches:
+market:
     magie - 3
     immobilier - 3
     nanotechnologie - 2

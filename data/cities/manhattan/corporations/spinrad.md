@@ -1,5 +1,5 @@
 name: Spinrad Industries
-marches:
+market:
     transport - 3
     sécurité - 2
     nanotechnologie - 2

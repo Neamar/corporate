@@ -56,7 +56,7 @@ class BaseCorporation:
 
 		self.initials_assets = 0
 		self.market = {}
-		marches = meta['marches']	
+		marches = meta['market']	
 		for s in marches[1:]:
 			s = s.split(" - ")
 			self.market[s[0]] = int(s[1])

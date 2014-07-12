@@ -1,5 +1,5 @@
 name: Neonet
-marches:
+market:
     cyberware - 2
     transport - 3
     communication - 2

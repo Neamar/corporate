@@ -4,7 +4,7 @@ from engine.dispatchs import post_create
 
 from engine.models import Game
 from engine_modules.corporation.models import BaseCorporation, Corporation
-
+from engine_modules.market.models import CorporationMarket
 
 @receiver(post_create, sender=Game)
 def auto_create_corporation(sender, instance, **kwargs):
@@ -23,3 +23,11 @@ def auto_create_corporation(sender, instance, **kwargs):
 		)
 
 		instance.corporations[base_corporation.slug].save()
+
+		for market_name in base_corporation.market.keys():
+			CorporationMarket(
+				corporation = instance.corporations[base_corporation.slug],
+				name=market_name, 
+				value=base_corporation.market[market_name]
+			).save()
+
