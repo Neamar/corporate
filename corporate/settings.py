@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     'engine_modules.effects',
     'engine_modules.mdc',
     'engine_modules.wiretransfer',
+    'engine_modules.market',
 )
 
 
@@ -121,5 +122,4 @@ if "test" in " ".join(sys.argv):
 else:
     CITY = "Manhattan"
 
-print "LOADING %s" % CITY
 CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())

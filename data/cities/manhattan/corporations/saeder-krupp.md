@@ -1,5 +1,9 @@
 name: Saeder Krupp
-initials_assets: 8
+markets:
+    santé: 1
+    transport: 3
+    communication: 2
+    armement: 2
 datasteal: 20
 sabotage: 10
 extraction: 10

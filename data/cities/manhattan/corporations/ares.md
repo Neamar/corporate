@@ -1,5 +1,9 @@
 name: Ares Macrotechnology
-initials_assets: 13
+markets:
+    armement: 3
+    alimentaire: 3
+    sécurité: 3
+    magie: 3
 datasteal: 10
 sabotage: 30
 extraction: 10

@@ -1,5 +1,9 @@
 name: Renraku Computer Systems
-initials_assets: 10
+markets:
+    sécurité: 3
+    nanotechnologie: 2
+    cyberware: 2
+    santé: 0
 datasteal: 20
 sabotage: 10
 extraction: 20
