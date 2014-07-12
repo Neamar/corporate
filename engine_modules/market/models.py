@@ -6,6 +6,9 @@ from engine.models import Game
 
 
 class Market(models.Model):
+	class Meta:
+		unique_together = (("game", "name"),)
+
 	game = models.ForeignKey(Game)
 	name = models.CharField(max_length=20)
 
