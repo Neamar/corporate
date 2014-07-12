@@ -1,5 +1,5 @@
 name: Horizon
-market:
+markets:
     communication - 2
     immobilier - 3
     magie - 3

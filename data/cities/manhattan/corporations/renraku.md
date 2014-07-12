@@ -1,5 +1,5 @@
 name: Renraku Computer Systems
-market:
+markets:
     sécurité - 3
     nanotechnologie - 2
     cyberware - 2

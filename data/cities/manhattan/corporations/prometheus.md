@@ -1,5 +1,5 @@
 name: Prometheus Engineering
-market:
+markets:
     immobilier - 3
     alimentaire - 3
     cyberware - 1

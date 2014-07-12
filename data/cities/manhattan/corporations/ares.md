@@ -1,5 +1,5 @@
 name: Ares Macrotechnology
-market:
+markets:
     armement - 3
     alimentaire - 3
     sécurité - 3

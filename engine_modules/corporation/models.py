@@ -57,7 +57,7 @@ class BaseCorporation:
 
 		self.initials_assets = 0
 		self.market = OrderedDict()
-		markets = meta['market']
+		markets = meta['markets']
 		for market in markets[1:]:
 			name, value = market.split(" - ")
 			self.market[name] = int(value)

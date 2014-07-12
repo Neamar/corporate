@@ -1,5 +1,5 @@
 name: Sony Corporation
-market:
+markets:
     alimentaire - 3
     immobilier - 3
     transport - 3

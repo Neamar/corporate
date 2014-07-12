@@ -1,5 +1,5 @@
 name: c
-market:
+markets:
     armement - 3
     cyberware - 3
     alimentaire - 3

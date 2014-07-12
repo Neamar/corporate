@@ -1,5 +1,5 @@
 name: Saeder Krupp
-market:
+markets:
     santé - 1
     transport - 3
     communication - 2
