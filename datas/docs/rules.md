@@ -182,7 +182,7 @@ Si le spéculateur se trompe, il perd la somme misée.
 
 Si sa spéculation est juste, il fait un bénéfice d'une côte de :
 
-* **1 pour 3** s'il a spéculé qu’une corpo finirait le tour **première ou dernière**. (S’il a placé 100 000 ny, il les conserve et gagne 150 000 ny suplémentaires)
+* **1 pour 3** s'il a spéculé qu’une corpo finirait le tour **première ou dernière**. (S’il a placé 100 000 ny, il les conserve et gagne 200 000 ny suplémentaires)
 * **1 pour 5** s’il a spéculé qu’une corpo finirait le tour à un autre rang (**de seconde à avant-dernière**) .
 
 > Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la corpo étant le plus loin dans le négatif est considéré dernière.
