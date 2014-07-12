@@ -131,8 +131,8 @@ class Corporation(models.Model):
 		market = self.corporationmarket_set.get(market=market)
 
 		if market.value + delta < 0:
-			# A market can't be negative
-			delta = market.value
+			# A market can't be negative, so we cap the delta
+			delta = -market.value
 
 		market.value += delta
 		market.save()
