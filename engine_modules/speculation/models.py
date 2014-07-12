@@ -13,7 +13,7 @@ class AbstractSpeculation(Order):
 	class Meta:
 		abstract = True
 
-	MAX_AMOUNT_SPECULATION = 100
+	MAX_AMOUNT_SPECULATION = 200
 	BASE_COST = 1
 
 	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
