@@ -46,9 +46,9 @@ class EngineTestCase(TestCase):
 		self.c3 = Corporation(base_corporation_slug='ares', assets=10)
 		self.g.corporation_set.add(self.c, self.c2, self.c3)
 
-		self.initial_money = Player._meta.get_field_by_name('money')[0].default
-		self.p = Player(game=self.g, money=self.initial_money)
+		self.p = Player(game=self.g)
 		self.p.save()
+		self.initial_money = self.p.money
 
 		# TODO: move to another place, in engine_modules/runs
 		# TODO : add test for 90% restriction
