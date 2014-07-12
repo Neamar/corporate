@@ -17,12 +17,12 @@ def auto_create_corporation(sender, instance, **kwargs):
 	markets = {}
 	base_corporations = BaseCorporation.retrieve_all()
 
-	# List all distincts market types
+	# List distinct market types
 	for base_corporation in base_corporations:
-		for market_name in base_corporation.market.keys():
+		for market_name in base_corporation.markets.keys():
 			markets[market_name] = True
 
-	# Create them
+	# Save them on DB
 	for market_name in markets.keys():
 		markets[market_name] = Market(game=instance, name=market_name)
 		markets[market_name].save()
@@ -38,11 +38,11 @@ def auto_create_corporation(sender, instance, **kwargs):
 
 		instance.corporations[base_corporation.slug].save()
 
-		for market_name in base_corporation.market.keys():
+		for market_name in base_corporation.markets.keys():
 			cm = CorporationMarket(
 				corporation=instance.corporations[base_corporation.slug],
 				market=markets[market_name],
-				value=base_corporation.market[market_name]
+				value=base_corporation.markets[market_name]
 			)
 			corporation_markets.append(cm)
 

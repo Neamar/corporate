@@ -56,13 +56,13 @@ class BaseCorporation:
 		self.on_last = self.compile_effect(code, "on_last")
 
 		self.initials_assets = 0
-		self.market = OrderedDict()
+		self.markets = OrderedDict()
 		markets = meta['markets']
 		for market in markets[1:]:
 			name, value = market.split(": ")
-			self.market[name] = int(value)
+			self.markets[name] = int(value)
 			self.initials_assets += int(value)
-		self.historic_market = self.market.keys()[0]
+		self.historic_market = self.markets.keys()[0]
 
 	def compile_effect(self, code, effect):
 		"""
