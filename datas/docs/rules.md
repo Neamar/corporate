@@ -217,7 +217,7 @@ De gros contrats d'entretien et de sécurité sont redistribués entre les corpo
 Effets :
 
 * Les **corpos** appartenant à la coalition **Contrats publics** gagnent immédiatement **+1 actif** dans leur marché historique. 
-* Les **corpos** appartenant à la coalition **Consolidation** subissent **-1 actif** dans leur marché historique, sans pouvoir descendre en dessous de 0.
+* Les **corpos** appartenant à la coalition **Opérations Clandestines** subissent **-1 actif** dans leur marché historique, sans pouvoir descendre en dessous de 0.
 
 ### Opérations Clandestines
 De nouvelles lois sont votées, renforçant les contrôles militaires au détriment de certaines zones.
@@ -225,7 +225,7 @@ De nouvelles lois sont votées, renforçant les contrôles militaires au détrim
 Effets :
 
 * Au prochain tour, les **joueurs** appartenant à la coalition **Opérations Clandestines** gagnent **+20%** sur chacune de leurs runs. Ce bonus peut permettre de dépasser les 100%, améliorant la vitesse de la run.
-* Au prochain tour, les **joueurs** appartenant à la coalition **Contrats publics** subissent un malus de **-20%**.
+* Au prochain tour, les **joueurs** appartenant à la coalition **Consolidation** subissent un malus de **-20%**.
 
 ### Consolidation
 Des opérations de presse et des réunions avec les citoyens permettent à certaines personnes de se faire connaître et apprécier du grand public.
@@ -233,7 +233,7 @@ Des opérations de presse et des réunions avec les citoyens permettent à certa
 Effets : 
 
 * Les **joueurs** appartenant à la coalition **Consolidation** gagnent **+3PV** pour la fin de partie.
-* Les **joueurs** appartenant à la coalition **Opérations Clandestines** subissent un malus de **-3PV** pour la fin de partie.
+* Les **joueurs** appartenant à la coalition **Contrats Publics** subissent un malus de **-3PV** pour la fin de partie.
 
 Autrement dit, de grosses possibilités de coopération pour d'énormes opportunités de backstab.
 

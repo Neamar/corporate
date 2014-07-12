@@ -50,7 +50,7 @@ Le joueur ayant des parts dans le plus grand nombre de corpos.
 
 ### Le Rentier
 * +5 PVs
-Le joueur ayant terminé la partie avec le plus de nuyens.
+Le joueur ayant terminé la partie avec le plus de nuyens, dividendes du dernier tour non compris.
 
 ### Le Meneur
 * +5 PVs
