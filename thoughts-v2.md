@@ -67,6 +67,9 @@ Système triangulaire :
 ## Dividendes
 Les dividendes de la dernière corpo n'ont pas de prix spécial.
 
+## Effet crash
+Une corporation qui crashe applique un effet spécial sur les autres corpos, plus puissant que les effets premiers / derniers.
+
 ## Wiretransfer
 Affiche une popup de validation "définitive"
 
