@@ -19,8 +19,11 @@ def auto_create_corporation(sender, instance, **kwargs):
 	# We first have to create all the Market Objects
 	for base_corporation in base_corporations:
 		for market_name in base_corporation.market.keys():
-			markets[market_name] = Market(game=instance, name=market_name)
-			markets[market_name].save()
+			markets[market_name] = True
+
+	for market_name in markets.keys():
+		markets[market_name] = Market(game=instance, name=market_name)
+		markets[market_name].save()
 
 	for base_corporation in base_corporations:
 		instance.corporations[base_corporation.slug] = Corporation(
