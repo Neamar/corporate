@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from os import listdir
 
 from django.db import models
@@ -45,16 +46,21 @@ class BaseCorporation:
 		self.extraction = int(meta['extraction'][0])
 		self.detection = int(meta['detection'][0])
 
+
 		code = "\n".join(meta['on_first'])
 		self.on_first = self.compile_effect(code, "on_first")
 
 		code = "\n".join(meta['on_last'])
 		self.on_last = self.compile_effect(code, "on_last")
 
-		try:
-			self.initials_assets = int(meta['initials_assets'][0])
-		except KeyError:
-			self.initials_assets = 10
+
+		self.initials_assets = 0
+		self.market = {}
+		marches = meta['marches']	
+		for s in marches[1:]:
+			s = s.split(" - ")
+			self.market[s[0]] = int(s[1])
+			self.initials_assets += int(s[1])
 
 		try:
 			self.derivative = meta['derivative'][0]

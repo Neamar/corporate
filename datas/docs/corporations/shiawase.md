@@ -1,5 +1,9 @@
 name: Shiawase
-initials_assets: 11
+marches:
+    nanotechnologie - 2
+    alimentaire - 2
+    magie - 2
+    communication - 2
 datasteal: 10
 sabotage: 10
 extraction: 30

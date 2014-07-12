@@ -1,5 +1,9 @@
 name: Horizon
-initials_assets: 9
+marches:
+    communication - 2
+    immobilier - 3
+    magie - 3
+    sécurité - 2
 datasteal: 10
 sabotage: 10
 extraction: 10
