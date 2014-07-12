@@ -30,7 +30,7 @@ def auto_create_corporation(sender, instance, **kwargs):
 			base_corporation_slug=base_corporation.slug,
 			game=instance,
 			assets=base_corporation.initials_assets,
-			historic_market=markets[base_corporation.market.keys()[0]]
+			historic_market=markets[base_corporation.historic_market]
 		)
 
 		instance.corporations[base_corporation.slug].save()
