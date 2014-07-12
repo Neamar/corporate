@@ -14,7 +14,6 @@ on_first:
 on_last:
     update(ladder[0], -1)
     update(ladder[1], -1)
-derivative: Dow Jones
 
 Dirigée depuis Détroit par le playboy multimilliardaire Damien Knight, Ares a la réputation d'être très "américaine" dans sa conception : enthousiaste, militariste, patriote et individualiste. Cette nostalgie de la "bonne vieille Amérique d'autrefois" fait que Manhattan lui va comme un gant.
 

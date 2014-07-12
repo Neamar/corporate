@@ -64,11 +64,6 @@ class BaseCorporation:
 			self.initials_assets += int(value)
 		self.historic_market = self.market.keys()[0]
 
-		try:
-			self.derivative = meta['derivative'][0]
-		except KeyError:
-			self.derivative = None
-
 	def compile_effect(self, code, effect):
 		"""
 		Compile specified code. Effect is a string that will be used for stacktrace reports.

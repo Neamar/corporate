@@ -1,5 +1,5 @@
 from django.contrib import admin
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
+from engine_modules.speculation.models import CorporationSpeculationOrder
 
 
 class SpeculationOrderAdmin(admin.ModelAdmin):
@@ -7,4 +7,3 @@ class SpeculationOrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CorporationSpeculationOrder, SpeculationOrderAdmin)
-admin.site.register(DerivativeSpeculationOrder, SpeculationOrderAdmin)

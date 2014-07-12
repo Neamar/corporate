@@ -39,25 +39,6 @@
 
 <div id="chart_div" style="width: 99%; height: 300px; margin:15px auto;"></div>
 
-<table class="prop_table">
-<thead>
-<tr>
-	<th></th>
-	<th>Actifs</th>
-	<th title="Actifs du tour précédent">Préc.</th>
-</tr>
-</thead>
-<tbody>
-{% for derivative in derivatives %}
-<tr>
-	<td title="{{ derivative.corporations.all|join:", " }}">{{ derivative.name|title }}</td>
-	<td><strong style="color:{% if derivative.assets > derivative.last_assets %}green{% elif derivative.assets < derivative.last_assets %}red{% endif %}">{{ derivative.assets }}</strong></td>
-	<td>{{ derivative.last_assets }}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-
 {% endblock content %}
 
 {% block scripts %}
