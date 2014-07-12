@@ -6,9 +6,11 @@ from django.conf import settings
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 
-from utils.read_markdown import read_markdown
-from engine.models import Game
+from collections import OrderedDict
 
+from utils.read_markdown import read_markdown
+from engine_modules.market.models import Market
+from engine.models import Game
 
 class BaseCorporation:
 	"""
@@ -46,16 +48,14 @@ class BaseCorporation:
 		self.extraction = int(meta['extraction'][0])
 		self.detection = int(meta['detection'][0])
 
-
 		code = "\n".join(meta['on_first'])
 		self.on_first = self.compile_effect(code, "on_first")
 
 		code = "\n".join(meta['on_last'])
 		self.on_last = self.compile_effect(code, "on_last")
 
-
 		self.initials_assets = 0
-		self.market = {}
+		self.market = OrderedDict()
 		marches = meta['market']	
 		for s in marches[1:]:
 			s = s.split(" - ")
@@ -92,6 +92,7 @@ class Corporation(models.Model):
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
 	assets = models.SmallIntegerField()
+	historic_market = models.ForeignKey(Market)
 
 	@cached_property
 	def base_corporation(self):
