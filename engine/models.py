@@ -53,9 +53,9 @@ class Game(models.Model):
 		message_number = Newsfeed.objects.filter(category=category, game=self, path=path).count() + 1
 
 		try:
-			content = read_file_from_path("%s/datas/cities/manhattan/newsfeeds/%s/%s/%s.md" % (settings.BASE_DIR, category, path, message_number))
+			content = read_file_from_path("%s/newsfeeds/%s/%s/%s.md" % (settings.CITY_BASE_DIR, category, path, message_number))
 		except IOError:
-			content = read_file_from_path("%s/datas/cities/manhattan/newsfeeds/%s/%s/_.md" % (settings.BASE_DIR, category, path))
+			content = read_file_from_path("%s/newsfeeds/%s/%s/_.md" % (settings.CITY_BASE_DIR, category, path))
 
 		kwargs['content'] = content
 		kwargs['category'] = category

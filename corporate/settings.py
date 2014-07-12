@@ -113,3 +113,8 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
 )
+
+
+# Settings for the game
+CITY = "Manhattan"
+CITY_BASE_DIR = "%s/datas/cities/%s" % (BASE_DIR, CITY.lower())
