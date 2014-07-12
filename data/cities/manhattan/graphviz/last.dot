@@ -1,4 +1,4 @@
-# dot -T svg datas/graphviz/last.dot > website/static/graphviz/last.svg
+# dot -T svg data/graphviz/last.dot > website/static/graphviz/last.svg
 digraph g{
 	graph [
 		rankdir = "LR"

@@ -152,8 +152,8 @@ class OffensiveCorporationRunOrder(OffensiveRunOrder):
 
 	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
 
-	def get_form(self, datas=None):
-		form = super(OffensiveRunOrder, self).get_form(datas)
+	def get_form(self, data=None):
+		form = super(OffensiveRunOrder, self).get_form(data)
 		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
@@ -211,8 +211,8 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 	def description(self):
 		return u"Envoyer une équipe voler des données de %s pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 
-	def get_form(self, datas=None):
-		form = super(DataStealOrder, self).get_form(datas)
+	def get_form(self, data=None):
+		form = super(DataStealOrder, self).get_form(data)
 		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
 
 		return form
@@ -329,8 +329,8 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 	def description(self):
 		return u"Réaliser une extraction de %s vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
 
-	def get_form(self, datas=None):
-		form = super(ExtractionOrder, self).get_form(datas)
+	def get_form(self, data=None):
+		form = super(ExtractionOrder, self).get_form(data)
 		form.fields['kidnapper_corporation'].queryset = self.player.game.corporation_set.all()
 
 		return form
@@ -382,8 +382,8 @@ class ProtectionOrder(RunOrder):
 	def description(self):
 		return u"Envoyer une équipe protéger %s des %ss (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_defense_display(), self.get_success_probability())
 
-	def get_form(self, datas=None):
-		form = super(ProtectionOrder, self).get_form(datas)
+	def get_form(self, data=None):
+		form = super(ProtectionOrder, self).get_form(data)
 		form.fields['protected_corporation'].queryset = self.player.game.corporation_set.all()
 		form.fields['base_extraction_percents'] = PlainTextField(initial="%s%%" % self.PROBA_EXTRACTION_SUCCESS)
 		form.fields['base_datasteal_percents'] = PlainTextField(initial="%s%%" % self.PROBA_DATASTEAL_SUCCESS)

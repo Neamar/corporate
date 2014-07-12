@@ -64,6 +64,7 @@ INSTALLED_APPS = (
 )
 
 
+# Only setup raven outside of test env
 if 1 in sys.argv and sys.argv[1] != 'test':
     INSTALLED_APPS += 'raven.contrib.django.raven_compat'
 
@@ -113,3 +114,12 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
 )
+
+
+# Settings for the game
+if 1 in sys.argv and sys.argv[1] != 'test':
+    CITY = "Manhattan"
+else:
+    CITY = "Test"
+
+CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())

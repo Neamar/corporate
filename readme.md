@@ -15,8 +15,8 @@ This is a standard Django project. Check you meet all the requirements listed in
 Once you're done, run `./manage.py runserver` to get started on http://localhost:8000/.
 You'll need to create a game and add some players in it.
 
-## Game datas
-Rules can be found in [datas/docs/index.md](datas/docs/index.md).
+## Game data
+Rules can be found in [data/docs/index.md](data/docs/index.md).
 
 ### Tasks list
 > Number between [] is the resolution order.

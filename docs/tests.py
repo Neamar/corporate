@@ -54,7 +54,7 @@ class DocTest(TestCase):
 		Corporation should be served
 		"""
 
-		r = self.c.get('/docs/corporations/ares')
+		r = self.c.get('/docs/corporations/c')
 		self.assertEqual(r.status_code, 200)
 		self.assertTemplateUsed('/docs/corporation.html')
 

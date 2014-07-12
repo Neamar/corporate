@@ -53,9 +53,9 @@ class Game(models.Model):
 		message_number = Newsfeed.objects.filter(category=category, game=self, path=path).count() + 1
 
 		try:
-			content = read_file_from_path("%s/datas/newsfeeds/%s/%s/%s.md" % (settings.BASE_DIR, category, path, message_number))
+			content = read_file_from_path("%s/newsfeeds/%s/%s/%s.md" % (settings.CITY_BASE_DIR, category, path, message_number))
 		except IOError:
-			content = read_file_from_path("%s/datas/newsfeeds/%s/%s/_.md" % (settings.BASE_DIR, category, path))
+			content = read_file_from_path("%s/newsfeeds/%s/%s/_.md" % (settings.CITY_BASE_DIR, category, path))
 
 		kwargs['content'] = content
 		kwargs['category'] = category
@@ -175,11 +175,11 @@ class Order(models.Model):
 		"""
 		raise NotImplementedError("Abstract call.")
 
-	def get_form(self, datas=None):
+	def get_form(self, data=None):
 		"""
 		Retrieve a form to create / edit this order
 		"""
-		return self.get_form_class()(datas, instance=self)
+		return self.get_form_class()(data, instance=self)
 
 	def get_form_class(self):
 		"""
@@ -217,7 +217,7 @@ class Order(models.Model):
 		raise LookupError("No orders subclass match this base: %s" % self.type)
 
 
-# Import datas for all engine_modules
+# Import data for all engine_modules
 from engine.modules import *
 
 # Import signals
