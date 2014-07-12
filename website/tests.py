@@ -58,16 +58,16 @@ class WebsiteTest(EngineTestCase):
 			reverse('website.views.orders.orders', args=[self.g.id]),
 			reverse('website.views.orders.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
 			reverse('website.views.orders.delete_order', args=[self.g.id, 1]),
-			reverse('website.views.datas.wallstreet', args=[self.g.id]),
-			reverse('website.views.datas.wallstreet', args=[self.g.id, self.g.current_turn - 1]),
-			reverse('website.views.datas.corporations', args=[self.g.id]),
-			reverse('website.views.datas.players', args=[self.g.id]),
-			reverse('website.views.datas.shares', args=[self.g.id]),
-			reverse('website.views.datas.shares', args=[self.g.id, self.g.current_turn - 1]),
-			reverse('website.views.datas.newsfeeds', args=[self.g.id]),
-			reverse('website.views.datas.newsfeeds', args=[self.g.id, self.g.current_turn - 1]),
-			reverse('website.views.datas.comlink', args=[self.g.id]),
-			reverse('website.views.datas.message', args=[self.g.id, self.p.message_set.get().pk]),
+			reverse('website.views.data.wallstreet', args=[self.g.id]),
+			reverse('website.views.data.wallstreet', args=[self.g.id, self.g.current_turn - 1]),
+			reverse('website.views.data.corporations', args=[self.g.id]),
+			reverse('website.views.data.players', args=[self.g.id]),
+			reverse('website.views.data.shares', args=[self.g.id]),
+			reverse('website.views.data.shares', args=[self.g.id, self.g.current_turn - 1]),
+			reverse('website.views.data.newsfeeds', args=[self.g.id]),
+			reverse('website.views.data.newsfeeds', args=[self.g.id, self.g.current_turn - 1]),
+			reverse('website.views.data.comlink', args=[self.g.id]),
+			reverse('website.views.data.message', args=[self.g.id, self.p.message_set.get().pk]),
 		]
 
 		for page in pages:
@@ -81,18 +81,18 @@ class WebsiteTest(EngineTestCase):
 		pages = [
 			reverse('website.views.orders.orders', args=[self.g.id]),
 			reverse('website.views.orders.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
-			reverse('website.views.datas.wallstreet', args=[self.g.id]),
-			reverse('website.views.datas.wallstreet', args=[self.g.id, self.g.current_turn - 1]),
-			reverse('website.views.datas.corporations', args=[self.g.id]),
-			reverse('website.views.datas.corporation', args=[self.g.id, self.c.base_corporation_slug]),
-			reverse('website.views.datas.players', args=[self.g.id]),
-			reverse('website.views.datas.player', args=[self.g.id, self.p.id]),
-			reverse('website.views.datas.shares', args=[self.g.id]),
-			reverse('website.views.datas.shares', args=[self.g.id, self.g.current_turn - 1]),
-			reverse('website.views.datas.newsfeeds', args=[self.g.id]),
-			reverse('website.views.datas.newsfeeds', args=[self.g.id, self.g.current_turn - 1]),
-			reverse('website.views.datas.comlink', args=[self.g.id]),
-			reverse('website.views.datas.message', args=[self.g.id, self.p.message_set.get().pk]),
+			reverse('website.views.data.wallstreet', args=[self.g.id]),
+			reverse('website.views.data.wallstreet', args=[self.g.id, self.g.current_turn - 1]),
+			reverse('website.views.data.corporations', args=[self.g.id]),
+			reverse('website.views.data.corporation', args=[self.g.id, self.c.base_corporation_slug]),
+			reverse('website.views.data.players', args=[self.g.id]),
+			reverse('website.views.data.player', args=[self.g.id, self.p.id]),
+			reverse('website.views.data.shares', args=[self.g.id]),
+			reverse('website.views.data.shares', args=[self.g.id, self.g.current_turn - 1]),
+			reverse('website.views.data.newsfeeds', args=[self.g.id]),
+			reverse('website.views.data.newsfeeds', args=[self.g.id, self.g.current_turn - 1]),
+			reverse('website.views.data.comlink', args=[self.g.id]),
+			reverse('website.views.data.message', args=[self.g.id, self.p.message_set.get().pk]),
 		]
 
 		for page in pages:
@@ -122,8 +122,8 @@ class WebsiteTest(EngineTestCase):
 		Check invalid page render 404
 		"""
 		pages = [
-			reverse('website.views.datas.newsfeeds', args=[self.g.id, self.g.current_turn + 1]),
-			reverse('website.views.datas.wallstreet', args=[self.g.id, self.g.current_turn + 1]),
+			reverse('website.views.data.newsfeeds', args=[self.g.id, self.g.current_turn + 1]),
+			reverse('website.views.data.wallstreet', args=[self.g.id, self.g.current_turn + 1]),
 		]
 
 		for page in pages:

@@ -44,7 +44,7 @@ def inject_game_into_response(func):
 
 def turn_by_turn_view(func):
 	"""
-	Decorator for view that let user browse datas page by page.
+	Decorator for view that let user browse data page by page.
 	Should be chained after @find_player_from_game_id.
 	"""
 	@wraps(func)

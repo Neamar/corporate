@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from website.views import index, datas, orders
+from website.views import index, data, orders
 
 # Index views
 urlpatterns = patterns('',
@@ -9,20 +9,20 @@ urlpatterns = patterns('',
 	url(r'^signup$', 'website.views.index.signup'),
 )
 
-# Datas views
+# Data views
 urlpatterns += patterns('',
-	url(r'^game/(?P<game_id>[0-9]+)/newsfeeds$', datas.newsfeeds),
-	url(r'^game/(?P<game_id>[0-9]+)/newsfeeds/(?P<turn>[0-9]+)$', datas.newsfeeds),
-	url(r'^game/(?P<game_id>[0-9]+)/comlink$', datas.comlink),
-	url(r'^game/(?P<game_id>[0-9]+)/comlink/(?P<message_id>[0-9]+)$', datas.message),
-	url(r'^game/(?P<game_id>[0-9]+)/wallstreet$', datas.wallstreet),
-	url(r'^game/(?P<game_id>[0-9]+)/wallstreet/(?P<turn>[0-9]+)$', datas.wallstreet),
-	url(r'^game/(?P<game_id>[0-9]+)/corporations$', datas.corporations),
-	url(r'^game/(?P<game_id>[0-9]+)/corporations/(?P<corporation_slug>[a-z0-9-]+)$', datas.corporation),
-	url(r'^game/(?P<game_id>[0-9]+)/players$', datas.players),
-	url(r'^game/(?P<game_id>[0-9]+)/players/(?P<player_id>[0-9]+)$', datas.player),
-	url(r'^game/(?P<game_id>[0-9]+)/shares$', datas.shares),
-	url(r'^game/(?P<game_id>[0-9]+)/shares/(?P<turn>[0-9]+)$', datas.shares),
+	url(r'^game/(?P<game_id>[0-9]+)/newsfeeds$', data.newsfeeds),
+	url(r'^game/(?P<game_id>[0-9]+)/newsfeeds/(?P<turn>[0-9]+)$', data.newsfeeds),
+	url(r'^game/(?P<game_id>[0-9]+)/comlink$', data.comlink),
+	url(r'^game/(?P<game_id>[0-9]+)/comlink/(?P<message_id>[0-9]+)$', data.message),
+	url(r'^game/(?P<game_id>[0-9]+)/wallstreet$', data.wallstreet),
+	url(r'^game/(?P<game_id>[0-9]+)/wallstreet/(?P<turn>[0-9]+)$', data.wallstreet),
+	url(r'^game/(?P<game_id>[0-9]+)/corporations$', data.corporations),
+	url(r'^game/(?P<game_id>[0-9]+)/corporations/(?P<corporation_slug>[a-z0-9-]+)$', data.corporation),
+	url(r'^game/(?P<game_id>[0-9]+)/players$', data.players),
+	url(r'^game/(?P<game_id>[0-9]+)/players/(?P<player_id>[0-9]+)$', data.player),
+	url(r'^game/(?P<game_id>[0-9]+)/shares$', data.shares),
+	url(r'^game/(?P<game_id>[0-9]+)/shares/(?P<turn>[0-9]+)$', data.shares),
 )
 
 # Orders views

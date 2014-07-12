@@ -20,10 +20,10 @@ from utils.read_markdown import parse_markdown
 @turn_by_turn_view
 def wallstreet(request, game, player, turn):
 	"""
-	Wallstreet datas
+	Wallstreet data
 	"""
 
-	# Table datas
+	# Table data
 	corporations = game.get_ladder(turn=turn)
 	delta_categories = {}
 
@@ -50,7 +50,7 @@ def wallstreet(request, game, player, turn):
 			setattr(corporation, 'unknown', unknown if unknown != 0 else "")
 		delta_categories['unknown'] = '?'
 
-	# Graph datas
+	# Graph data
 	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
 	assets_history = AssetHistory.objects.filter(corporation__game=game, turn__lte=turn).order_by('turn', 'corporation')
 
@@ -75,7 +75,7 @@ def wallstreet(request, game, player, turn):
 @inject_game_into_response
 def corporations(request, game, player):
 	"""
-	Corporations datas
+	Corporations data
 	"""
 
 	corporations = game.corporation_set.all().annotate(Count('share'))
@@ -90,7 +90,7 @@ def corporations(request, game, player):
 @inject_game_into_response
 def corporation(request, player, game, corporation_slug):
 	"""
-	Corporation datas
+	Corporation data
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game.pk)
 	players = Player.objects.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
@@ -110,7 +110,7 @@ def corporation(request, player, game, corporation_slug):
 @inject_game_into_response
 def players(request, game, player):
 	"""
-	Players datas
+	Players data
 	"""
 
 	players = game.player_set.all().annotate(Count('share')).select_related('citizenship__corporation', 'influence', 'user').order_by('name')
@@ -126,7 +126,7 @@ def players(request, game, player):
 @inject_game_into_response
 def player(request, game, player, player_id):
 	"""
-	Player datas
+	Player data
 	"""
 	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id, game_id=game.pk)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
@@ -148,7 +148,7 @@ def player(request, game, player, player_id):
 @turn_by_turn_view
 def shares(request, game, player, turn):
 	"""
-	Shares datas
+	Shares data
 	"""
 
 	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('pk')

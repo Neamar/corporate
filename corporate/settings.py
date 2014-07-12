@@ -122,4 +122,4 @@ if 1 in sys.argv and sys.argv[1] != 'test':
 else:
     CITY = "Test"
 
-CITY_BASE_DIR = "%s/datas/cities/%s" % (BASE_DIR, CITY.lower())
+CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())

@@ -96,8 +96,8 @@ class MDCVoteOrder(Order):
 					vote_registry[top_holders[0][0]].append(c)
 		return vote_registry
 
-	def get_form(self, datas=None):
-		form = super(MDCVoteOrder, self).get_form(datas)
+	def get_form(self, data=None):
+		form = super(MDCVoteOrder, self).get_form(data)
 		form.fields['coalition_weight'] = PlainTextField(initial=str(self.get_weight()))
 
 		return form
