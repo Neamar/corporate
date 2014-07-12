@@ -149,8 +149,9 @@ Vous recevrez un message contenant toutes les actions faites par les joueurs cib
 Vous recevez un détail de toutes les actions réussies et échouées sur les corpo cible.
 
 Cette run d'Information a un coût particulier :
+
 * 150 000 ny par joueur selectionné
-* 50 000 ny par joueur selectionné
+* 50 000 ny par corporation selectionnée
 
 ### Résolution
 
@@ -158,7 +159,7 @@ Le pourcentage de chances maximum qu'une run peut atteindre est de 90%. Ce chiff
 
 > Une run d'Extraction qui a 100% de chances de réussite sera donc maxée à 90%.
 
-Les runs sont résolues par % de réussite décroissants. Une seule run de chaque type peut être réussie par cible et par marché.
+Les runs sont résolues par pourcentage de réussite décroissants. Une seule run de chaque type peut être réussie par cible et par marché.
 
 > Une run qui a 70% de chances de réussir passera toujours avant une run qui a 60% de chances de réussir. Si la première run passe, la seconde échoue automatiquement.
 
@@ -172,9 +173,9 @@ Les runs sont résolues par % de réussite décroissants. Une seule run de chaqu
     La run de Jules s'éxecute en premier puisqu'elle a plus de précision. La run de protection de Yoann s'applique, la run de Jules a donc 50% de chances de réussite. La chance n'est pas avec lui et la run échoue. La run de Matthieu s'exécute alors (avec 50% de chances puis la run de protection est active tout le tour) et la run est un succès. La branche Militaire de Renraku perd un actif et la branche Militaire de Horizon gagne un actif. Bom arrive en dernier. Une run d'extraction a déjà eu lieu sur cette cible, sa run échoue automatiquement.
 
 ## Spéculation
-Les investissements à long termes sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
+Les investissements à long terme sont cruciaux pour bâtir un empire corporatiste, mais les cadres endurcis savent qu'il y a beaucoup d'argent à faire en spéculant à court terme sur les remous du marché. 
 
-Les joueurs qui veulent miser dans le grand casino de l'East Coast Stock Exchange peuvent effectuer autant de **spéculation** qu'ils veulent. Le montant de ces spéculation ne peut dépasser `200 000 ny × (IC du spéculateur)`.
+Les joueurs qui veulent miser dans le grand casino de l'East Coast Stock Exchange peuvent effectuer autant de **spéculation** qu'ils veulent. Le montant de ces spéculations ne peut dépasser `200 000 ny × (IC du spéculateur)`.
 
 Dans chaque spéculation, le joueur choisit une corporation et mise sur son classement en fin de tour.
 
