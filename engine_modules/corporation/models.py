@@ -56,11 +56,6 @@ class BaseCorporation:
 		except KeyError:
 			self.initials_assets = 10
 
-		try:
-			self.derivative = meta['derivative'][0]
-		except KeyError:
-			self.derivative = None
-
 	def compile_effect(self, code, effect):
 		"""
 		Compile specified code. Effect is a string that will be used for stacktrace reports.

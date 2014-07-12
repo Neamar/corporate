@@ -8,6 +8,5 @@ on_first:
     update('c', 1)
 on_last:
     update(ladder[0], -1)
-derivative: Nikkei
 
 Test corporation #1

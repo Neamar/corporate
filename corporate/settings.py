@@ -55,7 +55,6 @@ INSTALLED_APPS = (
     'engine_modules.run',
     'engine_modules.corporation_run',
     'engine_modules.corporation_asset_history',
-    'engine_modules.derivative',
     'engine_modules.player_run',
     'engine_modules.speculation',
     'engine_modules.effects',
@@ -117,9 +116,10 @@ TEMPLATE_DIRS = (
 
 
 # Settings for the game
-if 1 in sys.argv and sys.argv[1] != 'test':
-    CITY = "Manhattan"
-else:
+if "test" in " ".join(sys.argv):
     CITY = "Test"
+else:
+    CITY = "Manhattan"
 
+print "LOADING %s" % CITY
 CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())

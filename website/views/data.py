@@ -54,17 +54,10 @@ def wallstreet(request, game, player, turn):
 	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
 	assets_history = AssetHistory.objects.filter(corporation__game=game, turn__lte=turn).order_by('turn', 'corporation')
 
-	# Derivatives
-	derivatives = game.derivative_set.all()
-	for derivative in derivatives:
-		derivative.assets = derivative.get_sum(turn)
-		derivative.last_assets = derivative.get_sum(turn - 1)
-
 	return {
 		"corporations": corporations,
 		"assets_history": assets_history,
 		"sorted_corporations": sorted_corporations,
-		"derivatives": derivatives,
 		"delta_categories": OrderedDict(sorted(delta_categories.items())),
 	}
 
