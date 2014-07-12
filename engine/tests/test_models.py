@@ -94,7 +94,7 @@ class ModelsTest(EngineTestCase):
 
 		newsfeed = self.g.newsfeed_set.get()
 
-		self.assertEqual(newsfeed.content, read_file_from_path('%s/datas/newsfeeds/4-matrix-buzz/datasteal/shiawase/success/1.md' % settings.BASE_DIR))
+		self.assertEqual(newsfeed.content, read_file_from_path('%s/datas/cities/manhattan/newsfeeds/4-matrix-buzz/datasteal/shiawase/success/1.md' % settings.BASE_DIR))
 
 	def test_game_add_newsfeed_from_template_read_directory(self):
 		"""
@@ -107,10 +107,10 @@ class ModelsTest(EngineTestCase):
 			newsfeed = self.g.newsfeed_set.last()
 
 			try:
-				expected_content = read_file_from_path('%s/datas/newsfeeds/4-matrix-buzz/datasteal/shiawase/success/%s.md' % (settings.BASE_DIR, i))
+				expected_content = read_file_from_path('%s/datas/cities/manhattan/newsfeeds/4-matrix-buzz/datasteal/shiawase/success/%s.md' % (settings.BASE_DIR, i))
 				self.assertEqual(newsfeed.content, expected_content)
 			except IOError:
-				expected_content = read_file_from_path('%s/datas/newsfeeds/4-matrix-buzz/datasteal/shiawase/success/_.md' % settings.BASE_DIR)
+				expected_content = read_file_from_path('%s/datas/cities/manhattan/newsfeeds/4-matrix-buzz/datasteal/shiawase/success/_.md' % settings.BASE_DIR)
 				self.assertEqual(newsfeed.content, expected_content)
 				break
 		else:
