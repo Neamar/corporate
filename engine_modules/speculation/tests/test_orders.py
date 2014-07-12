@@ -108,7 +108,7 @@ class OrdersTest(EngineTestCase):
 		"""
 		self.g.resolve_current_turn()
 
-		self.first_corporation.update_assets(-5)
+		self.first_corporation.update_assets(-2)
 
 		dso = DerivativeSpeculationOrder(
 			player=self.p,

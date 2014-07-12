@@ -126,10 +126,23 @@ class Corporation(models.Model):
 	def on_last_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_last, AssetDelta.EFFECT_LAST, ladder)
 
-	def update_assets(self, delta, category=None):
+	def update_assets(self, delta, market=None, category=None):
 		"""
 		Update assets values, and save the model
 		"""
+		if market is None:
+			market = self.historic_market
+
+		market = self.corporationmarket_set.get(market=market)
+
+		if market.value + delta < 0:
+			# A market can't be negative
+			delta = market.value
+
+		market.value += delta
+		market.save()
+
+		# Mirror changes on assets
 		self.assets += delta
 		self.save()
 

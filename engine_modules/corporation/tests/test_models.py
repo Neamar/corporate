@@ -34,5 +34,5 @@ class ModelMethodTest(EngineTestCase):
 		corporation = Corporation.objects.get(base_corporation_slug='c')
 
 		initial_assets = corporation.assets
-		corporation.update_assets(-5)
-		self.assertEqual(self.reload(corporation).assets, initial_assets - 5)
+		corporation.update_assets(-1)
+		self.assertEqual(self.reload(corporation).assets, initial_assets - 1)
