@@ -1,9 +1,9 @@
 name: Shiawase
 markets:
-    nanotechnologie - 2
-    alimentaire - 2
-    magie - 2
-    communication - 2
+    nanotechnologie: 2
+    alimentaire: 2
+    magie: 2
+    communication: 2
 datasteal: 10
 sabotage: 10
 extraction: 30

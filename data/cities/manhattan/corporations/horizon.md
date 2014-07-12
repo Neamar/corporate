@@ -1,9 +1,9 @@
 name: Horizon
 markets:
-    communication - 2
-    immobilier - 3
-    magie - 3
-    sécurité - 2
+    communication: 2
+    immobilier: 3
+    magie: 3
+    sécurité: 2
 datasteal: 10
 sabotage: 10
 extraction: 10

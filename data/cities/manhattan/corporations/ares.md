@@ -1,9 +1,9 @@
 name: Ares Macrotechnology
 markets:
-    armement - 3
-    alimentaire - 3
-    sécurité - 3
-    magie - 3
+    armement: 3
+    alimentaire: 3
+    sécurité: 3
+    magie: 3
 datasteal: 10
 sabotage: 30
 extraction: 10

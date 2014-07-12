@@ -1,9 +1,9 @@
 name: Sony Corporation
 markets:
-    alimentaire - 3
-    immobilier - 3
-    transport - 3
-    cyberware - 2
+    alimentaire: 3
+    immobilier: 3
+    transport: 3
+    cyberware: 2
 datasteal: 10
 sabotage: 10
 extraction: 20

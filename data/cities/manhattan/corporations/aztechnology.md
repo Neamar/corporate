@@ -1,9 +1,9 @@
 name: Aztechnology
 markets:
-    magie - 3
-    immobilier - 3
-    nanotechnologie - 2
-    armement - 3
+    magie: 3
+    immobilier: 3
+    nanotechnologie: 2
+    armement: 3
 datasteal: 10
 sabotage: 20
 extraction: 10

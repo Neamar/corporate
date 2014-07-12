@@ -1,9 +1,9 @@
 name: Spinrad Industries
 markets:
-    transport - 3
-    sécurité - 2
-    nanotechnologie - 2
-    santé - 2
+    transport: 3
+    sécurité: 2
+    nanotechnologie: 2
+    santé: 2
 datasteal: 10
 sabotage: 20
 extraction: 20

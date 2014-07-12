@@ -1,9 +1,9 @@
 name: Neonet
 markets:
-    cyberware - 2
-    transport - 3
-    communication - 2
-    armement - 3
+    cyberware: 2
+    transport: 3
+    communication: 2
+    armement: 3
 datasteal: 30
 sabotage: 10
 extraction: 10

@@ -1,9 +1,9 @@
 name: c
 markets:
-    armement - 3
-    cyberware - 3
-    alimentaire - 3
-    nanotechnologie - 3
+    armement: 3
+    cyberware: 3
+    alimentaire: 3
+    nanotechnologie: 3
 datasteal: 0
 sabotage: 0
 extraction: 0
