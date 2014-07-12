@@ -67,8 +67,8 @@ class InformationOrder(OffensiveRunOrder):
 			content = information_messages['fail']['citizens'] % (self.player, self.target, self.get_raw_probability())
 			self.notify_citizens(content)
 
-	def get_form(self, datas=None):
-		form = super(InformationOrder, self).get_form(datas)
+	def get_form(self, data=None):
+		form = super(InformationOrder, self).get_form(data)
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		form.fields['target'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
