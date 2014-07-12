@@ -6,6 +6,7 @@ from engine.models import Game
 from engine_modules.corporation.models import BaseCorporation, Corporation
 from engine_modules.market.models import Market, CorporationMarket
 
+
 @receiver(post_create, sender=Game)
 def auto_create_corporation(sender, instance, **kwargs):
 	"""
@@ -41,4 +42,3 @@ def auto_create_corporation(sender, instance, **kwargs):
 				market=markets[market_name],
 				value=base_corporation.market[market_name]
 			).save()
-

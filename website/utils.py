@@ -81,6 +81,7 @@ def get_shares_count(corporation, player, shares):
 
 	return len([s for s in shares if s.player_id == player.pk and s.corporation == corporation])
 
+
 def is_top_shareholder(corporation, player, shares):
 	"""
 	Return true if player is top shareholder

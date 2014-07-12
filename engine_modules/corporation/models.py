@@ -12,6 +12,7 @@ from utils.read_markdown import read_markdown
 from engine_modules.market.models import Market
 from engine.models import Game
 
+
 class BaseCorporation:
 	"""
 	Basic corporation definition, reused for each game
@@ -56,9 +57,9 @@ class BaseCorporation:
 
 		self.initials_assets = 0
 		self.market = OrderedDict()
-		markets = meta['market']	
+		markets = meta['market']
 		for market in markets[1:]:
-			name,value = market.split(" - ")
+			name, value = market.split(" - ")
 			self.market[name] = int(value)
 			self.initials_assets += int(value)
 		self.historic_market = self.market.keys()[0]
