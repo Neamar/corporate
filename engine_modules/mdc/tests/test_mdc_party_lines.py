@@ -238,12 +238,14 @@ class MDCPartyLineTest(EngineTestCase):
 		Test what happens when the DERE party line is chosen for players who voted for it
 		"""
 
+		self.assertEqual(self.reload(self.p2).money, self.initial_money)
+
 		self.set_turn_line(MDCVoteOrder.BANK, MDCVoteOrder.DERE, MDCVoteOrder.DERE)
 		self.g.resolve_current_turn()
 
 		o = CorporationSpeculationOrder(
 			player=self.p2,
-			corporation=self.c,
+			corporation=self.c3,
 			rank=1,
 			investment=5
 		)

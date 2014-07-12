@@ -22,8 +22,7 @@ class ModelsTest(TestCase):
 		corporations = Corporation.objects.all().order_by('base_corporation_slug')
 		self.assertEqual(len(corporations), len(BaseCorporation.retrieve_all()))
 
-		self.assertEqual(corporations[0].base_corporation.slug, 'ares')
-		self.assertEqual(corporations[0].base_corporation.datasteal, 10)
+		self.assertEqual(corporations[0].base_corporation.slug, 'c')
 
 
 class ModelMethodTest(EngineTestCase):
@@ -32,7 +31,7 @@ class ModelMethodTest(EngineTestCase):
 		Corporation assets should be updated
 		"""
 
-		corporation = Corporation.objects.get(base_corporation_slug='ares')
+		corporation = Corporation.objects.get(base_corporation_slug='c')
 
 		initial_assets = corporation.assets
 		corporation.update_assets(-5)

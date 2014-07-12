@@ -15,7 +15,7 @@ class ModelsTest(EngineTestCase):
 		Share should be created at current turn
 		"""
 		s = Share(
-			corporation=self.g.corporation_set.get(base_corporation_slug="renraku"),
+			corporation=self.c,
 			player=self.p
 		)
 		s.save()
@@ -27,7 +27,7 @@ class ModelsTest(EngineTestCase):
 		Share should be created at current turn
 		"""
 		s = Share(
-			corporation=self.g.corporation_set.get(base_corporation_slug="renraku"),
+			corporation=self.c,
 			player=self.p
 		)
 		s.save()
@@ -45,7 +45,7 @@ class ModelsTest(EngineTestCase):
 		g2.save()
 
 		s = Share(
-			corporation=g2.corporation_set.get(base_corporation_slug="renraku"),
+			corporation=g2.corporations['c'],
 			player=self.p
 		)
 
