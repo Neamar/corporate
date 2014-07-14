@@ -12,6 +12,9 @@ class Market(models.Model):
 	game = models.ForeignKey(Game)
 	name = models.CharField(max_length=20)
 
+	def __unicode__(self):
+		return self.name
+
 
 class CorporationMarket(models.Model):
 	"""
