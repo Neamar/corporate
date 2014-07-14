@@ -56,6 +56,9 @@ class BaseCorporation:
 		code = "\n".join(meta['on_last'])
 		self.on_last = self.compile_effect(code, "on_last")
 
+		code = "\n".join(meta['on_crash'])
+		self.on_crash = self.compile_effect(code, "on_crash")
+
 		self.initials_assets = 0
 		self.markets = OrderedDict()
 		markets = meta['markets']
