@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 from collections import OrderedDict
 
 from utils.read_markdown import read_markdown
-from engine_modules.market.models import Market, CorporationMarket
+from engine_modules.market.models import Market
 from engine.models import Game
 
 

@@ -34,8 +34,7 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 			stealer_corporation=self.c2,
 			player=self.p,
 			target_corporation=self.c,
-			target_market=self.c.corporationmarket_set.get(
-				market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=1,
 			hidden_percents=3
 		)
@@ -52,7 +51,7 @@ class DatastealRunOrderTest(RunOrdersTest):
 			target_corporation=self.c,
 			# The 3 test corporations have the same 3 first markets
 			# Only the last one is different
-			target_market=self.c.corporationmarket_set.get(
+			target_corporation_market=self.c.corporationmarket_set.get(
 				market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=0,
 		)
@@ -99,7 +98,7 @@ class DatastealRunOrderTest(RunOrdersTest):
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 
 		# The last market is different in each test corporation
-		self.dso.target_market=self.c.corporationmarket_set.get(
+		self.dso.target_corporation_market=self.c.corporationmarket_set.get(
 			market__name=self.c.base_corporation.markets.keys()[-1])
 
 		self.assertRaises(ValidationError, self.dso.clean)
@@ -116,7 +115,7 @@ class DatastealRunOrderTest(RunOrdersTest):
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
-			target_market=self.dso.target_market,
+			target_corporation_market=self.dso.target_corporation_market,
 			defense=ProtectionOrder.DATASTEAL
 		)
 		po.clean()
@@ -138,7 +137,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.so = SabotageOrder(
 			player=self.p,
 			target_corporation=self.c,
-			target_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -154,14 +153,14 @@ class SabotageRunOrderTest(RunOrdersTest):
 		Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
 		"""
 		begin_assets = self.so.target_corporation.assets
-		begin_market_value = self.so.target_market.value
+		begin_market_value = self.so.target_corporation_market.value
 
 		self.so.additional_percents = 10
 		self.so.save()
 
 		self.so.resolve()
 		
-		delta = begin_market_value - self.reload(self.so.target_market).value
+		delta = begin_market_value - self.reload(self.so.target_corporation_market).value
 		self.assertLessEqual(delta, 2)
 		self.assertGreaterEqual(delta, 0)
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets - delta)
@@ -191,7 +190,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
-			target_market=self.so.target_market,
+			target_corporation_market=self.so.target_corporation_market,
 			defense=ProtectionOrder.SABOTAGE,
 			hidden_percents=10,
 		)
@@ -212,7 +211,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		self.eo = ExtractionOrder(
 			player=self.p,
 			target_corporation=self.c,
-			target_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			kidnapper_corporation=self.c2
 		)
 		self.eo.clean()
@@ -265,7 +264,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		po = ProtectionOrder(
 			player=self.p,
 			protected_corporation=self.c,
-			target_market=self.eo.target_market,
+			target_corporation_market=self.eo.target_corporation_market,
 			defense=ProtectionOrder.EXTRACTION,
 			hidden_percents=10,
 		)
@@ -286,7 +285,7 @@ class DefensiveRunOrderTest(RunOrdersTest):
 			stealer_corporation=self.c2,
 			player=self.p,
 			target_corporation=self.c,
-			target_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=0,
 		)
 		self.dso.clean()
@@ -295,7 +294,7 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		self.so = SabotageOrder(
 			player=self.p,
 			target_corporation=self.c,
-			target_market=self.dso.target_market,
+			target_corporation_market=self.dso.target_corporation_market,
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -305,20 +304,3 @@ class DefensiveRunOrderTest(RunOrdersTest):
 
 	def tearDown(self):
 		self.set_to_original(self.so.target_corporation)
-
-	# Protection Runs have been changed, this test should be modified
-	# def test_has_base_value(self):
-	#	"""
-	#	Protection has defaut protection values
-	#	"""
-
-#		po = ProtectionOrder(
-#			player=self.p,
-#			protected_corporation=self.c,
-#			defense=ProtectionOrder.DATASTEAL,
-#			additional_percents=1,
-#		)
-#		po.save()
-#
-#		self.assertEqual(po.get_success_probability(), po.additional_percents * 10 + po.BASE_SUCCESS_PROBABILITY[po.defense])
-

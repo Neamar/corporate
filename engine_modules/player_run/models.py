@@ -26,7 +26,6 @@ class InformationOrder(OffensiveRunOrder):
 	ORDER = 800
 	title = "Lancer une run d'Information"
 
-	TIMING_MALUS_SIMILAR = 'player'
 	PROTECTION_TYPE = "datasteal"
 	BASE_SUCCESS_PROBABILITY = 60
 

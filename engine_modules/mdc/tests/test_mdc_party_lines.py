@@ -95,7 +95,7 @@ class MDCPartyLineTest(EngineTestCase):
 			stealer_corporation=self.c2,
 			player=self.p,
 			target_corporation=self.c,
-			target_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=5,
 		)
 		dso.save()
@@ -107,7 +107,7 @@ class MDCPartyLineTest(EngineTestCase):
 			stealer_corporation=self.c2,
 			player=self.p2,
 			target_corporation=self.c,
-			target_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=5,
 		)
 		dso2.save()

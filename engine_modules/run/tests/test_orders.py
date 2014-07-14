@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.run.models import RunOrder 
+from engine_modules.run.models import RunOrder
 from engine.exceptions import OrderNotAvailable
 
 
@@ -30,33 +30,31 @@ class OrdersTest(EngineTestCase):
 				pass
 
 		resolve(self.o)
-		self.assertEqual(self.reload(self.p).money, 
-						self.initial_money - RunOrder.LAUNCH_COST)
+		self.assertEqual(self.reload(self.p).money,
+					self.initial_money - RunOrder.LAUNCH_COST)
 
 		current_player_money = self.reload(self.p).money
 		self.o.has_influence_bonus = True
 		resolve(self.o)
-		self.assertEqual(self.reload(self.p).money, 
+		self.assertEqual(self.reload(self.p).money,
 			current_player_money - RunOrder.LAUNCH_COST + RunOrder.INFLUENCE_BONUS)
 
 		current_player_money = self.reload(self.p).money
 		self.o.additional_percents = 2
 		resolve(self.o)
-		self.assertEqual(self.reload(self.p).money, 
-					current_player_money - RunOrder.LAUNCH_COST + 
+		self.assertEqual(self.reload(self.p).money,
+					current_player_money - RunOrder.LAUNCH_COST +
 					RunOrder.INFLUENCE_BONUS - RunOrder.BASE_COST * 2)
 
 	def test_run_probability(self):
-		self.assertEqual(self.o.get_success_probability(), 
-					RunOrder.BASE_SUCCESS_PROBABILITY)
+		self.assertEqual(self.o.get_success_probability(), RunOrder.BASE_SUCCESS_PROBABILITY)
 
 		self.o.has_influence_bonus = True
-		self.assertEqual(self.o.get_success_probability(),
-					RunOrder.BASE_SUCCESS_PROBABILITY)
+		self.assertEqual(self.o.get_success_probability(), RunOrder.BASE_SUCCESS_PROBABILITY)
 
 		self.o.additional_percents = 2
 		self.assertEqual(self.o.get_success_probability(),
-				RunOrder.BASE_SUCCESS_PROBABILITY + 2*10)
+				RunOrder.BASE_SUCCESS_PROBABILITY + 2 * 10)
 
 		# We can have 100% probability, but only in test env.
 		self.o.additional_percents = 5

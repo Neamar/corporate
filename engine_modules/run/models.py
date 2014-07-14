@@ -30,7 +30,7 @@ class RunOrder(Order):
 		Should only be used to compute the resolve order of runs
 		"""
 		proba = RunOrder.BASE_SUCCESS_PROBABILITY
-		proba += (self.additional_percents + self.hidden_percents)*10
+		proba += (self.additional_percents + self.hidden_percents) * 10
 		return proba
 
 	def get_success_probability(self):

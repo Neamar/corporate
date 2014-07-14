@@ -4,7 +4,6 @@ from random import randint
 from engine_modules.run.models import RunOrder
 from messaging.models import Newsfeed, Note
 from engine_modules.corporation.models import Corporation, AssetDelta
-from engine.models import Player
 from website.widgets import PlainTextField
 from engine_modules.market.models import CorporationMarket
 
@@ -54,7 +53,7 @@ class OffensiveRunOrder(RunOrder):
 	Model for offensive runs.
 
 	Require subclass to define a property target_corporation, whose values will be used for protection and defense.
-	Require subclass to define a property target_market
+	Require subclass to define a property target_corporation_market
 	Require constants to be defined:
 	* PROTECTION_TYPE : Will be used to find protection run and base default values.
 
@@ -78,16 +77,16 @@ class OffensiveCorporationRunOrder(OffensiveRunOrder):
 	Model for offensive corporation runs.
 	"""
 	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
-	target_market = models.ForeignKey(CorporationMarket)
+	target_corporation_market = models.ForeignKey(CorporationMarket)
 
 	def is_successful(self):
-		protection = len(self.target_corporation.protectors.filter(
-			target_market=self.target_market,
+		protection = self.target_corporation.protectors.filter(
+			target_corporation_market=self.target_corporation_market,
 			defense=self.PROTECTION_TYPE,
-			turn=self.turn)
-			)
+			turn=self.turn
+		)
 		chances = self.get_success_probability()
-		if protection:
+		if protection.exists():
 			chances = min(chances, ProtectionOrder.MAX_PERCENTS)
 		return randint(1, 100) < chances
 
@@ -110,7 +109,7 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve_success(self):
-		self.stealer_corporation.update_assets(+1, market=self.target_market.market)
+		self.stealer_corporation.update_assets(+1, market=self.target_corporation_market.market)
 
 		# Send a note to the one who ordered the DataSteal
 		content = datasteal_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
@@ -149,9 +148,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 	PROTECTION_TYPE = "sabotage"
 
 	def resolve_success(self):
-		self.target_corporation.update_assets(-2, 
-				market=self.target_market.market,
-				category=AssetDelta.RUN_SABOTAGE)
+		self.target_corporation.update_assets(-2, market=self.target_corporation_market.market, category=AssetDelta.RUN_SABOTAGE)
 
 		# Send a note to the one who ordered the Sabotage
 		content = sabotage_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name)
@@ -194,11 +191,8 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 	kidnapper_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve_success(self):
-		self.target_corporation.update_assets(-1,
-						market=self.target_market.market,
- 						category=AssetDelta.RUN_EXTRACTION)
-		self.kidnapper_corporation.update_assets(1,
-						market=self.target_market.market)
+		self.target_corporation.update_assets(-1, market=self.target_corporation_market.market, category=AssetDelta.RUN_EXTRACTION)
+		self.kidnapper_corporation.update_assets(1, market=self.target_corporation_market.market)
 
 		# Send a note to the one who ordered the Extraction
 		content = extraction_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
@@ -264,7 +258,7 @@ class ProtectionOrder(RunOrder):
 	}
 
 	defense = models.CharField(max_length=15, choices=DEFENSE_CHOICES)
-	target_market = models.ForeignKey(CorporationMarket)
+	target_corporation_market = models.ForeignKey(CorporationMarket)
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
 
 	def resolve(self):

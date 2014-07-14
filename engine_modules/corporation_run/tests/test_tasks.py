@@ -10,7 +10,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.so = SabotageOrder(
 			player=self.p,
 			target_corporation=self.c,
-			target_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.historic_market.name),
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -48,7 +48,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 		so2 = SabotageOrder(
                         player=self.p,
                         target_corporation=self.c2,
-			target_market=self.c2.corporationmarket_set.get(market__name=self.c2.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c2.corporationmarket_set.get(market__name=self.c2.historic_market.name),
                         additional_percents=4,
                 )
 		
@@ -59,7 +59,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 		so3 = SabotageOrder(
                         player=self.p,
                         target_corporation=self.c3,
-			target_market=self.c3.corporationmarket_set.get(market__name=self.c3.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c3.corporationmarket_set.get(market__name=self.c3.historic_market.name),
                         additional_percents=8,
                 )
 		
@@ -71,21 +71,3 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets)
 		self.assertEqual(self.reload(so2.target_corporation).assets, begin_sabotaged_assets_2)
 		self.assertEqual(self.reload(so3.target_corporation).assets, begin_sabotaged_assets_3 - 2)
-
-	# Protection runs must be modified, this test should be adapted
-	#def test_protection_run_task(self):
-	#	"""
-	#	Check the task solves the run
-	#	"""
-	#	po = ProtectionOrder(
-	#		player=self.p,
-	#		protected_corporation=self.c,
-	#		defense=ProtectionOrder.SABOTAGE,
-	#	)
-	#	po.clean()
-	#	po.save()
-	#	po.additional_percents = 10
-	#	po.save()
-
-	#	self.g.resolve_current_turn()
-	#	self.assertEqual(self.reload(self.p).money, self.INITIAL_MONEY - po.get_cost())
