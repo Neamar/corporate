@@ -36,8 +36,8 @@ class VoteOrder(Order):
 
 	def get_form(self, data=None):
 		form = super(VoteOrder, self).get_form(data)
-		form.fields['corporation_market_up'].queryset = self.player.game.corporation_set.all()
-		form.fields['corporation_market_down'].queryset = self.player.game.corporation_set.all()
+		form.fields['corporation_market_up'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game)
+		form.fields['corporation_market_down'].queryset = form.fields['corporation_market_up'].queryset
 
 		return form
 
