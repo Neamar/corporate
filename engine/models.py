@@ -39,11 +39,15 @@ class Game(models.Model):
 		self.current_turn += 1
 		self.save()
 
-	def add_newsfeed(self, **kwargs):
+	def add_newsfeed(self, players=None, corporations=None, **kwargs):
 		"""
 		Create a newsfeed on the game
 		"""
 		n = Newsfeed.objects.create(turn=self.current_turn, game=self, **kwargs)
+		if players:
+			n.players = players
+		if corporations:
+			n.corporations = corporations
 		return n
 
 	def add_newsfeed_from_template(self, category, path, **kwargs):

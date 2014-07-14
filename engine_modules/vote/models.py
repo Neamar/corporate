@@ -4,7 +4,7 @@ from django.db import models
 from engine.models import Order
 from engine_modules.corporation.models import Corporation
 from engine_modules.market.models import Market
-
+from messaging.models import Newsfeed
 
 class VoteOrder(Order):
 	"""
@@ -26,6 +26,14 @@ class VoteOrder(Order):
 		# Send a note for final message
 		content = u"Vous avez voté pour avantager le marché %s de %s au détriment du marché %s de %s." % (self.market_up.name, self.corporation_up.base_corporation.name, self.market_down.name, self.corporation_down.base_corporation.name)
 		self.player.add_note(content=content)
+
+
+		# Create the newsfeed
+		content = u"%s a voté pour mettre un +1 sur le marché %s de %s." % (self.player.name, self.market_up.name, self.corporation_up.base_corporation.name) 
+		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=content, status=Newsfeed.PRIVATE, market=self.market_up, corporations=[self.corporation_up], players=[self.player])
+
+		content = u"%s a voté pour mettre un -1 sur le marché %s de %s." % (self.player.name, self.market_down.name, self.corporation_down.base_corporation.name)
+		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=content, status=Newsfeed.PRIVATE, market=self.market_down, corporations=[self.corporation_down], players=[self.player])
 
 	def description(self):
 		return u"Voter pour l'augmentation des actifs du marché %s de %s et la diminution du marché %s de %s" % (self.market_up.name, self.corporation_up.base_corporation.name, self.market_down.name, self.corporation_down.base_corporation.name)
