@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, ExtractionOrder
-from engine_modules.corporation.testcases import override_base_corporations
 from django.core.exceptions import ValidationError
 
 
@@ -91,18 +90,16 @@ class DatastealRunOrderTest(RunOrdersTest):
 
 	def test_datasteal_unavailable_market(self):
 		"""
-		Datasteal should not be able to target a corporation thet doesn't 
+		Datasteal should not be able to target a corporation thet doesn't
 		have assets in the target market
 		"""
 
-		begin_assets_stealer = self.dso.stealer_corporation.assets
-
 		# The last market is different in each test corporation
-		self.dso.target_corporation_market=self.c.corporationmarket_set.get(
+		self.dso.target_corporation_market = self.c.corporationmarket_set.get(
 			market__name=self.c.base_corporation.markets.keys()[-1])
 
 		self.assertRaises(ValidationError, self.dso.clean)
-		
+
 	def test_datasteal_interception(self):
 		"""
 		Intercepted datasteal should not change corporation assets.
@@ -159,7 +156,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.so.save()
 
 		self.so.resolve()
-		
+
 		delta = begin_market_value - self.reload(self.so.target_corporation_market).value
 		self.assertLessEqual(delta, 2)
 		self.assertGreaterEqual(delta, 0)

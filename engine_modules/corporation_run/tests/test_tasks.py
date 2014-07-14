@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation_run.models import ProtectionOrder, SabotageOrder
+from engine_modules.corporation_run.models import SabotageOrder
 
 
 class OffensiveRunTaskTest(EngineTestCase):
@@ -51,7 +51,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 			target_corporation_market=self.c2.corporationmarket_set.get(market__name=self.c2.historic_market.name),
 			additional_percents=4,
 		)
-		
+
 		so2.clean()
 		so2.save()
 		begin_sabotaged_assets_2 = so2.target_corporation.assets
@@ -62,7 +62,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 			target_corporation_market=self.c3.corporationmarket_set.get(market__name=self.c3.historic_market.name),
 			additional_percents=8,
 		)
-		
+
 		so3.clean()
 		so3.save()
 		begin_sabotaged_assets_3 = so3.target_corporation.assets

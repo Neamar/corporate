@@ -22,7 +22,7 @@ class SignalsTest(EngineTestCase):
 		self.p.influence.level = 2
 		self.p.influence.save()
 
-		#assertNoRaises
+		# assertNoRaises
 		o.clean()
 
 	def test_max_corporation_speculation_amount_in_multiple_instance(self):
@@ -35,7 +35,7 @@ class SignalsTest(EngineTestCase):
 			rank=1,
 			investment=self.p.influence.level * CorporationSpeculationOrder.MAX_AMOUNT_SPECULATION / 2 + 1
 		)
-		#assertNoRaises
+		# assertNoRaises
 		o.clean()
 		o.save()
 

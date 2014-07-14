@@ -1,10 +1,8 @@
 from engine.models import Player
 from engine.testcases import EngineTestCase
-from engine.exceptions import OrderNotAvailable
 from engine_modules.share.models import Share
 from engine_modules.mdc.models import MDCVoteOrder
-from engine_modules.speculation.models import CorporationSpeculationOrder
-from engine_modules.corporation_run.models import ProtectionOrder, DataStealOrder
+from engine_modules.corporation_run.models import DataStealOrder
 
 
 class MDCPartyLineTest(EngineTestCase):

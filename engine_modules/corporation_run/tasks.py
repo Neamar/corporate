@@ -18,6 +18,7 @@ class OffensiveRunTask(OrderResolutionTask):
 		if len(orders):
 			orders[0].resolve()
 
+
 class ProtectionRunTask(OrderResolutionTask):
 	"""
 	Debit Protection runs from players
