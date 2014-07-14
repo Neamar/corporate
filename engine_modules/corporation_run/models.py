@@ -77,7 +77,7 @@ class OffensiveRunOrder(RunOrder):
 
 	def is_detected(self):
 		"""
-		Rturn True if the run is detected
+		Return True if the run is detected
 		"""
 		if self.target_corporation is None:
 			return False
@@ -98,38 +98,13 @@ class OffensiveRunOrder(RunOrder):
 			values.append(getattr(self.target_corporation.base_corporation, self.PROTECTION_TYPE))
 		return values
 
-	def get_raw_probability(self):
-		"""
-		Compute success probability, maxed by 90%
-		"""
-		proba = super(OffensiveRunOrder, self).get_success_probability()
-		proba += self.BASE_SUCCESS_PROBABILITY
-		return proba
-
-	def get_success_probability(self):
-		"""
-		Compute success probability, maxed by 90%. Add timing malus.
-		"""
-		raw_proba = self.get_raw_probability()
-
-		kwargs = {
-			self.TIMING_MALUS_SIMILAR: getattr(self, self.TIMING_MALUS_SIMILAR),
-			"turn": self.player.game.current_turn
-		}
-		similar_runs = self.__class__.objects.filter(**kwargs).exclude(pk=self.pk)
-		better_runs = [run for run in similar_runs if run.get_raw_probability() >= raw_proba]
-		proba = raw_proba - 10 * len(better_runs)
-		return proba
-
 	def resolve(self):
-			self.player.money -= self.get_cost()
-			self.player.save()
-			if self.is_successful() and not self.is_protected():
-				self.resolve_success(self.is_detected())
-			else:
-				self.resolve_fail(self.is_detected())
-				# Repay the player
-				self.repay()
+		self.player.money -= self.get_cost()
+		self.player.save()
+		if self.is_successful() and not self.is_protected():
+			self.resolve_success(self.is_detected())
+		else:
+			self.resolve_fail(self.is_detected())
 
 	def notify_citizens(self, content):
 		"""
@@ -165,7 +140,6 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 	Order for DataSteal runs
 	"""
 	ORDER = 500
-	BASE_SUCCESS_PROBABILITY = 30
 	PROTECTION_TYPE = "datasteal"
 
 	title = "Lancer une run de Datasteal"
@@ -225,7 +199,6 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 	ORDER = 600
 	title = "Lancer une run de Sabotage"
 
-	BASE_SUCCESS_PROBABILITY = 30
 	PROTECTION_TYPE = "sabotage"
 
 	def resolve_success(self, detected):
@@ -282,7 +255,6 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 	ORDER = 700
 	title = "Lancer une run d'Extraction"
 
-	BASE_SUCCESS_PROBABILITY = 10
 	PROTECTION_TYPE = "extraction"
 
 	kidnapper_corporation = models.ForeignKey(Corporation, related_name="+")
@@ -366,14 +338,6 @@ class ProtectionOrder(RunOrder):
 
 	defense = models.CharField(max_length=15, choices=DEFENSE_CHOICES)
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
-
-	def get_success_probability(self):
-		"""
-		Compute success probability, adding base values
-		"""
-		proba = super(ProtectionOrder, self).get_success_probability()
-		proba += self.BASE_SUCCESS_PROBABILITY[self.defense]
-		return proba
 
 	def resolve(self):
 		self.player.money -= self.get_cost()
