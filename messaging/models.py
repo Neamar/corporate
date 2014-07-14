@@ -35,7 +35,7 @@ class Newsfeed(models.Model):
 	players = models.ManyToManyField('engine.Player')
 	corporations = models.ManyToManyField('corporation.Corporation')
 	status = models.CharField(max_length=15, choices=STATUS_CHOICES, default=PUBLIC)
-	market = models.ForeignKey('market.Market', null=True, on_delete=models.SET_NULL)
+	market = models.ForeignKey('market.Market', null=True)
 
 	def __unicode__(self):
 		return "%s newsfeeds" % self.get_category_display()
