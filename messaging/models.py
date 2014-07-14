@@ -2,7 +2,8 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 from utils.read_markdown import parse_markdown
-
+from engine.models import Player
+from engine_modules.corporation.models import Corporation
 
 class Newsfeed(models.Model):
 	MDC_REPORT = '1-mdc'
@@ -17,11 +18,24 @@ class Newsfeed(models.Model):
 		(ECONOMY, 'Économie'),
 	)
 
+	PUBLIC = 'public'
+	PRIVATE = 'private'
+	PUBLIC_ANONYMOUS = 'public anonymous'
+
+	STATUS_CHOICES = (
+		(PUBLIC, 'information publique'),
+		(PRIVATE, 'information privée'),
+		(PUBLIC_ANONYMOUS, 'information anonymisée mais publique'),
+	)
+
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
 	content = models.TextField(blank=True)
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
 	path = models.CharField(max_length=250, blank=True)
+	joueur = models.ForeignKey(Player, null=True, on_delete=models.SET_NULL)
+	corpo = models.ForeignKey(Corporation, null=True, on_delete=models.SET_NULL)
+	status = models.CharField(max_length=15, choices=STATUS_CHOICES, default=PUBLIC)
 
 	def __unicode__(self):
 		return "%s newsfeeds" % self.get_category_display()
