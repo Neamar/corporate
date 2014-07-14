@@ -25,7 +25,6 @@ Rules can be found in [data/docs/index.md](data/docs/index.md).
 * [100] **VoteTask** : Resolve player's corporation votes
 * [100] **MDCVoteTask** : Choose the MDC party line, and save it in an MDCVoteSession
 * [300] **MDCLineCPUBTask** : Enforce the effects of the MDC CPUB party line
-* [300] **MDCLineDEVETask** : Enforce the effects of the MDC DEVE party line
 * [349] **ProtectionRunTask** : Debit Protection runs from players
 * [350] **OffensiveRunTask** : Resolve Offensive corporations runs (DataSteal, Sabotage, Extraction)
 * [350] **InformationRunTask** : Resolve Information runs
