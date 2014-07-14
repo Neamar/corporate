@@ -6,10 +6,15 @@ class TaskTest(EngineTestCase):
 	def setUp(self):
 		super(TaskTest, self).setUp()
 
+		self.c_market = self.c.corporationmarket_set.get(market=self.c.historic_market).market
+		self.c2_market = self.c.corporationmarket_set.get(market=self.c2.historic_market).market
+
 		self.v = VoteOrder(
 			player=self.p,
 			corporation_up=self.c,
-			corporation_down=self.c2
+			market_up=self.c_market,
+			corporation_down=self.c2,
+			market_down=self.c2_market,
 		)
 		self.v.save()
 
