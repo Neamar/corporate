@@ -15,7 +15,7 @@ class OffensiveRunTask(OrderResolutionTask):
 			orders += order_type.objects.filter(player__game=game, turn=game.current_turn)
 
 		orders = sorted(orders, key=lambda order: order.get_raw_probability(), reverse=True)
-		if len(orders):
+		if orders:
 			orders[0].resolve()
 
 

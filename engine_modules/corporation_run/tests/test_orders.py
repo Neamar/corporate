@@ -33,7 +33,7 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 			stealer_corporation=self.c2,
 			player=self.p,
 			target_corporation=self.c,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporationmarket_set.get(market=self.c.historic_market),
 			additional_percents=1,
 			hidden_percents=3
 		)
@@ -51,7 +51,7 @@ class DatastealRunOrderTest(RunOrdersTest):
 			# The 3 test corporations have the same 3 first markets
 			# Only the last one is different
 			target_corporation_market=self.c.corporationmarket_set.get(
-				market__name=self.c.base_corporation.markets.keys()[0]),
+				market=self.c.historic_market),
 			additional_percents=0,
 		)
 		self.dso.clean()
@@ -134,7 +134,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.so = SabotageOrder(
 			player=self.p,
 			target_corporation=self.c,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporationmarket_set.get(market=self.c.historic_market),
 			additional_percents=0,
 		)
 		self.so.clean()
