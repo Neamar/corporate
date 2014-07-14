@@ -15,7 +15,7 @@ class TaskTest(EngineTestCase):
 
 		self.v = MDCVoteOrder(
 			player=self.p,
-			coalition=MDCVoteOrder.DERE
+			coalition=MDCVoteOrder.CPUB
 		)
 		self.v.save()
 
@@ -34,7 +34,7 @@ class TaskTest(EngineTestCase):
 		"""
 		self.v2 = MDCVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.DEVE
+			coalition=MDCVoteOrder.OPCL
 		)
 		self.v2.save()
 
@@ -49,7 +49,7 @@ class TaskTest(EngineTestCase):
 		"""
 		v2 = MDCVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.BANK
+			coalition=MDCVoteOrder.OPCL
 		)
 		v2.save()
 
@@ -72,7 +72,7 @@ class TaskTest(EngineTestCase):
 
 		v2 = MDCVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.BANK
+			coalition=MDCVoteOrder.OPCL
 		)
 		v2.save()
 

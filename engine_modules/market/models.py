@@ -12,12 +12,20 @@ class Market(models.Model):
 	game = models.ForeignKey(Game)
 	name = models.CharField(max_length=20)
 
+	def __unicode__(self):
+		return self.name.capitalize()
+
 
 class CorporationMarket(models.Model):
 	"""
 	The market entry for a Corporation
 	"""
+	class Meta:
+		ordering = ['corporation', 'market']
 
 	corporation = models.ForeignKey("corporation.Corporation")
 	market = models.ForeignKey(Market)
 	value = models.SmallIntegerField()
+
+	def __unicode__(self):
+		return "%s de %s" % (self.market, self.corporation)

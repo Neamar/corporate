@@ -17,11 +17,25 @@ class Newsfeed(models.Model):
 		(ECONOMY, 'Économie'),
 	)
 
+	PUBLIC = 'public'
+	PRIVATE = 'private'
+	PUBLIC_ANONYMOUS = 'public anonymous'
+
+	STATUS_CHOICES = (
+		(PUBLIC, 'Information publique'),
+		(PRIVATE, 'Information privée'),
+		(PUBLIC_ANONYMOUS, 'Information anonymisée mais publique'),
+	)
+
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
 	content = models.TextField(blank=True)
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
 	path = models.CharField(max_length=250, blank=True)
+	players = models.ManyToManyField('engine.Player')
+	corporations = models.ManyToManyField('corporation.Corporation')
+	status = models.CharField(max_length=15, choices=STATUS_CHOICES, default=PUBLIC)
+	market = models.ForeignKey('market.Market', null=True)
 
 	def __unicode__(self):
 		return "%s newsfeeds" % self.get_category_display()

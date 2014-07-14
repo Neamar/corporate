@@ -15,44 +15,20 @@ class MDCVoteOrder(Order):
 	ORDER = 200
 
 	CPUB = "CPUB"
-	CCIB = "CCIB"
-	DERE = "DERE"
-	DEVE = "DEVE"
-	BANK = "BANK"
-	TRAN = "TRAN"
+	OPCL = "OPCL"
+	CONS = "CONS"
 
 	# Enumerate the party lines and their meanings
 	MDC_COALITION_CHOICES = (
-		(
-			'Contrats publics / Développement urbain',
-			(
-				('CPUB', 'Contrats publics'),
-				('DEVE', u'Développement urbain'),
-			)
-		),
-		(
-			'Contrôles ciblés / Transparence',
-			(
-				('CCIB', 'Contrôles ciblés'),
-				('TRAN', u'Transparence'),
-			)
-		),
-		(
-			'Garde-fous bancaires / Dérégulation',
-			(
-				('BANK', u'Garde-fous bancaires'),
-				('DERE', u'Dérégulation'),
-			)
-		),
+		('CPUB', 'Contrats publics'),
+		('OPCL', u'Opérations clandestines'),
+		('CONS', 'Consolidation'),
 	)
 
 	MDC_OPPOSITIONS = {
-		CPUB: DEVE,
-		DEVE: CPUB,
-		CCIB: TRAN,
-		TRAN: CCIB,
-		BANK: DERE,
-		DERE: BANK
+		CPUB: OPCL,
+		OPCL: CONS,
+		CONS: CPUB,
 	}
 
 	title = "Choisir une coalition"
@@ -83,8 +59,8 @@ class MDCVoteOrder(Order):
 
 		# For each corporation, get the 2 players that have the most shares
 		for c in corporations:
-			# Filter to shares bought up to the turn this order was passed + 1
-			shareholders = (s.player for s in c.share_set.filter(turn__lte=self.player.game.current_turn + 1))
+			# Filter to shares bought up to the turn this order was passed
+			shareholders = (s.player for s in c.share_set.filter(turn__lte=self.player.game.current_turn))
 			top_holders = Counter(shareholders).most_common(2)
 			try:
 				# if they don't have the same number of shares, the first one gets a vote

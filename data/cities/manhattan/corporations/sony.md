@@ -13,6 +13,8 @@ on_first:
     update('shiawase', 1)
 on_last:
     update(ladder[-2], -2)
+on_crash:
+    # TBD
 
 Sony se comporte dans les UCAS comme elle le fait au Japon : une base stable, avec des partenariats fondés sur le principe du tout ou rien. Cela signifie entre autre qu'elle est particulièrement interdépendante des autres japanocorps, malgré son opposition idéologique avec Shiawase. Pour les Américains, Sony est synonyme de produits d'électroniques grand public, de jeux et de divertissement. Voilà pour la base. Sony a recours à des campagnes de publicités qui font en sorte que ses produits soient toujours en vue des consommateurs. Des pubs diffusées sur les écrans Sony en polymères de ruthénium en passant par des popups animé en RA et leur flotte de dirigeables publicitaires qui plane au dessus de la ville, Sony fait en sorte que sa marque ne soit jamais absente de l'esprit du consommateur.
 
