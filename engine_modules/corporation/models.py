@@ -111,16 +111,6 @@ class Corporation(models.Model):
 
 			corporation.update_assets(delta, category=delta_category)
 
-		def crash(corporation, delta):
-			if isinstance(corporation, str):
-				# Try / catch if corporation crashed
-				try:
-					corporation = self.game.corporation_set.get(base_corporation_slug=corporation)
-				except Corporation.DoesNotExist:
-					return
-
-			corporation.update_assets(delta, category=delta_category)
-
 		context = {
 			'game': self.game,
 			'ladder': ladder,

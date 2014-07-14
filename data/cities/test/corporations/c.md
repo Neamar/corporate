@@ -13,6 +13,6 @@ on_first:
 on_last:
     update(ladder[0], -1)
 on_crash:
-    crash(ladder[0], -1)
+    update(ladder[0], -1)
 
 Test corporation #1

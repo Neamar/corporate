@@ -11,8 +11,11 @@ class CrashCorporationTask(ResolutionTask):
 
 	def run(self, game):
 		corporations_to_crash = game.corporation_set.filter(assets__lte=0)
+		if not corporations_to_crash:
+			return
+
+		ladder = game.get_ladder()
 		for corporation in corporations_to_crash:
-			ladder = game.get_ladder()
 			corporation.on_crash_effect(ladder)
 			corporation.delete()
 			game.add_newsfeed(category=Newsfeed.ECONOMY, content=u"La corporation %s a crashé." % corporation.base_corporation.name)

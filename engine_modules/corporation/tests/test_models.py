@@ -16,21 +16,6 @@ class ModelsTest(EngineTestCase):
 
 		self.assertEqual(corporations[0].base_corporation.slug, 'c')
 
-	def test_all_corporations_crash_effect(self):
-		"""
-		Checking for all corporation crash_effects
-		"""
-		ladder = self.g.get_ladder()
-		for corporation in self.g.corporation_set.all():
-			sid = transaction.savepoint()
-			try:
-				corporation.on_crash_effect(ladder)
-			except:
-				e = sys.exc_value
-				message = "[%s.on_crash_effect] %s" % (corporation.base_corporation_slug, str(e))
-				raise e.__class__(message)
-			transaction.savepoint_rollback(sid)
-
 
 class ModelMethodTest(EngineTestCase):
 	def test_corporation_update_assets(self):
