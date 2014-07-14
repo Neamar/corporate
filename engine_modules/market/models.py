@@ -20,7 +20,12 @@ class CorporationMarket(models.Model):
 	"""
 	The market entry for a Corporation
 	"""
+	class Meta:
+		ordering = ['corporation', 'market']
 
 	corporation = models.ForeignKey("corporation.Corporation")
 	market = models.ForeignKey(Market)
 	value = models.SmallIntegerField()
+
+	def __unicode__(self):
+		return "%s de %s" % (self.market, self.corporation)
