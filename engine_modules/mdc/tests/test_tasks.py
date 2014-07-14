@@ -49,7 +49,7 @@ class TaskTest(EngineTestCase):
 		"""
 		v2 = MDCVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.CPUB
+			coalition=MDCVoteOrder.OPCL
 		)
 		v2.save()
 
@@ -72,7 +72,7 @@ class TaskTest(EngineTestCase):
 
 		v2 = MDCVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.BANK
+			coalition=MDCVoteOrder.OPCL
 		)
 		v2.save()
 
