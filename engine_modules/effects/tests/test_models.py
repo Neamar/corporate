@@ -15,8 +15,8 @@ class ManhattanEffectsTest(TestCase):
 
 	def setUp(self):
 		# Override to use Manhattan
-		# MANHATTAN_BASE_DIR = "%s/data/cities/manhattan" % settings.BASE_DIR
-		# BaseCorporation.BASE_CORPORATION_DIR = BaseCorporation.BASE_CORPORATION_TEMPLATE % MANHATTAN_BASE_DIR
+		MANHATTAN_BASE_DIR = "%s/data/cities/manhattan" % settings.BASE_DIR
+		BaseCorporation.BASE_CORPORATION_DIR = BaseCorporation.BASE_CORPORATION_TEMPLATE % MANHATTAN_BASE_DIR
 
 		BaseCorporation.build_dict()
 		self.g = Game()

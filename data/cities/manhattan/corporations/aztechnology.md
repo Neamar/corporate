@@ -13,6 +13,8 @@ on_first:
     update(ladder[-1], -1)
 on_last:
     update('horizon', 2)
+on_crash:
+    # TBD
 
 Basée à Atzlan (le Mexique avant qu'elle n'en prenne totalement le contrôle), Aztechnology a des oeufs dans bien plus de paniers que n'importe quelle autre megacorp. Elle produit de tout, des jeux tridéos aux armements militaires, des accessoires pour mage à la nourriture pour chiens. Acheter n'importe quel article de consommation courante a de bonnes chances de contribuer à sa cagnotte.
 
