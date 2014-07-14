@@ -19,7 +19,8 @@ class BaseCorporation:
 	Implemented as a separate non-model class to avoid cluttering the database
 	"""
 
-	BASE_CORPORATION_DIR = "%s/corporations" % (settings.CITY_BASE_DIR)
+	BASE_CORPORATION_TEMPLATE = "%s/corporations"
+	BASE_CORPORATION_DIR = BASE_CORPORATION_TEMPLATE % (settings.CITY_BASE_DIR)
 
 	@classmethod
 	def build_dict(cls):
