@@ -132,7 +132,7 @@ class Corporation(models.Model):
 		self.apply_effect(self.base_corporation.on_last, AssetDelta.EFFECT_LAST, ladder)
 
 	def on_crash_effect(self, ladder):
-		self.apply_effect(self.base_corporation.on_crash, AssetDelta.CRASH, ladder)
+		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
 
 	def update_assets(self, delta, market=None, category=None):
 		"""
@@ -167,18 +167,18 @@ class AssetDelta(models.Model):
 	"""
 	EFFECT_FIRST = 'effect-first'
 	EFFECT_LAST = 'effect-last'
+	EFFECT_CRASH = 'effect-crash'
 	RUN_SABOTAGE = 'sabotage'
 	RUN_EXTRACTION = 'extraction'
 	MDC = 'mdc'
-	CRASH = 'crash'
 
 	CATEGORY_CHOICES = (
 		(EFFECT_FIRST, 'Eff. premier'),
 		(EFFECT_LAST, 'Eff. dernier'),
+		(EFFECT_CRASH, 'effect-crash')
 		(RUN_SABOTAGE, 'Sabotage'),
 		(RUN_EXTRACTION, 'Extraction'),
 		(MDC, 'MDC'),
-		(CRASH, 'crash')
 	)
 
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)

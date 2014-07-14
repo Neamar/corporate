@@ -22,9 +22,9 @@ class ModelsTest(TestCase):
 		for corporation in self.g.corporation_set.all():
 			sid = transaction.savepoint()
 			try:
-				corporation.on_first_effect(ladder)
+				corporation.on_crash_effect(ladder)
 			except:
 				e = sys.exc_value
-				message = "[%s.on_first_effect] %s" % (corporation.base_corporation_slug, str(e))
+				message = "[%s.on_crash_effect] %s" % (corporation.base_corporation_slug, str(e))
 				raise e.__class__(message)
 			transaction.savepoint_rollback(sid)
