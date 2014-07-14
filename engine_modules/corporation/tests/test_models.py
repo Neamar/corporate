@@ -7,7 +7,6 @@ class ModelsTest(EngineTestCase):
 		"""
 		Corporation should have been created alongside the game
 		"""
-
 		corporations = Corporation.objects.all().order_by('base_corporation_slug')
 		self.assertEqual(len(corporations), len(BaseCorporation.retrieve_all()))
 

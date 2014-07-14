@@ -56,6 +56,9 @@ class BaseCorporation:
 		code = "\n".join(meta['on_last'])
 		self.on_last = self.compile_effect(code, "on_last")
 
+		code = "\n".join(meta['on_crash'])
+		self.on_crash = self.compile_effect(code, "on_crash")
+
 		self.initials_assets = 0
 		self.markets = OrderedDict()
 		markets = meta['markets']
@@ -122,6 +125,9 @@ class Corporation(models.Model):
 	def on_last_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_last, AssetDelta.EFFECT_LAST, ladder)
 
+	def on_crash_effect(self, ladder):
+		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
+
 	def update_assets(self, delta, market=None, category=None):
 		"""
 		Update assets values, and save the model
@@ -155,6 +161,7 @@ class AssetDelta(models.Model):
 	"""
 	EFFECT_FIRST = 'effect-first'
 	EFFECT_LAST = 'effect-last'
+	EFFECT_CRASH = 'effect-crash'
 	RUN_SABOTAGE = 'sabotage'
 	RUN_EXTRACTION = 'extraction'
 	MDC = 'mdc'
@@ -162,6 +169,7 @@ class AssetDelta(models.Model):
 	CATEGORY_CHOICES = (
 		(EFFECT_FIRST, 'Eff. premier'),
 		(EFFECT_LAST, 'Eff. dernier'),
+		(EFFECT_CRASH, 'effect-crash'),
 		(RUN_SABOTAGE, 'Sabotage'),
 		(RUN_EXTRACTION, 'Extraction'),
 		(MDC, 'MDC'),
