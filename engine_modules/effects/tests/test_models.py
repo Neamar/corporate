@@ -13,7 +13,8 @@ class ManhattanEffectsTest(TestCase):
 	Retrieve all Manhattan corporations, and check their first and last effects
 	"""
 
-	def setUp(self):
+	@classmethod
+	def setUpClass(self):
 		# Override to use Manhattan
 		MANHATTAN_BASE_DIR = "%s/data/cities/manhattan" % settings.BASE_DIR
 		BaseCorporation.BASE_CORPORATION_DIR = BaseCorporation.BASE_CORPORATION_TEMPLATE % MANHATTAN_BASE_DIR
@@ -22,9 +23,11 @@ class ManhattanEffectsTest(TestCase):
 		self.g = Game()
 		self.g.save()
 
-	def tearDown(self):
+	@classmethod
+	def tearDownClass(self):
 		BaseCorporation.BASE_CORPORATION_DIR = BaseCorporation.BASE_CORPORATION_TEMPLATE % settings.CITY_BASE_DIR
 		BaseCorporation.build_dict()
+		self.g.delete()
 
 	def test_all_corporations_first_effect(self):
 		"""
