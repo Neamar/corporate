@@ -35,6 +35,8 @@ class BuyInfluenceOrder(Order):
 		# Send a note for final message
 		content = u"Votre Influence dans le milieu corporatiste monte à %i." % self.player.influence.level
 		self.player.add_note(content=content)
+
+		# Newsfeed
 		newsfeed_content = u"L'Influence Corporatiste de %s monte à %i." % (self.player.name, self.player.influence.level)
 		self.player.game.add_newsfeed(category=Newsfeed.PEOPLE, content=newsfeed_content, players=[self.player], status=Newsfeed.PUBLIC)
 

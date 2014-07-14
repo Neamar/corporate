@@ -22,9 +22,9 @@ class Newsfeed(models.Model):
 	PUBLIC_ANONYMOUS = 'public anonymous'
 
 	STATUS_CHOICES = (
-		(PUBLIC, 'information publique'),
-		(PRIVATE, 'information privée'),
-		(PUBLIC_ANONYMOUS, 'information anonymisée mais publique'),
+		(PUBLIC, 'Information publique'),
+		(PRIVATE, 'Information privée'),
+		(PUBLIC_ANONYMOUS, 'Information anonymisée mais publique'),
 	)
 
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
