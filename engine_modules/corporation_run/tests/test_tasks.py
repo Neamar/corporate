@@ -46,22 +46,22 @@ class OffensiveRunTaskTest(EngineTestCase):
 		begin_sabotaged_assets = self.so.target_corporation.assets
 
 		so2 = SabotageOrder(
-                        player=self.p,
-                        target_corporation=self.c2,
+			player=self.p,
+			target_corporation=self.c2,
 			target_corporation_market=self.c2.corporationmarket_set.get(market__name=self.c2.historic_market.name),
-                        additional_percents=4,
-                )
+			additional_percents=4,
+		)
 		
 		so2.clean()
 		so2.save()
 		begin_sabotaged_assets_2 = so2.target_corporation.assets
 
 		so3 = SabotageOrder(
-                        player=self.p,
-                        target_corporation=self.c3,
+			player=self.p,
+			target_corporation=self.c3,
 			target_corporation_market=self.c3.corporationmarket_set.get(market__name=self.c3.historic_market.name),
-                        additional_percents=8,
-                )
+			additional_percents=8,
+		)
 		
 		so3.clean()
 		so3.save()

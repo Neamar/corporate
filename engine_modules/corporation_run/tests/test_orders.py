@@ -110,7 +110,7 @@ class DatastealRunOrderTest(RunOrdersTest):
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 
 		# Needed to make the datasteal fail unconditionally
-		ProtectionOrder.MAX_PERCENTS=0
+		ProtectionOrder.MAX_PERCENTS = 0
 
 		po = ProtectionOrder(
 			player=self.p,
@@ -185,7 +185,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		begin_assets = self.so.target_corporation.assets
 
 		# Needed to make the sabotage fail unconditionally
-		ProtectionOrder.MAX_PERCENTS=0
+		ProtectionOrder.MAX_PERCENTS = 0
 
 		po = ProtectionOrder(
 			player=self.p,
@@ -259,7 +259,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		begin_assets_kidnapper = self.eo.kidnapper_corporation.assets
 
 		# Needed to make the extraction fail unconditionally
-		ProtectionOrder.MAX_PERCENTS=0
+		ProtectionOrder.MAX_PERCENTS = 0
 
 		po = ProtectionOrder(
 			player=self.p,
