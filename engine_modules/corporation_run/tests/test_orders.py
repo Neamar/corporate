@@ -88,18 +88,6 @@ class DatastealRunOrderTest(RunOrdersTest):
 		self.dso.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 
-	def test_datasteal_unavailable_market(self):
-		"""
-		Datasteal should not be able to target a corporation thet doesn't
-		have assets in the target market
-		"""
-
-		# The last market is different in each test corporation
-		self.dso.target_corporation_market = self.c.corporationmarket_set.get(
-			market__name=self.c.base_corporation.markets.keys()[-1])
-
-		self.assertRaises(ValidationError, self.dso.clean)
-
 	def test_datasteal_interception(self):
 		"""
 		Intercepted datasteal should not change corporation assets.
@@ -150,7 +138,9 @@ class SabotageRunOrderTest(RunOrdersTest):
 		Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
 		"""
 		begin_assets = self.so.target_corporation.assets
-		begin_market_value = self.so.target_corporation_market.value
+		self.so.target_corporation_market.value = 8
+		self.so.target_corporation_market.save()
+		begin_market_value = self.reload(self.so.target_corporation_market).value
 
 		self.so.additional_percents = 10
 		self.so.save()
@@ -158,8 +148,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.so.resolve()
 
 		delta = begin_market_value - self.reload(self.so.target_corporation_market).value
-		self.assertLessEqual(delta, 2)
-		self.assertGreaterEqual(delta, 0)
+		self.assertEqual(delta, 2)
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets - delta)
 
 	def test_sabotage_failure(self):

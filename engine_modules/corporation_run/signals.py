@@ -20,6 +20,18 @@ def datasteal_target_stealer_differ(sender, instance, **kwargs):
 		raise OrderNotAvailable("La cible et le bénéficiaire doivent être différents !")
 
 
+
+@receiver(validate_order, sender=ExtractionOrder)
+def extraction_target_stealer_differ(sender, instance, **kwargs):
+	"""
+	Extraction target and kidnapper must be different
+	"""
+	if not hasattr(instance, 'target_corporation'):
+		return
+
+	if instance.target_corporation == instance.kidnapper_corporation:
+		raise OrderNotAvailable("La cible et le bénéficiaire doivent être différents !")
+
 @receiver(validate_order, sender=DataStealOrder)
 def datasteal_both_have_target_corporation_market(sender, instance, **kwargs):
 	"""
@@ -32,14 +44,38 @@ def datasteal_both_have_target_corporation_market(sender, instance, **kwargs):
 	if instance.target_corporation_market.market.name not in instance.stealer_corporation.base_corporation.markets.keys():
 		raise ValidationError("Target market is absent from stealer corporation.")
 
+@receiver(validate_order, sender=ExtractionOrder)
+def extraction_both_have_target_corporation_market(sender, instance, **kwargs):
+	"""
+	The target and the stealer in an extraction must both have assets on the target market
+	"""
+
+	if instance.target_corporation_market.market.name not in instance.target_corporation.base_corporation.markets.keys():
+		raise ValidationError("Target market is absent from target corporation.")
+
+	if instance.target_corporation_market.market.name not in instance.kidnapper_corporation.base_corporation.markets.keys():
+		raise ValidationError("Target market is absent from stealer corporation.")
+
+@receiver(validate_order, sender=DataStealOrder)
+def datasteal_target_above_stealer(sender, instance, **kwargs):
+	"""
+	The target in a datasteal must have more assets than the stealer on the target market
+	"""
+
+	target_value = instance.target_corporation.corporationmarket_set.get(market__name=instance.target_corporation_market.market.name).value
+	stealer_value = instance.stealer_corporation.corporationmarket_set.get(market__name=instance.target_corporation_market.market.name).value
+
+	if target_value < stealer_value:
+		raise ValidationError("Target corporation is below the stealer on this market")
 
 @receiver(validate_order, sender=ExtractionOrder)
-def extraction_target_stealer_differ(sender, instance, **kwargs):
+def extraction_target_above_stealer(sender, instance, **kwargs):
 	"""
-	Extraction target and kidnapper must be different
+	The target in an extraction must have more assets than the stealer on the target market
 	"""
-	if not hasattr(instance, 'target_corporation'):
-		return
 
-	if instance.target_corporation == instance.kidnapper_corporation:
-		raise OrderNotAvailable("La cible et le bénéficiaire doivent être différents !")
+	target_value = instance.target_corporation.corporationmarket_set.get(market__name=instance.target_corporation_market.market.name).value
+	stealer_value = instance.kidnapper_corporation.corporationmarket_set.get(market__name=instance.target_corporation_market.market.name).value
+
+	if target_value < stealer_value:
+		raise ValidationError("Target corporation is below the kidnapper on this market")
