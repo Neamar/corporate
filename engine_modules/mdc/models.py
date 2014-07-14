@@ -15,45 +15,15 @@ class MDCVoteOrder(Order):
 	ORDER = 200
 
 	CPUB = "CPUB"
-	CCIB = "CCIB"
-	DERE = "DERE"
-	DEVE = "DEVE"
-	BANK = "BANK"
-	TRAN = "TRAN"
+	OPCL = "OPCL"
+	CONS = "CONS"
 
 	# Enumerate the party lines and their meanings
 	MDC_COALITION_CHOICES = (
-		(
-			'Contrats publics / Développement urbain',
-			(
-				('CPUB', 'Contrats publics'),
-				('DEVE', u'Développement urbain'),
-			)
-		),
-		(
-			'Contrôles ciblés / Transparence',
-			(
-				('CCIB', 'Contrôles ciblés'),
-				('TRAN', u'Transparence'),
-			)
-		),
-		(
-			'Garde-fous bancaires / Dérégulation',
-			(
-				('BANK', u'Garde-fous bancaires'),
-				('DERE', u'Dérégulation'),
-			)
-		),
+		('CPUB', 'Contrats publics'),
+		('OPCL', u'Opérations clandestines'),
+		('CONS', 'Consolidation'),
 	)
-
-	MDC_OPPOSITIONS = {
-		CPUB: DEVE,
-		DEVE: CPUB,
-		CCIB: TRAN,
-		TRAN: CCIB,
-		BANK: DERE,
-		DERE: BANK
-	}
 
 	title = "Choisir une coalition"
 
