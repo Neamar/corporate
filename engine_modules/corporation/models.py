@@ -175,7 +175,7 @@ class AssetDelta(models.Model):
 	CATEGORY_CHOICES = (
 		(EFFECT_FIRST, 'Eff. premier'),
 		(EFFECT_LAST, 'Eff. dernier'),
-		(EFFECT_CRASH, 'effect-crash')
+		(EFFECT_CRASH, 'effect-crash'),
 		(RUN_SABOTAGE, 'Sabotage'),
 		(RUN_EXTRACTION, 'Extraction'),
 		(MDC, 'MDC'),

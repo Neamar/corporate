@@ -1,4 +1,8 @@
+import sys
+
 from django.test import TestCase
+from django.db import transaction
+
 from engine.models import Game
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation, Corporation
@@ -23,6 +27,21 @@ class ModelsTest(TestCase):
 		self.assertEqual(len(corporations), len(BaseCorporation.retrieve_all()))
 
 		self.assertEqual(corporations[0].base_corporation.slug, 'c')
+
+	def test_all_corporations_first_effect(self):
+		"""
+		Checking for all corporation first_effects
+		"""
+		ladder = self.g.get_ladder()
+		for corporation in self.g.corporation_set.all():
+			sid = transaction.savepoint()
+			try:
+				corporation.on_first_effect(ladder)
+			except:
+				e = sys.exc_value
+				message = "[%s.on_first_effect] %s" % (corporation.base_corporation_slug, str(e))
+				raise e.__class__(message)
+			transaction.savepoint_rollback(sid)
 
 
 class ModelMethodTest(EngineTestCase):
