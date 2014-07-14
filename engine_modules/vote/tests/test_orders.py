@@ -1,6 +1,9 @@
+from django.core.exceptions import ValidationError
+
 from engine.testcases import EngineTestCase
 from engine.exceptions import OrderNotAvailable
 from engine_modules.vote.models import VoteOrder
+from engine_modules.market.models import Market
 
 
 class OrdersTest(EngineTestCase):
@@ -45,3 +48,35 @@ class OrdersTest(EngineTestCase):
 		)
 
 		self.assertRaises(OrderNotAvailable, o2.clean)
+
+	def test_cant_vote_nonexisting_market_up(self):
+		m = Market(
+			name="non_existing",
+			game=self.g
+		)
+		m.save()
+
+		o = VoteOrder(
+			corporation_up=self.c,
+			market_up=m,
+			corporation_down=self.c2,
+			market_down=self.c2_market,
+			player=self.p
+		)
+		self.assertRaises(ValidationError, o.clean)
+
+	def test_cant_vote_nonexisting_market_down(self):
+		m = Market(
+			name="non_existing",
+			game=self.g
+		)
+		m.save()
+
+		o = VoteOrder(
+			corporation_up=self.c,
+			market_up=self.c_market,
+			corporation_down=self.c2,
+			market_down=m,
+			player=self.p
+		)
+		self.assertRaises(ValidationError, o.clean)
