@@ -32,8 +32,8 @@ class Newsfeed(models.Model):
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
 	path = models.CharField(max_length=250, blank=True)
-	player = models.ForeignKey('engine.Player', null=True, on_delete=models.SET_NULL)
-	corpo = models.ForeignKey('corporation.Corporation', null=True, on_delete=models.SET_NULL)
+	players = models.ManyToManyField('engine.Player')
+	corporations = models.ManyToManyField('corporation.Corporation')
 	status = models.CharField(max_length=15, choices=STATUS_CHOICES, default=PUBLIC)
 	market = models.ForeignKey('market.Market', null=True, on_delete=models.SET_NULL)
 
