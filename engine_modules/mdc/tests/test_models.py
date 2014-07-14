@@ -8,7 +8,7 @@ class ModelsTest(EngineTestCase):
 
 		self.v = MDCVoteOrder(
 			player=self.p,
-			coalition=MDCVoteOrder.DERE
+			coalition=MDCVoteOrder.CPUB
 		)
 		self.v.clean()
 		self.v.save()

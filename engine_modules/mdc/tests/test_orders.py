@@ -10,7 +10,7 @@ class OrdersTest(EngineTestCase):
 
 		self.v = MDCVoteOrder(
 			player=self.p,
-			coalition=MDCVoteOrder.DERE
+			coalition=MDCVoteOrder.CPUB
 		)
 		self.v.save()
 
@@ -100,7 +100,7 @@ class OrdersTest(EngineTestCase):
 
 		instance = MDCVoteOrder(player=self.p)
 
-		form = instance.get_form({'coalition': MDCVoteOrder.DERE, 'player': self.p})
+		form = instance.get_form({'coalition': MDCVoteOrder.CPUB, 'player': self.p})
 		self.assertTrue(form.is_valid())
 
 		form = instance.get_form({'coalition': None, 'player': self.p})
