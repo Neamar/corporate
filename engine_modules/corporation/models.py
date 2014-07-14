@@ -107,6 +107,16 @@ class Corporation(models.Model):
 
 			corporation.update_assets(delta, category=delta_category)
 
+		def crash(corporation, delta):
+			if isinstance(corporation, str):
+				# Try / catch if corporation crashed
+				try:
+					corporation = self.game.corporation_set.get(base_corporation_slug=corporation)
+				except Corporation.DoesNotExist:
+					return
+
+			corporation.update_assets(delta, category=delta_category)
+
 		context = {
 			'game': self.game,
 			'ladder': ladder,
@@ -120,6 +130,9 @@ class Corporation(models.Model):
 
 	def on_last_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_last, AssetDelta.EFFECT_LAST, ladder)
+
+	def on_crash_effect(self, ladder):
+		self.apply_effect(self.base_corporation.on_crash, AssetDelta.CRASH, ladder)
 
 	def update_assets(self, delta, market=None, category=None):
 		"""
@@ -157,6 +170,7 @@ class AssetDelta(models.Model):
 	RUN_SABOTAGE = 'sabotage'
 	RUN_EXTRACTION = 'extraction'
 	MDC = 'mdc'
+	CRASH = 'crash'
 
 	CATEGORY_CHOICES = (
 		(EFFECT_FIRST, 'Eff. premier'),
@@ -164,6 +178,7 @@ class AssetDelta(models.Model):
 		(RUN_SABOTAGE, 'Sabotage'),
 		(RUN_EXTRACTION, 'Extraction'),
 		(MDC, 'MDC'),
+		(CRASH, 'crash')
 	)
 
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
