@@ -1,10 +1,8 @@
 from engine.models import Player
 from engine.testcases import EngineTestCase
-from engine.exceptions import OrderNotAvailable
 from engine_modules.share.models import Share
 from engine_modules.mdc.models import MDCVoteOrder
-from engine_modules.speculation.models import CorporationSpeculationOrder
-from engine_modules.corporation_run.models import ProtectionOrder, DataStealOrder
+from engine_modules.corporation_run.models import DataStealOrder
 
 
 class MDCPartyLineTest(EngineTestCase):
@@ -95,6 +93,7 @@ class MDCPartyLineTest(EngineTestCase):
 			stealer_corporation=self.c2,
 			player=self.p,
 			target_corporation=self.c,
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=5,
 		)
 		dso.save()
@@ -106,6 +105,7 @@ class MDCPartyLineTest(EngineTestCase):
 			stealer_corporation=self.c2,
 			player=self.p2,
 			target_corporation=self.c,
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=5,
 		)
 		dso2.save()

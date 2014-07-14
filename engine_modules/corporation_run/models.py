@@ -4,9 +4,8 @@ from random import randint
 from engine_modules.run.models import RunOrder
 from messaging.models import Newsfeed, Note
 from engine_modules.corporation.models import Corporation, AssetDelta
-from engine.models import Player
 from website.widgets import PlainTextField
-
+from engine_modules.market.models import CorporationMarket
 
 datasteal_messages = {
 	'success': {
@@ -54,103 +53,42 @@ class OffensiveRunOrder(RunOrder):
 	Model for offensive runs.
 
 	Require subclass to define a property target_corporation, whose values will be used for protection and defense.
+	Require subclass to define a property target_corporation_market
 	Require constants to be defined:
-
 	* PROTECTION_TYPE : Will be used to find protection run and base default values.
-	* TIMING_MALUS_SIMILAR value to consider for the timing malus.
-	* BASE_SUCCESS_PROBABILITY base probability for resolution
 
 	Checks for Protection Runs.
-	Implements timing malus.
 	"""
 	class Meta:
 		abstract = True
 
-	def is_protected(self):
-		"""
-		Return True if the run is defended against
-		"""
-		for protection in self.get_protection_values():
-			if randint(1, 100) <= protection:
-				return True
-		return False
-
-	def is_detected(self):
-		"""
-		Rturn True if the run is detected
-		"""
-		if self.target_corporation is None:
-			return False
-
-		if randint(1, 100) <= self.target_corporation.base_corporation.detection:
-			return True
-		return False
-
-	def get_protection_values(self):
-		"""
-		Return a list of defenses probabilities
-		"""
-		values = []
-		if self.target_corporation is not None:
-			for protector in self.target_corporation.protectors.filter(defense=self.PROTECTION_TYPE):
-				values.append(protector.get_success_probability())
-
-			values.append(getattr(self.target_corporation.base_corporation, self.PROTECTION_TYPE))
-		return values
-
-	def get_raw_probability(self):
-		"""
-		Compute success probability, maxed by 90%
-		"""
-		proba = super(OffensiveRunOrder, self).get_success_probability()
-		proba += self.BASE_SUCCESS_PROBABILITY
-		return proba
-
-	def get_success_probability(self):
-		"""
-		Compute success probability, maxed by 90%. Add timing malus.
-		"""
-		raw_proba = self.get_raw_probability()
-
-		kwargs = {
-			self.TIMING_MALUS_SIMILAR: getattr(self, self.TIMING_MALUS_SIMILAR),
-			"turn": self.player.game.current_turn
-		}
-		similar_runs = self.__class__.objects.filter(**kwargs).exclude(pk=self.pk)
-		better_runs = [run for run in similar_runs if run.get_raw_probability() >= raw_proba]
-		proba = raw_proba - 10 * len(better_runs)
-		return proba
-
 	def resolve(self):
-			self.player.money -= self.get_cost()
-			self.player.save()
-			if self.is_successful() and not self.is_protected():
-				self.resolve_success(self.is_detected())
-			else:
-				self.resolve_fail(self.is_detected())
-				# Repay the player
-				self.repay()
+		self.player.money -= self.get_cost()
+		self.player.save()
 
-	def notify_citizens(self, content):
-		"""
-		Send a message to target_corporation citizens
-		"""
-		n = Note(
-			category=Note.RUNS,
-			content=content,
-			turn=self.player.game.current_turn,
-		)
-		n.save()
-		n.recipient_set = Player.objects.filter(citizenship__corporation=self.target_corporation)
+		if self.is_successful():
+			self.resolve_success()
+		else:
+			self.resolve_fail()
 
 
 class OffensiveCorporationRunOrder(OffensiveRunOrder):
 	"""
 	Model for offensive corporation runs.
 	"""
-	TIMING_MALUS_SIMILAR = 'target_corporation'
-
 	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
+	target_corporation_market = models.ForeignKey(CorporationMarket)
+
+	def is_successful(self):
+		protection = self.target_corporation.protectors.filter(
+			target_corporation_market=self.target_corporation_market,
+			defense=self.PROTECTION_TYPE,
+			turn=self.turn
+		)
+		chances = self.get_success_probability()
+		if protection.exists():
+			chances = min(chances, ProtectionOrder.MAX_PERCENTS)
+		return randint(1, 100) < chances
 
 	def get_form(self, data=None):
 		form = super(OffensiveRunOrder, self).get_form(data)
@@ -165,48 +103,30 @@ class DataStealOrder(OffensiveCorporationRunOrder):
 	Order for DataSteal runs
 	"""
 	ORDER = 500
-	BASE_SUCCESS_PROBABILITY = 30
 	PROTECTION_TYPE = "datasteal"
 
 	title = "Lancer une run de Datasteal"
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
 
-	def resolve_success(self, detected):
-		self.stealer_corporation.update_assets(+1)
+	def resolve_success(self):
+		self.stealer_corporation.update_assets(+1, market=self.target_corporation_market.market)
 
 		# Send a note to the one who ordered the DataSteal
 		content = datasteal_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
 
-		if detected:
-			# Send a note to citizens
-			content = datasteal_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
-			# Send a note to everybody
-			content = datasteal_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
+		# And some RP
+		path = u'datasteal/%s/success' % self.target_corporation.base_corporation.slug
+		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
-			# And some RP
-			path = u'datasteal/%s/success' % self.target_corporation.base_corporation.slug
-			self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
-
-	def resolve_fail(self, detected):
+	def resolve_fail(self):
 		# Send a note to the one who ordered the DataSteal
 		content = datasteal_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
 
-		if detected:
-			# Send a note to citizens
-			content = datasteal_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
-
-			# Send a note to everybody
-			content = datasteal_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
-
-			# And some RP
-			path = u'datasteal/%s/failure' % self.target_corporation.base_corporation.slug
-			self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
+		# And some RP
+		path = u'datasteal/%s/failure' % self.target_corporation.base_corporation.slug
+		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
 	def description(self):
 		return u"Envoyer une équipe voler des données de %s pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
@@ -225,25 +145,14 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 	ORDER = 600
 	title = "Lancer une run de Sabotage"
 
-	BASE_SUCCESS_PROBABILITY = 30
 	PROTECTION_TYPE = "sabotage"
 
-	def resolve_success(self, detected):
-		self.target_corporation.update_assets(-2, category=AssetDelta.RUN_SABOTAGE)
+	def resolve_success(self):
+		self.target_corporation.update_assets(-2, market=self.target_corporation_market.market, category=AssetDelta.RUN_SABOTAGE)
 
 		# Send a note to the one who ordered the Sabotage
 		content = sabotage_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
-
-		if detected:
-			# Send a note to citizens
-			content = sabotage_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
-		else:
-			# Sabotage are public, even when not detected.
-			# Send another note to citizens, with less details
-			content = sabotage_messages['success']['citizens_undetected'] % (self.target_corporation.base_corporation.name)
-			self.notify_citizens(content)
 
 		# Send a note to everybody
 		content = sabotage_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
@@ -253,23 +162,18 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 		path = u'sabotage/%s/success' % self.target_corporation.base_corporation.slug
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
-	def resolve_fail(self, detected):
+	def resolve_fail(self):
 		# Send a note to the one who ordered the Sabotage
 		content = sabotage_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
 
-		if detected:
-			# Send a note to citizens
-			content = sabotage_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
+		# Send a note to everybody
+		content = sabotage_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
+		self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
-			# Send a note to everybody
-			content = sabotage_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
-
-			# And some RP
-			path = u'sabotage/%s/failure' % self.target_corporation.base_corporation.slug
-			self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
+		# And some RP
+		path = u'sabotage/%s/failure' % self.target_corporation.base_corporation.slug
+		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
 	def description(self):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
@@ -282,49 +186,38 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 	ORDER = 700
 	title = "Lancer une run d'Extraction"
 
-	BASE_SUCCESS_PROBABILITY = 10
 	PROTECTION_TYPE = "extraction"
 
 	kidnapper_corporation = models.ForeignKey(Corporation, related_name="+")
 
-	def resolve_success(self, detected):
-		self.target_corporation.update_assets(-1, category=AssetDelta.RUN_EXTRACTION)
-		self.kidnapper_corporation.update_assets(1)
+	def resolve_success(self):
+		self.target_corporation.update_assets(-1, market=self.target_corporation_market.market, category=AssetDelta.RUN_EXTRACTION)
+		self.kidnapper_corporation.update_assets(1, market=self.target_corporation_market.market)
 
 		# Send a note to the one who ordered the Extraction
 		content = extraction_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
 
-		if detected:
-			# Send a note to citizens
-			content = extraction_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
+		# Send a note to everybody
+		content = extraction_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
+		self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
-			# Send a note to everybody
-			content = extraction_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
+		# And some RP
+		path = u'extraction/%s/success' % self.target_corporation.base_corporation.slug
+		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
-			# And some RP
-			path = u'extraction/%s/success' % self.target_corporation.base_corporation.slug
-			self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
-
-	def resolve_fail(self, detected):
+	def resolve_fail(self):
 		# Send a note to the one who ordered the DataSteal
 		content = extraction_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
 
-		if detected:
-			# Send a note to citizens
-			content = extraction_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
+		# Send a note to everybody
+		content = extraction_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
+		self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
-			# Send a note to everybody
-			content = extraction_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
-
-			# And some RP
-			path = u'extraction/%s/failure' % self.target_corporation.base_corporation.slug
-			self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
+		# And some RP
+		path = u'extraction/%s/failure' % self.target_corporation.base_corporation.slug
+		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
 	def description(self):
 		return u"Réaliser une extraction de %s vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
@@ -365,15 +258,8 @@ class ProtectionOrder(RunOrder):
 	}
 
 	defense = models.CharField(max_length=15, choices=DEFENSE_CHOICES)
+	target_corporation_market = models.ForeignKey(CorporationMarket)
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
-
-	def get_success_probability(self):
-		"""
-		Compute success probability, adding base values
-		"""
-		proba = super(ProtectionOrder, self).get_success_probability()
-		proba += self.BASE_SUCCESS_PROBABILITY[self.defense]
-		return proba
 
 	def resolve(self):
 		self.player.money -= self.get_cost()
