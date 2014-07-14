@@ -25,6 +25,12 @@ class MDCVoteOrder(Order):
 		('CONS', 'Consolidation'),
 	)
 
+	MDC_OPPOSITIONS = {
+		CPUB: OPCL,
+		OPCL: CONS,
+		CONS: CPUB,
+	}
+
 	title = "Choisir une coalition"
 
 	coalition = models.CharField(max_length=4, choices=MDC_COALITION_CHOICES, blank=True, null=True, default=None)
