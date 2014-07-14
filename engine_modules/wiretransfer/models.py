@@ -33,9 +33,9 @@ class WiretransferOrder(Order):
 		m.save()
 		m.recipient_set.add(self.player, self.recipient)
 
-		#Newsfeed
+		# Newsfeed
 		content = u"%s a donné %s k¥ à %s." % (self.player, self.amount, self.recipient)
-		players=[self.player, self.recipient]
+		players = [self.player, self.recipient]
 		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=content, status=Newsfeed.PRIVATE, players=players)
 
 	def get_cost(self):
