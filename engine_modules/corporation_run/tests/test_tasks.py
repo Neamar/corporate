@@ -36,6 +36,39 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		self.so.target_corporation.base_corporation.sabotage = self.so_initial_extraction
 
+	def test_offensive_resolve_order(self):
+		"""
+		Check that offensive runs are resolved in order of raw_probability
+		And that only the first one has been resolved
+		"""
+
+		begin_sabotaged_assets = self.so.target_corporation.assets
+
+		so2 = SabotageOrder(
+                        player=self.p,
+                        target_corporation=self.c2,
+                        additional_percents=4,
+                )
+		
+		so2.clean()
+		so2.save()
+		begin_sabotaged_assets_2 = so2.target_corporation.assets
+
+		so3 = SabotageOrder(
+                        player=self.p,
+                        target_corporation=self.c3,
+                        additional_percents=8,
+                )
+		
+		so3.clean()
+		so3.save()
+		begin_sabotaged_assets_3 = so3.target_corporation.assets
+
+		self.g.resolve_current_turn()
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets)
+		self.assertEqual(self.reload(so2.target_corporation).assets, begin_sabotaged_assets_2)
+		self.assertEqual(self.reload(so3.target_corporation).assets, begin_sabotaged_assets_3 - 2)
+
 	# Protection runs must be modified, this test should be adapted
 	#def test_protection_run_task(self):
 	#	"""

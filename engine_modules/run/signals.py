@@ -14,7 +14,7 @@ def only_influence_bonus_per_turn(sender, instance, **kwargs):
 	You can't use more 30%% bonuses than you have influence
 	"""
 	if instance.has_influence_bonus and RunOrder.objects.filter(player=instance.player, turn=instance.player.game.current_turn, has_influence_bonus=True).count() >= instance.player.influence.level:
-		raise OrderNotAvailable("Impossible d'affecter le bonus de 30%: vous n'avez pas assez d'influence corporatiste.")
+		raise OrderNotAvailable("Impossible d'affecter la remise de 300k: vous n'avez pas assez d'influence corporatiste.")
 
 
 @receiver(validate_order, sender=RunOrder)
