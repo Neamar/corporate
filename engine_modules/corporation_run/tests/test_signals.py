@@ -35,12 +35,12 @@ class SignalsTest(EngineTestCase):
 		"""
 		Target and stealer must be different for Extraction.
 		"""
-		self.eo.kidnapper_corporation=self.c
+		self.eo.kidnapper_corporation = self.c
 		self.assertRaises(ValidationError, self.eo.clean)
 
 	def test_datasteal_unavailable_market(self):
 		"""
-		Datasteal should not be able to target a corporation thet doesn't
+		Datasteal should not be able to target a corporation that doesn't
 		have assets in the target market
 		"""
 
@@ -52,7 +52,7 @@ class SignalsTest(EngineTestCase):
 
 	def test_extraction_unavailable_market(self):
 		"""
-		Extraction should not be able to target a corporation thet doesn't
+		Extraction should not be able to target a corporation that doesn't
 		have assets in the target market
 		"""
 
