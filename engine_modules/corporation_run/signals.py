@@ -20,7 +20,6 @@ def datasteal_target_stealer_differ(sender, instance, **kwargs):
 		raise OrderNotAvailable("La cible et le bénéficiaire doivent être différents !")
 
 
-
 @receiver(validate_order, sender=ExtractionOrder)
 def extraction_target_stealer_differ(sender, instance, **kwargs):
 	"""
@@ -31,6 +30,7 @@ def extraction_target_stealer_differ(sender, instance, **kwargs):
 
 	if instance.target_corporation == instance.kidnapper_corporation:
 		raise OrderNotAvailable("La cible et le bénéficiaire doivent être différents !")
+
 
 @receiver(validate_order, sender=DataStealOrder)
 def datasteal_both_have_target_corporation_market(sender, instance, **kwargs):
@@ -44,6 +44,7 @@ def datasteal_both_have_target_corporation_market(sender, instance, **kwargs):
 	if instance.target_corporation_market.market.name not in instance.stealer_corporation.base_corporation.markets.keys():
 		raise ValidationError("Target market is absent from stealer corporation.")
 
+
 @receiver(validate_order, sender=ExtractionOrder)
 def extraction_both_have_target_corporation_market(sender, instance, **kwargs):
 	"""
@@ -56,6 +57,7 @@ def extraction_both_have_target_corporation_market(sender, instance, **kwargs):
 	if instance.target_corporation_market.market.name not in instance.kidnapper_corporation.base_corporation.markets.keys():
 		raise ValidationError("Target market is absent from stealer corporation.")
 
+
 @receiver(validate_order, sender=DataStealOrder)
 def datasteal_target_above_stealer(sender, instance, **kwargs):
 	"""
@@ -67,6 +69,7 @@ def datasteal_target_above_stealer(sender, instance, **kwargs):
 
 	if target_value < stealer_value:
 		raise ValidationError("Target corporation is below the stealer on this market")
+
 
 @receiver(validate_order, sender=ExtractionOrder)
 def extraction_target_above_stealer(sender, instance, **kwargs):

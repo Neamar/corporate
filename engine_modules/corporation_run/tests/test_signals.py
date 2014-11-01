@@ -28,7 +28,7 @@ class SignalsTest(EngineTestCase):
 		"""
 		Target and stealer must be different for Datasteal.
 		"""
-		self.dso.stealer_corporation=self.c
+		self.dso.stealer_corporation = self.c
 		self.assertRaises(ValidationError, self.dso.clean)
 
 	def test_extraction_target_stealer_different(self):
@@ -64,7 +64,7 @@ class SignalsTest(EngineTestCase):
 
 	def test_datasteal_stealer_above_target(self):
 		"""
-		A datasteal cannot be launched against a corporation that is 
+		A datasteal cannot be launched against a corporation that is
 		(strictly) below the stealer on the target market
 		"""
 
@@ -76,7 +76,7 @@ class SignalsTest(EngineTestCase):
 
 	def test_extraction_stealer_above_target(self):
 		"""
-		An extraction cannot be launched against a corporation that is 
+		An extraction cannot be launched against a corporation that is
 		(strictly) below the stealer on the target market
 		"""
 
