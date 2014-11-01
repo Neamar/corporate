@@ -176,12 +176,23 @@ class AssetDelta(models.Model):
 		(EFFECT_FIRST, 'Eff. premier'),
 		(EFFECT_LAST, 'Eff. dernier'),
 		(EFFECT_CRASH, 'effect-crash'),
+		(MDC, 'MDC'),
 		(RUN_SABOTAGE, 'Sabotage'),
 		(RUN_EXTRACTION, 'Extraction'),
 		(RUN_DATASTEAL, 'Datasteal'),
-		(MDC, 'MDC'),
 		(INVISIBLE_HAND, 'Main Invisible'),
 		(VOTES, 'Votes'),
+	)
+
+	"""
+	Data to be publicly displayed at any time.
+	"""
+	PUBLIC_DELTA = (
+		EFFECT_FIRST,
+		EFFECT_LAST,
+		EFFECT_CRASH,
+		RUN_SABOTAGE,
+		MDC
 	)
 
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
