@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
-from engine_modules.corporation_run.models import OffensiveRunOrder
+from engine_modules.run.models import RunOrder
 from engine.models import Player
 from messaging.models import Message, Note
 from website.widgets import PlainTextField
@@ -18,7 +18,7 @@ information_messages = {
 }
 
 
-class InformationOrder(OffensiveRunOrder):
+class InformationOrder(RunOrder):
 	"""
 	Order for Information runs
 	"""
@@ -30,14 +30,7 @@ class InformationOrder(OffensiveRunOrder):
 
 	target = models.ForeignKey(Player)
 
-	@property
-	def target_corporation(self):
-		"""
-		Return the corporation from the target
-		"""
-		return self.target.citizenship.corporation
-
-	def resolve_success(self):
+	def resolve_successful(self):
 		secrets = self.target.secrets
 
 		target_orders = self.target.message_set.filter(flag=Message.RESOLUTION).order_by('-turn')
@@ -53,7 +46,7 @@ class InformationOrder(OffensiveRunOrder):
 		content = information_messages['success']['sponsor'] % (self.target)
 		self.player.add_note(category=Note.RUNS, content=content)
 
-	def resolve_fail(self):
+	def resolve_failure(self):
 		# Send a note to the one who ordered the DataSteal
 		content = information_messages['fail']['sponsor'] % (self.target)
 		self.player.add_note(category=Note.RUNS, content=content)

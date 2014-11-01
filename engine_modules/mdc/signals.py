@@ -5,8 +5,7 @@ from engine.dispatchs import validate_order, post_create
 from engine.exceptions import OrderNotAvailable
 from engine.decorators import sender_instance_of
 from engine_modules.mdc.models import MDCVoteOrder
-from engine_modules.corporation_run.models import OffensiveRunOrder
-from engine_modules.player_run.models import InformationOrder
+from engine_modules.run.models import RunOrder
 from engine_modules.mdc.decorators import expect_coalition
 
 
@@ -20,7 +19,7 @@ def limit_mdc_order(sender, instance, **kwargs):
 
 
 @receiver(post_create)
-@sender_instance_of(OffensiveRunOrder, InformationOrder)
+@sender_instance_of(RunOrder)
 @expect_coalition(MDCVoteOrder.OPCL)
 def enforce_mdc_opcl(sender, instance, **kwargs):
 	"""
