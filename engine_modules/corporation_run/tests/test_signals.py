@@ -38,15 +38,25 @@ class SignalsTest(EngineTestCase):
 		self.eo.kidnapper_corporation = self.c
 		self.assertRaises(ValidationError, self.eo.clean)
 
-	def test_datasteal_unavailable_market(self):
+	def test_datasteal_unavailable_market_for_stealer(self):
 		"""
 		Datasteal should not be able to target a corporation that doesn't
 		have assets in the target market
 		"""
 
 		# The last market is different in each test corporation
-		self.dso.target_corporation_market = self.c.corporationmarket_set.get(
-			market__name=self.c.base_corporation.markets.keys()[-1])
+		self.dso.target_corporation_market = self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[-1])
+
+		self.assertRaises(ValidationError, self.dso.clean)
+
+	def test_datasteal_unavailable_market_for_target(self):
+		"""
+		Datasteal should not be able to target a corporation that doesn't
+		have assets in the target market
+		"""
+
+		# The last market is different in each test corporation
+		self.dso.target_corporation_market = self.c2.corporationmarket_set.get(market__name=self.c2.base_corporation.markets.keys()[-1])
 
 		self.assertRaises(ValidationError, self.dso.clean)
 
@@ -57,8 +67,7 @@ class SignalsTest(EngineTestCase):
 		"""
 
 		# The last market is different in each test corporation
-		self.eo.target_corporation_market = self.c.corporationmarket_set.get(
-			market__name=self.c.base_corporation.markets.keys()[-1])
+		self.eo.target_corporation_market = self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[-1])
 
 		self.assertRaises(ValidationError, self.eo.clean)
 
