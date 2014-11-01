@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, ExtractionOrder
-from django.core.exceptions import ValidationError
 
 
 class RunOrdersTest(EngineTestCase):

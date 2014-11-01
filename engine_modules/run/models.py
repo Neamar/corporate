@@ -48,7 +48,8 @@ class RunOrder(Order):
 	def resolve(self):
 		"""
 		Check whether the run is successful or not,
-		Make the player pay for his order.
+		Make the player pay for his order,
+		Resolve actions
 		"""
 		self.player.money -= self.get_cost()
 		self.player.save()
@@ -77,6 +78,8 @@ class RunOrder(Order):
 	def get_cost(self):
 		cost = RunOrder.LAUNCH_COST
 		cost += RunOrder.BASE_COST * self.additional_percents
+
+		# Do not pay for the influence bonus
 		if self.has_influence_bonus:
 			cost -= RunOrder.INFLUENCE_BONUS
 		return cost

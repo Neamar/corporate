@@ -49,52 +49,36 @@ extraction_messages = {
 }
 
 
-class OffensiveRunOrder(RunOrder):
-	"""
-	Model for offensive runs.
-
-	Require subclass to define a property target_corporation_market
-	Require constants to be defined:
-	* PROTECTION_TYPE : Will be used to find protection run and base default values.
-
-	Checks for Protection Runs.
-	"""
-	class Meta:
-		abstract = True
-
-	def resolve(self):
-		self.player.money -= self.get_cost()
-		self.player.save()
-
-		if self.is_successful():
-			self.resolve_success()
-		else:
-			self.resolve_fail()
-
-
-class OffensiveCorporationRunOrder(OffensiveRunOrder):
+class OffensiveCorporationRunOrder(RunOrder):
 	"""
 	Model for offensive corporation runs.
 	"""
 	target_corporation_market = models.ForeignKey(CorporationMarket, related_name="scoundrels")
 
-	def is_successful(self):
+	def get_success_probability(self):
+		"""
+		Compute success probability, eventually modified by protection runs
+		"""
+		base_value = super(OffensiveCorporationRunOrder, self).get_success_probability()
+
 		protection = self.target_corporation.protectors.filter(
 			target_corporation_market=self.target_corporation_market,
 			defense=self.PROTECTION_TYPE,
 			turn=self.turn
 		)
-		chances = self.get_success_probability()
 		if protection.exists():
-			chances = min(chances, ProtectionOrder.MAX_PERCENTS)
-		return randint(1, 100) <= chances
+			return min(base_value, ProtectionOrder.MAX_PERCENTS)
+		return base_value
 
 	@property
 	def target_corporation(self):
+		"""
+		Helper function to directly retrieve the corporation
+		"""
 		return self.target_corporation_market.corporation
 
 	def get_form(self, data=None):
-		form = super(OffensiveRunOrder, self).get_form(data)
+		form = super(OffensiveCorporationRunOrder, self).get_form(data)
 		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game)
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
@@ -103,7 +87,7 @@ class OffensiveCorporationRunOrder(OffensiveRunOrder):
 
 class OffensiveCorporationRunOrderWithStealer(OffensiveCorporationRunOrder):
 	"""
-	Offensive run with a stealer
+	Offensive run with a stealer (e.g. DataStealOrder / ExtractionOrder)
 	"""
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
 
@@ -127,7 +111,7 @@ class DataStealOrder(OffensiveCorporationRunOrderWithStealer):
 
 	title = "Lancer une run de Datasteal"
 
-	def resolve_success(self):
+	def resolve_successful(self):
 		self.stealer_corporation.update_assets(+1, market=self.target_corporation_market.market)
 
 		# Send a note to the one who ordered the DataSteal
@@ -138,7 +122,7 @@ class DataStealOrder(OffensiveCorporationRunOrderWithStealer):
 		path = u'datasteal/%s/success' % self.target_corporation.base_corporation.slug
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
-	def resolve_fail(self):
+	def resolve_failure(self):
 		# Send a note to the one who ordered the DataSteal
 		content = datasteal_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
@@ -160,7 +144,7 @@ class ExtractionOrder(OffensiveCorporationRunOrderWithStealer):
 
 	PROTECTION_TYPE = "extraction"
 
-	def resolve_success(self):
+	def resolve_successful(self):
 		self.target_corporation.update_assets(-1, market=self.target_corporation_market.market, category=AssetDelta.RUN_EXTRACTION)
 		self.stealer_corporation.update_assets(1, market=self.target_corporation_market.market)
 
@@ -176,7 +160,7 @@ class ExtractionOrder(OffensiveCorporationRunOrderWithStealer):
 		path = u'extraction/%s/success' % self.target_corporation.base_corporation.slug
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
-	def resolve_fail(self):
+	def resolve_failure(self):
 		# Send a note to the one who ordered the DataSteal
 		content = extraction_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
@@ -202,7 +186,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 
 	PROTECTION_TYPE = "sabotage"
 
-	def resolve_success(self):
+	def resolve_successful(self):
 		self.target_corporation.update_assets(-2, market=self.target_corporation_market.market, category=AssetDelta.RUN_SABOTAGE)
 
 		# Send a note to the one who ordered the Sabotage
@@ -217,7 +201,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 		path = u'sabotage/%s/success' % self.target_corporation.base_corporation.slug
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
-	def resolve_fail(self):
+	def resolve_failure(self):
 		# Send a note to the one who ordered the Sabotage
 		content = sabotage_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
