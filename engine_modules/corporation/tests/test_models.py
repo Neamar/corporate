@@ -33,7 +33,7 @@ class ModelMethodTest(EngineTestCase):
 		Corporation assets should be updated in historic market by default
 		"""
 
-		corporation_historic_market = self.c.corporationmarket_set.get(market=self.c.historic_market)
+		corporation_historic_market = self.c.historic_corporation_market
 		initial_corporation_assets = self.c.assets
 		initial_market_assets = corporation_historic_market.value
 
@@ -47,7 +47,7 @@ class ModelMethodTest(EngineTestCase):
 		Corporation assets should be updated in historic market by default
 		"""
 
-		corporation_historic_market = self.c.corporationmarket_set.get(market=self.c.historic_market)
+		corporation_historic_market = self.c.historic_corporation_market
 		initial_corporation_assets = self.c.assets
 
 		max_delta = corporation_historic_market.value + 1

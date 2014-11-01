@@ -9,14 +9,14 @@ class SignalsTest(EngineTestCase):
 		super(SignalsTest, self).setUp()
 		self.dso = DataStealOrder(
 			player=self.p,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.historic_market.name),
+			target_corporation_market=self.c.historic_corporation_market,
 			stealer_corporation=self.c2,
 		)
 		self.dso.save()
 
 		self.eo = ExtractionOrder(
 			player=self.p,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.historic_market.name),
+			target_corporation_market=self.c.historic_corporation_market,
 			stealer_corporation=self.c2,
 		)
 		self.eo.save()

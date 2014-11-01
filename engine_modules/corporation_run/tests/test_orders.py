@@ -32,7 +32,7 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation_market=self.c.corporationmarket_set.get(market=self.c.historic_market),
+			target_corporation_market=self.c.historic_corporation_market,
 			additional_percents=1,
 			hidden_percents=3
 		)
@@ -46,8 +46,7 @@ class DatastealRunOrderTest(RunOrdersTest):
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation_market=self.c.corporationmarket_set.get(
-				market=self.c.historic_market),
+			target_corporation_market=self.c.historic_corporation_market,
 			additional_percents=0,
 		)
 		self.dso.clean()
@@ -117,7 +116,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		super(SabotageRunOrderTest, self).setUp()
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation_market=self.c.corporationmarket_set.get(market=self.c.historic_market),
+			target_corporation_market=self.c.historic_corporation_market,
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -126,7 +125,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.set_to_zero(self.so.target_corporation)
 
 	def tearDown(self):
-		self.set_to_original(self.so.target_corporation_market.corporation)
+		self.set_to_original(self.so.target_corporation)
 
 	def test_sabotage_success(self):
 		"""
@@ -200,7 +199,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		self.set_to_zero(self.eo.target_corporation)
 
 	def tearDown(self):
-		self.set_to_original(self.eo.target_corporation_market.corporation)
+		self.set_to_original(self.eo.target_corporation)
 
 	def test_extraction_success(self):
 		"""
