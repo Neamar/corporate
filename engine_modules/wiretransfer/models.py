@@ -39,6 +39,7 @@ class WiretransferOrder(Order):
 		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=content, status=Newsfeed.PRIVATE, players=players)
 
 	def get_cost(self):
-		return self.amount or 0
+		# or 1: avoid displaying the order without money
+		return self.amount or 1
 
 orders = (WiretransferOrder,)

@@ -11,6 +11,9 @@ def limit_speculation_amount_by_influence(sender, instance, **kwargs):
 	"""
 	Total speculation amount can't be more than {{influence}} * MAX_AMOUNT_SPECULATION ¥ per turn
 	"""
+	if instance.investment is None:
+		return
+
 	current_speculations = CorporationSpeculationOrder.objects.filter(player=instance.player, turn=instance.player.game.current_turn)
 	current_speculation_amount = sum([speculation.investment for speculation in current_speculations])
 
