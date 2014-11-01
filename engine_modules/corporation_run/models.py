@@ -87,7 +87,7 @@ class OffensiveCorporationRunOrder(OffensiveRunOrder):
 		chances = self.get_success_probability()
 		if protection.exists():
 			chances = min(chances, ProtectionOrder.MAX_PERCENTS)
-		return randint(1, 100) < chances
+		return randint(1, 100) <= chances
 
 	@property
 	def target_corporation(self):

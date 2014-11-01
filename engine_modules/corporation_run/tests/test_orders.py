@@ -190,7 +190,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 
 		self.eo = ExtractionOrder(
 			player=self.p,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.historic_corporation_market,
 			stealer_corporation=self.c2
 		)
 		self.eo.clean()
@@ -212,6 +212,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		self.eo.save()
 
 		self.eo.resolve()
+
 		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets_target - 1)
 		self.assertEqual(self.reload(self.eo.stealer_corporation).assets, begin_assets_kidnapper + 1)
 
