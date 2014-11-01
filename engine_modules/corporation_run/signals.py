@@ -29,6 +29,9 @@ def both_have_target_corporation_market(sender, instance, **kwargs):
 	Datasteal / Extraction: The stealer must have assets on the target market
 	"""
 
+	if not hasattr(instance, 'target_corporation_market'):
+		return
+
 	if instance.target_corporation_market.market.name not in instance.stealer_corporation.base_corporation.markets.keys():
 		raise ValidationError(u"Le marché « %s » n'est pas présent sur %s." % (instance.target_corporation_market.market.name, instance.stealer_corporation.base_corporation.name))
 
@@ -39,6 +42,9 @@ def target_above_stealer(sender, instance, **kwargs):
 	"""
 	The target in a datasteal must have more assets than the stealer on the target market
 	"""
+
+	if not hasattr(instance, 'target_corporation_market'):
+		return
 
 	target_value = instance.target_corporation_market.value
 	stealer_value = instance.stealer_corporation_market.value
