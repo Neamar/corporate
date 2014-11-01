@@ -32,8 +32,7 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation=self.c,
-			target_corporation_market=self.c.corporationmarket_set.get(market=self.c.historic_market),
+			target_corporation_market=self.c.historic_corporation_market,
 			additional_percents=1,
 			hidden_percents=3
 		)
@@ -47,11 +46,7 @@ class DatastealRunOrderTest(RunOrdersTest):
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation=self.c,
-			# The 3 test corporations have the same 3 first markets
-			# Only the last one is different
-			target_corporation_market=self.c.corporationmarket_set.get(
-				market=self.c.historic_market),
+			target_corporation_market=self.c.historic_corporation_market,
 			additional_percents=0,
 		)
 		self.dso.clean()
@@ -121,8 +116,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		super(SabotageRunOrderTest, self).setUp()
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation=self.c,
-			target_corporation_market=self.c.corporationmarket_set.get(market=self.c.historic_market),
+			target_corporation_market=self.c.historic_corporation_market,
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -149,7 +143,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 
 		delta = begin_market_value - self.reload(self.so.target_corporation_market).value
 		self.assertEqual(delta, 2)
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets - delta)
+		self.assertEqual(self.so.target_corporation.assets, begin_assets - delta)
 
 	def test_sabotage_failure(self):
 		"""
@@ -196,9 +190,8 @@ class ExtractionRunOrderTest(RunOrdersTest):
 
 		self.eo = ExtractionOrder(
 			player=self.p,
-			target_corporation=self.c,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
-			kidnapper_corporation=self.c2
+			target_corporation_market=self.c.historic_corporation_market,
+			stealer_corporation=self.c2
 		)
 		self.eo.clean()
 		self.eo.save()
@@ -213,21 +206,22 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		Extraction benefits the stealer 1 asset and costs the stolen 1
 		"""
 		begin_assets_target = self.eo.target_corporation.assets
-		begin_assets_kidnapper = self.eo.kidnapper_corporation.assets
+		begin_assets_kidnapper = self.eo.stealer_corporation.assets
 
 		self.eo.additional_percents = 10
 		self.eo.save()
 
 		self.eo.resolve()
+
 		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets_target - 1)
-		self.assertEqual(self.reload(self.eo.kidnapper_corporation).assets, begin_assets_kidnapper + 1)
+		self.assertEqual(self.reload(self.eo.stealer_corporation).assets, begin_assets_kidnapper + 1)
 
 	def test_extraction_failure(self):
 		"""
 		Failed extraction does not change corporation assets
 		"""
 		begin_assets_target = self.eo.target_corporation.assets
-		begin_assets_kidnapper = self.eo.kidnapper_corporation.assets
+		begin_assets_kidnapper = self.eo.stealer_corporation.assets
 
 		self.eo.additional_percents = 0
 		self.eo.hidden_percents = -10
@@ -235,14 +229,14 @@ class ExtractionRunOrderTest(RunOrdersTest):
 
 		self.eo.resolve()
 		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets_target)
-		self.assertEqual(self.reload(self.eo.kidnapper_corporation).assets, begin_assets_kidnapper)
+		self.assertEqual(self.reload(self.eo.stealer_corporation).assets, begin_assets_kidnapper)
 
 	def test_extraction_interception(self):
 		"""
 		Intercepted extraction does not change corporation assets
 		"""
 		begin_assets_target = self.eo.target_corporation.assets
-		begin_assets_kidnapper = self.eo.kidnapper_corporation.assets
+		begin_assets_kidnapper = self.eo.stealer_corporation.assets
 
 		# Needed to make the extraction fail unconditionally
 		ProtectionOrder.MAX_PERCENTS = 0
@@ -261,7 +255,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 
 		self.eo.resolve()
 		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets_target)
-		self.assertEqual(self.reload(self.eo.kidnapper_corporation).assets, begin_assets_kidnapper)
+		self.assertEqual(self.reload(self.eo.stealer_corporation).assets, begin_assets_kidnapper)
 
 
 class DefensiveRunOrderTest(RunOrdersTest):
@@ -270,7 +264,6 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation=self.c,
 			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=0,
 		)
@@ -279,7 +272,6 @@ class DefensiveRunOrderTest(RunOrdersTest):
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation=self.c,
 			target_corporation_market=self.dso.target_corporation_market,
 			additional_percents=0,
 		)

@@ -9,15 +9,15 @@ admin.site.register(ProtectionOrder, ProtectionOrderAdmin)
 
 
 class DataStealOrderAdmin(admin.ModelAdmin):
-	list_display = ('pk', 'target_corporation', 'stealer_corporation')
+	list_display = ('pk', 'target_corporation_market', 'stealer_corporation')
 admin.site.register(DataStealOrder, DataStealOrderAdmin)
 
 
 class SabotageOrderAdmin(admin.ModelAdmin):
-	list_display = ('pk', 'target_corporation')
+	list_display = ('pk', 'target_corporation_market')
 admin.site.register(SabotageOrder, SabotageOrderAdmin)
 
 
 class ExtractionOrderAdmin(admin.ModelAdmin):
-	list_display = ('pk', 'target_corporation', 'kidnapper_corporation')
+	list_display = ('pk', 'target_corporation_market', 'stealer_corporation')
 admin.site.register(ExtractionOrder, ExtractionOrderAdmin)

@@ -38,7 +38,7 @@ class RunOrder(Order):
 		Compute success probability, maxed by 90%
 		"""
 		return min(self.get_raw_probability(), RunOrder.MAX_PERCENTS)
-	
+
 	def is_successful(self):
 		"""
 		Return true if the run is successful (random call)

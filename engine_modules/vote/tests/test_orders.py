@@ -6,8 +6,8 @@ from engine_modules.vote.models import VoteOrder
 class OrdersTest(EngineTestCase):
 	def setUp(self):
 		super(OrdersTest, self).setUp()
-		self.c_corporation_market = self.c.corporationmarket_set.get(market=self.c.historic_market)
-		self.c2_corporation_market = self.c2.corporationmarket_set.get(market=self.c2.historic_market)
+		self.c_corporation_market = self.c.historic_corporation_market
+		self.c2_corporation_market = self.c2.historic_corporation_market
 
 	def test_corporation_up_and_down(self):
 

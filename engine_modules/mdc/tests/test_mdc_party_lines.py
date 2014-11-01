@@ -92,7 +92,6 @@ class MDCPartyLineTest(EngineTestCase):
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation=self.c,
 			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=5,
 		)
@@ -104,7 +103,6 @@ class MDCPartyLineTest(EngineTestCase):
 		dso2 = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p2,
-			target_corporation=self.c,
 			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=5,
 		)

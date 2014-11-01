@@ -65,8 +65,6 @@ def get_order_availability(Order, player):
 	except OrderNotAvailable as e:
 		status['available'] = False
 		status['reason'] = e.message
-	except:
-		status['available'] = None
 
 	if status['available'] is not False:
 		status['form'] = instance.get_form()

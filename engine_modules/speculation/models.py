@@ -20,7 +20,8 @@ class AbstractSpeculation(Order):
 	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 
 	def get_cost(self):
-		return (self.investment or 0) * self.BASE_COST
+		# or 1: avoid displaying the order without money
+		return (self.investment or 1) * self.BASE_COST
 
 	def on_win_money(self):
 		"""

@@ -99,6 +99,10 @@ class Corporation(models.Model):
 	def base_corporation(self):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
+	@property
+	def historic_corporation_market(self):
+		return self.corporationmarket_set.get(market=self.historic_market)
+
 	def apply_effect(self, code, delta_category, ladder):
 
 		def update(corporation, delta):
