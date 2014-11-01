@@ -11,7 +11,10 @@ Avant de vous lancer, il vous reste des choix à faire pour donner une ossature 
 [TOC]
 
 ## Citoyenneté corpo
-Si vous le désirez, votre personnage peut commencer la partie avec une citoyenneté corporatiste ([cf. Citoyenneté](rules.md#citoyennete-corpo)). Dans ce cas, vous devrez obligatoirement acheter votre première part dans la corpo choisie.
+Si vous le désirez, votre personnage peut commencer la partie avec une citoyenneté corporatiste ([cf. Citoyenneté](rules.md#citoyennete-corpo)). Dans ce cas, vous devrez acheter votre première part dans la corpo choisie. Cette nationnalité corpo est choisie avant que l'ordre des corporation soit déterminé.
+
+Si vous n'achetez pas votre première part dans cette corporation, vous perdez votre nationalité corporatiste et vous perdez 4PV. 
+Si plusieurs joueurs ont pris la même citoyenneté corporatiste avant même le début de la partie, ce malus passe à 1PV : à vous de vous mettre d'accord avec votre compagnon de galère -- ce qui évitera les points négatifs pour la citoyenneté partagée en fin de jeu ([cf. fin du jeu](endgame.md#points-de-citoyen)).
 
 Cela signifie que votre personnage a accompli son ascension au sein de cette corpo, peut-être même depuis son premier jour si ses parents en avaient la nationalité. Ses valeurs et sa personnalité ont probablement été en partie façonnées par la culture corporatiste dans laquelle il a lutté pour en arriver là où il est. 
 

@@ -2,7 +2,7 @@ title: Fin du jeu
 
 Pour gagner le Corporate Game, il faut avoir plus de points de victoires (PVs) à la fin du dernier tour que n'importe quel autre joueur. Il n'y a pas de “victoire en équipe”, pas de gloire à finir deuxième, à s'être assuré que son allié finisse premier ou que son ennemi juré finisse dernier. Ce qui compte, c'est la première place et il faudra se battre bec et ongles pour l'obtenir.
 
-Il y a plusieurs manières de gagner des PVs, et il est recommandé de les examiner en détail avant le début de la partie. Ils ne seront d'ailleurs pas comptés automatiquement, et les joueurs vont devoir sortir leurs calculatrices à la fin du 8<sup>ème</sup> tour.
+Il y a plusieurs manières de gagner des PVs, et il est recommandé de les examiner en détail avant le début de la partie. Ils ne seront d'ailleurs pas comptés automatiquement, et les joueurs vont devoir sortir leurs calculatrices à la fin du 7<sup>ème</sup> tour.
 
 [TOC]
 
@@ -21,9 +21,9 @@ Une fois le classement final révélé :
 Ces nuyens sont comptés après les spéculations, mais avant les dividendes. 
 
 ## Points de citoyen
-* À la fin de la partie, gagnez `+10 - (rang de la corpo dont vous êtes citoyen) PVs`, soit 4 PVs si votre corpo a fini rang 6.  
-* `-(tour du changement) PVs` si vous avez changé de citoyenneté corpo en cours de jeu, soit -3 si vous avez changé de nationalité au tour 3.
-* `-3 PVs` pour chaque autre joueur citoyen de la même corpo que vous à la fin du 8<sup>ème</sup> tour.
+* À la fin de la partie, si vous avez une nationalité corporatiste, gagnez `+20 - 2 × (rang de la corpo dont vous êtes citoyen) PVs`, soit 8 PVs si votre corpo a fini rang 6 (20 -12).  Si vous n'avez pas de citoyenneté corporatiste, perdez 6 PVs à la place
+* `- 2 × (tour du changement) PVs` si vous avez changé de citoyenneté corpo en cours de jeu, soit -6 si vous avez changé de nationalité au tour 3.
+* `-6 PVs` pour chaque autre joueur citoyen de la même corpo que vous à la fin du 7<sup>ème</sup> tour.
 
 ## Points de titres
 Si plus d'un joueur se disputent un même titre, les points associés sont divisés entre eux (arrondi à l'entier inférieur).
@@ -45,12 +45,12 @@ Le joueur ayant le plus de parts dans une seule et même corpo.
 Le joueur ayant plus de parts que les autres joueurs dans le plus grand nombre de corpos.
 
 ### L'Opportuniste
-* +10 PVs
+* +5 PVs
 Le joueur ayant des parts dans le plus grand nombre de corpos.
 
 ### Le Rentier
 * +5 PVs
-Le joueur ayant terminé la partie avec le plus de nuyens.
+Le joueur ayant terminé la partie avec le plus de nuyens, dividendes du dernier tour non compris.
 
 ### Le Meneur
 * +5 PVs
@@ -58,11 +58,11 @@ Le joueur ayant voté le plus de fois pour la coalition gagnante.
 
 ### L'Homme de Wall Street
 * +5 PVs
-Le joueur ayant réussi le plus grand nombre de spéculations.
+Le joueur ayant réussi le plus grand nombre de spéculations. Il n'y a que les spéculations où le joueur a mis la mise maximale autorisée qui comptent.
 
 ### Le Maître espion
 * +5 PVs
-Le joueur ayant réussi le plus grand nombre de runs d'Information.
+Le joueur ayant dépensé le plus d'argent dans des runs d'Information. (ne compte pas pour la partie test)
 
 ### Le Casseur de code
 * +5 PVs
@@ -76,15 +76,10 @@ Le joueur ayant réussi le plus grand nombre de runs de Sabotage.
 * +5 PVs
 Le joueur ayant réussi le plus grand nombre de runs d'Extraction.
 
-### Le(s) Paranoïaque(s)
-* +3 PVs
-Le joueur ayant, pour le plus grand nombre de tour, lancé au moins une run de Protection (Datasteal).
+### Le Paranoïaque
+* +5 PVs
+Le joueur ayant fait échouer le plus grand nombre de runs (runs qui seraient passées sans la run de protection mais qui ne sont pas passées).
 
-* +3 PVs
-Le joueur ayant, pour le plus grand nombre de tour, lancé au moins une run de Protection (Sabotage).
-
-* +3 PVs
-Le joueur ayant, pour le plus grand nombre de tour, lancé au moins une run de Protection (Extraction).
 
 ## Points de Background
 Votre Background vous rapporte un nombre de PVs pouvant dépendre de vos actions au cours du jeu ([cf. Background](start.md#background)).
