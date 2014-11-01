@@ -53,7 +53,6 @@ class OffensiveRunOrder(RunOrder):
 	"""
 	Model for offensive runs.
 
-	Require subclass to define a property target_corporation, whose values will be used for protection and defense.
 	Require subclass to define a property target_corporation_market
 	Require constants to be defined:
 	* PROTECTION_TYPE : Will be used to find protection run and base default values.

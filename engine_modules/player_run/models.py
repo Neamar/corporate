@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.utils.functional import cached_property
 
 from engine_modules.corporation_run.models import OffensiveRunOrder
 from engine.models import Player
@@ -31,8 +30,11 @@ class InformationOrder(OffensiveRunOrder):
 
 	target = models.ForeignKey(Player)
 
-	@cached_property
+	@property
 	def target_corporation(self):
+		"""
+		Return the corporation from the target
+		"""
 		return self.target.citizenship.corporation
 
 	def resolve_success(self):

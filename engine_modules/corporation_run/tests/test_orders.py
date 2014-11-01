@@ -117,7 +117,6 @@ class SabotageRunOrderTest(RunOrdersTest):
 		super(SabotageRunOrderTest, self).setUp()
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation=self.c,
 			target_corporation_market=self.c.corporationmarket_set.get(market=self.c.historic_market),
 			additional_percents=0,
 		)
@@ -265,7 +264,6 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation=self.c,
 			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			additional_percents=0,
 		)
@@ -274,7 +272,6 @@ class DefensiveRunOrderTest(RunOrdersTest):
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation=self.c,
 			target_corporation_market=self.dso.target_corporation_market,
 			additional_percents=0,
 		)
