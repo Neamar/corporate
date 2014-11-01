@@ -6,7 +6,6 @@ from engine_modules.corporation_run.models import DataStealOrder, ExtractionOrde
 
 class SignalsTest(EngineTestCase):
 	def setUp(self):
-
 		super(SignalsTest, self).setUp()
 		self.dso = DataStealOrder(
 			player=self.p,
@@ -23,6 +22,9 @@ class SignalsTest(EngineTestCase):
 			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.historic_market.name)
 		)
 		self.eo.save()
+
+	def get_unique_market_for_corporation(self, corporation):
+		return corporation.corporationmarket_set.get(market__name=corporation.base_corporation.markets.keys()[-1])
 
 	def test_datasteal_target_stealer_different(self):
 		"""
@@ -43,9 +45,7 @@ class SignalsTest(EngineTestCase):
 		Datasteal should not be able to target a corporation that doesn't
 		have assets in the target market
 		"""
-
-		# The last market is different in each test corporation
-		self.dso.target_corporation_market = self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[-1])
+		self.dso.target_corporation_market = self.get_unique_market_for_corporation(self.c)
 
 		self.assertRaises(ValidationError, self.dso.clean)
 
@@ -54,9 +54,7 @@ class SignalsTest(EngineTestCase):
 		Datasteal should not be able to target a corporation that doesn't
 		have assets in the target market
 		"""
-
-		# The last market is different in each test corporation
-		self.dso.target_corporation_market = self.c2.corporationmarket_set.get(market__name=self.c2.base_corporation.markets.keys()[-1])
+		self.dso.target_corporation_market = self.get_unique_market_for_corporation(self.c2)
 
 		self.assertRaises(ValidationError, self.dso.clean)
 
@@ -65,9 +63,7 @@ class SignalsTest(EngineTestCase):
 		Extraction should not be able to target a corporation that doesn't
 		have assets in the target market
 		"""
-
-		# The last market is different in each test corporation
-		self.eo.target_corporation_market = self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[-1])
+		self.eo.target_corporation_market = self.get_unique_market_for_corporation(self.c)
 
 		self.assertRaises(ValidationError, self.eo.clean)
 
