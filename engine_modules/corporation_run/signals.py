@@ -19,7 +19,7 @@ def target_stealer_differ(sender, instance, **kwargs):
 		return
 
 	if instance.target_corporation == instance.stealer_corporation:
-		raise OrderNotAvailable("La cible et le bénéficiaire doivent être différents !")
+		raise OrderNotAvailable(u"La cible et le bénéficiaire doivent être différents !")
 
 
 @receiver(validate_order)
@@ -30,7 +30,7 @@ def both_have_target_corporation_market(sender, instance, **kwargs):
 	"""
 
 	if instance.target_corporation_market.market.name not in instance.stealer_corporation.base_corporation.markets.keys():
-		raise ValidationError("Target market %s is absent from stealer corporation." % instance.target_corporation_market.market.name)
+		raise ValidationError(u"Le marché « %s » n'est pas présent sur %s." % (instance.target_corporation_market.market.name, instance.stealer_corporation.base_corporation.name))
 
 
 @receiver(validate_order)
@@ -44,4 +44,4 @@ def target_above_stealer(sender, instance, **kwargs):
 	stealer_value = instance.stealer_corporation_market.value
 
 	if target_value < stealer_value:
-		raise ValidationError("Target market is below the stealer on this market")
+		raise ValidationError(u"Le marché %s de %s est plus bas que celui de %s" % (instance.target_corporation_market.market.name, instance.target_corporation.base_corporation.name, instance.stealer_corporation.base_corporation.name))

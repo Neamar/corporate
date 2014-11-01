@@ -148,7 +148,7 @@ class DataStealOrder(OffensiveCorporationRunOrderWithStealer):
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
 	def description(self):
-		return u"Envoyer une équipe voler des données de %s pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Envoyer une équipe voler des données de %s (%s) pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 
 
 class ExtractionOrder(OffensiveCorporationRunOrderWithStealer):
@@ -190,7 +190,7 @@ class ExtractionOrder(OffensiveCorporationRunOrderWithStealer):
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
 	def description(self):
-		return u"Réaliser une extraction de %s vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Réaliser une extraction de %s (%s) vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 
 
 class SabotageOrder(OffensiveCorporationRunOrder):
@@ -231,7 +231,7 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
 	def description(self):
-		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s) (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.get_raw_probability())
 
 
 class ProtectionOrder(RunOrder):
