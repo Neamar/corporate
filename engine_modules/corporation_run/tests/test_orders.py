@@ -32,7 +32,6 @@ class OffensiveCorporationRunOrderTest(RunOrdersTest):
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation=self.c,
 			target_corporation_market=self.c.corporationmarket_set.get(market=self.c.historic_market),
 			additional_percents=1,
 			hidden_percents=3
@@ -47,9 +46,6 @@ class DatastealRunOrderTest(RunOrdersTest):
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation=self.c,
-			# The 3 test corporations have the same 3 first markets
-			# Only the last one is different
 			target_corporation_market=self.c.corporationmarket_set.get(
 				market=self.c.historic_market),
 			additional_percents=0,
@@ -131,7 +127,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.set_to_zero(self.so.target_corporation)
 
 	def tearDown(self):
-		self.set_to_original(self.so.target_corporation)
+		self.set_to_original(self.so.target_corporation_market.corporation)
 
 	def test_sabotage_success(self):
 		"""
@@ -149,7 +145,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 
 		delta = begin_market_value - self.reload(self.so.target_corporation_market).value
 		self.assertEqual(delta, 2)
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets - delta)
+		self.assertEqual(self.so.target_corporation.assets, begin_assets - delta)
 
 	def test_sabotage_failure(self):
 		"""
@@ -196,7 +192,6 @@ class ExtractionRunOrderTest(RunOrdersTest):
 
 		self.eo = ExtractionOrder(
 			player=self.p,
-			target_corporation=self.c,
 			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
 			stealer_corporation=self.c2
 		)
@@ -206,7 +201,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		self.set_to_zero(self.eo.target_corporation)
 
 	def tearDown(self):
-		self.set_to_original(self.eo.target_corporation)
+		self.set_to_original(self.eo.target_corporation_market.corporation)
 
 	def test_extraction_success(self):
 		"""
