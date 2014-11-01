@@ -7,6 +7,7 @@ from engine_modules.corporation.models import Corporation, AssetDelta
 from website.widgets import PlainTextField
 from engine_modules.market.models import CorporationMarket
 
+
 datasteal_messages = {
 	'success': {
 		'sponsor': u"Votre équipe a *réussi* un **Datasteal** de %s pour le compte de %s",
@@ -76,8 +77,7 @@ class OffensiveCorporationRunOrder(OffensiveRunOrder):
 	"""
 	Model for offensive corporation runs.
 	"""
-	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
-	target_corporation_market = models.ForeignKey(CorporationMarket)
+	target_corporation_market = models.ForeignKey(CorporationMarket, related_name="scoundrels")
 
 	def is_successful(self):
 		protection = self.target_corporation.protectors.filter(
@@ -90,9 +90,12 @@ class OffensiveCorporationRunOrder(OffensiveRunOrder):
 			chances = min(chances, ProtectionOrder.MAX_PERCENTS)
 		return randint(1, 100) < chances
 
+	def stealer_corporation_market(self):
+		return self.stealer_corporation.corporationmarket_set.get(market=self.target_corporation_market.market_id)
+
 	def get_form(self, data=None):
 		form = super(OffensiveRunOrder, self).get_form(data)
-		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game)
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		return form
@@ -188,14 +191,14 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 
 	PROTECTION_TYPE = "extraction"
 
-	kidnapper_corporation = models.ForeignKey(Corporation, related_name="+")
+	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
 
 	def resolve_success(self):
 		self.target_corporation.update_assets(-1, market=self.target_corporation_market.market, category=AssetDelta.RUN_EXTRACTION)
-		self.kidnapper_corporation.update_assets(1, market=self.target_corporation_market.market)
+		self.stealer_corporation.update_assets(1, market=self.target_corporation_market.market)
 
 		# Send a note to the one who ordered the Extraction
-		content = extraction_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
+		content = extraction_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
 
 		# Send a note to everybody
@@ -208,7 +211,7 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 
 	def resolve_fail(self):
 		# Send a note to the one who ordered the DataSteal
-		content = extraction_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
+		content = extraction_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
 		self.player.add_note(category=Note.RUNS, content=content)
 
 		# Send a note to everybody
@@ -220,11 +223,11 @@ class ExtractionOrder(OffensiveCorporationRunOrder):
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
 	def description(self):
-		return u"Réaliser une extraction de %s vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Réaliser une extraction de %s vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 
 	def get_form(self, data=None):
 		form = super(ExtractionOrder, self).get_form(data)
-		form.fields['kidnapper_corporation'].queryset = self.player.game.corporation_set.all()
+		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
 
 		return form
 

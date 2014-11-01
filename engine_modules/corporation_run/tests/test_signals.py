@@ -9,17 +9,15 @@ class SignalsTest(EngineTestCase):
 		super(SignalsTest, self).setUp()
 		self.dso = DataStealOrder(
 			player=self.p,
-			target_corporation=self.c,
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.historic_market.name),
 			stealer_corporation=self.c2,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.historic_market.name)
 		)
 		self.dso.save()
 
 		self.eo = ExtractionOrder(
 			player=self.p,
-			target_corporation=self.c,
-			kidnapper_corporation=self.c2,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.historic_market.name)
+			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.historic_market.name),
+			stealer_corporation=self.c2,
 		)
 		self.eo.save()
 
@@ -37,7 +35,7 @@ class SignalsTest(EngineTestCase):
 		"""
 		Target and stealer must be different for Extraction.
 		"""
-		self.eo.kidnapper_corporation = self.c
+		self.eo.stealer_corporation = self.c
 		self.assertRaises(ValidationError, self.eo.clean)
 
 	def test_datasteal_unavailable_market_for_stealer(self):
@@ -73,9 +71,8 @@ class SignalsTest(EngineTestCase):
 		(strictly) below the stealer on the target market
 		"""
 
-		target_corporation_market = self.dso.target_corporation.corporationmarket_set.get(market__name=self.dso.target_corporation_market.market.name)
-		target_corporation_market.value = 0
-		target_corporation_market.save()
+		self.dso.target_corporation_market.value = 0
+		self.dso.target_corporation_market.save()
 
 		self.assertRaises(ValidationError, self.dso.clean)
 
@@ -85,8 +82,7 @@ class SignalsTest(EngineTestCase):
 		(strictly) below the stealer on the target market
 		"""
 
-		target_corporation_market = self.eo.target_corporation.corporationmarket_set.get(market__name=self.eo.target_corporation_market.market.name)
-		target_corporation_market.value = 0
-		target_corporation_market.save()
+		self.eo.target_corporation_market.value = 0
+		self.eo.target_corporation_market.save()
 
 		self.assertRaises(ValidationError, self.eo.clean)
