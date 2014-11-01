@@ -112,7 +112,7 @@ class DataStealOrder(OffensiveCorporationRunOrderWithStealer):
 	title = "Lancer une run de Datasteal"
 
 	def resolve_successful(self):
-		self.stealer_corporation.update_assets(+1, market=self.target_corporation_market.market)
+		self.stealer_corporation.update_assets(+1, market=self.target_corporation_market.market, category=AssetDelta.RUN_DATASTEAL)
 
 		# Send a note to the one who ordered the DataSteal
 		content = datasteal_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
@@ -146,7 +146,7 @@ class ExtractionOrder(OffensiveCorporationRunOrderWithStealer):
 
 	def resolve_successful(self):
 		self.target_corporation.update_assets(-1, market=self.target_corporation_market.market, category=AssetDelta.RUN_EXTRACTION)
-		self.stealer_corporation.update_assets(1, market=self.target_corporation_market.market)
+		self.stealer_corporation.update_assets(1, market=self.target_corporation_market.market, category=AssetDelta.RUN_EXTRACTION)
 
 		# Send a note to the one who ordered the Extraction
 		content = extraction_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
