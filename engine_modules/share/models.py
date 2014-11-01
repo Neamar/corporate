@@ -31,7 +31,9 @@ class BuyShareOrder(Order):
 
 	def get_cost(self):
 		if not hasattr(self, "corporation"):
-			return 0
+			# 1: avoid displaying the order without money
+			return 1
+
 		elif self.corporation == self.player.game.get_ladder()[0]:
 			if self.player.citizenship.corporation != self.corporation:
 				return BuyShareOrder.FIRST_COST * self.corporation.assets
@@ -65,8 +67,8 @@ class BuyShareOrder(Order):
 	def description(self):
 		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)
 
-	def get_form(self, datas=None):
-		form = super(BuyShareOrder, self).get_form(datas)
+	def get_form(self, data=None):
+		form = super(BuyShareOrder, self).get_form(data)
 		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
 
 		return form

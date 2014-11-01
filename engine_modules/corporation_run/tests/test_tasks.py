@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation_run.models import ProtectionOrder, SabotageOrder
+from engine_modules.corporation_run.models import SabotageOrder
 
 
 class OffensiveRunTaskTest(EngineTestCase):
@@ -9,7 +9,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation=self.c,
+			target_corporation_market=self.c.historic_corporation_market,
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -36,19 +36,35 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		self.so.target_corporation.base_corporation.sabotage = self.so_initial_extraction
 
-	def test_protection_run_task(self):
+	def test_offensive_resolve_order(self):
 		"""
-		Check the task solves the run
+		Check that offensive runs are resolved in order of raw_probability
+		And that only the first one has been resolved
 		"""
-		po = ProtectionOrder(
+
+		begin_sabotaged_assets = self.so.target_corporation.assets
+
+		so2 = SabotageOrder(
 			player=self.p,
-			protected_corporation=self.c,
-			defense=ProtectionOrder.SABOTAGE,
+			target_corporation_market=self.c2.historic_corporation_market,
+			additional_percents=4,
 		)
-		po.clean()
-		po.save()
-		po.additional_percents = 10
-		po.save()
+
+		so2.clean()
+		so2.save()
+		begin_sabotaged_assets_2 = so2.target_corporation.assets
+
+		so3 = SabotageOrder(
+			player=self.p,
+			target_corporation_market=self.c3.historic_corporation_market,
+			additional_percents=8,
+		)
+
+		so3.clean()
+		so3.save()
+		begin_sabotaged_assets_3 = so3.target_corporation.assets
 
 		self.g.resolve_current_turn()
-		self.assertEqual(self.reload(self.p).money, self.INITIAL_MONEY - po.get_cost())
+		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets)
+		self.assertEqual(self.reload(so2.target_corporation).assets, begin_sabotaged_assets_2)
+		self.assertEqual(self.reload(so3.target_corporation).assets, begin_sabotaged_assets_3 - 2)

@@ -34,7 +34,7 @@ RAVEN_CONFIG = {
 # Application definition
 
 INSTALLED_APPS = (
-    #'debug_toolbar',
+    # 'debug_toolbar',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,15 +55,16 @@ INSTALLED_APPS = (
     'engine_modules.run',
     'engine_modules.corporation_run',
     'engine_modules.corporation_asset_history',
-    'engine_modules.derivative',
     'engine_modules.player_run',
     'engine_modules.speculation',
     'engine_modules.effects',
     'engine_modules.mdc',
     'engine_modules.wiretransfer',
+    'engine_modules.market',
 )
 
 
+# Only setup raven outside of test env
 if 1 in sys.argv and sys.argv[1] != 'test':
     INSTALLED_APPS += 'raven.contrib.django.raven_compat'
 
@@ -113,3 +114,12 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
 )
+
+
+# Settings for the game
+if "test" in " ".join(sys.argv):
+    CITY = "Test"
+else:
+    CITY = "Manhattan"
+
+CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())

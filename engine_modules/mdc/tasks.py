@@ -122,9 +122,9 @@ class MDCVoteTask(ResolutionTask):
 			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"Répartition des coalitions :\n\n  * %s" % ("\n  * ".join(coalition_breakdown)))
 
 
-class MDCLineCPUBDEVETask(ResolutionTask):
+class MDCLineCPUBTask(ResolutionTask):
 	"""
-	Enforce the effects of the MDC CPUB and DEVE party line
+	Enforce the effects of the MDC CPUB party line
 	"""
 
 	# Resolve after MDCVoteTask
@@ -134,18 +134,18 @@ class MDCLineCPUBDEVETask(ResolutionTask):
 		# Because this is run the turn of the vote, we have to ask for the next line, not the current one
 		coalition = game.get_mdc_coalition(turn=game.current_turn + 1)
 
-		if coalition not in (MDCVoteOrder.CPUB, MDCVoteOrder.DEVE):
+		if coalition != MDCVoteOrder.CPUB:
 			return
 
-		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=coalition)
+		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.CPUB)
 		for o in win_votes:
 			for c in o.get_friendly_corporations():
 				c.update_assets(1, category=AssetDelta.MDC)
 
-		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.MDC_OPPOSITIONS[coalition])
+		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.OPCL)
 		for o in loss_votes:
 			for c in o.get_friendly_corporations():
 				c.update_assets(-1, category=AssetDelta.MDC)
 
 
-tasks = (MDCVoteTask, MDCLineCPUBDEVETask)
+tasks = (MDCVoteTask, MDCLineCPUBTask)

@@ -3,6 +3,7 @@ import sys
 
 from django.conf import settings
 
+
 """
 List of tasks to call for each game resolution
 """

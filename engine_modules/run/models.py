@@ -12,35 +12,38 @@ class RunOrder(Order):
 	"""
 	MAX_PERCENTS = 90
 
+	LAUNCH_COST = 350
 	BASE_COST = 50
-	INFLUENCE_BONUS = 30
+	BASE_SUCCESS_PROBABILITY = 50
+	INFLUENCE_BONUS = 300
 
-	has_influence_bonus = models.BooleanField(default=False, help_text="Accorder à cette run un bonus de 30% gratuit")
+	has_influence_bonus = models.BooleanField(default=False, help_text="Accorder à cette run une remise de 300k")
 	additional_percents = models.PositiveSmallIntegerField(default=1, validators=[MaxValueValidator(20), MinValueValidator(1)], help_text="Palier de 10% supplémentaires.")
 	hidden_percents = models.SmallIntegerField(default=0, editable=False)
 
 	def clean(self):
 		super(RunOrder, self).clean()
 
+	def get_raw_probability(self):
+		"""
+		Compute intended success probability, no max
+		Should only be used to compute the resolve order of runs
+		"""
+		proba = RunOrder.BASE_SUCCESS_PROBABILITY
+		proba += (self.additional_percents + self.hidden_percents) * 10
+		return proba
+
 	def get_success_probability(self):
 		"""
 		Compute success probability, maxed by 90%
 		"""
-		proba = 0
-		if self.has_influence_bonus:
-			proba += 30
-		proba += self.additional_percents * 10
-
-		proba += self.hidden_percents * 10
-
-		return proba
+		return min(self.get_raw_probability(), RunOrder.MAX_PERCENTS)
 
 	def is_successful(self):
 		"""
 		Return true if the run is successful (random call)
 		"""
-		probability = min(self.MAX_PERCENTS, self.get_success_probability())
-		return randint(1, 100) <= probability
+		return randint(1, 100) <= self.get_success_probability()
 
 	def resolve(self):
 		"""
@@ -72,11 +75,8 @@ class RunOrder(Order):
 		pass
 
 	def get_cost(self):
-		return RunOrder.BASE_COST * self.additional_percents
-
-	def repay(self):
-		"""
-		Give the player back half the money he paid
-		"""
-		self.player.money += self.get_cost() / 2
-		self.player.save()
+		cost = RunOrder.LAUNCH_COST
+		cost += RunOrder.BASE_COST * self.additional_percents
+		if self.has_influence_bonus:
+			cost -= RunOrder.INFLUENCE_BONUS
+		return cost

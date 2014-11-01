@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from os import listdir
 
 from django.db import models
@@ -5,7 +6,10 @@ from django.conf import settings
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 
+from collections import OrderedDict
+
 from utils.read_markdown import read_markdown
+from engine_modules.market.models import Market
 from engine.models import Game
 
 
@@ -15,7 +19,8 @@ class BaseCorporation:
 	Implemented as a separate non-model class to avoid cluttering the database
 	"""
 
-	BASE_CORPORATION_DIR = "%s/datas/docs/corporations" % (settings.BASE_DIR)
+	BASE_CORPORATION_TEMPLATE = "%s/corporations"
+	BASE_CORPORATION_DIR = BASE_CORPORATION_TEMPLATE % (settings.CITY_BASE_DIR)
 
 	@classmethod
 	def build_dict(cls):
@@ -51,15 +56,17 @@ class BaseCorporation:
 		code = "\n".join(meta['on_last'])
 		self.on_last = self.compile_effect(code, "on_last")
 
-		try:
-			self.initials_assets = int(meta['initials_assets'][0])
-		except KeyError:
-			self.initials_assets = 10
+		code = "\n".join(meta['on_crash'])
+		self.on_crash = self.compile_effect(code, "on_crash")
 
-		try:
-			self.derivative = meta['derivative'][0]
-		except KeyError:
-			self.derivative = None
+		self.initials_assets = 0
+		self.markets = OrderedDict()
+		markets = meta['markets']
+		for market in markets[1:]:
+			name, value = market.split(": ")
+			self.markets[name] = int(value)
+			self.initials_assets += int(value)
+		self.historic_market = self.markets.keys()[0]
 
 	def compile_effect(self, code, effect):
 		"""
@@ -86,10 +93,15 @@ class Corporation(models.Model):
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
 	assets = models.SmallIntegerField()
+	historic_market = models.ForeignKey(Market)
 
 	@cached_property
 	def base_corporation(self):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
+
+	@property
+	def historic_corporation_market(self):
+		return self.corporationmarket_set.get(market=self.historic_market)
 
 	def apply_effect(self, code, delta_category, ladder):
 
@@ -117,10 +129,26 @@ class Corporation(models.Model):
 	def on_last_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_last, AssetDelta.EFFECT_LAST, ladder)
 
-	def update_assets(self, delta, category=None):
+	def on_crash_effect(self, ladder):
+		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
+
+	def update_assets(self, delta, market=None, category=None):
 		"""
 		Update assets values, and save the model
 		"""
+		if market is None:
+			market = self.historic_market
+
+		market = self.corporationmarket_set.get(market=market)
+
+		if market.value + delta < 0:
+			# A market can't be negative, so we cap the delta
+			delta = -market.value
+
+		market.value += delta
+		market.save()
+
+		# Mirror changes on assets
 		self.assets += delta
 		self.save()
 
@@ -137,6 +165,7 @@ class AssetDelta(models.Model):
 	"""
 	EFFECT_FIRST = 'effect-first'
 	EFFECT_LAST = 'effect-last'
+	EFFECT_CRASH = 'effect-crash'
 	RUN_SABOTAGE = 'sabotage'
 	RUN_EXTRACTION = 'extraction'
 	MDC = 'mdc'
@@ -144,6 +173,7 @@ class AssetDelta(models.Model):
 	CATEGORY_CHOICES = (
 		(EFFECT_FIRST, 'Eff. premier'),
 		(EFFECT_LAST, 'Eff. dernier'),
+		(EFFECT_CRASH, 'effect-crash'),
 		(RUN_SABOTAGE, 'Sabotage'),
 		(RUN_EXTRACTION, 'Extraction'),
 		(MDC, 'MDC'),

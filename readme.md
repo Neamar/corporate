@@ -15,8 +15,8 @@ This is a standard Django project. Check you meet all the requirements listed in
 Once you're done, run `./manage.py runserver` to get started on http://localhost:8000/.
 You'll need to create a game and add some players in it.
 
-## Game datas
-Rules can be found in [datas/docs/index.md](datas/docs/index.md).
+## Game data
+Rules can be found in [data/docs/index.md](data/docs/index.md).
 
 ### Tasks list
 > Number between [] is the resolution order.
@@ -25,7 +25,6 @@ Rules can be found in [datas/docs/index.md](datas/docs/index.md).
 * [100] **VoteTask** : Resolve player's corporation votes
 * [100] **MDCVoteTask** : Choose the MDC party line, and save it in an MDCVoteSession
 * [300] **MDCLineCPUBTask** : Enforce the effects of the MDC CPUB party line
-* [300] **MDCLineDEVETask** : Enforce the effects of the MDC DEVE party line
 * [349] **ProtectionRunTask** : Debit Protection runs from players
 * [350] **OffensiveRunTask** : Resolve Offensive corporations runs (DataSteal, Sabotage, Extraction)
 * [350] **InformationRunTask** : Resolve Information runs
@@ -35,7 +34,6 @@ Rules can be found in [datas/docs/index.md](datas/docs/index.md).
 * [800] **DividendTask** : It's time to get money!
 * [900] **CitizenshipTask** : Update players citizenships
 * [900] **CorporationSpeculationTask** : Resolve corporations speculations
-* [900] **DerivativeSpeculationTask** : Resolve derivatives speculations
 * [1000] **BuyInfluenceTask** : Buy new Influence level
 * [1000] **CrashCorporationTask** : Let's crash corporations that didn't made it through the turn
 
@@ -50,6 +48,5 @@ Rules can be found in [datas/docs/index.md](datas/docs/index.md).
 * **ExtractionOrder** : Order for Extraction runs
 * **InformationOrder** : Order for information runs
 * **CorporationSpeculationOrder** : Order to speculate on a corporation's rank
-* **DerivativeSpeculationOrder** : Order to speculate on a derivative up or down
 * **MDCVoteOrder** : Order to vote for the MDC coalition
 * **WiretransferOrder** : Send money to another player

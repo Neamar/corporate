@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.utils.functional import cached_property
 
 from engine_modules.corporation_run.models import OffensiveRunOrder
 from engine.models import Player
@@ -26,17 +25,19 @@ class InformationOrder(OffensiveRunOrder):
 	ORDER = 800
 	title = "Lancer une run d'Information"
 
-	TIMING_MALUS_SIMILAR = 'player'
 	PROTECTION_TYPE = "datasteal"
 	BASE_SUCCESS_PROBABILITY = 60
 
 	target = models.ForeignKey(Player)
 
-	@cached_property
+	@property
 	def target_corporation(self):
+		"""
+		Return the corporation from the target
+		"""
 		return self.target.citizenship.corporation
 
-	def resolve_success(self, detected):
+	def resolve_success(self):
 		secrets = self.target.secrets
 
 		target_orders = self.target.message_set.filter(flag=Message.RESOLUTION).order_by('-turn')
@@ -52,23 +53,13 @@ class InformationOrder(OffensiveRunOrder):
 		content = information_messages['success']['sponsor'] % (self.target)
 		self.player.add_note(category=Note.RUNS, content=content)
 
-		if detected:
-			# Send a note to citizens
-			content = information_messages['success']['citizens'] % (self.player, self.target, self.get_raw_probability())
-			self.notify_citizens(content)
-
-	def resolve_fail(self, detected):
+	def resolve_fail(self):
 		# Send a note to the one who ordered the DataSteal
 		content = information_messages['fail']['sponsor'] % (self.target)
 		self.player.add_note(category=Note.RUNS, content=content)
 
-		if detected:
-			# Send a note to citizens
-			content = information_messages['fail']['citizens'] % (self.player, self.target, self.get_raw_probability())
-			self.notify_citizens(content)
-
-	def get_form(self, datas=None):
-		form = super(InformationOrder, self).get_form(datas)
+	def get_form(self, data=None):
+		form = super(InformationOrder, self).get_form(data)
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		form.fields['target'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)

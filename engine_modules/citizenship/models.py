@@ -26,16 +26,19 @@ class CitizenShipOrder(Order):
 		self.player.citizenship.corporation = self.corporation
 		self.player.citizenship.save()
 
+		# Note
 		content = u"Vous êtes désormais citoyen de la mégacorporation %s." % self.corporation.base_corporation.name
 		self.player.add_note(content=content)
+
+		# Newsfeed
 		newsfeed_content = u"%s est maintenant citoyen de la mégacorporation %s" % (self.player, self.corporation.base_corporation.name)
-		self.player.game.add_newsfeed(category=Newsfeed.PEOPLE, content=newsfeed_content)
+		self.player.game.add_newsfeed(category=Newsfeed.PEOPLE, content=newsfeed_content, players=[self.player], corporations=[self.corporation], status=Newsfeed.PUBLIC)
 
 	def description(self):
 		return u"Récupérer la nationalité corporatiste %s" % self.corporation.base_corporation.name
 
-	def get_form(self, datas=None):
-		form = super(CitizenShipOrder, self).get_form(datas)
+	def get_form(self, data=None):
+		form = super(CitizenShipOrder, self).get_form(data)
 		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
 
 		return form

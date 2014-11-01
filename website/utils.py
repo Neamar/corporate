@@ -65,8 +65,6 @@ def get_order_availability(Order, player):
 	except OrderNotAvailable as e:
 		status['available'] = False
 		status['reason'] = e.message
-	except:
-		status['available'] = None
 
 	if status['available'] is not False:
 		status['form'] = instance.get_form()
@@ -80,6 +78,7 @@ def get_shares_count(corporation, player, shares):
 	"""
 
 	return len([s for s in shares if s.player_id == player.pk and s.corporation == corporation])
+
 
 def is_top_shareholder(corporation, player, shares):
 	"""

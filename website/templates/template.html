@@ -25,21 +25,21 @@
 			{% if user.is_authenticated %}
 			{% if game %}
 			<ul class="game">
-				<li><a href="{% url 'website.views.datas.newsfeeds' game_id=game.pk %}">newsfeeds</a></li>
+				<li><a href="{% url 'website.views.data.newsfeeds' game_id=game.pk %}">newsfeeds</a></li>
 				<li><a href="{% url 'website.views.orders.orders' game_id=game.pk %}">ordres</a></li>
-				<li><a href="{% url 'website.views.datas.comlink' game_id=game.pk %}">commlink</a></li>
+				<li><a href="{% url 'website.views.data.comlink' game_id=game.pk %}">commlink</a></li>
 			</ul>
 
-			<ul class="datas">
-				<li><a href="{% url 'website.views.datas.wallstreet' game_id=game.pk %}">wall street</a></li>
-				<li><a href="{% url 'website.views.datas.corporations' game_id=game.pk %}">corpos</a></li>
-				<li><a href="{% url 'website.views.datas.players' game_id=game.pk %}">joueurs</a></li>
-				<li><a href="{% url 'website.views.datas.shares' game_id=game.pk %}">parts</a></li>
+			<ul class="data">
+				<li><a href="{% url 'website.views.data.wallstreet' game_id=game.pk %}">wall street</a></li>
+				<li><a href="{% url 'website.views.data.corporations' game_id=game.pk %}">corpos</a></li>
+				<li><a href="{% url 'website.views.data.players' game_id=game.pk %}">joueurs</a></li>
+				<li><a href="{% url 'website.views.data.shares' game_id=game.pk %}">parts</a></li>
 			</ul>
 			{% else %}
 			<ul class="game">
 				{% for player in user.player_set.all %}
-				<li><a href="{% url 'website.views.datas.newsfeeds' game_id=player.game_id %}">{{ player.game.city }}</a></li>
+				<li><a href="{% url 'website.views.data.newsfeeds' game_id=player.game_id %}">{{ player.game.city }}</a></li>
 				{% endfor %}
 			</ul>
 			{% endif %}
