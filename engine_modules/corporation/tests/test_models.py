@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import BaseCorporation, Corporation
+from engine_modules.corporation.models import BaseCorporation, Corporation, AssetDelta
 
 
 class ModelsTest(EngineTestCase):
@@ -23,7 +23,7 @@ class ModelMethodTest(EngineTestCase):
 		initial_corporation_assets = self.c.assets
 		initial_market_assets = corporation_market.value
 
-		self.c.update_assets(-1, market=corporation_market.market)
+		self.c.update_assets(-1, market=corporation_market.market, category=AssetDelta.EFFECT_FIRST)
 
 		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - 1)
 		self.assertEqual(self.reload(corporation_market).value, initial_market_assets - 1)
@@ -37,7 +37,7 @@ class ModelMethodTest(EngineTestCase):
 		initial_corporation_assets = self.c.assets
 		initial_market_assets = corporation_historic_market.value
 
-		self.c.update_assets(-1)
+		self.c.update_assets(-1, category=AssetDelta.EFFECT_FIRST)
 
 		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - 1)
 		self.assertEqual(self.reload(corporation_historic_market).value, initial_market_assets - 1)
@@ -51,7 +51,7 @@ class ModelMethodTest(EngineTestCase):
 		initial_corporation_assets = self.c.assets
 
 		max_delta = corporation_historic_market.value + 1
-		self.c.update_assets(-max_delta)
+		self.c.update_assets(-max_delta, category=AssetDelta.EFFECT_FIRST)
 
 		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - max_delta + 1)
 		self.assertEqual(self.reload(corporation_historic_market).value, 0)

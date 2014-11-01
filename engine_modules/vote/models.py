@@ -2,6 +2,7 @@
 from django.db import models
 
 from engine.models import Order
+from engine_modules.corporation.models import AssetDelta
 from engine_modules.market.models import CorporationMarket
 from messaging.models import Newsfeed
 
@@ -17,8 +18,8 @@ class VoteOrder(Order):
 	corporation_market_down = models.ForeignKey(CorporationMarket, related_name="+")
 
 	def resolve(self):
-		self.corporation_market_up.corporation.update_assets(1, market=self.corporation_market_up.market)
-		self.corporation_market_down.corporation.update_assets(-1, market=self.corporation_market_down.market)
+		self.corporation_market_up.corporation.update_assets(1, market=self.corporation_market_up.market, category=AssetDelta.VOTES)
+		self.corporation_market_down.corporation.update_assets(-1, market=self.corporation_market_down.market, category=AssetDelta.VOTES)
 
 		# Send a note for final message
 		content = u"Vous avez voté pour avantager le marché %s de %s au détriment du marché %s de %s." % (self.corporation_market_up.market, self.corporation_market_up.corporation.base_corporation.name, self.corporation_market_down.market, self.corporation_market_down.corporation.base_corporation.name)

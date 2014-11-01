@@ -132,7 +132,7 @@ class Corporation(models.Model):
 	def on_crash_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
 
-	def update_assets(self, delta, market=None, category=None):
+	def update_assets(self, delta, category, market=None):
 		"""
 		Update assets values, and save the model
 		"""
@@ -152,8 +152,7 @@ class Corporation(models.Model):
 		self.assets += delta
 		self.save()
 
-		if category is not None:
-			self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
+		self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
 
 	def __unicode__(self):
 		return "%s (%s)" % (self.base_corporation.name, self.assets)
@@ -168,7 +167,10 @@ class AssetDelta(models.Model):
 	EFFECT_CRASH = 'effect-crash'
 	RUN_SABOTAGE = 'sabotage'
 	RUN_EXTRACTION = 'extraction'
+	RUN_DATASTEAL = 'datasteal'
 	MDC = 'mdc'
+	INVISIBLE_HAND = 'invisible-hand'
+	VOTES = 'votes'
 
 	CATEGORY_CHOICES = (
 		(EFFECT_FIRST, 'Eff. premier'),
@@ -176,7 +178,10 @@ class AssetDelta(models.Model):
 		(EFFECT_CRASH, 'effect-crash'),
 		(RUN_SABOTAGE, 'Sabotage'),
 		(RUN_EXTRACTION, 'Extraction'),
+		(RUN_DATASTEAL, 'Datasteal'),
 		(MDC, 'MDC'),
+		(INVISIBLE_HAND, 'Main Invisible'),
+		(VOTES, 'Votes'),
 	)
 
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
