@@ -55,19 +55,26 @@ class OffensiveCorporationRunOrder(RunOrder):
 	"""
 	target_corporation_market = models.ForeignKey(CorporationMarket, related_name="scoundrels")
 
-	def is_successful(self):
+	def get_success_probability(self):
+		"""
+		Compute success probability, eventually modified by protection runs
+		"""
+		base_value = super(OffensiveCorporationRunOrder, self).get_success_probability()
+
 		protection = self.target_corporation.protectors.filter(
 			target_corporation_market=self.target_corporation_market,
 			defense=self.PROTECTION_TYPE,
 			turn=self.turn
 		)
-		chances = self.get_success_probability()
 		if protection.exists():
-			chances = min(chances, ProtectionOrder.MAX_PERCENTS)
-		return randint(1, 100) <= chances
+			return min(base_value, ProtectionOrder.MAX_PERCENTS)
+		return base_value
 
 	@property
 	def target_corporation(self):
+		"""
+		Helper function to directly retrieve the corporation
+		"""
 		return self.target_corporation_market.corporation
 
 	def get_form(self, data=None):
@@ -80,7 +87,7 @@ class OffensiveCorporationRunOrder(RunOrder):
 
 class OffensiveCorporationRunOrderWithStealer(OffensiveCorporationRunOrder):
 	"""
-	Offensive run with a stealer
+	Offensive run with a stealer (e.g. DataStealOrder / ExtractionOrder)
 	"""
 	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
 
