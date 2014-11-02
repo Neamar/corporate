@@ -4,7 +4,8 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
 script:
-  coverage run manage.py test
+  - coverage run manage.py test
+  - pep8 **/*.py
 after_success:
   coveralls
 notifications:

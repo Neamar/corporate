@@ -1,7 +1,11 @@
-Django==1.6.5
+Django==1.6.8
 Markdown==2.4
+argparse==1.2.1
 django-debug-toolbar==1.0.1
-argparse==1.1
-raven==4.2.1
+django-static-precompiler==0.7
 docutils==0.11
+pep8==1.4.6
+raven==4.2.1
+six==1.5.2
+sqlparse==0.1.11
 wsgiref==0.1.2
