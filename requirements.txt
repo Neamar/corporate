@@ -4,7 +4,11 @@ argparse==1.2.1
 django-debug-toolbar==1.0.1
 django-static-precompiler==0.7
 docutils==0.11
-pep8==1.4.6
+flake8==2.2.5
+gprof2dot==1.0
+mccabe==0.2.1
+pep8==1.5.7
+pyflakes==0.8.1
 raven==4.2.1
 six==1.5.2
 sqlparse==0.1.11

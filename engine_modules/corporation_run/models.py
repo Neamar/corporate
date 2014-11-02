@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from random import randint
 from engine_modules.run.models import RunOrder
 from messaging.models import Newsfeed, Note
 from engine_modules.corporation.models import Corporation, AssetDelta
