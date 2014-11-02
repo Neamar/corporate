@@ -25,6 +25,7 @@ class CorporationMarket(models.Model):
 
 	corporation = models.ForeignKey("corporation.Corporation")
 	market = models.ForeignKey(Market)
+	bubble = models.SmallIntegerField(default=0)
 	value = models.SmallIntegerField()
 
 	def __unicode__(self):
