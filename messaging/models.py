@@ -109,6 +109,9 @@ class Message(models.Model):
 
 
 class Note(models.Model):
+	"""
+	Temporary message, used in a transaction and then removed to build the main Message
+	"""
 	GLOBAL = 'global'
 	RUNS = 'runs'
 	MDC = 'mdc'
