@@ -92,8 +92,7 @@ class DatastealRunOrderTest(RunOrdersTest):
 
 		po = ProtectionOrder(
 			player=self.p,
-			protected_corporation=self.c,
-			target_corporation_market=self.dso.target_corporation_market,
+			protected_corporation_market=self.dso.target_corporation_market,
 		)
 		po.clean()
 		po.save()
@@ -164,8 +163,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 
 		po = ProtectionOrder(
 			player=self.p,
-			protected_corporation=self.c,
-			target_corporation_market=self.so.target_corporation_market,
+			protected_corporation_market=self.so.target_corporation_market,
 			hidden_percents=10,
 		)
 		po.clean()
@@ -235,8 +233,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 
 		po = ProtectionOrder(
 			player=self.p,
-			protected_corporation=self.c,
-			target_corporation_market=self.eo.target_corporation_market,
+			protected_corporation_market=self.eo.target_corporation_market,
 			hidden_percents=10,
 		)
 		po.save()

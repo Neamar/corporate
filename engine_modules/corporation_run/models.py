@@ -60,8 +60,7 @@ class OffensiveCorporationRunOrder(RunOrder):
 		"""
 		base_value = super(OffensiveCorporationRunOrder, self).get_success_probability()
 
-		protection = self.target_corporation.protectors.filter(
-			target_corporation_market=self.target_corporation_market,
+		protection = self.target_corporation_market.protectors.filter(
 			turn=self.turn
 		)
 		if protection.exists():
@@ -222,8 +221,14 @@ class ProtectionOrder(RunOrder):
 	title = "Lancer une run de Protection"
 	MAX_PERCENTS = 50
 
-	target_corporation_market = models.ForeignKey(CorporationMarket)
-	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
+	protected_corporation_market = models.ForeignKey(CorporationMarket, related_name="protectors")
+
+	@property
+	def protected_corporation(self):
+		"""
+		Helper function to directly retrieve the corporation from its market
+		"""
+		return self.protected_corporation_market.corporation
 
 	def resolve(self):
 		self.player.money -= self.get_cost()
@@ -234,7 +239,7 @@ class ProtectionOrder(RunOrder):
 
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)
-		form.fields['protected_corporation'].queryset = self.player.game.corporation_set.all()
+		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game)
 
 		return form
 
