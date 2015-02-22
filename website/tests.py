@@ -36,14 +36,13 @@ class WebsiteTest(EngineTestCase):
 
 	def test_pages_up_nologin(self):
 		"""
-		Checking index also checks admin forms are properly configured
+		Checking admin:index also checks admin forms are properly configured
 		"""
 
 		pages = [
 			'website.views.index.index',
 			'django.contrib.auth.views.login',
 			'website.views.index.signup',
-			'admin:index',
 		]
 
 		for page in pages:
