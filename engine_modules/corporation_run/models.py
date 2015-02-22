@@ -62,7 +62,6 @@ class OffensiveCorporationRunOrder(RunOrder):
 
 		protection = self.target_corporation.protectors.filter(
 			target_corporation_market=self.target_corporation_market,
-			defense=self.PROTECTION_TYPE,
 			turn=self.turn
 		)
 		if protection.exists():
@@ -109,7 +108,6 @@ class DataStealOrder(OffensiveCorporationRunOrderWithStealer):
 	Order for DataSteal runs
 	"""
 	ORDER = 500
-	PROTECTION_TYPE = "datasteal"
 
 	title = "Lancer une run de Datasteal"
 
@@ -143,8 +141,6 @@ class ExtractionOrder(OffensiveCorporationRunOrderWithStealer):
 	"""
 	ORDER = 700
 	title = "Lancer une run d'Extraction"
-
-	PROTECTION_TYPE = "extraction"
 
 	def resolve_successful(self):
 		self.target_corporation.update_assets(-1, market=self.target_corporation_market.market, category=AssetDelta.RUN_EXTRACTION)
@@ -186,8 +182,6 @@ class SabotageOrder(OffensiveCorporationRunOrder):
 	ORDER = 600
 	title = "Lancer une run de Sabotage"
 
-	PROTECTION_TYPE = "sabotage"
-
 	def resolve_successful(self):
 		self.target_corporation.update_assets(-2, market=self.target_corporation_market.market, category=AssetDelta.RUN_SABOTAGE)
 
@@ -228,27 +222,6 @@ class ProtectionOrder(RunOrder):
 	title = "Lancer une run de Protection"
 	MAX_PERCENTS = 50
 
-	EXTRACTION = "extraction"
-	DATASTEAL = "datasteal"
-	SABOTAGE = "sabotage"
-
-	PROBA_DATASTEAL_SUCCESS = 40
-	PROBA_EXTRACTION_SUCCESS = 10
-	PROBA_SABOTAGE_SUCCESS = 0
-
-	DEFENSE_CHOICES = (
-		(EXTRACTION, "Extraction"),
-		(DATASTEAL, "Datasteal"),
-		(SABOTAGE, "Sabotage")
-	)
-
-	BASE_SUCCESS_PROBABILITY = {
-		EXTRACTION: PROBA_EXTRACTION_SUCCESS,
-		DATASTEAL: PROBA_DATASTEAL_SUCCESS,
-		SABOTAGE: PROBA_SABOTAGE_SUCCESS,
-	}
-
-	defense = models.CharField(max_length=15, choices=DEFENSE_CHOICES)
 	target_corporation_market = models.ForeignKey(CorporationMarket)
 	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
 
@@ -257,14 +230,11 @@ class ProtectionOrder(RunOrder):
 		self.player.save()
 
 	def description(self):
-		return u"Envoyer une équipe protéger %s des %ss (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_defense_display(), self.get_success_probability())
+		return u"Envoyer une équipe protéger %s (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_success_probability())
 
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)
 		form.fields['protected_corporation'].queryset = self.player.game.corporation_set.all()
-		form.fields['base_extraction_percents'] = PlainTextField(initial="%s%%" % self.PROBA_EXTRACTION_SUCCESS)
-		form.fields['base_datasteal_percents'] = PlainTextField(initial="%s%%" % self.PROBA_DATASTEAL_SUCCESS)
-		form.fields['base_sabotage_percents'] = PlainTextField(initial="%s%%" % self.PROBA_SABOTAGE_SUCCESS)
 
 		return form
 
