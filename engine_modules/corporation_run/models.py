@@ -72,7 +72,7 @@ class OffensiveCorporationRunOrder(RunOrder):
 	@property
 	def target_corporation(self):
 		"""
-		Helper function to directly retrieve the corporation
+		Helper function to directly retrieve the corporation from its market
 		"""
 		return self.target_corporation_market.corporation
 
@@ -92,6 +92,9 @@ class OffensiveCorporationRunOrderWithStealer(OffensiveCorporationRunOrder):
 
 	@property
 	def stealer_corporation_market(self):
+		"""
+		Helper function to directly retrieve the market for the stealer
+		"""
 		return self.stealer_corporation.corporationmarket_set.get(market=self.target_corporation_market.market_id)
 
 	def get_form(self, data=None):
