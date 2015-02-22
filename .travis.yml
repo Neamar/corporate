@@ -5,8 +5,8 @@ install:
   - pip install coveralls
 script:
   - coverage run manage.py test
-  - pep8 **/*.py
-  - flake8 **/*.py
+  - pep8
+  - flake8
 after_success:
   coveralls
 notifications:
