@@ -1,5 +1,3 @@
-from django.core.exceptions import ValidationError
-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder
 
