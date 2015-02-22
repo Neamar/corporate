@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.testcases import override_base_corporations
+from engine_modules.corporation.decorators import override_base_corporations
 
 
 class TasksTest(EngineTestCase):

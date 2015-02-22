@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, ExtractionOrder
+from engine_modules.corporation_run.decorators import override_max_protection
 
 
 class RunOrdersTest(EngineTestCase):
@@ -82,20 +83,16 @@ class DatastealRunOrderTest(RunOrdersTest):
 		self.dso.resolve()
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 
+	@override_max_protection
 	def test_datasteal_interception(self):
 		"""
 		Intercepted datasteal should not change corporation assets.
 		"""
 		begin_assets_stealer = self.dso.stealer_corporation.assets
 
-		# Needed to make the datasteal fail unconditionally
-		ProtectionOrder.MAX_PERCENTS = 0
-
 		po = ProtectionOrder(
 			player=self.p,
-			protected_corporation=self.c,
-			target_corporation_market=self.dso.target_corporation_market,
-			defense=ProtectionOrder.DATASTEAL
+			protected_corporation_market=self.dso.target_corporation_market,
 		)
 		po.clean()
 		po.save()
@@ -157,20 +154,16 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.so.resolve()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
 
+	@override_max_protection
 	def test_sabotage_interception(self):
 		"""
 		Intercepted sabotage does not change corporation assets
 		"""
 		begin_assets = self.so.target_corporation.assets
 
-		# Needed to make the sabotage fail unconditionally
-		ProtectionOrder.MAX_PERCENTS = 0
-
 		po = ProtectionOrder(
 			player=self.p,
-			protected_corporation=self.c,
-			target_corporation_market=self.so.target_corporation_market,
-			defense=ProtectionOrder.SABOTAGE,
+			protected_corporation_market=self.so.target_corporation_market,
 			hidden_percents=10,
 		)
 		po.clean()
@@ -230,6 +223,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.eo.target_corporation).assets, begin_assets_target)
 		self.assertEqual(self.reload(self.eo.stealer_corporation).assets, begin_assets_kidnapper)
 
+	@override_max_protection
 	def test_extraction_interception(self):
 		"""
 		Intercepted extraction does not change corporation assets
@@ -237,14 +231,9 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		begin_assets_target = self.eo.target_corporation.assets
 		begin_assets_kidnapper = self.eo.stealer_corporation.assets
 
-		# Needed to make the extraction fail unconditionally
-		ProtectionOrder.MAX_PERCENTS = 0
-
 		po = ProtectionOrder(
 			player=self.p,
-			protected_corporation=self.c,
-			target_corporation_market=self.eo.target_corporation_market,
-			defense=ProtectionOrder.EXTRACTION,
+			protected_corporation_market=self.eo.target_corporation_market,
 			hidden_percents=10,
 		)
 		po.save()

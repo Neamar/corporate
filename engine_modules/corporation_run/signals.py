@@ -40,7 +40,7 @@ def both_have_target_corporation_market(sender, instance, **kwargs):
 @sender_instance_of(OffensiveCorporationRunOrderWithStealer)
 def target_above_stealer(sender, instance, **kwargs):
 	"""
-	The target in a datasteal must have more assets than the stealer on the target market
+	The target in a offensive run must have more assets than the stealer on the target market
 	"""
 
 	if not hasattr(instance, 'target_corporation_market'):
