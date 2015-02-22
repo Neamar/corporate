@@ -11,11 +11,13 @@ class SaveCorporationAssetTask(ResolutionTask):
 
 	def run(self, game):
 		corporations = game.corporation_set.all()
+		ahs = []
 		for corporation in corporations:
 			ah = AssetHistory(
 				corporation=corporation,
 				assets=corporation.assets,
 				turn=game.current_turn)
-			ah.save()
+			ahs.append(ah)
+		AssetHistory.objects.bulk_create(ahs)
 
 tasks = (SaveCorporationAssetTask, )

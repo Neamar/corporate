@@ -22,7 +22,7 @@ class OrdersTest(EngineTestCase):
 		"""
 		def resolve(o):
 			"""
-			Resolve run o, without NotImplementedError (we don't care about this, that's not waht we want to test)
+			Resolve run o, without NotImplementedError (we don't care about this, that's not what we want to test)
 			"""
 			try:
 				o.resolve()
@@ -30,21 +30,22 @@ class OrdersTest(EngineTestCase):
 				pass
 
 		resolve(self.o)
-		self.assertEqual(self.reload(self.p).money,
-					self.initial_money - RunOrder.LAUNCH_COST)
+
+		self.assertEqual(self.reload(self.p).money, self.initial_money - RunOrder.LAUNCH_COST)
 
 		current_player_money = self.reload(self.p).money
 		self.o.has_influence_bonus = True
+
 		resolve(self.o)
-		self.assertEqual(self.reload(self.p).money,
-			current_player_money - RunOrder.LAUNCH_COST + RunOrder.INFLUENCE_BONUS)
+
+		self.assertEqual(self.reload(self.p).money, current_player_money - RunOrder.LAUNCH_COST + RunOrder.INFLUENCE_BONUS)
 
 		current_player_money = self.reload(self.p).money
 		self.o.additional_percents = 2
+
 		resolve(self.o)
-		self.assertEqual(self.reload(self.p).money,
-					current_player_money - RunOrder.LAUNCH_COST +
-					RunOrder.INFLUENCE_BONUS - RunOrder.BASE_COST * 2)
+
+		self.assertEqual(self.reload(self.p).money, current_player_money - RunOrder.LAUNCH_COST + RunOrder.INFLUENCE_BONUS - RunOrder.BASE_COST * 2)
 
 	def test_run_probability(self):
 		self.assertEqual(self.o.get_success_probability(), RunOrder.BASE_SUCCESS_PROBABILITY)

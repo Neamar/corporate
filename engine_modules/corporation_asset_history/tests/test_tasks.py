@@ -60,7 +60,7 @@ class TasksTest(EngineTestCase):
 
 	def test_multi_turn(self):
 		"""
-		Test on more than one turn
+		Test going back for more than one turn
 		"""
 		self.c3.assets = 13
 		self.c3.save()

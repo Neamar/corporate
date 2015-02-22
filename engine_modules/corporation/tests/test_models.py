@@ -7,6 +7,7 @@ class ModelsTest(EngineTestCase):
 		"""
 		Corporation should have been created alongside the game
 		"""
+
 		corporations = Corporation.objects.all().order_by('base_corporation_slug')
 		self.assertEqual(len(corporations), len(BaseCorporation.retrieve_all()))
 
@@ -44,7 +45,7 @@ class ModelMethodTest(EngineTestCase):
 
 	def test_corporation_update_assets_not_below_zero(self):
 		"""
-		Corporation assets should be updated in historic market by default
+		Corporation market assets can't drop below 0
 		"""
 
 		corporation_historic_market = self.c.historic_corporation_market

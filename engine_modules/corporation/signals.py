@@ -8,9 +8,8 @@ from engine_modules.market.models import Market, CorporationMarket
 
 
 @receiver(post_create, sender=Game)
-def auto_create_corporation(sender, instance, **kwargs):
+def auto_create_markets_and_corporation(sender, instance, **kwargs):
 	"""
-	Create influence model for new player
 	Takes all the Base corporations and create corresponding Corporations
 	"""
 	instance.corporations = {}

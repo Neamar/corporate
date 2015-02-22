@@ -41,7 +41,7 @@ class RunOrder(Order):
 
 	def is_successful(self):
 		"""
-		Return true if the run is successful (random call)
+		Return true if the run is successful (random call, non omnipotent)
 		"""
 		return randint(1, 100) <= self.get_success_probability()
 

@@ -17,8 +17,8 @@ orders_list = []
 
 def try_import(package, name, default=None):
 	"""
-	Try to import some name from some file,
-	Returns default on failure
+	Try to import `name` from some file,
+	Returns `default` on failure
 	"""
 
 	try:
@@ -28,19 +28,22 @@ def try_import(package, name, default=None):
 		if 'No module named' in str(sys.exc_value):
 			return default
 		else:
+			# For invalid imports, we reraise
 			raise
 	except AttributeError:
 		return default
 
 for app in settings.INSTALLED_APPS:
 	# Only scan engine_modules app
-	if 'engine_modules.' not in app:
+	if not app.startswith('engine_modules.'):
 		continue
 
 	orders_list += try_import("%s.models" % app, 'orders', [])
 	tasks_list += try_import("%s.tasks" % app, 'tasks', [])
 
 	# Autoload signals as a convenience
+	# (will try to import 'none' function, fail but register signals.)
+	# #dirty
 	try_import("%s.signals" % app, 'none')
 
 # Sort tasks in place, by resolution_order

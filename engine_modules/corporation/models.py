@@ -30,7 +30,7 @@ class BaseCorporation:
 		"""
 		cls.base_corporations = {}
 		for f in [f for f in listdir(cls.BASE_CORPORATION_DIR) if f.endswith('.md')]:
-			bc = BaseCorporation(f[:-3])
+			bc = BaseCorporation(f[:-3])  # f[:-3] is the slug
 			cls.base_corporations[bc.slug] = bc
 
 	def __init__(self, slug):
@@ -70,7 +70,7 @@ class BaseCorporation:
 
 	def compile_effect(self, code, effect):
 		"""
-		Compile specified code. Effect is a string that will be used for stacktrace reports.
+		Compile specified code. Second parameter is a string that will be used for stacktrace reports.
 		"""
 		return compile(code, "%s.%s()" % (self.name, effect), 'exec')
 
@@ -141,6 +141,7 @@ class Corporation(models.Model):
 
 		market = self.corporationmarket_set.get(market=market)
 
+		# A market can't be negative, so we cap the delta
 		if market.value + delta < 0:
 			# A market can't be negative, so we cap the delta
 			delta = -market.value
@@ -152,6 +153,7 @@ class Corporation(models.Model):
 		self.assets += delta
 		self.save()
 
+		# And register assetdelta for logging purposes
 		self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
 
 	def __unicode__(self):
@@ -175,7 +177,7 @@ class AssetDelta(models.Model):
 	CATEGORY_CHOICES = (
 		(EFFECT_FIRST, 'Eff. premier'),
 		(EFFECT_LAST, 'Eff. dernier'),
-		(EFFECT_CRASH, 'effect-crash'),
+		(EFFECT_CRASH, 'Eff. crash'),
 		(MDC, 'MDC'),
 		(RUN_SABOTAGE, 'Sabotage'),
 		(RUN_EXTRACTION, 'Extraction'),
@@ -199,6 +201,3 @@ class AssetDelta(models.Model):
 	corporation = models.ForeignKey(Corporation)
 	delta = models.SmallIntegerField()
 	turn = models.SmallIntegerField(default=0)
-
-	def get_category_shortcut(self):
-		return dict(AssetDelta.SHORTCUTS)[self.category]

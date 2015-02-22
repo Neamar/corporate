@@ -11,7 +11,7 @@ from engine.dispatchs import post_create
 @receiver(post_save)
 def send_post_create_signal(sender, instance, created, **kwargs):
 	"""
-	Send signal post_create when a model is created
+	Send signal post_create when a model is first created
 	"""
 	if created:
 		del kwargs['signal']

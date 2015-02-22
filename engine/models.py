@@ -11,10 +11,15 @@ from utils.read_markdown import read_file_from_path
 
 
 class Game(models.Model):
+	# City name
 	city = models.CharField(max_length=50)
+
 	current_turn = models.PositiveSmallIntegerField(default=1)
 	total_turn = models.PositiveSmallIntegerField(default=8)
+
+	# Useful for testing, ensure results can be reproduced and understood easily.
 	disable_side_effects = models.BooleanField(default=False, help_text="Disable all side effects (invisible hand, first and last effects, ...)")
+
 	started = models.DateTimeField(auto_now_add=True)
 
 	@transaction.atomic
@@ -24,9 +29,9 @@ class Game(models.Model):
 		"""
 		# Execute all tasks
 		from engine.modules import tasks_list
-		for task in tasks_list:
-			# print "* [%s] **%s** : %s" % (task.RESOLUTION_ORDER, task.__name__, task.__doc__.strip())
-			t = task()
+		for Task in tasks_list:
+			# print "* [%s] **%s** : %s" % (Task.RESOLUTION_ORDER, Task.__name__, Task.__doc__.strip())
+			t = Task()
 			t.run(self)
 
 		# Build resolution messages for each player
@@ -59,6 +64,7 @@ class Game(models.Model):
 		try:
 			content = read_file_from_path("%s/newsfeeds/%s/%s/%s.md" % (settings.CITY_BASE_DIR, category, path, message_number))
 		except IOError:
+			# We don't have enough files, revert to default
 			content = read_file_from_path("%s/newsfeeds/%s/%s/_.md" % (settings.CITY_BASE_DIR, category, path))
 
 		kwargs['content'] = content
@@ -76,7 +82,9 @@ class Player(models.Model):
 
 	name = models.CharField(max_length=64)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+
 	game = models.ForeignKey(Game)
+
 	money = models.PositiveIntegerField(default=2000)
 	background = models.CharField(max_length=50)
 	rp = models.TextField(default="", blank=True)
@@ -110,7 +118,7 @@ class Player(models.Model):
 
 	def get_current_orders_cost(self):
 		"""
-		Get the cost for all orders on this turn
+		Get the cost for all player orders' on this turn
 		"""
 		return self.get_current_orders().aggregate(Sum('cost'))['cost__sum'] or 0
 
@@ -118,6 +126,7 @@ class Player(models.Model):
 		"""
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
+		# Start by adding the final note
 		self.add_note(content="Argent disponible pour le tour : %sk¥" % self.money)
 
 		notes = Note.objects.filter(recipient_set=self, turn=self.game.current_turn)
@@ -138,15 +147,16 @@ class Order(models.Model):
 	title = "Ordre"
 
 	player = models.ForeignKey(Player)
+
 	turn = models.PositiveSmallIntegerField(editable=False)
 	cost = models.PositiveSmallIntegerField(editable=False)
 	type = models.CharField(max_length=40, blank=True, editable=False)
 
 	def save(self):
-		# Save the current type to inflate later
+		# Save the current type to inflate later (model inheritance can be tricky)
 		self.type = self._meta.object_name
 
-		# Turn default values is game current_turn
+		# Turn default value is `game.current_turn`
 		if not self.turn:
 			self.turn = self.player.game.current_turn
 
@@ -156,6 +166,9 @@ class Order(models.Model):
 		super(Order, self).save()
 
 	def clean(self):
+		"""
+		Emit a validate_order signal to ensure the order is valid and can be saved
+		"""
 		if self.__class__.__name__ == "Order":
 			raise ValidationError("You can't save raw Order, only subclasses")
 		validate_order.send(sender=self.__class__, instance=self)
@@ -181,13 +194,14 @@ class Order(models.Model):
 
 	def get_form(self, data=None):
 		"""
-		Retrieve a form to create / edit this order
+		Retrieve a Django form to create / edit this order.
+		Default behavior is to instantiate a new item from `get_form_class()`
 		"""
 		return self.get_form_class()(data, instance=self)
 
 	def get_form_class(self):
 		"""
-		Build a new class for forms,
+		Build a new class for Order form.
 		"""
 		class OrderForm(ModelForm):
 			class Meta(self.get_form_meta()):
