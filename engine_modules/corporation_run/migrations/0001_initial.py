@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='OffensiveCorporationRunOrder',
+            name='CorporationRunOrder',
             fields=[
                 ('runorder_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='run.RunOrder')),
             ],
@@ -23,31 +23,31 @@ class Migration(migrations.Migration):
             bases=('run.runorder',),
         ),
         migrations.CreateModel(
-            name='OffensiveCorporationRunOrderWithStealer',
+            name='CorporationRunOrderWithStealer',
             fields=[
-                ('offensivecorporationrunorder_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='corporation_run.OffensiveCorporationRunOrder')),
+                ('CorporationRunOrder_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='corporation_run.CorporationRunOrder')),
             ],
             options={
             },
-            bases=('corporation_run.offensivecorporationrunorder',),
+            bases=('corporation_run.CorporationRunOrder',),
         ),
         migrations.CreateModel(
             name='ExtractionOrder',
             fields=[
-                ('offensivecorporationrunorderwithstealer_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='corporation_run.OffensiveCorporationRunOrderWithStealer')),
+                ('CorporationRunOrderwithstealer_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='corporation_run.CorporationRunOrderWithStealer')),
             ],
             options={
             },
-            bases=('corporation_run.offensivecorporationrunorderwithstealer',),
+            bases=('corporation_run.CorporationRunOrderwithstealer',),
         ),
         migrations.CreateModel(
             name='DataStealOrder',
             fields=[
-                ('offensivecorporationrunorderwithstealer_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='corporation_run.OffensiveCorporationRunOrderWithStealer')),
+                ('CorporationRunOrderwithstealer_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='corporation_run.CorporationRunOrderWithStealer')),
             ],
             options={
             },
-            bases=('corporation_run.offensivecorporationrunorderwithstealer',),
+            bases=('corporation_run.CorporationRunOrderwithstealer',),
         ),
         migrations.CreateModel(
             name='ProtectionOrder',
@@ -62,20 +62,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='SabotageOrder',
             fields=[
-                ('offensivecorporationrunorder_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='corporation_run.OffensiveCorporationRunOrder')),
+                ('CorporationRunOrder_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='corporation_run.CorporationRunOrder')),
             ],
             options={
             },
-            bases=('corporation_run.offensivecorporationrunorder',),
+            bases=('corporation_run.CorporationRunOrder',),
         ),
         migrations.AddField(
-            model_name='offensivecorporationrunorderwithstealer',
+            model_name='CorporationRunOrderwithstealer',
             name='stealer_corporation',
             field=models.ForeignKey(related_name='+', to='corporation.Corporation'),
             preserve_default=True,
         ),
         migrations.AddField(
-            model_name='offensivecorporationrunorder',
+            model_name='CorporationRunOrder',
             name='target_corporation_market',
             field=models.ForeignKey(related_name='scoundrels', to='market.CorporationMarket'),
             preserve_default=True,
