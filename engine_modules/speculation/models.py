@@ -20,7 +20,7 @@ class AbstractSpeculation(Order):
 	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 
 	def get_cost(self):
-		# or 1: avoid displaying the order without money
+		# or 1: avoid displaying the order when the player has no money left
 		return (self.investment or 1) * self.BASE_COST
 
 	def on_win_money(self):
@@ -53,9 +53,8 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 	def resolve(self):
 		ladder = self.player.game.get_ladder()
 
-		# Build message
-
 		if ladder.index(self.corporation) + 1 == self.rank:
+			# Well done!
 			self.player.money += self.on_win_money()
 			self.player.save()
 			content = u"Vos investissements de %sk¥ sur la corporation %s vous ont rapporté %sk¥" % (self.investment, self.corporation.base_corporation.name, self.on_win_money())
