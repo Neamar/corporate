@@ -24,7 +24,7 @@ class RunOrdersTest(EngineTestCase):
 		bc.datasteal = self._values[0]
 
 
-class OffensiveCorporationRunOrderTest(RunOrdersTest):
+class CorporationRunOrderTest(RunOrdersTest):
 	def test_get_raw_probability(self):
 		"""
 		Check raw probability values

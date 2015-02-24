@@ -48,7 +48,7 @@ extraction_messages = {
 }
 
 
-class OffensiveCorporationRunOrder(RunOrder):
+class CorporationRunOrder(RunOrder):
 	"""
 	Model for offensive corporation runs.
 	"""
@@ -58,7 +58,7 @@ class OffensiveCorporationRunOrder(RunOrder):
 		"""
 		Compute success probability, eventually modified by protection runs
 		"""
-		base_value = super(OffensiveCorporationRunOrder, self).get_success_probability()
+		base_value = super(CorporationRunOrder, self).get_success_probability()
 
 		protection = self.target_corporation_market.protectors.filter(
 			turn=self.turn
@@ -75,14 +75,14 @@ class OffensiveCorporationRunOrder(RunOrder):
 		return self.target_corporation_market.corporation
 
 	def get_form(self, data=None):
-		form = super(OffensiveCorporationRunOrder, self).get_form(data)
+		form = super(CorporationRunOrder, self).get_form(data)
 		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game)
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		return form
 
 
-class OffensiveCorporationRunOrderWithStealer(OffensiveCorporationRunOrder):
+class CorporationRunOrderWithStealer(CorporationRunOrder):
 	"""
 	Offensive run with a stealer (e.g. DataStealOrder / ExtractionOrder)
 	"""
@@ -96,13 +96,13 @@ class OffensiveCorporationRunOrderWithStealer(OffensiveCorporationRunOrder):
 		return self.stealer_corporation.corporationmarket_set.get(market=self.target_corporation_market.market_id)
 
 	def get_form(self, data=None):
-		form = super(OffensiveCorporationRunOrderWithStealer, self).get_form(data)
+		form = super(CorporationRunOrderWithStealer, self).get_form(data)
 		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
 
 		return form
 
 
-class DataStealOrder(OffensiveCorporationRunOrderWithStealer):
+class DataStealOrder(CorporationRunOrderWithStealer):
 	"""
 	Order for DataSteal runs
 	"""
@@ -134,7 +134,7 @@ class DataStealOrder(OffensiveCorporationRunOrderWithStealer):
 		return u"Envoyer une équipe voler des données de %s (%s) pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 
 
-class ExtractionOrder(OffensiveCorporationRunOrderWithStealer):
+class ExtractionOrder(CorporationRunOrderWithStealer):
 	"""
 	Order for Extraction runs
 	"""
@@ -174,7 +174,7 @@ class ExtractionOrder(OffensiveCorporationRunOrderWithStealer):
 		return u"Réaliser une extraction de %s (%s) vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 
 
-class SabotageOrder(OffensiveCorporationRunOrder):
+class SabotageOrder(CorporationRunOrder):
 	"""
 	Order for Sabotage runs
 	"""
