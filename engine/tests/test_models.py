@@ -45,6 +45,9 @@ class ModelsTest(EngineTestCase):
 		self.g.current_turn = 1
 		self.g.save()
 
+		print "DEBUG " + str(self)
+		print "DEBUG " + str(self.g)
+
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.g.current_turn, 2)

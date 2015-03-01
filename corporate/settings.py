@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     'engine_modules.mdc',
     'engine_modules.wiretransfer',
     'engine_modules.market',
+    'engine_modules.market_bubbles',
 )
 
 
