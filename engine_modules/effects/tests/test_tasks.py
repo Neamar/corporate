@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.testcases import override_base_corporations
+from engine_modules.corporation.decorators import override_base_corporations
 
 
 class TasksTest(EngineTestCase):
@@ -74,7 +74,7 @@ class TasksTest(EngineTestCase):
 	@override_base_corporations
 	def test_crashed_corporations(self):
 		"""
-		Test errors are gracefully handled whe the corporation to affect does not exist anymore
+		Test errors are gracefully handled when the corporation to affect does not exist anymore
 		"""
 		self.update_effect(self.last_corporation, 'on_last', "update('unknown_corporation', -5)")
 		self.update_effect(self.first_corporation, 'on_first', "")

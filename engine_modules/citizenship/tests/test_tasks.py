@@ -2,9 +2,9 @@ from engine.testcases import EngineTestCase
 from engine_modules.citizenship.models import CitizenShipOrder
 
 
-class TasksTest(EngineTestCase):
+class CitizenshipTaskTest(EngineTestCase):
 	def setUp(self):
-		super(TasksTest, self).setUp()
+		super(CitizenshipTaskTest, self).setUp()
 
 		self.o = CitizenShipOrder(
 			player=self.p,

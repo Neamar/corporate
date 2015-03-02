@@ -5,7 +5,7 @@ from messaging.models import Newsfeed
 
 class CrashCorporationTask(ResolutionTask):
 	"""
-	Let's crash corporations that didn't made it through the turn
+	Let's crash corporations that didn't make it through the turn
 	"""
 	RESOLUTION_ORDER = 1000
 

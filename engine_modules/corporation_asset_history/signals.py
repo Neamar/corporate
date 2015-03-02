@@ -9,7 +9,7 @@ from engine_modules.corporation_asset_history.models import AssetHistory
 @receiver(post_create, sender=Corporation)
 def initialize_asset_history(sender, instance, **kwargs):
 	"""
-	Save the corporation assets corporation at start of the game (turn 0)
+	Save the corporation assets history at game start (turn 0)
 	"""
 	ah = AssetHistory(
 		corporation=instance,

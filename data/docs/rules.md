@@ -13,20 +13,30 @@ Au début de la partie, les actifs des 10 corpos sont tirés au hasard (entre 7 
 
 Le **classement** trie les corpos par nombre d'actifs et leur attribue un rang de 1 à 10, 1 correspondant à la corpo possédant le plus d'actifs, celle qui domine le marché.
 
-Chaque corporation voit ses actifs répartis en quatre **marchés**. 
+Chaque corporation voit ses actifs répartis en plusieurs marchés **marchés**. 
 
 > Par exemple, Ares possède 10 actifs répartis comme suit :
 >
 > * 5 en Militaire
 > * 2 en Alimentaire
-> * 3 en Sécurité
+> * 2 en Sécurité
+> * 1 en Magie
+
+Une corporation a en général entre 3 et 6 marchés définis au début de la partie. Une corporation ne pourra donc jamais en gagner ou en perdre.
+Au total, il existe 10 marchés différents répartis entre les corporations.
+
+Si une corporation a plus d'actifs que toutes les autres sur un marché, elle **domine** ce marché et gagne un actif. Attention cependant, cet **actif de domination** est perdu dès que la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine.
+
+A contrario, une corporation qui tombe à 0 sur un de ses marchés perd un actif. Cet **actif de perte sèche** disparaît dès que la corporation a au moins un actif sur ce marché. A noter : le nombre d'actifs ne peut pas descendre en dessous de zéro. Si plusieurs corporations ont 0 actifs sur le même marché, elles ont toutes l'actif de perte sèche.
+
+> Par exemple, Ares a ses actifs répartis comme suit :
+>
+> * 8 en Militaire alors que toutes les autres corporations ont strictement moins.
+> * 2 en Alimentaire alors que Renraku à 2 aussi
+> * 0 en Sécurité 
 > * 0 en Magie
-
-Ces marchés sont définis au début de la partie. Une corporation ne pourra donc jamais ouvrir un marché dans lequel elle n'est pas compétente (en tout cas, pas dans cette ville ni dans cette partie). 
-Chaque corporation a un **marché historique**, qui est ciblé par certains effets de jeu.
-Au total, il existe 10 marchés différents répartis entre les corporations. Chacune possède un marché historique différent.
-
-Si une corporation a plus d'actifs que toutes les autres sur un marché, elle **domine** ce marché et gagne un actif. Attention cependant, cet actif est perdu dès la fin du tour où la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine.
+>
+> La somme d'actifs de Ares vaut 9 : 8(Militaire) +2(Alimentaire) +0(Sécurité) +0(Magie) +1(Actif de domination sur Militaire) -1(actif de perte sèche sur Sécurité) -1(actif de perte sèche sur Magie)
 
 Les joueurs commencent la partie avec 1 point d'**Influence corporatiste**, ou **"IC"**. Cette caractéristique représente l'étendue de leur pouvoir et de leurs réseaux dans l'île de Manhattan et sert de limite à certaines de leurs actions. Elle pourra être augmentée en cours de partie.
 
@@ -40,8 +50,9 @@ Chacune des étapes suivantes sera expliquée en détails.
 1. Chaque joueur remplit et envoie un **formulaire d'ordres**, où il peut effectuer des achats, spéculer et manipuler le marché.
 2. À midi chaque jour jusqu'à la fin du jeu, les ordres sont tous résolus simultanément, faisant gagner et perdre des actifs aux corpos.
 3. Chaque corpo est différente et possède un **effet premier** qui s'applique lorsque la corpo est en tête du classement et un **effet dernier**, qui s'applique lorsque qu'elle est dernière. Les deux effets sont résolus simultanément, une fois tous les autres modificateurs appliqués.
-4. Chaque joueur touche ses divers retours sur investissements.
-5. Les onglets **Wall Street** et **Newsfeeds** révèlent respectivement le nouveau classement et les évènements publics du tour écoulé, et chaque joueur reçoit en plus un **message de résolution** personnalisé qui contient les informations plus confidentielles.
+4. Si des corporations ont 0 actifs ou moins, elles crashent.
+5. Chaque joueur touche ses divers retours sur investissements.
+6. Les onglets **Wall Street** et **Newsfeeds** révèlent respectivement le nouveau classement et les évènements publics du tour écoulé, et chaque joueur reçoit en plus un **message de résolution** personnalisé qui contient les informations plus confidentielles.
 
 Un nouveau tour peut commencer.
 
@@ -68,8 +79,8 @@ En tant qu'acteur majeur du marché, chaque joueur a droit à un **Vote** par to
 ### La main invisible du marché
 Le reste des aléas de la bourse de Manhattan est laissé à la chance. À chaque tour :
 
-* Une corpo au hasard gagne 1 actif sur son marché historique.
-* Une corpo au hasard perd 1 actif sur son marché historique sans pouvoir descendre en dessous de 0.
+* Une corpo au hasard gagne 1 actif sur un de ses marchés déterminé aléatoirement.
+* Une corpo au hasard perd 1 actif sur un de ses marchés qui a au moins 1 actif déterminé aléatoirement.
 
 ### Effet premier / effet dernier
 Les effets premier et dernier des corpos en tête et en fin de classement s'appliquent chaque tour, après tous les autres modificateurs, et viennent chambouler les actifs des corpos en s'appliquant sur leurs marchés historiques.
@@ -80,7 +91,7 @@ Voir la page des corporations pour une description individuelle de chaque corpo 
 Au cours de la résolution du tour, une corpo peut descendre à 0 actifs ou moins. Son effet dernier peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle **Crashe** et est définitivement retirée du classement. Pas de remboursement pour les parts investies.
 
 ## Achat d'Influence
-Les joueurs peuvent payer pour augmenter leur Influence Corporatiste d'un point. Le coût est de `750 000 ny × indice`, soit 1 500 000 ny pour passer de 2 à 3. 
+Les joueurs peuvent payer pour augmenter leur Influence Corporatiste d'un point. Le coût est de `750 000 ny × indice actuel`, soit 1 500 000 ny pour passer de 2 à 3. 
 
 La nouvelle valeur d'IC ne prendra effet qu'au tour suivant.
 
@@ -133,11 +144,8 @@ Pour chaque point d'IC, un joueur peut réduire le coût de base d'une run à 50
 #### Protection
 
 Les corporations n'apprécient pas particulièrement d'être la cible de runs, et investissent des sommes colossales dans leur sécurité. 
-Vous pouvez lancer une run de protection sur un marché d'une corporation pour réduire la précision maximale des runs qui le cible. Son coût de base est de 350 000 ny comme les autres run. La précision maximum des runs attaquantes sur ce marché baisse en fonction du coût payé :
+Vous pouvez lancer une run de protection sur un marché d'une corporation pour réduire la précision maximale des runs qui le cible à 50%. Son coût est fixe : 350 000. 
 
-| Coût amélioration de la protection   | 350k¥ | 400k¥ | 450k¥ | 500k¥ |
-|--------------------------------------|-------|-------|-------|-------|
-| Valeur maximale des runs attaquantes |  80%  |  70%  |  60%  |  50%  |
 
 > Vous pouvez utiliser la réduction du prix de base de la run à 50 000 ny avec l'IC comme pour les autres runs. Si vous avez 1 d'IC, vous pouvez avoir la réduction sur un sabotage, un datasteal, une extraction ou une protection. Vous n'aurez pas deux réductions.
 
@@ -224,8 +232,8 @@ De nouvelles lois sont votées, renforçant les contrôles militaires au détrim
 
 Effets :
 
-* Au prochain tour, les **joueurs** appartenant à la coalition **Opérations Clandestines** gagnent **+20%** sur chacune de leurs runs. Ce bonus peut permettre de dépasser les 100%, améliorant la vitesse de la run.
-* Au prochain tour, les **joueurs** appartenant à la coalition **Consolidation** subissent un malus de **-20%**.
+* Au prochain tour, les **joueurs** appartenant à la coalition **Opérations Clandestines** gagnent **+20%** sur chacune de leurs runs classiques. Ce bonus peut permettre de dépasser les 100%, améliorant la vitesse de la run.
+* Au prochain tour, les **joueurs** appartenant à la coalition **Consolidation** subissent un malus de **-20%** sur chacune de leurs runs classiques.
 
 ### Consolidation
 Des opérations de presse et des réunions avec les citoyens permettent à certaines personnes de se faire connaître et apprécier du grand public.

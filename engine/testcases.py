@@ -17,13 +17,14 @@ class TestCase(DjangoTestCase):
 class EngineTestCase(TestCase):
 	"""
 	Base class for unittesting engine.
-	Add a game in self.g and a player in self.p
+	Add a game in self.g, a player in self.p
+	And three corporations in self.c, self.c2 and self.c3.
 	"""
 
 	def setUp(self):
 		"""
 		Setup initial configuration.
-		This is run on the test city, without too many corporations, for faster tests.
+		This is run on the test city, with few corporations, for faster tests.
 		"""
 
 		self.g = Game()
@@ -33,14 +34,17 @@ class EngineTestCase(TestCase):
 
 		self.p = Player(game=self.g)
 		self.p.save()
+
+		# Add a value storing default money, can be used read_only for comparisons
 		self.initial_money = self.p.money
 
 		self.c = self.g.corporations['c']
 		self.c2 = self.g.corporations['c2']
 		self.c3 = self.g.corporations['c3']
 
-		# TODO: move to another place, in engine_modules/runs
+		# TODO: move to another place, in engine_modules/runs/testcases?
 		# TODO : add test for 90% restriction
+		# Remove default 90% limitation, making test reliable
 		from engine_modules.run.models import RunOrder
 		RunOrder.MAX_PERCENTS = 100
 

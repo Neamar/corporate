@@ -31,9 +31,8 @@ class BuyShareOrder(Order):
 
 	def get_cost(self):
 		if not hasattr(self, "corporation"):
-			# 1: avoid displaying the order without money
+			# 1: avoid displaying the order when the player has no money left
 			return 1
-
 		elif self.corporation == self.player.game.get_ladder()[0]:
 			if self.player.citizenship.corporation != self.corporation:
 				return BuyShareOrder.FIRST_COST * self.corporation.assets

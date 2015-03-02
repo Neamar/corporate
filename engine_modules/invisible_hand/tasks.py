@@ -17,7 +17,7 @@ class InvisibleHandTask(ResolutionTask):
 
 		corpos = game.corporation_set.all().order_by('?')[0:2]
 
-		# Probably a test, but may happen in some situations
+		# Probably a useless test, but may happen in some situations
 		if len(corpos) == 0:
 			return
 
