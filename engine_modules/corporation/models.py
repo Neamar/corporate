@@ -79,6 +79,8 @@ class BaseCorporation:
 		return cls.base_corporations.values()
 
 # Build the dict at startup once and for all
+# This is executed when the file is imported (this is why 'import from' is important) !
+# Isn't there a better way to do this ? 
 BaseCorporation.build_dict()
 
 
@@ -132,6 +134,22 @@ class Corporation(models.Model):
 	def on_crash_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
 
+	def increase_assets(self, value=1):
+		"""
+		Increase corporation's assets by value
+		"""
+
+		self.assets += value
+		self.save()
+
+	def decrease_assets(self, value=1):
+		"""
+		Decrease corporation's assets by value
+		"""
+
+		self.assets -= value
+		self.save()
+
 	def update_assets(self, delta, category, market=None):
 		"""
 		Update assets values, and save the model
@@ -150,8 +168,7 @@ class Corporation(models.Model):
 		market.save()
 
 		# Mirror changes on assets
-		self.assets += delta
-		self.save()
+		self.increase_assets(delta)
 
 		# And register assetdelta for logging purposes
 		self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
