@@ -7,37 +7,40 @@ Ces règles vont détailler toutes les actions que vous avez la possibilité de 
 [TOC]
 
 ## Le classement corporatiste
-> Le classement de fin d’année c’est un peu comme une course. Tu peux avoir été devant tout le long, si le dernier te passe devant juste avant la ligne, c’est sa sale tronche qui sera dans le journal. 
+> Le classement de fin d’année, c’est un peu comme une course. Tu peux avoir été devant tout le long, si le dernier te passe devant juste avant la ligne, c’est sa sale tronche qui sera dans le journal. 
 
 Votre objectif est de devenir la personnalité la plus respectée de Detroit à la fin de l’année. Le truc important à retenir, c’est qu’il n’y a pas de victoire en équipe. Il y aura celui qui a réussi et ceux qui ont échoué. Et commencez pas à parler de chance, personne n’aime les gens qui se plaignent !
  
 > Pourquoi je ne mise que sur 10 corpos parmi des centaines ? Tu m’as bien regardé ? J’ai l’air d’un hippie qui laisse traîner son fric dans une boite réglo ?
 
-Votre champ de bataille, c’est 10 énormes entreprises cotées à Détroit. On les appelle des corporations, ou **corpos**. Chaque corpo commence avec un nombre d’**actifs** qui va évoluer au cours de la partie, au départ les corpos commencent avec entre 8 et 13 actifs.
+Votre champ de bataille, c’est 10 énormes entreprises cotées à Détroit. On les appelle des corporations, ou **corpos**. Chaque corpo commence avec un nombre d’**actifs** qui va évoluer au cours de la partie, au début du jeu. 3 corpos commencent avec 12 actifs, 4 corpos commencent avec 10 et 3 corpos commencent avec 8.
+
+Les corporations sont classées par ordre d'actifs décroissants. C'est à dire que la première corpo est celle qui a le plus d'actifs. En cas d'ex-aequo, celle qui était le mieux classé au tour d'avant reste la mieux classée.
+
+> Le crédit énergétique est une monnaie étalon comme le fut l'or à son époque. La populace utilise les monnaies corpos pour acheter leur pain, toi tu payes un type pour le faire.
  
 Les règles de l’économie sont simples :
 
-* Vous commencez la partie avec 2 000 000 ny. Ou 2 000 kilo-NewYen (kny).
-* Acheter une **part** coûte `actifs × 100 kny` (sauf si la corpo est première : `actifs × 125 kny` à la place)
-* Vendre une part rapporte immédiatement `actifs × 100 kny` (sauf si la corpo est première : `actifs × 125 kny` à la place). Cet argent est utilisable pour le tour en cours.
-* Posséder une part à la fin d’un tour rapporte `actifs × 50 kny` (ou `actifs × 75 kny` si la corpo est première). Une part achetée ce tour-ci compte, mais pas une part vendue ce tour-ci.
+* Vous commencez la partie avec deux millions de crédits énergétiques. Ou 2 000 000 ₵.
+* Acheter une **part** dans la première corpo coûte `actifs × 125 000 ₵`.
+* Acheter une part dans une autre corpo coûte `actifs × 100 000 ₵`.
+* Chaque part dans la première corpo rapporte des dividendes d'un montant de `actifs × 75 000 ₵` à la fin du tour.
+* Chaque part dans une autre corpo rapporte des dividendes d'un montant de  `actifs × 50 000 ₵` à la fin du tour.
 
-Dans le cas où plusieurs corpos ont le même nombre d'actifs, celle qui était devant l'autre au tour précédent reste mieux placée. Si elles étaient encore ex-aequo au tour précédent, on regarde le tour encore avant, puis le tour encore avant, etc...
-Au début du jeu, plusieurs corporations commencent avec le même nombre d'actifs. Au début du premier tour, après que les joueurs aient personalisés leur personnage, les ex-aequos sont résolus au hasard et c'est ce classement qui fait foi pour le reste de la partie. 
-
-    On aura donc probablement deux classement différents d'une partie sur l'autre, même si le tableau de départ est toujours le même.
+    Les parts rapportent des dividendes dès le tour où elles sont achetées.
 
 ## Influence corporatiste 
 > Bien sûr que je te mets des bâtons dans les roues. Mes convictions m’interdisent de laisser le pouvoir à un égoïste. Montre-moi une preuve de générosité et tu pourras avancer librement dans la vie. Tiens, voilà mon RIB.
 
-Acheter une part dans une corpo prend du temps, des ressources et beaucoup de négociations. Tant que l’on n’a pas les bons contacts, on ne peut pas en acheter autant qu’on veut. On modélise ça par l'influence corporatiste.
+Acheter une part dans une corpo prend du temps, des ressources et beaucoup de négociations. Tant que l’on n’a pas les bons contacts, on ne peut pas en acheter autant qu’on veut. Cette capacité est représentée par l'influence corporatiste.
 
 * L'influence corporatiste, ou **IC**, commence à 1 pour tous les joueurs.
-* Le nombre de parts qu’on peut acheter par tour est limité par son IC.
-* On peut augmenter son IC en payant `750 kny × indice actuel`. 
+* Le nombre de parts qu’on peut acheter par tour est limité à hauteur de l'IC.
+* On peut augmenter son IC en payant `750 000 ₵ × indice actuel`. 
 
-    Exemple : 1 500 kny pour passer de 2 à 3
+    Exemple : 1 500 000 ₵ pour passer de 2 à 3
  
+##Les Marchés
 Regardons en détail comment sont calculés les actifs. Chaque corporation est définie par ses **marchés** qui ne changeront pas au cours de la partie. Voici le tableau de répartition des actifs par marché des corporations au premier tour :
 
 
@@ -47,7 +50,7 @@ Les actifs d’une corporation sont égaux à la somme des actifs de ses marché
 * *A contrario*, une corporation qui tombe à 0 sur un de ses marchés perd un actif. Cet **actif de perte sèche** disparaît dès que la corporation récupère au moins un actif sur ce marché. À noter : le nombre d'actifs ne peut pas descendre en dessous de zéro. Si plusieurs corporations ont 0 actifs sur le même marché, elles ont toutes l'actif de perte sèche. Ces actifs sont en rouge dans la table.
 
 ## Main invisible
-> Même la plus corrompue des corpos est victime des modes des consommateurs. Ça a été une déception pour moi aussi, personne ne décide quel produit de merde le public va s'arracher cette année.
+> Même la plus corrompue des corpos est victime des modes des consommateurs. Ça a été une déception pour moi aussi: personne ne décide quel produit de merde le public va s'arracher cette année.
 
 À chaque tour, la **main invisible** du marché choisit au hasard :
 
@@ -55,69 +58,71 @@ Les actifs d’une corporation sont égaux à la somme des actifs de ses marché
 * Un marché d'une corpo qui a au moins 1 actif qui perd 1 actif.
 
 
-## Actions
-Évidemment, le jeu serait un peu fade si vous ne pouviez pas maîtriser un peu les cours de la bourse ! Vous disposez de 3 leviers : votre pouvoir sur les marchés, les contrats et Detroit Incorporation
+## Les Ordres
+Évidemment, le jeu serait un peu fade si vous ne pouviez pas maîtriser un peu les cours de la bourse ! Vous disposez de 3 leviers : votre voix au chapitre sur les marchés, les opés et Detroit Incorporated
 
-### Pouvoir
+Chaque tour, vous pouvez changer d'avis autant de fois que vous le voulez en modifiant votre fiche d'**ordres**. À 13h, la dernière version des fiches d'ordres de tous les joueurs seront exécutées simultanéments. Vous n'avez pas besoin de valider.
+
+### Voix au chapitre
 > Il y a un paquet de gens qui suivent mes conseils pour placer leur argent sans avoir conscience du pouvoir que ça me donne. C’est tellement plus efficace que le viagra !
 
-En tant qu'acteur majeur du marché, chaque joueur applique son **pouvoir** sur les marchés à chaque tour. Il choisit :
+En tant qu'acteur majeur du marché, chaque joueur applique sa **Voix au chapitre** sur les marchés à chaque tour. Il choisit :
 
 * Un marché d'une corpo qui gagne 1 actif.
 * Un marché d'une corpo qui perd 1 actif.
 
-### Contrats
-> Le montant est libre mais une rumeur dit que pour moins de 350k, tu reçoit juste une lettre d’excuse qui t’indique que ça n’a pas marché. A moins que tu aies les bons appuis, bien entendu.
+    Si un marché est dans le négatif une fois tous les ordres appliqués, on le ramène à 0 actifs avant que les effets premier/dernier/crash s'appliquent.
 
-Les **contrats** sont des missions illégales réalisées par un regroupement de diverses organisations criminelles ou d’indépendants contre une rétribution pécuniaire.
+### Opérations clandestines
+> Le montant est libre mais une rumeur dit que pour moins de 350k, tu reçois juste une lettre d’excuses qui t’indique que ça n’a pas marché. A moins que tu aies les bons appuis, bien entendu.
 
-#### Contrats classiques
+Les opérations clandestines, ou **opé**, sont des missions illégales réalisées par un regroupement de diverses organisations criminelles ou d’indépendants contre une rétribution pécuniaire.
+
+#### les opés classiques
 ##### Sabotage
-Le commanditaire choisit un marché d'une corpo cible, et tente de saboter une de ses opérations. En cas de réussite, le marché de la corpo cible perd 2 actifs.
+Le commanditaire choisit une corpo cible, ainsi qu'un Marché associé à cette corpo. En cas de réussite, un sabotage fait perdre 2 actifs au marché sélectionné
 
 ##### Datasteal
 Le commanditaire choisit un marché, une corpo cible et une corpo bénéficiaire. En cas de réussite, le marché de la corpo bénéficiaire gagne +1 actif grâce aux précieuses informations dérobées à la concurrence.
-Vous pouvez lancer ce contrat uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
-Vous ne pouvez pas lancer ce contrat si la corpo bénéficiaire possède plus d'actifs dans le marché que la corpo cible.
-
-    Mais vous pouvez si les deux corpos ont le même nombre d'actifs sur ce marché.
+Vous pouvez lancer cette opé uniquement si la corporation bénéficiaire et la corporation cible partagent le marché cible.
+Vous ne pouvez pas lancer cette opé si la corpo bénéficiaire possède strictement plus d'actifs dans le marché que la corpo cible.
 
 ##### Extraction
 Le commanditaire choisit un marché, une corpo cible et une corpo bénéficiaire. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui perd 1 actif sur ce marché, et rejoint la corpo bénéficiaire, lui faisant gagner +1 actif sur ce même marché.
-Vous pouvez lancer ce contrat uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché.
-Vous ne pouvez pas lancer ce contrat si la corpo bénéficiaire possède plus d'actifs dans le marché que la corpo cible.
+Vous pouvez lancer cette opé uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché cible.
+Vous ne pouvez pas lancer cette opé si la corpo bénéficiaire possède strictement plus d'actifs dans le marché que la corpo cible.
 
-##### Coût d'un contrat
-Chaque contrat coûte 350 kny et a 50% de chances de réussir. Le joueur commanditaire peut augmenter la fiabilité (les chances de réussite de son contrat) à raison de 50 kny par tranche de 10% supplémentaires.
+##### Coût d'une opé
+Chaque opé coûte 350 000 ₵ et a 50% de chances de réussir. Le joueur commanditaire peut augmenter les chances de réussite à raison de 50 000 ₵ par tranche de 10% supplémentaires.
 
-    Un joueur qui investit 450 kny dans un contrat de Sabotage aura donc 70% de chance de la voir réussir : `50% de base + 2 × 10%`. Attention, on ne peut pas payer plus de 250 kny pour augmenter la fiabilité de son contrat (et donc dépasser les 100%).
+    Un joueur qui investit 450 000 ₵ dans une opé de Sabotage aura donc 70% de chance de la voir réussir : `50% de base + 2 × 10%`. Attention, on ne peut pas payer plus de 250 000 ₵ pour augmenter la réussite de son opé (et donc dépasser les 100%).
 
-Pour chaque point d'IC, un joueur peut réduire le coût de base d'un contrat à 50 kny au lieu de 350 kny. Il paye normalement les bonus de fiabilité apportés.
+Pour chaque point d'IC, un joueur peut réduire le coût de base d'une opé à 50 000 ₵ au lieu de 350 000 ₵. Il paye normalement les augmentation de réussite apportés.
 
-#### Les contrats spéciaux
+#### Les opés spéciales
 ##### Protection
-Les corporations n'apprécient pas particulièrement d'être la cible de contrats, et investissent des sommes colossales dans leur sécurité. Vous pouvez lancer un contrat de protection sur un marché d'une corporation pour réduire la fiabilité maximale des contrats qui le cible à 50%. Son coût est fixe : 350 kny.
+Les corporations n'apprécient pas particulièrement d'être la cible d'opés, et investissent des sommes colossales dans leur sécurité. Vous pouvez lancer une opé de protection sur un marché d'une corporation pour réduire le pourcentage de réussite maximale des opés qui le ciblent à 40%. Son coût est fixe : 350 000 ₵.
 
-    Vous pouvez utiliser la réduction du prix de base du contrat à 50 kny avec l'IC comme pour les autres contrats. Pour 1 d'IC, vous pouvez avoir la réduction sur un sabotage, un datasteal, une extraction ou une protection. Vous n'aurez pas deux réductions.
+    Vous pouvez utiliser la réduction du prix de base de l'opé à 50 000 ₵ avec l'IC comme pour les autres opés. 
 
 ##### Information
 Le commanditaire choisit des joueurs cibles et des corpos cibles
-Il recevrevra un message contenant toutes les actions faites par les joueurs cibles ce tour-ci ainsi que leur Background (cf. Background). Vous recevrez un détail de toutes les actions réussies et échouées sur les corpo cibles.
-Ce contrat d'Information a un coût :
+Il recevra un message contenant toutes les actions faites par les joueurs cibles ce tour-ci ainsi que leur Background (cf. Background). Vous recevrez en détail toutes les actions réussies et échouées sur les corpos cibles.
+Cette opé d'Information a un coût :
 
-* 150 kny par joueur sélectionné
-* 50 kny par corporation sélectionnée
+* 150 000 ₵ par joueur sélectionné
+* 50 000 ₵ par corporation sélectionnée
 
-    Vous recevez gratuitement le journal interne de la corpo dont vous être citoyen qui exactement la même chose qu'un contrat d'information sur cette corporation.
+    Vous recevez gratuitement le journal interne de la corpo dont vous êtes citoyen, qui contient exactement la même chose qu'une opé d'information sur cette corporation.
 
 #### Résolution
-Le pourcentage de chances maximum qu'un contrat peut atteindre est de 90%. Ce chiffre peut être baissé par les contrats de Protection.
-Les contrats sont résolues par pourcentage de réussite décroissants. Un seule contrat de chaque type peut être réussi par cible et par marché. A partir du moment où un contrat est passé, les suivants échouent automatiquement.
+Le pourcentage de chances maximal qu'une opé peut atteindre est de 90%. Ce nombre peut être baissé par les opés de Protection.
+Les opés sont résolues par pourcentage de réussite décroissants. Une seule opé de chaque type peut être réussie par cible et par marché. À partir du moment où une opé est passé, les suivantes échouent automatiquement.
 
-    Un contrat d'Extraction qui a 100% de chances de réussite sera donc ramené à 90% juste avant de tester sa réussite, mais s’exécutera avant un contrat à 90% de chances. Si le premier contrat passe, le second échoue automatiquement.
+    Une opé d'Extraction qui a 100% de chances de réussite sera donc ramené à 90% juste avant de tester sa réussite, mais s’exécutera avant une opé à 90% de chances. Si la première opé passe, la seconde échoue automatiquement.
  
 ### Detroit Incorporated
-> C’est comme jouer à pierre-feuille-ciseau pour savoir qui va filmer l’autre en train de lécher une bouse. Le plus sage c’est clairement de ne pas jouer. MAIS PUTAIN IMAGINE SI TU GAGNES !
+> C’est comme jouer à pierre-feuille-ciseau pour savoir qui va filmer l’autre en train de lécher une bouse. Le plus sage; c’est clairement de ne pas jouer. MAIS PUTAIN IMAGINE SI TU GAGNES !
 
 **Detroit Inc.** est l’entreprise qui dirige la ville comme le faisaient les mairies autrefois. Elle a le pouvoir de décider la ligne politique de la ville.Chaque tour, les joueurs peuvent s’immiscer dans la politique de la ville en rejoignant une coalition défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des Contrats publics, une restriction des Opérations Clandestines ou des Consolidations.
 
@@ -129,40 +134,45 @@ En cas d'égalité, aucune coalition ne l'emporte.
 #### Contrats publics
 De gros contrats d'entretien et de sécurité sont redistribués entre les corpos de Detroit. Effets :
 
-* Les corpos appartenant à la coalition Contrats publics gagnent immédiatement `+1` actif dans un marché au hasard.
-* Les corpos appartenant à la coalition Opérations Clandestines subissent `-1` actif dans un marché au hasard ayant au moins un actif.
+* Les corpos appartenant à la coalition Contrats publics gagnent immédiatement `+1` actif dans un de ses marchés au hasard.
+* Les corpos appartenant à la coalition Opérations Clandestines subissent `-1` actif dans un de ses marchés au hasard ayant au moins un actif.
 
 #### Opérations Clandestines
 De nouvelles lois sont votées, renforçant les contrôles militaires au détriment de certaines zones. Effets :
 
-* Au prochain tour, les joueurs appartenant à la coalition Opérations Clandestines gagnent `+20%` sur chacune de leurs runs classiques. Ce bonus peut permettre de dépasser les 100%, améliorant la vitesse de la run.
-* Au prochain tour, les joueurs appartenant à la coalition Consolidation subissent un malus de `-20%` sur chacune de leurs runs classiques.
+* Au prochain tour, les joueurs appartenant à la coalition Opérations Clandestines gagnent `+20%` sur chacune de leurs opés classiques. Ce bonus peut permettre de dépasser les 100%, améliorant la vitesse de l'opé. 
+* Au prochain tour, les joueurs appartenant à la coalition Consolidation subissent un malus de `-20%` sur chacune de leurs opés classiques.
 
 #### Consolidation
 Des opérations de presse et des réunions avec les citoyens permettent à certaines personnes de se faire connaître et apprécier du grand public. Effets :
 
-* Les joueurs appartenant à la coalition Consolidation gagnent `+3PV` pour la fin de partie.
-* Les joueurs appartenant à la coalition Contrats Publics subissent un malus de `-3PV` pour la fin de partie.
+* Les joueurs appartenant à la coalition Consolidation gagnent `+3 Points de Victoire` pour la fin de partie.
+* Les joueurs appartenant à la coalition Contrats Publics subissent un malus de `-3 Points de Victoire` pour la fin de partie.
 
-    Exemple : Si John est le joueur ayant le plus de parts dans Sony et Renraku, il compte comme 3. Etienne a le plus de parts dans Ares et Annie a le plus de parts dans WuTech, ils comptent chacun comme 2. John choisit Contrats publics, Etienne et Annie choisissent tous les deux Consolidation et les autres joueurs choisissent de ne pas jouer. La coalition Consolidation passe, Etienne et Annie gagnent 3 points de victoire et John perd 3 points de victoire.
+    Exemple : Si John est le joueur ayant le plus de parts dans Sony et Renraku, son avis a un poids de 3. Etienne a le plus de parts dans Ares et Annie a le plus de parts dans WuTech, leurs avis ont chacun un poid de 2. John choisit Contrats publics, Etienne et Annie choisissent tous les deux Consolidation et les autres joueurs choisissent de ne pas jouer. La coalition Consolidation passe, Etienne et Annie gagnent 3 Points de Victoire et John perd 3 Points de Victoire.
 
-Une fois que tous ces effets ont été résolus, on a un nouveau classement qui s’établit et on applique les effets secondaires :
+## L'Effet premier et l'effet dernier
 
-## Effet premier / effet dernier
-L’**effet premier** de la première corpo du classement et l’**effet dernier** de la dernière corpo du classement s’appliquent simultanément. Et ce, après tous les autres modificateurs, et viennent chambouler les actifs des corpos. Ces effets font perdre ou gagner des actifs à d'autres corporations.
-Voir la page des corporations pour une description individuelle de chaque corpo et le recap pour une liste de leurs effets premiers / derniers.
+Une fois que tous les ordres ont été résolus, un nouveau classement est établit. La première corpo applique son **effet premier**. Ensuite la dernière corpo applique son **effet dernier**. 
 
-##Effet Crash
-Au cours de la résolution du tour, une corpo peut descendre à 0 actif ou moins.Son effet dernier peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle Crashe. Son **effet crash** se réalise et elle est définitivement retirée du classement. Pas de remboursement pour les parts investies.
+    Le classement n'est pas recalculé entre les deux donc l'effet premier ne peux jamais changer quelle corpo effectuera son effet dernier.
 
-Une fois tous ces effets résolus, on obtient le nouveau classement des corpos qui compte pour le gain de ny du tour suivant ainsi que pour les spéculations.
+Ces effets font perdre ou gagner des actifs à d'autres corporations.
+Voir la page des corporations pour une description individuelle de chaque corpo et leurs effets premiers / derniers. Ou le recap pour une liste globale.
+
+    Certains effets modifient les actifs de certaines corporations sans préciser le marché. Dans ce cas il s'agit du marché ayant le plus d'actifs. Ou d'un des marchés ayant le plus d'actifs tiré au hasard en cas d'ex-aequo.
+
+##L'Effet Crash
+Au cours de la résolution du tour, une corpo peut descendre à 0 actif ou moins avec les actifs de perte sèche. Son effet dernier peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle Crashe. Son **effet crash** est appliqué et elle est définitivement retirée du classement. Pas de remboursement pour les parts investies.
+
+Une fois tous ces effets résolus, on obtient le nouveau classement des corpos qui compte pour le gain de crédits énergétiques du tour suivant ainsi que pour les spéculations.
 
 ##Spéculation 
->Ou comment se faire de l’argent de poche
+>Spéculer, c'est à la fois le meilleur moyen de gagner et le meilleur moyen de perdre. Et la différence entre les deux n'est pas de croire en un divinité quelconque.
 
-Dès que l’on commence à influer sur les marchés, on peut se faire fructifier son argent. Chaque joueur peut miser jusqu’à `200 kny × (IC du spéculateur)` qu’il peut répartir entre autant de **spéculation** qu’il le souhaite.
+Dès que l’on commence à influer sur les marchés, on peut faire fructifier son argent. Chaque joueur peut miser jusqu’à `200 000 ₵ × (IC du spéculateur)` qu’il peut répartir entre autant de **spéculations** qu’il le souhaite.
 
-Dans chaque spéculation, le joueur choisit une corporation et mise sur son classement en fin de tour.
+Pour chaque spéculation, le joueur choisit une corporation et mise sur son classement en fin de tour.
 
 * Si le spéculateur se trompe, il perd la somme misée.
 * Si sa spéculation est juste, il garde sa mise et gagne en plus :
@@ -170,35 +180,35 @@ Dans chaque spéculation, le joueur choisit une corporation et mise sur son clas
     * 4 fois sa mise s’il a parié sur un autre rang.
 Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la corpo étant le plus loin dans le négatif est considéré dernière.
 
-    Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il peut miser jusqu'à 400 000 :
+    Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il peut miser jusqu'à 400 000 ₵ :
 
-    Il mise 100 000 ny sur la position d'Horizon, dont il pense qu'elle sera 2ème à la fin du trimestre.
+    Il mise 100 000 ₵ sur la position d'Horizon, dont il pense qu'elle sera 2ème à la fin du trimestre.
 
-    Horizon, malgré une Extraction vicieuse, finit en seconde position. Il garde ses 100 000 ny et en touche 400 000 de plus qui le font largement rentrer dans ses frais. Si Horizon avait finit 3eme, il aurait perdu ses 100 000ny.
+    Horizon, malgré une Extraction vicieuse, finit en seconde position. Il garde ses 100 000 ₵ et en touche 400 000 ₵ de plus qui le font largement rentrer dans ses frais. Si Horizon avait fini 3<sup>eme</sup>, il aurait perdu ses 100 000 ₵.
 
-Maintenant que tu sais te faire del'argent, voyons comment tu va t’en sortir pour faire des points.
+Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voici comment ils sont calculés :
 
 ##Les points de parts
 >Comment tu veux être pris au sérieux si tu n’as que des parts dans des corpos que les investisseurs fuient comme la peste ?
 
-A la fin de la partie, tu as :
+À la fin de la partie, tu as :
 
-* 5 Points de victoire pour chaque part dans la corpo en tête du classement
-* 4 Points de victoire par part dans la deuxième corpo
-* 3 Points de victoire par part dans la troisième corpo
-* 2 Points de victoire par part dans la quatrième corpo
-* 1 Points de victoire par part dans la cinquième corpo
+* 5 Points de Victoire pour chaque part dans la corpo en tête du classement
+* 4 Points de Victoire par part dans la deuxième corpo
+* 3 Points de Victoire par part dans la troisième corpo
+* 2 Points de Victoire par part dans la quatrième corpo
+* 1 Points de Victoire par part dans la cinquième corpo
 
 ##Les points de citoyenneté corpo
 >Changer de nationalité c’est un peu comme enfiler le maillot de l’autre équipe au milieu du  match. Si ta nouvelle équipe gagne, tu es seulement un traître.
 
 La **citoyenneté corpo** est très importante puisque votre image dépend du résulat de votre corpo.
 
-* A la fin de la partie, chaque corporation rapporte `20 – rang` points de victoire à ces citoyens. Donc 18 points pour la première corpo et 0 pour la dernière. Attention, ces points sont à partager entre tous les citoyens de la corporation arrondis à l’inférieur. Donc si 3 joueurs sont citoyens de la 3eme corpos, ils ne gagnent que 4 points chacun !
-* Vous pouvez changer de citoyenneté corpo contre X points de victoire. Où X est le tour en cours. Vous devez avoir une part dans une corporation pour en aquerir la nationalité.
+* A la fin de la partie, chaque corporation rapporte `20 – 2 × rang` points de victoire à ces citoyens. Donc 18 points pour la première corpo et 0 pour la dernière. Attention, ces points sont à partager entre tous les citoyens de la corporation arrondis à l’inférieur. Donc si 3 joueurs sont citoyens de la 3eme corpos, ils ne gagnent que 4 points chacun !
+* Vous pouvez changer de citoyenneté corpo contre X points de victoire. Où X est le tour en cours. Vous devez avoir une part dans une corporation pour en acquérir la nationalité.
 * Vous pouvez choisir de commencer la partie en tant que citoyen d’une corporation. Vous serez alors contraint d’acheter votre première part dans cette corporation au premier tour de jeu.
 
 ##Les background
->Tu veux laisser ta trace à Detroit ? Choisit ton style, fais en plus que les autres et prend le pouvoir avec. Moi je sabote les corpos de mes ennemis. Entre pote, un conseil en or comme lui vaut bien 100 kny.
+>Tu veux laisser ta trace à Detroit ? Choisis ton style, fais en plus que les autres et prends le pouvoir avec. Moi je sabote les corpos de mes ennemis. Entre potes, un conseil en or comme ça vaut bien 100 000 ₵.
 
-Au début du jeu, vous pouvez choisir un background. Il vous rapportera des points de victoire à chaque tour si vous remplissez les conditions. Vous pouvez aussi choisir de ne prendre aucun background, vous gagnez alors 5 points de victoire.
+Au début du jeu, vous pouvez choisir un background. Il vous rapportera des Points de Victoire à chaque tour si vous en remplissez les conditions. Vous pouvez aussi choisir de ne prendre aucun background, vous gagnez alors 5 Points de Victoire.
