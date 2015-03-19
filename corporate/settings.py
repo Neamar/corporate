@@ -144,7 +144,7 @@ if "OPBEAT_ORGANIZATION_ID" in os.environ:
     )
     OPBEAT = {
         "ORGANIZATION_ID": os.environ['OPBEAT_ORGANIZATION_ID'],
-        "APP_ID": os.environ['OPBEAT_APP_'],
+        "APP_ID": os.environ['OPBEAT_APP_ID'],
         "SECRET_TOKEN": os.environ['OPBEAT_SECRET_TOKEN'],
     }
     MIDDLEWARE_CLASSES += (
