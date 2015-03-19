@@ -9,7 +9,6 @@ gprof2dot==1.0
 mccabe==0.2.1
 pep8==1.5.7
 pyflakes==0.8.1
-raven==4.2.1
 six==1.5.2
 sqlparse==0.1.11
 wsgiref==0.1.2

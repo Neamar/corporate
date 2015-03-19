@@ -27,10 +27,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-RAVEN_CONFIG = {
-    'dsn': 'https://e07c2d0b4b994a79b74dbfe78fe91629:a996f7f6c7c74a3cafcacdbe7d51411c@app.getsentry.com/21834',
-}
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -63,10 +59,6 @@ INSTALLED_APPS = (
     'engine_modules.market',
 )
 
-
-# Only setup raven outside of test env
-if 1 in sys.argv and sys.argv[1] != 'test':
-    INSTALLED_APPS += 'raven.contrib.django.raven_compat'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
