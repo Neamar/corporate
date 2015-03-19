@@ -119,6 +119,7 @@ CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())
 
 # Environment overrides
 if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
+    DEBUG = False
     import dj_database_url
     DATABASES['default'] = dj_database_url.config()
 
