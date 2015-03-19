@@ -130,8 +130,7 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     ALLOWED_HOSTS = ['*']
 
     # Static asset configuration
-    STATIC_ROOT = 'staticfiles'
-    STATIC_URL = '/static/'
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),

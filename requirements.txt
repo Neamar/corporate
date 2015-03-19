@@ -18,4 +18,5 @@ pyflakes==0.8.1
 six==1.5.2
 sqlparse==0.1.11
 static3==0.5.1
+whitenoise==1.0.6
 wsgiref==0.1.2
