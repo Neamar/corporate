@@ -136,3 +136,17 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
     )
+
+
+if "OPBEAT_ORGANIZATION_ID" in os.environ:
+    INSTALLED_APPS += (
+        "opbeat.contrib.django",
+    )
+    OPBEAT = {
+        "ORGANIZATION_ID": os.environ['OPBEAT_ORGANIZATION_ID'],
+        "APP_ID": os.environ['OPBEAT_APP_'],
+        "SECRET_TOKEN": os.environ['OPBEAT_SECRET_TOKEN'],
+    }
+    MIDDLEWARE_CLASSES += (
+        'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
+    )
