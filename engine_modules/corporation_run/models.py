@@ -48,7 +48,7 @@ extraction_messages = {
 }
 
 
-class OffensiveCorporationRunOrder(RunOrder):
+class CorporationRunOrder(RunOrder):
 	"""
 	Model for offensive corporation runs.
 	"""
@@ -58,11 +58,9 @@ class OffensiveCorporationRunOrder(RunOrder):
 		"""
 		Compute success probability, eventually modified by protection runs
 		"""
-		base_value = super(OffensiveCorporationRunOrder, self).get_success_probability()
+		base_value = super(CorporationRunOrder, self).get_success_probability()
 
-		protection = self.target_corporation.protectors.filter(
-			target_corporation_market=self.target_corporation_market,
-			defense=self.PROTECTION_TYPE,
+		protection = self.target_corporation_market.protectors.filter(
 			turn=self.turn
 		)
 		if protection.exists():
@@ -72,19 +70,19 @@ class OffensiveCorporationRunOrder(RunOrder):
 	@property
 	def target_corporation(self):
 		"""
-		Helper function to directly retrieve the corporation
+		Helper function to directly retrieve the corporation from its market
 		"""
 		return self.target_corporation_market.corporation
 
 	def get_form(self, data=None):
-		form = super(OffensiveCorporationRunOrder, self).get_form(data)
+		form = super(CorporationRunOrder, self).get_form(data)
 		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game)
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		return form
 
 
-class OffensiveCorporationRunOrderWithStealer(OffensiveCorporationRunOrder):
+class CorporationRunOrderWithStealer(CorporationRunOrder):
 	"""
 	Offensive run with a stealer (e.g. DataStealOrder / ExtractionOrder)
 	"""
@@ -92,21 +90,23 @@ class OffensiveCorporationRunOrderWithStealer(OffensiveCorporationRunOrder):
 
 	@property
 	def stealer_corporation_market(self):
+		"""
+		Helper function to directly retrieve the market for the stealer
+		"""
 		return self.stealer_corporation.corporationmarket_set.get(market=self.target_corporation_market.market_id)
 
 	def get_form(self, data=None):
-		form = super(OffensiveCorporationRunOrderWithStealer, self).get_form(data)
+		form = super(CorporationRunOrderWithStealer, self).get_form(data)
 		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
 
 		return form
 
 
-class DataStealOrder(OffensiveCorporationRunOrderWithStealer):
+class DataStealOrder(CorporationRunOrderWithStealer):
 	"""
 	Order for DataSteal runs
 	"""
 	ORDER = 500
-	PROTECTION_TYPE = "datasteal"
 
 	title = "Lancer une run de Datasteal"
 
@@ -134,14 +134,12 @@ class DataStealOrder(OffensiveCorporationRunOrderWithStealer):
 		return u"Envoyer une équipe voler des données de %s (%s) pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 
 
-class ExtractionOrder(OffensiveCorporationRunOrderWithStealer):
+class ExtractionOrder(CorporationRunOrderWithStealer):
 	"""
 	Order for Extraction runs
 	"""
 	ORDER = 700
 	title = "Lancer une run d'Extraction"
-
-	PROTECTION_TYPE = "extraction"
 
 	def resolve_successful(self):
 		self.target_corporation.update_assets(-1, market=self.target_corporation_market.market, category=AssetDelta.RUN_EXTRACTION)
@@ -176,14 +174,12 @@ class ExtractionOrder(OffensiveCorporationRunOrderWithStealer):
 		return u"Réaliser une extraction de %s (%s) vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
 
 
-class SabotageOrder(OffensiveCorporationRunOrder):
+class SabotageOrder(CorporationRunOrder):
 	"""
 	Order for Sabotage runs
 	"""
 	ORDER = 600
 	title = "Lancer une run de Sabotage"
-
-	PROTECTION_TYPE = "sabotage"
 
 	def resolve_successful(self):
 		self.target_corporation.update_assets(-2, market=self.target_corporation_market.market, category=AssetDelta.RUN_SABOTAGE)
@@ -225,43 +221,25 @@ class ProtectionOrder(RunOrder):
 	title = "Lancer une run de Protection"
 	MAX_PERCENTS = 50
 
-	EXTRACTION = "extraction"
-	DATASTEAL = "datasteal"
-	SABOTAGE = "sabotage"
+	protected_corporation_market = models.ForeignKey(CorporationMarket, related_name="protectors")
 
-	PROBA_DATASTEAL_SUCCESS = 40
-	PROBA_EXTRACTION_SUCCESS = 10
-	PROBA_SABOTAGE_SUCCESS = 0
-
-	DEFENSE_CHOICES = (
-		(EXTRACTION, "Extraction"),
-		(DATASTEAL, "Datasteal"),
-		(SABOTAGE, "Sabotage")
-	)
-
-	BASE_SUCCESS_PROBABILITY = {
-		EXTRACTION: PROBA_EXTRACTION_SUCCESS,
-		DATASTEAL: PROBA_DATASTEAL_SUCCESS,
-		SABOTAGE: PROBA_SABOTAGE_SUCCESS,
-	}
-
-	defense = models.CharField(max_length=15, choices=DEFENSE_CHOICES)
-	target_corporation_market = models.ForeignKey(CorporationMarket)
-	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
+	@property
+	def protected_corporation(self):
+		"""
+		Helper function to directly retrieve the corporation from its market
+		"""
+		return self.protected_corporation_market.corporation
 
 	def resolve(self):
 		self.player.money -= self.get_cost()
 		self.player.save()
 
 	def description(self):
-		return u"Envoyer une équipe protéger %s des %ss (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_defense_display(), self.get_success_probability())
+		return u"Envoyer une équipe protéger %s (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_success_probability())
 
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)
-		form.fields['protected_corporation'].queryset = self.player.game.corporation_set.all()
-		form.fields['base_extraction_percents'] = PlainTextField(initial="%s%%" % self.PROBA_EXTRACTION_SUCCESS)
-		form.fields['base_datasteal_percents'] = PlainTextField(initial="%s%%" % self.PROBA_DATASTEAL_SUCCESS)
-		form.fields['base_sabotage_percents'] = PlainTextField(initial="%s%%" % self.PROBA_SABOTAGE_SUCCESS)
+		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game)
 
 		return form
 
