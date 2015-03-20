@@ -10,25 +10,12 @@
     "HEROKU_POSTGRESQL_BLACK_URL":{
       "required":true
     },
-    "HEROKU_POSTGRESQL_ORANGE_URL":{
-      "required":true
-    },
-    "OPBEAT_APP_ID":{
-      "required":true
-    },
-    "OPBEAT_ORGANIZATION_ID":{
-      "required":true
-    },
-    "OPBEAT_SECRET_TOKEN":{
-      "required":true
-    },
     "PYTHON_ENV":{
       "required":true
     }
   },
   "addons":[
     "deployhooks-http",
-    "heroku-postgresql-black",
-    "heroku-postgresql-orange"
+    "heroku-postgresql-black"
   ]
 }
