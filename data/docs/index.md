@@ -17,16 +17,7 @@ Vous êtes l'un d'entre eux. Depuis votre penthouse cinq étoiles, vous planifie
 
 ## Corporations
 
-* [Ares](corporations/ares.md)
-* [Neonet](corporations/neonet.md)
-* [Shiawase](corporations/shiawase.md)
-* [Renraku](corporations/renraku.md)
-* [Sony](corporations/sony.md)
-* [Horizon](corporations/horizon.md)
-* [Aztechnology](corporations/aztechnology.md)
-* [Spinrad](corporations/spinrad.md)
-* [Saeder-Krupp](corporations/saeder-krupp.md)
-* [Prometheus](corporations/prometheus.md)
+{{ corporations }}
 
 ## Récapitulatif
 
