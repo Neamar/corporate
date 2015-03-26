@@ -112,7 +112,7 @@ TEMPLATE_DIRS = (
 if "test" in " ".join(sys.argv):
     CITY = "Test"
 else:
-    CITY = "Manhattan"
+    CITY = "Detroit"
 
 CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())
 
