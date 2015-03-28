@@ -5,12 +5,12 @@ from engine.decorators import sender_instance_of
 from engine.dispatchs import validate_order
 from engine.exceptions import OrderNotAvailable
 
-from engine_modules.corporation_run.models import OffensiveCorporationRunOrderWithStealer
+from engine_modules.corporation_run.models import CorporationRunOrderWithStealer
 from django.core.exceptions import ValidationError
 
 
 @receiver(validate_order)
-@sender_instance_of(OffensiveCorporationRunOrderWithStealer)
+@sender_instance_of(CorporationRunOrderWithStealer)
 def target_stealer_differ(sender, instance, **kwargs):
 	"""
 	Datasteal / Extraction: target and stealer must be different
@@ -23,7 +23,7 @@ def target_stealer_differ(sender, instance, **kwargs):
 
 
 @receiver(validate_order)
-@sender_instance_of(OffensiveCorporationRunOrderWithStealer)
+@sender_instance_of(CorporationRunOrderWithStealer)
 def both_have_target_corporation_market(sender, instance, **kwargs):
 	"""
 	Datasteal / Extraction: The stealer must have assets on the target market
@@ -37,10 +37,10 @@ def both_have_target_corporation_market(sender, instance, **kwargs):
 
 
 @receiver(validate_order)
-@sender_instance_of(OffensiveCorporationRunOrderWithStealer)
+@sender_instance_of(CorporationRunOrderWithStealer)
 def target_above_stealer(sender, instance, **kwargs):
 	"""
-	The target in a datasteal must have more assets than the stealer on the target market
+	The target in a offensive run must have more assets than the stealer on the target market
 	"""
 
 	if not hasattr(instance, 'target_corporation_market'):

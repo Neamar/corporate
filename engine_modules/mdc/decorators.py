@@ -1,7 +1,7 @@
 def expect_coalition(coalition):
 	"""
-	Only call decorated function if coalition is the same as the order's game current_tyurn party line.
-	To be used with valide_order
+	Only call decorated function if coalition is the same as the order's game current_turn party line.
+	To be used with validate_order
 	"""
 	def d(function):
 		def wrapper(*args, **kwargs):

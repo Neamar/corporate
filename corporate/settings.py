@@ -27,10 +27,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-RAVEN_CONFIG = {
-    'dsn': 'https://e07c2d0b4b994a79b74dbfe78fe91629:a996f7f6c7c74a3cafcacdbe7d51411c@app.getsentry.com/21834',
-}
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -63,10 +59,6 @@ INSTALLED_APPS = (
     'engine_modules.market',
 )
 
-
-# Only setup raven outside of test env
-if 1 in sys.argv and sys.argv[1] != 'test':
-    INSTALLED_APPS += 'raven.contrib.django.raven_compat'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -123,3 +115,38 @@ else:
     CITY = "Manhattan"
 
 CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())
+
+
+# Environment overrides
+if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
+    DEBUG = False
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config()
+
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure()
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # Allow all host headers
+    ALLOWED_HOSTS = ['*']
+
+    # Static asset configuration
+    STATIC_ROOT = 'staticfiles'
+    STATIC_URL = '/static/'
+
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
+
+
+if "OPBEAT_ORGANIZATION_ID" in os.environ:
+    INSTALLED_APPS += (
+        "opbeat.contrib.django",
+    )
+    OPBEAT = {
+        "ORGANIZATION_ID": os.environ['OPBEAT_ORGANIZATION_ID'],
+        "APP_ID": os.environ['OPBEAT_APP_ID'],
+        "SECRET_TOKEN": os.environ['OPBEAT_SECRET_TOKEN'],
+    }
+    MIDDLEWARE_CLASSES += (
+        'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
+    )
