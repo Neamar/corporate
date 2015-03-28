@@ -51,7 +51,7 @@ Les actifs d’une corporation sont égaux à la somme des actifs de ses marché
 À chaque tour, la **main invisible** du marché choisit au hasard :
 
 * Un marché d'une corpo qui gagne 1 actif.
-* Un marché d'une corpo qui a au moins 1 actif qui perd 1 actif.
+* Un marché d'une corpo qui perd 1 actif.
 
 
 ## Les Ordres
