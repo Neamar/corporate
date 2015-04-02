@@ -1,8 +1,6 @@
 title: Règles avancées
 
-Ces règles ne vous feront pas perdre la partie, mais elles peuvent vous donner un léger avantage si vous souhaitez aller plus loin dans la compréhension du jeu.
-
-Nous vous conseillons de les lire après le premier ou second tour, une fois les mécanismes globaux acquis.
+Nous vous conseillons de lire ces règles après le premier ou second tour, une fois les mécanismes globaux du jeu acquis.
 
 [TOC]
 
