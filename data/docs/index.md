@@ -151,8 +151,8 @@ Au début du jeu, vous pouvez choisir un background. Il vous rapportera des Poin
 Avant de commencer la partie, chaque joueur peut choisir un background et une citoyenneté corpo.
 
 ## Règles avancées
-Bravo, vous avez enfin fini de lire les règles.
-Vous pouvez vous arrêter ici et revenir plus tard, une fois les principes généraux du jeu compris.
-Ne pas connaître les règles avancées ne vous fera pas perdre la partie, mais elles peuvent vous donner un léger avantage si vous prenez le temps de les lire.
+Bravo, vous avez enfin lu ce dont vous aviez besoin pour commencer à jouer !
 
-Si vous êtes toujours là, vous pouvez aller consulter [la page des règles avancées](/docs/advanced) pour en savoir plus sur Detroit Incorporated, les effets premier, dernier et crash ou la spéculation.
+Il reste quelques points de règles avancées, mais il est conseillé d'attendre le tour 2 ou 3 avant d'aller les lire. Ne pas connaître les règles avancées ne vous fera pas perdre la partie, mais elles peuvent vous donner un léger avantage si vous prenez le temps de les lire.
+
+[La page des règles avancées](/docs/advanced) contient les règles sur Detroit Incorporated, les effets premiers, les effets derniers, les effets crash et la spéculation.
