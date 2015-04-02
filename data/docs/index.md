@@ -34,7 +34,9 @@ Acheter une part dans une corpo prend du temps, des ressources et beaucoup de n�
 * Le nombre de parts qu’un joueur peut acheter par tour est limité à hauteur de l'IC.
 * On peut augmenter son IC en payant `750 000 ₵ × indice actuel`. 
 
-     John souhaite augmenter son IC de 2 à 3, ce qui lui coûtera donc 1 500 000 ₵
+<!-- -->
+
+    John souhaite augmenter son IC de 2 à 3, ce qui lui coûtera donc 1 500 000 ₵
  
 ##Les Marchés
 Regardons en détail comment sont calculés les actifs. Chaque corporation est définie par ses **marchés** qui ne changeront pas au cours de la partie. Voici le tableau de répartition des actifs par marché des corporations au premier tour :
@@ -176,6 +178,7 @@ Pour chaque spéculation, le joueur choisit une corporation et mise sur son clas
 * Si sa spéculation est juste, il garde sa mise et gagne en plus :
     * 2 fois sa mise s’il a parié que la corpo serait première ou dernière.
     * 4 fois sa mise s’il a parié sur un autre rang.
+
 Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la corpo étant le plus loin dans le négatif est considéré dernière.
 
     Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il peut miser jusqu'à 400 000 ₵ :
