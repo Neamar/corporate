@@ -38,7 +38,7 @@ Acheter une part dans une corpo prend du temps, des ressources et beaucoup de n�
 
     John souhaite augmenter son IC de 2 à 3, ce qui lui coûtera donc 1 500 000 ₵
  
-##Les Marchés
+## Les Marchés
 Regardons en détail comment sont calculés les actifs. Chaque corporation est définie par ses **marchés** qui ne changeront pas au cours de la partie. Voici le tableau de répartition des actifs par marché des corporations au premier tour :
 
 
@@ -70,7 +70,7 @@ En tant qu'acteur majeur du marché, chaque joueur applique sa **Voix au chapitr
 Si un marché est dans le négatif une fois tous les ordres appliqués, on le ramène à 0 actif avant que les effets premier/dernier/crash s'appliquent.
 
 ### Opérations clandestines
-> Le capitalisme a créé ce père Noël payant. Des fois tu as ce que tu veux etc'est la fête. D'autres fois tu pleures devant un vieux pull moche.
+> Le capitalisme a créé ce père Noël payant. Des fois tu as ce que tu veux et c'est la fête. D'autres fois tu pleures devant un vieux pull moche.
 
 Les opérations clandestines, ou **opé**, sont des missions illégales réalisées par un regroupement de diverses organisations criminelles ou d’indépendants contre une rétribution financière.
 
@@ -118,74 +118,6 @@ Le pourcentage de chances maximal qu'une opé peut atteindre est de 90%. Ce nomb
 Les opés sont résolues par pourcentage de réussite décroissant. Une seule opé de chaque type peut être réussie par cible et par marché. À partir du moment où une opé est passé, les suivantes échouent automatiquement.
 
 Une opé d'Extraction qui a 100% de chances de réussite sera donc ramenée à 90% juste avant de tester sa réussite, mais s’exécutera avant une opé à 90% de chances. Si la première opé passe, la seconde échoue automatiquement.
- 
-### Detroit Incorporated
-> C’est comme jouer à pierre-feuille-ciseau pour savoir qui va filmer l’autre en train de lécher une bouse. Le plus sage c’est clairement de ne pas jouer. MAIS PUTAIN IMAGINE SI TU GAGNES !
-
-**Detroit Inc.** est l’entreprise qui dirige la ville. Elle a le pouvoir de décider la ligne politique de la ville. Chaque tour, les joueurs peuvent s'y intéresser en rejoignant une coalition défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des **Contrats publics**, une **Réforme de la sécurité** ou des **Consolidations**.
-
-Le joueur qui possède le plus de parts dans une corpo peut influencer ses décisions politiques : la corpo rejoint la même coalition que lui.
-En cas d'égalité sur le nombre de parts possédées, la corpo reste neutre.
-La coalition rejointe par le plus de `joueurs + corpos` domine Detroit Inc. pour ce tour, et est libre d'appliquer sa ligne politique détaillée plus bas.
-En cas d'égalité, aucune coalition ne l'emporte.
-
-    Exemple : Si John est le joueur ayant le plus de parts dans Impulse et Iris, son avis a un poids de 3. Etienne a le plus de parts dans Pure et Annie a le plus de parts dans City Group, leurs avis ont chacun un poids de 2. John choisit Réforme de la sécurité, Étienne et Annie choisissent tous les deux Contrats publics et les autres joueurs ne participent pas pour ce tour. La coalition Contrats publics est appliquée :
-        * Pure et City Group gagnent un actif dans un de leurs marchés.
-        * Impulse et Iris perdent un actif dans l'un de leurs marchés.
-
-#### Contrats publics
-De gros contrats d'entretien et de sécurité sont redistribués entre les corpos de Detroit. Effets :
-
-* Les corpos appartenant à la coalition Contrats publics gagnent immédiatement `+1` actif dans un de leurs marchés au hasard.
-* Les corpos appartenant à la coalition Réforme de la sécurité subissent `-1` actif dans un de leurs marchés au hasard ayant au moins un actif.
-
-#### Réforme de la sécurité
-De nouvelles lois sont votées, renforçant les contrôles sur certaines zones au détriment d'autres. Effets :
-
-* Au prochain tour, les joueurs appartenant à la coalition Réforme de la sécurité gagnent `+20%` sur chacune de leurs opés classiques. Ce bonus peut permettre de dépasser les 100%, améliorant la vitesse de l'opé. 
-* Au prochain tour, les joueurs appartenant à la coalition Consolidation subissent un malus de `-20%` sur chacune de leurs opés classiques.
-
-#### Consolidation
-Des opérations de presse et des réunions avec les citoyens permettent à certaines personnes de se faire connaître et apprécier du grand public. Effets :
-
-* Les joueurs appartenant à la coalition Consolidation gagnent `+3 Points de Victoire` pour la fin de partie.
-* Les joueurs appartenant à la coalition Contrats Publics subissent un malus de `-3 Points de Victoire` pour la fin de partie.
-
-## L'Effet premier et l'effet dernier
-
-Une fois que tous les ordres ont été résolus, un nouveau classement est établi. La première corpo applique son **effet premier**. Ensuite la dernière corpo applique son **effet dernier**. 
-
-Le classement n'est pas recalculé entre les deux donc l'effet premier ne peut jamais changer quelle corpo effectuera son effet dernier.
-
-Ces effets font perdre ou gagner des actifs à d'autres corporations.
-Voir la page des corporations pour une description individuelle de chaque corpo et leurs effets premiers / derniers. Ou le recap pour une liste globale.
-
-Certains effets modifient les actifs de certaines corporations sans préciser le marché. Dans ce cas il s'agit du marché ayant le plus d'actifs (tiré au hasard parmi les ex-æquo s'il y en a).
-
-## L'Effet Crash
-Au cours de la résolution du tour, une corpo peut descendre à 0 actif ou moins avec les actifs de perte sèche. Son effet dernier peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle Crashe. Son **effet crash** est appliqué et elle est définitivement retirée du classement. Pas de remboursement pour les parts investies.
-
-Une fois tous ces effets résolus, on obtient le nouveau classement des corpos qui compte pour le gain de crédits énergétiques du tour suivant ainsi que pour les spéculations.
-
-##Spéculation 
->Spéculer, c'est à la fois le meilleur moyen de gagner et le meilleur moyen de perdre. Et la différence entre les deux n'est pas de croire en un divinité quelconque.
-
-Dès que l’on commence à influer sur les marchés, on peut faire fructifier son argent. Chaque joueur peut miser jusqu’à `200 000 ₵ × (IC du spéculateur)` qu’il peut répartir entre autant de **spéculations** qu’il le souhaite.
-
-Pour chaque spéculation, le joueur choisit une corporation et mise sur son classement en fin de tour.
-
-* Si le spéculateur se trompe, il perd la somme misée.
-* Si sa spéculation est juste, il garde sa mise et gagne en plus :
-    * 2 fois sa mise s’il a parié que la corpo serait première ou dernière.
-    * 4 fois sa mise s’il a parié sur un autre rang.
-
-Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la corpo étant le plus loin dans le négatif est considéré dernière.
-
-    Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il peut miser jusqu'à 400 000 ₵ :
-
-    Il mise 100 000 ₵ sur la position d'Iris, dont il pense qu'elle sera 2<sup>ème</sup> à la fin du trimestre.
-
-    Iris finit en seconde position. Il garde ses 100 000 ₵ et en touche 400 000 ₵ de plus. Si Iris avait fini 3<sup>ème</sup>, il aurait perdu ses 100 000 ₵.
 
 ## La fin de partie
 Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voici comment ils sont calculés :
@@ -217,3 +149,8 @@ Au début du jeu, vous pouvez choisir un background. Il vous rapportera des Poin
 
 ## Mise en place du jeu
 Avant de commencer la partie, chaque joueur peut choisir un background et une citoyenneté corpo.
+
+## Règles avancées
+Vous pouvez passer cette section si vous jouez votre première partie, et revenir la consulter pendant les tours deux ou trois, une fois les principes généraux du jeu compris.
+
+Pour les autres, vous pouvez aller consulter [la page des règles avancées](/docs/advanced).
