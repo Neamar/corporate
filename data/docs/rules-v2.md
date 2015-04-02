@@ -2,13 +2,13 @@ title: Comment jouer ?
 
 Dans le Corporate Game, vous incarnez une pointure dans l’univers de la finance dans un futur où le capitalisme a fini par dissoudre les pays. Vous jouez à Detroit, la première ville libérée du contrôle des États. Bienvenue dans le Disneyland des traders !
 
-Le jeu se déroule en 7 tours de 24h. Chaque tour, vous devez remplir une fiche d'ordres contenant tout ce que vous voulez faire. À 13h chaque jour, les fiches d'ordres de chaque joueur seront résolues en même temps et un nouveau tour pourra commencer. La personnalité la plus respectée de Detroit sera sacrée à la fin du 7<sup>eme</sup> tour, les autres sombreront dans l’oubli.
+Le jeu se déroule en 7 tours de 24h. Chaque tour, vous devez remplir une fiche d'ordres contenant tout ce que vous voulez faire. À 13h chaque jour, les fiches d'ordres de chaque joueur sont résolues en même temps et un nouveau tour peut commencer. La personnalité la plus respectée de Detroit sera sacrée à la fin du 7<sup>ème</sup> tour, les autres sombreront dans l’oubli.
 
+Votre objectif est de devenir la personnalité la plus respectée de Detroit **tout seul**. Le truc important à retenir, c’est qu’il n’y a pas de victoire en équipe. Il y aura celui qui a réussi et ceux qui ont échoué. Et commencez pas à parler de chance, personne n’aime les pleurnichards !
+ 
 [TOC]
 
 ## Le classement corporatiste
-Votre objectif est de devenir la personnalité la plus respectée de Detroit TOUT SEUL. Le truc important à retenir, c’est qu’il n’y a pas de victoire en équipe. Il y aura celui qui a réussi et ceux qui ont échoué. Et commencez pas à parler de chance, personne n’aime les pleurnichards !
- 
 > Pourquoi je ne mise que sur 10 corpos parmi des centaines ? Tu m’as bien regardé ? J’ai l’air d’un hippie qui laisse traîner son fric dans une boîte réglo ?
 
 Votre champ de bataille, c’est 10 énormes entreprises cotées à Détroit. On les appelle des corporations, ou **corpos**. Chaque corpo commence avec un certain nombre d’actifs ; ce nombre va évoluer au cours de la partie. Au début du jeu, 3 corpos commencent avec 12 actifs, 4 corpos commencent avec 10 et 3 corpos commencent avec 8.
@@ -68,7 +68,7 @@ En tant qu'acteur majeur du marché, chaque joueur applique sa **Voix au chapitr
 Si un marché est dans le négatif une fois tous les ordres appliqués, on le ramène à 0 actif avant que les effets premier/dernier/crash s'appliquent.
 
 ### Opérations clandestines
-> Le montant est libre mais une rumeur dit que pour moins de 350k, tu reçois juste une lettre d’excuses qui t’indique que ça n’a pas marché. À moins que tu aies les bons appuis, bien entendu.
+> Le capitalisme a créé ce père Noël payant. Des fois tu as ce que tu veux etc'est la fête. D'autres fois tu pleures devant un vieux pull moche.
 
 Les opérations clandestines, ou **opé**, sont des missions illégales réalisées par un regroupement de diverses organisations criminelles ou d’indépendants contre une rétribution financière.
 
@@ -99,7 +99,7 @@ Autant de fois qu'il a d'IC, un joueur peut réduire le coût de base d'une opé
 
 Vous pouvez lancer une opé de protection sur un marché d'une corporation pour réduire le pourcentage de réussite maximale des opés qui le ciblent à 40%. Son coût est fixe : 350 000 ₵.
 
-    Vous pouvez utiliser la réduction du prix de base de l'opé à 50 000 ₵ avec l'IC comme pour les autres opés. 
+Vous pouvez utiliser la réduction du prix de base de l'opé à 50 000 ₵ avec l'IC comme pour les autres opés. 
 
 ##### Information
 Le commanditaire choisit des joueurs cibles et des corpos cibles
@@ -115,7 +115,7 @@ Vous recevez gratuitement et à chaque tour le journal interne de la corpo dont 
 Le pourcentage de chances maximal qu'une opé peut atteindre est de 90%. Ce nombre peut être baissé par les opés de Protection.
 Les opés sont résolues par pourcentage de réussite décroissant. Une seule opé de chaque type peut être réussie par cible et par marché. À partir du moment où une opé est passé, les suivantes échouent automatiquement.
 
-    Une opé d'Extraction qui a 100% de chances de réussite sera donc ramenée à 90% juste avant de tester sa réussite, mais s’exécutera avant une opé à 90% de chances. Si la première opé passe, la seconde échoue automatiquement.
+Une opé d'Extraction qui a 100% de chances de réussite sera donc ramenée à 90% juste avant de tester sa réussite, mais s’exécutera avant une opé à 90% de chances. Si la première opé passe, la seconde échoue automatiquement.
  
 ### Detroit Incorporated
 > C’est comme jouer à pierre-feuille-ciseau pour savoir qui va filmer l’autre en train de lécher une bouse. Le plus sage c’est clairement de ne pas jouer. MAIS PUTAIN IMAGINE SI TU GAGNES !
@@ -180,13 +180,14 @@ Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la 
 
     Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il peut miser jusqu'à 400 000 ₵ :
 
-    Il mise 100 000 ₵ sur la position d'Iris, dont il pense qu'elle sera 2<sup>eme</sup> à la fin du trimestre.
+    Il mise 100 000 ₵ sur la position d'Iris, dont il pense qu'elle sera 2<sup>ème</sup> à la fin du trimestre.
 
-    Iris finit en seconde position. Il garde ses 100 000 ₵ et en touche 400 000 ₵ de plus. Si Iris avait fini 3<sup>eme</sup>, il aurait perdu ses 100 000 ₵.
+    Iris finit en seconde position. Il garde ses 100 000 ₵ et en touche 400 000 ₵ de plus. Si Iris avait fini 3<sup>ème</sup>, il aurait perdu ses 100 000 ₵.
 
+## La fin de partie
 Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voici comment ils sont calculés :
 
-## Les points de parts
+### Les points de parts
 >Comment tu veux être pris au sérieux si tu n’as que des parts dans des corpos que les investisseurs fuient comme la peste ?
 
 À la fin de la partie, tu as :
@@ -197,7 +198,7 @@ Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voi
 * 2 Points de Victoire par part dans la quatrième corpo
 * 1 Points de Victoire par part dans la cinquième corpo
 
-## Les points de citoyenneté corpo
+### Les points de citoyenneté corpo
 >Changer de nationalité c’est un peu comme enfiler le maillot de l’autre équipe au milieu du  match. Si ta nouvelle équipe gagne, tu es seulement un traître.
 
 La **citoyenneté corpo** est très importante puisque votre image dépend du résultat de votre corpo.
@@ -206,7 +207,10 @@ La **citoyenneté corpo** est très importante puisque votre image dépend du r�
 * Vous pouvez changer de citoyenneté corpo contre X points de victoire, X étant le tour en cours. Vous devez avoir au moins une part dans une corporation pour en acquérir la nationalité.
 * Vous pouvez choisir de commencer la partie en tant que citoyen d’une corporation. Vous serez alors contraint d’acheter votre première part dans cette corporation au premier tour de jeu.
 
-## Les Backgrounds
+### Les Backgrounds
 >Tu veux laisser ta trace à Detroit ? Choisis ton style, fais en plus que les autres et prends le pouvoir avec. Moi je sabote les corpos de mes ennemis. Entre potes, un conseil en or comme ça vaut bien 100 000 ₵.
 
 Au début du jeu, vous pouvez choisir un background. Il vous rapportera des Points de Victoire à chaque tour si vous en remplissez les conditions. Vous pouvez aussi choisir de ne prendre aucun background, vous gagnez alors 5 Points de Victoire.
+
+## Mise en place du jeu
+Avant de commencer la partie, chaque joueur peut choisir un background et une citoyenneté corpo.
