@@ -120,14 +120,14 @@ Une opé d'Extraction qui a 100% de chances de réussite sera donc ramenée à 9
 ### Detroit Incorporated
 > C’est comme jouer à pierre-feuille-ciseau pour savoir qui va filmer l’autre en train de lécher une bouse. Le plus sage c’est clairement de ne pas jouer. MAIS PUTAIN IMAGINE SI TU GAGNES !
 
-**Detroit Inc.** est l’entreprise qui dirige la ville. Elle a le pouvoir de décider la ligne politique de la ville. Chaque tour, les joueurs peuvent s'y intéresser en rejoignant une coalition défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des **Contrats publics**, une restriction des **Opérations Clandestines** ou des **Consolidations**.
+**Detroit Inc.** est l’entreprise qui dirige la ville. Elle a le pouvoir de décider la ligne politique de la ville. Chaque tour, les joueurs peuvent s'y intéresser en rejoignant une coalition défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des **Contrats publics**, une **Réforme de la sécurité** ou des **Consolidations**.
 
 Le joueur qui possède le plus de parts dans une corpo peut influencer ses décisions politiques : la corpo rejoint la même coalition que lui.
 En cas d'égalité sur le nombre de parts possédées, la corpo reste neutre.
 La coalition rejointe par le plus de `joueurs + corpos` domine Detroit Inc. pour ce tour, et est libre d'appliquer sa ligne politique détaillée plus bas.
 En cas d'égalité, aucune coalition ne l'emporte.
 
-    Exemple : Si John est le joueur ayant le plus de parts dans Impulse et Iris, son avis a un poids de 3. Etienne a le plus de parts dans Pure et Annie a le plus de parts dans City Group, leurs avis ont chacun un poids de 2. John choisit Opérations Clandestines, Étienne et Annie choisissent tous les deux Contrats publics et les autres joueurs ne participent pas pour ce tour. La coalition Contrats publics est appliquée :
+    Exemple : Si John est le joueur ayant le plus de parts dans Impulse et Iris, son avis a un poids de 3. Etienne a le plus de parts dans Pure et Annie a le plus de parts dans City Group, leurs avis ont chacun un poids de 2. John choisit Réforme de la sécurité, Étienne et Annie choisissent tous les deux Contrats publics et les autres joueurs ne participent pas pour ce tour. La coalition Contrats publics est appliquée :
         * Pure et City Group gagnent un actif dans un de leurs marchés.
         * Impulse et Iris perdent un actif dans l'un de leurs marchés.
 
@@ -135,12 +135,12 @@ En cas d'égalité, aucune coalition ne l'emporte.
 De gros contrats d'entretien et de sécurité sont redistribués entre les corpos de Detroit. Effets :
 
 * Les corpos appartenant à la coalition Contrats publics gagnent immédiatement `+1` actif dans un de leurs marchés au hasard.
-* Les corpos appartenant à la coalition Opérations Clandestines subissent `-1` actif dans un de leurs marchés au hasard ayant au moins un actif.
+* Les corpos appartenant à la coalition Réforme de la sécurité subissent `-1` actif dans un de leurs marchés au hasard ayant au moins un actif.
 
-#### Opérations Clandestines
-De nouvelles lois sont votées, renforçant les contrôles militaires au détriment de certaines zones. Effets :
+#### Réforme de la sécurité
+De nouvelles lois sont votées, renforçant les contrôles sur certaines zones au détriment d'autres. Effets :
 
-* Au prochain tour, les joueurs appartenant à la coalition Opérations Clandestines gagnent `+20%` sur chacune de leurs opés classiques. Ce bonus peut permettre de dépasser les 100%, améliorant la vitesse de l'opé. 
+* Au prochain tour, les joueurs appartenant à la coalition Réforme de la sécurité gagnent `+20%` sur chacune de leurs opés classiques. Ce bonus peut permettre de dépasser les 100%, améliorant la vitesse de l'opé. 
 * Au prochain tour, les joueurs appartenant à la coalition Consolidation subissent un malus de `-20%` sur chacune de leurs opés classiques.
 
 #### Consolidation
