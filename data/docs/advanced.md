@@ -19,31 +19,31 @@ En cas d'égalité, aucune coalition ne l'emporte.
         * Impulse et Iris perdent un actif dans l'un de leurs marchés.
 
 ### Contrats publics
-De gros contrats d'entretien et de sécurité sont redistribués entre les corpos de Detroit. Effets :
+De gros contrats d'entretien et de sécurité sont redistribués entre les corpos de Detroit.
 
 * Les corpos appartenant à la coalition Contrats publics gagnent immédiatement `+1` actif dans un de leurs marchés au hasard.
 * Les corpos appartenant à la coalition Réforme de la sécurité subissent `-1` actif dans un de leurs marchés au hasard ayant au moins un actif.
 
 ### Réforme de la sécurité
-De nouvelles lois sont votées, renforçant les contrôles sur certaines zones au détriment d'autres. Effets :
+De nouvelles lois sont votées, renforçant les contrôles sur certaines zones au détriment d'autres.
 
 * Au prochain tour, les joueurs appartenant à la coalition Réforme de la sécurité gagnent `+20%` sur chacune de leurs opés classiques. Ce bonus peut permettre de dépasser les 100%, améliorant la vitesse de l'opé. 
 * Au prochain tour, les joueurs appartenant à la coalition Consolidation subissent un malus de `-20%` sur chacune de leurs opés classiques.
 
 ### Consolidation
-Des opérations de presse et des réunions avec les citoyens permettent à certaines personnes de se faire connaître et apprécier du grand public. Effets :
+Des opérations de presse et des réunions avec les citoyens permettent à certaines personnes de se faire connaître et apprécier du grand public.
 
 * Les joueurs appartenant à la coalition Consolidation gagnent `+3 Points de Victoire` pour la fin de partie.
 * Les joueurs appartenant à la coalition Contrats Publics subissent un malus de `-3 Points de Victoire` pour la fin de partie.
 
 ## L'Effet premier et l'Effet dernier
 
-Une fois que tous les ordres ont été résolus, un nouveau classement est établi. La première corpo applique son **effet premier**. Ensuite la dernière corpo applique son **effet dernier**. 
+Une fois que tous les ordres ont été résolus, un nouveau classement est établi. La première corpo applique son **effet premier** ; la dernière corpo applique son **effet dernier**. 
 
-Le classement n'est pas recalculé entre les deux donc l'effet premier ne peut jamais changer quelle corpo effectuera son effet dernier.
+Le classement n'est pas recalculé entre les deux donc l'effet premier ne peut jamais changer la corpo qui effectuera son effet dernier.
 
 Ces effets font perdre ou gagner des actifs à d'autres corporations.
-Voir la page des corporations pour une description individuelle de chaque corpo et leurs effets premiers / derniers. Ou le recap pour une liste globale.
+Voir la page des corporations pour une description individuelle de chaque corpo et leurs effets premiers / derniers.
 
 Certains effets modifient les actifs de certaines corporations sans préciser le marché. Dans ce cas il s'agit du marché ayant le plus d'actifs (tiré au hasard parmi les ex-æquo s'il y en a).
 
