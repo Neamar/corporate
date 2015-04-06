@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import random
+
 from os import listdir
 
 from django.db import models
@@ -13,6 +15,8 @@ from engine_modules.market.models import Market
 from engine.models import Game
 
 from engine_modules.market.models import Market, CorporationMarket
+
+from django.core.exceptions import ValidationError
 
 class BaseCorporation:
 	"""
@@ -110,7 +114,8 @@ class Corporation(models.Model):
 
 	def apply_effect(self, code, delta_category, ladder):
 
-		def update(corporation, delta):
+		def update(corporation, delta, market=None):
+
 			if isinstance(corporation, str):
 				# Try / catch if corporation crashed
 				try:
@@ -118,7 +123,14 @@ class Corporation(models.Model):
 				except Corporation.DoesNotExist:
 					return
 
-			corporation.update_assets(delta, category=delta_category)
+			if market == None:
+				# By default, a random market is impacted
+				market = random.choice(corporation.markets)
+			else:
+				# TODO; implement and test effects with a marker name
+				raise ValidationError("Not Implemented")
+
+			corporation.update_assets(delta, category=delta_category, market=market)
 
 		context = {
 			'game': self.game,

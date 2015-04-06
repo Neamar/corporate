@@ -1,3 +1,5 @@
+import random
+
 from engine.testcases import EngineTestCase
 from engine_modules.vote.models import VoteOrder
 
@@ -6,8 +8,8 @@ class TaskTest(EngineTestCase):
 	def setUp(self):
 		super(TaskTest, self).setUp()
 
-		self.c_corporation_market = self.c.historic_corporation_market
-		self.c2_corporation_market = self.c2.historic_corporation_market
+                self.c_corporation_market = random.choice(self.c.corporation_markets)
+                self.c2_corporation_market = random.choice(self.c2.corporation_markets)
 
 		self.v = VoteOrder(
 			player=self.p,

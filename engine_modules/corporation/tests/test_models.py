@@ -1,3 +1,5 @@
+import random
+
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation, Corporation, AssetDelta
 
@@ -34,11 +36,12 @@ class ModelMethodTest(EngineTestCase):
 		Corporation market assets can't drop below 0
 		"""
 
-		corporation_markets = self.c.historic_corporation_market
+		c_markets = self.c.corporation_markets
+		corporation_market = random.choice(c_markets)
 		initial_corporation_assets = self.c.assets
 
-		max_delta = corporation_historic_market.value + 1
-		self.c.update_assets(-max_delta, category=AssetDelta.EFFECT_FIRST)
+		max_delta = corporation_market.value + 1
+		self.c.update_assets(-max_delta, category=AssetDelta.EFFECT_FIRST, market=corporation_market.market)
 
 		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - max_delta + 1)
-		self.assertEqual(self.reload(corporation_historic_market).value, 0)
+		self.assertEqual(self.reload(corporation_market).value, 0)

@@ -1,3 +1,5 @@
+import random
+
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder
 
@@ -7,7 +9,7 @@ class ModelsTest(EngineTestCase):
 		super(ModelsTest, self).setUp()
 		self.dso = DataStealOrder(
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=random.choice(self.c.corporation_markets),
 			stealer_corporation=self.c2,
 		)
 		self.dso.save()
@@ -31,7 +33,7 @@ class ModelsTest(EngineTestCase):
 
 		po = ProtectionOrder(
 			player=self.p,
-			protected_corporation_market=self.c.historic_corporation_market,
+			protected_corporation_market=random.choice(self.c.corporation_markets),
 		)
 		po.save()
 

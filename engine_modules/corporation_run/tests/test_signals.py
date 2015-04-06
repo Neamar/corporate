@@ -1,3 +1,5 @@
+import random
+
 from django.core.exceptions import ValidationError
 
 from engine.testcases import EngineTestCase
@@ -9,14 +11,14 @@ class SignalsTest(EngineTestCase):
 		super(SignalsTest, self).setUp()
 		self.dso = DataStealOrder(
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=random.choice(self.c.corporation_markets),
 			stealer_corporation=self.c2,
 		)
 		self.dso.save()
 
 		self.eo = ExtractionOrder(
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=random.choice(self.c.corporation_markets),
 			stealer_corporation=self.c2,
 		)
 		self.eo.save()
