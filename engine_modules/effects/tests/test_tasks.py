@@ -7,15 +7,15 @@ class TasksTest(EngineTestCase):
 
 		super(TasksTest, self).setUp()
 
-		self.c.assets = 20
+		self.c.market_assets = 20
 		self.c.save()
 		self.medium_corporation = self.c
 
-		self.c2.assets = 40
+		self.c2.market_assets = 40
 		self.c2.save()
 		self.first_corporation = self.c2
 
-		self.c3.assets = 10
+		self.c3.market_assets = 10
 		self.c3.save()
 		self.last_corporation = self.c3
 

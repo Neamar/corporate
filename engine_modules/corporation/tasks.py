@@ -10,7 +10,11 @@ class CrashCorporationTask(ResolutionTask):
 	RESOLUTION_ORDER = 1000
 
 	def run(self, game):
-		corporations_to_crash = game.corporation_set.filter(assets__lte=0)
+		# corporations_to_crash = game.corporation_set.filter(assets__lte=0)
+		# This does not work because my pinky tells me it should be assets, not market_assets
+		# but assets is a property, so we're kinda fucked. I don't want to deal with this now, so I'll leave it for later
+		# TODO: Find a fix
+		corporations_to_crash = game.corporation_set.filter(market_assets__lte=0)
 		if not corporations_to_crash:
 			return
 

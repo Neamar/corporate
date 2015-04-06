@@ -10,7 +10,7 @@ class ModelsTest(EngineTestCase):
 		self.p.citizenship.corporation = self.c
 		self.p.citizenship.save()
 
-		self.c.assets = 0
+		self.c.market_assets = 0
 		self.c.save()
 
 		self.g.resolve_current_turn()

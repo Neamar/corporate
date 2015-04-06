@@ -94,8 +94,13 @@ class Corporation(models.Model):
 
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
-	assets = models.SmallIntegerField()
+	market_assets = models.SmallIntegerField()
+	assets_modifier = models.SmallIntegerField(default=0)
 	historic_market = models.ForeignKey(Market)
+
+	@property
+	def assets(self):
+		return self.market_assets + self.assets_modifier
 
 	@cached_property
 	def base_corporation(self):
@@ -138,8 +143,7 @@ class Corporation(models.Model):
 		"""
 		Increase corporation's assets by value
 		"""
-
-		self.assets += value
+		self.market_assets += value
 		self.save()
 
 	def decrease_assets(self, value=1):
@@ -147,7 +151,7 @@ class Corporation(models.Model):
 		Decrease corporation's assets by value
 		"""
 
-		self.assets -= value
+		self.market_assets -= value
 		self.save()
 
 	def update_assets(self, delta, category, market=None):

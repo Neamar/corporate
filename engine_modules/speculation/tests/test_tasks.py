@@ -11,7 +11,7 @@ class TasksTest(EngineTestCase):
 		"""
 		Task should be called
 		"""
-		self.c.assets = 50
+		self.c.market_assets = 50
 		self.c.save()
 
 		cso = CorporationSpeculationOrder(

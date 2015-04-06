@@ -32,6 +32,8 @@ def auto_create_markets_and_corporation(sender, instance, **kwargs):
 			base_corporation_slug=base_corporation.slug,
 			game=instance,
 			assets=base_corporation.initials_assets,
+			market_assets=base_corporation.initials_assets,
+			assets_modifier=0,
 			historic_market=markets[base_corporation.historic_market]
 		)
 

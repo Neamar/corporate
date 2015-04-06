@@ -8,7 +8,7 @@ class CrashCorporationTaskTest(EngineTestCase):
 		Corporation should crash when their assets are null
 		"""
 
-		self.c.assets = 0
+		self.c.market_assets = 0
 		self.c.save()
 
 		self.g.resolve_current_turn()
