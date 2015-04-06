@@ -12,6 +12,7 @@ from utils.read_markdown import read_markdown
 from engine_modules.market.models import Market
 from engine.models import Game
 
+from engine_modules.market.models import Market, CorporationMarket
 
 class BaseCorporation:
 	"""
@@ -66,7 +67,6 @@ class BaseCorporation:
 			name, value = market.split(": ")
 			self.markets[name] = int(value)
 			self.initials_assets += int(value)
-		self.historic_market = self.markets.keys()[0]
 
 	def compile_effect(self, code, effect):
 		"""
@@ -93,15 +93,20 @@ class Corporation(models.Model):
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
 	assets = models.SmallIntegerField()
-	historic_market = models.ForeignKey(Market)
+	market_assets = models.SmallIntegerField()
+	assets_modifier = models.SmallIntegerField(default=0)
+
+	@property
+	def corporation_markets(self):
+		return CorporationMarket.objects.filter(corporation=self)
+
+	@property
+	def markets(self):
+		return [cm.market for cm in self.corporation_markets]
 
 	@cached_property
 	def base_corporation(self):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
-
-	@property
-	def historic_corporation_market(self):
-		return self.corporationmarket_set.get(market=self.historic_market)
 
 	def apply_effect(self, code, delta_category, ladder):
 
@@ -132,13 +137,25 @@ class Corporation(models.Model):
 	def on_crash_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
 
-	def update_assets(self, delta, category, market=None):
+	def increase_assets(self, value=1):
+		"""
+		Increase corporation's assets by value
+		"""
+		self.market_assets += value
+		self.save()
+
+	def decrease_assets(self, value=1):
+		"""
+		Decrease corporation's assets by value
+		"""
+
+		self.market_assets -= value
+		self.save()
+
+	def update_assets(self, delta, category, market):
 		"""
 		Update assets values, and save the model
 		"""
-		if market is None:
-			market = self.historic_market
-
 		market = self.corporationmarket_set.get(market=market)
 
 		# A market can't be negative, so we cap the delta

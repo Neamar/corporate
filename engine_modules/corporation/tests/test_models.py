@@ -29,26 +29,12 @@ class ModelMethodTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - 1)
 		self.assertEqual(self.reload(corporation_market).value, initial_market_assets - 1)
 
-	def test_corporation_update_assets_in_historic_market(self):
-		"""
-		Corporation assets should be updated in historic market by default
-		"""
-
-		corporation_historic_market = self.c.historic_corporation_market
-		initial_corporation_assets = self.c.assets
-		initial_market_assets = corporation_historic_market.value
-
-		self.c.update_assets(-1, category=AssetDelta.EFFECT_FIRST)
-
-		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - 1)
-		self.assertEqual(self.reload(corporation_historic_market).value, initial_market_assets - 1)
-
 	def test_corporation_update_assets_not_below_zero(self):
 		"""
 		Corporation market assets can't drop below 0
 		"""
 
-		corporation_historic_market = self.c.historic_corporation_market
+		corporation_markets = self.c.historic_corporation_market
 		initial_corporation_assets = self.c.assets
 
 		max_delta = corporation_historic_market.value + 1
