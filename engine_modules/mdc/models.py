@@ -15,19 +15,19 @@ class MDCVoteOrder(Order):
 	ORDER = 200
 
 	CPUB = "CPUB"
-	OPCL = "OPCL"
+	RSEC = "RSEC"
 	CONS = "CONS"
 
 	# Enumerate the party lines and their meanings
 	MDC_COALITION_CHOICES = (
 		('CPUB', 'Contrats publics'),
-		('OPCL', u'Opérations clandestines'),
+		('RSEC', u'Réforme de la sécurité'),
 		('CONS', 'Consolidation'),
 	)
 
 	MDC_OPPOSITIONS = {
-		CPUB: OPCL,
-		OPCL: CONS,
+		CPUB: RSEC,
+		RSEC: CONS,
 		CONS: CPUB,
 	}
 

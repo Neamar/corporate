@@ -73,7 +73,7 @@ class MDCPartyLineTest(EngineTestCase):
 		initial_assets2 = self.c2.assets
 		initial_assets3 = self.c3.assets
 
-		self.set_turn_line(MDCVoteOrder.CPUB, MDCVoteOrder.CPUB, MDCVoteOrder.OPCL)
+		self.set_turn_line(MDCVoteOrder.CPUB, MDCVoteOrder.CPUB, MDCVoteOrder.RSEC)
 
 		self.g.resolve_current_turn()
 
@@ -81,12 +81,12 @@ class MDCPartyLineTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c2).assets, initial_assets2 + 1)
 		self.assertEqual(self.reload(self.c3).assets, initial_assets3 - 1)
 
-	def test_mdc_OPCL_line_effects(self):
+	def test_mdc_RSEC_line_effects(self):
 		"""
-		Test what happens when the OPCL party line is chosen
+		Test what happens when the RSEC party line is chosen
 		"""
 
-		self.set_turn_line(MDCVoteOrder.CONS, MDCVoteOrder.OPCL, MDCVoteOrder.OPCL)
+		self.set_turn_line(MDCVoteOrder.CONS, MDCVoteOrder.RSEC, MDCVoteOrder.RSEC)
 		self.g.resolve_current_turn()
 
 		dso = DataStealOrder(

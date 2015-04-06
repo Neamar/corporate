@@ -20,17 +20,17 @@ def limit_mdc_order(sender, instance, **kwargs):
 
 @receiver(post_create)
 @sender_instance_of(RunOrder)
-@expect_coalition(MDCVoteOrder.OPCL)
-def enforce_mdc_opcl(sender, instance, **kwargs):
+@expect_coalition(MDCVoteOrder.RSEC)
+def enforce_mdc_rsec(sender, instance, **kwargs):
 	"""
-	When OPCL line is active,
-	* +20%% for OPCL players
+	When RSEC line is active,
+	* +20%% for RSEC players
 	* -20%% for CONS players
 	"""
 	player_vote = instance.player.get_last_mdc_coalition()
 	if player_vote == MDCVoteOrder.CONS:
 		instance.hidden_percents -= 2
 		instance.save()
-	elif player_vote == MDCVoteOrder.OPCL:
+	elif player_vote == MDCVoteOrder.RSEC:
 		instance.hidden_percents += 2
 		instance.save()

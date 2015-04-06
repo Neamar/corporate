@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+import random
 from collections import Counter
 from engine.tasks import ResolutionTask
 from engine_modules.corporation.models import AssetDelta
 from engine_modules.mdc.models import MDCVoteSession, MDCVoteOrder
+from engine_modules.market.models import CorporationMarket
 from messaging.models import Newsfeed, Note
 
 
@@ -32,14 +34,14 @@ class MDCVoteTask(ResolutionTask):
 			# Message all player who voted for this line
 			n = Note.objects.create(
 				category=Note.MDC,
-				content="Le MDC a suivi votre coalition",
+				content="Detroit Inc. a suivi votre coalition",
 				turn=game.current_turn,
 			)
 			n.recipient_set = [order.player for order in orders if order.coalition == official_line]
 
 			n = Note.objects.create(
 				category=Note.MDC,
-				content=u"Le MDC a rejoint la coalition opposée %s" % s.get_coalition_display(),
+				content=u"Detroit Inc. a rejoint la coalition opposée: %s" % s.get_coalition_display(),
 				turn=game.current_turn,
 			)
 			n.recipient_set = [order.player for order in orders if order.coalition == MDCVoteOrder.MDC_OPPOSITIONS[official_line]]
@@ -81,7 +83,7 @@ class MDCVoteTask(ResolutionTask):
 		"""
 
 		if mdc_vote_session.coalition is not None:
-			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition *%s* a été votée par le MDC." % mdc_vote_session.get_coalition_display())
+			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition *%s* a été votée par Detroit Inc." % mdc_vote_session.get_coalition_display())
 
 		votes_details = {}
 
@@ -140,12 +142,16 @@ class MDCLineCPUBTask(ResolutionTask):
 		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.CPUB)
 		for o in win_votes:
 			for c in o.get_friendly_corporations():
-				c.update_assets(1, category=AssetDelta.MDC)
+				# increase a market by 1 asset at random
+				markets = [cm.market for cm in CorporationMarket.objects.filter(corporation=c)]
+				c.update_assets(1, category=AssetDelta.MDC, market=random.choice(markets))
 
-		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.OPCL)
+		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.RSEC)
 		for o in loss_votes:
 			for c in o.get_friendly_corporations():
-				c.update_assets(-1, category=AssetDelta.MDC)
+				# decrease a market by 1 asset at random
+				markets = [cm.market for cm in CorporationMarket.objects.filter(corporation=c)]
+				c.update_assets(-1, category=AssetDelta.MDC, market=random.choice(markets))
 
 
 tasks = (MDCVoteTask, MDCLineCPUBTask)

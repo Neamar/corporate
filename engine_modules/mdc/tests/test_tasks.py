@@ -34,7 +34,7 @@ class TaskTest(EngineTestCase):
 		"""
 		self.v2 = MDCVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.OPCL
+			coalition=MDCVoteOrder.RSEC
 		)
 		self.v2.save()
 
@@ -49,7 +49,7 @@ class TaskTest(EngineTestCase):
 		"""
 		v2 = MDCVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.OPCL
+			coalition=MDCVoteOrder.RSEC
 		)
 		v2.save()
 
@@ -58,8 +58,8 @@ class TaskTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 
-		self.assertIn("MDC a suivi", self.p.message_set.get().content)
-		self.assertIn(u"MDC a rejoint la coalition opposée", self.p2.message_set.get().content)
+		self.assertIn("Detroit Inc. a suivi", self.p.message_set.get().content)
+		self.assertIn(u"Detroit Inc. a rejoint la coalition opposée", self.p2.message_set.get().content)
 
 	def test_coalition_newsfeed(self):
 		"""
@@ -72,7 +72,7 @@ class TaskTest(EngineTestCase):
 
 		v2 = MDCVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.OPCL
+			coalition=MDCVoteOrder.RSEC
 		)
 		v2.save()
 
