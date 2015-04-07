@@ -108,6 +108,19 @@ class Corporation(models.Model):
 	def markets(self):
 		return [cm.market for cm in self.corporation_markets]
 
+	def get_common_market(self, c2):
+		# Returns the CorporationMaket for a common market if there is one, None if not
+                common_market = None
+		common_markets = []
+
+                for cm in self.corporation_markets:
+                        if cm.market in [cm2.market for cm2 in c2.corporation_markets]:
+                                common_markets.append(cm)
+		if len(common_markets) != 0:
+			common_market = random.choice(common_markets)
+
+		return common_market
+
 	@cached_property
 	def base_corporation(self):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]

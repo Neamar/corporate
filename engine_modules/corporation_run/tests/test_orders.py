@@ -32,14 +32,8 @@ class CorporationRunOrderTest(RunOrdersTest):
 		"""
 		Check raw probability values
 		"""
-		c_markets = self.c.corporation_markets
-		c2_markets = self.c2.corporation_markets
 
-		common_market = None
-		for cm in c_markets:
-			if cm.market in [cm2.market for cm2 in c2_markets]:
-				common_market = cm
-
+		common_market = self.c.get_common_market(self.c2)
 		if common_market == None:
 			raise ValidationError("There is a problem with this test : no common market between c and c2")
 		
@@ -58,14 +52,7 @@ class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):
 		super(DatastealRunOrderTest, self).setUp()
 
-		c_markets = self.c.corporation_markets
-		c2_markets = self.c2.corporation_markets
-
-		common_market = None
-		for cm in c_markets:
-			if cm.market in [cm2.market for cm2 in c2_markets]:
-				common_market = cm
-
+		common_market = self.c.get_common_market(self.c2)
 		if common_market == None:
 			raise ValidationError("There is a problem with this test : no common market between c and c2")
 
@@ -138,14 +125,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 
 		super(RunOrdersTest, self).setUp()
 
-		c_markets = self.c.corporation_markets
-		c2_markets = self.c2.corporation_markets
-
-		common_market = None
-		for cm in c_markets:
-			if cm.market in [cm2.market for cm2 in c2_markets]:
-				common_market = cm
-
+		common_market = self.c.get_common_market(self.c2)
 		if common_market == None:
 			raise ValidationError("There is a problem with this test : no common market between c and c2")
 
@@ -220,13 +200,9 @@ class ExtractionRunOrderTest(RunOrdersTest):
 	def setUp(self):
 		super(ExtractionRunOrderTest, self).setUp()
 
-		c_markets = self.c.corporation_markets
-		c2_markets = self.c2.corporation_markets
-
-		common_market = None
-		for cm in c_markets:
-			if cm.market in [cm2.market for cm2 in c2_markets]:
-				common_market = cm
+		common_market = self.c.get_common_market(self.c2)
+		if common_market == None:
+			raise ValidationError("There is a problem with this test : no common market between c and c2")
 
 		self.eo = ExtractionOrder(
 			player=self.p,

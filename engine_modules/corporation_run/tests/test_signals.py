@@ -9,16 +9,25 @@ from engine_modules.corporation_run.models import DataStealOrder, ExtractionOrde
 class SignalsTest(EngineTestCase):
 	def setUp(self):
 		super(SignalsTest, self).setUp()
+
+		common_market = self.c.get_common_market(self.c2)
+		if common_market == None:
+			raise ValidationError("There is a problem with this test : no common market between c and c2")
+
 		self.dso = DataStealOrder(
 			player=self.p,
-			target_corporation_market=random.choice(self.c.corporation_markets),
+			target_corporation_market=common_market,
 			stealer_corporation=self.c2,
 		)
 		self.dso.save()
 
+		common_market = self.c.get_common_market(self.c2)
+		if common_market == None:
+			raise ValidationError("There is a problem with this test : no common market between c and c2")
+
 		self.eo = ExtractionOrder(
 			player=self.p,
-			target_corporation_market=random.choice(self.c.corporation_markets),
+			target_corporation_market=common_market,
 			stealer_corporation=self.c2,
 		)
 		self.eo.save()
