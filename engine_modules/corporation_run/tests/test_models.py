@@ -1,5 +1,3 @@
-import random
-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder
 
@@ -8,13 +6,12 @@ class ModelsTest(EngineTestCase):
 	def setUp(self):
 		super(ModelsTest, self).setUp()
 
-		common_market = self.c.get_common_market(self.c2)
-		if common_market == None:
-			raise ValidationError("There is a problem with this test : no common market between c and c2")
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+		self.assertIsNotNone(common_corporation_market)
 
 		self.dso = DataStealOrder(
 			player=self.p,
-			target_corporation_market=common_market,
+			target_corporation_market=common_corporation_market,
 			stealer_corporation=self.c2,
 		)
 		self.dso.save()
@@ -38,7 +35,7 @@ class ModelsTest(EngineTestCase):
 
 		po = ProtectionOrder(
 			player=self.p,
-			protected_corporation_market=random.choice(self.c.corporation_markets),
+			protected_corporation_market=self.c.random_corporation_market,
 		)
 		po.save()
 

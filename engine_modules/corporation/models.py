@@ -1,22 +1,17 @@
 # -*- coding: utf-8 -*-
 import random
-
 from os import listdir
+from collections import OrderedDict
 
 from django.db import models
 from django.conf import settings
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
-
-from collections import OrderedDict
+from django.core.exceptions import ValidationError
 
 from utils.read_markdown import read_markdown
-from engine_modules.market.models import Market
-from engine.models import Game
-
 from engine_modules.market.models import Market, CorporationMarket
-
-from django.core.exceptions import ValidationError
+from engine.models import Game
 
 class BaseCorporation:
 	"""
@@ -96,30 +91,40 @@ class Corporation(models.Model):
 
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
-	assets = models.SmallIntegerField(default=0)
+	assets = models.SmallIntegerField()
 	market_assets = models.SmallIntegerField()
 	assets_modifier = models.SmallIntegerField(default=0)
 
 	@property
 	def corporation_markets(self):
-		return CorporationMarket.objects.filter(corporation=self)
+		return self.corporationmarket_set.all()
 
 	@property
 	def markets(self):
 		return [cm.market for cm in self.corporation_markets]
 
-	def get_common_market(self, c2):
+	@property
+	def random_market(self):
+		return random.choice(self.markets)
+
+	@property
+	def random_corporation_market(self):
+		return random.choice(self.corporation_markets)
+
+	def get_common_corporation_market(self, c2):
 		# Returns the CorporationMaket for a common market if there is one, None if not
-                common_market = None
-		common_markets = []
+		common_corporation_market = None
+		common_corporation_markets = []
 
-                for cm in self.corporation_markets:
-                        if cm.market in [cm2.market for cm2 in c2.corporation_markets]:
-                                common_markets.append(cm)
-		if len(common_markets) != 0:
-			common_market = random.choice(common_markets)
+		c2_markets = c2.markets
+		for cm in self.corporation_markets:
+			if cm.market in c2_markets:
+				common_corporation_markets.append(cm)
 
-		return common_market
+		if len(common_corporation_markets) != 0:
+			common_corporation_market = random.choice(common_corporation_markets)
+
+		return common_corporation_market
 
 	@cached_property
 	def base_corporation(self):
@@ -136,12 +141,12 @@ class Corporation(models.Model):
 				except Corporation.DoesNotExist:
 					return
 
-			if market == None:
+			if market is None:
 				# By default, a random market is impacted
-				market = random.choice(corporation.markets)
+				market = corporation.random_market
 			else:
 				# TODO; implement and test effects with a marker name
-				raise ValidationError("Not Implemented")
+				raise NotImplementedError()
 
 			corporation.update_assets(delta, category=delta_category, market=market)
 

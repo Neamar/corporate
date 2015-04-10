@@ -1,5 +1,3 @@
-import random
-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import BaseCorporation, Corporation, AssetDelta
 
@@ -22,7 +20,7 @@ class ModelMethodTest(EngineTestCase):
 		Corporation assets should be updated
 		"""
 
-		corporation_market = self.c.corporationmarket_set.all().last()
+		corporation_market = self.c.corporation_markets.last()
 		initial_corporation_assets = self.c.assets
 		initial_market_assets = corporation_market.value
 
@@ -36,8 +34,7 @@ class ModelMethodTest(EngineTestCase):
 		Corporation market assets can't drop below 0
 		"""
 
-		c_markets = self.c.corporation_markets
-		corporation_market = random.choice(c_markets)
+		corporation_market = self.c.random_corporation_market
 		initial_corporation_assets = self.c.assets
 
 		max_delta = corporation_market.value + 1

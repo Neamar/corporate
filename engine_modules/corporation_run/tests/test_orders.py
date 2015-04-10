@@ -33,14 +33,13 @@ class CorporationRunOrderTest(RunOrdersTest):
 		Check raw probability values
 		"""
 
-		common_market = self.c.get_common_market(self.c2)
-		if common_market == None:
-			raise ValidationError("There is a problem with this test : no common market between c and c2")
-		
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+		self.assertIsNotNone(common_corporation_market)
+
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation_market=common_market,
+			target_corporation_market=common_corporation_market,
 			additional_percents=1,
 			hidden_percents=3
 		)
@@ -52,14 +51,13 @@ class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):
 		super(DatastealRunOrderTest, self).setUp()
 
-		common_market = self.c.get_common_market(self.c2)
-		if common_market == None:
-			raise ValidationError("There is a problem with this test : no common market between c and c2")
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+		self.assertIsNotNone(common_corporation_market)
 
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation_market=common_market,
+			target_corporation_market=common_corporation_market,
 			additional_percents=0,
 		)
 		self.dso.clean()
@@ -125,14 +123,13 @@ class SabotageRunOrderTest(RunOrdersTest):
 
 		super(RunOrdersTest, self).setUp()
 
-		common_market = self.c.get_common_market(self.c2)
-		if common_market == None:
-			raise ValidationError("There is a problem with this test : no common market between c and c2")
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+		self.assertIsNotNone(common_corporation_market)
 
 		super(SabotageRunOrderTest, self).setUp()
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation_market=common_market,
+			target_corporation_market=common_corporation_market,
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -200,13 +197,12 @@ class ExtractionRunOrderTest(RunOrdersTest):
 	def setUp(self):
 		super(ExtractionRunOrderTest, self).setUp()
 
-		common_market = self.c.get_common_market(self.c2)
-		if common_market == None:
-			raise ValidationError("There is a problem with this test : no common market between c and c2")
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+		self.assertIsNotNone(common_corporation_market)
 
 		self.eo = ExtractionOrder(
 			player=self.p,
-			target_corporation_market=common_market,
+			target_corporation_market=common_corporation_market,
 			stealer_corporation=self.c2
 		)
 		self.eo.clean()

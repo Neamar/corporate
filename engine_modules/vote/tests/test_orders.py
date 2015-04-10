@@ -1,5 +1,3 @@
-import random
-
 from engine.testcases import EngineTestCase
 from engine.exceptions import OrderNotAvailable
 from engine_modules.vote.models import VoteOrder
@@ -8,8 +6,8 @@ from engine_modules.vote.models import VoteOrder
 class OrdersTest(EngineTestCase):
 	def setUp(self):
 		super(OrdersTest, self).setUp()
-		self.c_corporation_market = random.choice(self.c.corporation_markets)
-		self.c2_corporation_market = random.choice(self.c2.corporation_markets)
+		self.c_corporation_market = self.c.random_corporation_market
+		self.c2_corporation_market = self.c2.random_corporation_market
 
 	def test_corporation_up_and_down(self):
 

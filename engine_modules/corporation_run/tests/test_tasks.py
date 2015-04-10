@@ -1,5 +1,3 @@
-import random
-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import SabotageOrder
 
@@ -11,7 +9,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation_market=random.choice(self.c.corporation_markets),
+			target_corporation_market=self.c.random_corporation_market,
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -48,7 +46,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		so2 = SabotageOrder(
 			player=self.p,
-			target_corporation_market=random.choice(self.c2.corporation_markets),
+			target_corporation_market=self.c2.random_corporation_market,
 			additional_percents=4,
 		)
 
@@ -58,7 +56,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		so3 = SabotageOrder(
 			player=self.p,
-			target_corporation_market=random.choice(self.c3.corporation_markets),
+			target_corporation_market=self.c3.random_corporation_market,
 			additional_percents=8,
 		)
 
