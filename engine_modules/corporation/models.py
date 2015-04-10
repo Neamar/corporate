@@ -217,7 +217,7 @@ class AssetDelta(models.Model):
 	RUN_SABOTAGE = 'sabotage'
 	RUN_EXTRACTION = 'extraction'
 	RUN_DATASTEAL = 'datasteal'
-	MDC = 'mdc'
+	DINC = 'detroit-inc'
 	INVISIBLE_HAND = 'invisible-hand'
 	VOTES = 'votes'
 
@@ -225,7 +225,7 @@ class AssetDelta(models.Model):
 		(EFFECT_FIRST, 'Eff. premier'),
 		(EFFECT_LAST, 'Eff. dernier'),
 		(EFFECT_CRASH, 'Eff. crash'),
-		(MDC, 'MDC'),
+		(DINC, 'Detroit, Inc.'),
 		(RUN_SABOTAGE, 'Sabotage'),
 		(RUN_EXTRACTION, 'Extraction'),
 		(RUN_DATASTEAL, 'Datasteal'),
@@ -241,7 +241,7 @@ class AssetDelta(models.Model):
 		EFFECT_LAST,
 		EFFECT_CRASH,
 		RUN_SABOTAGE,
-		MDC
+		DINC
 	)
 
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
