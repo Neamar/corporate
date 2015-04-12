@@ -7,16 +7,21 @@ from engine_modules.corporation_run.models import DataStealOrder, ExtractionOrde
 class SignalsTest(EngineTestCase):
 	def setUp(self):
 		super(SignalsTest, self).setUp()
+
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+
 		self.dso = DataStealOrder(
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=common_corporation_market,
 			stealer_corporation=self.c2,
 		)
 		self.dso.save()
 
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+
 		self.eo = ExtractionOrder(
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=common_corporation_market,
 			stealer_corporation=self.c2,
 		)
 		self.eo.save()

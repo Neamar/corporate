@@ -8,32 +8,32 @@ from engine.models import Order, Game, Player
 from website.widgets import PlainTextField
 
 
-class MDCVoteOrder(Order):
+class DIncVoteOrder(Order):
 	"""
-	Order to vote for the MDC coalition
+	Order to vote for the Detroit, Inc. coalition
 	"""
 	ORDER = 200
 
 	CPUB = "CPUB"
-	OPCL = "OPCL"
+	RSEC = "RSEC"
 	CONS = "CONS"
 
 	# Enumerate the party lines and their meanings
-	MDC_COALITION_CHOICES = (
+	DINC_COALITION_CHOICES = (
 		('CPUB', 'Contrats publics'),
-		('OPCL', u'Opérations clandestines'),
+		('RSEC', u'Réforme de la sécurité'),
 		('CONS', 'Consolidation'),
 	)
 
-	MDC_OPPOSITIONS = {
-		CPUB: OPCL,
-		OPCL: CONS,
+	DINC_OPPOSITIONS = {
+		CPUB: RSEC,
+		RSEC: CONS,
 		CONS: CPUB,
 	}
 
 	title = "Choisir une coalition"
 
-	coalition = models.CharField(max_length=4, choices=MDC_COALITION_CHOICES, blank=True, null=True, default=None)
+	coalition = models.CharField(max_length=4, choices=DINC_COALITION_CHOICES, blank=True, null=True, default=None)
 
 	def get_weight(self):
 		"""
@@ -73,13 +73,13 @@ class MDCVoteOrder(Order):
 		return vote_registry
 
 	def get_form(self, data=None):
-		form = super(MDCVoteOrder, self).get_form(data)
+		form = super(DIncVoteOrder, self).get_form(data)
 		form.fields['coalition_weight'] = PlainTextField(initial=str(self.get_weight()))
 
 		return form
 
 	def get_form_class(self):
-		ParentOrderForm = super(MDCVoteOrder, self).get_form_class()
+		ParentOrderForm = super(DIncVoteOrder, self).get_form_class()
 
 		class OrderForm(ParentOrderForm):
 			def clean_coalition(self):
@@ -90,17 +90,17 @@ class MDCVoteOrder(Order):
 		return OrderForm
 
 	def description(self):
-		return u"Apporter %d voix pour la coalition « %s » du MDC" % (self.get_weight(), self.get_coalition_display())
+		return u"Apporter %d voix pour la coalition « %s » de Detroit, Inc." % (self.get_weight(), self.get_coalition_display())
 
 
-class MDCVoteSession(models.Model):
+class DIncVoteSession(models.Model):
 	"""
-	A session of the MDC voting process
-	Used to keep track of the current MDC line
+	A session of the Detroit, Inc. voting process
+	Used to keep track of the current Detroit, Inc line
 	"""
 
 	coalition = models.CharField(max_length=4,
-		choices=MDCVoteOrder.MDC_COALITION_CHOICES, blank=True, null=True, default=None)
+		choices=DIncVoteOrder.DINC_COALITION_CHOICES, blank=True, null=True, default=None)
 	game = models.ForeignKey(Game)
 	turn = models.PositiveSmallIntegerField(editable=False)
 
@@ -108,9 +108,9 @@ class MDCVoteSession(models.Model):
 		return "%s line for %s on turn %s" % (self.coalition, self.game, self.turn)
 
 
-def get_mdc_coalition(self, turn=None):
+def get_dinc_coalition(self, turn=None):
 	"""
-	Get the MDC party line voted on turn session (defaults to current turn).
+	Get the Detroit, Inc. party line voted on turn session (defaults to current turn).
 	Return None on the first turn.
 	"""
 	if turn is None:
@@ -119,35 +119,35 @@ def get_mdc_coalition(self, turn=None):
 	if turn == 1:
 		return None
 
-	session = self.mdcvotesession_set.get(turn=turn)
+	session = self.dincvotesession_set.get(turn=turn)
 	return session.coalition
 
 
-def get_last_mdc_vote(self):
+def get_last_dinc_vote(self):
 	"""
-	Get what a player voted in the last MDC Vote session
+	Get what a player voted in the last Detroit, Inc. Vote session
 	"""
 
 	try:
-		return MDCVoteOrder.objects.get(turn=self.game.current_turn - 1, player=self)
+		return DIncVoteOrder.objects.get(turn=self.game.current_turn - 1, player=self)
 	except:
 		# No vote
 		return None
 
 
-def get_last_mdc_coalition(self):
+def get_last_dinc_coalition(self):
 	"""
-	Get what a player voted in the last MDC Vote session
+	Get what a player voted in the last Detroit, Inc. Vote session
 	"""
 
-	vote = self.get_last_mdc_vote()
+	vote = self.get_last_dinc_vote()
 	if vote:
 		return vote.coalition
 	else:
 		return None
 
-Game.get_mdc_coalition = get_mdc_coalition
-Player.get_last_mdc_vote = get_last_mdc_vote
-Player.get_last_mdc_coalition = get_last_mdc_coalition
+Game.get_dinc_coalition = get_dinc_coalition
+Player.get_last_dinc_vote = get_last_dinc_vote
+Player.get_last_dinc_coalition = get_last_dinc_coalition
 
-orders = (MDCVoteOrder,)
+orders = (DIncVoteOrder,)

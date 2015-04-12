@@ -83,7 +83,7 @@ class ModelsTest(EngineTestCase):
 		p2.save()
 
 		self.assertEqual(Newsfeed.objects.count(), 0)
-		self.g.add_newsfeed(category=Newsfeed.MDC_REPORT, content="something")
+		self.g.add_newsfeed(category=Newsfeed.DINC_REPORT, content="something")
 		self.assertEqual(Newsfeed.objects.count(), 1)
 
 	def test_game_add_newsfeed_from_template(self):

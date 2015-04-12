@@ -20,7 +20,7 @@ class ModelMethodTest(EngineTestCase):
 		Corporation assets should be updated
 		"""
 
-		corporation_market = self.c.corporationmarket_set.all().last()
+		corporation_market = self.c.corporation_markets.last()
 		initial_corporation_assets = self.c.assets
 		initial_market_assets = corporation_market.value
 
@@ -29,30 +29,16 @@ class ModelMethodTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - 1)
 		self.assertEqual(self.reload(corporation_market).value, initial_market_assets - 1)
 
-	def test_corporation_update_assets_in_historic_market(self):
-		"""
-		Corporation assets should be updated in historic market by default
-		"""
-
-		corporation_historic_market = self.c.historic_corporation_market
-		initial_corporation_assets = self.c.assets
-		initial_market_assets = corporation_historic_market.value
-
-		self.c.update_assets(-1, category=AssetDelta.EFFECT_FIRST)
-
-		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - 1)
-		self.assertEqual(self.reload(corporation_historic_market).value, initial_market_assets - 1)
-
 	def test_corporation_update_assets_not_below_zero(self):
 		"""
 		Corporation market assets can't drop below 0
 		"""
 
-		corporation_historic_market = self.c.historic_corporation_market
+		corporation_market = self.c.random_corporation_market
 		initial_corporation_assets = self.c.assets
 
-		max_delta = corporation_historic_market.value + 1
-		self.c.update_assets(-max_delta, category=AssetDelta.EFFECT_FIRST)
+		max_delta = corporation_market.value + 1
+		self.c.update_assets(-max_delta, category=AssetDelta.EFFECT_FIRST, market=corporation_market.market)
 
 		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - max_delta + 1)
-		self.assertEqual(self.reload(corporation_historic_market).value, 0)
+		self.assertEqual(self.reload(corporation_market).value, 0)
