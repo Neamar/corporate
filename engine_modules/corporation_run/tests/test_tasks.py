@@ -9,7 +9,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=self.c.random_corporation_market,
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -46,7 +46,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		so2 = SabotageOrder(
 			player=self.p,
-			target_corporation_market=self.c2.historic_corporation_market,
+			target_corporation_market=self.c2.random_corporation_market,
 			additional_percents=4,
 		)
 
@@ -56,7 +56,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		so3 = SabotageOrder(
 			player=self.p,
-			target_corporation_market=self.c3.historic_corporation_market,
+			target_corporation_market=self.c3.random_corporation_market,
 			additional_percents=8,
 		)
 

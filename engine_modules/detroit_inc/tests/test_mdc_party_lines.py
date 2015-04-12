@@ -1,18 +1,18 @@
 from engine.models import Player
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share
-from engine_modules.mdc.models import MDCVoteOrder
+from engine_modules.detroit_inc.models import DIncVoteOrder
 from engine_modules.corporation_run.models import DataStealOrder
 
 
-class MDCPartyLineTest(EngineTestCase):
+class DIncPartyLineTest(EngineTestCase):
 	def setUp(self):
 		"""
 		p is top shareholder in c,
 		p2 is top shareholder in c2,
 		p3 is top shareholder in c3,
 		"""
-		super(MDCPartyLineTest, self).setUp()
+		super(DIncPartyLineTest, self).setUp()
 
 		self.p2 = Player(game=self.g)
 		self.p2.save()
@@ -46,25 +46,25 @@ class MDCPartyLineTest(EngineTestCase):
 		A little helper to set the Line each player has voted for this turn
 		"""
 
-		v = MDCVoteOrder(
+		v = DIncVoteOrder(
 			player=self.p,
 			coalition=L1
 		)
 		v.save()
 
-		v2 = MDCVoteOrder(
+		v2 = DIncVoteOrder(
 			player=self.p2,
 			coalition=L2
 		)
 		v2.save()
 
-		v3 = MDCVoteOrder(
+		v3 = DIncVoteOrder(
 			player=self.p3,
 			coalition=L3
 		)
 		v3.save()
 
-	def test_mdc_CPUB_line_effects(self):
+	def test_dinc_CPUB_line_effects(self):
 		"""
 		Test what happens when the CPUB party line is chosen
 		"""
@@ -73,7 +73,7 @@ class MDCPartyLineTest(EngineTestCase):
 		initial_assets2 = self.c2.assets
 		initial_assets3 = self.c3.assets
 
-		self.set_turn_line(MDCVoteOrder.CPUB, MDCVoteOrder.CPUB, MDCVoteOrder.OPCL)
+		self.set_turn_line(DIncVoteOrder.CPUB, DIncVoteOrder.CPUB, DIncVoteOrder.RSEC)
 
 		self.g.resolve_current_turn()
 
@@ -81,12 +81,12 @@ class MDCPartyLineTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c2).assets, initial_assets2 + 1)
 		self.assertEqual(self.reload(self.c3).assets, initial_assets3 - 1)
 
-	def test_mdc_OPCL_line_effects(self):
+	def test_dinc_RSEC_line_effects(self):
 		"""
-		Test what happens when the OPCL party line is chosen
+		Test what happens when the RSEC party line is chosen
 		"""
 
-		self.set_turn_line(MDCVoteOrder.CONS, MDCVoteOrder.OPCL, MDCVoteOrder.OPCL)
+		self.set_turn_line(DIncVoteOrder.CONS, DIncVoteOrder.RSEC, DIncVoteOrder.RSEC)
 		self.g.resolve_current_turn()
 
 		dso = DataStealOrder(

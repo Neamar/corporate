@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.mdc.models import MDCVoteOrder
+from engine_modules.detroit_inc.models import DIncVoteOrder
 from engine.exceptions import OrderNotAvailable
 
 
@@ -11,13 +11,13 @@ class SignalsTest(EngineTestCase):
 		"""
 		Can't vote more than once
 		"""
-		v = MDCVoteOrder(
+		v = DIncVoteOrder(
 			player=self.p,
 		)
 		v.clean()
 		v.save()
 
-		v2 = MDCVoteOrder(
+		v2 = DIncVoteOrder(
 			player=self.p,
 		)
 		self.assertRaises(OrderNotAvailable, v2.clean)

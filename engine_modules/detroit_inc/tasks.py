@@ -2,24 +2,25 @@
 from collections import Counter
 from engine.tasks import ResolutionTask
 from engine_modules.corporation.models import AssetDelta
-from engine_modules.mdc.models import MDCVoteSession, MDCVoteOrder
+from engine_modules.detroit_inc.models import DIncVoteSession, DIncVoteOrder
+from engine_modules.market.models import CorporationMarket
 from messaging.models import Newsfeed, Note
 
 
-class MDCVoteTask(ResolutionTask):
+class DIncVoteTask(ResolutionTask):
 	"""
-	Choose the MDC party line, and save it in an MDCVoteSession
+	Choose the Detroit, Inc. party line, and save it in a DIncVoteSession
 	"""
 	RESOLUTION_ORDER = 100
-	ORDER_TYPE = MDCVoteOrder
+	ORDER_TYPE = DIncVoteOrder
 
 	def run(self, game):
-		orders = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
+		orders = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
 
 		self.send_resolution_message(orders)
 		official_line = self.get_official_line(orders)
 
-		s = MDCVoteSession(
+		s = DIncVoteSession(
 			coalition=official_line,
 			game=game,
 			turn=game.current_turn + 1
@@ -31,18 +32,18 @@ class MDCVoteTask(ResolutionTask):
 		if official_line is not None:
 			# Message all player who voted for this line
 			n = Note.objects.create(
-				category=Note.MDC,
-				content="Le MDC a suivi votre coalition",
+				category=Note.DINC,
+				content="Detroit, Inc. a suivi votre coalition",
 				turn=game.current_turn,
 			)
 			n.recipient_set = [order.player for order in orders if order.coalition == official_line]
 
 			n = Note.objects.create(
-				category=Note.MDC,
-				content=u"Le MDC a rejoint la coalition opposée %s" % s.get_coalition_display(),
+				category=Note.DINC,
+				content=u"Detroit, Inc. a rejoint la coalition opposée: %s" % s.get_coalition_display(),
 				turn=game.current_turn,
 			)
-			n.recipient_set = [order.player for order in orders if order.coalition == MDCVoteOrder.MDC_OPPOSITIONS[official_line]]
+			n.recipient_set = [order.player for order in orders if order.coalition == DIncVoteOrder.DINC_OPPOSITIONS[official_line]]
 
 	def get_official_line(self, orders):
 		"""
@@ -50,7 +51,7 @@ class MDCVoteTask(ResolutionTask):
 		"""
 
 		votes_count = {}
-		for t in MDCVoteOrder.MDC_OPPOSITIONS.values():
+		for t in DIncVoteOrder.DINC_OPPOSITIONS.values():
 			votes_count[t] = 0
 
 		for order in orders:
@@ -73,15 +74,15 @@ class MDCVoteTask(ResolutionTask):
 		Send a note to each player, to remember his choice.
 		"""
 		for order in orders:
-			order.player.add_note(category=Note.MDC, content="Vous avez rejoint la coalition *%s*." % order.get_coalition_display())
+			order.player.add_note(category=Note.DINC, content="Vous avez rejoint la coalition *%s*." % order.get_coalition_display())
 
-	def send_newsfeed(self, orders, mdc_vote_session):
+	def send_newsfeed(self, orders, dinc_vote_session):
 		"""
 		Build newsfeed message. Contains official line, and breakdown for each coalition.
 		"""
 
-		if mdc_vote_session.coalition is not None:
-			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"La coalition *%s* a été votée par le MDC." % mdc_vote_session.get_coalition_display())
+		if dinc_vote_session.coalition is not None:
+			dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"La coalition *%s* a été votée par Detroit Inc." % dinc_vote_session.get_coalition_display())
 
 		votes_details = {}
 
@@ -119,33 +120,37 @@ class MDCVoteTask(ResolutionTask):
 			coalition_breakdown.append(content)
 
 		if len(coalition_breakdown) > 0:
-			mdc_vote_session.game.add_newsfeed(category=Newsfeed.MDC_REPORT, content=u"Répartition des coalitions :\n\n  * %s" % ("\n  * ".join(coalition_breakdown)))
+			dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"Répartition des coalitions :\n\n  * %s" % ("\n  * ".join(coalition_breakdown)))
 
 
-class MDCLineCPUBTask(ResolutionTask):
+class DIncLineCPUBTask(ResolutionTask):
 	"""
-	Enforce the effects of the MDC CPUB party line
+	Enforce the effects of the Detroit, Inc. CPUB party line
 	"""
 
-	# Resolve after MDCVoteTask
+	# Resolve after DIncVoteTask
 	RESOLUTION_ORDER = 300
 
 	def run(self, game):
 		# Because this is run the turn of the vote, we have to ask for the next line, not the current one
-		coalition = game.get_mdc_coalition(turn=game.current_turn + 1)
+		coalition = game.get_dinc_coalition(turn=game.current_turn + 1)
 
-		if coalition != MDCVoteOrder.CPUB:
+		if coalition != DIncVoteOrder.CPUB:
 			return
 
-		win_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.CPUB)
+		win_votes = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=DIncVoteOrder.CPUB)
 		for o in win_votes:
 			for c in o.get_friendly_corporations():
-				c.update_assets(1, category=AssetDelta.MDC)
+				# increase a market by 1 asset at random
+				markets = [cm.market for cm in CorporationMarket.objects.filter(corporation=c)]
+				c.update_assets(1, category=AssetDelta.DINC, market=c.get_random_market())
 
-		loss_votes = MDCVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=MDCVoteOrder.OPCL)
+		loss_votes = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=DIncVoteOrder.RSEC)
 		for o in loss_votes:
 			for c in o.get_friendly_corporations():
-				c.update_assets(-1, category=AssetDelta.MDC)
+				# decrease a market by 1 asset at random
+				markets = [cm.market for cm in CorporationMarket.objects.filter(corporation=c)]
+				c.update_assets(-1, category=AssetDelta.DINC, market=c.get_random_market())
 
 
-tasks = (MDCVoteTask, MDCLineCPUBTask)
+tasks = (DIncVoteTask, DIncLineCPUBTask)

@@ -5,13 +5,13 @@ from utils.read_markdown import parse_markdown
 
 
 class Newsfeed(models.Model):
-	MDC_REPORT = '1-mdc'
+	DINC_REPORT = '1-detroit-inc'
 	ECONOMY = '2-economy'
 	PEOPLE = '3-people'
 	MATRIX_BUZZ = '4-matrix-buzz'
 
 	CATEGORY_CHOICES = (
-		(MDC_REPORT, 'Bulletin du MDC'),
+		(DINC_REPORT, 'Bulletin de Detroit, Inc.'),
 		(MATRIX_BUZZ, 'Matrix Buzz'),
 		(PEOPLE, 'Flash People'),
 		(ECONOMY, 'Économie'),
@@ -114,14 +114,14 @@ class Note(models.Model):
 	"""
 	GLOBAL = 'global'
 	RUNS = 'runs'
-	MDC = 'mdc'
+	DINC = 'detroit-inc'
 	SPECULATION = 'speculation'
 	DIVIDEND = 'dividend'
 
 	NOTE_CHOICES = (
 		(GLOBAL, u'Global'),
 		(RUNS, u'Runs'),
-		(MDC, u'MDC'),
+		(DINC, u'Detroit, Inc.'),
 		(SPECULATION, u'Spéculations'),
 		(DIVIDEND, u'Dividendes'),
 	)

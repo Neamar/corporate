@@ -34,7 +34,6 @@ def auto_create_markets_and_corporation(sender, instance, **kwargs):
 			assets=base_corporation.initials_assets,
 			market_assets=base_corporation.initials_assets,
 			assets_modifier=0,
-			historic_market=markets[base_corporation.historic_market]
 		)
 
 		instance.corporations[base_corporation.slug].save()

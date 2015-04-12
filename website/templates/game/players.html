@@ -12,7 +12,7 @@
 	<th>Joueur</th>
 	<th>IC</th>
 	<th>Parts</th>
-	<th>MDC</th>
+	<th>Detroit, Inc.</th>
 	<th>Citoyen</th>
 </tr>
 </thead>
@@ -23,7 +23,7 @@
 	<td>{{ player.user.username }}</td>
 	<td class="important">{{ player.influence.level }}</td>
 	<td>{{ player.share__count }}</td>
-	<td title="{{ player.get_last_mdc_vote.get_coalition_display }}">{{ player.get_last_mdc_coalition }}</td>
+	<td title="{{ player.get_last_dinc_vote.get_coalition_display }}">{{ player.get_last_dinc_coalition }}</td>
 	<td>{{ player.citizenship.corporation.base_corporation.slug|title }}</td>
 </tr>
 {% endfor %}

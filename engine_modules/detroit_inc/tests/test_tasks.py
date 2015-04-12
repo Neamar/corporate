@@ -2,7 +2,7 @@
 from engine.models import Player
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share
-from engine_modules.mdc.models import MDCVoteOrder
+from engine_modules.detroit_inc.models import DIncVoteOrder
 from messaging.models import Newsfeed
 
 
@@ -13,9 +13,9 @@ class TaskTest(EngineTestCase):
 		self.p2 = Player(game=self.g)
 		self.p2.save()
 
-		self.v = MDCVoteOrder(
+		self.v = DIncVoteOrder(
 			player=self.p,
-			coalition=MDCVoteOrder.CPUB
+			coalition=DIncVoteOrder.CPUB
 		)
 		self.v.save()
 
@@ -25,31 +25,31 @@ class TaskTest(EngineTestCase):
 		"""
 		self.g.resolve_current_turn()
 
-		mdc_vote_session = self.g.mdcvotesession_set.get(turn=self.g.current_turn)
-		self.assertEqual(mdc_vote_session.coalition, self.v.coalition)
+		dinc_vote_session = self.g.dincvotesession_set.get(turn=self.g.current_turn)
+		self.assertEqual(dinc_vote_session.coalition, self.v.coalition)
 
 	def test_equality_no_coalition(self):
 		"""
 		When an equality occurs, no line is set
 		"""
-		self.v2 = MDCVoteOrder(
+		self.v2 = DIncVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.OPCL
+			coalition=DIncVoteOrder.RSEC
 		)
 		self.v2.save()
 
 		self.g.resolve_current_turn()
 
-		mdc_vote_session = (self.g.mdcvotesession_set.get(turn=self.g.current_turn))
-		self.assertEqual(mdc_vote_session.coalition, None)
+		dinc_vote_session = (self.g.dincvotesession_set.get(turn=self.g.current_turn))
+		self.assertEqual(dinc_vote_session.coalition, None)
 
 	def test_coalition_resolution_message(self):
 		"""
 		Beneficiary and victims get a note in resolution message
 		"""
-		v2 = MDCVoteOrder(
+		v2 = DIncVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.OPCL
+			coalition=DIncVoteOrder.RSEC
 		)
 		v2.save()
 
@@ -58,8 +58,8 @@ class TaskTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 
-		self.assertIn("MDC a suivi", self.p.message_set.get().content)
-		self.assertIn(u"MDC a rejoint la coalition opposée", self.p2.message_set.get().content)
+		self.assertIn("Detroit, Inc. a suivi", self.p.message_set.get().content)
+		self.assertIn(u"Detroit, Inc. a rejoint la coalition opposée", self.p2.message_set.get().content)
 
 	def test_coalition_newsfeed(self):
 		"""
@@ -70,9 +70,9 @@ class TaskTest(EngineTestCase):
 		self.p2.name = "p2"
 		self.p2.save()
 
-		v2 = MDCVoteOrder(
+		v2 = DIncVoteOrder(
 			player=self.p2,
-			coalition=MDCVoteOrder.OPCL
+			coalition=DIncVoteOrder.RSEC
 		)
 		v2.save()
 

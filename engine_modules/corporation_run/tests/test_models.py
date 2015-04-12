@@ -5,9 +5,12 @@ from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrde
 class ModelsTest(EngineTestCase):
 	def setUp(self):
 		super(ModelsTest, self).setUp()
+
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+
 		self.dso = DataStealOrder(
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=common_corporation_market,
 			stealer_corporation=self.c2,
 		)
 		self.dso.save()
@@ -31,7 +34,7 @@ class ModelsTest(EngineTestCase):
 
 		po = ProtectionOrder(
 			player=self.p,
-			protected_corporation_market=self.c.historic_corporation_market,
+			protected_corporation_market=self.c.random_corporation_market,
 		)
 		po.save()
 
