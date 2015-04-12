@@ -19,7 +19,7 @@ def unique_domination_bubble(sender, instance, **kwargs):
 		return
 
 	Bubbles = MarketBubble.objects.all()
-	bubbles = MarketBubble.objects.filter(corporation__game=instance.corporation.game, turn=instance.turn, market=instance.market)
+	bubbles = MarketBubble.objects.filter(corporation__game=instance.corporation.game, turn=instance.turn, market=instance.market).exclude(corporation=instance.corporation)
 	if len(bubbles) > 0:
 		raise ValidationError(u"Il ne peut pas y avoir plus d'une bulle pour le marché '%s'" %instance.market.name)
 
