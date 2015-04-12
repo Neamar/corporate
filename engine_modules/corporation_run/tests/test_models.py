@@ -7,7 +7,6 @@ class ModelsTest(EngineTestCase):
 		super(ModelsTest, self).setUp()
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
-		self.assertIsNotNone(common_corporation_market)
 
 		self.dso = DataStealOrder(
 			player=self.p,

@@ -9,7 +9,6 @@ class SignalsTest(EngineTestCase):
 		super(SignalsTest, self).setUp()
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
-		self.assertIsNotNone(common_corporation_market)
 
 		self.dso = DataStealOrder(
 			player=self.p,
@@ -19,7 +18,6 @@ class SignalsTest(EngineTestCase):
 		self.dso.save()
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
-		self.assertIsNotNone(common_corporation_market)
 
 		self.eo = ExtractionOrder(
 			player=self.p,

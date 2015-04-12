@@ -34,7 +34,6 @@ class CorporationRunOrderTest(RunOrdersTest):
 		"""
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
-		self.assertIsNotNone(common_corporation_market)
 
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
@@ -52,7 +51,6 @@ class DatastealRunOrderTest(RunOrdersTest):
 		super(DatastealRunOrderTest, self).setUp()
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
-		self.assertIsNotNone(common_corporation_market)
 
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
@@ -124,7 +122,6 @@ class SabotageRunOrderTest(RunOrdersTest):
 		super(RunOrdersTest, self).setUp()
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
-		self.assertIsNotNone(common_corporation_market)
 
 		super(SabotageRunOrderTest, self).setUp()
 		self.so = SabotageOrder(
@@ -198,7 +195,6 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		super(ExtractionRunOrderTest, self).setUp()
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
-		self.assertIsNotNone(common_corporation_market)
 
 		self.eo = ExtractionOrder(
 			player=self.p,
