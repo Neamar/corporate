@@ -93,9 +93,17 @@ class Corporation(models.Model):
 
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
-	assets = models.SmallIntegerField()
+	# assets, market_assets and assets_modifier are meant to keep track of the MarketBubbles:
+        # - market_assets stands for the total of the assets in the Corporation's markets disregarding bubbles.
+        # - assets_modifier stands for the bonuses and maluses originating from domination on a market, or having a market at 0 assets.
+	# - assets stands for the assets that must be usually taken into account, so we have: assets = market_assets + assets_modifier
 	market_assets = models.SmallIntegerField()
 	assets_modifier = models.SmallIntegerField(default=0)
+
+	@property
+	def assets(self):
+		return self.market_assets + self.assets_modifier
+
 
 	@property
 	def corporation_markets(self):
@@ -136,10 +144,6 @@ class Corporation(models.Model):
 			return random.choice(common_corporation_markets)
 		else:
 			raise ValidationError("Corporations %s and %s have no common market" % (self.base_corporation.name, c2.base_corporation.name))
-
-	@property
-	def assets(self):
-		return self.market_assets + self.assets_modifier
 
 	@cached_property
 	def base_corporation(self):
@@ -186,37 +190,37 @@ class Corporation(models.Model):
 	def on_crash_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
 
-	def increase_assets(self, value=1):
+	def increase_market_assets(self, value=1):
 		"""
-		Increase corporation's assets by value
+		Increase corporation's market_assets by value
 		"""
 		self.market_assets += value
 		self.save()
 
-	def decrease_assets(self, value=1):
+	def decrease_market_assets(self, value=1):
 		"""
-		Decrease corporation's assets by value
+		Decrease corporation's market_assets by value
 		"""
-
 		self.market_assets -= value
 		self.save()
 
 	def update_assets(self, delta, category, market):
 		"""
-		Update assets values, and save the model
+		Updates market assets values, and save the model
+		Does not actually change "assets", since it is a property, but changes on market_assets will be reflected on assets
 		"""
-		market = self.corporationmarket_set.get(market=market)
+		corporation_market = self.corporationmarket_set.get(market=market)
 
 		# A market can't be negative, so we cap the delta
-		if market.value + delta < 0:
+		if corporation_market.value + delta < 0:
 			# A market can't be negative, so we cap the delta
-			delta = -market.value
+			delta = -corporation_market.value
 
-		market.value += delta
-		market.save()
+		corporation_market.value += delta
+		corporation_market.save()
 
-		# Mirror changes on assets
-		self.increase_assets(delta)
+		# Mirror changes on market assets
+		self.increase_market_assets(delta)
 
 		# And register assetdelta for logging purposes
 		self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
