@@ -133,7 +133,7 @@ class Corporation(models.Model):
 		if len(common_corporation_markets) != 0:
 			return random.choice(common_corporation_markets)
 		else:
-			raise ValidationError("Corporations %s and %s have no common market" %(self.base_corporation.name, c2.base_corporation.name))
+			raise ValidationError("Corporations %s and %s have no common market" % (self.base_corporation.name, c2.base_corporation.name))
 
 	@cached_property
 	def base_corporation(self):
