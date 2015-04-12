@@ -134,8 +134,9 @@ class Corporation(models.Model):
 
 	def get_common_corporation_market(self, c2):
 		"""
-		Returns the CorporationMaket for a common market between the Corporation and c2 if there is one.
-		Raises a ValidationError otherwise, because two Corporations should have at least one common Market.
+		Returns the CorporationMarket object for a common market between the Corporation and c2 if there is one
+		Raises a ValidationError otherwise, because two Corporations should have at least one common Market
+		This does not actually return a common CorporationMarket, because there is no such thing: a CorporationMarket is by definition specific to a Corporation
 		"""
 		c2_markets = c2.markets
 		common_corporation_markets = [cm for cm in self.corporation_markets if cm.market in c2_markets]
@@ -144,6 +145,13 @@ class Corporation(models.Model):
 			return random.choice(common_corporation_markets)
 		else:
 			raise ValidationError("Corporations %s and %s have no common market" % (self.base_corporation.name, c2.base_corporation.name))
+
+	def get_common_market(self, c2):
+		"""
+		Returns the Market object for a common market between the Corporation if there is one
+		Raises a ValidationError otherwise, because two Corporations should have at least one common Market
+		"""
+		return self.get_common_corporation_market(c2).market
 
 	@cached_property
 	def base_corporation(self):
