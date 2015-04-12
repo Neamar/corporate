@@ -143,14 +143,14 @@ class DIncLineCPUBTask(ResolutionTask):
 			for c in o.get_friendly_corporations():
 				# increase a market by 1 asset at random
 				markets = [cm.market for cm in CorporationMarket.objects.filter(corporation=c)]
-				c.update_assets(1, category=AssetDelta.DINC, market=c.random_market)
+				c.update_assets(1, category=AssetDelta.DINC, market=c.get_random_market())
 
 		loss_votes = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=DIncVoteOrder.RSEC)
 		for o in loss_votes:
 			for c in o.get_friendly_corporations():
 				# decrease a market by 1 asset at random
 				markets = [cm.market for cm in CorporationMarket.objects.filter(corporation=c)]
-				c.update_assets(-1, category=AssetDelta.DINC, market=c.random_market)
+				c.update_assets(-1, category=AssetDelta.DINC, market=c.get_random_market())
 
 
 tasks = (DIncVoteTask, DIncLineCPUBTask)

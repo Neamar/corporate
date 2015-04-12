@@ -97,43 +97,56 @@ class Corporation(models.Model):
 
 	@property
 	def corporation_markets(self):
+		"""
+		Returns all CorporationMarket objects associated with the Corporation
+		"""
 		return self.corporationmarket_set.all()
 
 	@property
 	def markets(self):
+		"""
+		Returns all Market objects associated with the Corporation
+		"""
 		return [cm.market for cm in self.corporation_markets]
 
 	@property
-	def random_market(self):
-		return random.choice(self.markets)
-
-	@property
 	def random_corporation_market(self):
+		"""
+		Returns one object at random among the CorporationMarket objects associated with the Corporation
+		"""
 		return random.choice(self.corporation_markets)
 
+	def get_random_market(self):
+		"""
+		Returns one object at random among the Market objects associated with the Corporation
+		"""
+		return random.choice(self.markets)
+
 	def get_common_corporation_market(self, c2):
-		# Returns the CorporationMaket for a common market if there is one, None if not
-		common_corporation_market = None
-		common_corporation_markets = []
-
+		"""
+		Returns the CorporationMaket for a common market between the Corporation and c2 if there is one.
+		Raises a ValidationError otherwise, because two Corporations should have at least one common Market.
+		"""
 		c2_markets = c2.markets
-		for cm in self.corporation_markets:
-			if cm.market in c2_markets:
-				common_corporation_markets.append(cm)
-
+		common_corporation_markets = [cm for cm in self.corporation_markets if cm.market in c2_markets]
+		
 		if len(common_corporation_markets) != 0:
-			common_corporation_market = random.choice(common_corporation_markets)
-
-		return common_corporation_market
+			return random.choice(common_corporation_markets)
+		else:
+			raise ValidationError("Corporations %s and %s have no common market" %(self.base_corporation.name, c2.base_corporation.name))
 
 	@cached_property
 	def base_corporation(self):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
 	def apply_effect(self, code, delta_category, ladder):
-
+		"""
+		Applies the effect described in code with respect to the ladder, in category delta_category
+		"""
 		def update(corporation, delta, market=None):
-
+			"""
+			Updates corporation's assets by delta, in Market market if specified, or a Market at random otherwise
+			"""
 			if isinstance(corporation, str):
 				# Try / catch if corporation crashed
 				try:
@@ -143,9 +156,9 @@ class Corporation(models.Model):
 
 			if market is None:
 				# By default, a random market is impacted
-				market = corporation.random_market
+				market = corporation.get_random_market()
 			else:
-				# TODO; implement and test effects with a marker name
+				# TODO; implement and test effects with a market name
 				raise NotImplementedError()
 
 			corporation.update_assets(delta, category=delta_category, market=market)

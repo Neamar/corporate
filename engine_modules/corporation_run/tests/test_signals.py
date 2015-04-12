@@ -1,5 +1,3 @@
-import random
-
 from django.core.exceptions import ValidationError
 
 from engine.testcases import EngineTestCase

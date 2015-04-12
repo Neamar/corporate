@@ -22,13 +22,13 @@ class InvisibleHandTask(ResolutionTask):
 		if len(corpos) == 0:
 			return
 
-		market = corpos[0].random_market
+		market = corpos[0].get_random_market()
 		corpos[0].update_assets(1, category=AssetDelta.INVISIBLE_HAND, market=market)
 		content = u'La main du marché favorise le marché %s de la corpo %s.' % (market.name, corpos[0].base_corporation.name)
 		game.add_newsfeed(category=Newsfeed.ECONOMY, content=content, status=Newsfeed.PRIVATE, market=market, corporations=[corpos[0]])
 
 		if len(corpos) >= 2:
-			market = corpos[1].random_market
+			market = corpos[1].get_random_market()
 			corpos[1].update_assets(-1, category=AssetDelta.INVISIBLE_HAND, market=market)
 			content = u'La main du marché défavorise le marché %s de la corpo %s.' % (market.name, corpos[1].base_corporation.name)
 			game.add_newsfeed(category=Newsfeed.ECONOMY, content=content, status=Newsfeed.PRIVATE, market=market, corporations=[corpos[1]])
