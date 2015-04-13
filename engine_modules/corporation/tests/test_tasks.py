@@ -1,5 +1,3 @@
-import random
-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import Corporation, AssetDelta
 
@@ -29,7 +27,7 @@ class CrashCorporationTaskTest(EngineTestCase):
 		for cm in corporation_markets:
 			if self.c.assets > 0:
 				# because a market cannot be negative, this ensures that at the end, Corporation's assets will be exactly 0
-				# unfortunately, because bubbles are only computed in resolve_current_turn, this also ensures that each market has value 0 ... 
+				# unfortunately, because bubbles are only computed in resolve_current_turn, this also ensures that each market has value 0 ...
 				self.c.update_assets(-self.c.assets, AssetDelta.RUN_SABOTAGE, cm.market)
 			cm.save()
 

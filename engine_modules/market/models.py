@@ -25,9 +25,9 @@ class CorporationMarket(models.Model):
 
 	corporation = models.ForeignKey("corporation.Corporation")
 	market = models.ForeignKey(Market)
-	# @Neamar: We explain in the method update_assets of the Corporation Class that a market value 
+	# @Neamar: We explain in the method update_assets of the Corporation Class that a market value
 	# can't be negative, so shouldn't this be:
-	#value = models.PositiveSmallIntegerField()
+	# value = models.PositiveSmallIntegerField()
 	value = models.SmallIntegerField()
 
 	def __unicode__(self):

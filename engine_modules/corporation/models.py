@@ -10,8 +10,8 @@ from django.utils.safestring import mark_safe
 from django.core.exceptions import ValidationError
 
 from utils.read_markdown import read_markdown
-from engine_modules.market.models import Market, CorporationMarket
 from engine.models import Game
+
 
 class BaseCorporation:
 	"""
@@ -79,7 +79,7 @@ class BaseCorporation:
 
 # Build the dict at startup once and for all
 # This is executed when the file is imported (this is why 'import from' is important) !
-# Isn't there a better way to do this ? 
+# Isn't there a better way to do this ?
 BaseCorporation.build_dict()
 
 
@@ -94,8 +94,8 @@ class Corporation(models.Model):
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
 	# assets, market_assets and assets_modifier are meant to keep track of the MarketBubbles:
-        # - market_assets stands for the total of the assets in the Corporation's markets disregarding bubbles.
-        # - assets_modifier stands for the bonuses and maluses originating from domination on a market, or having a market at 0 assets.
+	# - market_assets stands for the total of the assets in the Corporation's markets disregarding bubbles.
+	# - assets_modifier stands for the bonuses and maluses originating from domination on a market, or having a market at 0 assets.
 	# - assets stands for the assets that must be usually taken into account, so we have: assets = market_assets + assets_modifier
 	market_assets = models.SmallIntegerField()
 	assets_modifier = models.SmallIntegerField(default=0)
@@ -103,7 +103,6 @@ class Corporation(models.Model):
 	@property
 	def assets(self):
 		return self.market_assets + self.assets_modifier
-
 
 	@property
 	def corporation_markets(self):

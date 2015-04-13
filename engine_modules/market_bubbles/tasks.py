@@ -4,6 +4,7 @@ from engine_modules.market.models import CorporationMarket
 from engine_modules.market_bubbles.models import MarketBubble
 from engine_modules.corporation.models import Corporation
 
+
 class UpdateMarketBubblesTask(OrderResolutionTask):
 	"""
 	Recalculate Market bubbles for every market
@@ -14,8 +15,8 @@ class UpdateMarketBubblesTask(OrderResolutionTask):
 	def run(self, game):
 
 		# We can force the use of bubbles  using the force_invisible_hand flag
-                if game.disable_side_effects and not hasattr(game, 'force_bubbles'):
-                        return
+		if game.disable_side_effects and not hasattr(game, 'force_bubbles'):
+			return
 
 		# First, we have to reset every corporation's assets_modifier
 		corporations = Corporation.objects.filter(game=game)
@@ -24,9 +25,6 @@ class UpdateMarketBubblesTask(OrderResolutionTask):
 			modifiers[corporation] = 0
 
 		corporation_markets = CorporationMarket.objects.filter(corporation__game=game).order_by('market', '-value')
-
-#		print "Corporation Markets:"
-#		print corporation_markets
 
 		# build a dict: market name -> list of (Corporation, Assests in market)
 		# this means we parse the list twice, but no requests, so it should not impact performance, and it is clearer

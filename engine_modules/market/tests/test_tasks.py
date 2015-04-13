@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from engine.testcases import EngineTestCase
 
+
 class TasksTest(EngineTestCase):
 	def test_assets_saved_on_resolution(self):
 		"""

@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 import random
 
-from django.dispatch import receiver
 from django.core.exceptions import ValidationError
 
-from engine.decorators import sender_instance_of
-from engine.dispatchs import validate_order
-from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
 from engine_modules.market_bubbles.models import MarketBubble
-from engine_modules.market.models import Market, CorporationMarket
+from engine_modules.market.models import Market
+
 
 class SignalsTest(EngineTestCase):
 
@@ -17,13 +14,12 @@ class SignalsTest(EngineTestCase):
 
 		super(SignalsTest, self).setUp()
 		self.b = MarketBubble(
-			corporation = self.c,
-			market = self.c.get_random_market(),
-			turn = self.g.current_turn,
-			value = 1,
+			corporation=self.c,
+			market=self.c.get_random_market(),
+			turn=self.g.current_turn,
+			value=1,
 		)
 		self.b.save()
-
 
 	def test_unique_domination_same_market_same_turn(self):
 		"""
@@ -35,20 +31,20 @@ class SignalsTest(EngineTestCase):
 		self.b.save()
 
 		b2 = MarketBubble(
-			corporation = self.c2,
-			market = common_market,
-			turn = self.b.turn,
-			value = 1,
+			corporation=self.c2,
+			market=common_market,
+			turn=self.b.turn,
+			value=1,
 		)
 		self.assertRaises(ValidationError, b2.save)
 
 	def test_unique_domination_different_turns(self):
 
 		b2 = MarketBubble(
-			corporation = self.c,
-			market = self.b.market,
-			turn = self.g.current_turn + 1,
-			value = 1,
+			corporation=self.c,
+			market=self.b.market,
+			turn=self.g.current_turn + 1,
+			value=1,
 		)
 		b2.save()
 
