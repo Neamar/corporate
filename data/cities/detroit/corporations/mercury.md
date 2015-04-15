@@ -1,4 +1,4 @@
-name: DT&T
+name: Mercury
 markets:
     alimentaire: 3
     immobilier: 3
@@ -16,4 +16,4 @@ on_last:
 on_crash:
     # TBD
 
-Descirption DT&T
+Descirption Mercury
