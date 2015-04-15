@@ -1,4 +1,4 @@
-name: Azimov
+name: Shinsekai
 markets:
     magie: 3
     immobilier: 3
@@ -16,4 +16,4 @@ on_last:
 on_crash:
     # TBD
 
-Description Azimov
+Description Shinsekai
