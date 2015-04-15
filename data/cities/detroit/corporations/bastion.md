@@ -1,4 +1,4 @@
-name: Invictus
+name: Bastion
 markets:
     nanotechnologie: 2
     alimentaire: 2
@@ -17,4 +17,4 @@ on_last:
 on_crash:
     # TBD
 
-Description Invictus
+Description Bastion
