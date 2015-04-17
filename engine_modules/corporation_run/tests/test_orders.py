@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+import random
+
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, ExtractionOrder
 from engine_modules.corporation_run.decorators import override_max_protection
 
+from django.core.exceptions import ValidationError
 
 class RunOrdersTest(EngineTestCase):
 	def set_to_zero(self, corporation):
@@ -29,10 +32,13 @@ class CorporationRunOrderTest(RunOrdersTest):
 		"""
 		Check raw probability values
 		"""
+
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=common_corporation_market,
 			additional_percents=1,
 			hidden_percents=3
 		)
@@ -43,10 +49,13 @@ class CorporationRunOrderTest(RunOrdersTest):
 class DatastealRunOrderTest(RunOrdersTest):
 	def setUp(self):
 		super(DatastealRunOrderTest, self).setUp()
+
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+
 		self.dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=common_corporation_market,
 			additional_percents=0,
 		)
 		self.dso.clean()
@@ -109,10 +118,15 @@ class DatastealRunOrderTest(RunOrdersTest):
 
 class SabotageRunOrderTest(RunOrdersTest):
 	def setUp(self):
+
+		super(RunOrdersTest, self).setUp()
+
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+
 		super(SabotageRunOrderTest, self).setUp()
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=common_corporation_market,
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -180,9 +194,11 @@ class ExtractionRunOrderTest(RunOrdersTest):
 	def setUp(self):
 		super(ExtractionRunOrderTest, self).setUp()
 
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+
 		self.eo = ExtractionOrder(
 			player=self.p,
-			target_corporation_market=self.c.historic_corporation_market,
+			target_corporation_market=common_corporation_market,
 			stealer_corporation=self.c2
 		)
 		self.eo.clean()

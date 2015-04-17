@@ -6,7 +6,7 @@ def expect_coalition(coalition):
 	def d(function):
 		def wrapper(*args, **kwargs):
 			instance = kwargs['instance']
-			if instance.player.game.get_mdc_coalition() == coalition:
+			if instance.player.game.get_dinc_coalition() == coalition:
 				function(*args, **kwargs)
 		return wrapper
 	return d

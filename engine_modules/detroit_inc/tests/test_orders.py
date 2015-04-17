@@ -1,16 +1,16 @@
 from engine.models import Player
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share
-from engine_modules.mdc.models import MDCVoteOrder
+from engine_modules.detroit_inc.models import DIncVoteOrder
 
 
 class OrdersTest(EngineTestCase):
 	def setUp(self):
 		super(OrdersTest, self).setUp()
 
-		self.v = MDCVoteOrder(
+		self.v = DIncVoteOrder(
 			player=self.p,
-			coalition=MDCVoteOrder.CPUB
+			coalition=DIncVoteOrder.CPUB
 		)
 		self.v.save()
 
@@ -75,32 +75,32 @@ class OrdersTest(EngineTestCase):
 		self.assertEqual(self.v.get_weight(), 3)
 		self.assertItemsEqual(self.v.get_friendly_corporations(), [self.c, self.c2])
 
-	def test_mdc_coalition(self):
+	def test_dinc_coalition(self):
 		"""
 		Check party line is returned correctly
 		"""
-		self.assertIsNone(self.g.get_mdc_coalition())
+		self.assertIsNone(self.g.get_dinc_coalition())
 
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.g.get_mdc_coalition(), self.v.coalition)
+		self.assertEqual(self.g.get_dinc_coalition(), self.v.coalition)
 
 	def test_get_last_mdv_vote(self):
 		"""
 		Check player last vote is returned correctly
 		"""
-		self.assertIsNone(self.p.get_last_mdc_coalition())
+		self.assertIsNone(self.p.get_last_dinc_coalition())
 
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.p.get_last_mdc_coalition(), self.v.coalition)
+		self.assertEqual(self.p.get_last_dinc_coalition(), self.v.coalition)
 
 	def test_get_form_forbids_none_value(self):
 		self.v.delete()
 
-		instance = MDCVoteOrder(player=self.p)
+		instance = DIncVoteOrder(player=self.p)
 
-		form = instance.get_form({'coalition': MDCVoteOrder.CPUB, 'player': self.p})
+		form = instance.get_form({'coalition': DIncVoteOrder.CPUB, 'player': self.p})
 		self.assertTrue(form.is_valid())
 
 		form = instance.get_form({'coalition': None, 'player': self.p})

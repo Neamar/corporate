@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
+import random
 from os import listdir
+from collections import OrderedDict
 
 from django.db import models
 from django.conf import settings
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
-
-from collections import OrderedDict
+from django.core.exceptions import ValidationError
 
 from utils.read_markdown import read_markdown
-from engine_modules.market.models import Market
+from engine_modules.market.models import Market, CorporationMarket
 from engine.models import Game
-
 
 class BaseCorporation:
 	"""
@@ -66,7 +66,6 @@ class BaseCorporation:
 			name, value = market.split(": ")
 			self.markets[name] = int(value)
 			self.initials_assets += int(value)
-		self.historic_market = self.markets.keys()[0]
 
 	def compile_effect(self, code, effect):
 		"""
@@ -93,19 +92,61 @@ class Corporation(models.Model):
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
 	assets = models.SmallIntegerField()
-	historic_market = models.ForeignKey(Market)
+	market_assets = models.SmallIntegerField()
+	assets_modifier = models.SmallIntegerField(default=0)
+
+	@property
+	def corporation_markets(self):
+		"""
+		Returns all CorporationMarket objects associated with the Corporation
+		"""
+		return self.corporationmarket_set.all()
+
+	@property
+	def markets(self):
+		"""
+		Returns all Market objects associated with the Corporation
+		"""
+		return [cm.market for cm in self.corporation_markets]
+
+	@property
+	def random_corporation_market(self):
+		"""
+		Returns one object at random among the CorporationMarket objects associated with the Corporation
+		"""
+		return random.choice(self.corporation_markets)
+
+	def get_random_market(self):
+		"""
+		Returns one object at random among the Market objects associated with the Corporation
+		"""
+		return random.choice(self.markets)
+
+	def get_common_corporation_market(self, c2):
+		"""
+		Returns the CorporationMaket for a common market between the Corporation and c2 if there is one.
+		Raises a ValidationError otherwise, because two Corporations should have at least one common Market.
+		"""
+		c2_markets = c2.markets
+		common_corporation_markets = [cm for cm in self.corporation_markets if cm.market in c2_markets]
+		
+		if len(common_corporation_markets) != 0:
+			return random.choice(common_corporation_markets)
+		else:
+			raise ValidationError("Corporations %s and %s have no common market" % (self.base_corporation.name, c2.base_corporation.name))
 
 	@cached_property
 	def base_corporation(self):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
-	@property
-	def historic_corporation_market(self):
-		return self.corporationmarket_set.get(market=self.historic_market)
-
 	def apply_effect(self, code, delta_category, ladder):
-
-		def update(corporation, delta):
+		"""
+		Applies the effect described in code with respect to the ladder, in category delta_category
+		"""
+		def update(corporation, delta, market=None):
+			"""
+			Updates corporation's assets by delta, in Market market if specified, or a Market at random otherwise
+			"""
 			if isinstance(corporation, str):
 				# Try / catch if corporation crashed
 				try:
@@ -113,7 +154,14 @@ class Corporation(models.Model):
 				except Corporation.DoesNotExist:
 					return
 
-			corporation.update_assets(delta, category=delta_category)
+			if market is None:
+				# By default, a random market is impacted
+				market = corporation.get_random_market()
+			else:
+				# TODO; implement and test effects with a market name
+				raise NotImplementedError()
+
+			corporation.update_assets(delta, category=delta_category, market=market)
 
 		context = {
 			'game': self.game,
@@ -132,13 +180,25 @@ class Corporation(models.Model):
 	def on_crash_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
 
-	def update_assets(self, delta, category, market=None):
+	def increase_assets(self, value=1):
+		"""
+		Increase corporation's assets by value
+		"""
+		self.market_assets += value
+		self.save()
+
+	def decrease_assets(self, value=1):
+		"""
+		Decrease corporation's assets by value
+		"""
+
+		self.market_assets -= value
+		self.save()
+
+	def update_assets(self, delta, category, market):
 		"""
 		Update assets values, and save the model
 		"""
-		if market is None:
-			market = self.historic_market
-
 		market = self.corporationmarket_set.get(market=market)
 
 		# A market can't be negative, so we cap the delta
@@ -170,7 +230,7 @@ class AssetDelta(models.Model):
 	RUN_SABOTAGE = 'sabotage'
 	RUN_EXTRACTION = 'extraction'
 	RUN_DATASTEAL = 'datasteal'
-	MDC = 'mdc'
+	DINC = 'detroit-inc'
 	INVISIBLE_HAND = 'invisible-hand'
 	VOTES = 'votes'
 
@@ -178,7 +238,7 @@ class AssetDelta(models.Model):
 		(EFFECT_FIRST, 'Eff. premier'),
 		(EFFECT_LAST, 'Eff. dernier'),
 		(EFFECT_CRASH, 'Eff. crash'),
-		(MDC, 'MDC'),
+		(DINC, 'Detroit, Inc.'),
 		(RUN_SABOTAGE, 'Sabotage'),
 		(RUN_EXTRACTION, 'Extraction'),
 		(RUN_DATASTEAL, 'Datasteal'),
@@ -194,7 +254,7 @@ class AssetDelta(models.Model):
 		EFFECT_LAST,
 		EFFECT_CRASH,
 		RUN_SABOTAGE,
-		MDC
+		DINC
 	)
 
 	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
