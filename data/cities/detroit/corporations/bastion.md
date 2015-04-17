@@ -16,10 +16,8 @@ on_last:
     update(ladder[-2], -1)
 on_crash:
     # TBD
-    
-###BASTION
 
-> Solvendum nodum per gladium 
+> *Solvendum nodum per gladium* 
 
 Bastion est issu d’une union unique entre un fond d’investissement américain et plusieurs sociétés privées de sécurité. Corporation interventionniste à la réputation sordide, Bastion est probablement l’une des corporations les moins soucieux de son image auprès du public. 
 
