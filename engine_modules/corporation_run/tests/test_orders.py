@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-import random
-
 from engine.testcases import EngineTestCase
 from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrder, SabotageOrder, ExtractionOrder
 from engine_modules.corporation_run.decorators import override_max_protection
 
-from django.core.exceptions import ValidationError
 
 class RunOrdersTest(EngineTestCase):
 	def set_to_zero(self, corporation):

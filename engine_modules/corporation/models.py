@@ -10,8 +10,8 @@ from django.utils.safestring import mark_safe
 from django.core.exceptions import ValidationError
 
 from utils.read_markdown import read_markdown
-from engine_modules.market.models import Market, CorporationMarket
 from engine.models import Game
+
 
 class BaseCorporation:
 	"""
@@ -129,7 +129,7 @@ class Corporation(models.Model):
 		"""
 		c2_markets = c2.markets
 		common_corporation_markets = [cm for cm in self.corporation_markets if cm.market in c2_markets]
-		
+
 		if len(common_corporation_markets) != 0:
 			return random.choice(common_corporation_markets)
 		else:
