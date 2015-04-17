@@ -17,8 +17,7 @@ on_last:
 on_crash:
     # TBD
 
-Description EnerCore
-Triompher par l’énergie, pour l’énergie
+> Triompher par l’énergie, pour l’énergie
 
 En 2028, le génie de la physique Albert Van Tutten invente à 28 ans dans les super-laboratoire de EnerCore, magnat de l’éolienne et du barrage hydraulique, le premier réacteur à fusion nucléaire par accélération magnétique issu du projet BlackSun. Instantanément, l’énergie des étoiles est disponible à l’humanité. EnerCore vend ses BlackSuns par centaines. Le prix de cette technologie impose une rentabilité sur plusieurs décennies, mais l’énergie produite est théoriquement illimitée. Remplaçant peu à peu les moyens de production à énergie fossile dans les pays développés, les BlackSun d’EnerCore se sont généralisés dans les plus grandes mégalopoles mondiales. Surfant sur cette opportunité et ayant conscience que les multiples brevets déposés ne la protègeraient qu’un temps, EnerCore a augmenter son rayon d’action. Cette mégacorporation a su garder dans ses acquisitions une vision positive et énergique. On demande aux cadres d’EnerCore d’être communicatif, d’être présent dans les médias et aux côtés des travailleurs. EnerCore semble inépuisable, construisant des infrastructures utilitaires comme des barrages, des ponts ou encore des systèmes d’irrigations pour l’agriculture. Cette mégacorp aime à s’identifier comme le seul dauphin dans un gang de requins. Force est de constater qu’elle se situe nettement en dessous de la moyenne en termes d’opérations douteuses avérées et est relativement transparente par rapport à ses concurrent. Ce luxe lui est permis de par le pouvoir qu’elle détient : d’une presse de bouton, EnerCore prive d’énergie 50% de la population mondiale.
 
