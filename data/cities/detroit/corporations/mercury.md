@@ -16,7 +16,7 @@ on_last:
 on_crash:
     # TBD
 
-> Quick and Brilliant
+> *Quick and Brilliant*
 
 Alan « Mercury » Rhode était un whitehat excentrique, un hacker de génie qui offrait ses services aux corporations naissantes, montrant les failles dans leurs systèmes de communication. Véritable justicier du net pour certains, hacker à gage bipolaire pour d’autres, il pourchassait les criminels et/ou agissaient comme homme de main pour les corporations. Il savait sentir la température d’un réseau avant de se faire prendre, s’infiltrer inexorablement au sein d’un système et rendre n’importe qui fou de rage. 
 
