@@ -19,7 +19,7 @@ on_crash:
 
 > *Solvendum nodum per gladium* 
 
-Bastion est issu d’une union unique entre un fond d’investissement américain et plusieurs sociétés privées de sécurité. Corporation interventionniste à la réputation sordide, Bastion est probablement l’une des corporations les moins soucieux de son image auprès du public. 
+Bastion est issu d’une union unique entre un fond d’investissement américain et plusieurs sociétés privées de sécurité. Corporation interventionniste à la réputation sordide, Bastion est probablement l’une des corporations les moins soucieuses de son image auprès du public. 
 
 
 Aimez la, haïssez la, Bastion sait que lorsque les choses tourneront mal, vous les supplierez d’intervenir. De son QG de Washington DC, le conseil de Bastion impose une vision du monde basé sur un interventionnisme assumé et la mise en place de la solution la plus pragmatique. Ses activités varient de la production d’énergie à bas coût sans prendre en compte les normes environnementales à la diffusion de propagande dans les pays instables en passant la fabrication d’armes chimiques par des usines aux conditions déplorables ou la production de véhicule de hautes sécurité (transports de troupe ou de fonds). 
