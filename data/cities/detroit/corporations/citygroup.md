@@ -16,9 +16,8 @@ on_last:
 on_crash:
     # TBD
 
-###CityGroup
 
-> Construire aujourd’hui les villes de demain
+> *Construire aujourd’hui les villes de demain*
 
 CityGroup est une corporation jeune basée à Détroit. Son fondateur a déployé une fortune extraordinaire et déployant un matériau unique, le biobéton. Issu d’un procédé complexe, ce matériau gardé secret permet de convertir les déchets organiques en une matrice idéal à la construction d’immeuble : facile à mettre en œuvre, léger et surtout, peu cher. Bien que d’une odeur exécrable, d’une isolation sonore faible et d’un aspect peu attrayant, ce matériau répondait tout simplement à un double besoin : la gestion des déchets et une population mondiale toujours croissante cherchant à se loger à bas prix. 
 
