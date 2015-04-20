@@ -4,60 +4,52 @@ digraph g{
 		rankdir = "LR"
 		bgcolor=transparent
 	];
+	// title
+	labelloc="t";
+	label="Effets derniers";
 
-	aztechnology [shape=ellipse, fillcolor="burlywood", style="filled", label="Aztechnology"];
-	horizon [shape=ellipse, fillcolor="burlywood", style="filled", label="Horizon"];
-	saederkrupp [shape=ellipse, fillcolor="burlywood", style="filled", label="Saeder-Krupp"];
 	premier [shape=square, fillcolor="#FCD975", style="filled", label="Première"];
 	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
 	avantdernier [shape=square, fillcolor="#FCD975", style="filled", label="Avant-dernière"];
 
-	subgraph cluster_nikkei {
-		label = "Nikkei";
-		sony [shape=ellipse, fillcolor="burlywood", style="filled", label="Sony"];
-		shiawase [shape=ellipse, fillcolor="burlywood",style="filled", label="Shiawase"];
-		renraku [shape=ellipse, fillcolor="burlywood", style="filled", label="Renraku"];
-	}
+	pemmican [shape=ellipse, fillcolor="burlywood", style="filled", label="Pemmican"];
+	bastion [shape=ellipse, fillcolor="burlywood", style="filled", label="Bastion"];
+	citygroup [shape=ellipse, fillcolor="burlywood", style="filled", label="Citygroup"];
+	enercore [shape=ellipse, fillcolor="burlywood", style="filled", label="Enercore"];
+	impulse [shape=ellipse, fillcolor="burlywood", style="filled", label="Impulse"];
+	iris [shape=ellipse, fillcolor="burlywood",style="filled", label="Iris"];
+	mercury [shape=ellipse, fillcolor="burlywood", style="filled", label="Mercury"];
+	pure [shape=ellipse, fillcolor="burlywood", style="filled", label="Pure"];
+	shinsekai [shape=ellipse, fillcolor="burlywood", style="filled", label="Shinsekai"];
+	taurus [shape=ellipse, fillcolor="burlywood", style="filled", label="Taurus"];
 
-	subgraph cluster_dowjones {
-		label = "Dow Jones";
-		ares [shape=ellipse, fillcolor="burlywood", style="filled", label="Ares"];
-		neonet [shape=ellipse, fillcolor="burlywood", style="filled", label="NeoNET"];
-		prometheus [shape=ellipse, fillcolor="burlywood", style="filled", label="Prometheus"];
-		spinrad [shape=ellipse, fillcolor="burlywood", style="filled", label="Spinrad"];
-	}
+	pemmican -> premier [color="green"];
+	pemmican -> avantdernier [color="red"];
 
-	subgraph {
-		rank = same; ares; aztechnology; neonet; prometheus; spinrad
-	}
+	bastion -> taurus [color="green"];
+	bastion -> bastion [color="red"];
 
-	ares -> premier [color="red"];
-	ares -> second [color="red"];
+	taurus -> taurus [color="red"];
+	taurus -> bastion [color="green"];
 
-	aztechnology -> horizon [color="green"];
-	aztechnology -> horizon [color="green"];
+	citygroup-> avantdernier [color="green"];
+	citygroup-> avantdernier [color="green"];
 
-	horizon-> aztechnology [color="green"];
-	horizon-> premier [color="red"];
+	shinsekai -> premier [color="green"];
+	shinsekai -> second [color="green"];
 
-	neonet -> neonet [color="green"];
-	neonet -> renraku [color="green"];
+	enercore -> iris [color="green"];
+	enercore -> impulse [color="red"];
 
-	prometheus -> premier [color="green"];
-	prometheus -> premier [color="green"];
+	impulse -> avantdernier [color="red"];
+	impulse -> second [color="red"];
 
-	renraku -> sony [color="red"];
-	renraku -> shiawase [color="green"];
+	iris -> enercore [color="green"];
+	iris -> impulse [color="red"];
 
-	saederkrupp -> saederkrupp [color="green"];
-	saederkrupp -> saederkrupp [color="green"];
+	mercury -> premier [color="green"];
+	mercury -> premier [color="green"];
 
-	shiawase -> avantdernier [color="red"];
-	shiawase -> sony [color="red"];
-
-	sony -> avantdernier [color="red"];
-	sony -> avantdernier [color="red"];
-
-	spinrad -> spinrad [color="red"];
-	spinrad -> avantdernier [color="green"];
+	pure -> citygroup [color="red"];
+	pure -> second [color="green"];
 }
