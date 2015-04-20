@@ -68,6 +68,6 @@ Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la 
 
     Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il peut miser jusqu'à 400 000 ₵ :
 
-    Il mise 100 000 ₵ sur la position d'Iris, dont il pense qu'elle sera 2<sup>ème</sup> à la fin du trimestre.
+    Il mise 100 000 ₵ sur la position d'Iris, dont il pense qu'elle sera deuxième à la fin du trimestre.
 
-    Iris finit en seconde position. Il garde ses 100 000 ₵ et en touche 400 000 ₵ de plus. Si Iris avait fini 3<sup>ème</sup>, il aurait perdu ses 100 000 ₵.
+    Iris finit en seconde position. Il garde ses 100 000 ₵ et en touche 400 000 ₵ de plus. Si Iris avait fini troisième, il aurait perdu ses 100 000 ₵.
