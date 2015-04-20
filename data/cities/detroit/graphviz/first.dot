@@ -23,8 +23,8 @@ digraph g{
 	shinsekai [shape=ellipse, fillcolor="burlywood", style="filled", label="Shinsekai"];
 	taurus [shape=ellipse, fillcolor="burlywood", style="filled", label="Taurus"];
 
-	taurus -> dernier [color="red"];
-	taurus -> second [color="green"];
+	citygroup -> dernier [color="red"];
+	citygroup -> second [color="green"];
 
 	bastion -> pemmican [color="red"];
 	bastion -> bastion [color="green"];
@@ -32,8 +32,8 @@ digraph g{
 	pemmican -> pemmican [color="green"];
 	pemmican -> bastion [color="red"];
 
-	citygroup-> second [color="red"];
-	citygroup-> second [color="red"];
+	taurus-> second [color="red"];
+	taurus-> second [color="red"];
 
 	enercore -> enercore [color="green"];
 	enercore -> second [color="green"];
