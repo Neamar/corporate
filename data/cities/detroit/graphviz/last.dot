@@ -23,7 +23,7 @@ digraph g{
 	shinsekai [shape=ellipse, fillcolor="burlywood", style="filled", label="Shinsekai"];
 	taurus [shape=ellipse, fillcolor="burlywood", style="filled", label="Taurus"];
 
-	taurus -> premier [color="green"];
+	taurus -> premier [color="red"];
 	taurus -> avantdernier [color="red"];
 
 	bastion -> pemmican [color="green"];
@@ -51,5 +51,5 @@ digraph g{
 	mercury -> premier [color="green"];
 
 	iris -> citygroup [color="red"];
-	iris -> second [color="green"];
+	iris -> second [color="red"];
 }

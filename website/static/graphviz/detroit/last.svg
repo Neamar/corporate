@@ -91,8 +91,8 @@
 </g>
 <!-- iris&#45;&gt;second -->
 <g id="edge20" class="edge"><title>iris&#45;&gt;second</title>
-<path fill="none" stroke="green" d="M203.8,-65.2564C237.135,-75.5313 299.534,-95.1721 352,-114 366.618,-119.246 382.51,-125.377 396.498,-130.921"/>
-<polygon fill="green" stroke="green" points="395.253,-134.193 405.838,-134.648 397.847,-127.691 395.253,-134.193"/>
+<path fill="none" stroke="red" d="M203.8,-65.2564C237.135,-75.5313 299.534,-95.1721 352,-114 366.618,-119.246 382.51,-125.377 396.498,-130.921"/>
+<polygon fill="red" stroke="red" points="395.253,-134.193 405.838,-134.648 397.847,-127.691 395.253,-134.193"/>
 </g>
 <!-- iris&#45;&gt;citygroup -->
 <g id="edge19" class="edge"><title>iris&#45;&gt;citygroup</title>
@@ -166,8 +166,8 @@
 </g>
 <!-- taurus&#45;&gt;premier -->
 <g id="edge1" class="edge"><title>taurus&#45;&gt;premier</title>
-<path fill="none" stroke="green" d="M329.976,-208.599C337.066,-212.846 344.88,-217.577 352,-222 366.134,-230.78 381.477,-240.567 395.135,-249.371"/>
-<polygon fill="green" stroke="green" points="393.54,-252.507 403.838,-254.995 397.339,-246.628 393.54,-252.507"/>
+<path fill="none" stroke="red" d="M329.976,-208.599C337.066,-212.846 344.88,-217.577 352,-222 366.134,-230.78 381.477,-240.567 395.135,-249.371"/>
+<polygon fill="red" stroke="red" points="393.54,-252.507 403.838,-254.995 397.339,-246.628 393.54,-252.507"/>
 </g>
 <!-- taurus&#45;&gt;avantdernier -->
 <g id="edge2" class="edge"><title>taurus&#45;&gt;avantdernier</title>
