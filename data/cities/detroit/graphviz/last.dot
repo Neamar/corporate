@@ -16,40 +16,40 @@ digraph g{
 	bastion [shape=ellipse, fillcolor="burlywood", style="filled", label="Bastion"];
 	citygroup [shape=ellipse, fillcolor="burlywood", style="filled", label="Citygroup"];
 	enercore [shape=ellipse, fillcolor="burlywood", style="filled", label="Enercore"];
-	impulse [shape=ellipse, fillcolor="burlywood", style="filled", label="Impulse"];
 	iris [shape=ellipse, fillcolor="burlywood",style="filled", label="Iris"];
 	mercury [shape=ellipse, fillcolor="burlywood", style="filled", label="Mercury"];
 	pure [shape=ellipse, fillcolor="burlywood", style="filled", label="Pure"];
+	impulse [shape=ellipse, fillcolor="burlywood", style="filled", label="Impulse"];
 	shinsekai [shape=ellipse, fillcolor="burlywood", style="filled", label="Shinsekai"];
 	taurus [shape=ellipse, fillcolor="burlywood", style="filled", label="Taurus"];
 
-	pemmican -> premier [color="green"];
-	pemmican -> avantdernier [color="red"];
+	taurus -> premier [color="green"];
+	taurus -> avantdernier [color="red"];
 
-	bastion -> taurus [color="green"];
+	bastion -> pemmican [color="green"];
 	bastion -> bastion [color="red"];
 
-	taurus -> taurus [color="red"];
-	taurus -> bastion [color="green"];
+	pemmican -> pemmican [color="red"];
+	pemmican -> bastion [color="green"];
 
 	citygroup-> avantdernier [color="green"];
 	citygroup-> avantdernier [color="green"];
 
-	shinsekai -> premier [color="green"];
-	shinsekai -> second [color="green"];
+	enercore -> premier [color="green"];
+	enercore -> second [color="green"];
 
-	enercore -> iris [color="green"];
-	enercore -> impulse [color="red"];
+	shinsekai -> pure [color="green"];
+	shinsekai -> impulse [color="red"];
 
 	impulse -> avantdernier [color="red"];
 	impulse -> second [color="red"];
 
-	iris -> enercore [color="green"];
-	iris -> impulse [color="red"];
+	pure -> shinsekai [color="green"];
+	pure -> impulse [color="red"];
 
 	mercury -> premier [color="green"];
 	mercury -> premier [color="green"];
 
-	pure -> citygroup [color="red"];
-	pure -> second [color="green"];
+	iris -> citygroup [color="red"];
+	iris -> second [color="green"];
 }
