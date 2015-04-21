@@ -91,13 +91,13 @@
 </g>
 <!-- iris&#45;&gt;avantdernier -->
 <g id="edge19" class="edge"><title>iris&#45;&gt;avantdernier</title>
-<path fill="none" stroke="red" d="M73.599,-194.509C87.677,-198.988 106.219,-204.888 123.978,-210.538"/>
-<polygon fill="red" stroke="red" points="123.14,-213.945 133.731,-213.642 125.263,-207.274 123.14,-213.945"/>
+<path fill="none" stroke="green" d="M73.599,-194.509C87.677,-198.988 106.219,-204.888 123.978,-210.538"/>
+<polygon fill="green" stroke="green" points="123.14,-213.945 133.731,-213.642 125.263,-207.274 123.14,-213.945"/>
 </g>
 <!-- iris&#45;&gt;citygroup -->
 <g id="edge20" class="edge"><title>iris&#45;&gt;citygroup</title>
-<path fill="none" stroke="green" d="M73.599,-179.312C91.2834,-173.552 116.011,-165.496 137.384,-158.534"/>
-<polygon fill="green" stroke="green" points="138.507,-161.849 146.931,-155.424 136.339,-155.194 138.507,-161.849"/>
+<path fill="none" stroke="red" d="M73.599,-179.312C91.2834,-173.552 116.011,-165.496 137.384,-158.534"/>
+<polygon fill="red" stroke="red" points="138.507,-161.849 146.931,-155.424 136.339,-155.194 138.507,-161.849"/>
 </g>
 <!-- mercury -->
 <g id="node9" class="node"><title>mercury</title>

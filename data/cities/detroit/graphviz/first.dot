@@ -50,6 +50,6 @@ digraph g{
 	mercury -> dernier [color="green"];
 	mercury -> dernier [color="green"];
 
-	iris -> avantdernier [color="red"];
-	iris -> citygroup [color="green"];
+	iris -> avantdernier [color="green"];
+	iris -> citygroup [color="red"];
 }

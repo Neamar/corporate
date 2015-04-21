@@ -32,8 +32,8 @@ digraph g{
 	pemmican -> pemmican [color="red"];
 	pemmican -> bastion [color="green"];
 
-	citygroup-> avantdernier [color="green"];
-	citygroup-> avantdernier [color="green"];
+	citygroup-> second [color="green"];
+	citygroup-> second [color="green"];
 
 	enercore -> premier [color="green"];
 	enercore -> second [color="green"];
@@ -41,7 +41,7 @@ digraph g{
 	shinsekai -> pure [color="green"];
 	shinsekai -> impulse [color="red"];
 
-	impulse -> avantdernier [color="red"];
+	impulse -> premier [color="red"];
 	impulse -> second [color="red"];
 
 	pure -> shinsekai [color="green"];
@@ -51,5 +51,5 @@ digraph g{
 	mercury -> premier [color="green"];
 
 	iris -> citygroup [color="red"];
-	iris -> second [color="red"];
+	iris -> second [color="green"];
 }
