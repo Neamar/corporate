@@ -27,10 +27,10 @@ Si l’on parvient à voir au-delà de cette image (qu’elle soigne néanmoins 
 Peu savent à quel point les racines du tournesol s’étendent, mais une chose est sûre : adefinir rayonne maintenant mondialement.
 
 
----
++---
 
 
->T’as la fibre écolo petit ? 
++>T’as la fibre écolo petit ? 
 
 Tu t’entendras à merveille ces mecs-là. Leurs potes les appellent écoresponsable proactifs, je les appelle éco terroriste extrémiste imposant la dictature du bien-pensant. Ces mecs ont rien à perdre. Leur unité de prod’ de base, c’est le pauvre ravagé par les épidémies et les bouleversements climatiques. Ils nourrissent la planète et t’as juste pas envie de les avoir à dos. 
 
