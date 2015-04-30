@@ -27,14 +27,14 @@ Si l’on parvient à voir au-delà de cette image (qu’elle soigne néanmoins 
 Peu savent à quel point les racines du tournesol s’étendent, mais une chose est sûre : adefinir rayonne maintenant mondialement.
 
 
-+---
+---
 
 
-+>T’as la fibre écolo petit ? 
+>T’as la fibre écolo petit ? 
 
-Tu t’entendras à merveille ces mecs-là. Leurs potes les appellent écoresponsable proactifs, je les appelle éco terroriste extrémiste imposant la dictature du bien-pensant. Ces mecs ont rien à perdre. Leur unité de prod’ de base, c’est le pauvre ravagé par les épidémies et les bouleversements climatiques. Ils nourrissent la planète et t’as juste pas envie de les avoir à dos. 
+>Tu t’entendras à merveille ces mecs-là. Leurs potes les appellent écoresponsable proactifs, je les appelle éco terroriste extrémiste imposant la dictature du bien-pensant. Ces mecs ont rien à perdre. Leur unité de prod’ de base, c’est le pauvre ravagé par les épidémies et les bouleversements climatiques. Ils nourrissent la planète et t’as juste pas envie de les avoir à dos. 
 
-Avec Bastion, ils s’envoient de ces raclées ! Tu te souviens de ce massacre au Ghana… Ben ouais, Adefinir qui se lance contre un gouvernement de Bastion. Le coup d’état militaire en Indonésie ? Bastion qui renverse Adéfinir. Les plantes vertes n’acceptent que les plus cinglés pour bosser pour eux. Les désespérés, les malades… Ils peuvent faire des alliés aussi imposants que le poids de leurs convictions… Ils sont tout aussi redoutables. Alors oui, c’est un pouilleux mal fringué… Mais il n’a rien à perdre et sa ceinture d’explosif fera péter ta raffinerie…  
+>Avec Bastion, ils s’envoient de ces raclées ! Tu te souviens de ce massacre au Ghana… Ben ouais, Adefinir qui se lance contre un gouvernement de Bastion. Le coup d’état militaire en Indonésie ? Bastion qui renverse Adéfinir. Les plantes vertes n’acceptent que les plus cinglés pour bosser pour eux. Les désespérés, les malades… Ils peuvent faire des alliés aussi imposants que le poids de leurs convictions… Ils sont tout aussi redoutables. Alors oui, c’est un pouilleux mal fringué… Mais il n’a rien à perdre et sa ceinture d’explosif fera péter ta raffinerie…  
 
-Mais il faut reconnaître que la bouffe qu’ils font n’est pas dégueulasse…
+>Mais il faut reconnaître que la bouffe qu’ils font n’est pas dégueulasse…
 
