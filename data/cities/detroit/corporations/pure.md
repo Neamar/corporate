@@ -26,3 +26,12 @@ Ces multiples facettes, comme autant de couleur font de Pure une corporation pro
 
 
 Le mot d’ordre est toujours le même : l’excellence en toute chose.
+
+
+---
+
+>C’est les produits de luxe haut de gamme. C’est simple, c’est quasiment une marque de fabrique : tu consomme PURE, tu n’es plus de la classe moyenne. Putains ces mecs me foutent les jetons, tout le temps en blanc ou en couleurs pétantes. Rien de terne, rien de sale, rien de sombre. 
+
+>Quand tu run pour eux, ils t’accueillent dans un salon cozy, t’amènent une splendide chinoise pour te masser devant un martini. Alors tu te laisses tenter. Et c’est quand tu pars en avant, bourré de drogues stimulantes et d’anesthésiant que tu te souviens qu’ils sont aussi salopard que tout le reste. Faux cul, précieux, ils sont prêts à tout pour conserver leur image. Le luxe, c’est bien pire que l’héro. 
+
+>Ne m'fait pas pas dire ce que je n’ai pas dit. Ce ne sont pas des fiottes. Ils savent ce qu’ils font et il n’y a pas de meilleurs produits, même chez ShinSekai avec qui les relations sont plus que tendues. Tu peux te faire des marges de folie quand tu mets la main sur du matos PURE. Mais fais gaffe, cette corpos a de multiples visages et il est probable que ton acheteur potentiel t’attende avec un comité armé jusqu’aux dents.
