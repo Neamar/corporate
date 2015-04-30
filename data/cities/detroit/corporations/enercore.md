@@ -27,8 +27,10 @@ EnerCore semble inépuisable, construisant des infrastructures utilitaires comme
 
 ---
 
->Tout le monde veut bosser pour eux. Alors oui, c’est la seule corpo que je connaisse qui laisse une deuxième chance à ses runners, et qui leur offre même des jobs legit. Effectivement, c’est une corpo sympa… Oui c’est ce que tout le monde croit. 
+>Tout le monde veut bosser pour eux. Alors oui, c’est la seule corpo que je connaisse qui laisse une deuxième chance à ses runners, et qui leur offre même des jobs legit. Effectivement, c’est une corpo sympa… Oui c’est ce que tout le monde croit.
+
 >Une fois que t’as parcouru les ombres t’entends parler de trucs… Les Opérations Eclipses… Tu veux que je t’explique ? Facile… EnerCore choisis une cible, puis coupe le courant dans tout le quartier… Tout est plongé dans le noir… 300 commandos descendent en rappel, frappent, cassent quelques côtes et disparaissent. Le lendemain, une entreprise annonce sa fusion avec EnerCore après un blackout inexpliqué… 
+
 >Sympathique… Oui… Mais ne les prends pas pour des anges, parce qu’il n’hésite pas à écraser l’opposition aussi bien que toute corpo.
 
 
