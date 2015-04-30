@@ -29,6 +29,8 @@ De manière générale, Bastion est réputée pour mettre régulièrement l’é
 
 ---
 
->Si Leonidas, Napoléon, Schwarzenegger et Abraham Lincoln avaient décidé de fonder une corpo, ils n’auraient pas fait mieux. Ces gars-là sont des guerriers, qui ne lâchent rien sur le terrain comme sur les marchés. Il tranche dans le vif, vont droit au but. Pas de subtilité…  Et leurs putains de cyborgs… Bon dieu avec leurs implants de combat, ces gars font passer Terminator pour un enfant de cœur. J’en ai vu un soulevé d’une seule main un éco terroriste de Adéfinir et le casser sur son genou à mains nues. 
->Si tu veux bosser pour eux, t’as intérêt à montrer que t’es le plus grand salopard que la terre ait jamais connu et que t’es prêt à foutre tes mains dans la merde et tes pieds dans des gueules. Personne ne les aime mais tout le monde les respecte, je peux comprendre pourquoi : il faut bien admettre qu’ils sont les meilleurs à ce qu’ils font. 
+>Si Leonidas, Napoléon, Schwarzenegger et Abraham Lincoln avaient décidé de fonder une corpo, ils n’auraient pas fait mieux. Ces gars-là sont des guerriers, qui ne lâchent rien sur le terrain comme sur les marchés. Ils tranchent dans le vif, vont droit au but. Pas de subtilité…  Et leurs putains de cyborgs… Bon dieu avec leurs implants de combat, ces gars font passer Terminator pour un enfant de cœur. J’en ai vu un soulevé d’une seule main un éco terroriste de Adéfinir et le casser sur son genou à mains nues. 
+
+>Si tu veux bosser pour eux, t’as intérêt à montrer que t’es le plus grand salopard que la terre ait jamais connu et que t’es prêt à foutre tes mains dans la merde et tes pieds dans des gueules. Personne ne les aime mais tout le monde les respecte, je peux comprendre pourquoi : il faut bien admettre qu’ils sont les meilleurs à ce qu’ils font.
+
 >Alors si tu vas leur chercher des noises, assure toi d’être équipé contre du gros calibre, ils n’hésiteront pas à tirer à la mitrailleuse lourde au milieu d’un hypermarché  bondé pour te choper. 
