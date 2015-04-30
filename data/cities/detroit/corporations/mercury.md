@@ -25,3 +25,12 @@ Son surnom de Mercury devint une légende : s’entourant rapidement d’une éq
 
 
 Nombreux sont ceux qui ont grincé des dents, persuadés que ces projets avaient été développé par d’autres corporations puis volés lors d’attaques cybernétiques… Que cela soit vrai ou non, Mercury est une jeune corporation aux dents longues qui compte bien se faire une place dans la cour des grands avec une arme de taille : l’information. 
+
+
+---
+
+>La nouvelle venue et celle que je déteste le moins…  Alan est un putain de givré et ils adorent faire bosser les ombres. Corpo constitués de putains de geeks obèses ou faméliques, ils sont derrière leurs PC et font tourner le monde. Ces gars sont fous et ils peuvent lire tes données comme un livre ouvert. 
+
+>Ils poursuivent les projets de dingues et aiment le risque. En gros, c’est les plus balaize en Cyberguerre et les runs que tu devras faire pour eux auront généralement la gueule de : va foutre ça dans le port USB du PC du PDG sans te faire choper. Ca aura l’air de rien, mais ils payent vraiment bien. 
+
+>Tu veux monter un coup contre eux par contre, envoies par un mail à ton bon pote Max pour le mettre sur le coup. Ta boîte est protégée par une ICE Mercury. T’es à l’âge de pierre quand t’as affaire à eux et ils sauront te le faire savoir.
