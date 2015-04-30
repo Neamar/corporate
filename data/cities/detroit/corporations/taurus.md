@@ -26,3 +26,13 @@ Très rapidement Taurus Industries explose, absorbant les petites entreprises lo
 
 
 Ses avantages concurrentiels sont avant tout son efficience en termes de coût, la fiabilité de la totalité de ses produits, son implantation mondiale et sa position de plus puissante mégacorporation mondiale.
+
+
+
+---
+
+>Le gros poisson, le big boss, le grand bolem, le mammouth, la star…  Ces putains de shleu savent comment faire tourner une corpo. Imité, jamais égalé… Ils font tout. Ta bagnole, ton building, tes armes… C’est fiable, ça marche toujours et c’est performant. 
+
+>C’est cher mais ce n’est pas du luxe, c’est de la qualité. Dis-toi ça quand t’arriveras chez eux. Ils gèrent mieux leurs sous que n’importe qui et leurs forces de défenses sont efficaces. Pas de cri de guerre flashy, pas de dépenses inutiles. Efficient  et méthodiques, qui arrivent toujours à destination. 
+
+>On dit qu’une force d’intervention de Taurus peut se rendre à n’importe quel endroit de la Terre en moins de vingt minutes. J’ai tendance à le croire. Alors si tu deal avec eux… Prends juste la mesure que t’es face à un taureau. Et si tu te crois dans une corrida, tu te fourre le doigt dans l’œil. Le taureau est partout et il sait frapper avec puissance et précision. 
