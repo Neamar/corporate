@@ -1,0 +1,85 @@
+# dot -T svg data/cities/detroit/graphviz/last.dot > website/static/graphviz/detroit/last.svg
+digraph g{
+	graph [
+		rankdir = "LR"
+		bgcolor=transparent
+	];
+	// title
+	labelloc="t";
+	label="Effets crash";
+
+	premier [shape=square, fillcolor="#FCD975", style="filled", label="Première"];
+	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
+	avantdernier [shape=square, fillcolor="#FCD975", style="filled", label="Avant-dernière"];
+
+	pemmican [shape=ellipse, fillcolor="burlywood", style="filled", label="Pemmican"];
+	bastion [shape=ellipse, fillcolor="burlywood", style="filled", label="Bastion"];
+	citygroup [shape=ellipse, fillcolor="burlywood", style="filled", label="Citygroup"];
+	enercore [shape=ellipse, fillcolor="burlywood", style="filled", label="Enercore"];
+	iris [shape=ellipse, fillcolor="burlywood",style="filled", label="Iris"];
+	mercury [shape=ellipse, fillcolor="burlywood", style="filled", label="Mercury"];
+	pure [shape=ellipse, fillcolor="burlywood", style="filled", label="Pure"];
+	impulse [shape=ellipse, fillcolor="burlywood", style="filled", label="Impulse"];
+	shinsekai [shape=ellipse, fillcolor="burlywood", style="filled", label="Shinsekai"];
+	taurus [shape=ellipse, fillcolor="burlywood", style="filled", label="Taurus"];
+
+	taurus -> taurus [color="green"];
+	taurus -> taurus [color="green"];
+	taurus -> taurus [color="green"];
+	taurus -> taurus [color="green"];
+	taurus -> taurus [color="green"];
+	taurus -> taurus [color="green"];
+
+	mercury -> premier [color="red"];
+	mercury -> premier [color="red"];
+	mercury -> premier [color="red"];
+	mercury -> premier [color="red"];
+	mercury -> second [color="red"];
+	mercury -> second [color="red"];
+
+	bastion -> pemmican [color="green"];
+	bastion -> pemmican [color="green"];
+	bastion -> pemmican [color="green"];
+	bastion -> pemmican [color="green"];
+	bastion -> avantdernier [color="red"];
+	bastion -> avantdernier [color="red"];
+
+	pemmican -> bastion [color="green"];
+	pemmican -> bastion [color="green"];
+	pemmican -> bastion [color="green"];
+	pemmican -> bastion [color="green"];
+	pemmican -> premier [color="red"];
+	pemmican -> premier [color="red"];
+
+	citygroup-> second [color="red"];
+	citygroup-> second [color="red"];
+	citygroup-> second [color="red"];
+	citygroup-> avantdernier [color="red"];
+	citygroup-> avantdernier [color="red"];
+	citygroup-> avantdernier [color="red"];
+
+	enercore -> premier [color="green"];
+	enercore -> premier [color="green"];
+	enercore -> premier [color="green"];
+	enercore -> second [color="green"];
+	enercore -> second [color="green"];
+	enercore -> second [color="green"];
+
+	shinsekai -> impulse [color="red"];
+	shinsekai -> impulse [color="red"];
+	shinsekai -> impulse [color="red"];
+
+	impulse -> shinsekai [color="green"];
+	impulse -> shinsekai [color="green"];
+	impulse -> pure [color="green"];
+	impulse -> pure [color="green"];
+
+	pure -> impulse [color="red"];
+	pure -> impulse [color="red"];
+	pure -> impulse [color="red"];
+
+	iris -> impulse [color="red"];
+	iris -> bastion [color="red"];
+	iris -> taurus [color="green"];
+	iris -> taurus [color="green"];
+}
