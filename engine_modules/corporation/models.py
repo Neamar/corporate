@@ -200,12 +200,6 @@ class Corporation(models.Model):
 		Update assets values, and save the model
 		"""
 		market = self.corporationmarket_set.get(market=market)
-
-		# A market can't be negative, so we cap the delta
-		if market.value + delta < 0:
-			# A market can't be negative, so we cap the delta
-			delta = -market.value
-
 		market.value += delta
 		market.save()
 
