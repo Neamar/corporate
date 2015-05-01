@@ -17,16 +17,14 @@ class OrdersTest(EngineTestCase):
 		"""
 		Money should be reduced
 		"""
-		self.o.resolve()
-
+		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.p).money, self.initial_money - BuyInfluenceOrder.BASE_COST * 2)
 
 	def test_order_increment_influence(self):
 		"""
 		Order should increment influence
 		"""
-		self.o.resolve()
-
+		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.p).influence.level, 2)
 
 	def test_cant_create_order_twice(self):
