@@ -63,21 +63,6 @@ def wallstreet(request, game, player, turn):
 
 
 @login_required
-@render('game/corporations.html')
-@find_player_from_game_id
-@inject_game_into_response
-def corporations(request, game, player):
-	"""
-	Corporations data
-	"""
-
-	corporations = game.corporation_set.all().annotate(Count('share'))
-	return {
-		"corporations": corporations
-	}
-
-
-@login_required
 @render('game/corporation.html')
 @find_player_from_game_id
 @inject_game_into_response
@@ -131,59 +116,6 @@ def player(request, game, player, player_id):
 		"player": player,
 		"rp": rp,
 		"corporations": corporations
-	}
-
-
-@login_required
-@render('game/shares.html')
-@find_player_from_game_id
-@inject_game_into_response
-@turn_by_turn_view
-def shares(request, game, player, turn):
-	"""
-	Shares data
-	"""
-
-	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('pk')
-	corporations = list(game.corporation_set.all().order_by('pk'))
-	shares = Share.objects.filter(player__game=game, turn__lte=turn).select_related('corporation', 'player')
-	player_shares = []
-
-	for player in players:
-		player_share = {
-			"player": player,
-			"shares": [{"count": get_shares_count(c, player, shares), "top": is_top_shareholder(c, player, shares)} for c in corporations]
-		}
-
-		try:
-			player_share["citizenship_index"] = corporations.index(player.citizenship.corporation)
-		except ValueError:
-			pass
-
-		player_shares.append(player_share)
-
-	return {
-		"corporations": corporations,
-		"shares": player_shares
-	}
-
-
-@login_required
-@render('game/newsfeeds.html')
-@find_player_from_game_id
-@inject_game_into_response
-@turn_by_turn_view
-def newsfeeds(request, game, player, turn):
-	"""
-	Display newsfeed
-	"""
-
-	newsfeeds = game.newsfeed_set.filter(turn=turn, path="").order_by('category')
-	newsfeeds_rp = game.newsfeed_set.filter(turn=turn).exclude(path="").order_by('category')
-
-	return {
-		"newsfeeds": newsfeeds,
-		"newsfeeds_rp": newsfeeds_rp,
 	}
 
 
