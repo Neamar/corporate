@@ -2,11 +2,14 @@
 from engine.tasks import InitTask, OrderResolutionTask
 from engine_modules.influence.models import Influence, BuyInfluenceOrder
 
+
 class CreateInfluenceTask(InitTask):
 	"""
 	Create the Influence object for the turn
 	"""
+
 	RESOLUTION_ORDER = 0
+
 	def run(self, game):
 		new_influences = []
 		past_influences = Influence.objects.filter(turn=game.current_turn - 1)

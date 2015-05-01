@@ -9,10 +9,10 @@ class Influence(models.Model):
 	Player influence level
 	"""
 	class Meta:
-                unique_together = (("player", "turn"),)
+		unique_together = (("player", "turn"),)
 
 	player = models.ForeignKey(Player)
-        turn = models.PositiveSmallIntegerField(default=1)
+	turn = models.PositiveSmallIntegerField(default=1)
 	level = models.PositiveSmallIntegerField(default=1)
 
 
