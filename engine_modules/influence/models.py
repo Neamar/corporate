@@ -33,7 +33,7 @@ class BuyInfluenceOrder(Order):
 		self.player.save()
 
 		# Increase player influence by one
-		influence = Influence.objects.get(player=self, turn=self.turn)
+		influence = self.player.influence_set.get(turn=self.turn)
 		influence.level += 1
 		influence.save()
 

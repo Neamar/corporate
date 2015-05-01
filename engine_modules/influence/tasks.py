@@ -12,7 +12,7 @@ class CreateInfluenceTask(InitTask):
 
 	def run(self, game):
 		new_influences = []
-		past_influences = Influence.objects.filter(turn=game.current_turn - 1)
+		past_influences = Influence.objects.filter(player__game=game, turn=game.current_turn - 1)
 		for past_influence in past_influences:
 			influence = Influence(player=past_influence.player, turn=game.current_turn, level=past_influence.level)
 			new_influences.append(influence)

@@ -94,10 +94,8 @@ class Player(models.Model):
 		"""
 		Return player's influence at current turn
 		"""
-		from engine_modules.influence.models import Influence
-		turn = self.game.current_turn
 		# Influence for the turn is on preceding turn's Influence object
-		influence = Influence.objects.get(player=self, turn=turn - 1)
+		influence = self.influence_set.get(turn=self.game.current_turn - 1)
 		return influence
 
 	def add_message(self, **kwargs):
