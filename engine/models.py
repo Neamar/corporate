@@ -80,15 +80,23 @@ class Player(models.Model):
 	class Meta:
 		unique_together = (("game", "user"),)
 
-	name = models.CharField(max_length=64)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
-
 	game = models.ForeignKey(Game)
 
+	name = models.CharField(max_length=64)
 	money = models.PositiveIntegerField(default=2000)
 	background = models.CharField(max_length=50)
 	rp = models.TextField(default="", blank=True)
 	secrets = models.TextField(default="", blank=True)
+
+	@property
+	def influence(self):
+		"""
+		Return player's influence at current turn
+		"""
+		# Influence for the turn is on preceding turn's Influence object
+		influence = self.influence_set.get(turn=self.game.current_turn - 1)
+		return influence
 
 	def add_message(self, **kwargs):
 		"""
