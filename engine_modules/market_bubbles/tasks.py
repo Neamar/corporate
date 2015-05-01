@@ -40,7 +40,7 @@ class UpdateMarketBubblesTask(OrderResolutionTask):
 			# should be ordered from min value to max value
 			max_value = markets[market][-1][1]
 			for (corporation, value) in markets[market]:
-				if value == 0:
+				if value <= 0:
 					modifiers[corporation] -= 1
 					bubble = MarketBubble(corporation=corporation, market=market, turn=game.current_turn, value=-1)
 					bubble.save()
