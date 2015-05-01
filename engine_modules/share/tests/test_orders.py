@@ -89,8 +89,10 @@ class OrdersTest(EngineTestCase):
 		"""
 		Order should cost FIRST_AND_CITIZEN_COST rate when corporation is first and we have the citizenship
 		"""
-		self.p.citizenship.corporation = self.c2
-		self.p.citizenship.save()
+		citizenship = self.p.citizenship
+		citizenship.corporation = self.c2
+		citizenship.save()
+		self.g.resolve_current_turn()
 
 		init_money = self.p.money
 
