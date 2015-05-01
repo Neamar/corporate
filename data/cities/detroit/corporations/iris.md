@@ -1,9 +1,9 @@
 name: Iris
 markets:
-    immobilier: 3
-    alimentaire: 3
-    cyberware: 1
-    santé: 2
+    médias: 3
+    aérospatiale: 3
+    pharmaceutique: 1
+    télécom: 2
 datasteal: 20
 sabotage: 20
 extraction: 10

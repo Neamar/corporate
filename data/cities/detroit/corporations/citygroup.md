@@ -1,9 +1,9 @@
 name: CityGroup
 markets:
-    communication: 2
-    immobilier: 3
-    magie: 3
-    sécurité: 2
+    BTP: 2
+    télécom: 3
+    énergie: 3
+    transport: 2
 datasteal: 10
 sabotage: 10
 extraction: 10

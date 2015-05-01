@@ -1,9 +1,9 @@
 name: Impulse
 markets:
-    santé: 1
-    transport: 3
-    communication: 2
-    armement: 2
+    aérospatiale: 1
+    robotique: 3
+    telecom: 2
+    énergie: 2
 datasteal: 20
 sabotage: 10
 extraction: 10

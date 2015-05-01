@@ -1,9 +1,10 @@
 name: Shinsekai
 markets:
-    magie: 3
-    immobilier: 3
-    nanotechnologie: 2
-    armement: 3
+    robotique: 3
+    militaire: 3
+    pharmaceutique: 3
+    agroalimentaire: 3
+    telecom: 3
 datasteal: 10
 sabotage: 20
 extraction: 10
