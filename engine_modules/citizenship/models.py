@@ -27,10 +27,10 @@ class CitizenShipOrder(Order):
 		if self.player.citizenship == None:
 			self.player.game.create_game_event(event_type=Game.REMOVE_CITIZENSHIP, data='', corporation=self.player.citizenship.corporation, players=[self.player])
 
-
 		self.player.citizenship.corporation = self.corporation
 		self.player.citizenship.save()
 
+		# create a game_event for the new citizenship
 		self.player.game.create_game_event(event_type=Game.ADD_CITIZENSHIP, data='', corporation=self.corporation, players=[self.player])
 
 		# Note

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from engine.models import Player, Order
+from engine.models import Player, Order, Game
 from messaging.models import Newsfeed
 
 
@@ -31,6 +31,9 @@ class BuyInfluenceOrder(Order):
 		# Increase player influence by one
 		self.player.influence.level += 1
 		self.player.influence.save()
+
+		# Create game event
+		self.player.game.create_game_event(event_type=Game.IC_UP, data='', players=[self.player])
 
 		# Send a note for final message
 		content = u"Votre Influence dans le milieu corporatiste monte à %i." % self.player.influence.level
