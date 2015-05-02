@@ -1,4 +1,4 @@
-Django==1.7.4
+Django==1.8.1
 Markdown==2.4
 argparse==1.2.1
 dj-database-url==0.3.0
