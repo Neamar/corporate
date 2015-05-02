@@ -60,6 +60,8 @@ class Game(models.Model):
 	VOTE_CONTRAT = 'VOTE_CONTRAT'
 	MONEY_NEXT_TURN = 'MONEY_NEXT_TURN'
 	BACKGROUND = 'BACKGROUND'
+	WIN_BUBBLE = 'WIN_BUBBLE'
+	LOST_BUBBLE = 'LOST_BUBBLE'
 
 	EVENTS = (
 		(VOICE_UP, 'Voix au chapitre positive'),
@@ -99,6 +101,8 @@ class Game(models.Model):
 		(VOTE_CONTRAT, 'Vote de la ligne contrat public à Detoit Inc.'),
 		(MONEY_NEXT_TURN, 'Argent disponible au début de tour suivant'),
 		(BACKGROUND, 'Information de background découverte'),
+		(WIN_BUBBLE, 'Le marché a un actif de domination'),
+		(LOST_BUBBLE, 'Le marché a un actif de perte sèche'),
 	)
 
 	def create_game_event(self, event_type, data, delta=0, corporation=None, players=None, corporationmarket=None):

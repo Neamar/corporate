@@ -44,7 +44,9 @@ class Logs(models.Model):
 		Game.BUY_SHARE,
 		Game.VOTE_CONSOLIDATION,
 		Game.VOTE_SECURITY,
-		Game.VOTE_CONTRAT]
+		Game.VOTE_CONTRAT,
+		Game.WIN_BUBBLE,
+		Game.LOST_BUBBLE]
 
 	# All the public game_event created with a player should not be transmittable
 	UNTRANSMITTABLE = [

@@ -30,20 +30,39 @@ class DIncVoteTask(ResolutionTask):
 		self.send_newsfeed(orders, s)
 
 		if official_line is not None:
-			# Message all player who voted for this line
+			# We create a game_event for each loser
+			winners = [order.player for order in orders if order.coalition == official_line]
 			n = Note.objects.create(
 				category=Note.DINC,
 				content="Detroit, Inc. a suivi votre coalition",
 				turn=game.current_turn,
 			)
-			n.recipient_set = [order.player for order in orders if order.coalition == official_line]
+			n.recipient_set = winners
+			event_type = None
+			# the case of CPUB is handled in DIncLineCPUBTask to access the random corporationmarket
+			if official_line == 'RSEC':
+				event_type = Game.EFFECT_SECURITY_UP
+			elif official_line == 'CONS':
+				event_type = Game.EFFECT_CONSOLIDATION_UP
+			if event_type!=None:
+				for winner in winners:		
+					order.player.game.create_game_event(event_type=event_type, data='', players=[winner])
 
+			# We create a game_event for each loser
+			losers = [order.player for order in orders if order.coalition == DIncVoteOrder.DINC_OPPOSITIONS[official_line]]
 			n = Note.objects.create(
 				category=Note.DINC,
 				content=u"Detroit, Inc. a rejoint la coalition opposée: %s" % s.get_coalition_display(),
 				turn=game.current_turn,
 			)
-			n.recipient_set = [order.player for order in orders if order.coalition == DIncVoteOrder.DINC_OPPOSITIONS[official_line]]
+			n.recipient_set = losers
+			if DIncVoteOrder.DINC_OPPOSITIONS[official_line] == 'RSEC':
+				event_type = Game.EFFECT_SECURITY_DOWN
+			elif DIncVoteOrder.DINC_OPPOSITIONS[official_line] == 'CONS':
+				event_type = Game.EFFECT_CONSOLIDATION_DOWN
+			if event_type!=None:
+				for loser in losers:		
+					order.player.game.create_game_event(event_type=event_type, data='', players=[loser])
 
 	def get_official_line(self, orders):
 		"""
@@ -81,7 +100,8 @@ class DIncVoteTask(ResolutionTask):
 				event_type = Game.VOTE_SECURITY
 			elif order.get_coalition_display() == 'Consolidation':
 				event_type = Game.VOTE_CONSOLIDATION
-			order.player.game.create_game_event(event_type=event_type, data='', players=[order.player])
+			if event_type!=None:
+				order.player.game.create_game_event(event_type=event_type, data='', players=[order.player])
 
 
 	def send_newsfeed(self, orders, dinc_vote_session):
