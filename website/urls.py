@@ -16,6 +16,8 @@ urlpatterns += patterns('',
 	url(r'^game/(?P<game_id>[0-9]+)/wallstreet$', data.wallstreet),
 	url(r'^game/(?P<game_id>[0-9]+)/wallstreet/(?P<turn>[0-9]+)$', data.wallstreet),
 	url(r'^game/(?P<game_id>[0-9]+)/corporations/(?P<corporation_slug>[a-z0-9-]+)$', data.corporation),
+	url(r'^game/(?P<game_id>[0-9]+)/player$', data.players),
+	url(r'^game/(?P<game_id>[0-9]+)/player/(?P<turn>[0-9]+)$', data.player),
 	url(r'^game/(?P<game_id>[0-9]+)/players$', data.players),
 	url(r'^game/(?P<game_id>[0-9]+)/players/(?P<turn>[0-9]+)$', data.player),
 )

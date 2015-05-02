@@ -91,7 +91,7 @@ def players(request, game, player, turn):
 	Players data
 	"""
 
-	players = game.player_set.all().select_related('citizenship__corporation', 'influence').order_by('pk')
+	players = game.player_set.all().order_by('pk')
 	corporations = list(game.corporation_set.all().order_by('pk'))
 	shares = Share.objects.filter(player__game=game, turn=turn).select_related('corporation', 'player')
 	corporations_shares = []
