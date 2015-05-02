@@ -8,14 +8,11 @@ django-static-precompiler==0.7
 django-toolbelt==0.0.1
 docutils==0.11
 flake8==2.2.5
-gprof2dot==1.0
 gunicorn==19.3.0
-mccabe==0.2.1
 newrelic==2.50.0.39
 opbeat==2.0.3
 pep8==1.5.7
 psycopg2==2.6
-pyflakes==0.8.1
 six==1.5.2
 sqlparse==0.1.11
 static3==0.5.1
