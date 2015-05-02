@@ -90,7 +90,7 @@ def players(request, game, player):
 	Players data
 	"""
 
-	players = game.player_set.all().annotate(Count('share')).select_related('citizenship__corporation', 'influence', 'user').order_by('name')
+	players = game.player_set.all().annotate(Count('share')).select_related('citizenship__corporation', 'user').order_by('name')
 
 	return {
 		"players": players,
@@ -105,7 +105,7 @@ def player(request, game, player, player_id):
 	"""
 	Player data
 	"""
-	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id, game_id=game.pk)
+	player = Player.objects.select_related('citizenship__corporation').get(pk=player_id, game_id=game.pk)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
 	rp, _ = parse_markdown(player.rp)
