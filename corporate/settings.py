@@ -158,3 +158,8 @@ if "OPBEAT_ORGANIZATION_ID" in os.environ:
     MIDDLEWARE_CLASSES += (
         'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
     )
+
+if "CIRCLECI" in os.environ:
+    # We're running on circleci.com, toggle XML test output
+    TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
+    TEST_OUTPUT_DIR = os.environ['CIRCLE_TEST_REPORTS']
