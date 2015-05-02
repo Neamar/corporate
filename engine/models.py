@@ -51,7 +51,8 @@ class Game(models.Model):
 	EFFECT_CONSOLIDATION_DOWN = 'EFFECT_CONSOLIDATION_DOWN'
 	EFFECT_SECURITY_UP = 'EFFECT_SECURITY_UP'
 	EFFECT_SECURITY_DOWN = 'EFFECT_SECURITY_DOWN'
-	SPECULATION = 'SPECULATION'
+	SPECULATION_WIN = 'SPECULATION_WIN'
+	SPECULATION_LOST = 'SPECULATION_LOST'
 	WIRETRANSFER = 'WIRETRANSFER'
 	BUY_SHARE = 'BUY_SHARE'
 	VOTE_CONSOLIDATION = 'VOTE_CONSOLIDATION'
@@ -59,7 +60,6 @@ class Game(models.Model):
 	VOTE_DEV_URBAIN = 'VOTE_DEV_URBAIN'
 	MONEY_NEXT_TURN = 'MONEY_NEXT_TURN'
 	BACKGROUND = 'BACKGROUND'
-
 
 	EVENTS = (
 		(VOICE_UP, 'Voix au chapitre positive'),
@@ -90,7 +90,8 @@ class Game(models.Model):
 		(EFFECT_CONSOLIDATION_DOWN, 'Effet de Detroit Inc Consolidation négatif'),
 		(EFFECT_SECURITY_UP, 'Effet de Detroit Inc Réforme de la sécuritée positif'),
 		(EFFECT_SECURITY_DOWN, 'Effet de Detroit Inc Réforme de la sécuritée négatif'),
-		(SPECULATION, 'Spéculation'),
+		(SPECULATION_WIN, 'Spéculation réussie'),
+		(SPECULATION_LOST, 'Spéculation échouée'),
 		(WIRETRANSFER, 'Transfert d\'argent à un autre joueur'),
 		(BUY_SHARE, 'Acheter une part'),
 		(VOTE_CONSOLIDATION, 'Vote de la ligne Consolidation à Detoit Inc.'),
