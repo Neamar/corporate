@@ -23,7 +23,7 @@ body {
 position: relative;
 z-index: 5;
 text-indent: -5555em;
- margin: 80px auto auto;
+margin: 50px auto auto;
 
 	a {
 		background: url("/static/img/logo-corporate-game.png") repeat scroll center top rgba(0, 0, 0, 0);
@@ -310,6 +310,34 @@ text-indent: -5555em;
 		min-height: 120px;
 		position: relative;
 
+			&.RSEC {
+
+				&:after {
+				width: 70%;
+				margin: auto auto auto -35%;
+				}
+			}
+
+			&.CONS {
+				img {
+				margin: 32px auto auto
+				}
+				&:after {
+				margin: auto auto auto -38%;
+				width: 75%;
+				}
+			}
+
+			&.CPUB {
+				img {
+				margin: 5px auto auto
+				}
+				&:after {
+				width: 50%;
+				margin: auto auto auto -25%;
+				}
+			}
+
 		&:before {
 			height: 2px;
 			background-color: #4a4a4a;
@@ -319,22 +347,22 @@ text-indent: -5555em;
 			display: block;
 			top: 68%;
 			left: 50%;
-    		margin: auto auto auto -44%;
+    		margin: auto auto auto -45%;
 		}
 
 		&:after {
 			height: 2px;
 			background-color: #1d1d1d;
-			width: 70%;
 			content: "";
 			position: absolute;
 			display: block;
 			top: 68%;
-			margin: auto auto auto -35%;
 			left: 50%;
 		}
 
 		img {
+		position: relative;
+		z-index: 5;
 		display: block;
 		margin: auto;
 		}
