@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from engine.models import Player, Order
+from engine.models import Player, Order, Game
 from engine_modules.corporation.models import Corporation
 from messaging.models import Newsfeed
 
@@ -23,8 +23,15 @@ class CitizenShipOrder(Order):
 	corporation = models.ForeignKey(Corporation)
 
 	def resolve(self):
+		# if player has a citizenship, add a game_event for losing it
+		if self.player.citizenship == None:
+			self.player.game.create_game_event(event_type=Game.REMOVE_CITIZENSHIP, data='', corporation=self.player.citizenship.corporation, players=[self.player])
+
+
 		self.player.citizenship.corporation = self.corporation
 		self.player.citizenship.save()
+
+		self.player.game.create_game_event(event_type=Game.ADD_CITIZENSHIP, data='', corporation=self.corporation, players=[self.player])
 
 		# Note
 		content = u"Vous êtes désormais citoyen de la mégacorporation %s." % self.corporation.base_corporation.name
