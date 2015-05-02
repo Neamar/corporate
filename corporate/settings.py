@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
-    'static_precompiler',
+    'compressor',
     'website',
     'docs',
     'engine',
@@ -107,9 +107,12 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'static_precompiler.finders.StaticPrecompilerFinder',
+    'compressor.finders.CompressorFinder',
 )
-STATIC_PRECOMPILER_OUTPUT_DIR = "less"
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
@@ -145,6 +148,9 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
         os.path.join(BASE_DIR, 'static'),
     )
 
+    # Compress less file on deployment
+    COMPRESS_OFFLINE = True
+
 
 if "OPBEAT_ORGANIZATION_ID" in os.environ:
     INSTALLED_APPS += (
@@ -158,3 +164,8 @@ if "OPBEAT_ORGANIZATION_ID" in os.environ:
     MIDDLEWARE_CLASSES += (
         'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
     )
+
+if "CIRCLECI" in os.environ:
+    # We're running on circleci.com, toggle XML test output
+    TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
+    TEST_OUTPUT_DIR = os.environ['CIRCLE_TEST_REPORTS']

@@ -1,10 +1,13 @@
-{% load less %}
+{% load staticfiles %}
+{% load compress %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0">
 	<link href='//fonts.googleapis.com/css?family=Audiowide|Syncopate' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="{{ STATIC_URL }}{% less "style.less" %}" />
+	{% compress css %}
+	<link rel="stylesheet" type="text/less" media="all" href="{% static 'style.less' %}" />
+	{% endcompress %}
 	<link rel="icon" href="{% block favicon %}{{ STATIC_URL }}favicon.gif{% endblock %}" type="image/x-icon" />
 
 	{% block head %}{% endblock %}

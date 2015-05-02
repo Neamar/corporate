@@ -1,7 +1,8 @@
 from django.core.exceptions import ValidationError
 
 from engine.testcases import EngineTestCase
-from engine_modules.corporation_run.models import DataStealOrder, ExtractionOrder
+from engine.exceptions import OrderNotAvailable
+from engine_modules.corporation_run.models import DataStealOrder, ExtractionOrder, SabotageOrder, ProtectionOrder
 
 
 class SignalsTest(EngineTestCase):
@@ -26,6 +27,22 @@ class SignalsTest(EngineTestCase):
 		)
 		self.eo.save()
 
+		self.so = SabotageOrder(
+			player=self.p,
+			target_corporation_market=common_corporation_market,
+			additional_percents=0,
+		)
+		self.so.clean()
+		self.so.save()
+
+		self.po = ProtectionOrder(
+			player=self.p,
+			protected_corporation_market=self.eo.target_corporation_market,
+			hidden_percents=10,
+		)
+		self.po.clean()
+		self.po.save()
+
 	def get_unique_market_for_corporation(self, corporation):
 		return corporation.corporationmarket_set.get(market__name=corporation.base_corporation.markets.keys()[-1])
 
@@ -34,14 +51,14 @@ class SignalsTest(EngineTestCase):
 		Target and stealer must be different for Datasteal.
 		"""
 		self.dso.stealer_corporation = self.c
-		self.assertRaises(ValidationError, self.dso.clean)
+		self.assertRaises(OrderNotAvailable, self.dso.clean)
 
 	def test_extraction_target_stealer_different(self):
 		"""
 		Target and stealer must be different for Extraction.
 		"""
 		self.eo.stealer_corporation = self.c
-		self.assertRaises(ValidationError, self.eo.clean)
+		self.assertRaises(OrderNotAvailable, self.eo.clean)
 
 	def test_datasteal_unavailable_market_for_stealer(self):
 		"""
@@ -91,3 +108,47 @@ class SignalsTest(EngineTestCase):
 		self.eo.target_corporation_market.save()
 
 		self.assertRaises(ValidationError, self.eo.clean)
+
+	def test_datasteal_negative_market(self):
+		"""
+		Target market must have positive assets
+		"""
+		target_corporation_market = self.dso.target_corporation_market
+		target_corporation_market.value = -1
+		target_corporation_market.save()
+		# Stealer must have market assets lower than target
+		stealer_corporation_market = self.dso.stealer_corporation.corporationmarket_set.get(market=target_corporation_market.market)
+		stealer_corporation_market.value = -2
+		stealer_corporation_market.save()
+		self.assertRaises(OrderNotAvailable, self.dso.clean)
+
+	def test_extraction_negative_market(self):
+		"""
+		Target market must have positive assets
+		"""
+		target_corporation_market = self.eo.target_corporation_market
+		target_corporation_market.value = -1
+		target_corporation_market.save()
+		# Stealer must have market assets lower than target
+		stealer_corporation_market = self.eo.stealer_corporation.corporationmarket_set.get(market=target_corporation_market.market)
+		stealer_corporation_market.value = -2
+		stealer_corporation_market.save()
+		self.assertRaises(OrderNotAvailable, self.eo.clean)
+
+	def test_sabotage_negative_market(self):
+		"""
+		Target market must have positive assets
+		"""
+		target_corporation_market = self.so.target_corporation_market
+		target_corporation_market.value = -1
+		target_corporation_market.save()
+		self.assertRaises(OrderNotAvailable, self.so.clean)
+
+	def test_protection_negative_market(self):
+		"""
+		Target market must have positive assets
+		"""
+		target_corporation_market = self.po.protected_corporation_market
+		target_corporation_market.value = -1
+		target_corporation_market.save()
+		self.assertRaises(OrderNotAvailable, self.po.clean)

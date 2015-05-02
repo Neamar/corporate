@@ -98,6 +98,15 @@ class Player(models.Model):
 		influence = self.influence_set.get(turn=self.game.current_turn - 1)
 		return influence
 
+	@property
+	def citizenship(self):
+		"""
+		Return player's citizenship at current turn
+		"""
+		# Citizenship for the turn is on preceding turn's Citizenship object
+		citizenship = self.citizenship_set.get(turn=self.game.current_turn - 1)
+		return citizenship
+
 	def add_message(self, **kwargs):
 		"""
 		Send a message to the player
