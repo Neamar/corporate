@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'static_precompiler',
     'website',
     'docs',
     'engine',
@@ -105,6 +106,13 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'static_precompiler.finders.StaticPrecompilerFinder',
+)
+STATIC_PRECOMPILER_OUTPUT_DIR = "less"
+
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
 )

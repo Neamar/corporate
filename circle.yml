@@ -1,3 +1,6 @@
+dependencies:
+  pre:
+    - npm install -g less
 test:
   post:
     - pep8 .
