@@ -1,33 +1,46 @@
 {% extends "template.html" %}
 
-{% block title %}Joueurs{% endblock %}
-{% block h1 %}Joueurs{% endblock %}
+{% block title %}Parts possédées{% endblock %}
+{% block h1 %}Parts possédées{% endblock %}
 
 {% block content %}
+{% include "_pager.html" with base_url="website.views.data.shares" base_title="Consulter les parts au tour" %}
 
-<table class="prop_table">
+<table class="prop_table slanted_head">
 <thead>
 <tr>
 	<th></th>
-	<th>Joueur</th>
-	<th>IC</th>
-	<th>Parts</th>
-	<th>Detroit, Inc.</th>
-	<th>Citoyen</th>
+	{% for total in totals %}
+	<!-- should be replaced with the player's image when -->
+	<th><div><span>{{ total.player.name|title }}</span></div></th>
+	{% endfor %}
 </tr>
 </thead>
-<tbody>
-{% for player in players %}
+<tfoot>
 <tr>
-	<td><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.id %}">{{ player.name }}</a></td>
-	<td>{{ player.user.username }}</td>
-	<td class="important">{{ player.influence.level }}</td>
-	<td>{{ player.share__count }}</td>
-	<td title="{{ player.get_last_dinc_vote.get_coalition_display }}">{{ player.get_last_dinc_coalition }}</td>
-	<td>{{ player.citizenship.corporation.base_corporation.slug|title }}</td>
+	<td>Total (sigma)</td>
+	{% for total in totals %}
+	<td><div>{{ total.total }}</div></td>
+	{% endfor %}
+</tr>
+</tfoot>
+<tbody>
+{% for corporation_shares in corporations_shares %}
+<tr>
+	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation_shares.corporation.base_corporation.slug %}">{{ corporation_shares.corporation.base_corporation.slug }}</a></td>
+	{% for share in corporation_shares.shares %}
+	<td>
+	{% if share.count != 0 %}
+	{% if share.top %}
+		<strong title="Actionnaire majoritaire">{{ share.count }}</strong>
+	{% else %}
+		{{ share.count }}
+	{% endif %}
+	{% endif %}
+	</td>
+	{% endfor %}
 </tr>
 {% endfor %}
 </tbody>
 </table>
-
 {% endblock content %}
