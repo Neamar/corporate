@@ -16,16 +16,21 @@
 </head>
 
 <body>
-	<h1>Corporate Game</h1>
-	<ul class="menu">
-		<li><a href="{% url 'website.views.orders.orders' game_id='1' %}">Ordres</a></li>
-		<li><a href="{% url 'website.views.data.wallstreet' game_id='1' %}">Wallstreet</a></li>
-		<li><a href="{% url 'website.views.data.players' game_id='1' %}">Joueurs</a></li>
-		<li class="rules"><a href="{{% url 'docs.views.index' page='' %}" title="Règles du jeu">Règles</a></li>
-	</ul>
 
-	<div class="content">
-		{% block content %}{% endblock %}
+	<h1 class="grid-container main-logo"><a href="/">Corporate Game</a></h1>
+
+<div class="grid-container main-container">
+	<div class="content-container">
+		<ul class="menu">
+			<li><a href="{% url 'website.views.orders.orders' game_id='1' %}">Ordres</a></li>
+			<li><a href="{% url 'website.views.data.wallstreet' game_id='1' %}">Wallstreet</a></li>
+			<li><a class="active" href="{% url 'website.views.data.players' game_id='1' %}">Joueurs</a></li>
+			<li class="rules"><a href="{{% url 'docs.views.index' page='' %}" title="Règles du jeu">Règles</a></li>
+		</ul>
+
+		<div class="content">
+			{% block content %}{% endblock %}
+		</div>
 	</div>
 
 	<aside class="sidebar" role="sidebar">
@@ -56,12 +61,12 @@
 			</ul>
 		</div>
 
-		<div class="pod pod-dinc">
-			<h2 class="pod-title">Detroit <span class="inc">inc®</span></h2>
-			<img src="/static/img/detroit/reforme.png" title="Ligne Detroit Inc pour le tour" width="317" height"65" />
+		<div class="pod pod-dinc even">
+			<h2 class="pod-title">Detroit <span class="inc">Inc<sup>®</sup></span></h2>
+			<img src="/static/img/detroit-inc/RSEC.png" title="Ligne Detroit Inc pour le tour"/>
 		</div>
 
-		<div class="pod pod-current-player">
+		<div class="pod pod-current-player odd">
 			<div class="pod-current-player-ic">
 				<span class="icon-ic icon-large">IC</span>
 				<span class="ic-value">2</span>
@@ -69,51 +74,51 @@
 
 			<div class="pod-current-player-money">
 				<span class="icon-money icon-large"></span>
-				<span class="money-value">23&nbsp;k</span>
+				<span class="money-value">2399&nbsp;k</span>
 			</div>
 		</div>
 
-		<div class="pod pod-players">
+		<div class="pod pod-players last-pod">
 			<h2 class="pod-title">Joueurs</h2>
 			<ul class="pod-players-list">
 				<li class="pod-players-list-item">
-					<span class="player">
-						<img class="player-avatar" title="Avatar d'Arcadia Darell" />
-						<span class="player-name">Arcadia Darell</span>
-					</span>
-					<span class="icon-ic">2</span>
-					<span class="icon-messaging"></span>
+					<img class="player-avatar" title="Avatar d'Arcadia Darell" src="/static/img/players/02.png"/>
 
-					<div class="icons-list">
-						<span class="icon-ic-up" title="Protégé par le MDC"></span>
-						<span class="icon-first-effect" title="A été affecté par l'effet premier"></span>
-						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
-						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
-						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
-						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
-						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
-						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
-						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
-						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
-						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+					<div class="content-player">
+						<span class="player-name">Arcadia Darell</span>
+						<span class="icon-ic">2</span>
+						<span class="icon-messaging"></span>
+
+						<ul class="icons-list">
+							<li class="icon-ic-up" title="Protégé par le MDC"></li>
+							<li class="icon-first-effect" title="A été affecté par l'effet premier"></li>
+							<li class="icon-ic-up" title="Protégé par le MDC"></li>
+							<li class="icon-first-effect" title="A été affecté par l'effet premier"></li>
+							<li class="icon-ic-up" title="Protégé par le MDC"></li>
+							<li class="icon-first-effect" title="A été affecté par l'effet premier"></li>
+							<li class="icon-ic-up" title="Protégé par le MDC"></li>
+							<li class="icon-first-effect" title="A été affecté par l'effet premier"></li>
+						</ul>
 					</div>
 				</li>
 				<li class="pod-players-list-item">
-					<span class="player">
-						<img class="player-avatar" title="Avatar de Harlan Branno" />
-						<span class="player-name">Harlan Branno</span>
-					</span>
-					<span class="icon-ic">2</span>
-					<span class="icon-messaging"></span>
+					<img class="player-avatar" title="Avatar de Harlan Branno" src="/static/img/players/03.png"/>
 
-					<div class="icons-list">
-						<span class="icon-ic-up" title="Protégé par le MDC"></span>
-						<span class="icon-first-effect" title="A été affecté par l'effet premier"></span>
-						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+					<div class="content-player">
+						<span class="player-name">Harlan Branno</span>
+						<span class="icon-ic">2</span>
+						<span class="icon-messaging"></span>
+
+						<div class="icons-list">
+							<span class="icon-ic-up" title="Protégé par le MDC"></span>
+							<span class="icon-first-effect" title="A été affecté par l'effet premier"></span>
+							<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+						</div>
 					</div>
 				</li>
 			</ul>
 		</div>
 	</aside>
+</div>
 </body>
 </html>
