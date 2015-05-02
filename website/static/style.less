@@ -1,5 +1,179 @@
-a {
-  span {
-    color: red;
-  }
+body {
+font-family: 'Roboto', sans-serif;
+font-weight: normal;
+color: #fff;
+background-color: #000;
 }
+
+.icon-red {
+	color: #d13939;
+}
+
+
+.sidebar {
+	max-width: 342px;
+	width: 100%;
+	background-color: #262626;
+	position: relative;
+
+	&:before {
+		background: url("/static/img/sidebar/repeat-y.jpg") repeat-y scroll center top rgba(0, 0, 0, 0);
+		content: "";
+		display: block;
+		height: 100%;
+		position: absolute;
+		left: -4px;
+		width: 4px;
+	}
+
+	.current-player {
+		height: 88px;
+		background: url("/static/img/sidebar/avatar.jpg") center top no-repeat;
+	
+		.player {
+			overflow: hidden;
+			height: inherit;
+			float: left;
+
+			.player-avatar {
+				float: left;
+				position: relative;
+				top: 10px;
+				width: 58px;
+				height: 58px; 
+				background-color: #eee;
+				border-radius: 50%;
+				display: block;
+				margin-left: 15px;
+
+				img {
+					position: absolute;
+					bottom: 0;
+					right: 2px;
+				}
+			}
+
+			.player-name {
+				float: left;
+				font-size: 1.25em;
+				text-shadow: 1px 1px 0px #000;
+				font-weight: 300;
+				margin-top: 33px;
+				margin-left: 10px;
+			}
+		}
+
+		.icon-messaging {
+			float: right;
+			position: relative;
+    		top: 50%;
+    		margin-top: -13px;
+    		margin-right: 15px;
+		}
+	}//FIRST - Current player
+
+	.pod {
+		.pod-title {
+			color: #f6f6f6;
+			font-weight: bold;
+			margin: 0;
+			font-size: 1.0666666em;
+			margin-left: 45px;
+			padding-top: 11px;
+		}
+	}//pod - global
+
+	.pod-turn-spinner {
+		background: url("/static/img/sidebar/tour.jpg") center top no-repeat;
+		height: 112px;
+
+		.pod-turn-spinner-turns {
+		list-style-type: none;
+		font-weight: bold;
+		font-size: 1.100em;
+		margin-left: 2%;
+		margin-top: 0;
+		margin-bottom: 0;
+		padding-top: 29px;
+		padding-left: 0;
+		overflow: hidden;
+
+			li {
+				float: left;
+				margin-right: 2%;
+				line-height: 31px;
+				text-align: center;
+				position: relative;
+
+				&:last-child {
+					margin-right: 0;
+				}
+
+				&.pod-run-spinner-turns-turn {
+					background: url("/static/img/sidebar/tour-current-disabled.jpg") center top no-repeat;
+					width: 41px;
+					height: 33px;
+					display: block;
+					color: #bababa;
+
+						&:hover {
+							cursor: not-allowed;
+						}
+
+					&:before {
+						content: "";
+						display: block;
+						position: absolute;
+						background: url("/static/img/sidebar/tour-current-closed.jpg") center top no-repeat;
+						width: 18px;
+						height: 12px;
+						top: -17px;
+						left: 11px;
+					}
+
+					&.pod-run-spinner-turns-turn-active {
+						background: url("/static/img/sidebar/tour-current-active.jpg") center top no-repeat;
+						color: #fff;
+
+						&:hover {
+							cursor: pointer;
+						}
+
+						&:before {
+						background: url("/static/img/sidebar/tour-current-open.jpg") center top no-repeat;
+						}
+					}
+				}
+			}
+		}
+	}//Tour de jeu
+
+	.pod-dinc {
+		background: url("/static/img/sidebar/detroit-bg.jpg") center top no-repeat;
+		height: 120px;
+
+		img {
+			display: block;
+			margin: auto;
+		}
+	}
+
+	.pod-current-player {
+		background: url("/static/img/sidebar/current-bg.jpg") center top no-repeat;
+		height: 125px;
+
+		.pod-current-player-ic {
+			.icon-ic {
+				width: 49px;
+				height: 49px;
+				background: url("/static/img/sidebar/icon-ic.png") center top no-repeat;
+			}
+		}
+	}
+
+	.pod-players {
+		background-color: #262626;
+		background: url("/static/img/sidebar/player-bg.jpg") center top no-repeat;
+		height: 263px;
+	}
+}//sidebar

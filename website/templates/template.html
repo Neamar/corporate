@@ -9,6 +9,7 @@
 
 	{% block head %}{% endblock %}
 	<title>{% block title %}Corporate game{% endblock %}</title>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -24,16 +25,18 @@
 		{% block content %}{% endblock %}
 	</div>
 
-	<div class="sidebar">
-		<div id="current-player">
-			<span class="player">
-				<img class="player-avatar" title="Avatar de Golan Trévize" />
+	<aside class="sidebar" role="sidebar">
+		<div class="current-player">
+			<div class="player">
+				<span class="player-avatar">
+					<img title="Avatar de Golan Trévize" src="/static/img/players/01.png" />
+				</span>
 				<span class="player-name">Golan Trévize</span>
-			</span>
+			</div>
 			<span class="icon-messaging icon-medium icon-red">
 				<span class="messaging-count">2</span>
 			</span>
-			<span class="icon-logout">
+			<span class="icon-logout icon-medium">
 			</span>
 		</div>
 
@@ -47,13 +50,12 @@
 				<li class="pod-run-spinner-turns-turn">5</li>
 				<li class="pod-run-spinner-turns-turn pod-run-spinner-turns-turn-disabled">6</li>
 				<li class="pod-run-spinner-turns-turn pod-run-spinner-turns-turn-disabled">7</li>
-				<li class="pod-run-spinner-turns-turn pod-run-spinner-turns-turn-disabled">8</li>
 			</ul>
 		</div>
 
 		<div class="pod pod-dinc">
 			<h2 class="pod-title">Detroit <span class="inc">inc®</span></h2>
-			<img src="current_line.png" title="Ligne Detroit Inc pour le tour" />
+			<img src="/static/img/detroit/reforme.png" title="Ligne Detroit Inc pour le tour" width="317" height"65" />
 		</div>
 
 		<div class="pod pod-current-player">
@@ -95,7 +97,7 @@
 				</li>
 				<li class="pod-players-list-item">
 					<span class="player">
-						<img class="player-avatar" title="Avatar d'Arcadia Darell" />
+						<img class="player-avatar" title="Avatar de Harlan Branno" />
 						<span class="player-name">Harlan Branno</span>
 					</span>
 					<span class="icon-ic">2</span>
@@ -109,6 +111,6 @@
 				</li>
 			</ul>
 		</div>
-	</div>
+	</aside>
 </body>
 </html>
