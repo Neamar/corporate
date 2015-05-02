@@ -119,7 +119,7 @@ def players(request, game, player, turn):
 @find_player_from_game_id
 @inject_game_into_response
 @turn_by_turn_view
-def player(request, game, player, player_id, turn):
+def player(request, player, game, player_id, turn):
 	"""
 	Player data
 	"""

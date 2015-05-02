@@ -79,7 +79,7 @@ class WebsiteTest(EngineTestCase):
 			reverse('website.views.data.wallstreet', args=[self.g.id, self.g.current_turn - 1]),
 			reverse('website.views.data.corporation', args=[self.g.id, self.c.base_corporation_slug]),
 			reverse('website.views.data.players', args=[self.g.id]),
-			# reverse('website.views.data.player', args=[self.g.id, self.p.id]),
+			reverse('website.views.data.player', args=[self.g.id, self.p.id]),
 			reverse('website.views.data.comlink', args=[self.g.id]),
 			reverse('website.views.data.message', args=[self.g.id, self.p.message_set.get().pk]),
 		]
