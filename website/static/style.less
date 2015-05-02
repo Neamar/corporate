@@ -7,11 +7,12 @@ body {
 	&:before {
 		background: url("/static/img/bg-triangle.png") repeat scroll center top rgba(0, 0, 0, 0);
 		width: 1107px;
-		height: 398px;
+		min-height: 398px;
 		position: absolute;
 		top: 0;
 		right:  calc(0 - 20%);
 		content: "";
+		z-index: -1;
 	}
 }
 
@@ -48,6 +49,7 @@ text-indent: -5555em;
 		display: table-cell;
 		vertical-align: top;
 		max-width: 703px;
+		background: url("/static/img/content/content-bg-r.png") repeat-y scroll right top rgba(0, 0, 0, 0);
 
 		.content {
 			padding: 0 4%;
@@ -123,13 +125,16 @@ text-indent: -5555em;
 
 .sidebar {
 	width: 342px;
-	background-color: #262626;
 	position: relative;
 	display: table-cell;
 	vertical-align: top;
 	margin-top: 90px;
 
-	&:before {
+	.content-sidebar {
+		background-color: #262626;
+		position: relative;
+
+		&:before {
 		background: url("/static/img/sidebar/repeat-y.jpg") repeat-y scroll center top rgba(0, 0, 0, 0);
 		content: "";
 		display: block;
@@ -137,6 +142,7 @@ text-indent: -5555em;
 		position: absolute;
 		left: -4px;
 		width: 4px;
+		}
 	}
 
 	&:after {
@@ -259,37 +265,40 @@ text-indent: -5555em;
 				}
 
 				&.pod-run-spinner-turns-turn {
-					background: url("/static/img/sidebar/tour-current-disabled.jpg") center top no-repeat;
+					background: url("/static/img/sidebar/tour-current-active.jpg") center top no-repeat;
+					color: #fff;
 					width: 41px;
 					height: 33px;
 					display: block;
-					color: #bababa;
 
-						&:hover {
-							cursor: not-allowed;
+						&:before {
+							content: "";
+							display: block;
+							position: absolute;
+							background: url("/static/img/sidebar/tour-current-closed.jpg") center top no-repeat;
+							width: 18px;
+							height: 12px;
+							top: -17px;
+							left: 11px;
 						}
-
-					&:before {
-						content: "";
-						display: block;
-						position: absolute;
-						background: url("/static/img/sidebar/tour-current-closed.jpg") center top no-repeat;
-						width: 18px;
-						height: 12px;
-						top: -17px;
-						left: 11px;
-					}
-
-					&.pod-run-spinner-turns-turn-active {
-						background: url("/static/img/sidebar/tour-current-active.jpg") center top no-repeat;
-						color: #fff;
 
 						&:hover {
 							cursor: pointer;
 						}
 
+					&.pod-run-spinner-turns-turn-active {
+
 						&:before {
 						background: url("/static/img/sidebar/tour-current-open.jpg") center top no-repeat;
+						}
+					}
+
+					&.pod-run-spinner-turns-turn-disabled {
+						background: url("/static/img/sidebar/tour-current-disabled.jpg") center top no-repeat;
+						color: #bababa;
+
+						&:hover {
+							cursor: not-allowed;
 						}
 					}
 				}
@@ -335,16 +344,30 @@ text-indent: -5555em;
 		height: 125px;
 		display: table;
 		width: 100%;
-
 		font-size: 1.75em;
 		color: #e3e3e3;
+
+		.current-info {
+			font-size: 0.75rem;
+			color: #7a7a7a;
+			font-style: italic;
+			position: relative;
+
+			&.current-ic {
+				top: -15px;
+			}
+			&.current-money {
+				top: -7.5px;
+				padding-left: 30px;
+			}
+		}
 
 		.pod-current-player-ic {
 			position: relative;
 			display: table-cell;
 			vertical-align: middle;
 			width: 50%;
-			padding-top: 35px;
+			//padding-top: 35px;
 			padding-left: 25px;
 
 				&:after {
@@ -376,7 +399,7 @@ text-indent: -5555em;
 		.pod-current-player-money {
 			display: table-cell;
 			vertical-align: middle;
-			padding-top: 25px;
+			//padding-top: 25px;
 			width: 50%;
 
 			.icon-money {
@@ -400,7 +423,6 @@ text-indent: -5555em;
 		background: url("/static/img/sidebar/player-bg.jpg") center top no-repeat;
 		height: 263px;
 		padding-bottom: 10px;
-	
 
 		.pod-players-list {
 			list-style-type: none;

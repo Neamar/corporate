@@ -20,7 +20,7 @@
 	<h1 class="grid-container main-logo"><a href="/">Corporate Game</a></h1>
 
 <div class="grid-container main-container">
-	<div class="content-container">
+	<section class="content-container">
 		<ul class="menu">
 			<li><a href="{% url 'website.views.orders.orders' game_id='1' %}">Ordres</a></li>
 			<li><a href="{% url 'website.views.data.wallstreet' game_id='1' %}">Wallstreet</a></li>
@@ -28,12 +28,13 @@
 			<li class="rules"><a href="{{% url 'docs.views.index' page='' %}" title="Règles du jeu">Règles</a></li>
 		</ul>
 
-		<div class="content">
+		<article class="content">
 			{% block content %}{% endblock %}
-		</div>
-	</div>
+		</article>
+	</section>
 
 	<aside class="sidebar" role="sidebar">
+		<div class="content-sidebar">
 		<div class="current-player">
 			<div class="player">
 				<span class="player-avatar">
@@ -51,7 +52,7 @@
 		<div class="pod pod-turn-spinner">
 			<h2 class="pod-title">Tours de jeu</h2>
 			<ul class="pod-turn-spinner-turns">
-				<li class="pod-run-spinner-turns-turn pod-run-spinner-turns-turn-active ">1</li>
+				<li class="pod-run-spinner-turns-turn pod-run-spinner-turns-turn-active">1</li>
 				<li class="pod-run-spinner-turns-turn">2</li>
 				<li class="pod-run-spinner-turns-turn">3</li>
 				<li class="pod-run-spinner-turns-turn">4</li>
@@ -68,11 +69,13 @@
 
 		<div class="pod pod-current-player odd">
 			<div class="pod-current-player-ic">
+				<em class="current-info current-ic">Influence Corporatiste</em>
 				<span class="icon-ic icon-large">IC</span>
 				<span class="ic-value">2</span>
 			</div>
 
 			<div class="pod-current-player-money">
+				<em class="current-info current-money">Argent</em>
 				<span class="icon-money icon-large"></span>
 				<span class="money-value">2399&nbsp;k</span>
 			</div>
@@ -117,6 +120,7 @@
 					</div>
 				</li>
 			</ul>
+		</div>
 		</div>
 	</aside>
 </div>
