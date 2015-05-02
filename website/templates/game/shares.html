@@ -10,29 +10,34 @@
 <thead>
 <tr>
 	<th></th>
-	{% for corporation in corporations %}
-	<th><div><span>{{ corporation.base_corporation.slug|title }}</span></div></th>
+	{% for total in totals %}
+	<!-- should be replaced with the player's image when -->
+	<th><div><span><a href="{% url "website.views.data.player" game_id=game.pk player_id=total.player.id %}">{{ total.player.name|title }}</a></span></div></th>
 	{% endfor %}
 </tr>
 </thead>
-<tbody>
-{% for player_shares in shares %}
+<tfoot>
 <tr>
-	<td><a href="{% url "website.views.data.player" game_id=game.pk player_id=player_shares.player.id %}">{{ player_shares.player.name }}</a></td>
-	{% for share in player_shares.shares %}
-		{% if player_shares.citizenship_index == forloop.counter0 %}
-			<td class="important">
-		{% else %}
-			<td>
-		{% endif %}
-		{% if share.count != 0 %}
-		{% if share.top %}
-			<strong title="Actionnaire majoritaire">{{ share.count }}</strong>
-		{% else %}
-			{{ share.count }}
-		{% endif %}
-		{% endif %}
-		</td>
+	<td>Total (sigma)</td>
+	{% for total in totals %}
+	<td><div>{{ total.total }}</div></td>
+	{% endfor %}
+</tr>
+</tfoot>
+<tbody>
+{% for corporation_shares in corporations_shares %}
+<tr>
+	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation_shares.corporation.base_corporation.slug %}">{{ corporation_shares.corporation.base_corporation.slug }}</a></td>
+	{% for share in corporation_shares.shares %}
+	<td>
+	{% if share.count != 0 %}
+	{% if share.top %}
+		<strong title="Actionnaire majoritaire">{{ share.count }}</strong>
+	{% else %}
+		{{ share.count }}
+	{% endif %}
+	{% endif %}
+	</td>
 	{% endfor %}
 </tr>
 {% endfor %}
