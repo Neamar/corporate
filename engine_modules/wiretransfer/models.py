@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
-from engine.models import Order, Player
+from engine.models import Order, Player, Game
 from messaging.models import Message
 from messaging.models import Newsfeed
 
@@ -37,6 +37,9 @@ class WiretransferOrder(Order):
 		content = u"%s a donné %s k¥ à %s." % (self.player, self.amount, self.recipient)
 		players = [self.player, self.recipient]
 		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=content, status=Newsfeed.PRIVATE, players=players)
+
+		# Create the game_event
+		self.player.game.create_game_event(event_type=Game.WIRETRANSFER, data='', players=[self.player, self.recipient])
 
 	def get_cost(self):
 		# or 1: avoid displaying the order without money
