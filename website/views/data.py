@@ -6,9 +6,7 @@ from django.db.models import Count
 
 from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
-from engine_modules.share.models import Share
 from engine.models import Player
-from website.utils import get_shares_count, is_top_shareholder
 from website.decorators import render, find_player_from_game_id, inject_game_into_response, turn_by_turn_view
 from utils.read_markdown import parse_markdown
 
