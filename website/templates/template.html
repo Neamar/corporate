@@ -11,64 +11,103 @@
 </head>
 
 <body>
-	<div id="wrapper">
-		<div id="sidebar">
-			<ul class="general">
-				<li><a href="{% url 'website.views.index.index' %}">accueil</a></li>
-				<li><a href="{% url 'docs.views.index' page='' %}">docs</a></li>
-			{% if not user.is_authenticated %}
-				<li><a href="{% url 'django.contrib.auth.views.login' %}">login</a></li>
-				<li><a href="{% url 'website.views.index.signup' %}">inscription</a></li>
-			{% endif %}
-			</ul>
+	<h1>Corporate Game</h1>
+	<ul class="menu">
+		<li><a href="{% url 'website.views.orders.orders' game_id='1' %}">Ordres</a></li>
+		<li><a href="{% url 'website.views.data.wallstreet' game_id='1' %}">Wallstreet</a></li>
+		<li><a href="{% url 'website.views.data.players' game_id='1' %}">Joueurs</a></li>
+		<li class="rules"><a href="{{% url 'docs.views.index' page='' %}" title="Règles du jeu">Règles</a></li>
+	</ul>
 
-			{% if user.is_authenticated %}
-			{% if game %}
-			<ul class="game">
-				<li><a href="{% url 'website.views.orders.orders' game_id=game.pk %}">ordres</a></li>
-				<li><a href="{% url 'website.views.data.comlink' game_id=game.pk %}">commlink</a></li>
-			</ul>
+	<div class="content">
+		{% block content %}{% endblock %}
+	</div>
 
-			<ul class="data">
-				<li><a href="{% url 'website.views.data.wallstreet' game_id=game.pk %}">wall street</a></li>
-				<li><a href="{% url 'website.views.data.players' game_id=game.pk %}">joueurs</a></li>
-			</ul>
-			{% else %}
-			<ul class="game">
-				{% for player in user.player_set.all %}
-				<li><a href="{% url 'website.views.data.wallstreet' game_id=player.game_id %}">{{ player.game.city }}</a></li>
-				{% endfor %}
-			</ul>
-			{% endif %}
-			{% endif %}
+	<div class="sidebar">
+		<div id="current-player">
+			<span class="player">
+				<img class="player-avatar" title="Avatar de Golan Trévize" />
+				<span class="player-name">Golan Trévize</span>
+			</span>
+			<span class="icon-messaging icon-medium icon-red">
+				<span class="messaging-count">2</span>
+			</span>
+			<span class="icon-logout">
+			</span>
 		</div>
 
-
-		<div id="content">
-			<h1>{% block h1 %}Corporate game{% endblock %}</h1>
-
-			{% block content %}{% endblock %}
+		<div class="pod pod-turn-spinner">
+			<h2 class="pod-title">Tours de jeu</h2>
+			<ul class="pod-turn-spinner-turns">
+				<li class="pod-run-spinner-turns-turn pod-run-spinner-turns-turn-active ">1</li>
+				<li class="pod-run-spinner-turns-turn">2</li>
+				<li class="pod-run-spinner-turns-turn">3</li>
+				<li class="pod-run-spinner-turns-turn">4</li>
+				<li class="pod-run-spinner-turns-turn">5</li>
+				<li class="pod-run-spinner-turns-turn pod-run-spinner-turns-turn-disabled">6</li>
+				<li class="pod-run-spinner-turns-turn pod-run-spinner-turns-turn-disabled">7</li>
+				<li class="pod-run-spinner-turns-turn pod-run-spinner-turns-turn-disabled">8</li>
+			</ul>
 		</div>
 
-		<div id="end">
-			{% block end %}
-			<a href="#">&uarr;</a>
-			{% endblock %}
+		<div class="pod pod-dinc">
+			<h2 class="pod-title">Detroit <span class="inc">inc®</span></h2>
+			<img src="current_line.png" title="Ligne Detroit Inc pour le tour" />
 		</div>
 
-		{% block scripts %}{% endblock %}
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		<div class="pod pod-current-player">
+			<div class="pod-current-player-ic">
+				<span class="icon-ic icon-large">IC</span>
+				<span class="ic-value">2</span>
+			</div>
 
-			ga('create', 'UA-4257957-8', 'papiel.fr');
-			ga('send', 'pageview');
+			<div class="pod-current-player-money">
+				<span class="icon-money icon-large"></span>
+				<span class="money-value">23&nbsp;k</span>
+			</div>
+		</div>
 
-			var _gaq = _gaq || [];
-			_gaq.push(['_setCustomVar', 1, 'Username', '{{ user.username }}']);
-		</script>
+		<div class="pod pod-players">
+			<h2 class="pod-title">Joueurs</h2>
+			<ul class="pod-players-list">
+				<li class="pod-players-list-item">
+					<span class="player">
+						<img class="player-avatar" title="Avatar d'Arcadia Darell" />
+						<span class="player-name">Arcadia Darell</span>
+					</span>
+					<span class="icon-ic">2</span>
+					<span class="icon-messaging"></span>
+
+					<div class="icons-list">
+						<span class="icon-ic-up" title="Protégé par le MDC"></span>
+						<span class="icon-first-effect" title="A été affecté par l'effet premier"></span>
+						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+					</div>
+				</li>
+				<li class="pod-players-list-item">
+					<span class="player">
+						<img class="player-avatar" title="Avatar d'Arcadia Darell" />
+						<span class="player-name">Harlan Branno</span>
+					</span>
+					<span class="icon-ic">2</span>
+					<span class="icon-messaging"></span>
+
+					<div class="icons-list">
+						<span class="icon-ic-up" title="Protégé par le MDC"></span>
+						<span class="icon-first-effect" title="A été affecté par l'effet premier"></span>
+						<span class="icon-last-effect" title="A été affecté par l'effet dernier"></span>
+					</div>
+				</li>
+			</ul>
+		</div>
 	</div>
 </body>
 </html>
