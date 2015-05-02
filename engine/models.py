@@ -57,7 +57,7 @@ class Game(models.Model):
 	BUY_SHARE = 'BUY_SHARE'
 	VOTE_CONSOLIDATION = 'VOTE_CONSOLIDATION'
 	VOTE_SECURITY = 'VOTE_SECURITY'
-	VOTE_DEV_URBAIN = 'VOTE_DEV_URBAIN'
+	VOTE_CONTRAT = 'VOTE_CONTRAT'
 	MONEY_NEXT_TURN = 'MONEY_NEXT_TURN'
 	BACKGROUND = 'BACKGROUND'
 
@@ -96,7 +96,7 @@ class Game(models.Model):
 		(BUY_SHARE, 'Acheter une part'),
 		(VOTE_CONSOLIDATION, 'Vote de la ligne Consolidation à Detoit Inc.'),
 		(VOTE_SECURITY, 'Vote de la ligne Réforme de la sécuritée à Detoit Inc.'),
-		(VOTE_DEV_URBAIN, 'Vote de la ligne Developpement urbain à Detoit Inc.'),
+		(VOTE_CONTRAT, 'Vote de la ligne contrat public à Detoit Inc.'),
 		(MONEY_NEXT_TURN, 'Argent disponible au début de tour suivant'),
 		(BACKGROUND, 'Information de background découverte'),
 	)

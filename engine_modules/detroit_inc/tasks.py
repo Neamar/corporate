@@ -75,6 +75,14 @@ class DIncVoteTask(ResolutionTask):
 		"""
 		for order in orders:
 			order.player.add_note(category=Note.DINC, content="Vous avez rejoint la coalition *%s*." % order.get_coalition_display())
+			if order.get_coalition_display() == 'Contrats publics':
+				event_type = Game.VOTE_CONTRAT
+			elif order.get_coalition_display() == u'Réforme de la sécurité':
+				event_type = Game.VOTE_SECURITY
+			elif order.get_coalition_display() == 'Consolidation':
+				event_type = Game.VOTE_CONSOLIDATION
+			order.player.game.create_game_event(event_type=event_type, data='', players=[order.player])
+
 
 	def send_newsfeed(self, orders, dinc_vote_session):
 		"""

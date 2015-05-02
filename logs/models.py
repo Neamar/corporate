@@ -44,13 +44,17 @@ class Logs(models.Model):
 		Game.BUY_SHARE,
 		Game.VOTE_CONSOLIDATION,
 		Game.VOTE_SECURITY,
-		Game.VOTE_DEV_URBAIN]
+		Game.VOTE_CONTRAT]
 
+	# All the public game_event created with a player should not be transmittable
 	UNTRANSMITTABLE = [
 		Game.EFFECT_CONSOLIDATION_UP,
 		Game.EFFECT_CONSOLIDATION_DOWN,
 		Game.EFFECT_SECURITY_UP,
-		Game.EFFECT_SECURITY_DOWN]
+		Game.EFFECT_SECURITY_DOWN,
+		Game.VOTE_CONSOLIDATION,
+		Game.VOTE_SECURITY,
+		Game.VOTE_CONTRAT]
 
 
 class ConcernedPlayers(models.Model):
