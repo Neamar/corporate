@@ -14,15 +14,20 @@
 
 <body>
 	<h1>Corporate Game</h1>
-	<ul class="menu">
-		<li><a href="{% url 'website.views.orders.orders' game_id='1' %}">Ordres</a></li>
-		<li><a href="{% url 'website.views.data.wallstreet' game_id='1' %}">Wallstreet</a></li>
-		<li><a href="{% url 'website.views.data.players' game_id='1' %}">Joueurs</a></li>
-		<li class="rules"><a href="{{% url 'docs.views.index' page='' %}" title="Règles du jeu">Règles</a></li>
-	</ul>
+<div class="main-container">
+	
 
-	<div class="content">
-		{% block content %}{% endblock %}
+	<div class="content-container">
+		<ul class="menu">
+			<li><a href="{% url 'website.views.orders.orders' game_id='1' %}">Ordres</a></li>
+			<li><a href="{% url 'website.views.data.wallstreet' game_id='1' %}">Wallstreet</a></li>
+			<li><a class="active" href="{% url 'website.views.data.players' game_id='1' %}">Joueurs</a></li>
+			<li class="rules"><a href="{{% url 'docs.views.index' page='' %}" title="Règles du jeu">Règles</a></li>
+		</ul>
+
+		<div class="content">
+			{% block content %}{% endblock %}
+		</div>
 	</div>
 
 	<aside class="sidebar" role="sidebar">
@@ -111,5 +116,6 @@
 			</ul>
 		</div>
 	</aside>
+</div>
 </body>
 </html>
