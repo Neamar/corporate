@@ -163,6 +163,18 @@ class Corporation(models.Model):
 
 			corporation.update_assets(delta, category=delta_category, market=market)
 
+			# create a event_type
+			if delta_category == AssetDelta.EFFECT_FIRST:
+				event_type=Game.FIRST_EFFECT
+			elif delta_category == AssetDelta.EFFECT_LAST:
+				event_type=Game.LAST_EFFECT
+			elif delta_category == AssetDelta.EFFECT_CRASH:
+				event_type=Game.CRASH_EFFECT
+
+			corporationmarket = corporation.corporationmarket_set.get(market=market)
+			self.game.create_game_event(event_type=event_type, data='',  delta=delta , corporation=corporation , corporationmarket=corporationmarket)
+
+
 		context = {
 			'game': self.game,
 			'ladder': ladder,
@@ -191,7 +203,6 @@ class Corporation(models.Model):
 		"""
 		Decrease corporation's assets by value
 		"""
-
 		self.market_assets -= value
 		self.save()
 

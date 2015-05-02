@@ -5,7 +5,7 @@ from django.conf import settings
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
-from engine.dispatchs import validate_order
+from engine.dispatchs import validate_order, game_event
 from messaging.models import Message, Note, Newsfeed
 from utils.read_markdown import read_file_from_path
 
@@ -21,6 +21,96 @@ class Game(models.Model):
 	disable_side_effects = models.BooleanField(default=False, help_text="Disable all side effects (invisible hand, first and last effects, ...)")
 
 	started = models.DateTimeField(auto_now_add=True)
+
+	# List of possible events
+	VOICE_UP = 'VOICE_UP'
+	VOICE_DOWN = 'VOICE_DOWN'
+	FIRST_EFFECT = 'FIRST_EFFECT'
+	LAST_EFFECT = 'LAST_EFFECT'
+	CRASH_EFFECT = 'CRASH_EFFECT'
+	OPE_SABOTAGE = 'OPE_SABOTAGE'
+	OPE_SABOTAGE_FAIL = 'OPE_SABOTAGE_FAIL'
+	OPE_DATASTEAL_UP = 'OPE_DATASTEAL_UP'
+	OPE_DATASTEAL_FAIL_UP = 'OPE_DATASTEAL_FAIL_UP'
+	OPE_DATASTEAL_FAIL_DOWN = 'OPE_DATASTEAL_FAIL_DOWN'
+	OPE_DATASTEAL_DOWN = 'OPE_DATASTEAL_DOWN'
+	OPE_PROTECTION = 'OPE_PROTECTION'
+	OPE_EXTRACTION_UP = 'OPE_EXTRACTION_UP'
+	OPE_EXTRACTION_FAIL_UP = 'OPE_EXTRACTION_FAIL_UP'
+	OPE_EXTRACTION_FAIL_DOWN = 'OPE_EXTRACTION_FAIL_DOWN'
+	OPE_EXTRACTION_DOWN = 'OPE_EXTRACTION_DOWN'
+	EFFECT_DEV_URBAIN_UP = 'EFFECT_DEV_URBAIN_UP'
+	EFFECT_DEV_URBAIN_DOWN = 'EFFECT_DEV_URBAIN_DOWN'
+	MARKET_HAND_UP = 'MARKET_HAND_UP'
+	MARKET_HAND_DOWN = 'MARKET_HAND_DOWN'
+	ADD_CITIZENSHIP = 'ADD_CITIZENSHIP'
+	REMOVE_CITIZENSHIP = 'REMOVE_CITIZENSHIP'
+	IC_UP = 'IC_UP'
+	OPE_INFORMATION = 'OPE_INFORMATION'
+	EFFECT_CONSOLIDATION_UP = 'EFFECT_CONSOLIDATION_UP'
+	EFFECT_CONSOLIDATION_DOWN = 'EFFECT_CONSOLIDATION_DOWN'
+	EFFECT_SECURITY_UP = 'EFFECT_SECURITY_UP'
+	EFFECT_SECURITY_DOWN = 'EFFECT_SECURITY_DOWN'
+	SPECULATION = 'SPECULATION'
+	WIRETRANSFER = 'WIRETRANSFER'
+	BUY_SHARE = 'BUY_SHARE'
+	VOTE_CONSOLIDATION = 'VOTE_CONSOLIDATION'
+	VOTE_SECURITY = 'VOTE_SECURITY'
+	VOTE_DEV_URBAIN = 'VOTE_DEV_URBAIN'
+	MONEY_NEXT_TURN = 'MONEY_NEXT_TURN'
+	BACKGROUND = 'BACKGROUND'
+
+	EVENTS = (
+		(VOICE_UP, 'Voix au chapitre positive'),
+		(VOICE_DOWN, 'Voix au chapitre négative'),
+		(FIRST_EFFECT, 'Effet premier'),
+		(LAST_EFFECT, 'Effet dernier'),
+		(CRASH_EFFECT, 'Effet crash'),
+		(OPE_SABOTAGE, 'Opération de sabotage réussie'),
+		(OPE_SABOTAGE_FAIL, 'Opération de sabotage échouée'),
+		(OPE_DATASTEAL_UP, 'Opération de datasteal réussie positive'),
+		(OPE_DATASTEAL_FAIL_UP, 'Opération de datasteal échouée positive'),
+		(OPE_DATASTEAL_FAIL_DOWN, 'Opération de datasteal échouée négative'),
+		(OPE_DATASTEAL_DOWN, 'Opération de datasteal réussie négative'),
+		(OPE_PROTECTION, 'Opération de protection'),
+		(OPE_EXTRACTION_UP, 'Opération d\'extraction réussie positive'),
+		(OPE_EXTRACTION_FAIL_UP, 'Opération d\'extraction échouée positive'),
+		(OPE_EXTRACTION_FAIL_DOWN, 'Opération d\'extraction échouée négative'),
+		(OPE_EXTRACTION_DOWN, 'Opération d\'extraction réussie négative'),
+		(EFFECT_DEV_URBAIN_UP, 'Effet de Detroit Inc. Développement urbain positif'),
+		(EFFECT_DEV_URBAIN_DOWN, 'Effet de Detroit Inc. Développement urbain négatif'),
+		(MARKET_HAND_UP, 'Main du marché positive'),
+		(MARKET_HAND_DOWN, 'Main du marché négative'),
+		(ADD_CITIZENSHIP, 'Ajout de citoyenneté'),
+		(REMOVE_CITIZENSHIP, 'Perte de citoyenneté'),
+		(IC_UP, 'Augmentation d\'influence corporatiste'),
+		(OPE_INFORMATION, 'Opération d\'information'),
+		(EFFECT_CONSOLIDATION_UP, 'Effet de Detroit Inc Consolidation positif'),
+		(EFFECT_CONSOLIDATION_DOWN, 'Effet de Detroit Inc Consolidation négatif'),
+		(EFFECT_SECURITY_UP, 'Effet de Detroit Inc Réforme de la sécuritée positif'),
+		(EFFECT_SECURITY_DOWN, 'Effet de Detroit Inc Réforme de la sécuritée négatif'),
+		(SPECULATION, 'Spéculation'),
+		(WIRETRANSFER, 'Transfert d\'argent à un autre joueur'),
+		(BUY_SHARE, 'Acheter une part'),
+		(VOTE_CONSOLIDATION, 'Vote de la ligne Consolidation à Detoit Inc.'),
+		(VOTE_SECURITY, 'Vote de la ligne Réforme de la sécuritée à Detoit Inc.'),
+		(VOTE_DEV_URBAIN, 'Vote de la ligne Developpement urbain à Detoit Inc.'),
+		(MONEY_NEXT_TURN, 'Argent disponible au début de tour suivant'),
+		(BACKGROUND, 'Information de background découverte'),
+	)
+
+	def create_game_event(self, event_type, data, delta=0, corporation=None, players=None, corporationmarket=None):
+		"""
+		Create a game event signal. This signal may be received for a log creation for example.
+		"""
+		game_event.send(
+			sender=self.__class__,
+			event_type=event_type,
+			data=data,
+			delta=delta,
+			corporation=corporation,
+			players=players,
+			corporationmarket=corporationmarket)
 
 	@transaction.atomic
 	def resolve_current_turn(self):
