@@ -147,6 +147,9 @@ class Corporation(models.Model):
 			"""
 			Updates corporation's assets by delta, in Market market if specified, or a Market at random otherwise
 			"""
+			if market!=None:
+				corporationmarket = self.corporationmarket_set.get(market=market)
+
 			if isinstance(corporation, str):
 				# Try / catch if corporation crashed
 				try:
@@ -156,12 +159,12 @@ class Corporation(models.Model):
 
 			if market is None:
 				# By default, a random market is impacted
-				market = corporation.get_random_market()
+				corporationmarket = corporation.random_corporation_market
 			else:
 				# TODO; implement and test effects with a market name
 				raise NotImplementedError()
 
-			corporation.update_assets(delta, category=delta_category, market=market)
+			corporation.update_assets(delta, category=delta_category, corporationmarket=corporationmarket)
 
 			# create a event_type
 			if delta_category == AssetDelta.EFFECT_FIRST:
@@ -171,7 +174,6 @@ class Corporation(models.Model):
 			elif delta_category == AssetDelta.EFFECT_CRASH:
 				event_type=Game.CRASH_EFFECT
 
-			corporationmarket = corporation.corporationmarket_set.get(market=market)
 			self.game.create_game_event(event_type=event_type, data='',  delta=delta , corporation=corporation , corporationmarket=corporationmarket)
 
 
@@ -206,19 +208,17 @@ class Corporation(models.Model):
 		self.market_assets -= value
 		self.save()
 
-	def update_assets(self, delta, category, market):
+	def update_assets(self, delta, category, corporationmarket):
 		"""
 		Update assets values, and save the model
 		"""
-		market = self.corporationmarket_set.get(market=market)
-
 		# A market can't be negative, so we cap the delta
-		if market.value + delta < 0:
+		if corporationmarket.value + delta < 0:
 			# A market can't be negative, so we cap the delta
-			delta = -market.value
+			delta = -corporationmarket.value
 
-		market.value += delta
-		market.save()
+		corporationmarket.value += delta
+		corporationmarket.save()
 
 		# Mirror changes on assets
 		self.assets += delta

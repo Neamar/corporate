@@ -19,12 +19,12 @@ class VoteOrder(Order):
 
 	def resolve(self):
 		# apply the effect voice up
-		self.corporation_market_up.corporation.update_assets(1, market=self.corporation_market_up.market, category=AssetDelta.VOTES)
+		self.corporation_market_up.corporation.update_assets(1, corporationmarket=self.corporation_market_up, category=AssetDelta.VOTES)
 		# Create the game event
 		self.corporation_market_up.corporation.game.create_game_event(event_type=Game.VOICE_UP, data='',  delta=1, corporation=self.corporation_market_up.corporation, corporationmarket=self.corporation_market_up, players=[self.player])
 
 		# apply the effect voice down
-		self.corporation_market_down.corporation.update_assets(-1, market=self.corporation_market_down.market, category=AssetDelta.VOTES)
+		self.corporation_market_down.corporation.update_assets(-1, corporationmarket=self.corporation_market_down, category=AssetDelta.VOTES)
 		# Create the game event
 		self.corporation_market_up.corporation.game.create_game_event(event_type=Game.VOICE_DOWN, data='',  delta=-1, corporation=self.corporation_market_down.corporation, corporationmarket=self.corporation_market_down, players=[self.player])
 
