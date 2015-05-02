@@ -10,8 +10,9 @@ class InformationRunOrderTest(RunOrdersTest):
 
 		self.p2 = Player(game=self.g, secrets="Some nasty sfuff")
 		self.p2.save()
-		self.p2.citizenship.corporation = self.c
-		self.p2.citizenship.save()
+		citizenship = self.p2.citizenship
+		citizenship.corporation = self.c
+		citizenship.save()
 
 		from engine_modules.influence.models import BuyInfluenceOrder
 

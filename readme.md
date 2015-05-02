@@ -39,7 +39,7 @@ Rules can be found in [data/docs/index.md](data/docs/index.md).
 ### Orders list
 * **BuyInfluenceOrder** : Order to increase Player Influence
 * **VoteOrder** : Order to vote for a Corporation
-* **CitizenShipOrder** : Order to become citizen from a new corporation
+* **CitizenshipOrder** : Order to become citizen from a new corporation
 * **BuyShareOrder** : Order to buy a corporation share
 * **DataStealOrder** : Order for DataSteal runs
 * **ProtectionOrder** : Order for Protection runs
