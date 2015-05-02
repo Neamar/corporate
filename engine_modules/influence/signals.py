@@ -12,7 +12,9 @@ def auto_create_player_influence(sender, instance, **kwargs):
 	"""
 	Create influence model for new player
 	"""
-	Influence(player=instance).save()
+	# We keep the Influence at end of turn, so to have the influence at the beginning
+	# we have to query on preceding turn, so we must initialize at turn 0 too
+	Influence(player=instance, level=1, turn=0).save()
 
 
 @receiver(validate_order, sender=BuyInfluenceOrder)

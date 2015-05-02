@@ -5,15 +5,16 @@ from engine_modules.corporation.models import Corporation
 from messaging.models import Newsfeed
 
 
-class CitizenShip(models.Model):
-	player = models.OneToOneField(Player)
+class Citizenship(models.Model):
+	player = models.ForeignKey(Player)
 	corporation = models.ForeignKey(Corporation, null=True, on_delete=models.SET_NULL)
+	turn = models.PositiveSmallIntegerField(default=0)
 
 	def __unicode__(self):
 		return "%s - %s" % (self.player, self.corporation)
 
 
-class CitizenShipOrder(Order):
+class CitizenshipOrder(Order):
 	"""
 	Order to become citizen from a new corporation
 	"""
@@ -24,11 +25,13 @@ class CitizenShipOrder(Order):
 
 	def resolve(self):
 		# if player has a citizenship, add a game_event for losing it
-		if self.player.citizenship == None:
-			self.player.game.create_game_event(event_type=Game.REMOVE_CITIZENSHIP, data='', corporation=self.player.citizenship.corporation, players=[self.player])
+		corporation_last_turn = self.player.citizenship_set.get(turn=self.turn-1)
+		if corporation_last_turn == None:
+			self.player.game.create_game_event(event_type=Game.REMOVE_CITIZENSHIP, data='', corporation=corporation_last_turn, players=[self.player])
 
-		self.player.citizenship.corporation = self.corporation
-		self.player.citizenship.save()
+		citizenship = self.player.citizenship_set.get(turn=self.turn)
+		citizenship.corporation = self.corporation
+		citizenship.save()
 
 		# create a game_event for the new citizenship
 		self.player.game.create_game_event(event_type=Game.ADD_CITIZENSHIP, data='', corporation=self.corporation, players=[self.player])
@@ -45,9 +48,9 @@ class CitizenShipOrder(Order):
 		return u"Récupérer la nationalité corporatiste %s" % self.corporation.base_corporation.name
 
 	def get_form(self, data=None):
-		form = super(CitizenShipOrder, self).get_form(data)
+		form = super(CitizenshipOrder, self).get_form(data)
 		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
 
 		return form
 
-orders = (CitizenShipOrder,)
+orders = (CitizenshipOrder,)

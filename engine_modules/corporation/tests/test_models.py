@@ -29,16 +29,3 @@ class ModelMethodTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - 1)
 		self.assertEqual(self.reload(corporation_market).value, initial_market_assets - 1)
 
-	def test_corporation_update_assets_not_below_zero(self):
-		"""
-		Corporation market assets can't drop below 0
-		"""
-
-		corporation_market = self.c.random_corporation_market
-		initial_corporation_assets = self.c.assets
-
-		max_delta = corporation_market.value + 1
-		self.c.update_assets(-max_delta, category=AssetDelta.EFFECT_FIRST, corporationmarket=corporation_market)
-
-		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - max_delta + 1)
-		self.assertEqual(self.reload(corporation_market).value, 0)

@@ -1,13 +1,10 @@
 {
-  "name":"corporate",
+  "name":"Corporate Game",
   "scripts":{
     "postdeploy":"python manage.py migrate"
   },
   "env":{
     "DATABASE_URL":{
-      "required":true
-    },
-    "HEROKU_POSTGRESQL_BLACK_URL":{
       "required":true
     },
     "PYTHON_ENV":{
