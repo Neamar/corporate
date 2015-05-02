@@ -164,9 +164,27 @@ background-color: #000;
 		display: table;
 		width: inherit;
 
+		font-size: 1.75em;
+		color: #e3e3e3;
+
 		.pod-current-player-ic {
-		display: table-cell;
-		vertical-align: middle;
+			position: relative;
+			display: table-cell;
+			vertical-align: middle;
+			width: 50%;
+			padding-top: 35px;
+			padding-left: 25px;
+
+				&:after {
+					background-color: rgba(255, 255, 255, 0.2);
+					height: 85px;
+					width: 1px;
+					content: "";
+					position: absolute;
+					display: block;
+					right: 0;
+					top: 25px;
+				}
 
 			.icon-ic {
 				display: table-cell;
@@ -179,17 +197,21 @@ background-color: #000;
 			.ic-value {
 				display: table-cell;
 				vertical-align: middle;
+				padding-left: 15px;
 			}
 		}
 
 		.pod-current-player-money {
 			display: table-cell;
 			vertical-align: middle;
+			padding-top: 25px;
+			width: 50%;
 
 			.icon-money {
 				display: table-cell;
 				width: 58px;
 				height: 62px;
+				padding-left: 20px;
 				background: url("/static/img/sidebar/icon-argent.png") center top no-repeat;
 			}
 
@@ -198,11 +220,73 @@ background-color: #000;
 				vertical-align: middle;
 			}
 		}
-	}
+	}//current-player
 
 	.pod-players {
+		position: relative;
 		background-color: #262626;
 		background: url("/static/img/sidebar/player-bg.jpg") center top no-repeat;
-		height: 263px;
-	}
+		padding-bottom: 10px;
+
+		&:before {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: 2px;
+			background: url("/static/img/sidebar/player-bottom.png") center top no-repeat;
+			width: 244px;
+			height: 217px;
+			z-index: 1;
+		}
+
+		.pod-players-list {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+			width: 90%;
+			margin: auto;
+			position: relative;
+			z-index: 5;
+
+			& > li {
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			padding: 15px 0;
+			display: table;
+
+				img {
+					display: table-cell;
+					vertical-align: top;
+				}
+
+				.content-player {
+					display: table-cell;
+					vertical-align: top;
+					padding-left: 13px;
+					padding-top: 7px;
+					width: 100%;
+
+					.player-name {
+						color: #f6f6f6;
+						font-weight: bold;
+						font-size: 1.0666666em;
+					}
+
+					.icon-ic {
+						float: right;
+					}
+
+					.icons-list {
+					overflow: hidden;
+					margin: 0;
+					padding: 0;
+
+						& > li {
+							float: left;
+							margin-left: 20px;
+						}
+					}
+				}
+			}
+		}
+	}//pod-player
 }//sidebar
