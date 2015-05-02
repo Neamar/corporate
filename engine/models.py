@@ -39,8 +39,8 @@ class Game(models.Model):
 	OPE_EXTRACTION_FAIL_UP = 'OPE_EXTRACTION_FAIL_UP'
 	OPE_EXTRACTION_FAIL_DOWN = 'OPE_EXTRACTION_FAIL_DOWN'
 	OPE_EXTRACTION_DOWN = 'OPE_EXTRACTION_DOWN'
-	EFFECT_DEV_URBAIN_UP = 'EFFECT_DEV_URBAIN_UP'
-	EFFECT_DEV_URBAIN_DOWN = 'EFFECT_DEV_URBAIN_DOWN'
+	EFFECT_CONTRAT_UP = 'EFFECT_CONTRAT_UP'
+	EFFECT_CONTRAT_DOWN = 'EFFECT_CONTRAT_DOWN'
 	MARKET_HAND_UP = 'MARKET_HAND_UP'
 	MARKET_HAND_DOWN = 'MARKET_HAND_DOWN'
 	ADD_CITIZENSHIP = 'ADD_CITIZENSHIP'
@@ -60,6 +60,7 @@ class Game(models.Model):
 	MONEY_NEXT_TURN = 'MONEY_NEXT_TURN'
 	BACKGROUND = 'BACKGROUND'
 
+
 	EVENTS = (
 		(VOICE_UP, 'Voix au chapitre positive'),
 		(VOICE_DOWN, 'Voix au chapitre négative'),
@@ -77,8 +78,8 @@ class Game(models.Model):
 		(OPE_EXTRACTION_FAIL_UP, 'Opération d\'extraction échouée positive'),
 		(OPE_EXTRACTION_FAIL_DOWN, 'Opération d\'extraction échouée négative'),
 		(OPE_EXTRACTION_DOWN, 'Opération d\'extraction réussie négative'),
-		(EFFECT_DEV_URBAIN_UP, 'Effet de Detroit Inc. Développement urbain positif'),
-		(EFFECT_DEV_URBAIN_DOWN, 'Effet de Detroit Inc. Développement urbain négatif'),
+		(EFFECT_CONTRAT_UP, 'Effet de Detroit Inc. Contrat public positif'),
+		(EFFECT_CONTRAT_DOWN, 'Effet de Detroit Inc. Contrat public négatif'),
 		(MARKET_HAND_UP, 'Main du marché positive'),
 		(MARKET_HAND_DOWN, 'Main du marché négative'),
 		(ADD_CITIZENSHIP, 'Ajout de citoyenneté'),

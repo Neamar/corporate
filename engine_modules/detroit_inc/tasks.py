@@ -144,7 +144,7 @@ class DIncLineCPUBTask(ResolutionTask):
 				# increase a market by 1 asset at random
 				corporationmarket=c.random_corporation_market
 				c.update_assets(1, category=AssetDelta.DINC, corporationmarket=corporationmarket)
-				game.create_game_event(event_type=Game.EFFECT_DEV_URBAIN_UP, data='',  delta=1 , corporation=c , corporationmarket=corporationmarket)
+				game.create_game_event(event_type=Game.EFFECT_CONTRAT_UP, data='',  delta=1 , corporation=c , corporationmarket=corporationmarket)
 
 
 		loss_votes = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=DIncVoteOrder.RSEC)
@@ -153,6 +153,6 @@ class DIncLineCPUBTask(ResolutionTask):
 				# decrease a market by 1 asset at random
 				corporationmarket=c.random_corporation_market
 				c.update_assets(-1, category=AssetDelta.DINC, corporationmarket=c.random_corporation_market)
-				game.create_game_event(event_type=Game.EFFECT_DEV_URBAIN_DOWN, data='',  delta=-1 , corporation=c , corporationmarket=corporationmarket)
+				game.create_game_event(event_type=Game.EFFECT_CONTRAT_DOWN, data='',  delta=-1 , corporation=c , corporationmarket=corporationmarket)
 
 tasks = (DIncVoteTask, DIncLineCPUBTask)
