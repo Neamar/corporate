@@ -161,12 +161,41 @@ background-color: #000;
 	.pod-current-player {
 		background: url("/static/img/sidebar/current-bg.jpg") center top no-repeat;
 		height: 125px;
+		display: table;
+		width: inherit;
 
 		.pod-current-player-ic {
+		display: table-cell;
+		vertical-align: middle;
+
 			.icon-ic {
+				display: table-cell;
 				width: 49px;
 				height: 49px;
+				text-indent: -5555em;
 				background: url("/static/img/sidebar/icon-ic.png") center top no-repeat;
+			}
+
+			.ic-value {
+				display: table-cell;
+				vertical-align: middle;
+			}
+		}
+
+		.pod-current-player-money {
+			display: table-cell;
+			vertical-align: middle;
+
+			.icon-money {
+				display: table-cell;
+				width: 58px;
+				height: 62px;
+				background: url("/static/img/sidebar/icon-argent.png") center top no-repeat;
+			}
+
+			.money-value {
+				display: table-cell;
+				vertical-align: middle;
 			}
 		}
 	}
