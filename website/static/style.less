@@ -2,21 +2,46 @@ body {
 font-family: 'Roboto', sans-serif;
 font-weight: normal;
 color: #fff;
-
 background: url("/static/img/bg.jpg") repeat scroll center top rgba(0, 0, 0, 0);
+
+	&:before {
+		background: url("/static/img/bg-triangle.png") repeat scroll center top rgba(0, 0, 0, 0);
+		width: 1107px;
+		height: 398px;
+		position: absolute;
+		top: 0;
+		right:  calc(0 - 20%);
+		content: "";
+	}
 }
 
-.icon-red {
-	color: #d13939;
+.icon-red {color: #d13939}
+
+.grid-container.main-logo {
+position: relative;
+z-index: 5;
+text-indent: -5555em;
+ margin: 80px auto auto;
+
+	a {
+		background: url("/static/img/logo-corporate-game.png") repeat scroll center top rgba(0, 0, 0, 0);
+		width: 530px;
+		height: 103px;
+		display: block;
+	}
 }
 
-.main-container {
+.grid-container {
 	max-width: 1045px;
 	width: 96%;
 	margin: auto;
 	overflow: hidden;
-	 padding: 0 2%;
-	 display: table;
+	padding: 0 2%;
+	display: table;
+
+	&.main-container {
+		padding-bottom: 25px;
+	}
 
 	.content-container {
 		//float: left;
@@ -72,6 +97,14 @@ background: url("/static/img/bg.jpg") repeat scroll center top rgba(0, 0, 0, 0);
 			font-size: 1em;
 			text-decoration: none;
 			text-shadow: 1px 1px 0px #000;
+				-webkit-transition: all 0.25s ease-in-out 0.25s;
+				transition:all 0.25s ease-in-out 0.25s;
+
+			&:hover {
+				-webkit-transition: all 0.25s ease-in-out 0s;
+				transition:all 0.25s ease-in-out 0s;
+				color: #ec0707;
+			}
 
 			&.active {
 				color: #ec0707;
@@ -108,6 +141,18 @@ background: url("/static/img/bg.jpg") repeat scroll center top rgba(0, 0, 0, 0);
 		position: absolute;
 		left: -4px;
 		width: 4px;
+	}
+
+	&:after {
+		background: url("/static/img/sidebar/shadow.png") repeat-y scroll center top rgba(0, 0, 0, 0);
+		content: "";
+		display: block;
+		position: absolute;
+		right: -35px;
+		top: 0;
+		width: 35px;
+		height: 399px;
+		z-index: 1;
 	}
 
 	.current-player {
