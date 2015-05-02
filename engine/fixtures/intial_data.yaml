@@ -1,0 +1,17 @@
+- fields:
+    date_joined: 2015-05-02 22:33:24.334796+00:00
+    email: neamar@neamar.fr
+    first_name: ''
+    groups: []
+    is_active: true
+    is_staff: true
+    is_superuser: true
+    last_login: 2015-05-02 22:35:57.762042+00:00
+    last_name: ''
+    password: pbkdf2_sha256$15000$EisJqSdoNpog$uwsZ8gcHv/NOJkyRK9ExqpEmN+LjN3QazilUcU2mecs=
+    phone: null
+    skype: null
+    user_permissions: []
+    username: neamar
+  model: website.user
+  pk: 1

@@ -1,5 +1,8 @@
 {
   "name":"Corporate Game",
+  "description": "This is not a game, this is the Game.",
+  "website": "http://corporategame.me",
+  "repository": "https://github.com/Neamar/corporate",
   "scripts":{
     "postdeploy":"python manage.py migrate"
   },
