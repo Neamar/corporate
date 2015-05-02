@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'static_precompiler',
     'website',
     'docs',
     'engine',
@@ -103,6 +104,13 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'static_precompiler.finders.StaticPrecompilerFinder',
+)
+STATIC_PRECOMPILER_OUTPUT_DIR = "less"
+
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
 )
@@ -150,3 +158,8 @@ if "OPBEAT_ORGANIZATION_ID" in os.environ:
     MIDDLEWARE_CLASSES += (
         'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
     )
+
+if "CIRCLECI" in os.environ:
+    # We're running on circleci.com, toggle XML test output
+    TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
+    TEST_OUTPUT_DIR = os.environ['CIRCLE_TEST_REPORTS']

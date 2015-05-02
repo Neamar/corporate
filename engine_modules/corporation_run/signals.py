@@ -5,8 +5,34 @@ from engine.decorators import sender_instance_of
 from engine.dispatchs import validate_order
 from engine.exceptions import OrderNotAvailable
 
-from engine_modules.corporation_run.models import CorporationRunOrderWithStealer
+from engine_modules.corporation_run.models import CorporationRunOrder, CorporationRunOrderWithStealer, ProtectionOrder
 from django.core.exceptions import ValidationError
+
+
+@receiver(validate_order)
+@sender_instance_of(ProtectionOrder)
+def protected_market_positive(sender, instance, **kwargs):
+	"""
+	Protected market must be strictly positive
+	"""
+	if not hasattr(instance, 'protected_corporation_market'):
+		return
+
+	if instance.protected_corporation_market.value < 0:
+		raise OrderNotAvailable(u"Le marché «%s»est déjà dans le négatif pour la corpo %s, il est inutile de le protéger.")
+
+
+@receiver(validate_order)
+@sender_instance_of(CorporationRunOrder)
+def target_market_positive(sender, instance, **kwargs):
+	"""
+	Target market must be strictly positive
+	"""
+	if not hasattr(instance, 'target_corporation_market'):
+		return
+
+	if instance.target_corporation_market.value < 0:
+		raise OrderNotAvailable(u"Le marché «%s»est déjà dans le négatif pour la corpo %s, il ne lui reste que des dettes.")
 
 
 @receiver(validate_order)
@@ -15,7 +41,9 @@ def target_stealer_differ(sender, instance, **kwargs):
 	"""
 	Datasteal / Extraction: target and stealer must be different
 	"""
-	if not hasattr(instance, 'target_corporation_market'):
+	if not hasattr(instance, 'target_corporation'):
+		return
+	if not hasattr(instance, 'stealer_corporation'):
 		return
 
 	if instance.target_corporation == instance.stealer_corporation:

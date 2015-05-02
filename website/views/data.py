@@ -72,7 +72,6 @@ def corporation(request, player, game, corporation_slug):
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game.pk)
 	players = Player.objects.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
-	players = players.select_related('citizenship')
 
 	assets_history = corporation.assethistory_set.all()
 	return {
@@ -107,7 +106,6 @@ def players(request, game, player, turn):
 			"corporation": corporation,
 			"shares": [{"count": get_shares_count(corporation, player, shares), "top": is_top_shareholder(corporation, player, shares)} for player in players]
 		}
-
 		corporations_shares.append(corporation_shares)
 	return {
 		"totals": totals,
@@ -120,11 +118,12 @@ def players(request, game, player, turn):
 @render('game/player.html')
 @find_player_from_game_id
 @inject_game_into_response
-def player(request, game, player, player_id):
+@turn_by_turn_view
+def player(request, game, player, player_id, turn):
 	"""
 	Player data
 	"""
-	player = Player.objects.select_related('influence', 'citizenship__corporation').get(pk=player_id, game_id=game.pk)
+	player = Player.objects.get(pk=player_id, game_id=game.pk)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
 	rp, _ = parse_markdown(player.rp)
