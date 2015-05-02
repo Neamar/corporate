@@ -27,8 +27,6 @@ Jusque-là méconnue du grand public, elle a récemment gagné en influence de p
 ----
 
 
->Pas facile de faire chier Impulse… Ils fournissent le monde, reste discret et c’est tous des putains de génie. Même leurs gardes du corps planent à 120 de QI. Quand t’as pensé à un plan pour les baiser, ils l’ont envisagé. Non arrête de dire que t’as eu une pure idée… 
+>Pas facile de faire chier Impulse… Ils fournissent le monde, restent discret et c’est tous des putains de génie. Même leurs gardes du corps planent à 120 de QI. Quand t’as pensé à un plan pour les baiser, ils l’ont envisagé. Non arrête de dire que t’as eu une pure idée… 
 
->Si t’y vas, tu frappes vite et fort. Et si tu t’en sors mec, c’est ton échappée qu’il faut bosser. Ils fabriquent la moitié de ce qui vole et leurs drones spatiaux peuvent descendre te dézinguer depuis l’orbite. Ils ont des experts dans toutes les corpos qui les intéressent et ont le réseau d’info qui va avec. Ils ont la meilleure tech au monde, tout le monde se l’arrache. 
-
->Si tu t’en fais des employeurs, tant mieux pour toi. Tu peux te retrouver en exosquelette volant et te prendre pour Monsieur Stark… Si tu t’en fais des ennemis par contre, je te conseille d’apprendre à faire du camping souterrain…
+>Si t’y vas, tu frappes vite et fort. Et si tu veux t’en sortir mec, c’est ta fuite qu’il faut bosser. Ta fuite, ouais: ils fabriquent la moitié de ce qui vole et leurs drones spatiaux peuvent descendre te dézinguer depuis l’orbite. Ils ont la meilleure tech au monde, alors ça m'arrache pas la gueule de sortir le mot. 
