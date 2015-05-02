@@ -1,9 +1,9 @@
 name: EnerCore
 markets:
-    sécurité: 3
-    nanotechnologie: 2
-    cyberware: 2
-    santé: 0
+    énergie: 3
+    BTP: 2
+    médias: 2
+    agroalimentaire: 0
 datasteal: 20
 sabotage: 10
 extraction: 20

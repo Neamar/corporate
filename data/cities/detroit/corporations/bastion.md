@@ -1,9 +1,9 @@
 name: Bastion
 markets:
-    nanotechnologie: 2
-    alimentaire: 2
-    magie: 2
-    communication: 2
+    militaire: 2
+    médias: 2
+    énergie: 2
+    transport: 2
 datasteal: 10
 sabotage: 10
 extraction: 30

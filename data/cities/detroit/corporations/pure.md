@@ -1,9 +1,10 @@
 name: Pure
 markets:
-    cyberware: 2
+    pharmaceutique: 2
+    BTP: 3
+    robotique: 2
+    médias: 3
     transport: 3
-    communication: 2
-    armement: 3
 datasteal: 30
 sabotage: 10
 extraction: 10

@@ -1,9 +1,9 @@
 name: adefinir
 markets:
-    transport: 3
-    sécurité: 2
-    nanotechnologie: 2
-    santé: 2
+    agroalimentaire: 3
+    énergie: 2
+    transport: 2
+    pharmaceutique: 2
 datasteal: 10
 sabotage: 20
 extraction: 20

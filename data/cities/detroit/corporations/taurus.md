@@ -1,9 +1,11 @@
 name: Taurus Industries
 markets:
-    armement: 3
-    alimentaire: 3
-    sécurité: 3
-    magie: 3
+    transport: 3
+    militaire: 3
+    aérospatiale: 3
+    BTP: 3
+    robotique: 3
+    agroalimentaire: 3
 datasteal: 10
 sabotage: 30
 extraction: 10
