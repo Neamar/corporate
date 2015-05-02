@@ -4,6 +4,7 @@ font-weight: normal;
 color: #fff;
 background: url("/static/img/bg.jpg") repeat scroll center top rgba(0, 0, 0, 0);
 
+
 	&:before {
 		background: url("/static/img/bg-triangle.png") repeat scroll center top rgba(0, 0, 0, 0);
 		width: 1107px;
@@ -44,8 +45,6 @@ text-indent: -5555em;
 	}
 
 	.content-container {
-		//float: left;
-		//width: 67.3%;
 		display: table-cell;
 		vertical-align: top;
 		max-width: 703px;
@@ -123,9 +122,6 @@ text-indent: -5555em;
 
 
 .sidebar {
-	//max-width: 342px;
-	//width: 32.7%;
-	//float: left;
 	width: 342px;
 	background-color: #262626;
 	position: relative;
@@ -176,6 +172,8 @@ text-indent: -5555em;
 				margin-left: 15px;
 
 				img {
+					display: block;
+					border-radius: 50%;
 					position: absolute;
 					bottom: 0;
 					right: 2px;
@@ -211,6 +209,26 @@ text-indent: -5555em;
 			font-size: 1.0666666em;
 			margin-left: 45px;
 			padding-top: 11px;
+		}
+
+		&.last-pod {
+			&:before {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 2px;
+				background: url("/static/img/sidebar/player-bottom.png") center top no-repeat;
+				width: 244px;
+				height: 217px;
+				z-index: 1;
+			}
+		}
+
+		&.even {
+			background: #1e1e1e url("/static/img/sidebar/detroit-bg.jpg") center top no-repeat;
+		}
+		&.odd {
+			background: #1e1e1e url("/static/img/sidebar/current-bg.jpg") center top no-repeat;
 		}
 	}//pod - global
 
@@ -280,17 +298,40 @@ text-indent: -5555em;
 	}//Tour de jeu
 
 	.pod-dinc {
-		background: url("/static/img/sidebar/detroit-bg.jpg") center top no-repeat;
-		height: 120px;
+		min-height: 120px;
+		position: relative;
+
+		&:before {
+			height: 2px;
+			background-color: #4a4a4a;
+			width: 90%;
+			content: "";
+			position: absolute;
+			display: block;
+			top: 68%;
+			left: 50%;
+    		margin: auto auto auto -44%;
+		}
+
+		&:after {
+			height: 2px;
+			background-color: #1d1d1d;
+			width: 70%;
+			content: "";
+			position: absolute;
+			display: block;
+			top: 68%;
+			margin: auto auto auto -35%;
+			left: 50%;
+		}
 
 		img {
-			display: block;
-			margin: auto;
+		display: block;
+		margin: auto;
 		}
 	}
 
 	.pod-current-player {
-		background: url("/static/img/sidebar/current-bg.jpg") center top no-repeat;
 		height: 125px;
 		display: table;
 		width: 100%;
@@ -358,17 +399,6 @@ text-indent: -5555em;
 		background-color: #262626;
 		background: url("/static/img/sidebar/player-bg.jpg") center top no-repeat;
 		padding-bottom: 10px;
-
-		&:before {
-			content: "";
-			position: absolute;
-			bottom: 0;
-			left: 2px;
-			background: url("/static/img/sidebar/player-bottom.png") center top no-repeat;
-			width: 244px;
-			height: 217px;
-			z-index: 1;
-		}
 
 		.pod-players-list {
 			list-style-type: none;
