@@ -1,5 +1,6 @@
 {% extends "template.html" %}
 {% load get_item %}
+{% load pods %}
 
 {% block title %}Wallstreet{% endblock %}
 {% block h1 %}Wallstreet{% endblock %}
@@ -36,6 +37,13 @@
 {% endfor %}
 </tbody>
 </table>
+<div>
+<ul>
+{% for pod in pods %}
+	<li>{% get_pod pod %}</li>
+{% endfor %}
+</ul>
+</div>
 
 <div id="chart_div" style="width: 99%; height: 300px; margin:15px auto;"></div>
 
