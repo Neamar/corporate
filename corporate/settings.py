@@ -148,6 +148,9 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
         os.path.join(BASE_DIR, 'static'),
     )
 
+    # Compress less file on deployment
+    COMPRESS_OFFLINE = True
+
 
 if "OPBEAT_ORGANIZATION_ID" in os.environ:
     INSTALLED_APPS += (
