@@ -57,7 +57,7 @@ def wallstreet(request, game, player, turn):
 		"assets_history": assets_history,
 		"sorted_corporations": sorted_corporations,
 		"delta_categories": OrderedDict(sorted(delta_categories.items())),
-		"pods": ['players', ],
+		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
 	}
 
 
@@ -76,7 +76,8 @@ def corporation(request, player, game, corporation_slug):
 	return {
 		"corporation": corporation,
 		"players": players,
-		"assets_history": assets_history
+		"assets_history": assets_history,
+		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
 	}
 
 

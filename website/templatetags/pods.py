@@ -4,22 +4,37 @@ from django.template.loader import get_template
 register = template.Library()
 
 
-def get_player_pod(context):
-    game = context["game"]
-    player = context["player"]
-    return {
-        "player": player,
-        "game": game
-    }
+def players_pod(context):
+	return {}
 
 
+def d_inc_pod(context):
+	return {}
+
+
+def current_player_pod(context):
+	return {}
+
+
+def turn_spinner_pod(context):
+	return {}
+
+
+# Map string name to pod generator
 pods_functions = {
-    "players": get_player_pod,
+	"players": players_pod,
+	"d_inc": d_inc_pod,
+	"current_player": current_player_pod,
+	"turn_spinner": turn_spinner_pod,
 }
 
 
-@register.simple_tag(takes_context=True, name="get_pod")
-def get_pod(context, pod, *args, **kwargs):
-    template = get_template('pods/' + pod + '.html')
+@register.simple_tag(takes_context=True, name="display_pod")
+def display_pod(context, pod, *args, **kwargs):
+	template = get_template('pods/' + pod + '.html')
 
-    return template.render(pods_functions[pod](context))
+	pod_context = pods_functions[pod](context)
+	pod_context['game'] = context['game']
+	pod_context['player'] = context['player']
+
+	return template.render(pods_functions[pod](context))

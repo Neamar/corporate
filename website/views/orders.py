@@ -1,27 +1,30 @@
 from __future__ import absolute_import
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from engine.models import Order
 from website.utils import get_player, get_orders_availability, get_order_by_name
+from website.decorators import render, inject_game_and_player_into_response, find_player_from_game_id
 
 
 @login_required
-def orders(request, game_id):
-	player = get_player(request, game_id)
-
+@render('game/orders.html')
+@find_player_from_game_id
+@inject_game_and_player_into_response
+def orders(request, game, player):
 	existing_orders = [order.to_child() for order in player.order_set.filter(turn=player.game.current_turn)]
 	existing_orders_cost = sum(o.cost for o in existing_orders)
 
 	available_orders = get_orders_availability(player)
 
-	return render(request, 'game/orders.html', {
+	return {
 		"game": player.game,
 		"available_orders": available_orders,
 		"existing_orders": existing_orders,
 		"existing_orders_cost": existing_orders_cost,
 		"remaining_money": player.money - existing_orders_cost,
-	})
+		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
+	}
 
 
 @login_required
