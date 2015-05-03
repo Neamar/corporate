@@ -1,7 +1,7 @@
 {
   "name":"Corporate Game",
   "scripts":{
-    "postdeploy":"python manage.py migrate"
+    "postdeploy":"./bin/post_compile && python manage.py migrate"
   },
   "env":{
     "DATABASE_URL":{
