@@ -9,7 +9,10 @@ def players_pod(context):
 
 
 def d_inc_pod(context):
-	return {}
+	return {
+		'd_inc_line': 'CONS',
+		'd_inc_line_display': 'Consolidation'
+	}
 
 
 def current_player_pod(context):
@@ -37,4 +40,4 @@ def display_pod(context, pod, *args, **kwargs):
 	pod_context['game'] = context['game']
 	pod_context['player'] = context['player']
 
-	return template.render(pods_functions[pod](context))
+	return template.render(pod_context)
