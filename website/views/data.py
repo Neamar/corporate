@@ -82,13 +82,13 @@ def corporation(request, player, game, corporation_slug):
 
 
 @login_required
-@render('game/players.html')
+@render('game/shares.html')
 @find_player_from_game_id
 @inject_game_into_response
 @turn_by_turn_view
-def players(request, game, player, turn):
+def shares(request, game, player, turn):
 	"""
-	Players data
+	Shares data
 	"""
 
 	players = game.player_set.all().order_by('pk')
