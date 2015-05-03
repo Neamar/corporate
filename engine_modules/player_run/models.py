@@ -46,7 +46,6 @@ class InformationOrder(RunOrder):
 		content = information_messages['success']['sponsor'] % (self.target)
 		self.player.add_note(category=Note.RUNS, content=content)
 
-
 	def resolve_failure(self):
 		# Send a note to the one who ordered the DataSteal
 		content = information_messages['fail']['sponsor'] % (self.target)
