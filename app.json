@@ -1,12 +1,12 @@
 {
   "name":"Corporate Game",
+  "description": "This is not a game, this is the Game.",
+  "website": "http://corporategame.me",
+  "repository": "https://github.com/Neamar/corporate",
   "scripts":{
-    "postdeploy":"python manage.py migrate"
+    "postdeploy":"./bin/post_compile && python manage.py migrate && python manage.py loaddata website/fixtures/bootstrap.json "
   },
   "env":{
-    "DATABASE_URL":{
-      "required":true
-    },
     "PYTHON_ENV":{
       "required":true
     }
