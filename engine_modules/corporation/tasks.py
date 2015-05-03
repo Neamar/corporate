@@ -14,7 +14,12 @@ class CrashCorporationTask(ResolutionTask):
 		# This does not work because my pinky tells me it should be assets, not market_assets
 		# but assets is a property, so we're kinda fucked. I don't want to deal with this now, so I'll leave it for later
 		# TODO: Find a fix
-		corporations_to_crash = game.corporation_set.filter(market_assets__lte=0)
+		corporations_to_crash = []
+		corporations = game.corporation_set.all()
+		for corporation in corporations:
+			if corporation.assets <= 0:
+				corporations_to_crash.append(corporation)
+
 		if not corporations_to_crash:
 			return
 

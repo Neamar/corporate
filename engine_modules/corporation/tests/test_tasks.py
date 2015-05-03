@@ -34,3 +34,8 @@ class CrashCorporationTaskTest(EngineTestCase):
 		self.g.resolve_current_turn()
 
 		self.assertRaises(Corporation.DoesNotExist, lambda: self.reload(self.c))
+
+	def test_corporation_not_deleted_when_assets_not_zero(self):
+		"""
+		A corporation should not crash 
+		"""

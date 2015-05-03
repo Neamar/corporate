@@ -8,4 +8,3 @@ class User(AbstractUser):
 
 	phone = models.CharField(max_length=15, null=True, blank=True)
 	skype = models.CharField(max_length=50, null=True, blank=True)
-	# TODO: add image

@@ -139,7 +139,7 @@ class Corporation(models.Model):
 		"""
 		c2_markets = c2.markets
 		common_corporation_markets = [cm for cm in self.corporation_markets if cm.market in c2_markets]
-		
+
 		if len(common_corporation_markets) != 0:
 			return random.choice(common_corporation_markets)
 		else:
@@ -217,12 +217,6 @@ class Corporation(models.Model):
 		Does not actually change "assets", since it is a property, but changes on market_assets will be reflected on assets
 		"""
 		corporation_market = self.corporationmarket_set.get(market=market)
-
-		# A market can't be negative, so we cap the delta
-		if corporation_market.value + delta < 0:
-			# A market can't be negative, so we cap the delta
-			delta = -corporation_market.value
-
 		corporation_market.value += delta
 		corporation_market.save()
 

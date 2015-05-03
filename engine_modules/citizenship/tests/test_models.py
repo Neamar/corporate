@@ -7,8 +7,9 @@ class ModelsTest(EngineTestCase):
 		Corporation crash should set citizenship to null
 		"""
 
-		self.p.citizenship.corporation = self.c
-		self.p.citizenship.save()
+		citizenship = self.p.citizenship
+		citizenship.corporation = self.c
+		citizenship.save()
 
 		self.c.market_assets = 0
 		self.c.save()

@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 
 from engine.testcases import EngineTestCase
-from engine_modules.citizenship.models import CitizenShipOrder
+from engine_modules.citizenship.models import CitizenshipOrder
 from engine_modules.share.models import Share
 
 
@@ -16,7 +16,7 @@ class SignalsTest(EngineTestCase):
 		)
 		self.s.save()
 
-		self.o = CitizenShipOrder(
+		self.o = CitizenshipOrder(
 			player=self.p,
 			corporation=self.c
 		)
@@ -27,7 +27,7 @@ class SignalsTest(EngineTestCase):
 		"""
 		Order can't be created twice
 		"""
-		o2 = CitizenShipOrder(
+		o2 = CitizenshipOrder(
 			player=self.p,
 			corporation=self.c
 		)
