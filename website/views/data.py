@@ -7,14 +7,14 @@ from django.db.models import Count
 from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 from engine.models import Player
-from website.decorators import render, find_player_from_game_id, inject_game_into_response, turn_by_turn_view
+from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
 from utils.read_markdown import parse_markdown
 
 
 @login_required
 @render('game/wallstreet.html')
 @find_player_from_game_id
-@inject_game_into_response
+@inject_game_and_player_into_response
 @turn_by_turn_view
 def wallstreet(request, game, player, turn):
 	"""
@@ -57,13 +57,14 @@ def wallstreet(request, game, player, turn):
 		"assets_history": assets_history,
 		"sorted_corporations": sorted_corporations,
 		"delta_categories": OrderedDict(sorted(delta_categories.items())),
+		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
 	}
 
 
 @login_required
 @render('game/corporation.html')
 @find_player_from_game_id
-@inject_game_into_response
+@inject_game_and_player_into_response
 def corporation(request, player, game, corporation_slug):
 	"""
 	Corporation data
@@ -75,21 +76,20 @@ def corporation(request, player, game, corporation_slug):
 	return {
 		"corporation": corporation,
 		"players": players,
-		"assets_history": assets_history
+		"assets_history": assets_history,
+		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
 	}
 
 
 @login_required
 @render('game/players.html')
 @find_player_from_game_id
-@inject_game_into_response
+@inject_game_and_player_into_response
 def players(request, game, player):
 	"""
 	Players data
 	"""
-
 	players = game.player_set.all().annotate(Count('share')).select_related('user').order_by('name')
-
 	return {
 		"players": players,
 	}
@@ -98,11 +98,12 @@ def players(request, game, player):
 @login_required
 @render('game/player.html')
 @find_player_from_game_id
-@inject_game_into_response
+@inject_game_and_player_into_response
 def player(request, game, player, player_id):
 	"""
 	Player data
 	"""
+
 	player = Player.objects.get(pk=player_id, game_id=game.pk)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
@@ -119,7 +120,7 @@ def player(request, game, player, player_id):
 @login_required
 @render('game/comlink.html')
 @find_player_from_game_id
-@inject_game_into_response
+@inject_game_and_player_into_response
 def comlink(request, game, player):
 	"""
 	Display comlink
@@ -135,7 +136,7 @@ def comlink(request, game, player):
 @login_required
 @render('game/message.html')
 @find_player_from_game_id
-@inject_game_into_response
+@inject_game_and_player_into_response
 def message(request, game, player, message_id):
 	"""
 	Display message

@@ -32,12 +32,13 @@ def find_player_from_game_id(func):
 	return wrap
 
 
-def inject_game_into_response(func):
+def inject_game_and_player_into_response(func):
 	@wraps(func)
 	def wrap(*args, **kwargs):
 		response = func(*args, **kwargs)
 		if isinstance(response, dict):
 			response['game'] = kwargs["game"]
+			response['player'] = kwargs["player"]
 		return response
 	return wrap
 
