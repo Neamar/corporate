@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import render as django_render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from engine.models import Order
@@ -54,7 +54,7 @@ def add_order(request, game_id, order_type):
 		"form": form
 	}
 
-	return render(request, 'game/add_order.html', {"game": player.game, "order": order})
+	return django_render(request, 'game/add_order.html', {"game": player.game, "order": order})
 
 
 @login_required
