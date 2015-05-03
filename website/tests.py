@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.utils import timezone
 from django.test.utils import override_settings
 from django.test import Client
 from django.core.urlresolvers import reverse
@@ -17,7 +16,6 @@ class WebsiteTest(EngineTestCase):
 		password = "password"
 		self.u = User(username="hello")
 		self.u.set_password(password)
-		self.u.last_login = timezone.now()
 		self.u.save()
 
 		self.p.user = self.u
