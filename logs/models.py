@@ -71,3 +71,6 @@ class ConcernedPlayers(models.Model):
 	# It indicates that the player is the source of the action. Texts must be impacted :
 	# 'You have ...' instead of 'Marc have...'
 	personal = models.BooleanField()
+
+# Import signals
+from logs.signals import *

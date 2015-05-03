@@ -115,8 +115,9 @@ class Game(models.Model):
 			data=data,
 			delta=delta,
 			corporation=corporation,
+			corporationmarket=corporationmarket,
 			players=players,
-			corporationmarket=corporationmarket)
+			instance=self)
 
 	@transaction.atomic
 	def resolve_current_turn(self):
