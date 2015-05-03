@@ -37,5 +37,18 @@ class CrashCorporationTaskTest(EngineTestCase):
 
 	def test_corporation_not_deleted_when_assets_not_zero(self):
 		"""
-		A corporation should not crash 
+		A corporation should not crash when it has one market asset at 0 but not its assets
 		"""
+
+		corporation_market = self.c.get_random_corporation_market()
+		corporation_market.value = 100
+		corporation_market.save()
+
+		negative_corporation_market = self.c.get_random_corporation_market()
+		while negative_corporation_market == corporation_market:
+			negative_corporation_market = self.c.get_random_corporation_market()
+
+		negative_corporation_market.value = -10
+		negative_corporation_market.save()
+
+		self.reload(self.c)

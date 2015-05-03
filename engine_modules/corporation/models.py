@@ -118,8 +118,7 @@ class Corporation(models.Model):
 		"""
 		return [cm.market for cm in self.corporation_markets]
 
-	@property
-	def random_corporation_market(self):
+	def get_random_corporation_market(self):
 		"""
 		Returns one object at random among the CorporationMarket objects associated with the Corporation
 		"""
