@@ -28,4 +28,3 @@ class ModelMethodTest(EngineTestCase):
 
 		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - 1)
 		self.assertEqual(self.reload(corporation_market).value, initial_market_assets - 1)
-
