@@ -109,8 +109,7 @@ class Corporation(models.Model):
 		"""
 		return [cm.market for cm in self.corporation_markets]
 
-	@property
-	def random_corporation_market(self):
+	def get_random_corporation_market(self):
 		"""
 		Returns one object at random among the CorporationMarket objects associated with the Corporation
 		"""
@@ -147,7 +146,7 @@ class Corporation(models.Model):
 			"""
 			Updates corporation's assets by delta, in Market market if specified, or a Market at random otherwise
 			"""
-			if market!=None:
+			if market is not None:
 				corporationmarket = self.corporationmarket_set.get(market=market)
 
 			if isinstance(corporation, str):
@@ -159,7 +158,7 @@ class Corporation(models.Model):
 
 			if market is None:
 				# By default, a random market is impacted
-				corporationmarket = corporation.random_corporation_market
+				corporationmarket = corporation.get_random_corporation_market()
 			else:
 				# TODO; implement and test effects with a market name
 				raise NotImplementedError()
@@ -168,14 +167,13 @@ class Corporation(models.Model):
 
 			# create a event_type
 			if delta_category == AssetDelta.EFFECT_FIRST:
-				event_type=Game.FIRST_EFFECT
+				event_type = Game.FIRST_EFFECT
 			elif delta_category == AssetDelta.EFFECT_LAST:
-				event_type=Game.LAST_EFFECT
+				event_type = Game.LAST_EFFECT
 			elif delta_category == AssetDelta.EFFECT_CRASH:
-				event_type=Game.CRASH_EFFECT
+				event_type = Game.CRASH_EFFECT
 
-			self.game.create_game_event(event_type=event_type, data='',  delta=delta , corporation=corporation , corporationmarket=corporationmarket)
-
+			self.game.add_event(event_type=event_type, data='', delta=delta, corporation=corporation, corporationmarket=corporationmarket)
 
 		context = {
 			'game': self.game,

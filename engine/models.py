@@ -63,49 +63,7 @@ class Game(models.Model):
 	WIN_BUBBLE = 'WIN_BUBBLE'
 	LOST_BUBBLE = 'LOST_BUBBLE'
 
-	EVENTS = (
-		(VOICE_UP, 'Voix au chapitre positive'),
-		(VOICE_DOWN, 'Voix au chapitre négative'),
-		(FIRST_EFFECT, 'Effet premier'),
-		(LAST_EFFECT, 'Effet dernier'),
-		(CRASH_EFFECT, 'Effet crash'),
-		(OPE_SABOTAGE, 'Opération de sabotage réussie'),
-		(OPE_SABOTAGE_FAIL, 'Opération de sabotage échouée'),
-		(OPE_DATASTEAL_UP, 'Opération de datasteal réussie positive'),
-		(OPE_DATASTEAL_FAIL_UP, 'Opération de datasteal échouée positive'),
-		(OPE_DATASTEAL_FAIL_DOWN, 'Opération de datasteal échouée négative'),
-		(OPE_DATASTEAL_DOWN, 'Opération de datasteal réussie négative'),
-		(OPE_PROTECTION, 'Opération de protection'),
-		(OPE_EXTRACTION_UP, 'Opération d\'extraction réussie positive'),
-		(OPE_EXTRACTION_FAIL_UP, 'Opération d\'extraction échouée positive'),
-		(OPE_EXTRACTION_FAIL_DOWN, 'Opération d\'extraction échouée négative'),
-		(OPE_EXTRACTION_DOWN, 'Opération d\'extraction réussie négative'),
-		(EFFECT_CONTRAT_UP, 'Effet de Detroit Inc. Contrat public positif'),
-		(EFFECT_CONTRAT_DOWN, 'Effet de Detroit Inc. Contrat public négatif'),
-		(MARKET_HAND_UP, 'Main du marché positive'),
-		(MARKET_HAND_DOWN, 'Main du marché négative'),
-		(ADD_CITIZENSHIP, 'Ajout de citoyenneté'),
-		(REMOVE_CITIZENSHIP, 'Perte de citoyenneté'),
-		(IC_UP, 'Augmentation d\'influence corporatiste'),
-		(OPE_INFORMATION, 'Opération d\'information'),
-		(EFFECT_CONSOLIDATION_UP, 'Effet de Detroit Inc Consolidation positif'),
-		(EFFECT_CONSOLIDATION_DOWN, 'Effet de Detroit Inc Consolidation négatif'),
-		(EFFECT_SECURITY_UP, 'Effet de Detroit Inc Réforme de la sécuritée positif'),
-		(EFFECT_SECURITY_DOWN, 'Effet de Detroit Inc Réforme de la sécuritée négatif'),
-		(SPECULATION_WIN, 'Spéculation réussie'),
-		(SPECULATION_LOST, 'Spéculation échouée'),
-		(WIRETRANSFER, 'Transfert d\'argent à un autre joueur'),
-		(BUY_SHARE, 'Acheter une part'),
-		(VOTE_CONSOLIDATION, 'Vote de la ligne Consolidation à Detoit Inc.'),
-		(VOTE_SECURITY, 'Vote de la ligne Réforme de la sécuritée à Detoit Inc.'),
-		(VOTE_CONTRAT, 'Vote de la ligne contrat public à Detoit Inc.'),
-		(MONEY_NEXT_TURN, 'Argent disponible au début de tour suivant'),
-		(BACKGROUND, 'Information de background découverte'),
-		(WIN_BUBBLE, 'Le marché a un actif de domination'),
-		(LOST_BUBBLE, 'Le marché a un actif de perte sèche'),
-	)
-
-	def create_game_event(self, event_type, data, delta=0, corporation=None, players=None, corporationmarket=None):
+	def add_event(self, event_type, data, delta=0, corporation=None, players=[], corporationmarket=None):
 		"""
 		Create a game event signal. This signal may be received for a log creation for example.
 		"""
@@ -117,7 +75,8 @@ class Game(models.Model):
 			corporation=corporation,
 			corporationmarket=corporationmarket,
 			players=players,
-			instance=self)
+			instance=self
+		)
 
 	@transaction.atomic
 	def resolve_current_turn(self):

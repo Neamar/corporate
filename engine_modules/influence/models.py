@@ -38,7 +38,7 @@ class BuyInfluenceOrder(Order):
 		influence.save()
 
 		# Create game event
-		self.player.game.create_game_event(event_type=Game.IC_UP, data='', players=[self.player])
+		self.player.game.add_event(event_type=Game.IC_UP, data='', players=[self.player])
 
 		# Send a note for final message
 		content = u"Votre Influence dans le milieu corporatiste monte à %i." % self.player.influence.level
