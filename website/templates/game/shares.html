@@ -1,0 +1,45 @@
+{% extends "template.html" %}
+
+{% block title %}Parts{% endblock %}
+{% block h1 %}Parts{% endblock %}
+
+{% block content %}
+
+<table class="table">
+<thead>
+<tr>
+	<th></th>
+	{% for player in players %}
+	<!-- should be replaced with the player's image when -->
+	<th>{{ player.name|title }}</th>
+	{% endfor %}
+</tr>
+</thead>
+<tfoot>
+<tr>
+	<td>Total (Σ)</td>
+	{% for total in totals %}
+	<td>{{ total }}</td>
+	{% endfor %}
+</tr>
+</tfoot>
+<tbody>
+{% for corporation_shares in corporations_shares %}
+<tr>
+	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation_shares.corporation.base_corporation.slug %}">{{ corporation_shares.corporation.base_corporation.slug }}</a></td>
+	{% for share in corporation_shares.shares %}
+	<td>
+	{% if share.count != 0 %}
+	{% if share.top %}
+		<strong title="Actionnaire majoritaire">{{ share.count }}</strong>
+	{% else %}
+		{{ share.count }}
+	{% endif %}
+	{% endif %}
+	</td>
+	{% endfor %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock content %}

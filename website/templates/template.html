@@ -19,14 +19,12 @@
 
 <body>
 
-	<h1 class="grid-container main-logo"><a href="/">Corporate Game</a></h1>
-
 <div class="grid-container main-container">
 	<section class="content-container">
 		<ul class="menu">
 			<li><a href="{% url 'website.views.orders.orders' game_id='1' %}">Ordres</a></li>
 			<li><a href="{% url 'website.views.data.wallstreet' game_id='1' %}">Wallstreet</a></li>
-			<li><a class="active" href="{% url 'website.views.data.players' game_id='1' %}">Joueurs</a></li>
+			<li><a class="active" href="{% url 'website.views.data.shares' game_id='1' %}">Parts</a></li>
 			<li class="rules"><a href="{% url 'docs.views.index' page='' %}" title="Règles du jeu">Règles</a></li>
 		</ul>
 

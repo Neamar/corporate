@@ -4,10 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
 
+from engine_modules.share.models import Share
 from engine_modules.corporation.models import Corporation
 from engine_modules.corporation_asset_history.models import AssetHistory
 from engine.models import Player
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
+from website.utils import get_shares_count, is_top_shareholder
 from utils.read_markdown import parse_markdown
 
 
@@ -82,16 +84,38 @@ def corporation(request, player, game, corporation_slug):
 
 
 @login_required
-@render('game/players.html')
+@render('game/shares.html')
 @find_player_from_game_id
 @inject_game_and_player_into_response
-def players(request, game, player):
+@turn_by_turn_view
+def shares(request, game, player, turn):
 	"""
-	Players data
+	Shares data
 	"""
+
+	players = game.player_set.all().order_by('pk')
+	corporations = list(game.corporation_set.all().order_by('pk'))
+	shares = Share.objects.filter(player__game=game, turn=turn).select_related('corporation', 'player')
+	corporations_shares = []
+	totals = []
+	for player in players:
+		total = 0
+		for corporation in corporations:
+			total += get_shares_count(corporation, player, shares)
+		totals.append(total)
+	for corporation in corporations:
+		corporation_shares = {
+			"corporation": corporation,
+			"shares": [{"count": get_shares_count(corporation, player, shares), "top": is_top_shareholder(corporation, player, shares)} for player in players]
+		}
+		corporations_shares.append(corporation_shares)
 	players = game.player_set.all().annotate(Count('share')).select_related('user').order_by('name')
+
 	return {
+		"totals": totals,
 		"players": players,
+		"corporations": corporations,
+		"corporations_shares": corporations_shares,
 	}
 
 
@@ -99,7 +123,8 @@ def players(request, game, player):
 @render('game/player.html')
 @find_player_from_game_id
 @inject_game_and_player_into_response
-def player(request, game, player, player_id):
+@turn_by_turn_view
+def player(request, player, game, player_id, turn):
 	"""
 	Player data
 	"""
