@@ -114,6 +114,8 @@ STATICFILES_FINDERS = (
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
+COMPRESS_OUTPUT_DIR = "cache"
+
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
