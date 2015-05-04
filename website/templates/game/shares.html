@@ -4,23 +4,22 @@
 {% block h1 %}Parts{% endblock %}
 
 {% block content %}
-{% include "_pager.html" with base_url="website.views.data.shares" base_title="Consulter les parts au tour" %}
 
-<table class="prop_table slanted_head">
+<table class="table">
 <thead>
 <tr>
 	<th></th>
-	{% for total in totals %}
+	{% for player in players %}
 	<!-- should be replaced with the player's image when -->
-	<th><div><span>{{ total.player.name|title }}</span></div></th>
+	<th>{{ player.name|title }}</th>
 	{% endfor %}
 </tr>
 </thead>
 <tfoot>
 <tr>
-	<td>Total (sigma)</td>
+	<td>Total (Σ)</td>
 	{% for total in totals %}
-	<td><div>{{ total.total }}</div></td>
+	<td>{{ total }}</td>
 	{% endfor %}
 </tr>
 </tfoot>

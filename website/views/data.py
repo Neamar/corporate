@@ -100,7 +100,7 @@ def shares(request, game, player, turn):
 		total = 0
 		for corporation in corporations:
 			total += get_shares_count(corporation, player, shares)
-		totals.append({'player': player, 'total': total})
+		totals.append(total)
 	for corporation in corporations:
 		corporation_shares = {
 			"corporation": corporation,
@@ -109,6 +109,7 @@ def shares(request, game, player, turn):
 		corporations_shares.append(corporation_shares)
 	return {
 		"totals": totals,
+		"players": players,
 		"corporations": corporations,
 		"corporations_shares": corporations_shares,
 	}
@@ -133,25 +134,6 @@ def player(request, player, game, player_id, turn):
 		"player": player,
 		"rp": rp,
 		"corporations": corporations
-	}
-
-
-@login_required
-@render('game/newsfeeds.html')
-@find_player_from_game_id
-@inject_game_into_response
-@turn_by_turn_view
-def newsfeeds(request, game, player, turn):
-	"""
-	Display newsfeed
-	"""
-
-	newsfeeds = game.newsfeed_set.filter(turn=turn, path="").order_by('category')
-	newsfeeds_rp = game.newsfeed_set.filter(turn=turn).exclude(path="").order_by('category')
-
-	return {
-		"newsfeeds": newsfeeds,
-		"newsfeeds_rp": newsfeeds_rp,
 	}
 
 
