@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import sys
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -130,7 +131,7 @@ CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())
 
 # Environment overrides
 if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
-    DEBUG = False
+    DEBUG = os.environ['DEBUG'] if 'DEBUG' in os.environ else False
     import dj_database_url
     DATABASES['default'] = dj_database_url.config()
 
