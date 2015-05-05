@@ -136,13 +136,20 @@ class Corporation(models.Model):
 		Raises a ValidationError otherwise, because two Corporations should have at least one common Market
 		This does not actually return a common CorporationMarket, because there is no such thing: a CorporationMarket is by definition specific to a Corporation
 		"""
+		
+		return random.choice(self.get_common_corporation_markets(c2))
+
+	def get_common_corporation_markets(self, c2):
+		"""
+		Returns a list of CorporationMarket objects for every common market between the Corporation and c2 if there is one.
+		Raises ValidationError otherwise.
+		"""
 		c2_markets = c2.markets
 		common_corporation_markets = [cm for cm in self.corporation_markets if cm.market in c2_markets]
-
-		if len(common_corporation_markets) != 0:
-			return random.choice(common_corporation_markets)
-		else:
+		if len(common_corporation_markets) == 0:
 			raise ValidationError("Corporations %s and %s have no common market" % (self.base_corporation.name, c2.base_corporation.name))
+		else:
+			return common_corporation_markets
 
 	def get_common_market(self, c2):
 		"""
@@ -150,6 +157,14 @@ class Corporation(models.Model):
 		Raises a ValidationError otherwise, because two Corporations should have at least one common Market
 		"""
 		return self.get_common_corporation_market(c2).market
+
+	def get_common_markets(self, c2):
+		"""
+		Returns a list of Market objects for every common market between the Corporation and c2 if there is one.
+		Raises ValidationError otherwise.
+		"""
+		common_corporation_markets = self.get_common_corporation_markets(c2)
+		return [cm.market for cm in common_corporation_markets]
 
 	@cached_property
 	def base_corporation(self):
@@ -174,8 +189,13 @@ class Corporation(models.Model):
 				# By default, a random market is impacted
 				market = corporation.get_random_market()
 			else:
-				# TODO; implement and test effects with a market name
-				raise NotImplementedError()
+				for m in corporation.markets:
+					if m.name == market:
+						market = m
+						break
+
+				if isinstance(market, str):
+					raise ValidationError("La corporation %s n'est pas présente sur le marché %s, elle ne peut pas être impactée par un effet sur ce dernier" % (self.base_corporation.name, m))
 
 			corporation.update_assets(delta, category=delta_category, market=market)
 

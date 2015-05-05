@@ -32,3 +32,5 @@ def domination_in_corporations_markets(sender, instance, **kwargs):
 		corporation_markets.append(cm.market)
 	if instance.market not in corporation_markets:
 		raise ValidationError(u"La corporation %s ne peut pas dominer un marché où elle n'est pas présente")
+
+# TODO: write a signal to prevent having a positive and a negative bubble on the same market for the same corporation

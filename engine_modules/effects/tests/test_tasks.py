@@ -57,6 +57,23 @@ class TasksTest(EngineTestCase):
 		self.assertEqual(self.reload(self.last_corporation).assets, initial_assets - 3)
 
 	@override_base_corporations
+	def test_first_effect_target_market(self):
+		"""
+		Test that the first corporation's on_first effect gets applied on specified market
+		"""
+		initial_assets = self.first_corporation.assets
+		target_corporation_market = self.first_corporation.get_random_corporation_market()
+		initial_target_assets = target_corporation_market.value
+
+		# Change the default code
+		self.update_effect(self.first_corporation, 'on_first', "update('%s', 3, market='%s')" % (self.first_corporation.base_corporation_slug, target_corporation_market.market.name))
+		self.update_effect(self.last_corporation, 'on_last', "")
+
+		self.g.resolve_current_turn()
+		self.assertEqual(self.reload(self.first_corporation).assets, initial_assets + 3)
+		self.assertEqual(self.reload(target_corporation_market).value, initial_target_assets + 3)
+
+	@override_base_corporations
 	def test_update_create_assetdelta(self):
 		"""
 		Using update() function in code creates AssetDelta
