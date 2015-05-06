@@ -8,16 +8,13 @@ class OrdersTest(EngineTestCase):
 
 		super(OrdersTest, self).setUp()
 
-		self.c.market_assets = 100
-		self.c.save()
+		self.c.set_market_assets(100)
 		self.first_corporation = self.c
 
-		self.c2.market_assets = 10
-		self.c2.save()
+		self.c2.set_market_assets(10)
 		self.medium_corporation = self.c2
 
-		self.c3.market_assets = 1
-		self.c3.save()
+		self.c3.set_market_assets(1)
 		self.last_corporation = self.c3
 
 	def test_corporation_speculation_order_cost_money(self):

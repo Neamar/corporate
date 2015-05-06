@@ -9,7 +9,7 @@ class CrashCorporationTaskTest(EngineTestCase):
 		Corporations should crash when their market assets drop to 0
 		"""
 
-		self.c.market_assets = 0
+		self.c.set_market_assets(0)
 		self.c.save()
 
 		self.g.resolve_current_turn()

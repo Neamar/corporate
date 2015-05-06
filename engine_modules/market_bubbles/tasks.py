@@ -108,8 +108,7 @@ class UpdateMarketBubblesTask(OrderResolutionTask):
 						bubble.save()
 
 		for corporation in corporations:
-			corporation.assets_modifier = modifiers[corporation]
-			corporation.save()
+			corporation.update_modifier(modifiers[corporation])
 
 
 class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
@@ -175,7 +174,7 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 				domination_bubble.save()
 
 		for corporation in corporations:
-			corporation.assets_modifier += modifiers[corporation]
-			corporation.save()
+			# I believe I already mentioned that the 'modifiers' array contains relative values
+			corporation.update_modifier(corporation.assets_modifier + modifiers[corporation])
 		
 tasks = (UpdateMarketBubblesTask, UpdateMarketBubblesAfterEffectsTask)

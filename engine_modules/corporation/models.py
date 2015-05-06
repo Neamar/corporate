@@ -97,12 +97,13 @@ class Corporation(models.Model):
 	# - market_assets stands for the total of the assets in the Corporation's markets disregarding bubbles.
 	# - assets_modifier stands for the bonuses and maluses originating from domination on a market, or having a market at 0 assets.
 	# - assets stands for the assets that must be usually taken into account, so we have: assets = market_assets + assets_modifier
+	assets = models.SmallIntegerField()
 	market_assets = models.SmallIntegerField()
 	assets_modifier = models.SmallIntegerField(default=0)
 
-	@property
-	def assets(self):
-		return self.market_assets + self.assets_modifier
+#	@property
+#	def assets(self):
+#		return self.market_assets + self.assets_modifier
 
 	@property
 	def corporation_markets(self):
@@ -216,11 +217,29 @@ class Corporation(models.Model):
 	def on_crash_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
 
+	def update_modifier(self, value=1):
+		"""
+		Updates assets_modifier value, setting it to given value and saves the model
+		Must be used for all modifications on assets_modifier, because it enforces assets = market_assets + asset_modifier
+		"""
+		self.assets_modifier = value
+		self.assets = self.market_assets + self.assets_modifier
+		self.save()
+
+	def set_market_assets(self, value=0):
+		"""
+		This is here to replace the assignments 'c.market_assets = xxx', because they do not enforce assets = market_assets + asset_modifier
+		"""
+		self.market_assets = value
+		self.assets = self.market_assets + self.assets_modifier
+		self.save()
+
 	def increase_market_assets(self, value=1):
 		"""
 		Increase corporation's market_assets by value
 		"""
 		self.market_assets += value
+		self.assets = self.market_assets + self.assets_modifier
 		self.save()
 
 	def decrease_market_assets(self, value=1):
@@ -228,11 +247,12 @@ class Corporation(models.Model):
 		Decrease corporation's market_assets by value
 		"""
 		self.market_assets -= value
+		self.assets = self.market_assets + self.assets_modifier
 		self.save()
 
 	def update_assets(self, delta, category, market):
 		"""
-		Updates market assets values, and save the model
+		Updates market assets values, and saves the model
 		Does not actually change "assets", since it is a property, but changes on market_assets will be reflected on assets
 		"""
 		corporation_market = self.corporationmarket_set.get(market=market)
