@@ -51,12 +51,12 @@ digraph g{
 	pemmican -> premier [color="red"];
 	pemmican -> premier [color="red"];
 
-	citygroup-> second [color="red"];
-	citygroup-> second [color="red"];
-	citygroup-> second [color="red"];
-	citygroup-> avantdernier [color="red"];
-	citygroup-> avantdernier [color="red"];
-	citygroup-> avantdernier [color="red"];
+	citygroup-> iris [color="red"];
+	citygroup-> iris [color="red"];
+	citygroup-> iris [color="red"];
+	citygroup-> avantdernier [color="green"];
+	citygroup-> avantdernier [color="green"];
+	citygroup-> avantdernier [color="green"];
 
 	enercore -> premier [color="green"];
 	enercore -> premier [color="green"];
@@ -68,18 +68,29 @@ digraph g{
 	shinsekai -> impulse [color="red"];
 	shinsekai -> impulse [color="red"];
 	shinsekai -> impulse [color="red"];
+	shinsekai -> premier [color="green"];
+	shinsekai -> pure [color="green"];
+	shinsekai -> pure [color="green"];
 
 	impulse -> shinsekai [color="green"];
 	impulse -> shinsekai [color="green"];
 	impulse -> pure [color="green"];
 	impulse -> pure [color="green"];
+	impulse -> premier [color="red"];
+	impulse -> premier [color="red"];
 
 	pure -> impulse [color="red"];
 	pure -> impulse [color="red"];
 	pure -> impulse [color="red"];
+	pure -> second [color="green"];
+	pure -> second [color="green"];
+	pure -> shinsekai [color="green"];
 
-	iris -> impulse [color="red"];
-	iris -> bastion [color="red"];
-	iris -> taurus [color="green"];
-	iris -> taurus [color="green"];
+	
+	iris -> premier [color="red"];
+	iris -> premier [color="red"];
+	iris -> premier [color="red"];
+	iris -> avantdernier [color="red"];
+	iris -> avantdernier [color="red"];
+	iris -> citygroup [color="red"];
 }
