@@ -101,10 +101,6 @@ class Corporation(models.Model):
 	market_assets = models.SmallIntegerField()
 	assets_modifier = models.SmallIntegerField(default=0)
 
-#	@property
-#	def assets(self):
-#		return self.market_assets + self.assets_modifier
-
 	@property
 	def corporation_markets(self):
 		"""
