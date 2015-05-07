@@ -192,7 +192,7 @@ class Corporation(models.Model):
 						break
 
 				if isinstance(market, str):
-					raise ValidationError("La corporation %s n'est pas présente sur le marché %s, elle ne peut pas être impactée par un effet sur ce dernier" % (self.base_corporation.name, m))
+					raise ValidationError("Corporation %s is absent on market %s, it cannot be impacted by an effet on it" % (self.base_corporation.name, m))
 
 			corporation.update_assets(delta, category=delta_category, market=market)
 
