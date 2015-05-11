@@ -30,6 +30,6 @@ Nombreux sont ceux qui ont grincé des dents, persuadés que ces projets avaient
 
 >La nouvelle venue et celle que je déteste le moins…  Alan est un putain de givré et ils adorent faire bosser les ombres. Corpo constitués de putains de geeks obèses ou faméliques, ils sont derrière leurs PC et font tourner le monde. Ces gars sont fous et ils peuvent lire tes données comme un livre ouvert. 
 
->Ils poursuivent les projets de dingues et aiment le risque. En gros, c’est les plus balaize en Cyberguerre et les runs que tu devras faire pour eux auront généralement la gueule de : va foutre ça dans le port USB du PC du PDG sans te faire choper. Ca aura l’air de rien, mais ils payent vraiment bien. 
+>Ils poursuivent les projets de dingues et aiment le risque. En gros, c’est les plus balaize en Cyberguerre et les opés que tu devras faire pour eux auront généralement la gueule de : va foutre ça dans le port USB du PC du PDG sans te faire choper. Ca aura l’air de rien, mais ils payent vraiment bien. 
 
 >Tu veux monter un coup contre eux par contre, n'envoies pas un mail à ton bon pote Max pour le mettre sur le coup. Ta boîte est protégée par une ICE Mercury. T’es à l’âge de pierre quand t’as affaire à eux et ils sauront te le faire savoir.
