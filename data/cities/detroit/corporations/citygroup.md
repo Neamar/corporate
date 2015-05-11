@@ -28,8 +28,8 @@ CityGroup n’est pas sur les panneaux d’affichage ou dans vos écrans 3D, un 
 
 ---
 
->Tu vois ce taudis dans lequel on vit. Tu sais qu’avant les villes ne sentaiient pas en permanence cette odeur de merde… Mais regarde maintenant, tout le monde a de quoi se loger. Tout le monde peut vivre en ville dans un appartement dégueulasse pour profiter des plaisirs urbains qu’ils ne peuvent pas se payer. 
+>Tu vois ce taudis dans lequel on vit. Tu sais qu’avant les villes ne sentaient pas en permanence cette odeur de merde… Mais regarde maintenant, tout le monde a de quoi se loger. Tout le monde peut vivre en ville dans un appartement dégueulasse pour profiter des plaisirs urbains qu’ils ne peuvent pas se payer. 
 
 >Et c’est CityGroup qui orchestre tout ça. Ces fumiers bossent avec tous les gouvernements : des moutons bien parqués sont plus faciles à gérer hein ? Quoi ? Oui ben franchement le biobéton c’est dégueulasse… Et ça me gave de voir mon loyer arriver sur les comptes de ces salauds. 
 
->Si tu vas pour les faire chier, prépare-toi, ils ont des alliés politiques et gouvernementaux encore mieux placé que les autres corpos. Ils ont un étrange de partenariat avec Iris pour contrôler les masses… Et ça marche drôlement bien…
+>Si tu vas pour les faire chier, prépare-toi, ils ont des alliés politiques et gouvernementaux encore mieux placé que les autres corpos. En plus, on dit qu'ils ont un étrange partenariat avec Iris pour contrôler les masses… Et ça marche drôlement bien…
