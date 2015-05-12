@@ -10,11 +10,11 @@ class SignalTest(EngineTestCase):
 		"""
 		self.p2 = Player(game=self.g, money=self.initial_money)
 		self.p2.save()
-		
+
 		logs_before = Logs.objects.count()
 		m2m_before = ConcernedPlayers.objects.count()
 
 		self.g.add_event(event_type=Game.WIRETRANSFER, data='', players=[self.p, self.p2])
-		
+
 		self.assertEqual(1, Logs.objects.count() - logs_before)
 		self.assertEqual(2, ConcernedPlayers.objects.count() - m2m_before)

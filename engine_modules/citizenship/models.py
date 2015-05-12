@@ -25,8 +25,8 @@ class CitizenshipOrder(Order):
 
 	def resolve(self):
 		# if player has a citizenship, add a game_event for losing it
-		corporation_last_turn = self.player.citizenship
-		if corporation_last_turn is None:
+		corporation_last_turn = self.player.citizenship.corporation
+		if corporation_last_turn is not None:
 			self.player.game.add_event(event_type=Game.REMOVE_CITIZENSHIP, data='', corporation=corporation_last_turn, players=[self.player])
 
 		citizenship = self.player.citizenship_set.get(turn=self.turn)
