@@ -9,10 +9,9 @@ digraph g{
 	label="Effets premiers";
 
 	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
-	avantdernier [shape=square, fillcolor="#FCD975", style="filled", label="Avant-dernière"];
 	dernier [shape=square, fillcolor="#FCD975", style="filled", label="Dernière"];
 
-	pemmican [shape=ellipse, fillcolor="burlywood", style="filled", label="Pemmican"];
+	tlaloc [shape=ellipse, fillcolor="burlywood", style="filled", label="Tlaloc"];
 	bastion [shape=ellipse, fillcolor="burlywood", style="filled", label="Bastion"];
 	citygroup [shape=ellipse, fillcolor="burlywood", style="filled", label="Citygroup"];
 	enercore [shape=ellipse, fillcolor="burlywood", style="filled", label="Enercore"];
@@ -26,16 +25,16 @@ digraph g{
 	citygroup -> dernier [color="red"];
 	citygroup -> second [color="green"];
 
-	bastion -> pemmican [color="red"];
+	bastion -> tlaloc [color="red"];
 	bastion -> bastion [color="green"];
 
-	pemmican -> pemmican [color="green"];
-	pemmican -> bastion [color="red"];
+	tlaloc -> tlaloc [color="green"];
+	tlaloc -> bastion [color="red"];
 
-	taurus-> second [color="red"];
+	taurus-> enercore [color="red"];
 	taurus-> second [color="red"];
 
-	enercore -> enercore [color="green"];
+	enercore -> taurus [color="green"];
 	enercore -> second [color="green"];
 
 	shinsekai -> pure [color="red"];
@@ -47,9 +46,9 @@ digraph g{
 	pure -> shinsekai [color="red"];
 	pure -> impulse [color="green"];
 
-	mercury -> dernier [color="green"];
+	mercury -> enercore [color="green"];
 	mercury -> dernier [color="green"];
 
-	iris -> avantdernier [color="red"];
-	iris -> citygroup [color="red"];
+	iris -> dernier [color="red"];
+	iris -> citygroup [color="green"];
 }
