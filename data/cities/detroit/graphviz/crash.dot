@@ -24,62 +24,47 @@ digraph g{
 
 	taurus -> taurus [color="blue"];
 	taurus -> taurus [color="blue"];
+	taurus -> taurus [color="blue"];
 
 	mercury -> premier [color="black"];
-	mercury -> premier [color="red"];
+	mercury -> premier [color="black"];
 	mercury -> premier [color="red"];
 	mercury -> second [color="red"];
 
-	bastion -> tlaloc [color="green"];
-	bastion -> tlaloc [color="green"];
+	bastion -> tlaloc [color="blue"];
 	bastion -> taurus [color="green"];
 	bastion -> premier [color="green"];
-	bastion -> impulse [color="red"];
-	bastion -> impulse [color="red"];
+	bastion -> impulse [color="black"];
 
-	tlaloc -> bastion [color="green"];
-	tlaloc -> bastion [color="green"];
+	tlaloc -> bastion [color="blue"];
 	tlaloc -> impulse [color="green"];
 	tlaloc -> citygroup [color="red"];
-	tlaloc -> pure [color="red"];
-	tlaloc -> pure [color="red"];
+	tlaloc -> pure [color="black"];
 
 	citygroup-> taurus [color="black"];
-	citygroup-> iris [color="green"];
-	citygroup-> iris [color="green"];
+	citygroup-> taurus [color="red"];
+	citygroup-> iris [color="blue"];;
 	citygroup-> second [color="red"];
 
-	enercore -> mercury [color="red"];
-	enercore -> mercury [color="red"];
-	enercore -> iris [color="green"];
-	enercore -> iris [color="green"];
-	enercore -> citygroup [color="red"];
-	enercore -> citygroup [color="red"];
+	enercore -> mercury [color="black"];
+	enercore -> iris [color="blue"];
+	enercore -> citygroup [color="black"];
 
-	shinsekai -> premier [color="red"];
-	shinsekai -> premier [color="red"];
-	shinsekai -> bastion [color="green"];
-	shinsekai -> bastion [color="green"];
-	shinsekai -> tlaloc [color="green"];
-	shinsekai -> tlaloc [color="green"];
+	shinsekai -> premier [color="black"];
+	shinsekai -> bastion [color="blue"];
+	shinsekai -> tlaloc [color="blue"];
 
-	impulse -> premier [color="green"];
-	impulse -> premier [color="green"];
-	impulse -> iris [color="red"];
-	impulse -> iris [color="red"];
-	impulse -> mercury [color="red"];
-	impulse -> mercury [color="red"];
+	impulse -> premier [color="blue"];
+	impulse -> iris [color="black"];
+	impulse -> mercury [color="black"];
 
-	pure -> iris [color="red"];
-	pure -> iris [color="red"];
-	pure -> citygroup [color="green"];
-	pure -> citygroup [color="green"];
-	pure -> second [color="green"];
-	pure -> second [color="green"];
+	pure -> iris [color="black"];
+	pure -> citygroup [color="blue"];
+	pure -> second [color="blue"];
 
 	
-	iris -> pure [color="green"];
-	iris -> pure [color="green"];
+	iris -> pure [color="blue"];
 	iris -> impulse [color="green"];
 	iris -> citygroup [color="black"];
+	iris -> citygroup [color="red"];
 }
