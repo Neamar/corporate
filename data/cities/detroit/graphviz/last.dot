@@ -9,8 +9,7 @@ digraph g{
 	label="Effets derniers";
 
 	premier [shape=square, fillcolor="#FCD975", style="filled", label="Première"];
-	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
-	avantdernier [shape=square, fillcolor="#FCD975", style="filled", label="Avant-dernière"];
+
 
 	tlaloc [shape=ellipse, fillcolor="burlywood", style="filled", label="Tlaloc"];
 	bastion [shape=ellipse, fillcolor="burlywood", style="filled", label="Bastion"];
