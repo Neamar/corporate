@@ -9,10 +9,9 @@ digraph g{
 	label="Effets derniers";
 
 	premier [shape=square, fillcolor="#FCD975", style="filled", label="Première"];
-	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
-	avantdernier [shape=square, fillcolor="#FCD975", style="filled", label="Avant-dernière"];
 
-	pemmican [shape=ellipse, fillcolor="burlywood", style="filled", label="Pemmican"];
+
+	tlaloc [shape=ellipse, fillcolor="burlywood", style="filled", label="Tlaloc"];
 	bastion [shape=ellipse, fillcolor="burlywood", style="filled", label="Bastion"];
 	citygroup [shape=ellipse, fillcolor="burlywood", style="filled", label="Citygroup"];
 	enercore [shape=ellipse, fillcolor="burlywood", style="filled", label="Enercore"];
@@ -23,26 +22,26 @@ digraph g{
 	shinsekai [shape=ellipse, fillcolor="burlywood", style="filled", label="Shinsekai"];
 	taurus [shape=ellipse, fillcolor="burlywood", style="filled", label="Taurus"];
 
-	taurus -> premier [color="red"];
-	taurus -> avantdernier [color="red"];
+	taurus -> bastion [color="red"];
+	taurus -> tlaloc [color="red"];
 
-	bastion -> pemmican [color="green"];
+	bastion -> tlaloc [color="green"];
 	bastion -> bastion [color="red"];
 
-	pemmican -> pemmican [color="red"];
-	pemmican -> bastion [color="green"];
+	tlaloc -> tlaloc [color="red"];
+	tlaloc -> bastion [color="green"];
 
-	citygroup-> second [color="green"];
-	citygroup-> second [color="green"];
+	citygroup-> taurus [color="red"];
+	citygroup-> citygroup [color="green"];
 
-	enercore -> premier [color="green"];
-	enercore -> second [color="green"];
+	enercore -> pure [color="green"];
+	enercore -> shinsekai [color="green"];
 
 	shinsekai -> pure [color="green"];
 	shinsekai -> impulse [color="red"];
 
 	impulse -> premier [color="red"];
-	impulse -> second [color="red"];
+	impulse -> citygroup [color="red"];
 
 	pure -> shinsekai [color="green"];
 	pure -> impulse [color="red"];
@@ -50,6 +49,6 @@ digraph g{
 	mercury -> premier [color="green"];
 	mercury -> premier [color="green"];
 
-	iris -> citygroup [color="red"];
-	iris -> second [color="green"];
+	iris -> taurus [color="red"];
+	iris -> mercury [color="green"];
 }
