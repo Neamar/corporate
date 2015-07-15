@@ -29,7 +29,7 @@ De manière générale, Bastion est réputée pour mettre régulièrement l’é
 
 ---
 
->Ah... Bastion... Ces gars-là, c'est des guerriers, qui ne lâchent rien sur le terrain comme sur les marchés. Ils tranchent dans le vif, droit au but. Pas de subtilités…  Et leurs putains de cyborgs… Bon dieu avec leurs implants de combat, ces gars font passer Terminator pour un enfant de cœur. J’en ai vu un soulever d’une seule main un écoterroriste de Adéfinir et l'éclater sur son genou à mains nues.
+>Ah... Bastion... Ces gars-là, c'est des guerriers, qui ne lâchent rien sur le terrain comme sur les marchés. Ils tranchent dans le vif, droit au but. Pas de subtilités…  Et leurs putains de cyborgs… Bon dieu avec leurs implants de combat, ces gars font passer Terminator pour un enfant de cœur. J’en ai vu un soulever d’une seule main un écoterroriste de Tlaloc et l'éclater sur son genou à mains nues.
 
 >Si tu veux bosser pour eux, t’as intérêt à montrer que t’es le plus grand salopard que la Terre ait jamais connu et que t’es prêt à foutre tes mains dans la merde et tes pieds dans des gueules. Personne ne les aime mais tout le monde les respecte, je peux comprendre pourquoi : il faut bien admettre qu’ils sont les meilleurs à ce qu’ils font.
 
