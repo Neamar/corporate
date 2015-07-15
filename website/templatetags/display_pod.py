@@ -4,7 +4,6 @@ from django.template.loader import get_template
 from engine_modules.detroit_inc.models import DIncVoteOrder
 
 import re
-import random
 
 register = template.Library()
 
@@ -17,8 +16,6 @@ def players_pod(context):
 
 
 def d_inc_pod(context):
-	# Do we want to show the coalition that was voted on this turn, or the one in effect ? 
-	# I think the one in effect is much better
 
 	current_coalition = context['game'].get_dinc_coalition(turn=context['turn'])
 	if current_coalition is None:
@@ -61,7 +58,6 @@ pods_functions = {
 
 @register.simple_tag(takes_context=True, name="display_pod")
 def display_pod(context, pod, *args, **kwargs):
-
 
 	template = get_template('pods/' + pod + '.html')
 

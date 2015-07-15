@@ -29,7 +29,6 @@ def wallstreet(request, game, player, turn):
 
 	# TODO: Remove this, For debug purposes
 	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
-	#assets = AssetHistory.objects.filter(corporation__game=game, turn=turn)
 	assets_hash = {ah.corporation_id: ah.assets for ah in assets}
 
 	for corporation in corporations:
