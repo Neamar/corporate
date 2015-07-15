@@ -27,6 +27,27 @@ Que vous l'aimiez ou que vous la haïssiez, Bastion sait que lorsque les choses 
 
 De manière générale, Bastion est réputée pour mettre régulièrement l’éthique de côté et de ne laisser parler que les résultats. Déployant la force armée privée la plus puissante du monde, Bastion peut compter à la fois sur des forces spéciales d’élite augmentées, une multitude de milices armées à travers le monde et même son propre porte-avion : l’Alexandre. Cette présence permanente et sa capacité à agir sans compromis font de Bastion une puissance que nul ne peut regarder de haut.
 
+
+## Effet premier
+Profitant de sa position de premier, Bastion capitalise pour étendre sa vision du monde et renforcer ses positions. Tlaloc et ses alliés reculent face à la pression ultra moderniste.
+
+* +1 actif pour Bastion.
+* -1 actif pour Tlaloc.
+
+## Effet dernier
+Au fond du trou, les investisseurs de Bastion quittent le navire. Sa vision s'effrite avec ses actifs, profitant à Tlaloc et sa philosophie New Age.
+
+* -1 actif pour Bastion.
+* +1 actif pour Tlaloc
+
+## Effet crash
+Bastion perd définitivement le pari de l'interventionnisme. Sa chute propulse Tlaloc vers l'avant ainsi que Taurus Industries qui s'impose comme la nouvelle norme militaire. De nombreux projets militaires Impulse destinés au projet Mars sont abandonnés. Les meilleurs actifs de Bastion sont vendus au plus offrant.
+
+* +1 actif pour la première corporation
+* +1 actif pour Taurus
+* -2 actifs pour Impulse
+* +2 actifs pour Tlaloc
+
 ---
 
 >Ah... Bastion... Ces gars-là, c'est des guerriers, qui ne lâchent rien sur le terrain comme sur les marchés. Ils tranchent dans le vif, droit au but. Pas de subtilités…  Et leurs putains de cyborgs… Bon dieu avec leurs implants de combat, ces gars font passer Terminator pour un enfant de cœur. J’en ai vu un soulever d’une seule main un écoterroriste de Tlaloc et l'éclater sur son genou à mains nues.
