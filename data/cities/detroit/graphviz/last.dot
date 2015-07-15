@@ -1,0 +1,63 @@
+# dot -T svg data/graphviz/last.dot > website/static/graphviz/last.svg
+digraph g{
+	graph [
+		rankdir = "LR"
+		bgcolor=transparent
+	];
+
+	aztechnology [shape=ellipse, fillcolor="burlywood", style="filled", label="Aztechnology"];
+	horizon [shape=ellipse, fillcolor="burlywood", style="filled", label="Horizon"];
+	saederkrupp [shape=ellipse, fillcolor="burlywood", style="filled", label="Saeder-Krupp"];
+	premier [shape=square, fillcolor="#FCD975", style="filled", label="Première"];
+	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
+	avantdernier [shape=square, fillcolor="#FCD975", style="filled", label="Avant-dernière"];
+
+	subgraph cluster_nikkei {
+		label = "Nikkei";
+		sony [shape=ellipse, fillcolor="burlywood", style="filled", label="Sony"];
+		shiawase [shape=ellipse, fillcolor="burlywood",style="filled", label="Shiawase"];
+		renraku [shape=ellipse, fillcolor="burlywood", style="filled", label="Renraku"];
+	}
+
+	subgraph cluster_dowjones {
+		label = "Dow Jones";
+		ares [shape=ellipse, fillcolor="burlywood", style="filled", label="Ares"];
+		neonet [shape=ellipse, fillcolor="burlywood", style="filled", label="NeoNET"];
+		prometheus [shape=ellipse, fillcolor="burlywood", style="filled", label="Prometheus"];
+		spinrad [shape=ellipse, fillcolor="burlywood", style="filled", label="Spinrad"];
+	}
+
+	subgraph {
+		rank = same; ares; aztechnology; neonet; prometheus; spinrad
+	}
+
+	ares -> premier [color="red"];
+	ares -> second [color="red"];
+
+	aztechnology -> horizon [color="green"];
+	aztechnology -> horizon [color="green"];
+
+	horizon-> aztechnology [color="green"];
+	horizon-> premier [color="red"];
+
+	neonet -> neonet [color="green"];
+	neonet -> renraku [color="green"];
+
+	prometheus -> premier [color="green"];
+	prometheus -> premier [color="green"];
+
+	renraku -> sony [color="red"];
+	renraku -> shiawase [color="green"];
+
+	saederkrupp -> saederkrupp [color="green"];
+	saederkrupp -> saederkrupp [color="green"];
+
+	shiawase -> avantdernier [color="red"];
+	shiawase -> sony [color="red"];
+
+	sony -> avantdernier [color="red"];
+	sony -> avantdernier [color="red"];
+
+	spinrad -> spinrad [color="red"];
+	spinrad -> avantdernier [color="green"];
+}

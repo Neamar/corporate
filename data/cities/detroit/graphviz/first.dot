@@ -1,0 +1,59 @@
+# dot -T svg data/graphviz/first.dot > website/static/graphviz/first.svg
+digraph g{
+	graph [
+			rankdir = "LR"
+			bgcolor=transparent
+	];
+
+	aztechnology [shape=ellipse, fillcolor="burlywood", style="filled", label="Aztechnology"];
+	horizon [shape=ellipse, fillcolor="burlywood", style="filled", label="Horizon"];
+	saederkrupp [shape=ellipse, fillcolor="burlywood", style="filled", label="Saeder-Krupp"];
+	avantdernier [shape=square, fillcolor="#FCD975", style="filled", label="Avant-dernière"];
+	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
+	dernier [shape=square, fillcolor="#FCD975", style="filled", label="Dernière"];
+
+	subgraph cluster_nikkei {
+		label = "Nikkei";
+		sony [shape=ellipse, fillcolor="burlywood", style="filled", label="Sony"];
+		shiawase [shape=ellipse, fillcolor="burlywood",style="filled", label="Shiawase"];
+		renraku [shape=ellipse, fillcolor="burlywood", style="filled", label="Renraku"];
+	}
+
+	subgraph cluster_dowjones {
+		label = "Dow Jones";
+		ares [shape=ellipse, fillcolor="burlywood", style="filled", label="Ares"];
+		neonet [shape=ellipse, fillcolor="burlywood", style="filled", label="NeoNET"];
+		prometheus [shape=ellipse, fillcolor="burlywood", style="filled", label="Prometheus"];
+		spinrad [shape=ellipse, fillcolor="burlywood", style="filled", label="Spinrad"];
+	}
+
+	ares -> avantdernier [color="green"];
+	ares -> dernier [color="green"];
+
+	aztechnology -> horizon [color="red"];
+	aztechnology -> dernier [color="red"];
+
+	horizon-> dernier [color="red"];
+	horizon-> dernier [color="red"];
+
+	neonet -> spinrad [color="red"];
+	neonet -> second [color="red"];
+
+	prometheus -> prometheus [color="green"];
+	prometheus -> second [color="green"];
+
+	renraku -> neonet [color="red"];
+	renraku -> shiawase [color="red"];
+
+	saederkrupp -> second [color="red"];
+	saederkrupp -> second [color="red"];
+
+	shiawase -> renraku [color="red"];
+	shiawase -> sony [color="green"];
+
+	sony -> renraku [color="green"];
+	sony -> shiawase [color="green"];
+
+	spinrad -> spinrad [color="green"];
+	spinrad -> spinrad [color="green"];
+}
