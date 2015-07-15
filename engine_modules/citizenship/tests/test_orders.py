@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.citizenship.models import CitizenShipOrder
+from engine_modules.citizenship.models import CitizenshipOrder
 from engine_modules.share.models import Share
 
 
@@ -13,7 +13,7 @@ class OrdersTest(EngineTestCase):
 		)
 		self.s.save()
 
-		self.o = CitizenShipOrder(
+		self.o = CitizenshipOrder(
 			player=self.p,
 			corporation=self.c
 		)
@@ -24,6 +24,6 @@ class OrdersTest(EngineTestCase):
 		"""
 		Check if the citizenship is created
 		"""
-		self.o.resolve()
+		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.p).citizenship.corporation, self.c)

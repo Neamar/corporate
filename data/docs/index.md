@@ -43,6 +43,21 @@ Regardons en détail comment sont calculés les actifs. Chaque corporation est d
 
 {{ corporations }}
 
+Ces corporations sont réparties de la façon suivante dans les différents marchés :
+
+|           | Agroalimentaire | Aérospatiale | BTP | Militaire | Médias | Pharmaceutique | Robotique | Transport | Télécom | Énergie |
+|-----------|-----------------|--------------|-----|-----------|--------|----------------|-----------|-----------|---------|---------|
+| Tlaloc  |                 |              |     |           |        |                |           |           |         |         |
+| Bastion   |                 |              |     |           |        |                |           |           |         |         |
+| Citygroup |                 |              |     |           |        |                |           |           |         |         |
+| Enercore  |                 |              |     |           |        |                |           |           |         |         |
+| Impulse   |                 |              |     |           |        |                |           |           |         |         |
+| Iris      |                 |              |     |           |        |                |           |           |         |         |
+| Mercury   |                 |              |     |           |        |                |           |           |         |         |
+| Pure      |                 |              |     |           |        |                |           |           |         |         |
+| Shinsekai |                 |              |     |           |        |                |           |           |         |         |
+| Taurus    |                 |              |     |           |        |                |           |           |         |         |
+
 Les actifs d’une corporation sont égaux à la somme des actifs de ses marchés… à deux petites exceptions près :
 
 * Si une corporation a plus d'actifs que toutes les autres sur un marché, elle domine ce marché et gagne un actif. Attention cependant, cet **actif de domination** est perdu dès que la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine. Ces actifs sont en jaune dans la table.

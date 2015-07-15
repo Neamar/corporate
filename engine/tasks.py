@@ -1,8 +1,17 @@
+class InitTask:
+	"""
+	An abstract task to call during initialization
+	"""
+	RESOLUTION_ORDER = 0
+
+	def run(self, game):
+		raise NotImplementedError("Abstract call.")
+
+
 class ResolutionTask:
 	"""
 	An abstract task to call during resolution
 	"""
-
 	RESOLUTION_ORDER = 0
 
 	def run(self, game):

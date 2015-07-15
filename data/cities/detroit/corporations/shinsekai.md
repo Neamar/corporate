@@ -1,9 +1,10 @@
 name: Shinsekai
 markets:
-    magie: 3
-    immobilier: 3
-    nanotechnologie: 2
-    armement: 3
+    robotique: 3
+    militaire: 3
+    pharmaceutique: 3
+    agroalimentaire: 3
+    telecom: 3
 datasteal: 10
 sabotage: 20
 extraction: 10
@@ -16,8 +17,18 @@ on_last:
 on_crash:
     # TBD
 
-> La Tradition au service de l’Innovation
+> *La Tradition au service de l’Innovation*
 
-Depuis 1945, l’armée japonaise a toujours été limitée en termes d’effectif. Face à la montée effrayante de ses voisins chinois et coréens, le gouvernement encouragea à l’aide de multiples mesures la formation d’un conglomérat susceptible de réaliser des avancées substantielles dans la robotique de pointe. C’est ainsi que du son QG à Tokyo, l’entreprise Shinsekai mit au point le premier Cyberknight, une unité de combat entièrement robotisée et autonome, équipée de toutes les technologies développé par le conglomérat : détecteur de phéromone afin d’identifier les cibles hostiles, blindage en plastacier TamaHagane, interface direct en 7G ultrasécurisé pour un contrôle instantané  mais aussi et surtout leur modèle unique d’intelligence artificielle aujourd’hui inégalée : les ADAI (Autonomous Dutiful Artificial Intelligence). L’état japonais en commanda cent milles en 5 ans, propulsant Shinsekai au-devant de la scène et lui apportant les liquidités pour diversifier ses activités. Se basant sur leur modèle d’ADAI, Shinsekai a conquis le monde de la robotique et profite de son avance considérable pour proposer des services divers comme les implants cybernétiques (militaires et médicaux) ou des ADAI cuisiniers ou infirmier. Shinsekai donne ainsi l’image d’une entreprise mettant ses créations au service de l’homme. Profondément fière de ses traditions, Shinsekai impose à ses employés et à ses ADAI  une vision du monde manichéenne où l’échec est inacceptable et le devoir une nécessité. C’est cette machine bien huilée qui sait avancer d’un seul tenant en écrasant la concurrence avec une efficacité robotique.
+Shinsekai est la seule japanocorp a s'être fait une place dans les plus importantes megacorporations. Ses origines remontent à un obscur programme gouvernemental censé pallier au vieillissement de la population japonaise en produisant des forces armées cybernétiques. L'augmentation n'était pas la meilleure option étant donné le faible taux de natalité. C'est donc très naturellement que le développement des connaissances en robotique s'est accéléré en parallèle de la montée en puissance des voisins asiatiques. Les unités de combat Cyberknight sont les premières à avoir envahi les opérations militaires, mais la clé du succès de Shinsekai se trouve bien davantage dans la mise au point de leur intelligence artificielle ADAI ("Autonomous Dutiful Artificial Intelligence"). Le savoir-faire inégalé dont elle témoigne explique à lui seul que tout ce qui pense et réfléchit avec un cerveau artificiel le fait probablement d'abord en japonais.
 
-(SELON LE BESOIN : pour moi les ADAI sont liés à une directive, une DUTY, qui constitue leur prisme de compréhension. Les DUTY sont une forme d’ordre central auquel les autres fonctions font référence. Exemple : Empêcher les intrus d’entrer dans cette zone. L’ADAI fera instantanément une estimation de ses capacités d’actions, de réactions et choisira les meilleures options pour accomplir sa DUTY. Relativement monotâche, ils restent capable de s’adapter et d’évoluer en autonome. Modifier ou rédiger une DUTY est extrêmement et affreusement complexe. C’est un savoir jalousement gardé par Shinsekai)
+Si cette technologie a au départ été développé pour les besoins d'opération de combat, la réussite initiale a rapidement permis à Shinsekai de diversifier grandement, et aujourd'hui les ADAI sont présentes dans tous les secteurs, de l'industrie au luxe, en passant par l'intégralité de la gamme.
+Shinsekai donne ainsi l’image d’une entreprise mettant ses créations au service de l’homme. Profondément fière de ses traditions, Shinsekai impose à ses employés et à ses ADAI une vision du monde manichéenne où l’échec est inacceptable et le devoir une nécessité. C’est cette machine bien huilée qui sait avancer d’un seul tenant en écrasant la concurrence avec une efficacité robotique.
+
+---
+
+> Je t’ai entendu parler de ton coup sur un entrepôt de Shinsekai…
+> Déjà, tu baisses d’un ton ! Si j’ai pu t’entendre, l’ADAI serveuse a très bien pu t’enregistrer… Et si une ADAI t’entend, Shinsekai t’entend. Et ça, c’est vraiment pas bon pour toi. Je sais ce que tu penses…  Et je connais ton plan. Quelques robots, rien de bien sorcier. Une grosse bombe EMP, on rentre, on sort, facile. Tu sais combien de runners l’ont tenté ce coup-là ? T’en connais qui ont réussi ? Voilà… Shinsekai, c’est l’élite, ok ? T'as déjà vu un de leurs NeoSams ? Les ADAI sont pas les seuls trucs qui font flipper chez Shinsekai, crois-moi...  
+
+>Ils ont une tech que t’a jamais vu, sauf peut-être chez Impulse… Ils ont des ADAI qui protègent leurs systèmes informatiques, qui ouvrent leur porte et qui protègent leurs marchandises… Et même si tu sais à peu près les gérer, ils ont des centaines de gars prêts à te tomber dessus et massacrer ta famille tout en racontant leurs foutaises sur leur honneur. Alors oui, vu de l’extérieur, c’est juteux, mais c'est moins drôle une fois que t'as mis la main dans l'engrenage. 
+
+>Des programmes, des armes, une belle boîte… Mais je préfère bosser pour eux… Ces putains d’ADAI Kamikaze sont beaucoup mieux avec toi que contre toi crois-moi… Et ils t’en prêteront volontiers si tu veux fureter chez PURE.
