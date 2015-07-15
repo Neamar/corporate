@@ -1,3 +1,4 @@
+import json
 from logs.models import Logs, ConcernedPlayers
 from django.dispatch import receiver
 from engine.dispatchs import game_event
@@ -14,13 +15,16 @@ def insert_log_database(sender, instance, event_type, data, delta=0, corporation
 	# Same thing for transmittable propery attached on the many-to-many
 	transmittable = event_type not in Logs.UNTRANSMITTABLE
 
+	# Construction du message
+	message = json.dumps(data)
+
 	# creation of the log
 	log = Logs.objects.create(
 		turn=instance.current_turn,
 		game=instance,
 		delta=delta,
 		event_type=event_type,
-		data=data,
+		data=message,
 		corporation=corporation,
 		corporationmarket=corporationmarket,
 		hide_for_players=hide_for_players,

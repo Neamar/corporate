@@ -3,5 +3,5 @@ from logs.models import Logs
 
 
 class LogsAdmin(admin.ModelAdmin):
-	list_display = ('category', 'delta', 'game', 'content', 'turn')
+	list_display = ('event_type', 'delta', 'game', 'data', 'turn')
 admin.site.register(Logs, LogsAdmin)

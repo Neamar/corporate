@@ -34,7 +34,7 @@ class Logs(models.Model):
 	corporationmarket = models.ForeignKey('market.CorporationMarket', null=True)
 
 	# the orderer of the action and all the players knowing the action. Parameters are defferent between ordrer and knowers, see ConcernedPlayers
-	players = models.ManyToManyField('engine.Player', through='ConcernedPlayers', null=True)
+	players = models.ManyToManyField('engine.Player', through='ConcernedPlayers')
 
 	# List of game events that are hide for players (see hide for player above)
 	HIDE_FOR_PLAYERS = [
