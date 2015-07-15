@@ -122,8 +122,6 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     DEBUG = os.environ['DEBUG'] if 'DEBUG' in os.environ else False
     import dj_database_url
     DATABASES['default'] = dj_database_url.config()
-    # Use persistent connection (instead of one connection per request)
-    DATABASES['default']['CONN_MAX_AGE'] = 600
 
     # Honor the 'X-Forwarded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -137,13 +135,6 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
 
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
-    )
-
-    # Cache template parsing
-    TEMPLATE_LOADERS = (
-        'django.template.loaders.cached.Loader',
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
     )
 
 
