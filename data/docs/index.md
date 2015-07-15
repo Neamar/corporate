@@ -39,8 +39,24 @@ Acheter une part dans une corpo prend du temps, des ressources et beaucoup de n�
     John souhaite augmenter son IC de 2 à 3, ce qui lui coûtera donc 1 500 000 ₵
  
 ## Les Marchés
-Regardons en détail comment sont calculés les actifs. Chaque corporation est définie par ses **marchés** qui ne changeront pas au cours de la partie. Voici le tableau de répartition des actifs par marché des corporations au premier tour :
+Regardons en détail comment sont calculés les actifs. Chaque corporation est définie par ses **marchés** qui ne changeront pas au cours de la partie. Voici la liste des corporations :
 
+{{ corporations }}
+
+Ces corporations sont réparties de la façon suivante dans les différents marchés :
+
+|           | Agroalimentaire | Aérospatiale | BTP | Militaire | Médias | Pharmaceutique | Robotique | Transport | Télécom | Énergie |
+|-----------|-----------------|--------------|-----|-----------|--------|----------------|-----------|-----------|---------|---------|
+| Tlaloc  |                 |              |     |           |        |                |           |           |         |         |
+| Bastion   |                 |              |     |           |        |                |           |           |         |         |
+| Citygroup |                 |              |     |           |        |                |           |           |         |         |
+| Enercore  |                 |              |     |           |        |                |           |           |         |         |
+| Impulse   |                 |              |     |           |        |                |           |           |         |         |
+| Iris      |                 |              |     |           |        |                |           |           |         |         |
+| Mercury   |                 |              |     |           |        |                |           |           |         |         |
+| Pure      |                 |              |     |           |        |                |           |           |         |         |
+| Shinsekai |                 |              |     |           |        |                |           |           |         |         |
+| Taurus    |                 |              |     |           |        |                |           |           |         |         |
 
 Les actifs d’une corporation sont égaux à la somme des actifs de ses marchés… à deux petites exceptions près :
 
