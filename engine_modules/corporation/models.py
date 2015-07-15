@@ -95,7 +95,7 @@ class Corporation(models.Model):
 	game = models.ForeignKey(Game)
 	# assets, market_assets and assets_modifier are meant to keep track of the MarketBubbles:
 	# - market_assets stands for the total of the assets in the Corporation's markets disregarding bubbles.
-	# - assets_modifier stands for the bonuses and maluses originating from domination on a market, or having a market at 0 assets.
+	# - assets_modifier stands for the bonuses and maluses originating from domination on a market, or having a market at 0 asset.
 	# - assets stands for the assets that must be usually taken into account, so we have: assets = market_assets + assets_modifier
 	assets = models.SmallIntegerField()
 	market_assets = models.SmallIntegerField()
@@ -133,7 +133,7 @@ class Corporation(models.Model):
 		Raises a ValidationError otherwise, because two Corporations should have at least one common Market
 		This does not actually return a common CorporationMarket, because there is no such thing: a CorporationMarket is by definition specific to a Corporation
 		"""
-		
+
 		return random.choice(self.get_common_corporation_markets(c2))
 
 	def get_common_corporation_markets(self, c2):
@@ -150,7 +150,7 @@ class Corporation(models.Model):
 
 	def get_common_market(self, c2):
 		"""
-		Returns the Market object for a common market between the Corporation if there is one
+		Returns the Market object for a common market between the Corporation if there is at least one
 		Raises a ValidationError otherwise, because two Corporations should have at least one common Market
 		"""
 		return self.get_common_corporation_market(c2).market
@@ -190,8 +190,7 @@ class Corporation(models.Model):
 					if m.name == market:
 						market = m
 						break
-
-				if isinstance(market, str):
+				else:
 					raise ValidationError("Corporation %s is absent on market %s, it cannot be impacted by an effet on it" % (self.base_corporation.name, m))
 
 			corporation.update_assets(delta, category=delta_category, market=market)
@@ -225,6 +224,7 @@ class Corporation(models.Model):
 	def set_market_assets(self, value=0):
 		"""
 		This is here to replace the assignments 'c.market_assets = xxx', because they do not enforce assets = market_assets + asset_modifier
+		**This function should only be used in tests.**
 		"""
 		self.market_assets = value
 		self.assets = self.market_assets + self.assets_modifier
@@ -235,14 +235,6 @@ class Corporation(models.Model):
 		Increase corporation's market_assets by value
 		"""
 		self.market_assets += value
-		self.assets = self.market_assets + self.assets_modifier
-		self.save()
-
-	def decrease_market_assets(self, value=1):
-		"""
-		Decrease corporation's market_assets by value
-		"""
-		self.market_assets -= value
 		self.assets = self.market_assets + self.assets_modifier
 		self.save()
 
