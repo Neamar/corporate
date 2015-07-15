@@ -27,7 +27,9 @@ def wallstreet(request, game, player, turn):
 	corporations = game.get_ladder(turn=turn)
 	delta_categories = {}
 
-	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn)
+	# TODO: Remove this, For debug purposes
+	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
+	#assets = AssetHistory.objects.filter(corporation__game=game, turn=turn)
 	assets_hash = {ah.corporation_id: ah.assets for ah in assets}
 
 	for corporation in corporations:
@@ -60,6 +62,8 @@ def wallstreet(request, game, player, turn):
 		"sorted_corporations": sorted_corporations,
 		"delta_categories": OrderedDict(sorted(delta_categories.items())),
 		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
+		"turn": turn,
+		"request": request,
 	}
 
 
@@ -79,7 +83,10 @@ def corporation(request, player, game, corporation_slug):
 		"corporation": corporation,
 		"players": players,
 		"assets_history": assets_history,
-		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
+		# Turn_spinner doesn't work, because the URL with e turn isn't allowed, which makes sense, because for this description, the turn doesn't matter
+		"pods": ['d_inc', 'current_player', 'players', ],
+		"turn": game.current_turn,
+		"request": request,
 	}
 
 
@@ -95,7 +102,7 @@ def shares(request, game, player, turn):
 
 	players = game.player_set.all().order_by('pk')
 	corporations = list(game.corporation_set.all().order_by('pk'))
-	shares = Share.objects.filter(player__game=game, turn=turn).select_related('corporation', 'player')
+	shares = Share.objects.filter(player__game=game, turn__lte=turn).select_related('corporation', 'player')
 	corporations_shares = []
 	totals = []
 	for player in players:
@@ -116,6 +123,9 @@ def shares(request, game, player, turn):
 		"players": players,
 		"corporations": corporations,
 		"corporations_shares": corporations_shares,
+		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
+		"turn": turn,
+		"request": request,
 	}
 
 

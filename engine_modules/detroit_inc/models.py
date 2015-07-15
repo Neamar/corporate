@@ -18,6 +18,7 @@ class DIncVoteOrder(Order):
 	RSEC = "RSEC"
 	CONS = "CONS"
 
+	# @Neamar: Why is DINC_COALTION_CHOICES not a dict ? 
 	# Enumerate the party lines and their meanings
 	DINC_COALITION_CHOICES = (
 		('CPUB', 'Contrats publics'),
@@ -99,6 +100,7 @@ class DIncVoteSession(models.Model):
 	Used to keep track of the current Detroit, Inc line
 	"""
 
+	# @Neamar: DIncVoteORder.DINC_COALITION_CHOICES contains tuples, not strings, should it not be c[1] for c in DINC_COALTION_CHOICES instead ?
 	coalition = models.CharField(max_length=4,
 		choices=DIncVoteOrder.DINC_COALITION_CHOICES, blank=True, null=True, default=None)
 	game = models.ForeignKey(Game)
@@ -116,10 +118,17 @@ def get_dinc_coalition(self, turn=None):
 	if turn is None:
 		turn = self.current_turn
 
-	if turn == 1:
+	# Is that actually OK to do ? What happens when we have an equal vote ? does a session still get put ? 
+	# Is that masking the fact that we ask for a turn that doesn't exist (like -1, for example)? 
+	# I do believe it is, yes, that's the same error as what is happening in get_influence ...
+	try:
+		session = self.dincvotesession_set.get(turn=turn)
+#	except DoesNotExist:
+	except DIncVoteSession.DoesNotExist:
+#	except Exception as e:
+#		print "WUUUUUUUUUUUUUUUUUUUUT  ????!!!!"
+#		print e
 		return None
-
-	session = self.dincvotesession_set.get(turn=turn)
 	return session.coalition
 
 

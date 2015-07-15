@@ -36,7 +36,6 @@
 {% endif %}
 
 <h2>Passer un ordre</h2>
-<p>Fonds : {{ remaining_money }}k&nbsp;¥</p>
 
 {% for order in available_orders %}
 	<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">{{ order.title }}</h3>

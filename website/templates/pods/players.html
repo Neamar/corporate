@@ -1,6 +1,29 @@
 <div class="pod pod-players last-pod">
 	<h2 class="pod-title">Joueurs</h2>
 	<ul class="pod-players-list">
+	{% for player in players %}
+		<li class="pod-players-list-item">
+			<img class="player-avatar" title="Avatar {{ player.name }}" src="/static/img/players/02.png"/>
+
+			<div class="content-player">
+				<span class="player-name">{{ player.name }}</span>
+				<span class="icon-ic">{{ player.influence.level }}</span>
+				<span class="icon-messaging"></span>
+
+				<ul class="icons-list">
+					<li class="icon-ic-up" title="Protégé par le MDC"></li>
+					<li class="icon-first-effect" title="A été affecté par l'effet premier"></li>
+					<li class="icon-ic-up" title="Protégé par le MDC"></li>
+					<li class="icon-first-effect" title="A été affecté par l'effet premier"></li>
+					<li class="icon-ic-up" title="Protégé par le MDC"></li>
+					<li class="icon-first-effect" title="A été affecté par l'effet premier"></li>
+					<li class="icon-ic-up" title="Protégé par le MDC"></li>
+					<li class="icon-first-effect" title="A été affecté par l'effet premier"></li>
+				</ul>
+			</div>
+		</li>
+	{% endfor %}
+<!--
 		<li class="pod-players-list-item">
 			<img class="player-avatar" title="Avatar d'Arcadia Darell" src="/static/img/players/02.png"/>
 
@@ -36,5 +59,6 @@
 				</div>
 			</div>
 		</li>
+-->
 	</ul>
 </div>
