@@ -18,7 +18,7 @@ class DIncVoteOrder(Order):
 	RSEC = "RSEC"
 	CONS = "CONS"
 
-	# @Neamar: Why is DINC_COALTION_CHOICES not a dict ? 
+	# @Neamar: Why is DINC_COALTION_CHOICES not a dict ?
 	# Enumerate the party lines and their meanings
 	DINC_COALITION_CHOICES = (
 		('CPUB', 'Contrats publics'),
@@ -118,16 +118,12 @@ def get_dinc_coalition(self, turn=None):
 	if turn is None:
 		turn = self.current_turn
 
-	# Is that actually OK to do ? What happens when we have an equal vote ? does a session still get put ? 
-	# Is that masking the fact that we ask for a turn that doesn't exist (like -1, for example)? 
+	# Is that actually OK to do ? What happens when we have an equal vote ? does a session still get put ?
+	# Is that masking the fact that we ask for a turn that doesn't exist (like -1, for example)?
 	# I do believe it is, yes, that's the same error as what is happening in get_influence ...
 	try:
 		session = self.dincvotesession_set.get(turn=turn)
-#	except DoesNotExist:
 	except DIncVoteSession.DoesNotExist:
-#	except Exception as e:
-#		print "WUUUUUUUUUUUUUUUUUUUUT  ????!!!!"
-#		print e
 		return None
 	return session.coalition
 
