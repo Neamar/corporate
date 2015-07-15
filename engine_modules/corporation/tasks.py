@@ -11,6 +11,7 @@ class CrashCorporationTask(ResolutionTask):
 
 	def run(self, game):
 		corporations_to_crash = game.corporation_set.filter(assets__lte=0)
+
 		if not corporations_to_crash:
 			return
 

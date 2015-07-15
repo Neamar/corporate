@@ -34,7 +34,7 @@ class ModelsTest(EngineTestCase):
 
 		po = ProtectionOrder(
 			player=self.p,
-			protected_corporation_market=self.c.random_corporation_market,
+			protected_corporation_market=self.c.get_random_corporation_market(),
 		)
 		po.save()
 
