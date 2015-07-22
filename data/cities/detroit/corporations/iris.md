@@ -25,6 +25,25 @@ Iris a l’image d’une corporation bon enfant, en perpétuel renouvellement, a
 
 Anarchiste, Conformiste, Conservateur, Révolutionnaire… Qui que vous soyez Iris a l’éventail de divertissement qu’il vous faut et vous vend le comprimé énergétique amincissant, le NewBotox, la crème anti-âge, le smartphone et le viagra 2.0 qui vous feront ressembler à votre acteur préféré. Ce contact direct avec le consommateur et le positionnement stratégique et emblématique de leur QG font d’Iris une corporation puissante qui a l’oreille de chaque foyer.
 
+## Effet premier
+Iris devient un modèle de la réussite des réseaux et use de sa position de force pour enfoncer les entreprises en difficulté à coup de scandale médiatiques. CityGroup profite de cet engouement, les masses hypnotisées affluant vers les villes pour vivre le rêve d’Iris.
+
+* +1 actif pour CityGroup.
+* -1 actif pour la dernière corporation.
+
+## Effet dernier
+Iris perdant pied, elle tente de relancer l'audimat en usant de dossier, causant du tort à la corporation avec le plus de squelette au placard : Taurus Industries. Le déluge d'information devant être régulé, Mercury et ses programmes de défenses deviennent très populaires.
+
+* -1 actif pour Taurus.
+* +1 actif pour Mercury.
+
+## Effet crash
+Iris chute, laissant un vide important dans de nombreux marchés profitant notamment à de nombreuses filiales de Pure. Impulse met la main sur le QG tandis que les masses, moins hypnotisés par les programmes Iris, aspire à mieux pour eux même que le bio béton CityGroup.
+
+* -3 actifs pour CityGroup.
+* +1 actif pour Impulse.
+* +2 actifs pour Pure.
+
 ---
 
 
