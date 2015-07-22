@@ -46,7 +46,6 @@ CityGroup chute et ses infrastructures s’effondrent. Taurus Industries souffre
 * -3 actifs pour Taurus.
 * +2 actifs pour Iris.
 
-
 ---
 
 >Tu vois ce taudis dans lequel on vit. Tu sais qu’avant les villes ne sentaient pas en permanence cette odeur de merde… Mais regarde maintenant, tout le monde a de quoi se loger. Tout le monde peut vivre en ville dans un appartement dégueulasse pour profiter des plaisirs urbains qu’ils ne peuvent pas se payer. 
