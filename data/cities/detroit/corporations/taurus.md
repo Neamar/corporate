@@ -25,6 +25,23 @@ Taurus Industries est la plus grosse mégacorpo. Elle est la plus emblèmatique 
 
 Ses avantages concurrentiels sont avant tout son efficience en termes de coût, la fiabilité de la totalité de ses produits, son implantation mondiale et sa position de plus puissante mégacorporation mondiale. Jamais a court de ressources, elle a une influence notable sur le marché et profite de sa position multi-sectorielle pour garder une compétitivité à toute épreuve.
 
+## Effet premier
+A sa place historique, Taurus Industries a tous les outils en main pour appliquer sa stratégie prédatrice sur ses concurrents directs et pour tenter d'affaiblir la position d'EnerCore afin de mettre la main sur leurs BlackSuns.
+
+* -1 actif pour la seconde corporation.
+* -1 actif pour Enercore.
+
+## Effet dernier
+Afin d'éviter la saignée, Taurus Industries coupe les lignes de transport les moins rentables, rendant les déplacements et donc les affrontements au travers le monde plus complexe. Cette situation nuit directement à Bastion et à Tlaloc, dont le succès et l’image sont directement dépendants de ces campagnes.
+
+* -1 actif pour Tlaloc.
+* -1 actif pour Bastion.
+
+## Effet crash
+Taurus Industries ne chute jamais. Alors que les investisseurs pensent l'abandonner, son directeur lance une nouvelle campagne de réduction des coûts et d'innovation si convaincante et efficace qu'elle revient dans la course.
+
+* +6 actifs pour Taurus.
+
 ---
 
 >Le gros poisson, le big boss...  Ils savent faire tourner une corpo. Imités, jamais égalés… Ils font tout. Ta bagnole, tes armes, ton building, et les robots qui le construisent… C’est fiable, ça marche toujours et c’est performant. 
