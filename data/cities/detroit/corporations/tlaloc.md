@@ -43,8 +43,9 @@ Tlaloc perds le masque de la bienséance, donnant raison à Bastion et sa vision
 
 * -2 actifs pour Pure.
 * +2 actifs pour Bastion.
-* +1 actifs pour Impulse.
-* -1 actifs pour CityGroup.
+* +1 actif pour Impulse.
+* -1 actif pour CityGroup.
+
 
  ---
 
