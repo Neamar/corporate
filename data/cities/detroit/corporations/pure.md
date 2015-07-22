@@ -26,6 +26,25 @@ Ces multiples facettes, comme autant de couleurs font de Pure une corporation qu
 
 Le mot d’ordre est toujours le même : l’excellence en toute chose.
 
+## Effet premier
+Les filiales de Pure se démultiplient, offrant aux hommes une version du monde où le transhumain remplace les machines. Le marché des ADAI de Shinsekai connait un ralentissement tandis qu'Impulse profite de cet engouement technologique pour développer son projet Mars.
+
+* +1 actif pour Impulse.
+* -1 actif pour Shinsekai.
+
+## Effet dernier
+Avec plusieurs filiales en difficulté financière, Pure cède du terrain à Shinsekai sur le marché des produits de luxe. Afin de limiter les coûts, elle se débarrasse de ses prestataires Impulse.
+
+* +1 actif pour Shinsekai.
+* -1 actif pour Impulse.
+
+## Effet crash
+Pure chute, provoquant la baisse des produits de luxe et la priorité n'est plus au paraitre. Iris souffre de cette dépréciation de l'image tandis que CityGroup ramène aux valeurs de bases. Le vide de marché causé par la chute de ses multiples filiales présente une opportunité pour les étoiles montantes.
+
+* -2 actifs pour Iris.
+* +2 actif pour CityGroup.
+* +2 actif pour la deuxième corporation
+
 ---
 
 >C’est les produits de luxe, le haut de gamme. C’est simple, c'est presque une règle: si tu consomme PURE, c'est que tu n’es plus de la classe moyenne. Putains ces mecs me foutent les jetons, tout le temps en blanc ou en couleurs pétantes. Rien de terne, rien de sale, rien de sombre. 
