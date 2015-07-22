@@ -25,7 +25,7 @@ Si cette technologie a au départ été développé pour les besoins d'opératio
 Shinsekai donne ainsi l’image d’une entreprise mettant ses créations au service de l’homme. Profondément fière de ses traditions, Shinsekai impose à ses employés et à ses ADAI une vision du monde manichéenne où l’échec est inacceptable et le devoir une nécessité. C’est cette machine bien huilée qui sait avancer d’un seul tenant en écrasant la concurrence avec une efficacité robotique.
 
 ## Effet premier
- corporation japonaise profite de sa position de leader pour inonder le marché d'ADAI servant au quotidien. De nombreuses filiales de Pure doivent être restructurées tandis qu'Impulse fait avancer son programme de conquête martienne.
+La corporation japonaise profite de sa position de leader pour inonder le marché d'ADAI servant au quotidien. De nombreuses filiales de Pure doivent être restructurées tandis qu'Impulse fait avancer son programme de conquête martienne.
 
 * +1 actif pour Impulse.
 * -1 actif pour Pure.
