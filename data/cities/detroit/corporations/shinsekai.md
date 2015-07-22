@@ -24,6 +24,25 @@ Shinsekai est la seule japanocorp a s'être fait une place dans les plus importa
 Si cette technologie a au départ été développé pour les besoins d'opération de combat, la réussite initiale a rapidement permis à Shinsekai de diversifier grandement, et aujourd'hui les ADAI sont présentes dans tous les secteurs, de l'industrie au luxe, en passant par l'intégralité de la gamme.
 Shinsekai donne ainsi l’image d’une entreprise mettant ses créations au service de l’homme. Profondément fière de ses traditions, Shinsekai impose à ses employés et à ses ADAI une vision du monde manichéenne où l’échec est inacceptable et le devoir une nécessité. C’est cette machine bien huilée qui sait avancer d’un seul tenant en écrasant la concurrence avec une efficacité robotique.
 
+## Effet premier
+ corporation japonaise profite de sa position de leader pour inonder le marché d'ADAI servant au quotidien. De nombreuses filiales de Pure doivent être restructurées tandis qu'Impulse fait avancer son programme de conquête martienne.
+
+* +1 actif pour Impulse.
+* -1 actif pour Pure.
+
+## Effet dernier
+Avec une abnégation toute japonaise, Shinsekai vends plusieurs actifs à Pure tout en réduisant ses effectifs de consultants afin d'améliorer sa rentabilité.
+
+* +1 actif pour Pure.
+* -1 actif pour Impulse.
+
+## Effet crash
+Quittant la scène internationale, Shinsekaï limite ses pertes en vendant à prix cassés des ADAI aux belligérants du conflit Tlaloc/Bastion. Elle rapatrie de plus de nombreuses ADAI de gestion en leasing chez les plus puissants
+
+* -2 actifs pour la première corporation.
+* +2 actifs pour Bastion.
+* +2 actifs pour Tlaloc.
+
 ---
 
 > Je t’ai entendu parler de ton coup sur un entrepôt de Shinsekai…
