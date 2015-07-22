@@ -26,6 +26,25 @@ Si l’on parvient à voir au-delà de cette image (qu’elle soigne néanmoins 
 
 Peu savent à quel point les racines de cette corporation s’étendent, mais une chose est sûre : Tlaloc rayonne maintenant mondialement.
 
+## Effet premier
+En position de meneur, Tlaloc provoque un changement important dans l'économie mondiale, la tournant à son avantage en pressurisant la création de nouvelles normes environnementales et sociales plus strictes ayant un gros impact sur Bastion.
+
+* +1 actif pour Tlaloc.
+* -1 actif pour Bastion.
+
+## Effet dernier
+Sa voix faiblissant en impact sur la scène corporatiste, Tlaloc perd rapidement la confiance d'alliés précieux, qui enlèvent autant d'épines dans le pied de Bastion.
+
+* -1 actif pour Tlaloc.
+* +1 actif pour Bastion.
+
+## Effet crash
+Tlaloc perds le masque de la bienséance, donnant raison à Bastion et sa vision manichéenne et ultramoderne. Impulse profite de ce retour du monde à la foi dans le progrès technique tandis que Pure et CityGroup perdent leur principal fournisseur en produit naturel, créant une baisse de rentabilité.
+
+* +2 actifs pour Bastion.
+* +1 actifs pour Impulse.
+* -1 actifs pour CityGroup.
+* -2 actifs pour Pure.
 
  ---
 
