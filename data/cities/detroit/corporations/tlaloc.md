@@ -41,10 +41,10 @@ Sa voix faiblissant en impact sur la scène corporatiste, Tlaloc perd rapidement
 ## Effet crash
 Tlaloc perds le masque de la bienséance, donnant raison à Bastion et sa vision manichéenne et ultramoderne. Impulse profite de ce retour du monde à la foi dans le progrès technique tandis que Pure et CityGroup perdent leur principal fournisseur en produit naturel, créant une baisse de rentabilité.
 
+* -2 actifs pour Pure.
 * +2 actifs pour Bastion.
 * +1 actifs pour Impulse.
 * -1 actifs pour CityGroup.
-* -2 actifs pour Pure.
 
  ---
 
