@@ -34,7 +34,7 @@ CityGroup surfe sur son avantage concurrentiel pour créer des infrastructures e
 * -1 actif pour la dernière corporation.
 
 ## Effet dernier
-Fier de son aptitude à trouver de bonnes opportunités même dans les situations les plus désespérées, CityGroup trouve le moyen de regagner un second souffle. Néanmoins, l'infrastructure des villes diminuant, les options de transport en souffre autant, imposant un ralentissement à Taurus Industries.
+Fier de son aptitude à trouver de bonnes opportunités même dans les situations les plus désespérées, CityGroup trouve le moyen de regagner un second souffle. Néanmoins, l'infrastructure des villes diminuant, les options de transport en souffrent autant, imposant un ralentissement à Taurus Industries.
 
 * -1 actif pour Taurus.
 * +1 actif pour CityGroup.
