@@ -20,7 +20,7 @@ on_crash:
 
 Iris est la corporation la plus visible au quotidien. Détentrice de plus de 3 500 chaînes de télévision, propriétaire de multiples réseaux sociaux, Iris est la seule corporation à avoir installé son siège en orbite, déployant depuis l’espace son réseau de satellites de télécommunications afin d’inonder la planète de divertissements, de news et de publicités en tout genre. 
 
-Iris a l’image d’une corporation bon enfant, en perpétuel renouvellement, au service de la jeunesse et de l’opulence. Elle inonde d’informations et flatte ses auditeurs. Elle organise des concours, des voyages touristiques dans l’espace, la télé-réalité, des galas, des cérémonies de remise de prix. Elle choisit les stars de demain et enterre celle d’hier. 
+Iris a l’image d’une corporation bon enfant, en perpétuel renouvellement, au service de la jeunesse et de l’opulence. Elle inonde d’informations et flatte ses auditeurs. Elle organise des concours, des voyages touristiques dans l’espace, la télé-réalité, des galas, des cérémonies de remise de prix. Elle choisit les stars de demain et enterre celles d’hier. 
 
 
 Anarchiste, Conformiste, Conservateur, Révolutionnaire… Qui que vous soyez Iris a l’éventail de divertissement qu’il vous faut et vous vend le comprimé énergétique amincissant, le NewBotox, la crème anti-âge, le smartphone et le viagra 2.0 qui vous feront ressembler à votre acteur préféré. Ce contact direct avec le consommateur et le positionnement stratégique et emblématique de leur QG font d’Iris une corporation puissante qui a l’oreille de chaque foyer.
@@ -38,7 +38,7 @@ Iris perdant pied, elle tente de relancer l'audimat en usant d'informations dét
 * +1 actif pour Mercury.
 
 ## Effet crash
-Iris chute, laissant un vide important dans de nombreux marchés profitant notamment à de nombreuses filiales de Pure. Impulse met la main sur le QG tandis que les masses, moins hypnotisés par les programmes Iris, aspire à mieux pour eux même que le bio béton CityGroup.
+Iris chute, laissant un vide important dans de nombreux marchés profitant notamment à de nombreuses filiales de Pure. Impulse met la main sur le QG tandis que les masses, moins hypnotisées par les programmes Iris, aspirent à mieux pour elles mêmes que le bio-béton CityGroup.
 
 * -3 actifs pour CityGroup.
 * +1 actif pour Impulse.
