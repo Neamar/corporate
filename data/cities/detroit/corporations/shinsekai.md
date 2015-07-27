@@ -31,7 +31,7 @@ La corporation japonaise profite de sa position de leader pour inonder le march�
 * -1 actif pour Pure.
 
 ## Effet dernier
-Avec une abnégation toute japonaise, Shinsekai vends plusieurs actifs à Pure tout en réduisant ses effectifs de consultants afin d'améliorer sa rentabilité.
+Avec une abnégation toute japonaise, Shinsekai vend plusieurs actifs à Pure tout en réduisant ses effectifs de consultants afin d'améliorer sa rentabilité.
 
 * +1 actif pour Pure.
 * -1 actif pour Impulse.
