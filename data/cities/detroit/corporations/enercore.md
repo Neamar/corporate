@@ -19,11 +19,11 @@ on_crash:
 
 > *Triompher par l’énergie, pour l’énergie*
 
-En 2028, le génie de la physique Albert Van Tutten invente à 28 ans dans les super-laboratoires de EnerCore, magnat de l’éolienne et du barrage hydraulique, le premier réacteur à fusion nucléaire par accélération magnétique issu du projet BlackSun. Instantanément, l'humanité a accès à l'énergie des étoiles. EnerCore vend ses BlackSuns par centaines. Le prix de cette technologie impose une rentabilité sur plusieurs décennies, mais l’énergie produite est théoriquement illimitée. 
+En 2028, le génie de la physique Albert Van Tutten invente à 28 ans dans les super-laboratoires de EnerCore, magnat de l’éolienne et du barrage hydraulique, le premier réacteur à fusion nucléaire par accélération magnétique issu du projet Black Sun. Instantanément, l'humanité a accès à l'énergie des étoiles. EnerCore vend ses Black Suns par centaines. Le prix de cette technologie impose une rentabilité sur plusieurs décennies, mais l’énergie produite est théoriquement illimitée. 
 
-Remplaçant peu à peu les moyens de production à énergie fossile dans les pays développés, les BlackSun d’EnerCore se sont généralisés dans les plus grandes mégalopoles mondiales. Surfant sur cette opportunité et ayant conscience que les multiples brevets déposés ne la protègeraient qu’un temps, EnerCore a augmenté son rayon d’action. Cette mégacorporation a su garder dans ses acquisitions une vision positive et énergique. On demande aux cadres d’EnerCore d’être communicatifs, d’être présents dans les médias et aux côtés des travailleurs. 
+Remplaçant peu à peu les moyens de production à énergie fossile dans les pays développés, les Black Suns d’EnerCore se sont généralisés dans les plus grandes mégalopoles mondiales. Surfant sur cette opportunité et ayant conscience que les multiples brevets déposés ne la protègeraient qu’un temps, EnerCore a augmenté son rayon d’action. Cette mégacorporation a su garder dans ses acquisitions une vision positive et énergique. On demande aux cadres d’EnerCore d’être communicatifs, d’être présents dans les médias et aux côtés des travailleurs. 
 
-EnerCore semble inépuisable, construisant des infrastructures utilitaires comme des barrages, des ponts ou encore des systèmes d’irrigations pour l’agriculture. Cette mégacorpo aime à s’identifier comme le seul dauphin dans un gang de requins. Force est de constater qu’elle se situe nettement en dessous de la moyenne en termes d’opérations douteuses avérées et est relativement transparente par rapport à ses concurrents. Ce luxe lui est permis de par le pouvoir qu’elle détient : EnerCore n'a besoin que d'actionner un commutateur pour priver d’énergie 50% de la population mondiale.
+EnerCore semble inépuisable, construisant des infrastructures utilitaires comme des barrages, des ponts ou encore des systèmes d’irrigations pour l’agriculture. Cette mégacorpo aime à s’identifier comme le seul dauphin dans un gang de requins. Force est de constater qu’elle se situe nettement en dessous de la moyenne en termes d’opérations douteuses avérées et est relativement transparente par rapport à ses concurrents. Ce luxe lui est permis de par le pouvoir qu’elle détient : EnerCore n'a qu'à actionner un commutateur pour priver d’énergie 50% de la population mondiale.
 
 
 ## Effet premier
@@ -33,13 +33,13 @@ L'énergie est disponible pour tous alors qu'EnerCore s'élève en haut de la py
 * +1 actif pour Taurus.
 
 ## Effet dernier
-Sa puissance financière diminuant, la supériorité technologique d'EnerCore laisse place à de nouveaux acteurs dont les performances ne sont plus à prouver. Shinsekai et Pure, les corporations les plus agressives technologiquement, s’engouffrent dans la brèche.
+Sa puissance financière diminuant, la supériorité technologique d'EnerCore laisse place à de nouveaux acteurs dont les performances ne sont plus à prouver. Shinsekaï et Pure, les corporations les plus agressives technologiquement, s’engouffrent dans la brèche.
 
-* +1 actif pour Shinsekai.
+* +1 actif pour Shinsekaï.
 * +1 actif pour Pure.
 
 ## Effet crash
-Face à la banqueroute, EnerCore n'a d'autres choix que vendre le secret du BlackSuns à Iris et ses parts de Mercury au rabais. La chute de la corporation provoque une montée des prix de l'énergie et donc une recherche vers des logements plus isolante et performante que le bio béton de CityGroup.
+Face à la banqueroute, EnerCore n'a d'autres choix que vendre le secret du Black Sun à Iris et ses parts de Mercury au rabais. La chute de la corporation provoque une montée des prix de l'énergie et donc une recherche vers des logements plus isolants et performants que le bio-béton de CityGroup.
 
 * -2 actifs pour Mercury.
 * -2 actifs pour CityGroup.
