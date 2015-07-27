@@ -32,7 +32,7 @@ Iris devient un modèle de la réussite des réseaux et use de sa position de fo
 * -1 actif pour la dernière corporation.
 
 ## Effet dernier
-Iris perdant pied, elle tente de relancer l'audimat en usant de dossier, causant du tort à la corporation avec le plus de squelette au placard : Taurus Industries. Le déluge d'information devant être régulé, Mercury et ses programmes de défenses deviennent très populaires.
+Iris perdant pied, elle tente de relancer l'audimat en usant d'informations détournées et de révélations scandaleuses, causant du tort à la corporation avec le plus de squelette au placard : Taurus Industries. Le déluge d'information devant être régulé, Mercury et ses programmes de défenses deviennent très populaires.
 
 * -1 actif pour Taurus.
 * +1 actif pour Mercury.
