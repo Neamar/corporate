@@ -21,12 +21,12 @@ Impulse est une des plus vieilles mégacorporations et une des plus méconnues. 
 
 Sur terre, son influence s’étend comme la corporation la plus tournée vers l’avenir et la découverte, s’entourant des esprits techniques les plus brillants qu’elle sait rétribuer et récompenser. Dans l’espace, ses navettes larguent en orbite des escadrons de drones qui réparent ses satellites de communication et récoltent l’énergie de ses stations solaires. Impulse fournit toutes les corporations (ou les particuliers fortunés) en matériel ultramoderne ou en prestation technique spécialisée. 
 
-Jusque-là méconnue du grand public, elle a récemment gagné en influence de par la mise en place de son projet de colonisation de Mars dans lequel elle cherche des partenaires, particulièrement Shinsekai et Pure. C’est cette ambition permanente et sa capacité à s’entourer d’un personnel d’une qualification inégalée qui font d’Impulse une corporation dangereusement efficace.
+Jusque-là méconnue du grand public, elle a récemment gagné en influence de par la mise en place de son projet de colonisation de Mars dans lequel elle cherche des partenaires, particulièrement Shinsekaï et Pure. C’est cette ambition permanente et sa capacité à s’entourer d’un personnel d’une qualification inégalée qui font d’Impulse une corporation dangereusement efficace.
 
 ## Effet premier
-La méga corporation B2B peut maintenant offrir directement au consommateur des produits de haute technologie particulièrement innovant et performant. Les produits Shinsekai et Pure prennent un coup de vieux et connaissent une baisse de rentabilité.
+La méga corporation B2B peut maintenant offrir directement au consommateur des produits de haute technologie particulièrement innovants et performants. Les produits Shinsekaï et Pure prennent un coup de vieux et connaissent une baisse de rentabilité.
 
-* -1 actif pour Shinsekai.
+* -1 actif pour Shinsekaï.
 * -1 actif pour Pure.
 
 ## Effet dernier
