@@ -27,15 +27,15 @@ Ces multiples facettes, comme autant de couleurs font de Pure une corporation qu
 Le mot d’ordre est toujours le même : l’excellence en toute chose.
 
 ## Effet premier
-Les filiales de Pure se démultiplient, offrant aux hommes une version du monde où le transhumain remplace les machines. Le marché des ADAI de Shinsekai connait un ralentissement tandis qu'Impulse profite de cet engouement technologique pour développer son projet Mars.
+Les filiales de Pure se démultiplient, offrant aux hommes une version du monde où le transhumain remplace les machines. Le marché des ADAI de Shinsekaï connait un ralentissement tandis qu'Impulse profite de cet engouement technologique pour développer son projet Mars.
 
 * +1 actif pour Impulse.
-* -1 actif pour Shinsekai.
+* -1 actif pour Shinsekaï.
 
 ## Effet dernier
-Avec plusieurs filiales en difficulté financière, Pure cède du terrain à Shinsekai sur le marché des produits de luxe. Afin de limiter les coûts, elle se débarrasse de ses prestataires Impulse.
+Avec plusieurs filiales en difficulté financière, Pure cède du terrain à Shinsekaï sur le marché des produits de luxe. Afin de limiter les coûts, elle se débarrasse de ses prestataires Impulse.
 
-* +1 actif pour Shinsekai.
+* +1 actif pour Shinsekaï.
 * -1 actif pour Impulse.
 
 ## Effet crash
@@ -51,4 +51,4 @@ Pure chute, provoquant la baisse des produits de luxe et la priorité n'est plus
 
 >Quand tu fais une opé pour eux, ils t’accueillent dans un salon cozy, t’amènent une splendide chinoise pour te masser devant un martini. Alors tu te laisses tenter. Et c’est quand tu pars en avant, bourré de drogues stimulantes et d’anesthésiant que tu te souviens qu’ils sont comme les autres: faux cul, précieux, ils sont prêts à tout pour conserver leur image.
 
->Ne me fais pas pas dire ce que j’ai pas dit. Ce ne sont pas des fiottes. Ils savent ce qu’ils font et il n’y a pas de meilleurs produits, même chez ShinSekai avec qui les relations sont d'ailleurs plus que tendues. Tu peux te faire des marges de folie quand tu mets la main sur du matos PURE. Mais fais gaffe, cette corpos a de multiples visages et il est probable que ton acheteur potentiel t’attende avec un comité armé jusqu’aux dents.
+>Ne me fais pas pas dire ce que j’ai pas dit. Ce ne sont pas des fiottes. Ils savent ce qu’ils font et il n’y a pas de meilleurs produits, même chez Shinsekaï avec qui les relations sont d'ailleurs plus que tendues. Tu peux te faire des marges de folie quand tu mets la main sur du matos PURE. Mais fais gaffe, cette corpos a de multiples visages et il est probable que ton acheteur potentiel t’attende avec un comité armé jusqu’aux dents.
