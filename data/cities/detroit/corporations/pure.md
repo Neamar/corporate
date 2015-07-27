@@ -39,7 +39,7 @@ Avec plusieurs filiales en difficulté financière, Pure cède du terrain à Shi
 * -1 actif pour Impulse.
 
 ## Effet crash
-Pure chute, provoquant la baisse des produits de luxe et la priorité n'est plus au paraitre. Iris souffre de cette dépréciation de l'image tandis que CityGroup ramène aux valeurs de bases. Le vide de marché causé par la chute de ses multiples filiales présente une opportunité pour les étoiles montantes.
+Pure chute, provoquant la baisse des produits de luxe et la priorité n'est plus au paraître. Iris souffre de cette dépréciation de l'image tandis que CityGroup ramène aux valeurs de bases. Le vide de marché causé par la chute de ses multiples filiales présente une opportunité pour les étoiles montantes.
 
 * -2 actifs pour Iris.
 * +2 actif pour CityGroup.
