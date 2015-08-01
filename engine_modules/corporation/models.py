@@ -71,7 +71,7 @@ class BaseCorporation:
 		"""
 		Compile specified code. Second parameter is a string that will be used for stacktrace reports.
 		"""
-		return compile(code, "%s.%s()" % (self.name, effect), 'exec')
+		return compile(code, u"%s.%s()" % (self.name, effect), 'exec')
 
 	@classmethod
 	def retrieve_all(cls):
