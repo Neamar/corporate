@@ -5,42 +5,24 @@
 {% block favicon %}{{ STATIC_URL }}corporations/{{corporation.base_corporation.slug}}.png{% endblock %}
 
 {% block content %}
+<table>
+<tbody>
+<tr>
 {% for market in corporation.markets %}
-<table><tbody>
-<tr> 
 	<td>{{ market.name }}</td>
-</tr>
-</tbody></table>
 {% endfor %}
+</tr>
+</tbody>
+</table>
 
 {% for player in share_holders %}
 {% endfor %}
 
 {% if share_holders %}
-<!--
-<h2>Parts possédées</h2>
-<table class="prop_table">
-<thead>
-<tr>
-	<th></th>
-	<th>Parts</th>
-</tr>
-</thead>
-<tbody>
--->
-<table>
-<tbody>
-<tr>
+<ul>
 {% for player in share_holders %}
-	<td><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}">{{ player.name }}</a></td>
-	{% if player.citizenship.corporation_id == corporation.pk %}
-		<td> (Citizen) </td>
-	{% endif %}
-	<td>{{ player.qty_share }}</td>
+	<li class="{% if player.citizenship.corporation_id == corporation.pk %}citizen {% endif %}"><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}" title="Parts de {{ player.name }}"><span>{{ player.qty_share }}</span></a></li>
 {% endfor %}
-</tr>
-</tbody>
-</table>
 
 <table>
 <thead>
@@ -66,12 +48,8 @@
 </table>
 {% endif %}
 <a href="{% url "docs.views.corporation" corporation_slug=corporation.base_corporation.slug %}">voir la page de la corporation</a>
-<!--
-<h2>Description</h2>
-<img src="{{ STATIC_URL }}corporations/{{corporation.base_corporation.slug}}.png" alt="{{ corporation.base_corporation.name" style="float:right; margin:0 30px"/>
-{{ corporation.base_corporation.description }}
+
 {% endblock content %}
--->
 
 {% block scripts %}
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
