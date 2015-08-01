@@ -192,9 +192,9 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 		# Crete event lost bubble
 		for deleted_bubble in previous_turn_bubbles:
 			if deleted_bubble.value == 1:
-				event_type = game.LOST_DOMINATION_BUBBLE
+				event_type = game.LOSE_DOMINATION_BUBBLE
 			elif deleted_bubble.value == -1:
-				event_type = game.LOST_DRY_BUBBLE
+				event_type = game.LOSE_DRY_BUBBLE
 			else:
 				raise Exception("Bubble value different than +1 or -1")
 			corporation_market = deleted_bubble.corporation.corporationmarket_set.get(market=deleted_bubble.market)
@@ -202,9 +202,9 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 		# Create event add bubble
 		for added_bubble in current_turn_bubbles:
 			if added_bubble.value == 1:
-				event_type = game.WIN_DOMINATION_BUBBLE
+				event_type = game.GAIN_DOMINATION_BUBBLE
 			elif added_bubble.value == -1:
-				event_type = game.WIN_DRY_BUBBLE
+				event_type = game.GAIN_DRY_BUBBLE
 			else:
 				raise Exception("Bubble value different than +1 or -1")
 			corporation_market = added_bubble.corporation.corporationmarket_set.get(market=added_bubble.market)
