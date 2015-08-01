@@ -15,30 +15,6 @@
 
 {% for player in share_holders %}
 {% endfor %}
-<table class="prop_table">
-<thead>
-<tr>
-	<th></th>
-	<th>Actif</th>
-	<th>DS</th>
-	<th>S</th>
-	<th>E</th>
-	<th>D</th>
-	<th>Coalition</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
-	<td class="important">{{ corporation.assets }}</td>
-	<td>{{ corporation.base_corporation.datasteal }}</td>
-	<td>{{ corporation.base_corporation.sabotage }}</td>
-	<td>{{ corporation.base_corporation.extraction }}</td>
-	<td>{{ corporation.base_corporation.detection }}</td>
-	<td> TBD </td>
-</tr>
-</tbody>
-</table>
 
 {% if share_holders %}
 <!--
@@ -72,20 +48,24 @@
 {% for market in markets %}
 	<td> {{ market.name }} </td>
 {% endfor %}
+	<td> &Sigma; </td>
+	<td> Joueurs </td>
 </thead>
 <tbody>
 {% for entry in summary %}
 <tr>
-	<td>{{ entry.0 }}</td>
+	<td>{{ entry.0.base_corporation.name }}</td>
 	{% for value in entry.1 %}
 		<td> {% if value %} {{ value }} {% else %} - {% endif %}</td>
 	{% endfor %}
+	<td> {{ entry.0.assets }}</td>
+	<td>{% for holder in entry.2 %} {{ holder.name }} {% endfor %}</td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
 {% endif %}
-{% comment %} <a href="{% url "docs.corporations" corporation_slug=corporation.slug %}">"voir la page de la corporation"</a> {% endcomment %}
+<a href="{% url "docs.views.corporation" corporation_slug=corporation.base_corporation.slug %}">voir la page de la corporation</a>
 <!--
 <h2>Description</h2>
 <img src="{{ STATIC_URL }}corporations/{{corporation.base_corporation.slug}}.png" alt="{{ corporation.base_corporation.name" style="float:right; margin:0 30px"/>
