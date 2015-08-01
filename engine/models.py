@@ -73,7 +73,7 @@ class Game(models.Model):
 		self.add_newsfeed(**kwargs)
 
 	def __unicode__(self):
-		return "Corporate Game: %s" % self.city
+		return u"Corporate Game: %s" % self.city
 
 
 class Player(models.Model):
@@ -265,6 +265,11 @@ class Order(models.Model):
 
 		raise LookupError("No orders subclass match this base: %s" % self.type)
 
+	def custom_description(self):
+		"""
+		A custom description, that may be displayed in some places (for instance, orders list page)
+		"""
+		return ""
 
 # Import data for all engine_modules
 from engine.modules import *

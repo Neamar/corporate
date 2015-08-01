@@ -14,7 +14,7 @@
 
 	{% block head %}{% endblock %}
 	<title>{% block title %}Corporate game{% endblock %}</title>
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Oswald:400,700,300' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -34,6 +34,8 @@
 		</ul>
 
 		<article class="content">
+			<h1 class="main-h1-title">{% block h1 %}{% endblock %}</h1>
+
 			{% block content %}{% endblock %}
 		</article>
 	</section>

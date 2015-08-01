@@ -28,4 +28,4 @@ class CorporationMarket(models.Model):
 	value = models.SmallIntegerField()
 
 	def __unicode__(self):
-		return "%s de %s" % (self.market, self.corporation)
+		return u"%s de %s" % (self.market, self.corporation)
