@@ -88,7 +88,7 @@ def corporation(request, player, game, corporation_slug, turn):
 		holders = game.player_set.filter(share__corporation__base_corporation_slug=corpo.base_corporation_slug).distinct()
 		corporation_markets = corpo.corporationmarket_set.filter(market__in=markets)
 		for market in markets:
-			assets.append(next((cm.value for cm in corporation_markets if cm.market.name  == market.name), None))
+			assets.append(next((cm.value for cm in corporation_markets if cm.market.name == market.name), None))
 		# That's kind of a weird data structure, but the template tags are not as flexible as one might like
 		summary.append((corpo, assets, holders))
 
