@@ -27,7 +27,6 @@ def wallstreet(request, game, player, turn):
 	corporations = game.get_ladder(turn=turn)
 	delta_categories = {}
 
-	# TODO: Remove this, For debug purposes
 	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
 	assets_hash = {ah.corporation_id: ah.assets for ah in assets}
 

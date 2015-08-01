@@ -108,9 +108,6 @@ class Player(models.Model):
 		if turn is None:
 			turn = self.game.current_turn
 
-		# TODO: Remove this. This is a TEMPORARY fix for a problem where in some queries, turn=0
-		if turn == 0:
-			turn = 1
 		# Influence for the turn is on preceding turn's Influence object
 		influence = self.influence_set.get(turn=turn - 1)
 		return influence

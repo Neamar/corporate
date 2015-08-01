@@ -56,8 +56,6 @@ def turn_by_turn_view(func):
 
 		if turn > game.current_turn:
 			raise Http404("This turn has not yet been played.")
-			# We probably shouldn't raise a 404: that's way too extreme.
-			# Plus, there should probably a different behaviour for the current turn and for turns still to come.
 
 		response = func(request=request, game=game, player=player, turn=turn, *args, **kwargs)
 		if isinstance(response, dict):
