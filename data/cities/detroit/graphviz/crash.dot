@@ -1,0 +1,70 @@
+# dot -T svg data/cities/detroit/graphviz/last.dot > website/static/graphviz/detroit/last.svg
+digraph g{
+	graph [
+		rankdir = "LR"
+		bgcolor=transparent
+	];
+	// title
+	labelloc="t";
+	label="Effets crash";
+
+	premier [shape=square, fillcolor="#FCD975", style="filled", label="Première"];
+	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
+
+	tlaloc [shape=ellipse, fillcolor="burlywood", style="filled", label="Tlaloc"];
+	bastion [shape=ellipse, fillcolor="burlywood", style="filled", label="Bastion"];
+	citygroup [shape=ellipse, fillcolor="burlywood", style="filled", label="Citygroup"];
+	enercore [shape=ellipse, fillcolor="burlywood", style="filled", label="Enercore"];
+	iris [shape=ellipse, fillcolor="burlywood",style="filled", label="Iris"];
+	mercury [shape=ellipse, fillcolor="burlywood", style="filled", label="Mercury"];
+	pure [shape=ellipse, fillcolor="burlywood", style="filled", label="Pure"];
+	impulse [shape=ellipse, fillcolor="burlywood", style="filled", label="Impulse"];
+	shinsekai [shape=ellipse, fillcolor="burlywood", style="filled", label="Shinsekai"];
+	taurus [shape=ellipse, fillcolor="burlywood", style="filled", label="Taurus"];
+
+	taurus -> taurus [color="blue"];
+	taurus -> taurus [color="blue"];
+	taurus -> taurus [color="blue"];
+
+	mercury -> premier [color="black"];
+	mercury -> premier [color="black"];
+	mercury -> premier [color="red"];
+	mercury -> second [color="red"];
+
+	bastion -> tlaloc [color="blue"];
+	bastion -> taurus [color="green"];
+	bastion -> premier [color="green"];
+	bastion -> impulse [color="black"];
+
+	tlaloc -> bastion [color="blue"];
+	tlaloc -> impulse [color="green"];
+	tlaloc -> citygroup [color="red"];
+	tlaloc -> pure [color="black"];
+
+	citygroup-> taurus [color="black"];
+	citygroup-> taurus [color="red"];
+	citygroup-> iris [color="blue"];;
+	citygroup-> second [color="red"];
+
+	enercore -> mercury [color="black"];
+	enercore -> iris [color="blue"];
+	enercore -> citygroup [color="black"];
+
+	shinsekai -> premier [color="black"];
+	shinsekai -> bastion [color="blue"];
+	shinsekai -> tlaloc [color="blue"];
+
+	impulse -> premier [color="blue"];
+	impulse -> iris [color="black"];
+	impulse -> mercury [color="black"];
+
+	pure -> iris [color="black"];
+	pure -> citygroup [color="blue"];
+	pure -> second [color="blue"];
+
+	
+	iris -> pure [color="blue"];
+	iris -> impulse [color="green"];
+	iris -> citygroup [color="black"];
+	iris -> citygroup [color="red"];
+}
