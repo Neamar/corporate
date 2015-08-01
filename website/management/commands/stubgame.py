@@ -32,12 +32,10 @@ class Command(BaseCommand):
 
 		# Create game
 		self.stdout.write("Creating stub game...")
-		g = Game.objects.create(city="Stub")
-		p1 = self.create_player(game=g, user=user1, name="player1", background="Player 1 background")
-		g.player_set.add(p1)
-		p2 = Player(user=user2, name="player1", background="Player 2 background")
-		g.player_set.add(p2)
-		p3 = Player(user=user3, name="player1", background="Player 3 background")
-		g.player_set.add(p3)
-		p4 = Player(user=user4, name="player1", background="Player 4 background")
-		g.player_set.add(p4)
+		self.g = Game.objects.create(city="Stub")
+		self.p1 = self.create_player(game=self.g, user=user1, name="player1", background="Player 1 background")
+		self.p2 = self.create_player(game=self.g, user=user2, name="player1", background="Player 2 background")
+		self.p3 = self.create_player(game=self.g, user=user3, name="player1", background="Player 3 background")
+		self.p4 = self.create_player(game=self.g, user=user4, name="player1", background="Player 4 background")
+
+		self.stdout.write("Created game #%s, connect with username `player1` and password `user`" % self.g.pk)
