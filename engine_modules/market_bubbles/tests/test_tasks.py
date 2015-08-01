@@ -115,9 +115,9 @@ class TaskTest(EngineTestCase):
 		# Create a positive bubble, and make c2 first
 		self.c2.update_assets(delta=differential_2, category=AssetDelta.INVISIBLE_HAND, corporationmarket=target_corporation_market_2)
 
-		# c is last, its effets will be to minimize c2 own market
+		# c is last, its effects will be to minimize c2 own's market
 		self.update_effect(self.c, 'on_last', "update('%s', %i, market='%s')" % (self.c2.base_corporation_slug, -2 * differential_2, target_corporation_market_2.market.name))
-		# c2 is first, its effets will be to maximize c own market
+		# c2 is first, its effects will be to maximize c own's market
 		self.update_effect(self.c2, 'on_first', "update('%s', %i, market='%s')" % (self.c.base_corporation_slug, 2 * differential_1, target_corporation_market.market.name))
 
 		pre_bubbles_assets_1 = self.c.assets
