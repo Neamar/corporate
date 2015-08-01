@@ -12,11 +12,11 @@ class MarketBubble(models.Model):
 	"""
 	class Meta:
 		unique_together = (("corporation", "market", "turn"),)
-		
+
 	corporation = models.ForeignKey(Corporation, related_name='market_bubbles', null=True, default=None)
 	market = models.ForeignKey(Market, related_name='bubbles')
 	turn = models.PositiveSmallIntegerField()
 	value = models.SmallIntegerField()
 
 	def __unicode__(self):
-		return "%s (%i) in %s" % (self.corporation, self.value, self.market)
+		return u"%s (%i) in %s" % (self.corporation, self.value, self.market)

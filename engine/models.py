@@ -73,7 +73,7 @@ class Game(models.Model):
 		self.add_newsfeed(**kwargs)
 
 	def __unicode__(self):
-		return "Corporate Game: %s" % self.city
+		return u"Corporate Game: %s" % self.city
 
 
 class Player(models.Model):
@@ -201,7 +201,7 @@ class Order(models.Model):
 		return 0
 
 	def __unicode__(self):
-		return "%s for %s, turn %s" % (self.type, self.player, self.turn)
+		return u"%s for %s, turn %s" % (self.type, self.player, self.turn)
 
 	def description(self):
 		"""
