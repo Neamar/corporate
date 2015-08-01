@@ -51,10 +51,10 @@ def turn_by_turn_view(func):
 	@wraps(func)
 	def wrap(request, game, player, turn=None, *args, **kwargs):
 		if turn is None:
-			turn = game.current_turn - 1
+			turn = game.current_turn
 		turn = int(turn)
 
-		if turn >= game.current_turn:
+		if turn > game.current_turn:
 			raise Http404("This turn has not yet been played.")
 
 		response = func(request=request, game=game, player=player, turn=turn, *args, **kwargs)

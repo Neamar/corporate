@@ -18,6 +18,7 @@ class DIncVoteOrder(Order):
 	RSEC = "RSEC"
 	CONS = "CONS"
 
+	# @Neamar: Why is DINC_COALTION_CHOICES not a dict ?
 	# Enumerate the party lines and their meanings
 	DINC_COALITION_CHOICES = (
 		('CPUB', 'Contrats publics'),
@@ -113,13 +114,14 @@ def get_dinc_coalition(self, turn=None):
 	Get the Detroit, Inc. party line voted on turn session (defaults to current turn).
 	Return None on the first turn.
 	"""
+
 	if turn is None:
 		turn = self.current_turn
 
-	if turn == 1:
+	try:
+		session = self.dincvotesession_set.get(turn=turn)
+	except DIncVoteSession.DoesNotExist:
 		return None
-
-	session = self.dincvotesession_set.get(turn=turn)
 	return session.coalition
 
 

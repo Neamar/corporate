@@ -24,31 +24,34 @@ def wallstreet(request, game, player, turn):
 	"""
 
 	# Table data
-	corporations = game.get_ladder(turn=turn)
+	corporations = game.get_ladder(turn=turn - 1)
 	delta_categories = {}
 
-	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn)
+	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
 	assets_hash = {ah.corporation_id: ah.assets for ah in assets}
 
 	for corporation in corporations:
 		corporation.current_assets = assets_hash[corporation.pk]
 
 	# Insert last turn assets
-	last_assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
+	last_assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 2)
 	last_assets_hash = {ah.corporation_id: ah.assets for ah in last_assets}
 
-	if game.current_turn > 1:
-		for corporation in corporations:
-			corporation.last_assets = last_assets_hash[corporation.pk]
+	for corporation in corporations:
+		corporation.last_assets = last_assets_hash[corporation.pk] if turn > 1 else None
 
-			detailed_delta = corporation.assetdelta_set.filter(turn=turn).order_by('category')
-			for detail in detailed_delta:
+		detailed_delta = corporation.assetdelta_set.filter(turn=turn - 1).order_by('category')
+		for detail in detailed_delta:
+			if turn > 1:
 				setattr(corporation, detail.category, getattr(corporation, detail.category, 0) + detail.delta)
 				delta_categories[detail.category] = detail.get_category_display()
-
-			unknown = corporation.current_assets - corporation.last_assets - sum([ad.delta for ad in detailed_delta])
+				unknown = corporation.current_assets - corporation.last_assets - sum([ad.delta for ad in detailed_delta])
+			else:
+				setattr(corporation, detail.category, None)
+				unknown = None
 			setattr(corporation, 'unknown', unknown if unknown != 0 else "")
-		delta_categories['unknown'] = '?'
+
+	delta_categories['unknown'] = '?'
 
 	# Graph data
 	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
@@ -60,6 +63,8 @@ def wallstreet(request, game, player, turn):
 		"sorted_corporations": sorted_corporations,
 		"delta_categories": OrderedDict(sorted(delta_categories.items())),
 		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
+		"turn": turn,
+		"request": request,
 	}
 
 
@@ -79,7 +84,10 @@ def corporation(request, player, game, corporation_slug):
 		"corporation": corporation,
 		"players": players,
 		"assets_history": assets_history,
-		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
+		# Turn_spinner doesn't work, because the URL with e turn isn't allowed, which makes sense, because for this description, the turn doesn't matter
+		"pods": ['d_inc', 'current_player', 'players', ],
+		"turn": game.current_turn,
+		"request": request,
 	}
 
 
@@ -95,7 +103,7 @@ def shares(request, game, player, turn):
 
 	players = game.player_set.all().order_by('pk')
 	corporations = list(game.corporation_set.all().order_by('pk'))
-	shares = Share.objects.filter(player__game=game, turn=turn).select_related('corporation', 'player')
+	shares = Share.objects.filter(player__game=game, turn__lte=turn).select_related('corporation', 'player')
 	corporations_shares = []
 	totals = []
 	for player in players:
@@ -116,6 +124,9 @@ def shares(request, game, player, turn):
 		"players": players,
 		"corporations": corporations,
 		"corporations_shares": corporations_shares,
+		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
+		"turn": turn,
+		"request": request,
 	}
 
 

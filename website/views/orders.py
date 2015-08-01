@@ -23,7 +23,9 @@ def orders(request, game, player):
 		"existing_orders": existing_orders,
 		"existing_orders_cost": existing_orders_cost,
 		"remaining_money": player.money - existing_orders_cost,
-		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
+		"pods": ['d_inc', 'current_player', 'players', ],
+		"turn": game.current_turn,
+		"request": request,
 	}
 
 

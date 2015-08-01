@@ -19,5 +19,8 @@ Rejoignez la danse pour devenir le roi d'un instant !</p>
 {% if is_authenticated %}
 <hr />
 <small><a href="{% url 'django.contrib.auth.views.logout_then_login' %}">Déconnexion</a></small>.
+{% else %}
+<hr />
+<small><a href="{% url 'django.contrib.auth.views.login' %}">Connexion</a></small>.
 {% endif %}
 {% endblock content %}

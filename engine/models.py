@@ -98,6 +98,20 @@ class Player(models.Model):
 		influence = self.influence_set.get(turn=self.game.current_turn - 1)
 		return influence
 
+	def get_influence(self, turn=None):
+		"""
+		Return player's influence at specified turn
+		Yes, this is a little redundant, but I need to have it for any arbitrary turn, and
+		I thought it would be good to discuss it before breaking the "influence" property
+		"""
+
+		if turn is None:
+			turn = self.game.current_turn
+
+		# Influence for the turn is on preceding turn's Influence object
+		influence = self.influence_set.get(turn=turn - 1)
+		return influence
+
 	@property
 	def citizenship(self):
 		"""
