@@ -7,6 +7,8 @@ import re
 
 register = template.Library()
 
+NO_CONTEXT_REQUIRED = "__no_context"
+
 
 def players_pod(context):
 	players = context['game'].player_set.all()
@@ -47,32 +49,40 @@ def turn_spinner_pod(context):
 	}
 
 
+def corporation_documentation(context):
+	return {
+		"base_corporations": context['base_corporations'],
+		NO_CONTEXT_REQUIRED: True
+	}
+
+
 # Map string name to pod generator
 pods_functions = {
 	"players": players_pod,
 	"d_inc": d_inc_pod,
 	"current_player": current_player_pod,
 	"turn_spinner": turn_spinner_pod,
+	"corporation_documentation": corporation_documentation
 }
 
 
 @register.simple_tag(takes_context=True, name="display_pod")
 def display_pod(context, pod, *args, **kwargs):
-
 	template = get_template('pods/' + pod + '.html')
 
 	pod_context = pods_functions[pod](context)
-	pod_context['game'] = context['game']
-	pod_context['player'] = context['player']
-	pod_context['turn"'] = context['turn']
+	if NO_CONTEXT_REQUIRED not in pod_context:
+		pod_context['game'] = context['game']
+		pod_context['player'] = context['player']
+		pod_context['turn"'] = context['turn']
 
-	# does not work when using URL like game/1/wallstreet, because the turn is default, not explicit
-	path_list = context['request'].path.split('/')
-	path_len = len(path_list)
-	# remove turn number if there was one
-	if len(re.findall('\d+', path_list[-1])) != 0:
-		path_len -= 1
+		# does not work when using URL like game/1/wallstreet, because the turn is default, not explicit
+		path_list = context['request'].path.split('/')
+		path_len = len(path_list)
+		# remove turn number if there was one
+		if len(re.findall('\d+', path_list[-1])) != 0:
+			path_len -= 1
 
-	pod_context['request_path'] = ''.join(s + '/' for s in path_list[:path_len])
+		pod_context['request_path'] = ''.join(s + '/' for s in path_list[:path_len])
 
 	return template.render(pod_context)

@@ -1,10 +1,10 @@
-from engine_modules.corporation_run.tests.test_orders import RunOrdersTest
+from engine.testcases import EngineTestCase
 from engine.models import Player
 from messaging.models import Message
 from engine_modules.player_run.models import InformationOrder
 
 
-class InformationRunOrderTest(RunOrdersTest):
+class InformationRunOrderTest(EngineTestCase):
 	def setUp(self):
 		super(InformationRunOrderTest, self).setUp()
 
@@ -31,11 +31,6 @@ class InformationRunOrderTest(RunOrdersTest):
 		)
 		self.io.clean()
 		self.io.save()
-
-		self.set_to_zero(self.io.target.citizenship.corporation)
-
-	def tearDown(self):
-		self.set_to_original(self.io.target.citizenship.corporation)
 
 	def test_information_success(self):
 		"""

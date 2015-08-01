@@ -4,10 +4,6 @@ markets:
     médias: 2
     énergie: 2
     transport: 2
-datasteal: 10
-sabotage: 10
-extraction: 30
-detection: 30
 on_first:
     update('renraku', -1)
     update('sony', 1)

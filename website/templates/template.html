@@ -22,14 +22,16 @@
 <div class="grid-container main-container">
 
 	<section class="content-container">
-		{% if game.id != None %}
 		<ul class="menu">
+		{% if game.id != None %}
 			<li><a class={% make_link_active "orders" %} href="{% url 'website.views.orders.orders' game_id=game.id %}">Ordres</a></li>
 			<li><a class={% make_link_active "wallstreet" %} href="{% url 'website.views.data.wallstreet' game_id=game.id %}">Wallstreet</a></li>
 			<li><a class={% make_link_active "shares" %} href="{% url 'website.views.data.shares' game_id=game.id %}">Parts</a></li>
+		{% else %}
+			<li><a href="{% url 'website.views.index.index' %}">Accueil</a></li>
+		{% endif %}
 			<li class="rules"><a title="Les règles du jeu" href="{% url 'docs.views.index' page='' %}"><svg role="img" class="svg-rules svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#Svg--rules"></use></svg><span class="visually-hidden">Les règles du jeu</span></a></li>
 		</ul>
-		{% endif %}
 
 		<article class="content">
 			{% block content %}{% endblock %}

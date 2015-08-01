@@ -4,10 +4,6 @@ markets:
     robotique: 3
     telecom: 2
     énergie: 2
-datasteal: 20
-sabotage: 10
-extraction: 10
-detection: 60
 on_first:
     update(ladder[1], -2)
 on_last:

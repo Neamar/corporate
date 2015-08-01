@@ -4,10 +4,6 @@ markets:
     énergie: 2
     transport: 2
     pharmaceutique: 2
-datasteal: 10
-sabotage: 20
-extraction: 20
-detection: 30
 on_first:
     update('spinrad', 2)
 on_last:

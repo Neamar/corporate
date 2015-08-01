@@ -4,10 +4,6 @@ markets:
     aérospatiale: 3
     pharmaceutique: 1
     télécom: 2
-datasteal: 20
-sabotage: 20
-extraction: 10
-detection: 30
 on_first:
     update('prometheus', 1)
     update(ladder[1], 1)
