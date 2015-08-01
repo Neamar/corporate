@@ -7,6 +7,14 @@ from utils.read_markdown import read_file_from_path, parse_markdown
 from engine_modules.corporation.models import BaseCorporation
 
 
+def get_base_data():
+	return {
+		"base_corporations": BaseCorporation.retrieve_all(),
+		"city": settings.CITY,
+		"pods": ["corporation_documentation"]
+	}
+
+
 def index(request, page):
 	if page == '':
 		page = 'index'
@@ -34,7 +42,9 @@ def index(request, page):
 	title = mark_safe(title)
 	content = mark_safe(content)
 
-	return render(request, 'docs/index.html', {"content": content, "title": title})
+	data = get_base_data()
+	data.update({"content": content, "title": title})
+	return render(request, 'docs/index.html', data)
 
 
 def redirect_md(request, page):
@@ -54,5 +64,10 @@ def corporation(request, corporation_slug):
 	except KeyError:
 		raise Http404("No matching corporation.")
 
-	print base_corporation.markets
-	return render(request, 'docs/corporation.html', {"base_corporation": base_corporation, "city": settings.CITY})
+	# TODO: add some pods (first, last and crash effects)
+
+	data = get_base_data()
+	data.update({
+		"base_corporation": base_corporation,
+	})
+	return render(request, 'docs/corporation.html', data)
