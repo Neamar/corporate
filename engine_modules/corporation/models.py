@@ -104,16 +104,31 @@ class Corporation(models.Model):
 	@property
 	def corporation_markets(self):
 		"""
-		Returns all CorporationMarket objects associated with the Corporation
+		Returns all CorporationMarket objects associated with the Corporation for the current turn
 		"""
-		return self.corporationmarket_set.all()
+		return self.corporationmarket_set.filter(turn=self.game.current_turn)
+
+	def get_corporation_markets(self, turn=None):
+		"""
+		Returns all CorporationMarket objects associated with the Corporation for the specified turn
+		"""
+		if turn is None:
+			turn = self.game.current_turn
+		return self.corporationmarket_set.filter(turn=turn)
 
 	@property
 	def markets(self):
 		"""
-		Returns all Market objects associated with the Corporation
+		Returns all Market objects associated with the Corporation for the current turn
 		"""
 		return [cm.market for cm in self.corporation_markets]
+
+	def get_markets(self, turn=None):
+		"""
+		Returns all Market objects associated with the Corporation for the current turn
+		"""
+		# The case where turn is None is handled by get_corporation_markets
+		return [cm.market for cm in self.get_corporation_markets(turn)]
 
 	def get_random_corporation_market(self):
 		"""

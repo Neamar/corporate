@@ -25,6 +25,7 @@ class CorporationMarket(models.Model):
 
 	corporation = models.ForeignKey("corporation.Corporation")
 	market = models.ForeignKey(Market)
+	turn = models.PositiveSmallIntegerField(default=1)
 	value = models.SmallIntegerField()
 
 	def __unicode__(self):

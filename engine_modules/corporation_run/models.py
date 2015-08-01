@@ -52,6 +52,7 @@ class CorporationRunOrder(RunOrder):
 	"""
 	Model for offensive corporation runs.
 	"""
+	# TODO: Check that the turn is the same on RunOrder and target_corporation_market
 	target_corporation_market = models.ForeignKey(CorporationMarket, related_name="scoundrels")
 
 	def get_success_probability(self):
