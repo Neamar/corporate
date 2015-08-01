@@ -12,7 +12,7 @@
 	{% for player in players %}
 	<!-- should be replaced with the player's image when -->
 	<th>
-		<a href="#" title="{{ player.name|title }}"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" /></a>
+		<a href="{% url 'website.views.data.player' game_id=game.id player_id=player.id %}" title="{{ player.name|title }}"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" /></a>
 	</th>
 	{% endfor %}
 </tr>
