@@ -203,7 +203,7 @@
 		min-height: 120px;
 		position: relative;
 
-			&.RSEC {
+			&.RSEC, &.rsec {
 
 				&:after {
 				width: 70%;
@@ -211,9 +211,9 @@
 				}
 			}
 
-			&.CONS {
+			&.CONS, &.cons {
 				img {
-				margin: 32px auto auto
+				margin: 12px auto auto
 				}
 				&:after {
 				margin: auto auto auto -38%;
@@ -221,13 +221,23 @@
 				}
 			}
 
-			&.CPUB {
+			&.CPUB, &.cpub {
 				img {
-				margin: 5px auto auto
+				margin: 9px auto auto
 				}
 				&:after {
 				width: 50%;
 				margin: auto auto auto -25%;
+				}
+			}
+
+			&.None, &.none {
+				img {
+				margin: 15px auto auto
+				}
+
+				&:before {
+					background-color: transparent;
 				}
 			}
 
