@@ -71,7 +71,7 @@ class BaseCorporation:
 		"""
 		Compile specified code. Second parameter is a string that will be used for stacktrace reports.
 		"""
-		return compile(code, "%s.%s()" % (self.name, effect), 'exec')
+		return compile(code, "%s.%s()" % (self.slug, effect), 'exec')
 
 	@classmethod
 	def retrieve_all(cls):
@@ -254,7 +254,7 @@ class Corporation(models.Model):
 		self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
 
 	def __unicode__(self):
-		return "%s (%s)" % (self.base_corporation.name, self.assets)
+		return u"%s (%s)" % (self.base_corporation.name, self.assets)
 
 
 class AssetDelta(models.Model):
