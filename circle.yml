@@ -1,4 +1,4 @@
 test:
   post:
     - pep8 .
-    - flake8 --exclude=.pyenv,nvm,virtualenvs .
+    - flake8 --exclude=.pyenv,nvm,virtualenvs,migrations .

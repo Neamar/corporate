@@ -11,11 +11,9 @@ class OrdersTest(EngineTestCase):
 		super(OrdersTest, self).setUp()
 		self.c3.delete()
 
-		self.c.assets = 7
-		self.c.save()
+		self.c.set_market_assets(7)
 
-		self.c2.assets = 8
-		self.c2.save()
+		self.c2.set_market_assets(8)
 
 		self.o = BuyShareOrder(
 			player=self.p,
@@ -29,7 +27,6 @@ class OrdersTest(EngineTestCase):
 		"""
 		init_money = self.p.money
 		self.o.resolve()
-
 		self.assertEqual(self.reload(self.p).money, init_money - BuyShareOrder.BASE_COST * self.c.assets)
 
 	def test_order_add_share(self):
@@ -37,7 +34,6 @@ class OrdersTest(EngineTestCase):
 		A share should be created
 		"""
 		self.o.resolve()
-
 		s = Share.objects.get()
 		self.assertEqual(s.player, self.p)
 		self.assertEqual(s.corporation, self.o.corporation)
@@ -54,8 +50,9 @@ class OrdersTest(EngineTestCase):
 
 		self.assertRaises(OrderNotAvailable, o2.clean)
 
-		self.p.influence.level = 2
-		self.p.influence.save()
+		influence = self.p.influence
+		influence.level = 2
+		influence.save()
 		# assertNoRaises
 		o2.clean()
 
@@ -90,8 +87,10 @@ class OrdersTest(EngineTestCase):
 		"""
 		Order should cost FIRST_AND_CITIZEN_COST rate when corporation is first and we have the citizenship
 		"""
-		self.p.citizenship.corporation = self.c2
-		self.p.citizenship.save()
+		citizenship = self.p.citizenship
+		citizenship.corporation = self.c2
+		citizenship.save()
+		self.g.resolve_current_turn()
 
 		init_money = self.p.money
 

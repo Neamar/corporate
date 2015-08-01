@@ -71,13 +71,15 @@ class BaseCorporation:
 		"""
 		Compile specified code. Second parameter is a string that will be used for stacktrace reports.
 		"""
-		return compile(code, "%s.%s()" % (self.name, effect), 'exec')
+		return compile(code, "%s.%s()" % (self.slug, effect), 'exec')
 
 	@classmethod
 	def retrieve_all(cls):
 		return cls.base_corporations.values()
 
 # Build the dict at startup once and for all
+# This is executed when the file is imported (this is why 'import from' is important) !
+# Isn't there a better way to do this ?
 BaseCorporation.build_dict()
 
 
@@ -91,6 +93,10 @@ class Corporation(models.Model):
 
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
+	# assets, market_assets and assets_modifier are meant to keep track of the MarketBubbles:
+	# - market_assets stands for the total of the assets in the Corporation's markets disregarding bubbles.
+	# - assets_modifier stands for the bonuses and maluses originating from domination on a market, or having a market at 0 asset.
+	# - assets stands for the assets that must be usually taken into account, so we have: assets = market_assets + assets_modifier
 	assets = models.SmallIntegerField()
 	market_assets = models.SmallIntegerField()
 	assets_modifier = models.SmallIntegerField(default=0)
@@ -109,8 +115,7 @@ class Corporation(models.Model):
 		"""
 		return [cm.market for cm in self.corporation_markets]
 
-	@property
-	def random_corporation_market(self):
+	def get_random_corporation_market(self):
 		"""
 		Returns one object at random among the CorporationMarket objects associated with the Corporation
 		"""
@@ -124,16 +129,39 @@ class Corporation(models.Model):
 
 	def get_common_corporation_market(self, c2):
 		"""
-		Returns the CorporationMaket for a common market between the Corporation and c2 if there is one.
-		Raises a ValidationError otherwise, because two Corporations should have at least one common Market.
+		Returns the CorporationMarket object for a common market between the Corporation and c2 if there is one
+		Raises a ValidationError otherwise, because two Corporations should have at least one common Market
+		This does not actually return a common CorporationMarket, because there is no such thing: a CorporationMarket is by definition specific to a Corporation
+		"""
+
+		return random.choice(self.get_common_corporation_markets(c2))
+
+	def get_common_corporation_markets(self, c2):
+		"""
+		Returns a list of CorporationMarket objects for every common market between the Corporation and c2 if there is one.
+		Raises ValidationError otherwise.
 		"""
 		c2_markets = c2.markets
 		common_corporation_markets = [cm for cm in self.corporation_markets if cm.market in c2_markets]
-
-		if len(common_corporation_markets) != 0:
-			return random.choice(common_corporation_markets)
-		else:
+		if len(common_corporation_markets) == 0:
 			raise ValidationError("Corporations %s and %s have no common market" % (self.base_corporation.name, c2.base_corporation.name))
+		else:
+			return common_corporation_markets
+
+	def get_common_market(self, c2):
+		"""
+		Returns the Market object for a common market between the Corporation if there is at least one
+		Raises a ValidationError otherwise, because two Corporations should have at least one common Market
+		"""
+		return self.get_common_corporation_market(c2).market
+
+	def get_common_markets(self, c2):
+		"""
+		Returns a list of Market objects for every common market between the Corporation and c2 if there is one.
+		Raises ValidationError otherwise.
+		"""
+		common_corporation_markets = self.get_common_corporation_markets(c2)
+		return [cm.market for cm in common_corporation_markets]
 
 	@cached_property
 	def base_corporation(self):
@@ -156,12 +184,21 @@ class Corporation(models.Model):
 
 			if market is None:
 				# By default, a random market is impacted
-				market = corporation.get_random_market()
+				corporationmarket = corporation.get_random_corporation_market()
 			else:
-				# TODO; implement and test effects with a market name
-				raise NotImplementedError()
+				corporationmarket = corporation.corporationmarket_set.get(market__name=market)
 
-			corporation.update_assets(delta, category=delta_category, market=market)
+			corporation.update_assets(delta, category=delta_category, corporationmarket=corporationmarket)
+
+			# create a event_type
+			if delta_category == AssetDelta.EFFECT_FIRST:
+				event_type = Game.FIRST_EFFECT
+			elif delta_category == AssetDelta.EFFECT_LAST:
+				event_type = Game.LAST_EFFECT
+			elif delta_category == AssetDelta.EFFECT_CRASH:
+				event_type = Game.CRASH_EFFECT
+
+			self.game.add_event(event_type=event_type, data={"triggered_corporation": self.base_corporation.name, "delta": delta, "abs_delta": abs(delta), "market": corporationmarket.market.name, "corporation": corporation.base_corporation.name}, delta=delta, corporation=corporation, corporationmarket=corporationmarket)
 
 		context = {
 			'game': self.game,
@@ -180,44 +217,48 @@ class Corporation(models.Model):
 	def on_crash_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
 
-	def increase_assets(self, value=1):
+	def update_modifier(self, value=1):
 		"""
-		Increase corporation's assets by value
+		Updates assets_modifier value, setting it to given value and saves the model
+		Must be used for all modifications on assets_modifier, because it enforces assets = market_assets + asset_modifier
+		"""
+		self.assets_modifier = value
+		self.assets = self.market_assets + self.assets_modifier
+		self.save()
+
+	def set_market_assets(self, value=0):
+		"""
+		This is here to replace the assignments 'c.market_assets = xxx', because they do not enforce assets = market_assets + asset_modifier
+		**This function should only be used in tests.**
+		"""
+		self.market_assets = value
+		self.assets = self.market_assets + self.assets_modifier
+		self.save()
+
+	def increase_market_assets(self, value=1):
+		"""
+		Increase corporation's market_assets by value
 		"""
 		self.market_assets += value
+		self.assets = self.market_assets + self.assets_modifier
 		self.save()
 
-	def decrease_assets(self, value=1):
+	def update_assets(self, delta, category, corporationmarket):
 		"""
-		Decrease corporation's assets by value
+		Updates market assets values, and saves the model
+		Does not actually change "assets", since it is a property, but changes on market_assets will be reflected on assets
 		"""
+		corporationmarket.value += delta
+		corporationmarket.save()
 
-		self.market_assets -= value
-		self.save()
-
-	def update_assets(self, delta, category, market):
-		"""
-		Update assets values, and save the model
-		"""
-		market = self.corporationmarket_set.get(market=market)
-
-		# A market can't be negative, so we cap the delta
-		if market.value + delta < 0:
-			# A market can't be negative, so we cap the delta
-			delta = -market.value
-
-		market.value += delta
-		market.save()
-
-		# Mirror changes on assets
-		self.assets += delta
-		self.save()
+		# Mirror changes on market assets
+		self.increase_market_assets(delta)
 
 		# And register assetdelta for logging purposes
 		self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
 
 	def __unicode__(self):
-		return "%s (%s)" % (self.base_corporation.name, self.assets)
+		return u"%s (%s)" % (self.base_corporation.name, self.assets)
 
 
 class AssetDelta(models.Model):

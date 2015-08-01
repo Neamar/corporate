@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from engine_modules.citizenship.models import CitizenShip, CitizenShipOrder
+from engine_modules.citizenship.models import Citizenship, CitizenshipOrder
 
 
-admin.site.register(CitizenShip)
-admin.site.register(CitizenShipOrder)
+admin.site.register(Citizenship)
+admin.site.register(CitizenshipOrder)
