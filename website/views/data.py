@@ -138,7 +138,8 @@ def player(request, player, game, player_id, turn):
 	return {
 		"player": player,
 		"rp": rp,
-		"corporations": corporations
+		"corporations": corporations,
+		"qty_shares": sum([corporation.qty_share for corporation in corporations])
 	}
 
 
