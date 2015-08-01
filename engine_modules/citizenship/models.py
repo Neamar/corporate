@@ -27,14 +27,14 @@ class CitizenshipOrder(Order):
 		# if player has a citizenship, add a game_event for losing it
 		corporation_last_turn = self.player.citizenship.corporation
 		if corporation_last_turn is not None:
-			self.player.game.add_event(event_type=Game.REMOVE_CITIZENSHIP, data='', corporation=corporation_last_turn, players=[self.player])
+			self.player.game.add_event(event_type=Game.REMOVE_CITIZENSHIP, data={"player": self.player.name, "corporation": corporation_last_turn.base_corporation.name}, corporation=corporation_last_turn, players=[self.player])
 
 		citizenship = self.player.citizenship_set.get(turn=self.turn)
 		citizenship.corporation = self.corporation
 		citizenship.save()
 
 		# create a game_event for the new citizenship
-		self.player.game.add_event(event_type=Game.ADD_CITIZENSHIP, data='', corporation=self.corporation, players=[self.player])
+		self.player.game.add_event(event_type=Game.ADD_CITIZENSHIP, data={"player": self.player.name, "corporation": self.corporation.base_corporation.name}, corporation=self.corporation, players=[self.player])
 
 		# Note
 		content = u"Vous êtes désormais citoyen de la mégacorporation %s." % self.corporation.base_corporation.name

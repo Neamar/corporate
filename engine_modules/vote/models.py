@@ -21,12 +21,12 @@ class VoteOrder(Order):
 		# apply the effect voice up
 		self.corporation_market_up.corporation.update_assets(1, corporationmarket=self.corporation_market_up, category=AssetDelta.VOTES)
 		# Create the game event
-		self.corporation_market_up.corporation.game.add_event(event_type=Game.VOICE_UP, data={"player": self.player.name}, delta=1, corporation=self.corporation_market_up.corporation, corporationmarket=self.corporation_market_up, players=[self.player])
+		self.corporation_market_up.corporation.game.add_event(event_type=Game.VOICE_UP, data={"player": self.player.name, "corporation": self.corporation_market_up.corporation.base_corporation.name, "market": self.corporation_market_up.market.name}, delta=1, corporation=self.corporation_market_up.corporation, corporationmarket=self.corporation_market_up, players=[self.player])
 
 		# apply the effect voice down
 		self.corporation_market_down.corporation.update_assets(-1, corporationmarket=self.corporation_market_down, category=AssetDelta.VOTES)
 		# Create the game event
-		self.corporation_market_up.corporation.game.add_event(event_type=Game.VOICE_DOWN, data={"player": self.player.name}, delta=-1, corporation=self.corporation_market_down.corporation, corporationmarket=self.corporation_market_down, players=[self.player])
+		self.corporation_market_up.corporation.game.add_event(event_type=Game.VOICE_DOWN, data={"player": self.player.name, "corporation": self.corporation_market_down.corporation.base_corporation.name, "market": self.corporation_market_down.market.name}, delta=-1, corporation=self.corporation_market_down.corporation, corporationmarket=self.corporation_market_down, players=[self.player])
 
 		# Send a note for final message
 		content = u"Vous avez voté pour avantager le marché %s de %s au détriment du marché %s de %s." % (self.corporation_market_up.market, self.corporation_market_down.corporation.base_corporation.name, self.corporation_market_down.market, self.corporation_market_down.corporation.base_corporation.name)
