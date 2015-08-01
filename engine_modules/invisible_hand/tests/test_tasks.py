@@ -9,8 +9,8 @@ class TaskTest(EngineTestCase):
 		self.c3.delete()
 
 	def test_invisible_hand_with_two_corporations(self):
-		self.c2.assets = 15
-		self.c2.save()
+
+		self.c2.set_market_assets(15)
 
 		begin_assets_1 = self.c.assets
 		begin_assets_2 = self.c2.assets

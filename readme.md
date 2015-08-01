@@ -28,7 +28,9 @@ Rules can be found in [data/docs/index.md](data/docs/index.md).
 * [350] **OffensiveRunTask** : Resolve Offensive corporations runs (DataSteal, Sabotage, Extraction)
 * [350] **InformationRunTask** : Resolve Information runs
 * [400] **InvisibleHandTask** : Give +1 and -1 asset for two random corporations
+* [500] **UpdateMarketBubblesTask** : Count the bubbles and apply them
 * [600] **FirstLastEffectsTask** : Apply first and last corporations effects
+* [625] **UpdateMarketBubblesAfterEffectsTask** : Recount the bubbles and apply them again, this time for good
 * [650] **SaveCorporationAssetTask** : Save the assets of all corporations after the turn resolution
 * [800] **DividendTask** : It's time to get money!
 * [900] **CitizenshipTask** : Update players citizenships
