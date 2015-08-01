@@ -73,7 +73,6 @@ class BaseCorporation:
 		"""
 		return compile(code, "%s.%s()" % (self.slug, effect), 'exec')
 
-
 	@classmethod
 	def retrieve_all(cls):
 		return cls.base_corporations.values()
