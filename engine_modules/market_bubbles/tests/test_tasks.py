@@ -44,7 +44,9 @@ class TaskTest(EngineTestCase):
 		for cm in common_corporation_markets_1_2:
 			if cm in common_corporation_markets_1_3:
 				target_corporation_market = cm
-		self.c.update_assets(delta=target_corporation_market.value, category=AssetDelta.RUN_DATASTEAL, market=target_corporation_market.market)
+
+		corporation_market = self.c.corporationmarket_set.get(market=target_corporation_market.market)
+		self.c.update_assets(delta=target_corporation_market.value, category=AssetDelta.RUN_DATASTEAL, corporationmarket=corporation_market)
 
 		begin_assets_1 = self.c.assets
 		begin_assets_2 = self.c2.assets
@@ -71,7 +73,9 @@ class TaskTest(EngineTestCase):
 				cm = corporation_market
 		differential = cm.value
 		# Should there be an AssetDelta for tests ?
-		self.c.update_assets(-differential, category=AssetDelta.RUN_DATASTEAL, market=cm.market)
+		corporation_market = self.c.corporationmarket_set.get(market=cm.market)
+		self.c.update_assets(delta=-differential, category=AssetDelta.RUN_DATASTEAL, corporationmarket=corporation_market)
+
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.c).assets, begin_assets_1 - differential - 1)
@@ -79,6 +83,7 @@ class TaskTest(EngineTestCase):
 	@override_base_corporations
 	def test_bubbles_after_effects(self):
 		"""
+		Ensure bubbles are redistributed *after* first and last effect.
 		This test is quite complicated, and quite specific: the first and last effects, in particular. Assets must be distributed as in the test before last.
 		It tests a big part of the game's behavior, so it can break for a lot of reasons.
 		"""
@@ -87,21 +92,33 @@ class TaskTest(EngineTestCase):
 		corporation_markets = self.c.corporation_markets
 		corporation_markets_2 = self.c2.corporation_markets
 		target_corporation_market = None
-		# Both target_corporationn_market_1 and _2 must be corporation-specific, lest there also be a positive bubble on this market when there should only be a negative on another
+		# Both target_corporation_market_1 and _2 must be corporation-specific, lest there also be a positive bubble on this market when there should only be a negative on another
 		for corporation_market in corporation_markets:
 			if corporation_market.market not in [cm.market for cm in corporation_markets_2]:
 				target_corporation_market = corporation_market
+				break
+		else:
+			raise Exception("Corporations share all their markets!")
 		for corporation_market in corporation_markets_2:
 			if corporation_market.market not in [cm.market for cm in corporation_markets]:
 				target_corporation_market_2 = corporation_market
-		
+				break
+		else:
+			raise Exception("Corporations share all their markets!")
+
+		# Beware: c and c2 must not crash !
 		differential_1 = target_corporation_market.value
 		differential_2 = target_corporation_market_2.value
-		# Beware: c and c2 must not crash !
-		self.c.update_assets(-differential_1, category=AssetDelta.RUN_DATASTEAL, market=target_corporation_market.market)
-		self.c2.update_assets(differential_2, category=AssetDelta.INVISIBLE_HAND, market=target_corporation_market_2.market)
-		self.update_effect(self.c2, 'on_first', "update('%s', %i, market='%s')" % (self.c.base_corporation_slug, 2 * differential_1, target_corporation_market.market.name))
+
+		# Create a negative bubble, and make c last
+		self.c.update_assets(delta=-differential_1, category=AssetDelta.RUN_DATASTEAL, corporationmarket=target_corporation_market)
+		# Create a positive bubble, and make c2 first
+		self.c2.update_assets(delta=differential_2, category=AssetDelta.INVISIBLE_HAND, corporationmarket=target_corporation_market_2)
+
+		# c is last, its effects will be to minimize c2 own's market
 		self.update_effect(self.c, 'on_last', "update('%s', %i, market='%s')" % (self.c2.base_corporation_slug, -2 * differential_2, target_corporation_market_2.market.name))
+		# c2 is first, its effects will be to maximize c own's market
+		self.update_effect(self.c2, 'on_first', "update('%s', %i, market='%s')" % (self.c.base_corporation_slug, 2 * differential_1, target_corporation_market.market.name))
 
 		pre_bubbles_assets_1 = self.c.assets
 		pre_bubbles_assets_2 = self.c2.assets
@@ -109,7 +126,7 @@ class TaskTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 
-		# Here, we only expect a '+1' or a '-1' because the negative bubble was not in place when the assets were pur in pre_bubbles_assets
+		# Here, we only expect a '+1' or a '-1' because there was no negative bubble in the DB (for turn 0, since we hardcoded our update_assets).
 		self.assertEqual(self.reload(self.c).assets, pre_bubbles_assets_1 + 2 * differential_1 + 1)
 		self.assertEqual(self.reload(self.c2).assets, pre_bubbles_assets_2 - 2 * differential_2 - 1)
 		self.assertEqual(self.reload(self.c3).assets, pre_bubbles_assets_3 + 1)

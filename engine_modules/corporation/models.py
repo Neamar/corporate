@@ -179,16 +179,21 @@ class Corporation(models.Model):
 
 			if market is None:
 				# By default, a random market is impacted
-				market = corporation.get_random_market()
+				corporationmarket = corporation.get_random_corporation_market()
 			else:
-				for m in corporation.markets:
-					if m.name == market:
-						market = m
-						break
-				else:
-					raise ValidationError("Corporation %s is absent on market %s, it cannot be impacted by an effet on it" % (self.base_corporation.name, m))
+				corporationmarket = corporation.corporationmarket_set.get(market__name=market)
 
-			corporation.update_assets(delta, category=delta_category, market=market)
+			corporation.update_assets(delta, category=delta_category, corporationmarket=corporationmarket)
+
+			# create a event_type
+			if delta_category == AssetDelta.EFFECT_FIRST:
+				event_type = Game.FIRST_EFFECT
+			elif delta_category == AssetDelta.EFFECT_LAST:
+				event_type = Game.LAST_EFFECT
+			elif delta_category == AssetDelta.EFFECT_CRASH:
+				event_type = Game.CRASH_EFFECT
+
+			self.game.add_event(event_type=event_type, data={"triggered_corporation": self.base_corporation.name, "delta": delta, "abs_delta": abs(delta), "market": corporationmarket.market.name, "corporation": corporation.base_corporation.name}, delta=delta, corporation=corporation, corporationmarket=corporationmarket)
 
 		context = {
 			'game': self.game,
@@ -233,14 +238,13 @@ class Corporation(models.Model):
 		self.assets = self.market_assets + self.assets_modifier
 		self.save()
 
-	def update_assets(self, delta, category, market):
+	def update_assets(self, delta, category, corporationmarket):
 		"""
 		Updates market assets values, and saves the model
 		Does not actually change "assets", since it is a property, but changes on market_assets will be reflected on assets
 		"""
-		corporation_market = self.corporationmarket_set.get(market=market)
-		corporation_market.value += delta
-		corporation_market.save()
+		corporationmarket.value += delta
+		corporationmarket.save()
 
 		# Mirror changes on market assets
 		self.increase_market_assets(delta)
