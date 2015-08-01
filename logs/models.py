@@ -15,7 +15,7 @@ class Logs(models.Model):
 
 	# some icons must be duplicated for display on a corporation but not on a player
 	# for example we want a +1 and a -1 icon for an extraction but just one extraction icon on the player who orders it
-	# So the -1 Log is hide for players to just have one icon
+	# So the -1 Log is hidden for players to just have one icon
 	hide_for_players = models.BooleanField()
 
 	# To avoid attaching public info on all 8 players and simplify end_game request we created a flag 'public'
@@ -27,16 +27,16 @@ class Logs(models.Model):
 	# data contains a json with all the informations needed for the text.
 	data = models.TextField()
 
-	# the coporation concerned by the log
+	# the corporation concerned by the log
 	corporation = models.ForeignKey('corporation.Corporation', null=True)
 
 	# the corporationmarket concerned for this log
 	corporationmarket = models.ForeignKey('market.CorporationMarket', null=True)
 
-	# the orderer of the action and all the players knowing the action. Parameters are defferent between ordrer and knowers, see ConcernedPlayers
+	# the orderer of the action and all the players knowing the action. Parameters are different between orderer and knowers, see ConcernedPlayers
 	players = models.ManyToManyField('engine.Player', through='ConcernedPlayers')
 
-	# List of game events that are hide for players (see hide for player above)
+	# List of game events that are hidden for players (see hide for player above)
 	HIDE_FOR_PLAYERS = [
 		Game.OPE_DATASTEAL_FAIL_DOWN,
 		Game.OPE_DATASTEAL_DOWN,
@@ -80,8 +80,8 @@ class Logs(models.Model):
 class ConcernedPlayers(models.Model):
 	player = models.ForeignKey('engine.Player')
 	log = models.ForeignKey('logs.Logs')
-	# When a run of information tragetting a player is started, we have to gather every Log connected to
-	# that players with the attribute transmittable = true
+	# When an information run targetting a player is started, we have to gather every Log connected to
+	# that player with the attribute transmittable = True
 	# And the information of having the information is not transmittable, so we add the player who ordered that run
 	# in the many to many fields, but with both personal and transmittable attributes equal to false.
 	transmittable = models.BooleanField()

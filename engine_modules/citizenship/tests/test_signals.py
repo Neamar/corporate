@@ -55,9 +55,9 @@ class SignalsTest(EngineTestCase):
 		@receiver(game_event)
 		def catch_game_event(sender, instance, event_type, **kwargs):
 			if event_type == 'ADD_CITIZENSHIP':
-				self.g.add_citizenship_was_called = 1
+				self.g.add_citizenship_was_called = True
 			elif event_type == 'REMOVE_CITIZENSHIP':
-				self.g.remove_citizenship_was_called = 1
+				self.g.remove_citizenship_was_called = True
 
 		# Buy a share to have the new nationality
 		self.s = Share(
@@ -76,8 +76,48 @@ class SignalsTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 
-		self.assertEquals(self.g.add_citizenship_was_called, 1)
-		self.assertEquals(self.g.remove_citizenship_was_called, 1)
+		self.assertTrue(self.g.add_citizenship_was_called)
+		self.assertTrue(self.g.remove_citizenship_was_called)
+
+		# disconnect receiver
+		game_event.disconnect(catch_game_event)
+
+
+class CitizenshipSignalsTest(EngineTestCase):
+	def setUp(self):
+
+		super(CitizenshipSignalsTest, self).setUp()
+
+		self.s = Share(
+			player=self.p,
+			corporation=self.c
+		)
+		self.s.save()
+
+	def test_get_citizenship_first_time_does_not_create_remove_citizenship_event(self):
+		"""
+		When you get citizenship for the first time, you should only fire the event of add_citizenship
+		"""
+
+		# create the function that will catch the signal
+		@receiver(game_event)
+		def catch_game_event(sender, instance, event_type, **kwargs):
+			if event_type == 'ADD_CITIZENSHIP':
+				self.g.add_citizenship_was_called = True
+			elif event_type == 'REMOVE_CITIZENSHIP':
+				raise Exception("Should not happen")
+
+		# Change citizenship
+		self.o = CitizenshipOrder(
+			player=self.p,
+			corporation=self.c
+		)
+		self.o.clean()
+		self.o.save()
+
+		self.g.resolve_current_turn()
+
+		self.assertTrue(self.g.add_citizenship_was_called)
 
 		# disconnect receiver
 		game_event.disconnect(catch_game_event)

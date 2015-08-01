@@ -6,16 +6,16 @@ from engine.dispatchs import game_event
 
 @receiver(game_event)
 def insert_log_database(sender, instance, event_type, data, delta=0, corporation=None, corporationmarket=None, players=[], **kwargs):
-	# We deduce the value of property hide_for players of the category
+	# We deduce the value of property hide_for players from the category
 	hide_for_players = event_type in Logs.HIDE_FOR_PLAYERS
 
-	# Same thing for public property : we deduce it of the category
+	# Same thing for public property : we deduce it from the category
 	public = event_type in Logs.PUBLIC
 
-	# Same thing for transmittable propery attached on the many-to-many
+	# Same thing for transmittable property attached on the many-to-many
 	transmittable = event_type not in Logs.UNTRANSMITTABLE
 
-	# Construction du message
+	# Message building
 	message = json.dumps(data)
 
 	# creation of the log

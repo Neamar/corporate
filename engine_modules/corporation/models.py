@@ -185,10 +185,8 @@ class Corporation(models.Model):
 			if market is None:
 				# By default, a random market is impacted
 				corporationmarket = corporation.get_random_corporation_market()
-				market_name = corporationmarket.market.name
 			else:
 				corporationmarket = corporation.corporationmarket_set.get(market__name=market)
-				market_name = corporationmarket.market.name
 
 			corporation.update_assets(delta, category=delta_category, corporationmarket=corporationmarket)
 
@@ -200,7 +198,7 @@ class Corporation(models.Model):
 			elif delta_category == AssetDelta.EFFECT_CRASH:
 				event_type = Game.CRASH_EFFECT
 
-			self.game.add_event(event_type=event_type, data={"triggered_corporation": self.base_corporation.name, "delta": delta, "abs_delta": abs(delta), "market": market_name, "corporation": corporation.base_corporation.name}, delta=delta, corporation=corporation, corporationmarket=corporationmarket)
+			self.game.add_event(event_type=event_type, data={"triggered_corporation": self.base_corporation.name, "delta": delta, "abs_delta": abs(delta), "market": corporationmarket.market.name, "corporation": corporation.base_corporation.name}, delta=delta, corporation=corporation, corporationmarket=corporationmarket)
 
 		context = {
 			'game': self.game,
