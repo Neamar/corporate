@@ -70,7 +70,6 @@ pods_functions = {
 def display_pod(context, pod, *args, **kwargs):
 	template = get_template('pods/' + pod + '.html')
 
-	print "FOQUE", pod
 	pod_context = pods_functions[pod](context)
 	if NO_CONTEXT_REQUIRED not in pod_context:
 		pod_context['game'] = context['game']

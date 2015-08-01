@@ -4,27 +4,7 @@ from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrde
 from engine_modules.corporation_run.decorators import override_max_protection
 
 
-class RunOrdersTest(EngineTestCase):
-	def set_to_zero(self, corporation):
-		"""
-		Set corporation protection values to 0, to ease testing.
-		"""
-		bc = corporation.base_corporation
-		self._values = (bc.extraction, bc.sabotage, bc.datasteal)
-
-		bc.extraction = bc.sabotage = bc.datasteal = 0
-
-	def set_to_original(self, corporation):
-		"""
-		Set corporation protection values back to original values, to ease testing.
-		"""
-		bc = corporation.base_corporation
-		bc.extraction = self._values[0]
-		bc.sabotage = self._values[0]
-		bc.datasteal = self._values[0]
-
-
-class CorporationRunOrderTest(RunOrdersTest):
+class CorporationRunOrderTest(EngineTestCase):
 	def test_get_raw_probability(self):
 		"""
 		Check raw probability values
@@ -43,7 +23,7 @@ class CorporationRunOrderTest(RunOrdersTest):
 		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.hidden_percents * 10 + dso.BASE_SUCCESS_PROBABILITY)
 
 
-class DatastealRunOrderTest(RunOrdersTest):
+class DatastealRunOrderTest(EngineTestCase):
 	def setUp(self):
 		super(DatastealRunOrderTest, self).setUp()
 
@@ -57,11 +37,6 @@ class DatastealRunOrderTest(RunOrdersTest):
 		)
 		self.dso.clean()
 		self.dso.save()
-
-		self.set_to_zero(self.dso.target_corporation)
-
-	def tearDown(self):
-		self.set_to_original(self.dso.target_corporation)
 
 	def test_datasteal_success(self):
 		"""
@@ -113,14 +88,13 @@ class DatastealRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 
 
-class SabotageRunOrderTest(RunOrdersTest):
+class SabotageRunOrderTest(EngineTestCase):
 	def setUp(self):
 
-		super(RunOrdersTest, self).setUp()
+		super(SabotageRunOrderTest, self).setUp()
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
 
-		super(SabotageRunOrderTest, self).setUp()
 		self.so = SabotageOrder(
 			player=self.p,
 			target_corporation_market=common_corporation_market,
@@ -128,11 +102,6 @@ class SabotageRunOrderTest(RunOrdersTest):
 		)
 		self.so.clean()
 		self.so.save()
-
-		self.set_to_zero(self.so.target_corporation)
-
-	def tearDown(self):
-		self.set_to_original(self.so.target_corporation)
 
 	def test_sabotage_success(self):
 		"""
@@ -187,7 +156,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
 
 
-class ExtractionRunOrderTest(RunOrdersTest):
+class ExtractionRunOrderTest(EngineTestCase):
 	def setUp(self):
 		super(ExtractionRunOrderTest, self).setUp()
 
@@ -200,11 +169,6 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		)
 		self.eo.clean()
 		self.eo.save()
-
-		self.set_to_zero(self.eo.target_corporation)
-
-	def tearDown(self):
-		self.set_to_original(self.eo.target_corporation)
 
 	def test_extraction_success(self):
 		"""
@@ -259,7 +223,7 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.eo.stealer_corporation).assets, begin_assets_kidnapper)
 
 
-class DefensiveRunOrderTest(RunOrdersTest):
+class DefensiveRunOrderTest(EngineTestCase):
 	def setUp(self):
 		super(DefensiveRunOrderTest, self).setUp()
 		self.dso = DataStealOrder(
@@ -278,8 +242,3 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		)
 		self.so.clean()
 		self.so.save()
-
-		self.set_to_zero(self.so.target_corporation)
-
-	def tearDown(self):
-		self.set_to_original(self.so.target_corporation)
