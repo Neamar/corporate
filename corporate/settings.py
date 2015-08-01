@@ -19,10 +19,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'hj9f%^kb5$!n_c@w(m8y)j4$*-zxli0+8aqwc0uoj5+@v&msir'
+SECRET_KEY = os.environ["SECRET_KEY"] if "SECRET_KEY" in os.environ else "test_key"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = "DEBUG" in os.environ and bool(os.environ["DEBUG"])
 
 TEMPLATE_DEBUG = True
 
@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'engine_modules.detroit_inc',
     'engine_modules.wiretransfer',
     'engine_modules.market',
+    'engine_modules.market_bubbles',
 )
 
 
@@ -126,7 +127,7 @@ TEMPLATE_DIRS = (
 if "test" in " ".join(sys.argv):
     CITY = "Test"
 else:
-    CITY = "Manhattan"
+    CITY = "Detroit"
 
 CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())
 
