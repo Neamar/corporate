@@ -83,3 +83,6 @@ class RunOrder(Order):
 		if self.has_influence_bonus:
 			cost -= RunOrder.INFLUENCE_BONUS
 		return cost
+
+	def custom_description(self):
+		return "%s%%" % self.get_raw_probability()
