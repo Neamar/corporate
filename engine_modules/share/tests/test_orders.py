@@ -11,11 +11,9 @@ class OrdersTest(EngineTestCase):
 		super(OrdersTest, self).setUp()
 		self.c3.delete()
 
-		self.c.assets = 7
-		self.c.save()
+		self.c.set_market_assets(7)
 
-		self.c2.assets = 8
-		self.c2.save()
+		self.c2.set_market_assets(8)
 
 		self.o = BuyShareOrder(
 			player=self.p,

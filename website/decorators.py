@@ -1,6 +1,7 @@
 from functools import wraps
 from django.shortcuts import render as django_render
 from django.http import Http404
+from django.conf import settings
 
 from website.utils import get_player
 
@@ -39,6 +40,7 @@ def inject_game_and_player_into_response(func):
 		if isinstance(response, dict):
 			response['game'] = kwargs["game"]
 			response['player'] = kwargs["player"]
+			response['city'] = settings.CITY
 		return response
 	return wrap
 
