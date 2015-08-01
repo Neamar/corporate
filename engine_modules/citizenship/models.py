@@ -11,7 +11,7 @@ class Citizenship(models.Model):
 	turn = models.PositiveSmallIntegerField(default=0)
 
 	def __unicode__(self):
-		return "%s - %s" % (self.player, self.corporation)
+		return u"%s - %s" % (self.player, self.corporation)
 
 
 class CitizenshipOrder(Order):

@@ -14,7 +14,7 @@ class Share(models.Model):
 	turn = models.PositiveSmallIntegerField()
 
 	def __unicode__(self):
-		return "%s share for %s" % (self.corporation, self.player)
+		return u"%s share for %s" % (self.corporation, self.player)
 
 
 class BuyShareOrder(Order):
