@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from engine.models import Player, Order
+from engine.models import Player, Order, Game
 from engine_modules.corporation.models import Corporation
 from messaging.models import Newsfeed
 
@@ -62,6 +62,9 @@ class BuyShareOrder(Order):
 			newsfeed_content = u"%s a acheté sa %i<sup>ème</sup> part dans %s." % (self.player, nb_shares, self.corporation.base_corporation.name)
 		self.player.add_note(content=content)
 		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=newsfeed_content)
+
+		# Create game_event
+		self.player.game.add_event(event_type=Game.BUY_SHARE, data={"player": self.player.name, "corporation": self.corporation.base_corporation.name}, corporation=self.corporation, players=[self.player])
 
 	def description(self):
 		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)

@@ -8,12 +8,13 @@ sabotage: 10
 extraction: 20
 detection: 60
 on_first:
-    update('renraku', 1)
-    update('shiawase', 1)
+    update('enercore', 1)
+    update(ladder[-1], 1)
 on_last:
-    update(ladder[-2], -2)
+    update(ladder[0], 2)
 on_crash:
-    # TBD
+    update(ladder[0], -5)
+    update(ladder[1], -1)
 
 > *Quick and Brilliant*
 
