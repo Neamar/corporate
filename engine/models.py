@@ -265,6 +265,11 @@ class Order(models.Model):
 
 		raise LookupError("No orders subclass match this base: %s" % self.type)
 
+	def custom_description(self):
+		"""
+		A custom description, that may be displayed in some places (for instance, orders list page)
+		"""
+		return ""
 
 # Import data for all engine_modules
 from engine.modules import *
