@@ -61,8 +61,10 @@ class Logs(models.Model):
 		Game.VOTE_CONSOLIDATION,
 		Game.VOTE_SECURITY,
 		Game.VOTE_CONTRAT,
-		Game.WIN_BUBBLE,
-		Game.LOST_BUBBLE]
+		Game.WIN_DOMINATION_BUBBLE,
+		Game.LOST_DOMINATION_BUBBLE,
+		Game.WIN_DRY_BUBBLE,
+		Game.LOST_DRY_BUBBLE]
 
 	# All the public game_event created with a player should not be transmittable, here is the list
 	UNTRANSMITTABLE = [

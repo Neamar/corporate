@@ -30,7 +30,7 @@ class DIncVoteTask(ResolutionTask):
 		self.send_newsfeed(orders, s)
 
 		if official_line is not None:
-			# We create a game_event for each loser
+			# We create a game_event for each winner
 			winners = [order.player for order in orders if order.coalition == official_line]
 			n = Note.objects.create(
 				category=Note.DINC,
@@ -46,7 +46,7 @@ class DIncVoteTask(ResolutionTask):
 				event_type = Game.EFFECT_CONSOLIDATION_UP
 			if event_type is not None:
 				for winner in winners:
-					game.add_event(event_type=event_type, data='', players=[winner])
+					game.add_event(event_type=event_type, data=None, players=[winner])
 
 			# We create a game_event for each loser
 			losers = [order.player for order in orders if order.coalition == DIncVoteOrder.DINC_OPPOSITIONS[official_line]]
@@ -62,7 +62,7 @@ class DIncVoteTask(ResolutionTask):
 				event_type = Game.EFFECT_CONSOLIDATION_DOWN
 			if event_type is not None:
 				for loser in losers:
-					game.add_event(event_type=event_type, data='', players=[loser])
+					game.add_event(event_type=event_type, data=None, players=[loser])
 
 	def get_official_line(self, orders):
 		"""
@@ -101,7 +101,7 @@ class DIncVoteTask(ResolutionTask):
 			elif order.coalition == 'CONS':
 				event_type = Game.VOTE_CONSOLIDATION
 			if event_type is not None:
-				order.player.game.add_event(event_type=event_type, data='', players=[order.player])
+				order.player.game.add_event(event_type=event_type, data=None, players=[order.player])
 
 	def send_newsfeed(self, orders, dinc_vote_session):
 		"""
@@ -171,7 +171,7 @@ class DIncLineCPUBTask(ResolutionTask):
 				# increase a market by 1 asset at random
 				corporationmarket = c.get_random_corporation_market()
 				c.update_assets(1, category=AssetDelta.DINC, corporationmarket=corporationmarket)
-				game.add_event(event_type=Game.EFFECT_CONTRAT_UP, data='', delta=1, corporation=c, corporationmarket=corporationmarket)
+				game.add_event(event_type=Game.EFFECT_CONTRAT_UP, data={"market": corporationmarket.market.name}, delta=1, corporation=c, corporationmarket=corporationmarket)
 
 		loss_votes = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=DIncVoteOrder.RSEC)
 		for o in loss_votes:
@@ -179,6 +179,6 @@ class DIncLineCPUBTask(ResolutionTask):
 				# decrease a market by 1 asset at random
 				corporationmarket = c.get_random_corporation_market()
 				c.update_assets(-1, category=AssetDelta.DINC, corporationmarket=c.get_random_corporation_market())
-				game.add_event(event_type=Game.EFFECT_CONTRAT_DOWN, data='', delta=-1, corporation=c, corporationmarket=corporationmarket)
+				game.add_event(event_type=Game.EFFECT_CONTRAT_DOWN, data={"market": corporationmarket.market.name}, delta=-1, corporation=c, corporationmarket=corporationmarket)
 
 tasks = (DIncVoteTask, DIncLineCPUBTask)

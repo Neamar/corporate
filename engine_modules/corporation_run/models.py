@@ -119,9 +119,9 @@ class DataStealOrder(CorporationRunOrderWithStealer):
 		self.player.add_note(category=Note.RUNS, content=content)
 
 		# create a game_event on the stealer
-		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_UP, data='', delta=1, corporation=self.stealer_corporation, corporationmarket=self.stealer_corporation_market, players=[self.player])
+		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_UP, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, delta=1, corporation=self.stealer_corporation, corporationmarket=self.stealer_corporation_market, players=[self.player])
 		# create a game event on the target
-		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_DOWN, data='', corporation=self.target_corporation, corporationmarket=self.target_corporation_market, players=[self.player])
+		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_DOWN, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporationmarket=self.target_corporation_market, players=[self.player])
 
 		# And some RP
 		path = u'datasteal/%s/success' % self.target_corporation.base_corporation.slug
@@ -161,9 +161,9 @@ class ExtractionOrder(CorporationRunOrderWithStealer):
 		self.player.add_note(category=Note.RUNS, content=content)
 
 		# create a game_event on the stealer
-		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_UP, data='', delta=1, corporation=self.stealer_corporation, corporationmarket=self.stealer_corporation_market, players=[self.player])
+		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_UP, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, delta=1, corporation=self.stealer_corporation, corporationmarket=self.stealer_corporation_market, players=[self.player])
 		# create a game_event on the target
-		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_DOWN, data='', delta=-1, corporation=self.target_corporation, corporationmarket=self.target_corporation_market, players=[self.player])
+		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_DOWN, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, delta=-1, corporation=self.target_corporation, corporationmarket=self.target_corporation_market, players=[self.player])
 
 		# Send a note to everybody
 		content = extraction_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
@@ -203,7 +203,6 @@ class SabotageOrder(CorporationRunOrder):
 	title = "Lancer une run de Sabotage"
 
 	def resolve_successful(self):
-		target_corporation_market = self.target_corporation_market
 		self.target_corporation.update_assets(-2, corporationmarket=self.target_corporation_market, category=AssetDelta.RUN_SABOTAGE)
 
 		# Send a note to the one who ordered the Sabotage
@@ -215,7 +214,7 @@ class SabotageOrder(CorporationRunOrder):
 		self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
 		# create a game event on the target
-		self.player.game.add_event(event_type=Game.OPE_SABOTAGE, delta=-2, data='', corporation=self.target_corporation, corporationmarket=target_corporation_market, players=[self.player])
+		self.player.game.add_event(event_type=Game.OPE_SABOTAGE, delta=-2, data={"player": self.player.name, "market": self.target_corporation_market.market.name, "corporation": self.target_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporationmarket=self.target_corporation_market, players=[self.player])
 
 		# And some RP
 		path = u'sabotage/%s/success' % self.target_corporation.base_corporation.slug
@@ -231,7 +230,7 @@ class SabotageOrder(CorporationRunOrder):
 		self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
 
 		# create a game event on the target
-		self.player.game.add_event(event_type=Game.OPE_SABOTAGE_FAIL, data='', corporation=self.target_corporation, corporationmarket=self.target_corporation_market, players=[self.player])
+		self.player.game.add_event(event_type=Game.OPE_SABOTAGE_FAIL, data={"player": self.player.name, "market": self.target_corporation_market.market.name, "corporation": self.target_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporationmarket=self.target_corporation_market, players=[self.player])
 
 		# And some RP
 		path = u'sabotage/%s/failure' % self.target_corporation.base_corporation.slug
@@ -263,7 +262,7 @@ class ProtectionOrder(RunOrder):
 		self.player.save()
 
 		# create a game event on the target
-		self.player.game.add_event(event_type=Game.OPE_PROTECTION, data='', corporation=self.protected_corporation, corporationmarket=self.protected_corporation_market, players=[self.player])
+		self.player.game.add_event(event_type=Game.OPE_PROTECTION, data={"player": self.player.name, "market": self.protected_corporation_market.market.name, "corporation": self.protected_corporation.base_corporation.name}, corporation=self.protected_corporation, corporationmarket=self.protected_corporation_market, players=[self.player])
 
 	def description(self):
 		return u"Envoyer une équipe protéger %s (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_success_probability())

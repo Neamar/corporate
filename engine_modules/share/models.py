@@ -64,7 +64,7 @@ class BuyShareOrder(Order):
 		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=newsfeed_content)
 
 		# Create game_event
-		self.player.game.add_event(event_type=Game.BUY_SHARE, data='', corporation=self.corporation, players=[self.player])
+		self.player.game.add_event(event_type=Game.BUY_SHARE, data={"player": self.player.name, "corporation": self.corporation.base_corporation.name}, corporation=self.corporation, players=[self.player])
 
 	def description(self):
 		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)

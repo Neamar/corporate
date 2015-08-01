@@ -176,5 +176,38 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 		for corporation in corporations:
 			# I believe I already mentioned that the 'modifiers' array contains relative values
 			corporation.update_modifier(corporation.assets_modifier + modifiers[corporation])
-		
+
+		# Create logs for add or remove bubble. Problem is, we want to do this compare to precedent turn, not compared to before first, last and crash effect
+		# We have to compare to previous turn to this one after the bubbles have been created.
+		# First, get the two list of bubbles : one containing all bubbles of turn T, the orther for turn T-1
+		previous_turn_bubbles = MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn - 1)
+		current_turn_bubbles = MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn)
+		# Then, remove all the values that are in both two lists
+		for previous in previous_turn_bubbles:
+			for current in current_turn_bubbles:
+				if previous.market == current.market and previous.corporation == current.corporation and previous.value == current.value:
+					previous_turn_bubbles.remove(previous)
+					current_turn_bubbles.remove(current)
+		# Eventually, it remains all the deleted values in one list and all the created values in the other list.
+		# Crete event lost bubble
+		for deleted_bubble in previous_turn_bubbles:
+			if deleted_bubble.value == 1:
+				corporation_market = deleted_bubble.corporation.corporationmarket_set.get(market=deleted_bubble.market)
+				game.add_event(event_type=game.LOST_DOMINATION_BUBBLE, data={"market": deleted_bubble.market.name, "corporation": deleted_bubble.corporation.base_corporation.name}, corporation=deleted_bubble.corporation, corporationmarket=corporation_market)
+			elif deleted_bubble.value == -1:
+				corporation_market = deleted_bubble.corporation.corporationmarket_set.get(market=deleted_bubble.market)
+				game.add_event(event_type=game.LOST_DRY_BUBBLE, data={"market": deleted_bubble.market.name, "corporation": deleted_bubble.corporation.base_corporation.name}, corporation=deleted_bubble.corporation, corporationmarket=corporation_market)
+			else:
+				raise Exception("Bubble value different than +1 or -1")
+		# Create event add bubble
+		for added_bubble in current_turn_bubbles:
+			if added_bubble.value == 1:
+				corporation_market = added_bubble.corporation.corporationmarket_set.get(market=added_bubble.market)
+				game.add_event(event_type=game.WIN_DOMINATION_BUBBLE, data={"market": added_bubble.market.name, "corporation": added_bubble.corporation.base_corporation.name}, corporation=added_bubble.corporation, corporationmarket=corporation_market)
+			elif added_bubble.value == -1:
+				corporation_market = added_bubble.corporation.corporationmarket_set.get(market=added_bubble.market)
+				game.add_event(event_type=game.WIN_DRY_BUBBLE, data={"market": added_bubble.market.name, "corporation": added_bubble.corporation.base_corporation.name}, corporation=added_bubble.corporation, corporationmarket=corporation_market)
+			else:
+				raise Exception("Bubble value different than +1 or -1")
+
 tasks = (UpdateMarketBubblesTask, UpdateMarketBubblesAfterEffectsTask)
