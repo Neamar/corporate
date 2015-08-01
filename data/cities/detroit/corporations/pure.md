@@ -5,10 +5,6 @@ markets:
     robotique: 2
     médias: 3
     transport: 3
-datasteal: 30
-sabotage: 10
-extraction: 10
-detection: 30
 on_first:
     update('spinrad', -1)
     update(ladder[1], -1)

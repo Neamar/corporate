@@ -3,10 +3,6 @@ markets:
     télécom: 3
     agroalimentaire: 3
     transport: 3
-datasteal: 10
-sabotage: 10
-extraction: 20
-detection: 60
 on_first:
     update('renraku', 1)
     update('shiawase', 1)

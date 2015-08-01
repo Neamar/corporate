@@ -6,10 +6,6 @@ markets:
     BTP: 3
     robotique: 3
     agroalimentaire: 3
-datasteal: 10
-sabotage: 30
-extraction: 10
-detection: 30
 on_first:
     update(ladder[-1], 1)
     update(ladder[-2], 1)

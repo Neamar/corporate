@@ -4,10 +4,6 @@ markets:
     télécom: 3
     énergie: 3
     transport: 2
-datasteal: 10
-sabotage: 10
-extraction: 10
-detection: 90
 on_first:
     update(ladder[-1], -2)
 on_last:

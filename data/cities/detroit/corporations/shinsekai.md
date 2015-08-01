@@ -5,10 +5,6 @@ markets:
     pharmaceutique: 3
     agroalimentaire: 3
     telecom: 3
-datasteal: 10
-sabotage: 20
-extraction: 10
-detection: 60
 on_first:
     update('horizon', -1)
     update(ladder[-1], -1)
