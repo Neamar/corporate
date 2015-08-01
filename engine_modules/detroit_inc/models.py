@@ -115,6 +115,9 @@ def get_dinc_coalition(self, turn=None):
 	Return None on the first turn.
 	"""
 
+	if turn is None:
+		turn = self.current_turn
+
 	try:
 		session = self.dincvotesession_set.get(turn=turn)
 	except DIncVoteSession.DoesNotExist:
