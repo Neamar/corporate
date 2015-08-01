@@ -3,7 +3,6 @@ from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from django.conf import settings
 
-from messaging.models import Newsfeed
 from engine.testcases import EngineTestCase
 from engine.models import Player, Order
 from messaging.models import Message, Note
@@ -71,50 +70,6 @@ class ModelsTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 		self.assertEqual(0, Note.objects.count())
-
-	def test_game_add_newsfeed(self):
-		"""
-		Check add_newsfeed on Game
-		"""
-		u = User(username="haha", email="azre@fer.fr")
-		u.save()
-
-		p2 = Player(user=u, game=self.g, name="hahaha")
-		p2.save()
-
-		self.assertEqual(Newsfeed.objects.count(), 0)
-		self.g.add_newsfeed(category=Newsfeed.DINC_REPORT, content="something")
-		self.assertEqual(Newsfeed.objects.count(), 1)
-
-	def test_game_add_newsfeed_from_template(self):
-		"""
-		Should store used path
-		"""
-		self.g.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path='datasteal/c/success')
-
-		newsfeed = self.g.newsfeed_set.get()
-
-		self.assertEqual(newsfeed.content, read_file_from_path('%s/newsfeeds/4-matrix-buzz/datasteal/c/success/1.md' % settings.CITY_BASE_DIR))
-
-	def test_game_add_newsfeed_from_template_read_directory(self):
-		"""
-		Should read all directory until failure, then loop on '_.md'
-		"""
-
-		for i in range(1, 10):
-			self.g.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path='datasteal/c/success')
-
-			newsfeed = self.g.newsfeed_set.last()
-
-			try:
-				expected_content = read_file_from_path('%s/newsfeeds/4-matrix-buzz/datasteal/c/success/%s.md' % (settings.CITY_BASE_DIR, i))
-				self.assertEqual(newsfeed.content, expected_content)
-			except IOError:
-				expected_content = read_file_from_path('%s/newsfeeds/4-matrix-buzz/datasteal/c/success/_.md' % settings.CITY_BASE_DIR)
-				self.assertEqual(newsfeed.content, expected_content)
-				break
-		else:
-			raise Exception("Never looped :(")
 
 	def test_order_clean_is_abstract(self):
 		"""

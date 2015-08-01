@@ -6,8 +6,7 @@ from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order
-from messaging.models import Message, Note, Newsfeed
-from utils.read_markdown import read_file_from_path
+from messaging.models import Message, Note
 
 
 class Game(models.Model):
@@ -43,34 +42,6 @@ class Game(models.Model):
 		# Increment current turn and terminate.
 		self.current_turn += 1
 		self.save()
-
-	def add_newsfeed(self, players=None, corporations=None, **kwargs):
-		"""
-		Create a newsfeed on the game
-		"""
-		n = Newsfeed.objects.create(turn=self.current_turn, game=self, **kwargs)
-		if players:
-			n.players = players
-		if corporations:
-			n.corporations = corporations
-		return n
-
-	def add_newsfeed_from_template(self, category, path, **kwargs):
-		"""
-		Construct the content of a newsfeed, avoiding messages already displayed within the same game.
-		"""
-		message_number = Newsfeed.objects.filter(category=category, game=self, path=path).count() + 1
-
-		try:
-			content = read_file_from_path("%s/newsfeeds/%s/%s/%s.md" % (settings.CITY_BASE_DIR, category, path, message_number))
-		except IOError:
-			# We don't have enough files, revert to default
-			content = read_file_from_path("%s/newsfeeds/%s/%s/_.md" % (settings.CITY_BASE_DIR, category, path))
-
-		kwargs['content'] = content
-		kwargs['category'] = category
-		kwargs['path'] = path
-		self.add_newsfeed(**kwargs)
 
 	def __unicode__(self):
 		return "Corporate Game: %s" % self.city

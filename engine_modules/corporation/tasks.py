@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from engine.tasks import ResolutionTask
-from messaging.models import Newsfeed
 
 
 class CrashCorporationTask(ResolutionTask):
@@ -18,6 +17,5 @@ class CrashCorporationTask(ResolutionTask):
 		for corporation in corporations_to_crash:
 			corporation.on_crash_effect(ladder)
 			corporation.delete()
-			game.add_newsfeed(category=Newsfeed.ECONOMY, content=u"La corporation %s a crashé." % corporation.base_corporation.name)
 
 tasks = (CrashCorporationTask,)
