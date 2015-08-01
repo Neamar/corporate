@@ -72,18 +72,32 @@ def wallstreet(request, game, player, turn):
 @render('game/corporation.html')
 @find_player_from_game_id
 @inject_game_and_player_into_response
-def corporation(request, player, game, corporation_slug):
+@turn_by_turn_view
+def corporation(request, player, game, corporation_slug, turn):
 	"""
 	Corporation data
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game.pk)
-	players = Player.objects.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
+	share_holders = game.player_set.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
+	markets = corporation.markets
+	competitors = game.corporation_set.filter(corporationmarket__market__in=markets).distinct().order_by('base_corporation_slug')
+
+	summary = []
+	for corporation in competitors:
+		assets = []
+		corporation_markets = corporation.corporationmarket_set.filter(market__in=markets)
+		for market in markets:
+			assets.append(next((cm.value for cm in corporation_markets if cm.market.name  == market.name), None))
+		# That's kind of a weird data structure, but the template tags are not as flexible as one might like
+		summary.append((corporation.base_corporation.name, assets))
 
 	assets_history = corporation.assethistory_set.all()
 	return {
 		"corporation": corporation,
-		"players": players,
+		"share_holders": share_holders,
 		"assets_history": assets_history,
+		"markets": markets,
+		"summary": summary,
 		# Turn_spinner doesn't work, because the URL with e turn isn't allowed, which makes sense, because for this description, the turn doesn't matter
 		"pods": ['d_inc', 'current_player', 'players', ],
 		"turn": game.current_turn,
@@ -151,6 +165,7 @@ def player(request, player, game, player_id, turn):
 		"rp": rp,
 		"corporations": corporations,
 		"qty_shares": sum([corporation.qty_share for corporation in corporations])
+		"request": request,
 	}
 
 

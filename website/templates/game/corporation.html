@@ -5,6 +5,16 @@
 {% block favicon %}{{ STATIC_URL }}corporations/{{corporation.base_corporation.slug}}.png{% endblock %}
 
 {% block content %}
+{% for market in corporation.markets %}
+<table><tbody>
+<tr> 
+	<td>{{ market.name }}</td>
+</tr>
+</tbody></table>
+{% endfor %}
+
+{% for player in share_holders %}
+{% endfor %}
 <table class="prop_table">
 <thead>
 <tr>
@@ -30,9 +40,8 @@
 </tbody>
 </table>
 
-<div id="chart_div" style="width: 530px; height: 300px; margin:15px auto;"></div>
-
-{% if players %}
+{% if share_holders %}
+<!--
 <h2>Parts possédées</h2>
 <table class="prop_table">
 <thead>
@@ -42,24 +51,47 @@
 </tr>
 </thead>
 <tbody>
-{% for player in players %}
+-->
+<table>
+<tbody>
 <tr>
+{% for player in share_holders %}
 	<td><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}">{{ player.name }}</a></td>
 	{% if player.citizenship.corporation_id == corporation.pk %}
-	<td><strong>{{ player.qty_share }}</strong></td>
-	{% else %}
-	<td>{{ player.qty_share }}</td>
+		<td> (Citizen) </td>
 	{% endif %}
+	<td>{{ player.qty_share }}</td>
+{% endfor %}
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<td></td>
+{% for market in markets %}
+	<td> {{ market.name }} </td>
+{% endfor %}
+</thead>
+<tbody>
+{% for entry in summary %}
+<tr>
+	<td>{{ entry.0 }}</td>
+	{% for value in entry.1 %}
+		<td> {% if value %} {{ value }} {% else %} - {% endif %}</td>
+	{% endfor %}
 </tr>
 {% endfor %}
 </tbody>
 </table>
 {% endif %}
-
+{% comment %} <a href="{% url "docs.corporations" corporation_slug=corporation.slug %}">"voir la page de la corporation"</a> {% endcomment %}
+<!--
 <h2>Description</h2>
 <img src="{{ STATIC_URL }}corporations/{{corporation.base_corporation.slug}}.png" alt="{{ corporation.base_corporation.name" style="float:right; margin:0 30px"/>
 {{ corporation.base_corporation.description }}
 {% endblock content %}
+-->
 
 {% block scripts %}
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
