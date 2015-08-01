@@ -175,8 +175,6 @@ class Corporation(models.Model):
 			"""
 			Updates corporation's assets by delta, in Market market if specified, or a Market at random otherwise
 			"""
-			if market is not None:
-				corporationmarket = self.corporationmarket_set.get(market__name=market)
 
 			if isinstance(corporation, str):
 				# Try / catch if corporation crashed
@@ -189,12 +187,7 @@ class Corporation(models.Model):
 				# By default, a random market is impacted
 				corporationmarket = corporation.get_random_corporation_market()
 			else:
-				for m in corporation.markets:
-					if m.name == market:
-						market = m
-						break
-				else:
-					raise ValidationError("Corporation %s is absent on market %s, it cannot be impacted by an effet on it" % (self.base_corporation.name, m))
+				corporationmarket = corporation.corporationmarket_set.get(market__name=market)
 
 			corporation.update_assets(delta, category=delta_category, corporationmarket=corporationmarket)
 
