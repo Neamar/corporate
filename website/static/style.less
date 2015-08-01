@@ -70,17 +70,23 @@ overflow:hidden;
 svg:not(:root) { overflow: hidden }
 
 svg use {
-	width: inherit;
-	height: inherit;
-	display: inline-block;
-}
-.svg--small {
+width: inherit;
+height: inherit;
 display: inline-block;
+}
+.svg--medium, .svg--small  {
+display: inline-block;
+}
+.svg--medium {
 height: 32px;
 width: 32px;
 }
+.svg--small {
+height: 16px;
+width: 16px;
+}
 .svg--white {
-	fill: white;
+fill: white;
 }
 
 
