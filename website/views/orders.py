@@ -56,7 +56,7 @@ def add_order(request, game_id, order_type):
 		"form": form
 	}
 
-	return django_render(request, 'game/add_order.html', {"game": player.game, "order": order})
+	return django_render(request, 'game/add_order.html', {"game": player.game, "order": order, "request": request})
 
 
 @login_required

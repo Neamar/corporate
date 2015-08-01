@@ -25,43 +25,9 @@ def wallstreet(request, game, player, turn):
 
 	# Table data
 	corporations = game.get_ladder(turn=turn - 1)
-	delta_categories = {}
-
-	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
-	assets_hash = {ah.corporation_id: ah.assets for ah in assets}
-
-	for corporation in corporations:
-		corporation.current_assets = assets_hash[corporation.pk]
-
-	# Insert last turn assets
-	last_assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 2)
-	last_assets_hash = {ah.corporation_id: ah.assets for ah in last_assets}
-
-	for corporation in corporations:
-		corporation.last_assets = last_assets_hash[corporation.pk] if turn > 1 else None
-
-		detailed_delta = corporation.assetdelta_set.filter(turn=turn - 1).order_by('category')
-		for detail in detailed_delta:
-			if turn > 1:
-				setattr(corporation, detail.category, getattr(corporation, detail.category, 0) + detail.delta)
-				delta_categories[detail.category] = detail.get_category_display()
-				unknown = corporation.current_assets - corporation.last_assets - sum([ad.delta for ad in detailed_delta])
-			else:
-				setattr(corporation, detail.category, None)
-				unknown = None
-			setattr(corporation, 'unknown', unknown if unknown != 0 else "")
-
-	delta_categories['unknown'] = '?'
-
-	# Graph data
-	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
-	assets_history = AssetHistory.objects.filter(corporation__game=game, turn__lte=turn).order_by('turn', 'corporation')
 
 	return {
 		"corporations": corporations,
-		"assets_history": assets_history,
-		"sorted_corporations": sorted_corporations,
-		"delta_categories": OrderedDict(sorted(delta_categories.items())),
 		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
 		"turn": turn,
 		"request": request,

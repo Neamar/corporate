@@ -6,37 +6,28 @@
 
 {% block content %}
 
-
-<table class="prop_table slanted_head">
-<thead>
-<tr>
-	<th></th>
-	<th><div><span>Actifs</span></div></th>
-{% if corporations.0.last_assets %}
-	<th title="Actifs du tour précédent"><div><span>Précédents</span></div></th>
-{% endif %}
-{% for category in delta_categories.values %}
-	<th><div><span>{{ category }}</span></div></th>
-{% endfor %}
-</tr>
-</thead>
-<tbody>
 {% for corporation in corporations %}
-<tr>
-	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
-	<td class="important"><strong style="color:{% if corporation.current_assets > corporation.last_assets %}green{% elif corporation.current_assets < corporation.last_assets %}red{% endif %}">{{ corporation.current_assets }}</strong></td>
-{% if corporation.last_assets %}
-	<td>{{ corporation.last_assets }}</td>
-{% endif %}
-{% for category in delta_categories.keys %}
-    <td>{{ corporation|get_item:category }}</td>
-{% endfor %}
-</tr>
-{% endfor %}
-</tbody>
-</table>
+<section class="corporation-row">
+	<h2>
+		<span class="corporation-index">{{ forloop.counter }}</span>
+		<span class="corporation-name">{{ corporation.base_corporation.name }}</span>
+		<span class="current-assets">{{ corporation.assets }}
+			<span class="assets-delta{{ corporation.asset_delta_is_positive|yesno:" positive, negative,"}}">
+			{{ corporation.asset_delta|default:0 }}
+			</span>
+		</span>
+	</h2>
 
-<div id="chart_div" style="width: 99%; height: 300px; margin:15px auto;"></div>
+	<div class="corporation-markets">
+	{% for corporation_market in corporation.corporation_market %}
+		<div class="corporation-market">
+			<img src="{{ STATIC_URL }}{{ CITY }}/markets/{{ corporation_market.market.name}}.png" title="corporation_market.market.name" />
+			<span class="corporation-market-value">{{ corporation_market.value }}</span>
+		</div>
+	{% endfor %}
+	</div>
+</section>
+{% endfor %}
 
 {% endblock content %}
 
