@@ -6,7 +6,6 @@ from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order, game_event
-from messaging.models import Message, Note
 
 
 class Game(models.Model):
@@ -94,8 +93,6 @@ class Game(models.Model):
 		# Build resolution messages for each player
 		for player in self.player_set.all().select_related('game'):
 			player.build_resolution_message()
-		# Remove all Notes
-		Note.objects.filter(recipient_set__game=self).delete()
 
 		# Increment current turn and terminate.
 		self.current_turn += 1
@@ -136,26 +133,6 @@ class Player(models.Model):
 		citizenship = self.citizenship_set.get(turn=self.game.current_turn - 1)
 		return citizenship
 
-	def add_message(self, **kwargs):
-		"""
-		Send a message to the player
-		"""
-		m = Message(turn=self.game.current_turn, **kwargs)
-		m.save()
-		m.recipient_set.add(self)
-
-		return m
-
-	def add_note(self, **kwargs):
-		"""
-		Create a note for the player
-		"""
-		n = Note(turn=self.game.current_turn, **kwargs)
-		n.save()
-		n.recipient_set.add(self)
-
-		return n
-
 	def get_current_orders(self):
 		"""
 		Returns the list of order for this turn
@@ -173,16 +150,7 @@ class Player(models.Model):
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
 		# Start by adding the final note
-		self.add_note(content="Argent disponible pour le tour : %sk¥" % self.money)
-
-		notes = Note.objects.filter(recipient_set=self, turn=self.game.current_turn)
-		m = Message.build_message_from_notes(
-			message_type=Message.RESOLUTION,
-			notes=notes,
-			title="Message de résolution du tour %s" % self.game.current_turn,
-			turn=self.game.current_turn
-		)
-		m.recipient_set.add(self)
+		m = "TODO"
 		return m
 
 	def __unicode__(self):

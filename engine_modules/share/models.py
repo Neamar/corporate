@@ -2,7 +2,6 @@
 from django.db import models
 from engine.models import Player, Order, Game
 from engine_modules.corporation.models import Corporation
-from messaging.models import Newsfeed
 
 
 class Share(models.Model):
@@ -51,17 +50,6 @@ class BuyShareOrder(Order):
 			corporation=self.corporation,
 			player=self.player
 		).save()
-
-		# Send a note for final message
-		nb_shares = self.player.share_set.filter(corporation=self.corporation).count()
-		if nb_shares == 1:
-			content = u"Vous avez acheté votre première part dans %s." % self.corporation.base_corporation.name
-			newsfeed_content = u"%s a acheté sa première part dans %s." % (self.player, self.corporation.base_corporation.name)
-		else:
-			content = u"Vous avez acheté votre %i<sup>ème</sup> part dans %s." % (nb_shares, self.corporation.base_corporation.name)
-			newsfeed_content = u"%s a acheté sa %i<sup>ème</sup> part dans %s." % (self.player, nb_shares, self.corporation.base_corporation.name)
-		self.player.add_note(content=content)
-		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=newsfeed_content)
 
 		# Create game_event
 		self.player.game.add_event(event_type=Game.BUY_SHARE, data={"player": self.player.name, "corporation": self.corporation.base_corporation.name}, corporation=self.corporation, players=[self.player])

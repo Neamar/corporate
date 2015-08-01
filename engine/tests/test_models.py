@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
-from django.conf import settings
 
 from engine.testcases import EngineTestCase
 from engine.models import Player, Order
-from messaging.models import Message, Note
 from website.models import User
-from utils.read_markdown import read_file_from_path
 
 
 class ModelsTest(EngineTestCase):
@@ -47,29 +44,6 @@ class ModelsTest(EngineTestCase):
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.g.current_turn, 2)
-
-	def test_game_resolve_current_turn_build_resolution_message(self):
-		"""
-		Check resolve_current_turn creates Resolution messages.
-		"""
-
-		# sanity check
-		self.assertEqual(0, Message.objects.filter(recipient_set=self.p, flag=Message.RESOLUTION).count())
-		self.g.resolve_current_turn()
-		self.assertEqual(1, Message.objects.filter(recipient_set=self.p, flag=Message.RESOLUTION).count())
-
-	def test_game_resolve_current_turn_removes_notes(self):
-		"""
-		Check resolve_current_turn removes Note objects
-		"""
-
-		self.p.add_note(content="private")
-
-		# sanity check
-		self.assertEqual(1, Note.objects.count())
-
-		self.g.resolve_current_turn()
-		self.assertEqual(0, Note.objects.count())
 
 	def test_order_clean_is_abstract(self):
 		"""
@@ -218,24 +192,3 @@ class ModelsTest(EngineTestCase):
 		self.g.save()
 
 		self.assertEqual([o2], list(self.p.get_current_orders()))
-
-	def test_player_add_note(self):
-		"""
-		Check add_note on Player
-		"""
-
-		n = self.p.add_note(content="something")
-		self.assertEqual(list(n.recipient_set.all()), [self.p])
-
-	def test_player_build_resolution_message(self):
-		"""
-		Check build_resolution_message on Player
-		"""
-
-		self.p.add_note(content="private")
-
-		m = self.p.build_resolution_message()
-		self.assertEqual(m.flag, Message.RESOLUTION)
-		self.assertEqual(m.recipient_set.count(), 1)
-		self.assertIn(self.p, m.recipient_set.all())
-		self.assertIn("private", m.content)

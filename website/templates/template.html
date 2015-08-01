@@ -25,9 +25,7 @@
 			{% if user.is_authenticated %}
 			{% if game %}
 			<ul class="game">
-				<li><a href="{% url 'website.views.data.newsfeeds' game_id=game.pk %}">newsfeeds</a></li>
 				<li><a href="{% url 'website.views.orders.orders' game_id=game.pk %}">ordres</a></li>
-				<li><a href="{% url 'website.views.data.comlink' game_id=game.pk %}">commlink</a></li>
 			</ul>
 
 			<ul class="data">
@@ -39,7 +37,7 @@
 			{% else %}
 			<ul class="game">
 				{% for player in user.player_set.all %}
-				<li><a href="{% url 'website.views.data.newsfeeds' game_id=player.game_id %}">{{ player.game.city }}</a></li>
+				<li><a href="{% url 'website.views.data.wallstreet' game_id=player.game_id %}">{{ player.game.city }}</a></li>
 				{% endfor %}
 			</ul>
 			{% endif %}
