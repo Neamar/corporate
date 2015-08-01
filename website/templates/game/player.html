@@ -4,7 +4,6 @@
 {% block h1 %}{{ player.name }}{% endblock %}
 
 {% block content %}
-<h1>{{ player.name }}</h1>
 
 <h2>Vote à Detroit<sup>INC</sup></h2>
 <img title="{{ player.get_last_dinc_vote.get_coalition_display }}" src="{{ STATIC_URL }}dinc/{{ player.get_last_dinc_coalition }}.png" />
