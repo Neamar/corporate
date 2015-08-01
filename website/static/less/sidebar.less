@@ -139,6 +139,11 @@
 				text-align: center;
 				position: relative;
 
+				a {
+					text-decoration: none;
+					color: #fff;
+				}
+
 				&:last-child {
 					margin-right: 0;
 				}
@@ -166,6 +171,15 @@
 						}
 
 					&.pod-run-spinner-turns-turn-active {
+							opacity: 1;
+							-webkit-transition: all 0.3s, all 0.4s;
+							transition: all 0.3s, all 0.4s;
+
+						&:hover {
+							opacity: 0.8;
+							-webkit-transition: all 0.3s, all 0.4s;
+							transition: all 0.3s, all 0.4s;
+						}
 
 						&:before {
 						background: url("/static/img/sidebar/tour-current-open.jpg") center top no-repeat;

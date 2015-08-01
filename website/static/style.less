@@ -3,6 +3,7 @@ body {
 	font-weight: normal;
 	color: #fff;
 	background: url("/static/img/bg.jpg") repeat scroll center top rgba(0, 0, 0, 0);
+	overflow-x: hidden;
 
 	&:before {
 		background: url("/static/img/bg-triangle.png") repeat scroll center top rgba(0, 0, 0, 0);
@@ -17,11 +18,12 @@ body {
 }
 
 
-.grid-container.main-logo {
+.main-logo {
 position: relative;
 z-index: 5;
 text-indent: -5555em;
 margin: 50px auto auto;
+max-width: 1045px;
 
 	a {
 		background: url("/static/img/logo-corporate-game.png") repeat scroll center top rgba(0, 0, 0, 0);
@@ -55,6 +57,32 @@ margin: 50px auto auto;
 		}
 	}
 }
+
+.visually-hidden {
+position:absolute;
+left:-10000px;
+top:auto;
+width:1px;
+height:1px;
+overflow:hidden;
+}
+
+svg:not(:root) { overflow: hidden }
+
+svg use {
+	width: inherit;
+	height: inherit;
+	display: inline-block;
+}
+.svg--small {
+display: inline-block;
+height: 32px;
+width: 32px;
+}
+.svg--white {
+	fill: white;
+}
+
 
 @import "less/menu.less";
 @import "less/sidebar.less";
