@@ -25,6 +25,22 @@ Son surnom de Mercury devint une légende : s’entourant rapidement d’une éq
 
 Nombreux sont ceux qui ont grincé des dents, persuadés que ces projets avaient été développé par d’autres corporations puis volés lors d’attaques cybernétiques… Que cela soit vrai ou non, Mercury est une jeune corporation aux dents longues qui compte bien se faire une place dans la cour des grands avec une arme de taille : l’information. 
 
+## Effet premier
+La jeune méga corpo raffole de sa position et se souvient de ses origines. Elle signe des partenariats mutuellement profitables avec les plus petits et consolide son association avec EnerCore.
+
+* +1 actif pour Enercore.
+* +1 actif pour la dernière corporation.
+
+## Effet dernier
+Son innovation légendaire connaissant un ralentissement important, Mercury se voit obligé de réaliser des contrats juteux de mercenariat de cyberguerre au plus offrant afin de garder la tête hors de l'eau.
+
+* +2 actifs pour la première corporation.
+
+## Effet crash
+Le rêve d'Alan s'effondre, mais dans un sursaut de folie, il décide de ne pas chuter seul. Coordonnant une ultime attaque cybernétique, il paralyse et endommage les puissants.
+
+* -5 actifs pour la première corporation.
+* -1 actif pour la deuxième corporation.
 
 ---
 

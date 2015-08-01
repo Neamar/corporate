@@ -26,6 +26,26 @@ Aujourd’hui, les 3 milliards de personnes qui vivent dans des barres d’immeu
 
 CityGroup n’est pas sur les panneaux d’affichage ou dans vos écrans 3D, un tiers de la population mondiale leur verse simplement un loyer.
 
+
+## Effet premier
+CityGroup surfe sur son avantage concurrentiel pour créer des infrastructures et trouver de nouveaux alliés puissants. De plus, elle impose une guerre des prix, empêchant les corporations en difficulté de remonter la pente.
+
+* +1 actif pour la deuxième corporation.
+* -1 actif pour la dernière corporation.
+
+## Effet dernier
+Fier de son aptitude à trouver de bonnes opportunités même dans les situations les plus désespérées, CityGroup trouve le moyen de regagner un second souffle. Néanmoins, l'infrastructure des villes diminuant, les options de transport en souffrent autant, imposant un ralentissement à Taurus Industries.
+
+* -1 actif pour Taurus.
+* +1 actif pour CityGroup.
+
+## Effet crash
+CityGroup chute et ses infrastructures s’effondrent. Taurus Industries souffre particulièrement, ses transports n'étant plus aussi bien managés. Iris réalise une campagne de médiatisation mettant en scène la chute de CityGroup comme la mort d'un héros populaire, faisant grimper l'audimat.
+
+* -1 actif pour la deuxième corporation.
+* -3 actifs pour Taurus.
+* +2 actifs pour Iris.
+
 ---
 
 >Tu vois ce taudis dans lequel on vit. Tu sais qu’avant les villes ne sentaient pas en permanence cette odeur de merde… Mais regarde maintenant, tout le monde a de quoi se loger. Tout le monde peut vivre en ville dans un appartement dégueulasse pour profiter des plaisirs urbains qu’ils ne peuvent pas se payer. 
