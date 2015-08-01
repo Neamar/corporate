@@ -1,19 +1,31 @@
 {% extends "template.html" %}
 
-{% block title %}{{ player_profile.name }}{% endblock %}
-{% block h1 %}{{ player_profile.name }}{% endblock %}
+{% block title %}{{ player.name }}{% endblock %}
 
 {% block content %}
 
-<h2>Vote à Detroit<sup>INC</sup></h2>
-<img title="{{ player_profile.get_last_dinc_vote.get_coalition_display }}" src="{{ STATIC_URL }}dinc/{{ player_profile.get_last_dinc_coalition }}.png" />
+<div class="player-content">
+<h1><img title="" src="/static/img/players/01.png" width="90" height="90" /><span>{{ player.name }}</span></h1>
+
+<h2 class="h2-player-dinc">Vote à Detroit <sup>INC</sup></h2>
+<!--- <img class"dinc-player" title="{{ player.get_last_dinc_vote.get_coalition_display }}" src="{{ STATIC_URL }}dinc/{{ player.get_last_dinc_coalition }}.png" /> -->
+<div class="dinc-player-content"><img class="dinc-player" title="{{ player.get_last_dinc_vote.get_coalition_display }}" src="/static/img/detroit-inc/cpub.png" />
+</div>
 
 <h2>Informations sur le tour</h2>
-<span class="ic-value">{{ player_profile.influence.level }}</span>
-<span class="money-value">250k</span>
-<span class="share-amount">{{ qty_shares }}</span>
+<div class="turn-info-content">
+	<span class="ic-value">{{ player.influence.level }}</span>
+	<span class="money-value">250k</span>
+	<span class="share-amount">{{ qty_shares }}</span>
+</div>
 
 <h2>Parts dans les corporations</h2>
+<ul class="corporation">
+	<li><a href="#"><span>3</span></a></li>
+	<li><a href="#"><span>3</span></a></li>
+	<li><a href="#"><span>3</span></a></li>
+	<li><a href="#"><span>3</span></a></li>
+</ul>
 {% for corporation in corporations %}
 <span class="corporation">
 	<a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation.base_corporation.slug %}">
@@ -26,6 +38,8 @@
 Background : <strong>{{ player_profile.background }}</strong>
 
 <h2>Mon histoire</h2>
-<p>{{ rp }}</p>
-
+<div class="player-story">
+	<p>{{ rp }}</p>
+</div>
+</div>
 {% endblock content %}
