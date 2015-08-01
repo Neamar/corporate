@@ -9,12 +9,16 @@ sabotage: 20
 extraction: 20
 detection: 30
 on_first:
-    update('spinrad', 2)
+    update('tlaloc', 1)
+    update('bastion', -1)
 on_last:
-    update('spinrad', -1)
-    update(ladder[-2], 1)   
+    update('tlaloc', -1)
+    update('bastion', 1)
 on_crash:
-    # TBD
+    update('pure', -2)
+    update('bastion', 2)
+    update('impulse', 1)
+    update('citygroup', -1)
 
 > *Grandir vers le soleil*
 
