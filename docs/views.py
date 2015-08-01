@@ -54,4 +54,5 @@ def corporation(request, corporation_slug):
 	except KeyError:
 		raise Http404("No matching corporation.")
 
-	return render(request, 'docs/corporation.html', {"base_corporation": base_corporation})
+	print base_corporation.markets
+	return render(request, 'docs/corporation.html', {"base_corporation": base_corporation, "city": settings.CITY})

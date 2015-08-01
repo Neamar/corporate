@@ -5,28 +5,14 @@
 {% block favicon %}{{ STATIC_URL }}corporations/{{ base_corporation.slug}}.png{% endblock %}
 
 {% block content %}
-<table class="prop_table">
-<thead>
-<tr>
-	<th></th>
-	<th>DS</th>
-	<th>S</th>
-	<th>E</th>
-	<th>D</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-	<td>{{ base_corporation.slug|title }}</a></td>
-	<td>{{ base_corporation.datasteal }}</td>
-	<td>{{ base_corporation.sabotage }}</td>
-	<td>{{ base_corporation.extraction }}</td>
-	<td>{{ base_corporation.detection }}</td>
-</tr>
-</tbody>
-</table>
+
+<div class="markets">
+{% for market in base_corporation.markets %}
+<img src="{ STATIC_URL }}{{ city }}/markets/{{ market }}.png" title="{{ market|capfirst }}" />
+{% endfor %}
+</div>
 
 <h2>Description</h2>
-<img src="{{ STATIC_URL }}corporations/{{ base_corporation.slug}}.png" alt="{{ base_corporation.name }}" style="float:right; margin:0 30px"/>
+<img src="{{ STATIC_URL }}{{ city }}/corporations/{{ base_corporation.slug}}.png" alt="{{ base_corporation.name }}" style="float:right; margin:0 30px"/>
 {{ base_corporation.description }}
 {% endblock content %}
