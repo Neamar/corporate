@@ -10,7 +10,7 @@ class Logs(models.Model):
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
 
-	# how much assets are lost or mon on a market
+	# how much assets are lost or won on a market
 	delta = models.SmallIntegerField()
 
 	# some icons must be duplicated for display on a corporation but not on a player
