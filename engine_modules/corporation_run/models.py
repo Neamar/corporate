@@ -131,7 +131,7 @@ class DataStealOrder(CorporationRunOrderWithStealer):
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
 	def description(self):
-		return u"Envoyer une équipe voler des données de %s (%s) pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Envoyer une équipe voler des données de %s (%s) pour le compte de %s" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name)
 
 
 class ExtractionOrder(CorporationRunOrderWithStealer):
@@ -171,7 +171,7 @@ class ExtractionOrder(CorporationRunOrderWithStealer):
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
 	def description(self):
-		return u"Réaliser une extraction de %s (%s) vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Réaliser une extraction de %s (%s) vers %s" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name)
 
 
 class SabotageOrder(CorporationRunOrder):
@@ -210,7 +210,7 @@ class SabotageOrder(CorporationRunOrder):
 		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
 
 	def description(self):
-		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s) (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.get_raw_probability())
+		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name)
 
 
 class ProtectionOrder(RunOrder):
@@ -235,7 +235,7 @@ class ProtectionOrder(RunOrder):
 		self.player.save()
 
 	def description(self):
-		return u"Envoyer une équipe protéger %s (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_success_probability())
+		return u"Envoyer une équipe protéger %s" % (self.protected_corporation.base_corporation.name)
 
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)

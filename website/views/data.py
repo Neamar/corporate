@@ -38,18 +38,33 @@ def wallstreet(request, game, player, turn):
 @render('game/corporation.html')
 @find_player_from_game_id
 @inject_game_and_player_into_response
-def corporation(request, player, game, corporation_slug):
+@turn_by_turn_view
+def corporation(request, player, game, corporation_slug, turn):
 	"""
 	Corporation data
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game.pk)
-	players = Player.objects.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
+	share_holders = game.player_set.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
+	markets = corporation.markets
+	competitors = game.corporation_set.filter(corporationmarket__market__in=markets).distinct().order_by('base_corporation_slug')
+
+	summary = []
+	for corpo in competitors:
+		assets = []
+		holders = game.player_set.filter(share__corporation__base_corporation_slug=corpo.base_corporation_slug).distinct()
+		corporation_markets = corpo.corporationmarket_set.filter(market__in=markets)
+		for market in markets:
+			assets.append(next((cm.value for cm in corporation_markets if cm.market.name == market.name), None))
+		# That's kind of a weird data structure, but the template tags are not as flexible as one might like
+		summary.append((corpo, assets, holders))
 
 	assets_history = corporation.assethistory_set.all()
 	return {
 		"corporation": corporation,
-		"players": players,
+		"share_holders": share_holders,
 		"assets_history": assets_history,
+		"markets": markets,
+		"summary": summary,
 		# Turn_spinner doesn't work, because the URL with e turn isn't allowed, which makes sense, because for this description, the turn doesn't matter
 		"pods": ['d_inc', 'current_player', 'players', ],
 		"turn": game.current_turn,
@@ -106,17 +121,18 @@ def player(request, player, game, player_id, turn):
 	Player data
 	"""
 
-	player = Player.objects.get(pk=player_id, game_id=game.pk)
+	player_profile = Player.objects.get(pk=player_id, game_id=game.pk)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
 
 	rp, _ = parse_markdown(player.rp)
 	rp = mark_safe(rp)
 
 	return {
-		"player": player,
+		"player_profile": player_profile,
 		"rp": rp,
 		"corporations": corporations,
-		"qty_shares": sum([corporation.qty_share for corporation in corporations])
+		"qty_shares": sum([corporation.qty_share for corporation in corporations]),
+		"request": request,
 	}
 
 
