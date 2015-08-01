@@ -20,7 +20,7 @@ class Command(StubGame):
 		c1_market = c1.corporationmarket_set.first()
 		c2 = corporations[2]
 		c2_market = c2.corporationmarket_set.first()
-		c3 = corporations[3]
+		c3 = corporations[0]
 		c3_market = c3.corporationmarket_set.first()
 
 		# TURN 1
@@ -48,3 +48,4 @@ class Command(StubGame):
 		self.g.disable_side_effects = False
 		self.g.save()
 
+		self.stdout.write("Simulated turn #1")
