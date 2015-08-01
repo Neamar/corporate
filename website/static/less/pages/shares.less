@@ -5,9 +5,42 @@
 	}
 }
 
+
+body:not(.nohover) .shares-table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 .shares-table {
 	border-collapse:collapse;
 	font-family: 'Oswald', sans-serif;
+	background: url("/static/img/shares/share-bg.png") no-repeat center;
+	overflow: hidden;
+
+	//table Overlay
+	td, th {
+	  padding: 10px;
+	  position: relative;
+	  outline: 0;
+	}
+
+
+	td:hover::after,
+	thead th:not(:empty):hover::after,
+	td:focus::after,
+	thead th:not(:empty):focus::after { 
+	  content: '';  
+	  height: 10000px;
+	  left: 0;
+	  position: absolute;  
+	  top: -5000px;
+	  width: 100%;
+	  z-index: -1;
+	}
+
+	td:hover::after,
+	th:hover::after {
+	  background-color: rgba(0, 0, 0, 0.3);
+	}
 
 	thead {
 		tr {
@@ -67,6 +100,7 @@
 				padding: 0;
 				font-size: 18px;
 
+
 				&.share-top {
 					background-color: rgba(190, 15, 15, 0.2);
 					strong {
@@ -103,7 +137,7 @@
 				}
 				text-align: center;
 				width: 60px;
-				height: 45px;
+				height: 42px;
 				border-right: 1px solid #828585;
 				border-bottom: 1px solid #828585;
 			}
@@ -127,6 +161,8 @@
     background-size:1px 100%;
     background-position:-1px 0, 100% 0;
     background-repeat:no-repeat;
+
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
 
 				&:first-child {
 					background-color: transparent;

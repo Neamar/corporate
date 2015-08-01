@@ -12,8 +12,7 @@
 	{% for player in players %}
 	<!-- should be replaced with the player's image when -->
 	<th>
-		<span>{{ player.name|title }}</span>
-		<a href="#"><img src="/static/img/players/01.png" /></a>
+		<a href="#" title="{{ player.name|title }}"><img src="/static/img/players/01.png" /></a>
 	</th>
 	{% endfor %}
 </tr>
