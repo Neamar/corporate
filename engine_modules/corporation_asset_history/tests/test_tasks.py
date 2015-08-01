@@ -16,12 +16,9 @@ class TasksTest(EngineTestCase):
 		Test rank of turn if no ex-aequo
 		"""
 
-		self.c3.assets = 13
-		self.c3.save()
-		self.c2.assets = 12
-		self.c2.save()
-		self.c.assets = 11
-		self.c.save()
+		self.c3.set_market_assets(13)
+		self.c2.set_market_assets(12)
+		self.c.set_market_assets(11)
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.g.get_ladder(), [self.c3, self.c2, self.c])
@@ -31,20 +28,14 @@ class TasksTest(EngineTestCase):
 		Test rank of turn if ex-aequo
 		"""
 
-		self.c3.assets = 13
-		self.c3.save()
-		self.c2.assets = 12
-		self.c2.save()
-		self.c.assets = 11
-		self.c.save()
+		self.c3.set_market_assets(13)
+		self.c2.set_market_assets(12)
+		self.c.set_market_assets(11)
 		self.g.resolve_current_turn()
 
-		self.c3.assets = 11
-		self.c3.save()
-		self.c2.assets = 13
-		self.c2.save()
-		self.c.assets = 11
-		self.c.save()
+		self.c3.set_market_assets(11)
+		self.c2.set_market_assets(13)
+		self.c.set_market_assets(11)
 
 		self.assertEqual(self.g.get_ladder(), [self.c2, self.c3, self.c])
 
@@ -62,27 +53,18 @@ class TasksTest(EngineTestCase):
 		"""
 		Test going back for more than one turn
 		"""
-		self.c3.assets = 13
-		self.c3.save()
-		self.c2.assets = 12
-		self.c2.save()
-		self.c.assets = 11
-		self.c.save()
+		self.c3.set_market_assets(13)
+		self.c2.set_market_assets(12)
+		self.c.set_market_assets(11)
 		self.g.resolve_current_turn()
 
-		self.c3.assets = 11
-		self.c3.save()
-		self.c2.assets = 11
-		self.c2.save()
-		self.c.assets = 11
-		self.c.save()
+		self.c3.set_market_assets(11)
+		self.c2.set_market_assets(11)
+		self.c.set_market_assets(11)
 		self.g.resolve_current_turn()
 
-		self.c3.assets = 11
-		self.c3.save()
-		self.c2.assets = 13
-		self.c2.save()
-		self.c.assets = 11
-		self.c.save()
+		self.c3.set_market_assets(11)
+		self.c2.set_market_assets(13)
+		self.c.set_market_assets(11)
 
 		self.assertEqual(self.g.get_ladder(), [self.c2, self.c3, self.c])

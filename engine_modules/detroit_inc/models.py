@@ -106,7 +106,7 @@ class DIncVoteSession(models.Model):
 	turn = models.PositiveSmallIntegerField(editable=False)
 
 	def __unicode__(self):
-		return "%s line for %s on turn %s" % (self.coalition, self.game, self.turn)
+		return u"%s line for %s on turn %s" % (self.coalition, self.game, self.turn)
 
 
 def get_dinc_coalition(self, turn=None):

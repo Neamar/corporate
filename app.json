@@ -9,6 +9,12 @@
   "env":{
     "PYTHON_ENV":{
       "required":true
+    },
+    "SECRET_KEY":{
+      "required":true
+    },
+    "DEBUG":{
+      "required":false
     }
   },
   "addons":[

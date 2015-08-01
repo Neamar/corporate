@@ -73,7 +73,7 @@ class Game(models.Model):
 		self.add_newsfeed(**kwargs)
 
 	def __unicode__(self):
-		return "Corporate Game: %s" % self.city
+		return u"Corporate Game: %s" % self.city
 
 
 class Player(models.Model):

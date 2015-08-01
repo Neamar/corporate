@@ -1,0 +1,8 @@
+<div class="pod pod-corporation-documentation">
+	<h2 class="pod-title">Corporations</h2>
+	<ul>
+	{% for base_corporation in base_corporations %}
+		<li><a href="{% url 'docs.views.corporation' corporation_slug=base_corporation.slug %}">{{ base_corporation.name }}</a></li>
+	{% endfor %}
+	</ul>
+</div>

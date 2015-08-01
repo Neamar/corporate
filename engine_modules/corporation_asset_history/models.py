@@ -17,7 +17,7 @@ class AssetHistory(models.Model):
 	turn = models.PositiveSmallIntegerField()
 
 	def __unicode__(self):
-		return "%s assets for %s on turn %s" % (self.assets, self.corporation.base_corporation.name, self.turn)
+		return u"%s assets for %s on turn %s" % (self.assets, self.corporation.base_corporation.name, self.turn)
 
 
 def get_ladder(self, turn=None):

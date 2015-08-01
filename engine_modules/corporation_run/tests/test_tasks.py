@@ -9,7 +9,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation_market=self.c.random_corporation_market,
+			target_corporation_market=self.c.get_random_corporation_market(),
 			additional_percents=0,
 		)
 		self.so.clean()
@@ -19,8 +19,6 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.INITIAL_MONEY = 100000
 		self.p.money = self.INITIAL_MONEY
 		self.p.save()
-
-		self.so_initial_extraction = self.so.target_corporation.base_corporation.sabotage
 
 	def test_offensive_run_task(self):
 		"""
@@ -34,8 +32,6 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets - 2)
 
-		self.so.target_corporation.base_corporation.sabotage = self.so_initial_extraction
-
 	def test_offensive_resolve_order(self):
 		"""
 		Check that offensive runs are resolved in order of raw_probability
@@ -46,7 +42,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		so2 = SabotageOrder(
 			player=self.p,
-			target_corporation_market=self.c2.random_corporation_market,
+			target_corporation_market=self.c2.get_random_corporation_market(),
 			additional_percents=4,
 		)
 
@@ -56,7 +52,7 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		so3 = SabotageOrder(
 			player=self.p,
-			target_corporation_market=self.c3.random_corporation_market,
+			target_corporation_market=self.c3.get_random_corporation_market(),
 			additional_percents=8,
 		)
 
