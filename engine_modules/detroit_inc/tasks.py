@@ -55,9 +55,10 @@ class DIncVoteTask(ResolutionTask):
 				turn=game.current_turn,
 			)
 			n.recipient_set = losers
-			if DIncVoteOrder.DINC_OPPOSITIONS[official_line] == DIncVoteOrder.RSEC:
+			event_type = None
+			if official_line == DIncVoteOrder.RSEC:
 				event_type = Game.EFFECT_SECURITY_DOWN
-			elif DIncVoteOrder.DINC_OPPOSITIONS[official_line] == DIncVoteOrder.CONS:
+			elif official_line == DIncVoteOrder.CONS:
 				event_type = Game.EFFECT_CONSOLIDATION_DOWN
 			if event_type is not None:
 				game.add_event(event_type=event_type, data=None, players=losers)

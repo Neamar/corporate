@@ -17,9 +17,8 @@ def players_pod(context):
 
 	for player in players:
 		# turn=now AND players__player=target AND (players__player=myself OR (public)
-		player.events = Logs.objects.filter(Q(players=player, turn=context['turn'] - 1) & (Q(players=context['player']) | Q(public=True)))
-		print Logs.objects.filter(Q(players=player) & (Q(players=context['player']) | Q(public=True))).query
-
+		player.events = Logs.objects.filter(turn=context['turn'] - 1).filter(players=player).filter(Q(players=context['player']) | Q(public=True))
+		print player.events.query
 	return {
 		'players': players
 	}
