@@ -10,7 +10,7 @@
 {% for corporation_market in corporation_markets %}
 	<li>
 		<h3>{{ corporation_market.market.name }}</h3>
-		{% include "logs/simple.html" with events=corporation_market.events %}
+		{% include "logs/advanced.html" with events=corporation_market.events %}
 	</li>
 {% endfor %}
 </ul>

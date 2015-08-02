@@ -98,8 +98,6 @@ def corporation(request, player, game, corporation_slug, turn):
 
 	for corporation_market in previous_corporation_markets:
 		corporation_market.events = Logs.objects.for_corporation_market(corporation_market, player)
-		print corporation_market.pk, corporation_market.events.query
-		print corporation_market.events
 
 	return {
 		"corporation": corporation,
