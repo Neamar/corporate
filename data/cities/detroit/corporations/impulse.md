@@ -9,11 +9,15 @@ sabotage: 10
 extraction: 10
 detection: 60
 on_first:
-    update(ladder[1], -2)
+    update("shinsekai", -1)
+    update("pure", -1)
 on_last:
-    update('saeder-krupp', 2)
+    update('citygroup', -1)
+    update(ladder[0], -1)
 on_crash:
-    # TBD
+    update('mercury', -2)
+    update('iris', -2)
+    update(ladder[0], 2)
 
 > *La Terre n'est que le début*
 
@@ -21,12 +25,12 @@ Impulse est une des plus vieilles mégacorporations et une des plus méconnues. 
 
 Sur terre, son influence s’étend comme la corporation la plus tournée vers l’avenir et la découverte, s’entourant des esprits techniques les plus brillants qu’elle sait rétribuer et récompenser. Dans l’espace, ses navettes larguent en orbite des escadrons de drones qui réparent ses satellites de communication et récoltent l’énergie de ses stations solaires. Impulse fournit toutes les corporations (ou les particuliers fortunés) en matériel ultramoderne ou en prestation technique spécialisée. 
 
-Jusque-là méconnue du grand public, elle a récemment gagné en influence de par la mise en place de son projet de colonisation de Mars dans lequel elle cherche des partenaires, particulièrement Shinsekaï et Pure. C’est cette ambition permanente et sa capacité à s’entourer d’un personnel d’une qualification inégalée qui font d’Impulse une corporation dangereusement efficace.
+Jusque-là méconnue du grand public, elle a récemment gagné en influence de par la mise en place de son projet de colonisation de Mars dans lequel elle cherche des partenaires, particulièrement Shinsekai et Pure. C’est cette ambition permanente et sa capacité à s’entourer d’un personnel d’une qualification inégalée qui font d’Impulse une corporation dangereusement efficace.
 
 ## Effet premier
-La méga corporation B2B peut maintenant offrir directement au consommateur des produits de haute technologie particulièrement innovants et performants. Les produits Shinsekaï et Pure prennent un coup de vieux et connaissent une baisse de rentabilité.
+La méga corporation B2B peut maintenant offrir directement au consommateur des produits de haute technologie particulièrement innovants et performants. Les produits Shinsekai et Pure prennent un coup de vieux et connaissent une baisse de rentabilité.
 
-* -1 actif pour Shinsekaï.
+* -1 actif pour Shinsekai.
 * -1 actif pour Pure.
 
 ## Effet dernier

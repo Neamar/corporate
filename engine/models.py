@@ -166,7 +166,7 @@ class Order(models.Model):
 	cost = models.PositiveSmallIntegerField(editable=False)
 	type = models.CharField(max_length=40, blank=True, editable=False)
 
-	def save(self):
+	def save(self, **kwargs):
 		# Save the current type to inflate later (model inheritance can be tricky)
 		self.type = self._meta.object_name
 
@@ -177,7 +177,7 @@ class Order(models.Model):
 		if not self.cost:
 			self.cost = self.get_cost()
 
-		super(Order, self).save()
+		super(Order, self).save(**kwargs)
 
 	def clean(self):
 		"""

@@ -11,6 +11,7 @@ class CorporationRunOrder(RunOrder):
 	"""
 	Model for offensive corporation runs.
 	"""
+
 	target_corporation_market = models.ForeignKey(CorporationMarket, related_name="scoundrels")
 
 	def get_success_probability(self):
@@ -35,7 +36,7 @@ class CorporationRunOrder(RunOrder):
 
 	def get_form(self, data=None):
 		form = super(CorporationRunOrder, self).get_form(data)
-		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game)
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn)
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		return form
@@ -52,7 +53,7 @@ class CorporationRunOrderWithStealer(CorporationRunOrder):
 		"""
 		Helper function to directly retrieve the market for the stealer
 		"""
-		return self.stealer_corporation.corporationmarket_set.get(market=self.target_corporation_market.market_id)
+		return self.stealer_corporation.corporationmarket_set.get(market=self.target_corporation_market.market_id, turn=self.player.game.current_turn)
 
 	def get_form(self, data=None):
 		form = super(CorporationRunOrderWithStealer, self).get_form(data)
@@ -163,7 +164,7 @@ class ProtectionOrder(RunOrder):
 
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)
-		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game)
+		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn)
 
 		return form
 
