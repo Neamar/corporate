@@ -1,7 +1,6 @@
 from engine.testcases import EngineTestCase
 from engine.models import Player
 from engine_modules.wiretransfer.models import WiretransferOrder
-from messaging.models import Message
 
 
 class WiretransterOrderTest(EngineTestCase):
@@ -29,16 +28,3 @@ class WiretransterOrderTest(EngineTestCase):
 
 		# Wiretransfer should not be saved in DB
 		self.assertIsNone(self.wo.pk)
-
-	def test_wiretransfer_message(self):
-		"""
-		Wiretransfer sends a message to both players
-		"""
-		self.wo.save()
-
-		m = Message.objects.get()
-		self.assertEqual(m.title, "Transfert d'argent")
-		self.assertEqual(m.flag, Message.CASH_TRANSFER)
-		self.assertIn(self.wo.player.name, m.content)
-		self.assertIn(self.wo.recipient.name, m.content)
-		self.assertIn(str(self.wo.amount), m.content)

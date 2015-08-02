@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from engine.tasks import ResolutionTask, OrderResolutionTask
 from engine_modules.share.models import Share, BuyShareOrder
-from messaging.models import Note
 
 
 class BuyShareTask(OrderResolutionTask):
@@ -53,11 +52,5 @@ class DividendTask(ResolutionTask):
 			dividend = int(dividend)
 			share.player.money += dividend
 			share.player.save()
-
-			if share.count == 1:
-				content = u"Votre part dans %s vous rapporte %sk¥" % (share.corporation.base_corporation.name, dividend)
-			else:
-				content = u"Vos %s parts dans %s vous rapportent %sk¥" % (share.count, share.corporation.base_corporation.name, dividend)
-			share.player.add_note(category=Note.DIVIDEND, content=content)
 
 tasks = (BuyShareTask, DividendTask)

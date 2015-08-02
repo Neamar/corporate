@@ -11,12 +11,13 @@ class OffensiveRunTask(OrderResolutionTask):
 
 	def run(self, game):
 		orders = []
+		# For every type of order, we run each order order by raw_probability desc until one of them is sucessful
 		for order_type in self.ORDER_TYPES:
-			orders += order_type.objects.filter(player__game=game, turn=game.current_turn)
-
-		orders = sorted(orders, key=lambda order: order.get_raw_probability(), reverse=True)
-		if orders:
-			orders[0].resolve()
+			orders = order_type.objects.filter(player__game=game, turn=game.current_turn)
+			sorted_orders = sorted(orders, key=lambda order: order.get_raw_probability(), reverse=True)
+			for order in sorted_orders:
+				if order.resolve():
+					break
 
 
 class ProtectionRunTask(OrderResolutionTask):
