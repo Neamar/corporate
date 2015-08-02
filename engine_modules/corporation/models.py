@@ -99,16 +99,31 @@ class Corporation(models.Model):
 	@property
 	def corporation_markets(self):
 		"""
-		Returns all CorporationMarket objects associated with the Corporation
+		Returns all CorporationMarket objects associated with the Corporation for the current turn
 		"""
-		return self.corporationmarket_set.all()
+		return self.get_corporation_markets()
+
+	def get_corporation_markets(self, turn=None):
+		"""
+		Returns all CorporationMarket objects associated with the Corporation for the specified turn
+		"""
+		if turn is None:
+			turn = self.game.current_turn
+		return self.corporationmarket_set.filter(turn=turn)
 
 	@property
 	def markets(self):
 		"""
-		Returns all Market objects associated with the Corporation
+		Returns all Market objects associated with the Corporation for the current turn
 		"""
-		return [cm.market for cm in self.corporation_markets]
+		return self.get_markets()
+
+	def get_markets(self, turn=None):
+		"""
+		Returns all Market objects associated with the Corporation for the current turn
+		"""
+		# The case where turn is None is handled by get_corporation_markets
+		return [cm.market for cm in self.get_corporation_markets(turn)]
 
 	def get_random_corporation_market(self):
 		"""
@@ -179,16 +194,21 @@ class Corporation(models.Model):
 
 			if market is None:
 				# By default, a random market is impacted
-				market = corporation.get_random_market()
+				corporationmarket = corporation.get_random_corporation_market()
 			else:
-				for m in corporation.markets:
-					if m.name == market:
-						market = m
-						break
-				else:
-					raise ValidationError("Corporation %s is absent on market %s, it cannot be impacted by an effet on it" % (self.base_corporation.name, m))
+				corporationmarket = corporation.corporationmarket_set.get(market__name=market, turn=self.game.current_turn)
 
-			corporation.update_assets(delta, category=delta_category, market=market)
+			corporation.update_assets(delta, category=delta_category, corporationmarket=corporationmarket)
+
+			# create a event_type
+			if delta_category == AssetDelta.EFFECT_FIRST:
+				event_type = Game.FIRST_EFFECT
+			elif delta_category == AssetDelta.EFFECT_LAST:
+				event_type = Game.LAST_EFFECT
+			elif delta_category == AssetDelta.EFFECT_CRASH:
+				event_type = Game.CRASH_EFFECT
+
+			self.game.add_event(event_type=event_type, data={"triggered_corporation": self.base_corporation.name, "delta": delta, "abs_delta": abs(delta), "market": corporationmarket.market.name, "corporation": corporation.base_corporation.name}, delta=delta, corporation=corporation, corporationmarket=corporationmarket)
 
 		context = {
 			'game': self.game,
@@ -233,20 +253,20 @@ class Corporation(models.Model):
 		self.assets = self.market_assets + self.assets_modifier
 		self.save()
 
-	def update_assets(self, delta, category, market):
+	def update_assets(self, delta, category, corporationmarket):
 		"""
 		Updates market assets values, and saves the model
 		Does not actually change "assets", since it is a property, but changes on market_assets will be reflected on assets
 		"""
-		corporation_market = self.corporationmarket_set.get(market=market)
-		corporation_market.value += delta
-		corporation_market.save()
+		turn = self.game.current_turn
+		corporationmarket.value += delta
+		corporationmarket.save()
 
 		# Mirror changes on market assets
 		self.increase_market_assets(delta)
 
 		# And register assetdelta for logging purposes
-		self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
+		self.assetdelta_set.create(category=category, delta=delta, turn=turn)
 
 	def __unicode__(self):
 		return u"%s (%s)" % (self.base_corporation.name, self.assets)

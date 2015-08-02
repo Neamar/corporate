@@ -5,12 +5,15 @@ markets:
     pharmaceutique: 1
     télécom: 2
 on_first:
-    update('prometheus', 1)
-    update(ladder[1], 1)
+    update('citygroup', 1)
+    update(ladder[-1], -1)
 on_last:
-    update(ladder[0], 2)
+    update('taurus', -1)
+    update('mercury', 1)
 on_crash:
-    # TBD
+    update('citygroup', -3)
+    update('impulse', 1)
+    update('pure', 2)
 
 > *From the stars to you*
 

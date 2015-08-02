@@ -7,13 +7,13 @@ markets:
     robotique: 3
     agroalimentaire: 3
 on_first:
-    update(ladder[-1], 1)
-    update(ladder[-2], 1)
-on_last:
-    update(ladder[0], -1)
     update(ladder[1], -1)
+    update('enercore', -1)
+on_last:
+    update('tlaloc', -1)
+    update('bastion', -1)
 on_crash:
-    # TBD
+    update('taurus', 6)
 
 > *Se rendre au-delà du progrès*
 

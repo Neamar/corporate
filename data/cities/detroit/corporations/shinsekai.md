@@ -6,12 +6,15 @@ markets:
     agroalimentaire: 3
     telecom: 3
 on_first:
-    update('horizon', -1)
-    update(ladder[-1], -1)
+    update('impulse', 1)
+    update('pure', -1)
 on_last:
-    update('horizon', 2)
+    update('impulse', -1)
+    update('pure', 1)
 on_crash:
-    # TBD
+    update(ladder[0], -2)
+    update('bastion', 2)
+    update('tlaloc', 2)
 
 > *La Tradition au service de l’Innovation*
 

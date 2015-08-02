@@ -5,12 +5,15 @@ markets:
     énergie: 3
     transport: 2
 on_first:
-    update(ladder[-1], -2)
+    update(ladder[1], 1)
+    update(ladder[-1], -1)
 on_last:
-    update('aztechnology', 1)
-    update(ladder[0], -1)
+    update('taurus', -1)
+    update('citygroup', 1)
 on_crash:
-    # TBD
+    update(ladder[1], -1)
+    update('taurus', -3)
+    update('iris', 2)
     
 > *Construire aujourd’hui les villes de demain*
 

@@ -18,6 +18,7 @@
     }
   },
   "addons":[
-    "heroku-postgresql"
+    "heroku-postgresql",
+    "newrelic"
   ]
 }

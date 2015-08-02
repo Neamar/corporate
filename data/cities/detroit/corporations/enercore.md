@@ -5,13 +5,15 @@ markets:
     médias: 2
     agroalimentaire: 0
 on_first:
-    update('neonet', -1)
-    update('shiawase', -1)
+    update('taurus', 1)
+    update(ladder[1], 1)
 on_last:
-    update('sony', -1)
-    update('shiawase', 1)
+    update('shinsekai', 1)
+    update('pure', 1)
 on_crash:
-    # TBD
+    update('mercury', -2)
+    update('citygroup', -2)
+    update('iris', 2)
 
 > *Triompher par l’énergie, pour l’énergie*
 
@@ -29,9 +31,9 @@ L'énergie est disponible pour tous alors qu'EnerCore s'élève en haut de la py
 * +1 actif pour Taurus.
 
 ## Effet dernier
-Sa puissance financière diminuant, la supériorité technologique d'EnerCore laisse place à de nouveaux acteurs dont les performances ne sont plus à prouver. Shinsekaï et Pure, les corporations les plus agressives technologiquement, s’engouffrent dans la brèche.
+Sa puissance financière diminuant, la supériorité technologique d'EnerCore laisse place à de nouveaux acteurs dont les performances ne sont plus à prouver. Shinsekai et Pure, les corporations les plus agressives technologiquement, s’engouffrent dans la brèche.
 
-* +1 actif pour Shinsekaï.
+* +1 actif pour Shinsekai.
 * +1 actif pour Pure.
 
 ## Effet crash
