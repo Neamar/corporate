@@ -18,7 +18,6 @@ def orders(request, game, player):
 	available_orders = get_orders_availability(player)
 
 	return {
-		"game": player.game,
 		"available_orders": available_orders,
 		"existing_orders": existing_orders,
 		"existing_orders_cost": existing_orders_cost,
@@ -53,10 +52,17 @@ def add_order(request, game_id, order_type):
 		"game": player.game,
 		"title": instance.title,
 		"name": SubOrder.__name__,
-		"form": form
+		"form": form,
 	}
 
-	return django_render(request, 'game/add_order.html', {"game": player.game, "order": order, "request": request})
+	return django_render(request, 'game/add_order.html', {
+		"game": player.game,
+		"player": player,
+		"order": order,
+		"pods": ['d_inc', 'current_player', 'players', ],
+		"request": request,
+		"turn": player.game.current_turn,
+	})
 
 
 @login_required

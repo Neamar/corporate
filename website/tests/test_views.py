@@ -3,7 +3,6 @@ from django.test.utils import override_settings
 from django.test import Client
 from django.core.urlresolvers import reverse
 
-from messaging.models import Message
 from engine.testcases import EngineTestCase
 from website.models import User
 
@@ -20,13 +19,6 @@ class ViewsTest(EngineTestCase):
 
 		self.p.user = self.u
 		self.p.save()
-		m = Message.objects.create(
-			author=None,
-			title="test",
-			content="hi",
-			turn=self.g.current_turn
-		)
-		m.recipient_set.add(self.p)
 
 		self.client = Client()
 
@@ -61,8 +53,6 @@ class ViewsTest(EngineTestCase):
 			reverse('website.views.data.wallstreet', args=[self.g.id, self.g.current_turn - 1]),
 			reverse('website.views.data.shares', args=[self.g.id]),
 			reverse('website.views.data.player', args=[self.g.id, self.p.id]),
-			reverse('website.views.data.comlink', args=[self.g.id]),
-			reverse('website.views.data.message', args=[self.g.id, self.p.message_set.get().pk]),
 		]
 
 		for page in pages:
@@ -79,9 +69,7 @@ class ViewsTest(EngineTestCase):
 			reverse('website.views.data.wallstreet', args=[self.g.id]),
 			reverse('website.views.data.corporation', args=[self.g.id, self.c.base_corporation_slug]),
 			reverse('website.views.data.shares', args=[self.g.id]),
-			# reverse('website.views.data.player', args=[self.g.id, self.p.id]),
-			# reverse('website.views.data.comlink', args=[self.g.id]),
-			# reverse('website.views.data.message', args=[self.g.id, self.p.message_set.get().pk]),
+			reverse('website.views.data.player', args=[self.g.id, self.p.id]),
 		]
 
 		for page in pages:
