@@ -54,10 +54,12 @@ class RunOrder(Order):
 		self.player.money -= self.get_cost()
 		self.player.save()
 
-		if self.is_successful():
+		result = self.is_successful()
+		if result:
 			self.resolve_successful()
 		else:
 			self.resolve_failure()
+		return result
 
 	def resolve_successful(self):
 		"""

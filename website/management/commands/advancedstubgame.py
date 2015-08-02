@@ -26,11 +26,11 @@ class Command(StubGame):
 		self.g.player_set.all().update(money=10000)
 		corporations = self.g.corporation_set.all()
 		c1 = corporations[1]
-		c1_market = c1.corporationmarket_set.first()
+		c1_market = c1.corporation_markets.first()
 		c2 = corporations[2]
-		c2_market = c2.corporationmarket_set.first()
+		c2_market = c2.corporation_markets.first()
 		c3 = corporations[0]
-		c3_market = c3.corporationmarket_set.first()
+		c3_market = c3.corporation_markets.first()
 
 		# TURN 1
 		# p1
@@ -51,6 +51,14 @@ class Command(StubGame):
 		# self.add_order(player=self.p3, Order=DataStealOrder, target_corporation_market=c1_market, stealer_corporation=c2)
 		self.g.resolve_current_turn()
 		self.stdout.write("Simulated turn #1")
+
+		corporations = self.g.corporation_set.all()
+		c1 = corporations[1]
+		c1_market = c1.corporation_markets.first()
+		c2 = corporations[2]
+		c2_market = c2.corporation_markets.first()
+		c3 = corporations[0]
+		c3_market = c3.corporation_markets.first()
 
 		# TURN 2
 		# p1
