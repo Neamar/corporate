@@ -1,4 +1,3 @@
-from django.db.models import Q
 from django import template
 from django.template.loader import get_template
 from logs.models import Logs
@@ -17,8 +16,8 @@ def players_pod(context):
 	players = context['game'].player_set.all()
 
 	for player in players:
-		# turn=now AND players__player=target AND personal_event AND (players__player=myself OR (public)
-		player.events = Logs.objects.filter(turn=context['turn'] - 1, hide_for_players=False).filter(concernedplayers__player=player, concernedplayers__personal=True).filter(Q(players=context['player']) | Q(public=True)).distinct()
+		player.events = Logs.objects.for_player(player=player, asking_player=context['player'], turn=context['turn'])
+		print player.events
 	return {
 		'players': players
 	}

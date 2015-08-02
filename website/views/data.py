@@ -11,6 +11,7 @@ from engine.models import Player
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
 from website.utils import get_shares_count, is_top_shareholder
 from utils.read_markdown import parse_markdown
+from logs.models import Logs
 
 
 @login_required
@@ -161,10 +162,13 @@ def player(request, player, game, player_id, turn):
 	rp, _ = parse_markdown(player.rp)
 	rp = mark_safe(rp)
 
+	events = Logs.objects.for_player(player=player_profile, asking_player=player, turn=turn)
+
 	return {
 		"player_profile": player_profile,
 		"rp": rp,
 		"corporations": corporations,
 		"qty_shares": sum([corporation.qty_share for corporation in corporations]),
+		"events": events,
 		"request": request,
 	}
