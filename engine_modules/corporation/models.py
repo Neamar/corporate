@@ -197,6 +197,8 @@ class Corporation(models.Model):
 				event_type = Game.LAST_EFFECT
 			elif delta_category == AssetDelta.EFFECT_CRASH:
 				event_type = Game.CRASH_EFFECT
+			else:
+				raise Exception("Unknownk category of effect : %s" % (delta_category))
 
 			self.game.add_event(event_type=event_type, data={"triggered_corporation": self.base_corporation.name, "delta": delta, "abs_delta": abs(delta), "market": corporationmarket.market.name, "corporation": corporation.base_corporation.name}, delta=delta, corporation=corporation, corporationmarket=corporationmarket)
 

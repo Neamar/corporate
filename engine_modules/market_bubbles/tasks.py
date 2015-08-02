@@ -159,9 +159,9 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 
 			if domination_bubble is not None:
 				if domination_bubble.corporation != markets[market][0][0]:
-					if len(markets) == 1 or markets[1][0] < max_value:
+					if len(markets) == 1 or markets[market][1][1] < max_value:
 						# The corporation dominating has been changed by First/Last effects, update the bubble
-						modifiers[markets[0][0]] += 1
+						modifiers[markets[market][0][0]] += 1
 						domination_bubble.update(corporation=markets[market][0][0])
 					else:
 						# First/Last effects made it so there is no longer a domination on this market, burst former domination bubble
@@ -180,8 +180,8 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 		# Create logs for add or remove bubble. Problem is, we want to do this compared to precedent turn, not compared to before first, last and crash effect
 		# We have to compare to previous turn to this one after the bubbles have been created.
 		# First, get the two list of bubbles : one containing all bubbles of turn T, the other for turn T-1
-		previous_turn_bubbles = MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn - 1)
-		current_turn_bubbles = MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn)
+		previous_turn_bubbles = list(MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn - 1))
+		current_turn_bubbles = list(MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn))
 		# Then, remove all the values that are in both lists
 		for previous in previous_turn_bubbles:
 			for current in current_turn_bubbles:
