@@ -9,9 +9,9 @@ from website.models import User
 
 
 @override_settings(PASSWORD_HASHERS=('django.contrib.auth.hashers.SHA1PasswordHasher',))
-class WebsiteTest(EngineTestCase):
+class ViewsTest(EngineTestCase):
 	def setUp(self):
-		super(WebsiteTest, self).setUp()
+		super(ViewsTest, self).setUp()
 
 		password = "password"
 		self.u = User(username="hello")
