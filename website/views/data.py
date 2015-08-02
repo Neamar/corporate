@@ -2,7 +2,7 @@ from __future__ import absolute_import
 from collections import OrderedDict
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
-from django.db.models import Count
+from django.db.models import Count, Sum
 
 from engine_modules.share.models import Share
 from engine_modules.corporation.models import Corporation
@@ -23,11 +23,16 @@ def wallstreet(request, game, player, turn):
 	Wallstreet data
 	"""
 
+	ranking = []
 	# Table data
 	corporations = game.get_ladder(turn=turn - 1)
+	for corporation in corporations:
+		corporation_markets = corporation.get_corporation_markets(turn - 1).order_by('market__name').annotate(bubbles=Sum('market__bubbles__value'))
+		print [m.bubbles for m in corporation_markets]
+		ranking.append((corporation, corporation_markets))
 
 	return {
-		"corporations": corporations,
+		"ranking": ranking,
 		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
 		"turn": turn,
 		"request": request,

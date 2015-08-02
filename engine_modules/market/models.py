@@ -28,7 +28,7 @@ class CorporationMarket(models.Model):
 	# At the end of turn n, the CorporationMarket object with turn n has the values at end of turn,
 	# whereas the one with turn n-1 has the values at beginning of turn.
 	# This is why we have default turn 0 and we need to initialize both for turn 0 and 1
-	turn = models.PositiveSmallIntegerField(default=0)
+	turn = models.PositiveSmallIntegerField()
 	value = models.SmallIntegerField()
 
 	def __unicode__(self):

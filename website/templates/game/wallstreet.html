@@ -6,22 +6,22 @@
 
 {% block content %}
 
-{% for corporation in corporations %}
+{% for entry in ranking %}
 <section class="corporation-row">
 	<h2>
 		<span class="corporation-index">{{ forloop.counter }}</span>
-		<span class="corporation-name">{{ corporation.base_corporation.name }}</span>
-		<span class="current-assets">{{ corporation.assets }}
-			<span class="assets-delta{{ corporation.asset_delta_is_positive|yesno:" positive, negative,"}}">
-			{{ corporation.asset_delta|default:0 }}
+		<span class="corporation-name">{{ entry.0.base_corporation.name }}</span>
+		<span class="current-assets">{{ entry.0.assets }}
+			<span class="assets-delta{{ entry.0.asset_delta_is_positive|yesno:" positive, negative,"}}">
+			{{ entry.0.asset_delta|default:"-" }}
 			</span>
 		</span>
 	</h2>
 
 	<div class="corporation-markets">
-	{% for corporation_market in corporation.corporation_market %}
+	{% for corporation_market in entry.1 %}
 		<div class="corporation-market">
-			<img src="{{ STATIC_URL }}{{ CITY }}/markets/{{ corporation_market.market.name}}.png" title="corporation_market.market.name" />
+			<img src="{{ STATIC_URL }}{{ CITY }}/markets/{{ corporation_market.market.name}}.png" title={{ corporation_market.market.name }} />
 			<span class="corporation-market-value">{{ corporation_market.value }}</span>
 		</div>
 	{% endfor %}
