@@ -9,7 +9,7 @@ class ReplicateCorporationMarketTaskTest(EngineTestCase):
 
 	def test_replicate_corporationmarket_task(self):
 		"""
-		Test that the CorporationMakets are correct for different turns
+		Test that the CorporationMarkets are correct for different turns
 		"""
 
 		market = self.c.markets[0]

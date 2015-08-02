@@ -106,7 +106,7 @@ class Corporation(models.Model):
 		"""
 		Returns all CorporationMarket objects associated with the Corporation for the current turn
 		"""
-		return self.corporationmarket_set.filter(turn=self.game.current_turn)
+		return self.get_corporation_markets()
 
 	def get_corporation_markets(self, turn=None):
 		"""
@@ -121,7 +121,7 @@ class Corporation(models.Model):
 		"""
 		Returns all Market objects associated with the Corporation for the current turn
 		"""
-		return [cm.market for cm in self.corporation_markets]
+		return self.get_markets()
 
 	def get_markets(self, turn=None):
 		"""

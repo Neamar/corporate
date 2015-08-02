@@ -15,7 +15,7 @@ class MarketBubble(models.Model):
 
 	corporation = models.ForeignKey(Corporation, related_name='market_bubbles', null=True, default=None)
 	market = models.ForeignKey(Market, related_name='bubbles')
-	turn = models.PositiveSmallIntegerField(default=1)
+	turn = models.PositiveSmallIntegerField()
 	value = models.SmallIntegerField()
 
 	def __unicode__(self):
