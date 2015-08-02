@@ -17,7 +17,6 @@ def players_pod(context):
 
 	for player in players:
 		player.events = Logs.objects.for_player(player=player, asking_player=context['player'], turn=context['turn'])
-		print player.events
 	return {
 		'players': players
 	}

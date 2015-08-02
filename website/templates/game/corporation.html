@@ -5,23 +5,22 @@
 {% block favicon %}{{ STATIC_URL }}corporations/{{corporation.base_corporation.slug}}.png{% endblock %}
 
 {% block content %}
-<table>
-<tbody>
-<tr>
-{% for market in corporation.markets %}
-	<td>{{ market.name }}</td>
-{% endfor %}
-</tr>
-</tbody>
-</table>
 
-{% for player in share_holders %}
+<ul>
+{% for corporation_market in corporation_markets %}
+	<li>
+		<h3>{{ corporation_market.market.name }}</h3>
+		{% include "logs/simple.html" with events=corporation_market.events %}
+	</li>
 {% endfor %}
+</ul>
 
 <ul>
 {% for player in share_holders %}
 	<li class="{% if player.citizenship.corporation_id == corporation.pk %}citizen {% endif %}"><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}" title="Parts de {{ player.name }}"><span>{{ player.qty_share }}</span></a></li>
 {% endfor %}
+</ul>
+
 <table>
 <thead>
 <td></td>
@@ -47,33 +46,5 @@
 <a href="{% url "docs.views.corporation" corporation_slug=corporation.base_corporation.slug %}">voir la page de la corporation</a>
 
 {% endblock content %}
-
-{% block scripts %}
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawChart);
-function drawChart() {
-	var data = google.visualization.arrayToDataTable([
-		['Tour', 'Actifs'],
-		{% for asset_history in assets_history %}
-			[{{ asset_history.turn }}, {{ asset_history.assets }}],
-		{% endfor %}
-	]);
-
-	var options = {
-		title: 'Actifs',
-		backgroundColor: 'transparent',
-		theme: 'maximized',
-		pointSize: 4,
-		legend: 'none',
-		vAxis: {minValue:0, format:'#'},
-	};
-
-	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-	chart.draw(data, options);
-}
-</script>
-{% endblock scripts %}
 
 

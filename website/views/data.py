@@ -80,25 +80,33 @@ def corporation(request, player, game, corporation_slug, turn):
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game.pk)
 	share_holders = game.player_set.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
-	markets = corporation.markets
-	competitors = game.corporation_set.filter(corporationmarket__market__in=markets).distinct().order_by('base_corporation_slug')
+	previous_corporation_markets = corporation.get_corporation_markets(turn=game.current_turn - 1)
+	current_markets = corporation.markets
+	competitors = game.corporation_set.filter(corporationmarket__market__in=current_markets).distinct().order_by('base_corporation_slug')
 
 	summary = []
 	for corpo in competitors:
 		assets = []
 		holders = game.player_set.filter(share__corporation__base_corporation_slug=corpo.base_corporation_slug).distinct()
-		corporation_markets = corpo.corporationmarket_set.filter(market__in=markets)
-		for market in markets:
+		corporation_markets = corpo.corporationmarket_set.filter(market__in=current_markets)
+		for market in current_markets:
 			assets.append(next((cm.value for cm in corporation_markets if cm.market.name == market.name), None))
 		# That's kind of a weird data structure, but the template tags are not as flexible as one might like
 		summary.append((corpo, assets, holders))
 
 	assets_history = corporation.assethistory_set.all()
+
+	for corporation_market in previous_corporation_markets:
+		corporation_market.events = Logs.objects.for_corporation_market(corporation_market, player)
+		print corporation_market.pk, corporation_market.events.query
+		print corporation_market.events
+
 	return {
 		"corporation": corporation,
 		"share_holders": share_holders,
 		"assets_history": assets_history,
-		"markets": markets,
+		"markets": current_markets,
+		"corporation_markets": previous_corporation_markets,
 		"summary": summary,
 		# Turn_spinner doesn't work, because the URL with e turn isn't allowed, which makes sense, because for this description, the turn doesn't matter
 		"pods": ['d_inc', 'current_player', 'players', ],

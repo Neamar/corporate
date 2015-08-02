@@ -9,6 +9,9 @@ class LogManager(models.Manager):
 		# turn=now AND players__player=target AND personal_event AND (players__player=myself OR (public)
 		return Logs.objects.filter(turn=turn - 1, hide_for_players=False).filter(concernedplayers__player=player, concernedplayers__personal=True).filter(Q(players=asking_player) | Q(public=True)).distinct()
 
+	def for_corporation_market(self, corporation_market, asking_player):
+		return Logs.objects.filter(corporationmarket=corporation_market).filter(Q(players=asking_player) | Q(public=True)).distinct()
+
 
 class Logs(models.Model):
 	"""

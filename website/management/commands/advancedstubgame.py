@@ -52,6 +52,14 @@ class Command(StubGame):
 		self.g.resolve_current_turn()
 		self.stdout.write("Simulated turn #1")
 
+		corporations = self.g.corporation_set.all()
+		c1 = corporations[1]
+		c1_market = c1.corporationmarket_set.first()
+		c2 = corporations[2]
+		c2_market = c2.corporationmarket_set.first()
+		c3 = corporations[0]
+		c3_market = c3.corporationmarket_set.first()
+
 		# TURN 2
 		# p1
 		self.add_order(player=self.p1, Order=VoteOrder, corporation_market_up=c1_market, corporation_market_down=c2_market)
