@@ -15,6 +15,29 @@ body {
 		content: "";
 		z-index: -1;
 	}
+
+	a {
+		color: #fff;
+
+		&:hover {
+			color: #ec0707;
+		}
+	}
+
+	a.link {
+		color: #fff;
+		text-decoration: none;
+		border-bottom: 1px solid #ccc;
+		-webkit-transition: all 0.25s ease-in-out;
+		transition:all 0.25s ease-in-out;
+
+		&:hover {
+			border-bottom: 1px dashed #ec0707;
+			color: #ec0707;
+			-webkit-transition: all 0.25s ease-in-out;
+			transition:all 0.25s ease-in-out;
+		}
+	}
 }
 
 .main-h1-title {
@@ -25,6 +48,7 @@ body {
 	text-align: center;
 	text-transform: uppercase;
 	margin-top: 20px;
+	overflow: hidden;
 
     display: table;
     white-space: nowrap;
