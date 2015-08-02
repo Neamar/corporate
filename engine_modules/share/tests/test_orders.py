@@ -2,7 +2,6 @@
 from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
 from engine_modules.share.models import Share, BuyShareOrder
-from messaging.models import Note
 
 
 class OrdersTest(EngineTestCase):
@@ -55,18 +54,6 @@ class OrdersTest(EngineTestCase):
 		influence.save()
 		# assertNoRaises
 		o2.clean()
-
-	def test_order_message(self):
-		"""
-		Note differ after first share
-		"""
-		self.o.resolve()
-		n = Note.objects.filter(category=Note.GLOBAL).last()
-		self.assertIn(u'première', n.content)
-
-		self.o.resolve()
-		n = Note.objects.filter(category=Note.GLOBAL).last()
-		self.assertIn(u'2<sup>ème</sup>', n.content)
 
 	def test_order_special_cost_for_first_corpo_and_not_citizen(self):
 		"""

@@ -6,8 +6,6 @@ from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 from engine.dispatchs import validate_order, game_event
-from messaging.models import Message, Note, Newsfeed
-from utils.read_markdown import read_file_from_path
 
 
 class Game(models.Model):
@@ -95,40 +93,10 @@ class Game(models.Model):
 		# Build resolution messages for each player
 		for player in self.player_set.all().select_related('game'):
 			player.build_resolution_message()
-		# Remove all Notes
-		Note.objects.filter(recipient_set__game=self).delete()
 
 		# Increment current turn and terminate.
 		self.current_turn += 1
 		self.save()
-
-	def add_newsfeed(self, players=None, corporations=None, **kwargs):
-		"""
-		Create a newsfeed on the game
-		"""
-		n = Newsfeed.objects.create(turn=self.current_turn, game=self, **kwargs)
-		if players:
-			n.players = players
-		if corporations:
-			n.corporations = corporations
-		return n
-
-	def add_newsfeed_from_template(self, category, path, **kwargs):
-		"""
-		Construct the content of a newsfeed, avoiding messages already displayed within the same game.
-		"""
-		message_number = Newsfeed.objects.filter(category=category, game=self, path=path).count() + 1
-
-		try:
-			content = read_file_from_path("%s/newsfeeds/%s/%s/%s.md" % (settings.CITY_BASE_DIR, category, path, message_number))
-		except IOError:
-			# We don't have enough files, revert to default
-			content = read_file_from_path("%s/newsfeeds/%s/%s/_.md" % (settings.CITY_BASE_DIR, category, path))
-
-		kwargs['content'] = content
-		kwargs['category'] = category
-		kwargs['path'] = path
-		self.add_newsfeed(**kwargs)
 
 	def __unicode__(self):
 		return u"Corporate Game: %s" % self.city
@@ -179,26 +147,6 @@ class Player(models.Model):
 		citizenship = self.citizenship_set.get(turn=self.game.current_turn - 1)
 		return citizenship
 
-	def add_message(self, **kwargs):
-		"""
-		Send a message to the player
-		"""
-		m = Message(turn=self.game.current_turn, **kwargs)
-		m.save()
-		m.recipient_set.add(self)
-
-		return m
-
-	def add_note(self, **kwargs):
-		"""
-		Create a note for the player
-		"""
-		n = Note(turn=self.game.current_turn, **kwargs)
-		n.save()
-		n.recipient_set.add(self)
-
-		return n
-
 	def get_current_orders(self):
 		"""
 		Returns the list of order for this turn
@@ -216,16 +164,7 @@ class Player(models.Model):
 		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
 		"""
 		# Start by adding the final note
-		self.add_note(content="Argent disponible pour le tour : %sk¥" % self.money)
-
-		notes = Note.objects.filter(recipient_set=self, turn=self.game.current_turn)
-		m = Message.build_message_from_notes(
-			message_type=Message.RESOLUTION,
-			notes=notes,
-			title="Message de résolution du tour %s" % self.game.current_turn,
-			turn=self.game.current_turn
-		)
-		m.recipient_set.add(self)
+		m = "TODO"
 		return m
 
 	def __unicode__(self):
@@ -241,7 +180,7 @@ class Order(models.Model):
 	cost = models.PositiveSmallIntegerField(editable=False)
 	type = models.CharField(max_length=40, blank=True, editable=False)
 
-	def save(self):
+	def save(self, **kwargs):
 		# Save the current type to inflate later (model inheritance can be tricky)
 		self.type = self._meta.object_name
 
@@ -252,7 +191,7 @@ class Order(models.Model):
 		if not self.cost:
 			self.cost = self.get_cost()
 
-		super(Order, self).save()
+		super(Order, self).save(**kwargs)
 
 	def clean(self):
 		"""

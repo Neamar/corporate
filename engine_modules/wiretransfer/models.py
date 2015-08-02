@@ -2,8 +2,6 @@
 from django.db import models
 
 from engine.models import Order, Player, Game
-from messaging.models import Message
-from messaging.models import Newsfeed
 
 
 class WiretransferOrder(Order):
@@ -23,20 +21,6 @@ class WiretransferOrder(Order):
 		self.player.save()
 		self.recipient.money += self.amount
 		self.recipient.save()
-
-		m = Message(
-			title="Transfert d'argent",
-			content="Un transfert de %s k¥ a été effectué de %s vers %s" % (self.amount, self.player, self.recipient),
-			turn=self.player.game.current_turn,
-			flag=Message.CASH_TRANSFER,
-		)
-		m.save()
-		m.recipient_set.add(self.player, self.recipient)
-
-		# Newsfeed
-		content = u"%s a donné %s k¥ à %s." % (self.player, self.amount, self.recipient)
-		players = [self.player, self.recipient]
-		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=content, status=Newsfeed.PRIVATE, players=players)
 
 		# Create the game_event
 		self.player.game.add_event(event_type=Game.WIRETRANSFER, data={"giver": self.player.name, "receiver": self.recipient.name, "money": self.amount}, players=[self.player, self.recipient])

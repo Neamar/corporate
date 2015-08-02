@@ -1,12 +1,24 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.db.models import Q
 from engine.models import Game
+
+
+class LogManager(models.Manager):
+	def for_player(self, player, asking_player, turn):
+		# turn=now AND players__player=target AND personal_event AND (players__player=myself OR (public)
+		return Logs.objects.filter(turn=turn - 1, hide_for_players=False).filter(concernedplayers__player=player, concernedplayers__personal=True).filter(Q(players=asking_player) | Q(public=True)).distinct()
+
+	def for_corporation_market(self, corporation_market, asking_player):
+		return Logs.objects.filter(corporationmarket=corporation_market).filter(Q(players=asking_player) | Q(public=True)).distinct()
 
 
 class Logs(models.Model):
 	"""
 	We log every action in the game in a single table
 	"""
+	objects = LogManager()
+
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
 
