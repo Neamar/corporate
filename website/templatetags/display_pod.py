@@ -2,6 +2,7 @@ from django.db.models import Q
 from django import template
 from django.template.loader import get_template
 from logs.models import Logs
+from django.conf import settings
 
 from engine_modules.detroit_inc.models import DIncVoteOrder
 
@@ -90,5 +91,6 @@ def display_pod(context, pod, *args, **kwargs):
 			path_len -= 1
 
 		pod_context['request_path'] = ''.join(s + '/' for s in path_list[:path_len])
+		pod_context['STATIC_URL'] = settings.STATIC_URL
 
 	return template.render(pod_context)

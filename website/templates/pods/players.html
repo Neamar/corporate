@@ -3,7 +3,7 @@
 	<ul class="pod-players-list">
 	{% for player in players %}
 		<li class="pod-players-list-item">
-			<img class="player-avatar" title="Avatar {{ player.name }}" src="/static/img/players/{% cycle '01' '02' '03' %}.png"/>
+			<img class="player-avatar" title="Avatar {{ player.name }}" src="{{ STATIC_URL }}img/players/{% cycle '01' '02' '03' %}.png"/>
 
 			<div class="content-player">
 				<span class="player-name">{{ player.name }}</span>
@@ -12,7 +12,7 @@
 
 				<ul class="icons-list">
 					{% for event in player.events %}
-						{{ event.event_type }}
+						<li><img src="{{ STATIC_URL }}img/logs/{{ event.event_type|lower }}.png" alt="{{ event.event_type|lower|capfirst }}" width="32" height="32" title="{{ event.event_type|lower|capfirst }} {{ event.data }}"/></li>
 					{% endfor %}
 				</ul>
 			</div>
