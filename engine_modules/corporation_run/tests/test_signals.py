@@ -44,7 +44,7 @@ class SignalsTest(EngineTestCase):
 		self.po.save()
 
 	def get_unique_market_for_corporation(self, corporation):
-		return corporation.corporationmarket_set.get(market__name=corporation.base_corporation.markets.keys()[-1])
+		return corporation.corporationmarket_set.get(market__name=corporation.base_corporation.markets.keys()[-1], turn=self.g.current_turn)
 
 	def test_datasteal_target_stealer_different(self):
 		"""
@@ -117,7 +117,7 @@ class SignalsTest(EngineTestCase):
 		target_corporation_market.value = -1
 		target_corporation_market.save()
 		# Stealer must have market assets lower than target
-		stealer_corporation_market = self.dso.stealer_corporation.corporationmarket_set.get(market=target_corporation_market.market)
+		stealer_corporation_market = self.dso.stealer_corporation.corporationmarket_set.get(market=target_corporation_market.market, turn=self.g.current_turn)
 		stealer_corporation_market.value = -2
 		stealer_corporation_market.save()
 		self.assertRaises(OrderNotAvailable, self.dso.clean)
@@ -130,7 +130,7 @@ class SignalsTest(EngineTestCase):
 		target_corporation_market.value = -1
 		target_corporation_market.save()
 		# Stealer must have market assets lower than target
-		stealer_corporation_market = self.eo.stealer_corporation.corporationmarket_set.get(market=target_corporation_market.market)
+		stealer_corporation_market = self.eo.stealer_corporation.corporationmarket_set.get(market=target_corporation_market.market, turn=self.g.current_turn)
 		stealer_corporation_market.value = -2
 		stealer_corporation_market.save()
 		self.assertRaises(OrderNotAvailable, self.eo.clean)

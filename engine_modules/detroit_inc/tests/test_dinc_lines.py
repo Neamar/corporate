@@ -92,7 +92,7 @@ class DIncPartyLineTest(EngineTestCase):
 		dso = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporation_markets.first(),
 			additional_percents=5,
 		)
 		dso.save()
@@ -103,7 +103,7 @@ class DIncPartyLineTest(EngineTestCase):
 		dso2 = DataStealOrder(
 			stealer_corporation=self.c2,
 			player=self.p2,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
+			target_corporation_market=self.c.corporation_markets.first(),
 			additional_percents=5,
 		)
 		dso2.save()
