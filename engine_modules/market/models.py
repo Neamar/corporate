@@ -25,7 +25,9 @@ class CorporationMarket(models.Model):
 
 	corporation = models.ForeignKey("corporation.Corporation")
 	market = models.ForeignKey(Market)
-	turn = models.PositiveSmallIntegerField(default=1)
+	# default turn is 0, because the CorporationMarket on turn n represent the status on the 
+	# beginning of turn n + 1
+	turn = models.PositiveSmallIntegerField(default=0)
 	value = models.SmallIntegerField()
 
 	def __unicode__(self):

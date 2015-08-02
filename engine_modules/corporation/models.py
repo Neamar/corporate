@@ -258,7 +258,8 @@ class Corporation(models.Model):
 		Updates market assets values, and saves the model
 		Does not actually change "assets", since it is a property, but changes on market_assets will be reflected on assets
 		"""
-		corporation_market = self.corporationmarket_set.get(market=market)
+		turn = self.game.current_turn
+		corporation_market = self.corporationmarket_set.get(market=market, turn=turn)
 		corporation_market.value += delta
 		corporation_market.save()
 
@@ -266,7 +267,7 @@ class Corporation(models.Model):
 		self.increase_market_assets(delta)
 
 		# And register assetdelta for logging purposes
-		self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
+		self.assetdelta_set.create(category=category, delta=delta, turn=turn)
 
 	def __unicode__(self):
 		return u"%s (%s)" % (self.base_corporation.name, self.assets)

@@ -25,7 +25,7 @@ class ModelsTest(EngineTestCase):
 		"""
 		stealer_corporation_market must return the right corporation_market
 		"""
-		self.assertEqual(self.dso.stealer_corporation_market, self.c2.corporationmarket_set.get(market=self.dso.target_corporation_market.market))
+		self.assertEqual(self.dso.stealer_corporation_market, self.c2.corporationmarket_set.get(market=self.dso.target_corporation_market.market, turn=self.g.current_turn))
 
 	def test_protected_corporation_property(self):
 		"""

@@ -81,7 +81,7 @@ class UpdateMarketBubblesTask(OrderResolutionTask):
 			return
 
 		corporations = Corporation.objects.filter(game=game)
-		corporation_markets = CorporationMarket.objects.filter(corporation__game=game).order_by('market', 'value')
+		corporation_markets = CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn).order_by('market', 'value')
 
 		modifiers = reset_local_assets_modifier(corporations)
 		markets = get_market_dictionary(corporation_markets)
@@ -125,7 +125,7 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 			return
 
 		corporations = Corporation.objects.filter(game=game)
-		corporation_markets = CorporationMarket.objects.filter(corporation__game=game).order_by('market', 'value')
+		corporation_markets = CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn).order_by('market', 'value')
 		market_bubbles = MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn)
 
 		# Waring: in this case, the values in modifiers are relative to those already in place from the other bubbles Task
