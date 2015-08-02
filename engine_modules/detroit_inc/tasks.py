@@ -92,7 +92,7 @@ class DIncVoteTask(ResolutionTask):
 		Build newsfeed message. Contains official line, and breakdown for each coalition.
 		"""
 
-		# To Keep while not replaced by game events
+		# TODO : replace by game events
 		# if dinc_vote_session.coalition is not None:
 		# dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"La coalition *%s* a été votée par Detroit Inc." % dinc_vote_session.get_coalition_display())
 
@@ -131,7 +131,7 @@ class DIncVoteTask(ResolutionTask):
 
 			coalition_breakdown.append(content)
 
-		# To keep while not replaced by game events
+		# TODO : replace by game events
 		# if len(coalition_breakdown) > 0:
 		# dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"Répartition des coalitions :\n\n  * %s" % ("\n  * ".join(coalition_breakdown)))
 

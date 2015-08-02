@@ -35,19 +35,3 @@ class InformationRunOrderTest(RunOrdersTest):
 
 	def tearDown(self):
 		self.set_to_original(self.io.target.citizenship.corporation)
-
-	def test_information_success(self):
-		"""
-		Information yields players data
-		"""
-		# TODO
-
-		self.assertEqual(1, 1)
-
-	def test_information_failure(self):
-		"""
-		Failed information should not give information
-		"""
-		# TODO
-
-		self.assertEqual(1, 1)
