@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'docs',
     'engine',
     'messaging',
+    'logs',
     'engine_modules.influence',
     'engine_modules.corporation',
     'engine_modules.invisible_hand',

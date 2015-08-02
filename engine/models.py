@@ -5,7 +5,7 @@ from django.conf import settings
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
-from engine.dispatchs import validate_order
+from engine.dispatchs import validate_order, game_event
 from messaging.models import Message, Note, Newsfeed
 from utils.read_markdown import read_file_from_path
 
@@ -21,6 +21,64 @@ class Game(models.Model):
 	disable_side_effects = models.BooleanField(default=False, help_text="Disable all side effects (invisible hand, first and last effects, ...)")
 
 	started = models.DateTimeField(auto_now_add=True)
+
+	# List of possible events
+	VOICE_UP = 'VOICE_UP'
+	VOICE_DOWN = 'VOICE_DOWN'
+	FIRST_EFFECT = 'FIRST_EFFECT'
+	LAST_EFFECT = 'LAST_EFFECT'
+	CRASH_EFFECT = 'CRASH_EFFECT'
+	OPE_SABOTAGE = 'OPE_SABOTAGE'
+	OPE_SABOTAGE_FAIL = 'OPE_SABOTAGE_FAIL'
+	OPE_DATASTEAL_UP = 'OPE_DATASTEAL_UP'
+	OPE_DATASTEAL_FAIL_UP = 'OPE_DATASTEAL_FAIL_UP'
+	OPE_DATASTEAL_FAIL_DOWN = 'OPE_DATASTEAL_FAIL_DOWN'
+	OPE_DATASTEAL_DOWN = 'OPE_DATASTEAL_DOWN'
+	OPE_PROTECTION = 'OPE_PROTECTION'
+	OPE_EXTRACTION_UP = 'OPE_EXTRACTION_UP'
+	OPE_EXTRACTION_FAIL_UP = 'OPE_EXTRACTION_FAIL_UP'
+	OPE_EXTRACTION_FAIL_DOWN = 'OPE_EXTRACTION_FAIL_DOWN'
+	OPE_EXTRACTION_DOWN = 'OPE_EXTRACTION_DOWN'
+	EFFECT_CONTRAT_UP = 'EFFECT_CONTRAT_UP'
+	EFFECT_CONTRAT_DOWN = 'EFFECT_CONTRAT_DOWN'
+	MARKET_HAND_UP = 'MARKET_HAND_UP'
+	MARKET_HAND_DOWN = 'MARKET_HAND_DOWN'
+	ADD_CITIZENSHIP = 'ADD_CITIZENSHIP'
+	REMOVE_CITIZENSHIP = 'REMOVE_CITIZENSHIP'
+	IC_UP = 'IC_UP'
+	OPE_INFORMATION = 'OPE_INFORMATION'
+	EFFECT_CONSOLIDATION_UP = 'EFFECT_CONSOLIDATION_UP'
+	EFFECT_CONSOLIDATION_DOWN = 'EFFECT_CONSOLIDATION_DOWN'
+	EFFECT_SECURITY_UP = 'EFFECT_SECURITY_UP'
+	EFFECT_SECURITY_DOWN = 'EFFECT_SECURITY_DOWN'
+	SPECULATION_WIN = 'SPECULATION_WIN'
+	SPECULATION_LOST = 'SPECULATION_LOST'
+	WIRETRANSFER = 'WIRETRANSFER'
+	BUY_SHARE = 'BUY_SHARE'
+	VOTE_CONSOLIDATION = 'VOTE_CONSOLIDATION'
+	VOTE_SECURITY = 'VOTE_SECURITY'
+	VOTE_CONTRAT = 'VOTE_CONTRAT'
+	MONEY_NEXT_TURN = 'MONEY_NEXT_TURN'
+	BACKGROUND = 'BACKGROUND'
+	GAIN_DOMINATION_BUBBLE = 'GAIN_DOMINATION_BUBBLE'
+	LOSE_DOMINATION_BUBBLE = 'LOSE_DOMINATION_BUBBLE'
+	GAIN_DRY_BUBBLE = 'GAIN_DRY_BUBBLE'
+	LOSE_DRY_BUBBLE = 'LOSE_DRY_BUBBLE'
+
+	def add_event(self, event_type, data, delta=0, corporation=None, players=[], corporationmarket=None):
+		"""
+		Create a game event signal. This signal may be received for a log creation for example.
+		"""
+		game_event.send(
+			sender=self.__class__,
+			event_type=event_type,
+			data=data,
+			delta=delta,
+			corporation=corporation,
+			corporationmarket=corporationmarket,
+			players=players,
+			instance=self
+		)
 
 	@transaction.atomic
 	def resolve_current_turn(self):
@@ -169,7 +227,7 @@ class Order(models.Model):
 	cost = models.PositiveSmallIntegerField(editable=False)
 	type = models.CharField(max_length=40, blank=True, editable=False)
 
-	def save(self):
+	def save(self, **kwargs):
 		# Save the current type to inflate later (model inheritance can be tricky)
 		self.type = self._meta.object_name
 
@@ -180,7 +238,7 @@ class Order(models.Model):
 		if not self.cost:
 			self.cost = self.get_cost()
 
-		super(Order, self).save()
+		super(Order, self).save(**kwargs)
 
 	def clean(self):
 		"""
