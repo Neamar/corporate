@@ -45,7 +45,7 @@ class TaskTest(EngineTestCase):
 			if cm in common_corporation_markets_1_3:
 				target_corporation_market = cm
 
-		corporation_market = self.c.corporationmarket_set.get(market=target_corporation_market.market)
+		corporation_market = self.c.corporationmarket_set.get(market=target_corporation_market.market, turn=self.g.current_turn)
 		self.c.update_assets(delta=target_corporation_market.value, category=AssetDelta.RUN_DATASTEAL, corporationmarket=corporation_market)
 
 		begin_assets_1 = self.c.assets
@@ -73,7 +73,7 @@ class TaskTest(EngineTestCase):
 				cm = corporation_market
 		differential = cm.value
 		# Should there be an AssetDelta for tests ?
-		corporation_market = self.c.corporationmarket_set.get(market=cm.market)
+		corporation_market = self.c.corporationmarket_set.get(market=cm.market, turn=self.g.current_turn)
 		self.c.update_assets(delta=-differential, category=AssetDelta.RUN_DATASTEAL, corporationmarket=corporation_market)
 
 		self.g.resolve_current_turn()

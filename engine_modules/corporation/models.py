@@ -99,16 +99,31 @@ class Corporation(models.Model):
 	@property
 	def corporation_markets(self):
 		"""
-		Returns all CorporationMarket objects associated with the Corporation
+		Returns all CorporationMarket objects associated with the Corporation for the current turn
 		"""
-		return self.corporationmarket_set.all()
+		return self.get_corporation_markets()
+
+	def get_corporation_markets(self, turn=None):
+		"""
+		Returns all CorporationMarket objects associated with the Corporation for the specified turn
+		"""
+		if turn is None:
+			turn = self.game.current_turn
+		return self.corporationmarket_set.filter(turn=turn)
 
 	@property
 	def markets(self):
 		"""
-		Returns all Market objects associated with the Corporation
+		Returns all Market objects associated with the Corporation for the current turn
 		"""
-		return [cm.market for cm in self.corporation_markets]
+		return self.get_markets()
+
+	def get_markets(self, turn=None):
+		"""
+		Returns all Market objects associated with the Corporation for the current turn
+		"""
+		# The case where turn is None is handled by get_corporation_markets
+		return [cm.market for cm in self.get_corporation_markets(turn)]
 
 	def get_random_corporation_market(self):
 		"""
@@ -181,7 +196,7 @@ class Corporation(models.Model):
 				# By default, a random market is impacted
 				corporationmarket = corporation.get_random_corporation_market()
 			else:
-				corporationmarket = corporation.corporationmarket_set.get(market__name=market)
+				corporationmarket = corporation.corporationmarket_set.get(market__name=market, turn=self.game.current_turn)
 
 			corporation.update_assets(delta, category=delta_category, corporationmarket=corporationmarket)
 
@@ -243,6 +258,7 @@ class Corporation(models.Model):
 		Updates market assets values, and saves the model
 		Does not actually change "assets", since it is a property, but changes on market_assets will be reflected on assets
 		"""
+		turn = self.game.current_turn
 		corporationmarket.value += delta
 		corporationmarket.save()
 
@@ -250,7 +266,7 @@ class Corporation(models.Model):
 		self.increase_market_assets(delta)
 
 		# And register assetdelta for logging purposes
-		self.assetdelta_set.create(category=category, delta=delta, turn=self.game.current_turn)
+		self.assetdelta_set.create(category=category, delta=delta, turn=turn)
 
 	def __unicode__(self):
 		return u"%s (%s)" % (self.base_corporation.name, self.assets)
