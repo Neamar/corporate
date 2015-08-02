@@ -76,6 +76,9 @@ class Logs(models.Model):
 		Game.VOTE_SECURITY,
 		Game.VOTE_CONTRAT]
 
+	def get_display(self, type):
+		return "GET DISPLAY %s: %s" % (type, self.data)
+
 
 class ConcernedPlayers(models.Model):
 	player = models.ForeignKey('engine.Player')
