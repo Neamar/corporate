@@ -52,10 +52,10 @@
 {% for order in available_orders %}
 	<div class="order-form-content">
 		<div class="content-title">
-	<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">
-		<span>{{ order.title }}</span>
-	</h3>
-</div>
+			<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">
+				<span>{{ order.title }}</span>
+			</h3>
+		</div>
 	{% if order.available != False %}
 	<form class="order-form-container" method="post" action="{% url "website.views.orders.add_order" game_id=game.pk order_type=order.name %}">
 		<table>
