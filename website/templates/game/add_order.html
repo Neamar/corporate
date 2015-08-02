@@ -3,7 +3,7 @@
 {% block h1 %} Ajouter un ordre  {% endblock %}
 
 {% block content %}
-<div class="order-form-content">
+<div class="order-form-content {% if order.form.errors %}form-errored{% endif %}">
 	<div class="content-title">
 		<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">
 			<span>{{ order.title }}</span>

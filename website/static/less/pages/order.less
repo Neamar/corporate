@@ -199,6 +199,12 @@
 .order-form-content {
 	margin-bottom: 35px;
 
+	&.form-errored {
+		.order {
+			background-color: rgba(236, 7, 7, 0.5);
+		}
+	}
+
 	.content-title {
 		overflow: hidden;
 	}
@@ -272,6 +278,7 @@
 
 						.errorlist {
 							color: #ec0707;
+							font-weight: 300;
 							margin: 0;
 						}
 					}
