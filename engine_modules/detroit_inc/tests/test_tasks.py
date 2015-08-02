@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from engine.models import Player
 from engine.testcases import EngineTestCase
-from engine_modules.share.models import Share
 from engine_modules.detroit_inc.models import DIncVoteOrder
 
 
