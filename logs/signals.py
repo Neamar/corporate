@@ -5,7 +5,7 @@ from engine.dispatchs import game_event
 
 
 @receiver(game_event)
-def insert_log_database(sender, instance, event_type, data, delta=0, corporation=None, corporationmarket=None, players=[], **kwargs):
+def insert_log_database(sender, instance, event_type, data, delta=0, corporation=None, corporation_market=None, players=[], **kwargs):
 	# We deduce the value of property hide_for players from the category
 	hide_for_players = event_type in Log.HIDE_FOR_PLAYERS
 
@@ -26,7 +26,7 @@ def insert_log_database(sender, instance, event_type, data, delta=0, corporation
 		event_type=event_type,
 		data=message,
 		corporation=corporation,
-		corporationmarket=corporationmarket,
+		corporation_market=corporation_market,
 		hide_for_players=hide_for_players,
 		public=public
 	)

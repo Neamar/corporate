@@ -31,7 +31,7 @@ class Log(models.Model):
 	corporation = models.ForeignKey('corporation.Corporation', null=True)
 
 	# the corporationmarket concerned for this log
-	corporationmarket = models.ForeignKey('market.CorporationMarket', null=True)
+	corporation_market = models.ForeignKey('market.CorporationMarket', null=True)
 
 	# the orderer of the action and all the players knowing the action. Parameters are different between orderer and knowers, see ConcernedPlayer
 	players = models.ManyToManyField('engine.Player', through='ConcernedPlayer')

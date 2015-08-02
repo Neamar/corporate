@@ -46,7 +46,7 @@ class TaskTest(EngineTestCase):
 				target_corporation_market = cm
 
 		corporation_market = self.c.corporationmarket_set.get(market=target_corporation_market.market, turn=self.g.current_turn)
-		self.c.update_assets(delta=target_corporation_market.value, category=AssetDelta.RUN_DATASTEAL, corporationmarket=corporation_market)
+		self.c.update_assets(delta=target_corporation_market.value, category=AssetDelta.RUN_DATASTEAL, corporation_market=corporation_market)
 
 		begin_assets_1 = self.c.assets
 		begin_assets_2 = self.c2.assets
@@ -74,7 +74,7 @@ class TaskTest(EngineTestCase):
 		differential = cm.value
 		# Should there be an AssetDelta for tests ?
 		corporation_market = self.c.corporationmarket_set.get(market=cm.market, turn=self.g.current_turn)
-		self.c.update_assets(delta=-differential, category=AssetDelta.RUN_DATASTEAL, corporationmarket=corporation_market)
+		self.c.update_assets(delta=-differential, category=AssetDelta.RUN_DATASTEAL, corporation_market=corporation_market)
 
 		self.g.resolve_current_turn()
 
@@ -111,9 +111,9 @@ class TaskTest(EngineTestCase):
 		differential_2 = target_corporation_market_2.value
 
 		# Create a negative bubble, and make c last
-		self.c.update_assets(delta=-differential_1, category=AssetDelta.RUN_DATASTEAL, corporationmarket=target_corporation_market)
+		self.c.update_assets(delta=-differential_1, category=AssetDelta.RUN_DATASTEAL, corporation_market=target_corporation_market)
 		# Create a positive bubble, and make c2 first
-		self.c2.update_assets(delta=differential_2, category=AssetDelta.INVISIBLE_HAND, corporationmarket=target_corporation_market_2)
+		self.c2.update_assets(delta=differential_2, category=AssetDelta.INVISIBLE_HAND, corporation_market=target_corporation_market_2)
 
 		# c is last, its effects will be to minimize c2 own's market
 		self.update_effect(self.c, 'on_last', "update('%s', %i, market='%s')" % (self.c2.base_corporation_slug, -2 * differential_2, target_corporation_market_2.market.name))
