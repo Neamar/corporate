@@ -18,12 +18,10 @@
 {% for player in share_holders %}
 {% endfor %}
 
-{% if share_holders %}
 <ul>
 {% for player in share_holders %}
 	<li class="{% if player.citizenship.corporation_id == corporation.pk %}citizen {% endif %}"><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}" title="Parts de {{ player.name }}"><span>{{ player.qty_share }}</span></a></li>
 {% endfor %}
-
 <table>
 <thead>
 <td></td>
@@ -46,7 +44,6 @@
 {% endfor %}
 </tbody>
 </table>
-{% endif %}
 <a href="{% url "docs.views.corporation" corporation_slug=corporation.base_corporation.slug %}">voir la page de la corporation</a>
 
 {% endblock content %}
