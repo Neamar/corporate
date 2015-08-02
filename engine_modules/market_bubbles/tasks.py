@@ -28,7 +28,7 @@ def get_market_dictionary(corporation_markets):
 		if market not in sorted_markets.keys():
 			sorted_markets[market] = []
 			markets_dict[market] = []
-			
+
 		sorted_markets[market].append((corporation_market.corporation, corporation_market.value))
 
 	for market in sorted_markets.keys():
@@ -76,16 +76,16 @@ class UpdateMarketBubblesTask(OrderResolutionTask):
 
 	def run(self, game):
 
-		# We can force the use of bubbles  using the force_bubbles flag
-		if game.disable_side_effects and not hasattr(game, 'force_bubbles'):
-			return
+		# # We can force the use of bubbles  using the force_bubbles flag
+		# if game.disable_side_effects and not hasattr(game, 'force_bubbles'):
+		# 	return
 
 		corporations = Corporation.objects.filter(game=game)
 		corporation_markets = CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn).order_by('market', 'value')
 
 		modifiers = reset_local_assets_modifier(corporations)
 		markets = get_market_dictionary(corporation_markets)
-		
+
 		for market in markets.keys():
 			# should be ordered from min value to max value
 			max_value = markets[market][0][1]
