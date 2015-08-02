@@ -3,7 +3,6 @@ from django.db import models
 
 from engine_modules.run.models import RunOrder
 from engine.models import Player
-from messaging.models import Message, Note
 from website.widgets import PlainTextField
 
 information_messages = {
@@ -30,26 +29,9 @@ class InformationOrder(RunOrder):
 
 	target = models.ForeignKey(Player)
 
-	def resolve_successful(self):
-		secrets = self.target.secrets
+	# TODO def resolve_successful(self):
 
-		target_orders = self.target.message_set.filter(flag=Message.RESOLUTION).order_by('-turn')
-		messages = "\n".join(["### Tour %s\n\n%s" % (o.turn, o.content.replace('# ', '## ')) for o in target_orders])
-
-		self.player.add_message(
-			title="Run d'information sur %s" % (self.target),
-			content="## Secrets du joueur\n%s\n\n## Feuilles d'Ordres\n%s" % (secrets, messages),
-			author=None,
-			flag=Message.PRIVATE_MESSAGE,
-		)
-
-		content = information_messages['success']['sponsor'] % (self.target)
-		self.player.add_note(category=Note.RUNS, content=content)
-
-	def resolve_failure(self):
-		# Send a note to the one who ordered the DataSteal
-		content = information_messages['fail']['sponsor'] % (self.target)
-		self.player.add_note(category=Note.RUNS, content=content)
+	# TODO def resolve_failure(self):
 
 	def get_form(self, data=None):
 		form = super(InformationOrder, self).get_form(data)

@@ -1,5 +1,4 @@
 from engine.tasks import ResolutionTask
-from messaging.models import Newsfeed
 
 
 class FirstLastEffectsTask(ResolutionTask):
@@ -22,7 +21,5 @@ class FirstLastEffectsTask(ResolutionTask):
 
 		first_corporation.on_first_effect(ladder)
 		last_corporation.on_last_effect(ladder)
-
-		game.add_newsfeed(category=Newsfeed.ECONOMY, content="Effet premier : %s, effet dernier : %s" % (first_corporation.base_corporation.name, last_corporation.base_corporation.name))
 
 tasks = (FirstLastEffectsTask, )

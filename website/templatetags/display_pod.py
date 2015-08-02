@@ -18,7 +18,6 @@ def players_pod(context):
 	for player in players:
 		# turn=now AND players__player=target AND personal_event AND (players__player=myself OR (public)
 		player.events = Logs.objects.filter(turn=context['turn'] - 1, hide_for_players=False).filter(concernedplayers__player=player, concernedplayers__personal=True).filter(Q(players=context['player']) | Q(public=True)).distinct()
-		print player.events.query
 	return {
 		'players': players
 	}

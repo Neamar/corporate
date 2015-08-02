@@ -81,7 +81,7 @@ class UpdateMarketBubblesTask(OrderResolutionTask):
 			return
 
 		corporations = Corporation.objects.filter(game=game)
-		corporation_markets = CorporationMarket.objects.filter(corporation__game=game).order_by('market', 'value')
+		corporation_markets = CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn).order_by('market', 'value')
 
 		modifiers = reset_local_assets_modifier(corporations)
 		markets = get_market_dictionary(corporation_markets)
@@ -125,7 +125,7 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 			return
 
 		corporations = Corporation.objects.filter(game=game)
-		corporation_markets = CorporationMarket.objects.filter(corporation__game=game).order_by('market', 'value')
+		corporation_markets = CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn).order_by('market', 'value')
 		market_bubbles = MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn)
 
 		# Waring: in this case, the values in modifiers are relative to those already in place from the other bubbles Task
@@ -159,9 +159,9 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 
 			if domination_bubble is not None:
 				if domination_bubble.corporation != markets[market][0][0]:
-					if len(markets) == 1 or markets[1][0] < max_value:
+					if len(markets) == 1 or markets[market][1][1] < max_value:
 						# The corporation dominating has been changed by First/Last effects, update the bubble
-						modifiers[markets[0][0]] += 1
+						modifiers[markets[market][0][0]] += 1
 						domination_bubble.update(corporation=markets[market][0][0])
 					else:
 						# First/Last effects made it so there is no longer a domination on this market, burst former domination bubble
@@ -180,8 +180,8 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 		# Create logs for add or remove bubble. Problem is, we want to do this compared to precedent turn, not compared to before first, last and crash effect
 		# We have to compare to previous turn to this one after the bubbles have been created.
 		# First, get the two list of bubbles : one containing all bubbles of turn T, the other for turn T-1
-		previous_turn_bubbles = MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn - 1)
-		current_turn_bubbles = MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn)
+		previous_turn_bubbles = list(MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn - 1))
+		current_turn_bubbles = list(MarketBubble.objects.filter(corporation__game=game, turn=game.current_turn))
 		# Then, remove all the values that are in both lists
 		for previous in previous_turn_bubbles:
 			for current in current_turn_bubbles:
@@ -197,7 +197,7 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 				event_type = game.LOSE_DRY_BUBBLE
 			else:
 				raise Exception("Bubble value different than +1 or -1")
-			corporation_market = deleted_bubble.corporation.corporationmarket_set.get(market=deleted_bubble.market)
+			corporation_market = deleted_bubble.corporation.corporationmarket_set.get(market=deleted_bubble.market, turn=game.current_turn - 1)
 			game.add_event(event_type=event_type, data={"market": deleted_bubble.market.name, "corporation": deleted_bubble.corporation.base_corporation.name}, corporation=deleted_bubble.corporation, corporationmarket=corporation_market)
 		# Create event add bubble
 		for added_bubble in current_turn_bubbles:
@@ -207,7 +207,7 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 				event_type = game.GAIN_DRY_BUBBLE
 			else:
 				raise Exception("Bubble value different than +1 or -1")
-			corporation_market = added_bubble.corporation.corporationmarket_set.get(market=added_bubble.market)
+			corporation_market = added_bubble.corporation.corporationmarket_set.get(market=added_bubble.market, turn=game.current_turn)
 			game.add_event(event_type=event_type, data={"market": added_bubble.market.name, "corporation": added_bubble.corporation.base_corporation.name}, corporation=added_bubble.corporation, corporationmarket=corporation_market)
 
 tasks = (UpdateMarketBubblesTask, UpdateMarketBubblesAfterEffectsTask)

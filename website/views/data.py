@@ -168,38 +168,3 @@ def player(request, player, game, player_id, turn):
 		"qty_shares": sum([corporation.qty_share for corporation in corporations]),
 		"request": request,
 	}
-
-
-@login_required
-@render('game/comlink.html')
-@find_player_from_game_id
-@inject_game_and_player_into_response
-def comlink(request, game, player):
-	"""
-	Display comlink
-	"""
-
-	messages = player.message_set.all().order_by("-turn", "-pk")
-
-	return {
-		"messages": messages
-	}
-
-
-@login_required
-@render('game/message.html')
-@find_player_from_game_id
-@inject_game_and_player_into_response
-def message(request, game, player, message_id):
-	"""
-	Display message
-	"""
-
-	message = player.message_set.get(pk=message_id)
-
-	message.html, _ = parse_markdown(message.content)
-	message.html = mark_safe(message.html)
-
-	return {
-		"message": message
-	}
