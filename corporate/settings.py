@@ -118,6 +118,8 @@ COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
 COMPRESS_OUTPUT_DIR = "cache"
+# Weird Heroku bug: CommandError: Compressor is disabled. Set the COMPRESS_ENABLED setting or use --force to override.
+COMPRESS_ENABLED = False
 
 
 TEMPLATE_DIRS = (
