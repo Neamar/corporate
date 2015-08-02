@@ -46,7 +46,7 @@ def auto_create_markets_and_corporation(sender, instance, **kwargs):
 				value=base_corporation.markets[market_name]
 			)
 			corporation_markets.append(cm)
-			# Because there is no resolve_current_turn for turn0, we have to do
+			# Because there is no resolve_current_turn for turn 0, we have to do
 			# the work of ReplicateCorporationMarketsTask for it and copy the CorporationMarkets for turn 1
 			cm = CorporationMarket(
 				corporation=instance.corporations[base_corporation.slug],
