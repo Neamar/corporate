@@ -65,7 +65,7 @@ class Game(models.Model):
 	GAIN_DRY_BUBBLE = 'GAIN_DRY_BUBBLE'
 	LOSE_DRY_BUBBLE = 'LOSE_DRY_BUBBLE'
 
-	def add_event(self, event_type, data, delta=0, corporation=None, players=[], corporationmarket=None):
+	def add_event(self, event_type, data, delta=0, corporation=None, players=[], corporation_market=None):
 		"""
 		Create a game event signal. This signal may be received for a log creation for example.
 		"""

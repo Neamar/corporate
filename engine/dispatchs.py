@@ -15,4 +15,4 @@ post_create = django.dispatch.Signal(providing_args=["instance"])
 """
 This signal gets sent from the function create_game_event on Game.
 """
-game_event = django.dispatch.Signal(providing_args=["game_event", "delta", "data", "corporation", "players", "corporationmarket"])
+game_event = django.dispatch.Signal(providing_args=["game_event", "delta", "data", "corporation", "players", "corporation_market"])

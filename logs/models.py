@@ -3,7 +3,7 @@ from django.db import models
 from engine.models import Game
 
 
-class Logs(models.Model):
+class Log(models.Model):
 	"""
 	We log every action in the game in a single table
 	"""
@@ -33,8 +33,8 @@ class Logs(models.Model):
 	# the corporationmarket concerned for this log
 	corporationmarket = models.ForeignKey('market.CorporationMarket', null=True)
 
-	# the orderer of the action and all the players knowing the action. Parameters are different between orderer and knowers, see ConcernedPlayers
-	players = models.ManyToManyField('engine.Player', through='ConcernedPlayers')
+	# the orderer of the action and all the players knowing the action. Parameters are different between orderer and knowers, see ConcernedPlayer
+	players = models.ManyToManyField('engine.Player', through='ConcernedPlayer')
 
 	# List of game events that are hidden for players (see hide for player above)
 	HIDE_FOR_PLAYERS = [
@@ -80,9 +80,9 @@ class Logs(models.Model):
 		return "GET DISPLAY %s: %s" % (type, self.data)
 
 
-class ConcernedPlayers(models.Model):
+class ConcernedPlayer(models.Model):
 	player = models.ForeignKey('engine.Player')
-	log = models.ForeignKey('logs.Logs')
+	log = models.ForeignKey('logs.Log')
 	# When an information run targetting a player is started, we have to gather every Log connected to
 	# that player with the attribute transmittable = True
 	# And the information of having the information is not transmittable, so we add the player who ordered that run
