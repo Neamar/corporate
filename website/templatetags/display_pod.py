@@ -1,5 +1,7 @@
+from django.db.models import Q
 from django import template
 from django.template.loader import get_template
+from logs.models import Logs
 
 from engine_modules.detroit_inc.models import DIncVoteOrder
 
@@ -12,6 +14,12 @@ NO_CONTEXT_REQUIRED = "__no_context"
 
 def players_pod(context):
 	players = context['game'].player_set.all()
+
+	for player in players:
+		# turn=now AND players__player=target AND (players__player=myself OR (public)
+		player.events = Logs.objects.filter(Q(players=player, turn=context['turn'] - 1) & (Q(players=context['player']) | Q(public=True)))
+		print Logs.objects.filter(Q(players=player) & (Q(players=context['player']) | Q(public=True))).query
+
 	return {
 		'players': players
 	}
