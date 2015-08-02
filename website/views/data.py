@@ -80,7 +80,7 @@ def corporation(request, player, game, corporation_slug, turn):
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game.pk)
 	share_holders = game.player_set.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
-	previous_corporation_markets = corporation.get_corporation_markets(turn=game.current_turn - 1)
+	previous_corporation_markets = corporation.get_corporation_markets(turn=turn - 1)
 	current_markets = corporation.markets
 	competitors = game.corporation_set.filter(corporationmarket__market__in=current_markets).distinct().order_by('base_corporation_slug')
 
@@ -88,11 +88,15 @@ def corporation(request, player, game, corporation_slug, turn):
 	for corpo in competitors:
 		assets = []
 		holders = game.player_set.filter(share__corporation__base_corporation_slug=corpo.base_corporation_slug).distinct()
-		corporation_markets = corpo.corporationmarket_set.filter(market__in=current_markets)
+		corporation_markets = corpo.corporationmarket_set.filter(market__in=current_markets, turn=turn - 1)
 		for market in current_markets:
 			assets.append(next((cm.value for cm in corporation_markets if cm.market.name == market.name), None))
-		# That's kind of a weird data structure, but the template tags are not as flexible as one might like
-		summary.append((corpo, assets, holders))
+
+		summary.append({
+			"corporation": corpo,
+			"assets": assets,
+			"holders": holders
+		})
 
 	assets_history = corporation.assethistory_set.all()
 
