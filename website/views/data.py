@@ -29,9 +29,14 @@ def wallstreet(request, game, player, turn):
 	corporations = game.get_ladder(turn=turn - 1)
 	for corporation in corporations:
 		corporation_markets = corporation.get_corporation_markets(turn - 1).order_by('market__name').annotate(bubbles=Sum('market__bubbles__value'))
-		print [m.bubbles for m in corporation_markets]
 		ranking.append((corporation, corporation_markets))
 
+	i = 0
+	for corporation in corporations:
+		print "Corporation: %s" %corporation.base_corporation_slug
+		for cm in ranking[i][1]:
+			print "Corporation Market: %s -> %i" %(cm.market.name, cm.bubbles if cm.bubbles is not None else 99)
+		i += 1
 	return {
 		"ranking": ranking,
 		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
