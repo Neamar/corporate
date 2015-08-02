@@ -4,7 +4,6 @@
 {% block h1 %}Parts{% endblock %}
 
 {% block content %}
-
 <table class="table shares-table">
 <thead>
 <tr>
@@ -25,7 +24,8 @@
 	{% for share in corporation_shares.shares %}
 
 	{% if share.top %}
-	<td class="share-top">
+{% comment %}	<td class="share-top"> {% endcomment %}
+	<td class="main-shareholder">
 	{% else %}
 	<td>
 	{% endif %}
