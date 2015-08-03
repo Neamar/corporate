@@ -30,6 +30,14 @@ class CorporationMarket(models.Model):
 	# This is why we have default turn 0 and we need to initialize both for turn 0 and 1
 	turn = models.PositiveSmallIntegerField(default=0)
 	value = models.SmallIntegerField()
+	bubble_value = models.SmallIntegerField(default=0)
+
+	@property
+	def full_value(self):
+		"""
+		Return the value taking bubbles into account
+		"""
+		return self.value + self.bubble_value
 
 	def __unicode__(self):
 		return u"%s de %s" % (self.market, self.corporation)

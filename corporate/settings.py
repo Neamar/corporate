@@ -58,7 +58,7 @@ INSTALLED_APPS = (
     'engine_modules.detroit_inc',
     'engine_modules.wiretransfer',
     'engine_modules.market',
-    'engine_modules.market_bubbles',
+#    'engine_modules.market_bubbles',
 )
 
 

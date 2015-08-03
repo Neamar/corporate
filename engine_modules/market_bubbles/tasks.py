@@ -75,7 +75,7 @@ class UpdateMarketBubblesTask(OrderResolutionTask):
 	RESOLUTION_ORDER = 500
 
 	def run(self, game):
-
+		return
 		# We can force the use of bubbles  using the force_bubbles flag
 		if game.disable_side_effects and not hasattr(game, 'force_bubbles'):
 			return
@@ -119,6 +119,7 @@ class UpdateMarketBubblesAfterEffectsTask(UpdateMarketBubblesTask):
 	RESOLUTION_ORDER = 650
 
 	def run(self, game):
+		return
 
 		# We can force the use of bubbles using the force_bubbles flag
 		if game.disable_side_effects and not hasattr(game, 'force_bubbles'):

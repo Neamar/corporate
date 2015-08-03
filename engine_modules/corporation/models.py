@@ -93,7 +93,7 @@ class Corporation(models.Model):
 
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
-	# assets, market_assets and assets_modifier are meant to keep track of the MarketBubbles:
+	# assets, market_assets and assets_modifier are meant to keep track of the bubbles:
 	# - market_assets stands for the total of the assets in the Corporation's markets disregarding bubbles.
 	# - assets_modifier stands for the bonuses and maluses originating from domination on a market, or having a market at 0 asset.
 	# - assets stands for the assets that must be usually taken into account, so we have: assets = market_assets + assets_modifier
