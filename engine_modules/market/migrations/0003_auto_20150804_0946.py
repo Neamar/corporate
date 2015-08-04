@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('market', '0004_auto_20150802_1437'),
+        ('market', '0002_corporationmarket_turn'),
     ]
 
     operations = [
@@ -15,5 +15,10 @@ class Migration(migrations.Migration):
             model_name='corporationmarket',
             name='bubble_value',
             field=models.SmallIntegerField(default=0),
+        ),
+        migrations.AlterField(
+            model_name='corporationmarket',
+            name='turn',
+            field=models.PositiveSmallIntegerField(default=0),
         ),
     ]
