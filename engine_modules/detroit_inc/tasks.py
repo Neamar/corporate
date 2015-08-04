@@ -3,7 +3,6 @@ from collections import Counter
 from engine.tasks import ResolutionTask
 from engine_modules.corporation.models import AssetDelta
 from engine_modules.detroit_inc.models import DIncVoteSession, DIncVoteOrder
-from messaging.models import Newsfeed, Note
 from engine.models import Game
 
 
@@ -32,12 +31,6 @@ class DIncVoteTask(ResolutionTask):
 		if official_line is not None:
 			# We create a game_event for each winner
 			winners = [order.player for order in orders if order.coalition == official_line]
-			n = Note.objects.create(
-				category=Note.DINC,
-				content="Detroit, Inc. a suivi votre coalition",
-				turn=game.current_turn,
-			)
-			n.recipient_set = winners
 			event_type = None
 			# the case of CPUB is handled in DIncLineCPUBTask to access the random corporationmarket
 			if official_line == DIncVoteOrder.RSEC:
@@ -49,12 +42,6 @@ class DIncVoteTask(ResolutionTask):
 
 			# We create a game_event for each loser
 			losers = [order.player for order in orders if order.coalition == DIncVoteOrder.DINC_OPPOSITIONS[official_line]]
-			n = Note.objects.create(
-				category=Note.DINC,
-				content=u"Detroit, Inc. a rejoint la coalition opposée: %s" % s.get_coalition_display(),
-				turn=game.current_turn,
-			)
-			n.recipient_set = losers
 			if DIncVoteOrder.DINC_OPPOSITIONS[official_line] == DIncVoteOrder.RSEC:
 				event_type = Game.EFFECT_SECURITY_DOWN
 			elif DIncVoteOrder.DINC_OPPOSITIONS[official_line] == DIncVoteOrder.CONS:
@@ -91,7 +78,6 @@ class DIncVoteTask(ResolutionTask):
 		Send a note to each player, to remember his choice.
 		"""
 		for order in orders:
-			order.player.add_note(category=Note.DINC, content="Vous avez rejoint la coalition *%s*." % order.get_coalition_display())
 			if order.coalition == DIncVoteOrder.CPUB:
 				event_type = Game.VOTE_CONTRAT
 			elif order.coalition == DIncVoteOrder.RSEC:
@@ -106,8 +92,9 @@ class DIncVoteTask(ResolutionTask):
 		Build newsfeed message. Contains official line, and breakdown for each coalition.
 		"""
 
-		if dinc_vote_session.coalition is not None:
-			dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"La coalition *%s* a été votée par Detroit Inc." % dinc_vote_session.get_coalition_display())
+		# TODO : replace by game events
+		# if dinc_vote_session.coalition is not None:
+		# dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"La coalition *%s* a été votée par Detroit Inc." % dinc_vote_session.get_coalition_display())
 
 		votes_details = {}
 
@@ -144,8 +131,9 @@ class DIncVoteTask(ResolutionTask):
 
 			coalition_breakdown.append(content)
 
-		if len(coalition_breakdown) > 0:
-			dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"Répartition des coalitions :\n\n  * %s" % ("\n  * ".join(coalition_breakdown)))
+		# TODO : replace by game events
+		# if len(coalition_breakdown) > 0:
+		# dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"Répartition des coalitions :\n\n  * %s" % ("\n  * ".join(coalition_breakdown)))
 
 
 class DIncLineCPUBTask(ResolutionTask):

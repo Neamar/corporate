@@ -2,7 +2,6 @@
 from django.db import models
 from engine.models import Order, Game
 from engine_modules.corporation.models import Corporation
-from messaging.models import Note
 
 
 class AbstractSpeculation(Order):
@@ -57,16 +56,12 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 			# Well done!
 			self.player.money += self.on_win_money()
 			self.player.save()
-			content = u"Vos investissements de %sk¥ sur la corporation %s vous ont rapporté %sk¥" % (self.investment, self.corporation.base_corporation.name, self.on_win_money())
 			self.player.game.add_event(event_type=Game.SPECULATION_WIN, data={"player": self.player.name, "mise": self.investment, "corporation": self.corporation.base_corporation.name, "position": self.rank, "total_win": self.on_win_money()}, players=[self.player])
 		else:
 			# Failure
 			self.player.money -= self.on_loss_money()
 			self.player.save()
-			content = u"Vos spéculations de %sk¥ sur la corporation %s n'ont malheureusement pas été concluantes" % (self.investment, self.corporation.base_corporation.name)
 			self.player.game.add_event(event_type=Game.SPECULATION_LOST, data={"player": self.player.name, "mise": self.investment, "corporation": self.corporation.base_corporation.name, "position": self.rank}, players=[self.player])
-
-		self.player.add_note(category=Note.SPECULATION, content=content)
 
 	def description(self):
 		return u"Miser sur la position %s de la corporation %s (gain : %sk¥, perte : %sk¥)" % (self.rank, self.corporation.base_corporation.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())

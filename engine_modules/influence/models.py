@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from engine.models import Player, Order, Game
-from messaging.models import Newsfeed
 
 
 class Influence(models.Model):
@@ -39,14 +38,6 @@ class BuyInfluenceOrder(Order):
 
 		# Create game event
 		self.player.game.add_event(event_type=Game.IC_UP, data={"player": self.player.name}, players=[self.player])
-
-		# Send a note for final message
-		content = u"Votre Influence dans le milieu corporatiste monte à %i." % self.player.influence.level
-		self.player.add_note(content=content)
-
-		# Newsfeed
-		newsfeed_content = u"L'Influence Corporatiste de %s monte à %i." % (self.player.name, self.player.influence.level)
-		self.player.game.add_newsfeed(category=Newsfeed.PEOPLE, content=newsfeed_content, players=[self.player], status=Newsfeed.PUBLIC)
 
 	def description(self):
 		return u"Augmenter mon Influence Corporatiste à %s" % (self.player.influence.level + 1)
