@@ -29,15 +29,19 @@ class CorporationMarket(models.Model):
 	# whereas the one with turn n-1 has the values at beginning of turn.
 	# This is why we have default turn 0 and we need to initialize both for turn 0 and 1
 	turn = models.PositiveSmallIntegerField(default=0)
+	# The meaning of 'value' and 'bubble_value' changed: value is now the market assets + the bubble modifier.
+	# bubble_value is only here as a token for the bubble: 0 -> no bubble, 1 -> domination, -1 -> 'dry' bubble
+	# This should greatly simplify the DB requests for the CorporationMarkets that have a bubble
 	value = models.SmallIntegerField()
+	# bubble_value should only be modified through the update_bubble() method
 	bubble_value = models.SmallIntegerField(default=0)
 
-	@property
-	def full_value(self):
+	def update_bubble(self, value):
 		"""
-		Return the value taking bubbles into account
+		update the bubble_value field and keep the value field consistent
 		"""
-		return self.value + self.bubble_value
+		self.value += (value - self.bubble_value)
+		self.bubble_value = value
 
 	def __unicode__(self):
 		return u"%s de %s" % (self.market, self.corporation)

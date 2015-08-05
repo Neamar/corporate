@@ -25,7 +25,7 @@ class TaskTest(EngineTestCase):
 		"""
 
 		# For this test, we should disable bubbles
-		self.g.force_bubbles = False
+		del self.g.force_bubbles
 		self.g.save()
 
 		market = self.c.markets[0]
@@ -77,6 +77,7 @@ class TaskTest(EngineTestCase):
 		for cm in common_corporation_markets_1_2:
 			if cm in common_corporation_markets_1_3:
 				target_corporation_market = cm
+				break
 
 		corporation_market = self.c.corporationmarket_set.get(market=target_corporation_market.market, turn=self.g.current_turn)
 		self.c.update_assets(delta=target_corporation_market.value, category=AssetDelta.RUN_DATASTEAL, corporationmarket=corporation_market)
@@ -104,6 +105,7 @@ class TaskTest(EngineTestCase):
 		for corporation_market in corporation_markets:
 			if corporation_market.market not in markets_2:
 				cm = corporation_market
+				break
 		differential = cm.value
 		# Should there be an AssetDelta for tests ?
 		corporation_market = self.c.corporationmarket_set.get(market=cm.market, turn=self.g.current_turn)
@@ -112,6 +114,124 @@ class TaskTest(EngineTestCase):
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.c).assets, begin_assets_1 - differential - 1)
+
+	def test_positive_bubble_erased(self):
+		"""
+		A corporation that had a domination bubble whose assets in the Market then dropped below (or at the level of) another's should see its bubble removed
+		"""
+
+		# Resolve so that the bubble on the corporation-specific market is not taken into account
+		self.g.resolve_current_turn()
+		begin_assets_1 = self.reload(self.c).assets
+		# The Market with a bubble must not be the one that is Corporation-specific, because that one has one anyway (unless it is 0, but then it has a negative bubble)
+		cm = self.c.get_common_corporation_market(self.c2)
+		differential = cm.value
+		# This should be enough to get a domination bubble
+		self.c.update_assets(delta=differential, category=AssetDelta.RUN_DATASTEAL, corporationmarket=cm)
+		cm.save()
+
+		self.g.resolve_current_turn()
+
+		# Just to check that we do have a domination bubble
+		self.assertEqual(self.reload(self.c).assets, begin_assets_1 + differential + 1)
+		# We have to substract 1 more to counterbalance the bubble, which is taken into account
+		self.c.update_assets(delta=-differential - 1, category=AssetDelta.RUN_DATASTEAL, corporationmarket=cm)
+		cm.save()
+
+		# Refresh the bubbles
+		self.g.resolve_current_turn()
+		self.assertEqual(self.reload(self.c).assets, begin_assets_1)
+
+	def test_negative_bubble_erased(self):
+		"""
+		A corporation that had a negative bubble whose assets in the Market then went up above 0 should see its bubble removed
+		"""
+
+		# Resolve so that the bubble on the corporation-specific market is not taken into account
+		self.g.resolve_current_turn()
+		begin_assets_1 = self.reload(self.c).assets
+		# The Market with a bubble must not be the one that is Corporation-specific, because that one has one anyway (unless it is 0, but then it has a negative bubble)
+		cm = self.c.get_common_corporation_market(self.c2)
+		differential = cm.value
+		# This should be enough to get a domination bubble
+		self.c.update_assets(delta=differential, category=AssetDelta.RUN_DATASTEAL, corporationmarket=cm)
+
+		self.g.resolve_current_turn()
+
+		# Just to check that we do have a domination bubble
+		self.assertEqual(self.reload(self.c).assets, begin_assets_1 + differential + 1)
+		# We have to substract 1 more to counterbalance the bubble, which is taken into account
+		self.c.update_assets(delta=-differential - 1, category=AssetDelta.RUN_DATASTEAL, corporationmarket=cm)
+		cm.save()
+
+		# Refresh the bubbles
+		self.g.resolve_current_turn()
+
+		self.assertEqual(self.reload(self.c).assets, begin_assets_1)
+
+	def test_positive_bubbles_accounted_in_ranking(self):
+		"""
+		Positive Bubbles should give a bonus in the ranking, and it should count in assigning new bubbles.
+		So a corporation with n assets on market m at turn t should have n+1 assets at turn t+1 and be ranked above a corporation
+		with n assets, or on the same rank as a corporation with n+1 assets
+		This test test bubble_value directly, so it is a bit more implementation-specific
+		"""
+
+		# Resolve so that the bubble on the corporation-specific market is not taken into account
+		self.g.resolve_current_turn()
+		# The Market with a bubble must not be the one that is Corporation-specific, because that one has one anyway (unless it is 0, but then it has a negative bubble)
+		cm = self.c.get_common_corporation_market(self.c2)
+		differential = 2
+		# This should be enough to get a domination bubble
+		self.c.update_assets(delta=differential, category=AssetDelta.RUN_DATASTEAL, corporationmarket=cm)
+
+		self.g.resolve_current_turn()
+		self.assertEqual(self.reload(cm).bubble_value, 1)
+
+		# This should NOT be enough to get a domination bubble
+		cm2 = self.c2.corporationmarket_set.get(turn=self.g.current_turn, market=cm.market)
+		self.c2.update_assets(delta=differential, category=AssetDelta.RUN_DATASTEAL, corporationmarket=cm2)
+		self.g.resolve_current_turn()
+
+		self.assertEqual(self.reload(cm).bubble_value, 1)
+		# There should not be a bubble on c2's CorporationMarket
+		self.assertEqual(self.reload(cm2).bubble_value, 0)
+
+	def test_negative_bubble_disappears_at_zero(self):
+		"""
+		Negative Bubbles should be an incentive to get your Market assets back up to 0, because then your bubble disappears, and you get back up to 1 instead
+		You then get a 2-increment boost instead of 1
+		"""
+
+		corporation_markets = self.c.corporation_markets
+		markets_2 = self.c2.markets
+		# The Market at 0 must be the one that is Corporation-specific, or there is also going to be a positive bubble
+		cm = None
+		for corporation_market in corporation_markets:
+			if corporation_market.market not in markets_2:
+				cm = corporation_market
+				break
+		differential = cm.value
+		# Should there be an AssetDelta for tests ?
+		corporation_market = self.c.corporationmarket_set.get(market=cm.market, turn=self.g.current_turn)
+		self.c.update_assets(delta=-differential, category=AssetDelta.RUN_DATASTEAL, corporationmarket=corporation_market)
+		corporation_market.save()
+
+		self.g.resolve_current_turn()
+		corporation_market = self.c.corporationmarket_set.get(market=cm.market, turn=self.g.current_turn)
+		# There should now be a negative bubble on corporation_market
+		begin_assets_1 = self.reload(self.c).assets
+		# Get that corporation_market back up to 0
+		self.c.update_assets(delta=1, category=AssetDelta.RUN_DATASTEAL, corporationmarket=corporation_market)
+		corporation_market.save()
+		self.g.resolve_current_turn()
+		corporation_market = self.c.corporationmarket_set.get(market=cm.market, turn=self.g.current_turn)
+		
+		# Don't forget: because c is alone on that market, it will also get a domination bubble as soon as the market gets back up above 0
+		# That, however, is a consequence of the AfterEffects Task, and it should not
+		# @Neamar: should we remove that behaviour, or integrate it into UpdateBubblesTask ?
+		self.assertEqual(self.reload(self.c).assets, begin_assets_1 + 3)
+		self.assertEqual(self.reload(corporation_market).bubble_value, 1)
 
 	@override_base_corporations
 	def test_bubbles_after_effects(self):
@@ -149,9 +269,10 @@ class TaskTest(EngineTestCase):
 		# Create a positive bubble, and make c2 first
 		self.c2.update_assets(delta=differential_2, category=AssetDelta.INVISIBLE_HAND, corporationmarket=target_corporation_market_2)
 
-		# c is last, its effects will be to minimize c2 own's market
-		self.update_effect(self.c, 'on_last', "update('%s', %i, market='%s')" % (self.c2.base_corporation_slug, -2 * differential_2, target_corporation_market_2.market.name))
-		# c2 is first, its effects will be to maximize c own's market
+		# c is last, its effects will be to minimize c2's own market
+		# We have to add a '-1' to compensate the effect of the domination bubble
+		self.update_effect(self.c, 'on_last', "update('%s', %i, market='%s')" % (self.c2.base_corporation_slug, -2 * differential_2 - 1, target_corporation_market_2.market.name))
+		# c2 is first, its effects will be to maximize c's own market
 		self.update_effect(self.c2, 'on_first', "update('%s', %i, market='%s')" % (self.c.base_corporation_slug, 2 * differential_1, target_corporation_market.market.name))
 
 		pre_bubbles_assets_1 = self.c.assets
@@ -162,5 +283,5 @@ class TaskTest(EngineTestCase):
 
 		# Here, we only expect a '+1' or a '-1' because there was no negative bubble in the DB (for turn 0, since we hardcoded our update_assets).
 		self.assertEqual(self.reload(self.c).assets, pre_bubbles_assets_1 + 2 * differential_1 + 1)
-		self.assertEqual(self.reload(self.c2).assets, pre_bubbles_assets_2 - 2 * differential_2 - 1)
+		self.assertEqual(self.reload(self.c2).assets, pre_bubbles_assets_2 - 2 * differential_2 - 2)
 		self.assertEqual(self.reload(self.c3).assets, pre_bubbles_assets_3 + 1)

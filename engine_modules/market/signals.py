@@ -13,4 +13,15 @@ def unique_domination_bubble(sender, instance, **kwargs):
 	"""
 
 	if instance.bubble_value > 1:
-		raise ValidationError(u"Il ne peut pas y avoir plus d'une bulle pour le marché '%s'" % instance.market.name)
+		raise ValidationError(u"There can at most be one domination bubble for market '%s'" % instance.market.name)
+
+
+# TODO: Add a test_signal testing this
+@receiver(pre_save, sender=CorporationMarket)
+def bubble_value_ok(sender, instance, **kwargs):
+	"""
+	Check that the field "bubble_value" is either -1 (negative bubble), 0 (no bubble), or 1 (domination bubble)
+	"""
+
+	if instance.bubble_value not in [-1, 0, 1]:
+		raise ValidationError(u"A CorporationMarket should have a bubble_value of either -1 (negative bubble), 0 (no bubble), or 1 (domination bubble)")

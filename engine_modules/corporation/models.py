@@ -263,7 +263,7 @@ class Corporation(models.Model):
 	def update_assets(self, delta, category, corporationmarket):
 		"""
 		Updates market assets values, and saves the model
-		Does not actually change "assets", since it is a property, but changes on market_assets will be reflected on assets
+		Does not actually change "assets", but changes on market_assets will be reflected on assets via increase_market_assets
 		"""
 		turn = self.game.current_turn
 		corporationmarket.value += delta
