@@ -13,6 +13,8 @@ class SignalsTest(EngineTestCase):
 	def test_unique_domination_same_market_same_turn(self):
 		"""
 		A Market should only have one domination bubble per turn
+		A bubble should give a bonus or a malus of 1, so a CorporationMarket should have
+		a bubble_value of either -1, 0, or 1
 		"""
 
 		cm = self.c.get_random_corporation_market()

@@ -45,8 +45,10 @@ class AbstractBubblesTask(ResolutionTask):
 			modifiers[corporation] = 0
 
 		for nb in negative_bubbles:
-			# DEBUG
-			# print "Negative bubble on %s.%s" % (nb.corporation.base_corporation_slug, nb.market.name)
+			# DEBUG # print "Negative bubble on %s.%s" % (nb.corporation.base_corporation_slug, nb.market.name)
+			# This test differentiates corporations descending to 0, from the ones ascending to 0. The former should get a negative bubble, the latter shouldn't,
+			# because the negative bubble are an incentive to get that market back up. If you get it back up to 0, your previous bubble is erased and you don't get a new one.
+			# Ascending corporations have a bublle value of -1 because they had a negative bubble last turn, the others do not
 			if nb.bubble_value == 0 or nb.value < 0:
 				nb.update_bubble(-1)
 				nb.save()
@@ -137,7 +139,8 @@ class UpdateBubblesAfterEffectsTask(AbstractBubblesTask):
 
 	def run(self, game):
 
-		print "----------------------- After effects -------------------------"
+		# DEBUG
+		# print "----------------------- After effects -------------------------"
 		super(UpdateBubblesAfterEffectsTask, self).run(game, after_effects=True)
 		return
 

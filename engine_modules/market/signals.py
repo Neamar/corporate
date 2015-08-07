@@ -2,6 +2,7 @@
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
 from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 
 from engine_modules.market.models import CorporationMarket
 
@@ -24,4 +25,4 @@ def bubble_value_ok(sender, instance, **kwargs):
 	"""
 
 	if instance.bubble_value not in [-1, 0, 1]:
-		raise ValidationError(u"A CorporationMarket should have a bubble_value of either -1 (negative bubble), 0 (no bubble), or 1 (domination bubble)")
+		raise IntegrityError(u"A CorporationMarket should have a bubble_value of either -1 (negative bubble), 0 (no bubble), or 1 (domination bubble)")
