@@ -35,7 +35,7 @@ def try_import(package, name, default=None):
 
 for app in settings.INSTALLED_APPS:
 	# Only scan engine_modules app
-	if not app.startswith('engine_modules.'):
+	if not app.startswith('engine_modules.') and not (app == 'logs'):
 		continue
 
 	orders_list += try_import("%s.models" % app, 'orders', [])
