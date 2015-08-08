@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 from django.db import models
 from engine.models import Game
 
@@ -76,8 +77,17 @@ class Log(models.Model):
 		Game.VOTE_SECURITY,
 		Game.VOTE_CONTRAT]
 
-	def get_display(self, type):
-		return "GET DISPLAY %s: %s" % (type, self.data)
+	def get_display(self, type, display_context, isPersonal=False):
+		if isPersonal:
+			pathPersonal = 'personal'
+		else:
+			pathPersonal = 'not_personal'
+		file_name = self.event_type
+		messages_context = json.loads(self.data)
+		path = 'logs/%s/%s/%s.md' % (pathPersonal, display_context, file_name.lower())
+		template = get_template(path)
+		text, other = template.render(messages_context)
+		return "GET DISPLAY %s: %s" % (type, text)
 
 
 class ConcernedPlayer(models.Model):
