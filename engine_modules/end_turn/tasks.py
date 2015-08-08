@@ -11,7 +11,7 @@ class MoneyInformationTask(ResolutionTask):
 
 	def run(self, game):
 		"""
-		Raise an event on each player
+		Create an event on each player
 		"""
 		all_players = Player.objects.filter(game=game)
 
