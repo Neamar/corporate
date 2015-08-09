@@ -57,7 +57,7 @@ class AbstractBubblesTask(ResolutionTask):
 					modifiers[nb.corporation] += nb.update_bubble(-1)
 					if after_effects:
 						# This bubble did not exist last turn, log its creation
-						game.add_event(event_type=game.GAIN_DRY_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, corporation=nb.corporation, corporationmarket=nb)
+						game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, corporation=nb.corporation, corporationmarket=nb)
 			else:
 				# This CorporationMarket had a negative bubble, and came back up: don't shoot the ambulance, actually, help it a bit
 				# We do not have to log the bubble popping, it will be logged later, because we haven't removed it from previous_negative_bubbles
@@ -84,7 +84,7 @@ class AbstractBubblesTask(ResolutionTask):
 				pnb.save()
 
 			if after_effects:
-				game.add_event(event_type=game.LOSE_DRY_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, corporation=pnb.corporation, corporationmarket=pnb)
+				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, corporation=pnb.corporation, corporationmarket=pnb)
 
 		for pb in positive_bubbles.values():
 			for ppb in previous_positive_bubbles:
