@@ -26,7 +26,7 @@ class CorporationMarket(models.Model):
 	DOMINATION_BUBBLE = 1
 	NO_BUBBLE = 0
 	NEGATIVE_BUBBLE = -1
-	BUBBLE_CHOICES = (
+	BUBBLE_VALUES = (
 		(DOMINATION_BUBBLE, 'Bulle de domination'),
 		(NO_BUBBLE, 'Pas de bulle'),
 		(NEGATIVE_BUBBLE, 'Bulle négative')
@@ -42,7 +42,7 @@ class CorporationMarket(models.Model):
 	# This should greatly simplify the DB requests for the CorporationMarkets that have a bubble
 	value = models.SmallIntegerField()
 	# bubble_value should only be modified through the update_bubble() method
-	bubble_value = models.SmallIntegerField(choices=BUBBLE_CHOICES, default=NO_BUBBLE)
+	bubble_value = models.SmallIntegerField(choices=BUBBLE_VALUES, default=NO_BUBBLE)
 
 	def update_bubble(self, value):
 		"""

@@ -54,14 +54,14 @@ class AbstractBubblesTask(ResolutionTask):
 						previous_negative_bubbles.remove(pnb)
 						break
 				else:
-					modifiers[nb.corporation] += nb.update_bubble(-1)
+					modifiers[nb.corporation] += nb.update_bubble(CorporationMarket.NEGATIVE_BUBBLE)
 					if after_effects:
 						# This bubble did not exist last turn, log its creation
 						game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, corporation=nb.corporation, corporationmarket=nb)
 			else:
 				# This CorporationMarket had a negative bubble, and came back up: don't shoot the ambulance, actually, help it a bit
 				# We do not have to log the bubble popping, it will be logged later, because we haven't removed it from previous_negative_bubbles
-				modifiers[nb.corporation] += nb.update_bubble(0)
+				modifiers[nb.corporation] += nb.update_bubble(CorporationMarket.NO_BUBBLE)
 
 				# We have to check whether that corporation has a domination bubble by getting back up to 1 because a negative bubble disappeared.
 				# That is only possible if the max_val for this market is None, because the query calculating it has a .exclude(value__lte=0) clause.
@@ -80,7 +80,7 @@ class AbstractBubblesTask(ResolutionTask):
 		for pnb in previous_negative_bubbles:
 			if pnb.value > 0 and pnb.value != max_vals[pnb.market.name]:
 				# We handled the other cases in the negative_bubbles loop or we will handle it in the positive_bubble loop
-				modifiers[pnb.corporation] += pnb.update_bubble(0)
+				modifiers[pnb.corporation] += pnb.update_bubble(CorporationMarket.NO_BUBBLE)
 				pnb.save()
 
 			if after_effects:
@@ -93,7 +93,7 @@ class AbstractBubblesTask(ResolutionTask):
 					previous_positive_bubbles.remove(ppb)
 					break
 			else:
-				modifiers[pb.corporation] += pb.update_bubble(1)
+				modifiers[pb.corporation] += pb.update_bubble(CorporationMarket.DOMINATION_BUBBLE)
 				if after_effects:
 					# This bubble did not exist last turn, log its creation
 					game.add_event(event_type=game.GAIN_DOMINATION_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, corporation=pb.corporation, corporationmarket=pb)
@@ -101,7 +101,7 @@ class AbstractBubblesTask(ResolutionTask):
 		for ppb in previous_positive_bubbles:
 			if ppb.value > 0:
 				# We already handled the other cases in the negative_bubble loop
-				modifiers[ppb.corporation] += ppb.update_bubble(0)
+				modifiers[ppb.corporation] += ppb.update_bubble(CorporationMarket.NO_BUBBLE)
 				ppb.save()
 
 			if after_effects:

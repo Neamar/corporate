@@ -24,5 +24,5 @@ def bubble_value_ok(sender, instance, **kwargs):
 	Check that the field "bubble_value" is either -1 (negative bubble), 0 (no bubble), or 1 (domination bubble)
 	"""
 
-	if instance.bubble_value not in [-1, 0, 1]:
+	if instance.bubble_value not in (c[0] for c in CorporationMarket.BUBBLE_VALUES):
 		raise IntegrityError(u"A CorporationMarket should have a bubble_value of either -1 (negative bubble), 0 (no bubble), or 1 (domination bubble)")
