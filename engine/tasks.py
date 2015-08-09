@@ -1,4 +1,15 @@
-class ResolutionTask:
+class InitTask:
+	"""
+	An abstract task to call during initialization
+	"""
+	RESOLUTION_ORDER = 0
+
+	def run(self, game):
+		raise NotImplementedError("Abstract call.")
+
+
+# This has to be a new-style class in order to be able to use super()
+class ResolutionTask(object):
 	"""
 	An abstract task to call during resolution
 	"""

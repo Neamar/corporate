@@ -20,7 +20,39 @@
 <body>
 <h1 class="main-logo"><a href="/">Corporate Game</a></h1>
 <div class="grid-container main-container">
+{% comment %}
+	<div id="wrapper">
+		<div id="sidebar">
+			<ul class="general">
+				<li><a href="{% url 'website.views.index.index' %}">accueil</a></li>
+				<li><a href="{% url 'docs.views.index' page='' %}">docs</a></li>
+			{% if not user.is_authenticated %}
+				<li><a href="{% url 'django.contrib.auth.views.login' %}">login</a></li>
+				<li><a href="{% url 'website.views.index.signup' %}">inscription</a></li>
+			{% endif %}
+			</ul>
 
+			{% if user.is_authenticated %}
+			{% if game %}
+			<ul class="game">
+				<li><a href="{% url 'website.views.orders.orders' game_id=game.pk %}">ordres</a></li>
+			</ul>
+
+			<ul class="data">
+				<li><a href="{% url 'website.views.data.wallstreet' game_id=game.pk %}">wall street</a></li>
+				<li><a href="{% url 'website.views.data.players' game_id=game.pk %}">joueurs</a></li>
+				<li><a href="{% url 'website.views.data.shares' game_id=game.pk %}">parts</a></li>
+			</ul>
+			{% else %}
+			<ul class="game">
+				{% for player in user.player_set.all %}
+				<li><a href="{% url 'website.views.data.wallstreet' game_id=player.game_id %}">{{ player.game.city }}</a></li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+			{% endif %}
+		</div>
+{% endcomment %}
 	<section class="content-container">
 		<ul class="menu">
 		{% if game.id != None %}

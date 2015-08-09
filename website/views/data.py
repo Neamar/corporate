@@ -1,14 +1,12 @@
 from __future__ import absolute_import
-from collections import OrderedDict
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
 
-from engine_modules.share.models import Share
 from engine_modules.corporation.models import Corporation
-from engine_modules.corporation_asset_history.models import AssetHistory
-from engine.models import Player
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
+from engine.models import Player
+from engine_modules.share.models import Share
 from website.utils import get_shares_count, is_top_shareholder
 from utils.read_markdown import parse_markdown
 from logs.models import Logs
@@ -24,47 +22,14 @@ def wallstreet(request, game, player, turn):
 	Wallstreet data
 	"""
 
-	# Table data
+	ranking = []
 	corporations = game.get_ladder(turn=turn - 1)
-	delta_categories = {}
-
-	assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 1)
-	assets_hash = {ah.corporation_id: ah.assets for ah in assets}
-
 	for corporation in corporations:
-		corporation.current_assets = assets_hash[corporation.pk]
-
-	# Insert last turn assets
-	last_assets = AssetHistory.objects.filter(corporation__game=game, turn=turn - 2)
-	last_assets_hash = {ah.corporation_id: ah.assets for ah in last_assets}
-
-	for corporation in corporations:
-		corporation.last_assets = last_assets_hash[corporation.pk] if turn > 1 else None
-
-		detailed_delta = corporation.assetdelta_set.filter(turn=turn - 1).order_by('category')
-		for detail in detailed_delta:
-			if turn > 1:
-				setattr(corporation, detail.category, getattr(corporation, detail.category, 0) + detail.delta)
-				delta_categories[detail.category] = detail.get_category_display()
-				unknown = corporation.current_assets - corporation.last_assets - sum([ad.delta for ad in detailed_delta])
-			else:
-				setattr(corporation, detail.category, None)
-				unknown = None
-			setattr(corporation, 'unknown', unknown if unknown != 0 else "")
-
-	delta_categories['unknown'] = '?'
-
-	# Graph data
-	sorted_corporations = sorted(corporations, key=lambda c: c.base_corporation_slug)
-	assets_history = AssetHistory.objects.filter(corporation__game=game, turn__lte=turn).order_by('turn', 'corporation')
+		corporation_markets = corporation.get_corporation_markets(turn - 1).order_by('market__name')
+		ranking.append((corporation, corporation_markets))
 
 	return {
 		"corporations": corporations,
-		"assets_history": assets_history,
-		"sorted_corporations": sorted_corporations,
-		"delta_categories": OrderedDict(sorted(delta_categories.items())),
-		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
-		"turn": turn,
 		"request": request,
 	}
 

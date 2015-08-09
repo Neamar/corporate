@@ -11,6 +11,11 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AddField(
+            model_name='corporationmarket',
+            name='bubble_value',
+            field=models.SmallIntegerField(default=0),
+        ),
         migrations.AlterField(
             model_name='corporationmarket',
             name='turn',
