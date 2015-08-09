@@ -39,9 +39,22 @@ class CorporationMarket(models.Model):
 	def update_bubble(self, value):
 		"""
 		update the bubble_value field and keep the value field consistent
+		We'll internalize some of the considerations when you cross the 0 threshold in a direction or the other
+		Because of that, we have to return the amount by which self.bubble_value actually changed, which may be different from the amount requested
 		"""
+
+		previous_bubble_value = self.bubble_value
+		# We have to specially handle the case where the resulting value would be 0
 		self.value += (value - self.bubble_value)
+		# You can't go into negative values unless you have a negative bubble
+		if value > -1:
+			self.value = max(self.value, 0)
 		self.bubble_value = value
+		if self.value == 0 and previous_bubble_value != 0:
+			self.value -= 1
+			self.bubble_value -= 1
+		self.save()
+		return self.bubble_value - previous_bubble_value
 
 	def __unicode__(self):
 		return u"%s de %s" % (self.market, self.corporation)
