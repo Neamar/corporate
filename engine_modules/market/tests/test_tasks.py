@@ -24,7 +24,6 @@ class TaskTest(EngineTestCase):
 		Test that the CorporationMarkets are correct for different turns
 		"""
 
-		return
 		# For this test, we should disable bubbles
 		del self.g.force_bubbles
 		self.g.save()
@@ -56,7 +55,6 @@ class TaskTest(EngineTestCase):
 		WARNING: this test only works on the prerequisite that every corporation has one and only one corporation-specific Market and that all markets have the same value.
 		"""
 
-		return
 		begin_assets_1 = self.c.assets
 		begin_assets_2 = self.c2.assets
 		begin_assets_3 = self.c3.assets
@@ -72,7 +70,6 @@ class TaskTest(EngineTestCase):
 		A corporation with a domination should see its assets augmented by 1, even if there are competitors
 		"""
 
-		return
 		common_corporation_markets_1_2 = self.c.get_common_corporation_markets(self.c2)
 		common_corporation_markets_1_3 = self.c.get_common_corporation_markets(self.c3)
 
@@ -100,7 +97,6 @@ class TaskTest(EngineTestCase):
 		A corporation with a market_asset at 0 (so negative bubble) should see its assets diminished by 1
 		"""
 
-		return
 		begin_assets_1 = self.c.assets
 		corporation_markets = self.c.corporation_markets
 		markets_2 = self.c2.markets
@@ -124,7 +120,6 @@ class TaskTest(EngineTestCase):
 		A corporation that had a domination bubble whose assets in the Market then dropped below (or at the level of) another's should see its bubble removed
 		"""
 
-		return
 		# Resolve so that the bubble on the corporation-specific market is not taken into account
 		self.g.resolve_current_turn()
 		begin_assets_1 = self.reload(self.c).assets
@@ -152,7 +147,6 @@ class TaskTest(EngineTestCase):
 		A corporation that had a negative bubble whose assets in the Market then went up above 0 should see its bubble removed
 		"""
 
-		return
 		# Resolve so that the bubble on the corporation-specific market is not taken into account
 		self.g.resolve_current_turn()
 		begin_assets_1 = self.reload(self.c).assets
@@ -183,7 +177,6 @@ class TaskTest(EngineTestCase):
 		This test test bubble_value directly, so it is a bit more implementation-specific
 		"""
 
-		return
 		# Resolve so that the bubble on the corporation-specific market is not taken into account
 		self.g.resolve_current_turn()
 		# The Market with a bubble must not be the one that is Corporation-specific, because that one has one anyway (unless it is 0, but then it has a negative bubble)
@@ -210,7 +203,6 @@ class TaskTest(EngineTestCase):
 		You then get a 2-increment boost instead of 1
 		"""
 
-		return
 		# Reevalutaion of the bubbles after the first/last effects should not have an effect but it could mask errors, so let's disable it
 		self.g.disable_bubble_reevaluation = True
 		self.g.save()
@@ -248,7 +240,6 @@ class TaskTest(EngineTestCase):
 		should get a negative bubble and end up with a value of -1
 		"""
 
-		return
 		# Reevalutaion of the bubbles after the first/last effects should not have an effect but it could mask errors, so let's disable it
 		self.g.disable_bubble_reevaluation = True
 		self.g.save()
@@ -285,7 +276,6 @@ class TaskTest(EngineTestCase):
 		So none of them should get the domination bubble.
 		"""
 
-		return
 		# Reevalutaion of the bubbles after the first/last effects should not have an effect but it could mask errors, so let's disable it
 		self.g.disable_bubble_reevaluation = True
 		self.g.save()

@@ -234,12 +234,12 @@ class Corporation(models.Model):
 	def on_crash_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
 
-	def update_modifier(self, value=0):
+	def update_modifier(self, delta=0):
 		"""
-		Updates assets_modifier value, in/decreasing it by given value and saves the model
+		Updates assets_modifier value, in/decreasing it by given delta and saves the model
 		Must be used for all modifications on assets_modifier, because it enforces assets = market_assets + asset_modifier
 		"""
-		self.assets_modifier += value
+		self.assets_modifier += delta
 		self.assets = self.market_assets + self.assets_modifier
 		self.save()
 

@@ -23,6 +23,14 @@ class CorporationMarket(models.Model):
 	class Meta:
 		ordering = ['corporation', 'market']
 
+	DOMINATION_BUBBLE = 1
+	NO_BUBBLE = 0
+	NEGATIVE_BUBBLE = -1
+	BUBBLE_CHOICES = (
+		(DOMINATION_BUBBLE, 'Bulle de domination'),
+		(NO_BUBBLE, 'Pas de bulle'),
+		(NEGATIVE_BUBBLE, 'Bulle négative')
+	)
 	corporation = models.ForeignKey("corporation.Corporation")
 	market = models.ForeignKey(Market)
 	# At the end of turn n, the CorporationMarket object with turn n has the values at end of turn,
@@ -34,7 +42,7 @@ class CorporationMarket(models.Model):
 	# This should greatly simplify the DB requests for the CorporationMarkets that have a bubble
 	value = models.SmallIntegerField()
 	# bubble_value should only be modified through the update_bubble() method
-	bubble_value = models.SmallIntegerField(default=0)
+	bubble_value = models.SmallIntegerField(choices=BUBBLE_CHOICES, default=NO_BUBBLE)
 
 	def update_bubble(self, value):
 		"""
