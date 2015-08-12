@@ -8,7 +8,8 @@ class InitTask:
 		raise NotImplementedError("Abstract call.")
 
 
-class ResolutionTask:
+# This has to be a new-style class in order to be able to use super()
+class ResolutionTask(object):
 	"""
 	An abstract task to call during resolution
 	"""
