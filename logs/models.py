@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
 from django.db import models
+from django.conf import settings
+from django.template import Template, Context
 from engine.models import Game
+from utils.read_markdown import read_markdown
 
 
 class Log(models.Model):
@@ -77,17 +80,25 @@ class Log(models.Model):
 		Game.VOTE_SECURITY,
 		Game.VOTE_CONTRAT]
 
-	def get_display(self, type, display_context, isPersonal=False):
-		if isPersonal:
-			pathPersonal = 'personal'
+	CONTEXT_CORPORATION = "corporation"
+	CONTEXT_CORPORATION_MARKET = "corporation_market"
+	CONTEXT_CORPORATION_PLAYER = "player"
+
+	def get_display(self, display_context, is_personal=False):
+		"""
+		Return a formatted string with the Log values, according to is_personal (are we displaying this for the player who triggered the action ?) and display_context (is the reader already aware of the corporation? The corporationmarket?)
+		"""
+		if is_personal:
+			path_personal = 'personal'
 		else:
-			pathPersonal = 'not_personal'
+			path_personal = 'not_personal'
 		file_name = self.event_type
-		messages_context = json.loads(self.data)
-		path = 'logs/%s/%s/%s.md' % (pathPersonal, display_context, file_name.lower())
-		template = get_template(path)
-		text, other = template.render(messages_context)
-		return "GET DISPLAY %s: %s" % (type, text)
+		context = Context(json.loads(self.data))
+		path = '%s/logs/templates/logs/%s/%s/%s.md' % (settings.BASE_DIR, path_personal, display_context, file_name.lower())
+		raw_template, _ = read_markdown(path)
+		template = Template(raw_template)
+		text = template.render(context)
+		return text
 
 
 class ConcernedPlayer(models.Model):
