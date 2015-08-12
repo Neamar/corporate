@@ -156,16 +156,16 @@ class DIncLineCPUBTask(ResolutionTask):
 		for o in win_votes:
 			for c in o.get_friendly_corporations():
 				# increase a market by 1 asset at random
-				corporationmarket = c.get_random_corporation_market()
-				c.update_assets(1, category=AssetDelta.DINC, corporationmarket=corporationmarket)
-				game.add_event(event_type=Game.EFFECT_CONTRAT_UP, data={"market": corporationmarket.market.name}, delta=1, corporation=c, corporationmarket=corporationmarket)
+				corporation_market = c.get_random_corporation_market()
+				c.update_assets(1, category=AssetDelta.DINC, corporation_market=corporation_market)
+				game.add_event(event_type=Game.EFFECT_CONTRAT_UP, data={"market": corporation_market.market.name}, delta=1, corporation=c, corporation_market=corporation_market)
 
 		loss_votes = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=DIncVoteOrder.RSEC)
 		for o in loss_votes:
 			for c in o.get_friendly_corporations():
 				# decrease a market by 1 asset at random
-				corporationmarket = c.get_random_corporation_market()
-				c.update_assets(-1, category=AssetDelta.DINC, corporationmarket=c.get_random_corporation_market())
-				game.add_event(event_type=Game.EFFECT_CONTRAT_DOWN, data={"market": corporationmarket.market.name}, delta=-1, corporation=c, corporationmarket=corporationmarket)
+				corporation_market = c.get_random_corporation_market()
+				c.update_assets(-1, category=AssetDelta.DINC, corporation_market=c.get_random_corporation_market())
+				game.add_event(event_type=Game.EFFECT_CONTRAT_DOWN, data={"market": corporation_market.market.name}, delta=-1, corporation=c, corporation_market=corporation_market)
 
 tasks = (DIncVoteTask, DIncLineCPUBTask)

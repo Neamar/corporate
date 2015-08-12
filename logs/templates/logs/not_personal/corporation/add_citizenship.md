@@ -1,0 +1,2 @@
+ {{ player }} est maintenant citoyen
+ 

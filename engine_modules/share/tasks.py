@@ -17,7 +17,8 @@ class DividendTask(ResolutionTask):
 	"""
 	SHARE_BASE_VALUE = 50
 	FIRST_BONUS = 1.5
-	LAST_BONUS = 0.5
+	# To avoid double penalty and to simplfy the game, we removed last bonus
+	LAST_BONUS = 1
 
 	RESOLUTION_ORDER = 800
 
@@ -49,8 +50,10 @@ class DividendTask(ResolutionTask):
 			if share.corporation == ladder[-1]:
 				dividend *= self.LAST_BONUS
 
-			dividend = int(dividend)
-			share.player.money += dividend
-			share.player.save()
+			# If the corporation hasn't crashed. We test it here because the corporation really collapse at resoltuion_order 1000. At this time, asset may be negative
+			if dividend > 0:
+				dividend = int(dividend)
+				share.player.money += dividend
+				share.player.save()
 
 tasks = (BuyShareTask, DividendTask)

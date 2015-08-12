@@ -1,6 +1,6 @@
 from django import template
 from django.template.loader import get_template
-from logs.models import Logs
+from logs.models import Log
 from django.conf import settings
 
 from engine_modules.detroit_inc.models import DIncVoteOrder
@@ -16,7 +16,7 @@ def players_pod(context):
 	players = context['game'].player_set.all()
 
 	for player in players:
-		player.events = Logs.objects.for_player(player=player, asking_player=context['player'], turn=context['turn'])
+		player.events = Log.objects.for_player(player=player, asking_player=context['player'], turn=context['turn'])
 	return {
 		'players': players
 	}

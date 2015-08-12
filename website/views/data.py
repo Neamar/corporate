@@ -9,7 +9,7 @@ from engine.models import Player
 from engine_modules.share.models import Share
 from website.utils import get_shares_count, is_top_shareholder
 from utils.read_markdown import parse_markdown
-from logs.models import Logs
+from logs.models import Log
 
 
 @login_required
@@ -66,7 +66,7 @@ def corporation(request, player, game, corporation_slug, turn):
 	assets_history = corporation.assethistory_set.all()
 
 	for corporation_market in previous_corporation_markets:
-		corporation_market.events = Logs.objects.for_corporation_market(corporation_market, player)
+		corporation_market.events = Log.objects.for_corporation_market(corporation_market, player)
 
 	return {
 		"corporation": corporation,
@@ -137,7 +137,7 @@ def player(request, player, game, player_id, turn):
 	rp, _ = parse_markdown(player.rp)
 	rp = mark_safe(rp)
 
-	events = Logs.objects.for_player(player=player_profile, asking_player=player, turn=turn)
+	events = Log.objects.for_player(player=player_profile, asking_player=player, turn=turn)
 
 	return {
 		"player_profile": player_profile,
