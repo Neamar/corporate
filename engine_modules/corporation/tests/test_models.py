@@ -24,7 +24,7 @@ class ModelMethodTest(EngineTestCase):
 		initial_corporation_assets = self.c.assets
 		initial_market_assets = corporation_market.value
 
-		self.c.update_assets(-1, corporationmarket=corporation_market, category=AssetDelta.EFFECT_FIRST)
+		self.c.update_assets(-1, corporation_market=corporation_market, category=AssetDelta.EFFECT_FIRST)
 
 		self.assertEqual(self.reload(self.c).assets, initial_corporation_assets - 1)
 		self.assertEqual(self.reload(corporation_market).value, initial_market_assets - 1)
