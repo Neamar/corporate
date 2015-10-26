@@ -21,12 +21,14 @@
 	<div class="corporation-markets">
 	{% for corporation_market in entry.1 %}
 		<div class="corporation-market">
-			<img src="{{ STATIC_URL }}{{ CITY }}/markets/{{ corporation_market.market.name}}.png" title={{ corporation_market.market.name }} />
-			<span class="corporation-market-value">{{ corporation_market.value }}</span>
+			<h3><svg role="img" class="svg-rules svg--small svg--white" title="{{ corporation_market.market.name }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg> {{ corporation_market.market.name }}</h3>
+<!--			<img src="{{ STATIC_URL }}{{ CITY }}/markets/{{ corporation_market.market.name}}.png" title={{ corporation_market.market.name }} />
+-->			<span class="corporation-market-value">{{ corporation_market.value }}</span>
 			<span class="corporation-market-bubble">{{ corporation_market.bubble_value }}</span>
 		</div>
 	{% endfor %}
 	</div>
+	{% include "logs/advanced.html" with events=entry.2 %}
 </section>
 {% endfor %}
 
