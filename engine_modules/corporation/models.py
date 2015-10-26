@@ -92,7 +92,12 @@ class Corporation(models.Model):
 		ordering = ['base_corporation_slug']
 
 	base_corporation_slug = models.CharField(max_length=20)
-	game = models.ForeignKey(Game)
+	# We change the related name of game object so we can do game.all_corporation_set to get all the corporation and game.corporation_set to have only a filtered queryset
+	# Note that corporation_set is defined on the game as all_corporation_set.filter...
+	game = models.ForeignKey(
+		Game,
+		related_name="all_corporation_set"
+	)
 	# assets, market_assets and assets_modifier are meant to keep track of the bubbles:
 	# - market_assets stands for the total of the assets in the Corporation's markets disregarding bubbles.
 	# - assets_modifier stands for the bonuses and maluses originating from domination on a market, or having a market at 0 asset.
@@ -100,6 +105,10 @@ class Corporation(models.Model):
 	assets = models.SmallIntegerField()
 	market_assets = models.SmallIntegerField()
 	assets_modifier = models.SmallIntegerField(default=0)
+	# We do a logical delete rather than a real one to avoid reference problems to a crashed corporation
+	# Furthermore, we save the turn a corporation have crashed in order to continue seeing it at a turn
+	# In the game, corporation_set will be overwrite to filter on corporation that hasn't crashed yet plus coproration that crashed this turn
+	crash_turn = models.SmallIntegerField(null=True, blank=True)
 
 	@property
 	def corporation_markets(self):
@@ -191,9 +200,9 @@ class Corporation(models.Model):
 			Updates corporation's assets by delta, in Market market if specified, or a Market at random otherwise
 			"""
 			if isinstance(corporation, str):
-				# Try / catch if corporation crashed
+				# Try / catch if corporation does not exists
 				try:
-					corporation = self.game.corporation_set.get(base_corporation_slug=corporation)
+					corporation = self.game.corporation_set.get(base_corporation_slug=corporation, crash_turn=None)
 				except Corporation.DoesNotExist:
 					return
 

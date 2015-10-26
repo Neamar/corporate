@@ -36,6 +36,8 @@ class CorporationRunOrder(RunOrder):
 
 	def get_form(self, data=None):
 		form = super(CorporationRunOrder, self).get_form(data)
+		# TODO : remove crashed corporations
+		# TODO : remove negatice or 0 corporationMarket for sabotage
 		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn)
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 

@@ -36,9 +36,11 @@ def get_ladder(self, turn=None):
 
 	# We're asking for a ladder on a turn where the AssetHistory have not been written yet
 	if turn > self.current_turn:
-		actual = Corporation.objects.filter(game=self)
+		actual = self.corporation_set.all()
 		for element in actual:
 			ranking[element] += element.assets * pow(10, 2 * self.current_turn)
+
+	# TODO : remove all corporations that are crashed last turn
 
 	ordered_corporation = sorted(ranking, key=lambda c: ranking[c], reverse=True)
 	return ordered_corporation

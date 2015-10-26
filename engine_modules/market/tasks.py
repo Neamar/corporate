@@ -9,6 +9,9 @@ from engine_modules.market.models import Market, CorporationMarket
 class AbstractBubblesTask(ResolutionTask):
 	"""
 	This is an abstract class for the updating of Bubbles, it should be inherited from, but not used
+
+	TODO : actual logging does not work. It just create logs for difference between the state before first/Last/crash effects and after first/last/crash effect.
+	We must create a log function that looks between end of last turn and after first/last/crash effect. Most of the time it will be the same.
 	"""
 
 	def run(self, game, after_effects=False):
@@ -21,16 +24,22 @@ class AbstractBubblesTask(ResolutionTask):
 		# even if other Corporations were to have even lower assets on this Market. This might seem redundant because Markets are not supposed to have negative values,
 		# but if that changes (unlikely), this'll be ready. It means '0' CANNOT be a superposed state for 'bubble_value', so we don't need 2 fields (for positive and negative bubbles)
 		# get all negative bubbles, in alphabetical order of the name of the Market on which they apply
-		negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, value__lte=0).order_by('market__name'))
 		# Turn everything to list, because QuerySets don't have a 'remove' method
+
+		# TODO : remove positive bubbles of all crashed corporations
+
+		negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, value__lte=0).order_by('market__name'))
 		previous_negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=-1).order_by('market__name'))
+
 		# Now get all positive bubbles. We annotate the CorporationMarkets with the field 'maxval', containing the maximal value across all
 		positive_bubbles = {}
 		max_vals = {}
 		for market in Market.objects.all():
+			# TODO : filter on CorporationMarket with corporation not crashed (with attribute crash_turn = none). A crashed corporation can't have a positive bubble
 			max_vals[market.name] = CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, market=market).exclude(value__lte=0).aggregate(maximum=Max('value'))['maximum']
 			if max_vals[market.name] is not None:
 				try:
+					# TODO : filter on CorporationMarket with corporation not crashed (with attribute crash_turn = none). A crashed corporation can't have a positive bubble
 					positive_bubbles[market.name] = CorporationMarket.objects.get(corporation__game=game, turn=game.current_turn, market=market, value=max_vals[market.name])
 				except:
 					# There were several corporations tied for first
@@ -146,6 +155,7 @@ class ReplicateCorporationMarketsTask(ResolutionTask):
 	def run(self, game):
 
 		# On next turn, these will stand for the beginning values
+		# TODO : remove all the corporationMarkets form crashed corporation on the filter
 		corporation_markets = CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn)
 		new_corporation_markets = []
 		for corporation_market in corporation_markets:
