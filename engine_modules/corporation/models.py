@@ -194,11 +194,11 @@ class Corporation(models.Model):
 
 			if market is None:
 				# By default, a random market is impacted
-				corporationmarket = corporation.get_random_corporation_market()
+				corporation_market = corporation.get_random_corporation_market()
 			else:
-				corporationmarket = corporation.corporationmarket_set.get(market__name=market, turn=self.game.current_turn)
+				corporation_market = corporation.corporationmarket_set.get(market__name=market, turn=self.game.current_turn)
 
-			corporation.update_assets(delta, category=delta_category, corporationmarket=corporationmarket)
+			corporation.update_assets(delta, category=delta_category, corporation_market=corporation_market)
 
 			# create a event_type
 			if delta_category == AssetDelta.EFFECT_FIRST:
@@ -210,7 +210,7 @@ class Corporation(models.Model):
 			else:
 				raise Exception("Unknown category of effect : %s" % (delta_category))
 
-			self.game.add_event(event_type=event_type, data={"triggered_corporation": self.base_corporation.name, "delta": delta, "abs_delta": abs(delta), "market": corporationmarket.market.name, "corporation": corporation.base_corporation.name}, delta=delta, corporation=corporation, corporationmarket=corporationmarket)
+			self.game.add_event(event_type=event_type, data={"triggered_corporation": self.base_corporation.name, "delta": delta, "abs_delta": abs(delta), "market": corporation_market.market.name, "corporation": corporation.base_corporation.name}, delta=delta, corporation=corporation, corporation_market=corporation_market)
 
 		context = {
 			'game': self.game,
@@ -255,14 +255,14 @@ class Corporation(models.Model):
 		self.assets = self.market_assets + self.assets_modifier
 		self.save()
 
-	def update_assets(self, delta, category, corporationmarket):
+	def update_assets(self, delta, category, corporation_market):
 		"""
 		Updates market assets values, and saves the model
 		Does not actually change "assets", but changes on market_assets will be reflected on assets via increase_market_assets
 		"""
 		turn = self.game.current_turn
-		corporationmarket.value += delta
-		corporationmarket.save()
+		corporation_market.value += delta
+		corporation_market.save()
 
 		# Mirror changes on market assets
 		self.increase_market_assets(delta)

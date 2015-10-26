@@ -18,14 +18,14 @@ class VoteOrder(Order):
 
 	def resolve(self):
 		# apply the effect voice up
-		self.corporation_market_up.corporation.update_assets(1, corporationmarket=self.corporation_market_up, category=AssetDelta.VOTES)
+		self.corporation_market_up.corporation.update_assets(1, corporation_market=self.corporation_market_up, category=AssetDelta.VOTES)
 		# Create the game event
-		self.corporation_market_up.corporation.game.add_event(event_type=Game.VOICE_UP, data={"player": self.player.name, "corporation": self.corporation_market_up.corporation.base_corporation.name, "market": self.corporation_market_up.market.name}, delta=1, corporation=self.corporation_market_up.corporation, corporationmarket=self.corporation_market_up, players=[self.player])
+		self.corporation_market_up.corporation.game.add_event(event_type=Game.VOICE_UP, data={"player": self.player.name, "corporation": self.corporation_market_up.corporation.base_corporation.name, "market": self.corporation_market_up.market.name}, delta=1, corporation=self.corporation_market_up.corporation, corporation_market=self.corporation_market_up, players=[self.player])
 
 		# apply the effect voice down
-		self.corporation_market_down.corporation.update_assets(-1, corporationmarket=self.corporation_market_down, category=AssetDelta.VOTES)
+		self.corporation_market_down.corporation.update_assets(-1, corporation_market=self.corporation_market_down, category=AssetDelta.VOTES)
 		# Create the game event
-		self.corporation_market_up.corporation.game.add_event(event_type=Game.VOICE_DOWN, data={"player": self.player.name, "corporation": self.corporation_market_down.corporation.base_corporation.name, "market": self.corporation_market_down.market.name}, delta=-1, corporation=self.corporation_market_down.corporation, corporationmarket=self.corporation_market_down, players=[self.player])
+		self.corporation_market_up.corporation.game.add_event(event_type=Game.VOICE_DOWN, data={"player": self.player.name, "corporation": self.corporation_market_down.corporation.base_corporation.name, "market": self.corporation_market_down.market.name}, delta=-1, corporation=self.corporation_market_down.corporation, corporation_market=self.corporation_market_down, players=[self.player])
 
 	def description(self):
 		return u"Voter pour l'augmentation des actifs du marché %s de %s et la diminution du marché %s de %s" % (self.corporation_market_up.market, self.corporation_market_up.corporation.base_corporation.name, self.corporation_market_down.market, self.corporation_market_down.corporation.base_corporation.name)
