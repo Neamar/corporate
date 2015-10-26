@@ -1,3 +1,4 @@
+
 {% extends "template.html" %}
 
 {% block title %}{{ corporation.base_corporation.name }}{% endblock %}
@@ -9,7 +10,8 @@
 <ul>
 {% for corporation_market in corporation_markets %}
 	<li>
-		<h3>{{ corporation_market.market.name }}</h3>
+		<h3><svg role="img" class="svg-rules svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg> {{ corporation_market.market.name }}</h3>
+
 		{% include "logs/advanced.html" with events=corporation_market.events %}
 	</li>
 {% endfor %}

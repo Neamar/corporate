@@ -2,7 +2,7 @@ name: Impulse
 markets:
     aérospatiale: 1
     robotique: 3
-    telecom: 2
+    télécom: 2
     énergie: 2
 on_first:
     update("shinsekai", -1)

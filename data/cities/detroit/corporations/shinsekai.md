@@ -4,7 +4,7 @@ markets:
     militaire: 3
     pharmaceutique: 3
     agroalimentaire: 3
-    telecom: 3
+    télécom: 3
 on_first:
     update('impulse', 1)
     update('pure', -1)
