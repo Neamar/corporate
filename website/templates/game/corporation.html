@@ -19,7 +19,7 @@
 
 <ul>
 {% for player in share_holders %}
-	<li class="{% if player.citizenship.corporation_id == corporation.pk %}citizen {% endif %}"><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}" title="Parts de {{ player.name }}"><span>{{ player.qty_share }}</span></a></li>
+	<li class="{% if player.citizenship.corporation_id == corporation.pk %}citizen {% endif %}"><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}" title="Parts de {{ player.name }}"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" /><span>{{ player.qty_share }}</span></a></li>
 {% endfor %}
 </ul>
 
@@ -40,7 +40,7 @@
 	<td> {{ value|default:"-" }}</td>
 {% endfor %}
 	<td> {{ entry.corporation.assets }}</td>
-	<td>{% for holder in entry.holders %} {{ holder.name }} {% endfor %}</td>
+	<td>{% for holder in entry.holders %} <a href="{% url "website.views.data.player" game_id=game.pk player_id=holder.pk %}" title="Parts de {{ holder.name }}"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" width="32" height="32" /></a> {% endfor %}</td>
 </tr>
 {% endfor %}
 </tbody>
@@ -48,5 +48,3 @@
 <a href="{% url "docs.views.corporation" corporation_slug=corporation.base_corporation.slug %}">voir la page de la corporation</a>
 
 {% endblock content %}
-
-
