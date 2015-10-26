@@ -105,34 +105,41 @@ max-width: 1045px;
 }
 
 .visually-hidden {
-position:absolute;
-left:-10000px;
-top:auto;
-width:1px;
-height:1px;
-overflow:hidden;
+	position:absolute;
+	left:-10000px;
+	top:auto;
+	width:1px;
+	height:1px;
+	overflow:hidden;
 }
 
 svg:not(:root) { overflow: hidden }
 
 svg use {
-width: inherit;
-height: inherit;
-display: inline-block;
+	width: inherit;
+	height: inherit;
+	display: inline-block;
 }
-.svg--medium, .svg--small  {
-display: inline-block;
+.svg--medium, .svg--small, .svg--large {
+	display: inline-block;
 }
 .svg--medium {
-height: 32px;
-width: 32px;
+	height: 32px;
+	width: 32px;
 }
 .svg--small {
-height: 16px;
-width: 16px;
+	height: 16px;
+	width: 16px;
+}
+
+.svg--large {
+	height: 48px;
+	width: 48px;
+}
+.svg--medium, .svg--small  {
 }
 .svg--white {
-fill: white;
+	fill: white;
 }
 
 

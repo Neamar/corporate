@@ -36,3 +36,4 @@ class LogTest(EngineTestCase):
 		self.assertEqual(self.l.get_display(display_context="corporation", is_personal=False), u"<p>testplayer a lancé une opé de protection sur le marché testmarket</p>")
 
 	def test_logs_retrieval_for_player(self):
+		pass
