@@ -1,14 +1,12 @@
 from __future__ import absolute_import
-from collections import OrderedDict
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count, Sum
 
-from engine_modules.share.models import Share
 from engine_modules.corporation.models import Corporation
-from engine_modules.corporation_asset_history.models import AssetHistory
-from engine.models import Player
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
+from engine.models import Player
+from engine_modules.share.models import Share
 from website.utils import get_shares_count, is_top_shareholder
 from utils.read_markdown import parse_markdown
 from logs.models import Logs
@@ -28,19 +26,17 @@ def wallstreet(request, game, player, turn):
 	# Table data
 	corporations = game.get_ladder(turn=turn - 1)
 	for corporation in corporations:
-		corporation_markets = corporation.get_corporation_markets(turn - 1).order_by('market__name').annotate(bubbles=Sum('market__bubbles__value'))
+		corporation_markets = corporation.get_corporation_markets(turn - 1).order_by('market__name')
 		ranking.append((corporation, corporation_markets))
 
-	i = 0
-	for corporation in corporations:
-		print "Corporation: %s" %corporation.base_corporation_slug
-		for cm in ranking[i][1]:
-			print "Corporation Market: %s -> %i" %(cm.market.name, cm.bubbles if cm.bubbles is not None else 99)
-		i += 1
+	print "ranking: "
+	print ranking
+
 	return {
 		"ranking": ranking,
 		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
 		"turn": turn,
+		"corporations": corporations,
 		"request": request,
 	}
 
@@ -56,7 +52,7 @@ def corporation(request, player, game, corporation_slug, turn):
 	"""
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game.pk)
 	share_holders = game.player_set.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
-	previous_corporation_markets = corporation.get_corporation_markets(turn=game.current_turn - 1)
+	previous_corporation_markets = corporation.get_corporation_markets(turn=turn - 1)
 	current_markets = corporation.markets
 	competitors = game.corporation_set.filter(corporationmarket__market__in=current_markets).distinct().order_by('base_corporation_slug')
 
@@ -64,11 +60,15 @@ def corporation(request, player, game, corporation_slug, turn):
 	for corpo in competitors:
 		assets = []
 		holders = game.player_set.filter(share__corporation__base_corporation_slug=corpo.base_corporation_slug).distinct()
-		corporation_markets = corpo.corporationmarket_set.filter(market__in=current_markets)
+		corporation_markets = corpo.corporationmarket_set.filter(market__in=current_markets, turn=turn - 1)
 		for market in current_markets:
 			assets.append(next((cm.value for cm in corporation_markets if cm.market.name == market.name), None))
-		# That's kind of a weird data structure, but the template tags are not as flexible as one might like
-		summary.append((corpo, assets, holders))
+
+		summary.append({
+			"corporation": corpo,
+			"assets": assets,
+			"holders": holders
+		})
 
 	assets_history = corporation.assethistory_set.all()
 

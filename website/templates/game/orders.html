@@ -6,7 +6,7 @@
 {% block content %}
 
 {% if existing_orders|length > 0 %}
-<table>
+<table class="order-launched">
 <thead>
 	<tr>
 		<th></th>
@@ -16,31 +16,31 @@
 </thead>
 <tfoot>
 	<tr>
-		<td colspan="4">TOTAL</td>
-		<td>{{ existing_orders_cost }}k&nbsp;¥</td>
+		<td class="total-text" colspan="4">TOTAL</td>
+		<td class="total-total">{{ existing_orders_cost }}k&nbsp;¥</td>
 	</tr>
 </tfoot>
 <tbody>
 {% for order in existing_orders %}
 <tr>
-	<td><a href="{% url "website.views.orders.delete_order" game_id=game.pk order_id=order.pk %}" title="Supprimer cet ordre">✗</a></td>
-	<td><img src="{{STATIC_URL }}orders/{{ order.name }}.png" title="{{ order.name }}"</td>
+	<td class="order-delete"><a href="{% url "website.views.orders.delete_order" game_id=game.pk order_id=order.pk %}" title="Supprimer cet ordre">✗</a></td>
+	<td class="order-name"><img src="{{STATIC_URL }}orders/{{ order.name }}.png" title="{{ order.name }}"</td>
 	{% if order.custom_description|length == 0 %}
-	<td colspan="2">{{ order.description }}</td>
+	<td colspan="2" class="order-description">{{ order.description }}</td>
 	{% else %}
-	<td>{{ order.description }}</td>
-	<td>{{ order.custom_description }}</td>
+	<td class="order-description">{{ order.description }}</td>
+	<td class="order-custom">{{ order.custom_description }}</td>
 	{% endif %}
-	<td>{{ order.get_cost }}</td>
+	<td class="order-cost">{{ order.get_cost }}</td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
 {% endif %}
 
-<h1>Passer un ordre</h1>
+<h1 class="main-h1-title">Passer un ordre</h1>
 
-<ul>
+<ul class="content-order-list">
 {% for order in available_orders %}
 	<li{% if order.available == False %} class="disabled" title="{{order.reason }}"{% endif %}>
 		<img src="{{STATIC_URL }}orders/{{ order.name }}.png" alt="{{ order.title }}" />
@@ -50,22 +50,33 @@
 </ul>
 
 {% for order in available_orders %}
-	<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">{{ order.title }}</h3>
+	<div class="order-form-content">
+		<div class="content-title">
+			<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">
+				<span>{{ order.title }}</span>
+			</h3>
+		</div>
 	{% if order.available != False %}
-	<form method="post" action="{% url "website.views.orders.add_order" game_id=game.pk order_type=order.name %}">
+	<form class="order-form-container" method="post" action="{% url "website.views.orders.add_order" game_id=game.pk order_type=order.name %}">
 		<table>
 		{{ order.form.as_table }}
-		<tr>
+		<tr class="submit-order">
 			<td colspan="2">
-				<input type="submit" value="Envoyer l'ordre" />
+				<div class="button-content">
+					<div class="cornered-top"></div>
+					<input type="submit" value="Envoyer l'ordre" />
+					<div class="cornered-bottom"></div>
+				</div>
 			</td>
 		</tr>
 		</table>
 	</form>
 	{% else %}
+	<div class="order-form-container">
 		{{order.reason }}
+	</div>
 	{% endif %}
+	</div>
 {% endfor %}
-</ul>
 
 {% endblock content %}

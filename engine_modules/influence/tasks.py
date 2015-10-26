@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from engine.tasks import InitTask, OrderResolutionTask
+from engine.tasks import ResolutionTask, OrderResolutionTask
 from engine_modules.influence.models import Influence, BuyInfluenceOrder
 
 
-class CreateInfluenceTask(InitTask):
+class CreateInfluenceTask(ResolutionTask):
 	"""
 	Create the Influence object for the turn
 	"""

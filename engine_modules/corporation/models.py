@@ -88,7 +88,7 @@ class Corporation(models.Model):
 
 	base_corporation_slug = models.CharField(max_length=20)
 	game = models.ForeignKey(Game)
-	# assets, market_assets and assets_modifier are meant to keep track of the MarketBubbles:
+	# assets, market_assets and assets_modifier are meant to keep track of the bubbles:
 	# - market_assets stands for the total of the assets in the Corporation's markets disregarding bubbles.
 	# - assets_modifier stands for the bonuses and maluses originating from domination on a market, or having a market at 0 asset.
 	# - assets stands for the assets that must be usually taken into account, so we have: assets = market_assets + assets_modifier
@@ -229,12 +229,12 @@ class Corporation(models.Model):
 	def on_crash_effect(self, ladder):
 		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
 
-	def update_modifier(self, value=1):
+	def update_modifier(self, delta=0):
 		"""
-		Updates assets_modifier value, setting it to given value and saves the model
+		Updates assets_modifier value, in/decreasing it by given delta and saves the model
 		Must be used for all modifications on assets_modifier, because it enforces assets = market_assets + asset_modifier
 		"""
-		self.assets_modifier = value
+		self.assets_modifier += delta
 		self.assets = self.market_assets + self.assets_modifier
 		self.save()
 
@@ -258,7 +258,7 @@ class Corporation(models.Model):
 	def update_assets(self, delta, category, corporationmarket):
 		"""
 		Updates market assets values, and saves the model
-		Does not actually change "assets", since it is a property, but changes on market_assets will be reflected on assets
+		Does not actually change "assets", but changes on market_assets will be reflected on assets via increase_market_assets
 		"""
 		turn = self.game.current_turn
 		corporationmarket.value += delta

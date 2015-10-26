@@ -59,7 +59,6 @@ INSTALLED_APPS = (
     'engine_modules.detroit_inc',
     'engine_modules.wiretransfer',
     'engine_modules.market',
-    'engine_modules.market_bubbles',
 )
 
 
@@ -118,6 +117,7 @@ COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
 COMPRESS_OUTPUT_DIR = "cache"
+COMPRESS_ENABLED = True
 
 
 TEMPLATE_DIRS = (

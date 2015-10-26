@@ -33,12 +33,12 @@
 <tbody>
 {% for entry in summary %}
 <tr>
-	<td>{{ entry.0.base_corporation.name }}</td>
-	{% for value in entry.1 %}
-		<td> {% if value %} {{ value }} {% else %} - {% endif %}</td>
-	{% endfor %}
-	<td> {{ entry.0.assets }}</td>
-	<td>{% for holder in entry.2 %} {{ holder.name }} {% endfor %}</td>
+	<td>{{ entry.corporation.base_corporation.name }}</td>
+{% for value in entry.assets %}
+	<td> {{ value|default:"-" }}</td>
+{% endfor %}
+	<td> {{ entry.corporation.assets }}</td>
+	<td>{% for holder in entry.holders %} {{ holder.name }} {% endfor %}</td>
 </tr>
 {% endfor %}
 </tbody>

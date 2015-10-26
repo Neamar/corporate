@@ -23,6 +23,7 @@
 		<div class="corporation-market">
 			<img src="{{ STATIC_URL }}{{ CITY }}/markets/{{ corporation_market.market.name}}.png" title={{ corporation_market.market.name }} />
 			<span class="corporation-market-value">{{ corporation_market.value }}</span>
+			<span class="corporation-market-bubble">{{ corporation_market.bubble_value }}</span>
 		</div>
 	{% endfor %}
 	</div>
