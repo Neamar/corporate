@@ -13,6 +13,9 @@ from website.decorators import render, inject_game_and_player_into_response, fin
 @inject_game_and_player_into_response
 def orders(request, game, player):
 	existing_orders = [order.to_child() for order in player.order_set.filter(turn=player.game.current_turn)]
+	for existing_order in existing_orders:
+		existing_order.name = existing_order.__class__.__name__
+
 	existing_orders_cost = sum(o.cost for o in existing_orders)
 
 	available_orders = get_orders_availability(player)
