@@ -26,8 +26,7 @@ class AbstractBubblesTask(ResolutionTask):
 		# get all negative bubbles, in alphabetical order of the name of the Market on which they apply
 		# Turn everything to list, because QuerySets don't have a 'remove' method
 
-		# TODO : remove positive bubbles of all crashed corporations
-
+		# We let negative bubbles on corporations crashed this turn
 		negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, value__lte=0).order_by('market__name'))
 		previous_negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=-1).order_by('market__name'))
 
@@ -35,12 +34,12 @@ class AbstractBubblesTask(ResolutionTask):
 		positive_bubbles = {}
 		max_vals = {}
 		for market in Market.objects.all():
-			# TODO : filter on CorporationMarket with corporation not crashed (with attribute crash_turn = none). A crashed corporation can't have a positive bubble
-			max_vals[market.name] = CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, market=market).exclude(value__lte=0).aggregate(maximum=Max('value'))['maximum']
+			# A crashed corporation does not compete for positive bubble
+			max_vals[market.name] = CorporationMarket.objects.filter(corporation__game=game, corporation__crash_turn__isnull=True, turn=game.current_turn, market=market).exclude(value__lte=0).aggregate(maximum=Max('value'))['maximum']
 			if max_vals[market.name] is not None:
 				try:
-					# TODO : filter on CorporationMarket with corporation not crashed (with attribute crash_turn = none). A crashed corporation can't have a positive bubble
-					positive_bubbles[market.name] = CorporationMarket.objects.get(corporation__game=game, turn=game.current_turn, market=market, value=max_vals[market.name])
+					# A crashed corporation does not compete for positive bubble
+					positive_bubbles[market.name] = CorporationMarket.objects.get(corporation__game=game, corporation__crash_turn__isnull=True, turn=game.current_turn, market=market, value=max_vals[market.name])
 				except:
 					# There were several corporations tied for first
 					pass
@@ -155,8 +154,7 @@ class ReplicateCorporationMarketsTask(ResolutionTask):
 	def run(self, game):
 
 		# On next turn, these will stand for the beginning values
-		# TODO : remove all the corporationMarkets form crashed corporation on the filter
-		corporation_markets = CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn)
+		corporation_markets = CorporationMarket.objects.filter(corporation__game=game, corporation__crash_turn__isnull=True, turn=game.current_turn)
 		new_corporation_markets = []
 		for corporation_market in corporation_markets:
 			new_corporation_market = CorporationMarket(
