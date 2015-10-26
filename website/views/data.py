@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
-from django.db.models import Count, Sum
+from django.db.models import Count
 
 from engine_modules.corporation.models import Corporation
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
