@@ -9,9 +9,6 @@ from engine_modules.market.models import Market, CorporationMarket
 class AbstractBubblesTask(ResolutionTask):
 	"""
 	This is an abstract class for the updating of Bubbles, it should be inherited from, but not used
-
-	TODO : actual logging does not work. It just create logs for difference between the state before first/Last/crash effects and after first/last/crash effect.
-	We must create a log function that looks between end of last turn and after first/last/crash effect. Most of the time it will be the same.
 	"""
 
 	def run(self, game, after_effects=False):
