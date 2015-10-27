@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+import json
 from django.db import models
+from django.conf import settings
+from django.template import Template, Context
 from engine.models import Game
+from utils.read_markdown import read_markdown
 
 
-class Logs(models.Model):
+class Log(models.Model):
 	"""
 	We log every action in the game in a single table
 	"""
@@ -31,10 +35,10 @@ class Logs(models.Model):
 	corporation = models.ForeignKey('corporation.Corporation', null=True)
 
 	# the corporationmarket concerned for this log
-	corporationmarket = models.ForeignKey('market.CorporationMarket', null=True)
+	corporation_market = models.ForeignKey('market.CorporationMarket', null=True)
 
-	# the orderer of the action and all the players knowing the action. Parameters are different between orderer and knowers, see ConcernedPlayers
-	players = models.ManyToManyField('engine.Player', through='ConcernedPlayers')
+	# the orderer of the action and all the players knowing the action. Parameters are different between orderer and knowers, see ConcernedPlayer
+	players = models.ManyToManyField('engine.Player', through='ConcernedPlayer')
 
 	# List of game events that are hidden for players (see hide for player above)
 	HIDE_FOR_PLAYERS = [
@@ -76,10 +80,30 @@ class Logs(models.Model):
 		Game.VOTE_SECURITY,
 		Game.VOTE_CONTRAT]
 
+	CONTEXT_CORPORATION = "corporation"
+	CONTEXT_CORPORATION_MARKET = "corporation_market"
+	CONTEXT_CORPORATION_PLAYER = "player"
 
-class ConcernedPlayers(models.Model):
+	def get_display(self, display_context, is_personal=False):
+		"""
+		Return a formatted string with the Log values, according to is_personal (are we displaying this for the player who triggered the action ?) and display_context (is the reader already aware of the corporation? The corporationmarket?)
+		"""
+		if is_personal:
+			path_personal = 'personal'
+		else:
+			path_personal = 'not_personal'
+		file_name = self.event_type
+		context = Context(json.loads(self.data))
+		path = '%s/logs/templates/logs/%s/%s/%s.md' % (settings.BASE_DIR, path_personal, display_context, file_name.lower())
+		raw_template, _ = read_markdown(path)
+		template = Template(raw_template)
+		text = template.render(context)
+		return text
+
+
+class ConcernedPlayer(models.Model):
 	player = models.ForeignKey('engine.Player')
-	log = models.ForeignKey('logs.Logs')
+	log = models.ForeignKey('logs.Log')
 	# When an information run targetting a player is started, we have to gather every Log connected to
 	# that player with the attribute transmittable = True
 	# And the information of having the information is not transmittable, so we add the player who ordered that run

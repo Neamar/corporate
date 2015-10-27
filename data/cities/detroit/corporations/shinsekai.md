@@ -4,7 +4,7 @@ markets:
     militaire: 3
     pharmaceutique: 3
     agroalimentaire: 3
-    telecom: 3
+    télécom: 3
 datasteal: 10
 sabotage: 20
 extraction: 10

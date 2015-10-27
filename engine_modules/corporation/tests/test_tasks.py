@@ -30,7 +30,7 @@ class CrashCorporationTaskTest(EngineTestCase):
 				# because a market cannot be negative, this ensures that at the end, Corporation's assets will be exactly 0
 				# unfortunately, because bubbles are only computed in resolve_current_turn, this also ensures that each market has value 0 ...
 				corporation_market = self.c.corporationmarket_set.get(market=cm.market, turn=self.g.current_turn)
-				self.c.update_assets(delta=-self.c.assets, category=AssetDelta.RUN_SABOTAGE, corporationmarket=corporation_market)
+				self.c.update_assets(delta=-self.c.assets, category=AssetDelta.RUN_SABOTAGE, corporation_market=corporation_market)
 			cm.save()
 
 		self.g.resolve_current_turn()

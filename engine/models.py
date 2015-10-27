@@ -63,7 +63,7 @@ class Game(models.Model):
 	GAIN_NEGATIVE_BUBBLE = 'GAIN_NEGATIVE_BUBBLE'
 	LOSE_NEGATIVE_BUBBLE = 'LOSE_NEGATIVE_BUBBLE'
 
-	def add_event(self, event_type, data, delta=0, corporation=None, players=[], corporationmarket=None):
+	def add_event(self, event_type, data, delta=0, corporation=None, players=[], corporation_market=None):
 		"""
 		Create a game event signal. This signal may be received for a log creation for example.
 		"""
@@ -73,7 +73,7 @@ class Game(models.Model):
 			data=data,
 			delta=delta,
 			corporation=corporation,
-			corporationmarket=corporationmarket,
+			corporation_market=corporation_market,
 			players=players,
 			instance=self
 		)
