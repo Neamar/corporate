@@ -202,7 +202,7 @@ class Corporation(models.Model):
 			if isinstance(corporation, str):
 				# Try / catch if corporation does not exists
 				try:
-					corporation = self.game.corporation_set.get(base_corporation_slug=corporation, crash_turn=None)
+					corporation = self.game.corporation_set.get(base_corporation_slug=corporation, crash_turn__isnull=True)
 				except Corporation.DoesNotExist:
 					return
 
