@@ -156,7 +156,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 					# This is not a new bubble
 					break
 			else:
-				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, corporation=nb.corporation, corporationmarket=nb)
+				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, corporation=nb.corporation, corporation_market=nb)
 
 		for pnb in previous_negative_bubbles:
 			for nb in negative_bubbles:
@@ -165,7 +165,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 					negative_bubbles.remove(nb)
 					break
 			else:
-				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, corporation=pnb.corporation, corporationmarket=pnb)
+				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, corporation=pnb.corporation, corporation_market=pnb)
 
 		for pb in positive_bubbles:
 			for ppb in previous_positive_bubbles:
@@ -173,7 +173,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 					# This is not a new bubble
 					break
 			else:
-				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, corporation=pb.corporation, corporationmarket=pb)
+				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, corporation=pb.corporation, corporation_market=pb)
 
 		for ppb in previous_positive_bubbles:
 			for pb in positive_bubbles:
@@ -182,7 +182,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 					positive_bubbles.remove(pb)
 					break
 			else:
-				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": ppb.market.name, "corporation": ppb.corporation.base_corporation.name}, corporation=ppb.corporation, corporationmarket=ppb)
+				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": ppb.market.name, "corporation": ppb.corporation.base_corporation.name}, corporation=ppb.corporation, corporation_market=ppb)
 
 			return
 
