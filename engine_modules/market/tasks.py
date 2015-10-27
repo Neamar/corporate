@@ -63,9 +63,6 @@ class AbstractBubblesTask(ResolutionTask):
 						break
 				else:
 					modifiers[nb.corporation] += nb.update_bubble(CorporationMarket.NEGATIVE_BUBBLE)
-					if after_effects:
-						# This bubble did not exist last turn, log its creation
-						game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, corporation=nb.corporation, corporationmarket=nb)
 			else:
 				# This CorporationMarket had a negative bubble, and came back up: don't shoot the ambulance, actually, help it a bit
 				# We do not have to log the bubble popping, it will be logged later, because we haven't removed it from previous_negative_bubbles
@@ -91,9 +88,6 @@ class AbstractBubblesTask(ResolutionTask):
 				modifiers[pnb.corporation] += pnb.update_bubble(CorporationMarket.NO_BUBBLE)
 				pnb.save()
 
-			if after_effects:
-				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, corporation=pnb.corporation, corporationmarket=pnb)
-
 		for pb in positive_bubbles.values():
 			for ppb in previous_positive_bubbles:
 				if (ppb.corporation == pb.corporation) and (ppb.market == pb.market):
@@ -102,18 +96,12 @@ class AbstractBubblesTask(ResolutionTask):
 					break
 			else:
 				modifiers[pb.corporation] += pb.update_bubble(CorporationMarket.DOMINATION_BUBBLE)
-				if after_effects:
-					# This bubble did not exist last turn, log its creation
-					game.add_event(event_type=game.GAIN_DOMINATION_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, corporation=pb.corporation, corporationmarket=pb)
 
 		for ppb in previous_positive_bubbles:
 			if ppb.value > 0:
 				# We already handled the other cases in the negative_bubble loop
 				modifiers[ppb.corporation] += ppb.update_bubble(CorporationMarket.NO_BUBBLE)
 				ppb.save()
-
-			if after_effects:
-				game.add_event(event_type=game.LOSE_DOMINATION_BUBBLE, data={"market": ppb.market.name, "corporation": ppb.corporation.base_corporation.name}, corporation=ppb.corporation, corporationmarket=ppb)
 
 		for corporation in modifiers.keys():
 			corporation.update_modifier(modifiers[corporation])
@@ -135,7 +123,6 @@ class UpdateBubblesAfterEffectsTask(AbstractBubblesTask):
 	"""
 	Update the bubble value on the CorporationMarket objects after the First/Last effects have been applied
 	"""
-	# Be careful: this task must be resolved before ReplicateCorporationMarketTask
 	RESOLUTION_ORDER = 650
 
 	def run(self, game):
@@ -145,11 +132,69 @@ class UpdateBubblesAfterEffectsTask(AbstractBubblesTask):
 		return
 
 
+class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
+	"""
+	Update the bubble value on the CorporationMarket objects after the Crash effects have been applied
+	"""
+	# Be careful: this task must be resolved before ReplicateCorporationMarketTask
+	RESOLUTION_ORDER = 860
+
+	def run(self, game):
+
+		if not hasattr(game, 'disable_bubble_reevaluation'):
+			super(UpdateBubblesAfterCrashTask, self).run(game, after_effects=True)
+
+		# We build the logs. We need to calculate the difference bewtween the end on last turn and now to create events
+		# We don't do it in AbstractBubblesTask because we don't want to sent the temporaty states.
+
+		# We let negative bubbles on corporations crashed this turn
+		negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=-1))
+		previous_negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn - 1, bubble_value=-1))
+		positive_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=1))
+		previous_positive_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn - 1, bubble_value=1))
+
+		for nb in negative_bubbles:
+			for pnb in previous_negative_bubbles:
+				if (pnb.corporation == nb.corporation) and (pnb.market == nb.market):
+					# This is not a new bubble
+					break
+			else:
+				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, corporation=nb.corporation, corporationmarket=nb)
+
+		for pnb in previous_negative_bubbles:
+			for nb in negative_bubbles:
+				if (pnb.corporation == nb.corporation) and (pnb.market == nb.market):
+					# This is not a new bubble
+					negative_bubbles.remove(nb)
+					break
+			else:
+				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, corporation=pnb.corporation, corporationmarket=pnb)
+
+		for pb in positive_bubbles:
+			for ppb in previous_positive_bubbles:
+				if (ppb.corporation == pb.corporation) and (ppb.market == pb.market):
+					# This is not a new bubble
+					break
+			else:
+				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, corporation=pb.corporation, corporationmarket=pb)
+
+		for ppb in previous_positive_bubbles:
+			for pb in positive_bubbles:
+				if (ppb.corporation == pb.corporation) and (ppb.market == pb.market):
+					# This is not a new bubble
+					positive_bubbles.remove(pb)
+					break
+			else:
+				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": ppb.market.name, "corporation": ppb.corporation.base_corporation.name}, corporation=ppb.corporation, corporationmarket=ppb)
+
+			return
+
+
 class ReplicateCorporationMarketsTask(ResolutionTask):
 	"""
 	Copy the CorporationMarket objects from current turn for next turn
 	"""
-	RESOLUTION_ORDER = 659
+	RESOLUTION_ORDER = 870
 	
 	def run(self, game):
 
@@ -167,4 +212,4 @@ class ReplicateCorporationMarketsTask(ResolutionTask):
 		# On next turn, these will be modified until they stand for the final values
 		CorporationMarket.objects.bulk_create(new_corporation_markets)
 
-tasks = (UpdateBubblesTask, UpdateBubblesAfterEffectsTask, ReplicateCorporationMarketsTask, )
+tasks = (UpdateBubblesTask, UpdateBubblesAfterEffectsTask, UpdateBubblesAfterCrashTask, ReplicateCorporationMarketsTask, )

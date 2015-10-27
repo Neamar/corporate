@@ -7,7 +7,7 @@ class CrashCorporationTask(ResolutionTask):
 	"""
 	Let's crash corporations that didn't make it through the turn
 	"""
-	RESOLUTION_ORDER = 1000
+	RESOLUTION_ORDER = 850
 
 	def run(self, game):
 		corporations_to_crash = game.corporation_set.filter(assets__lte=0)
