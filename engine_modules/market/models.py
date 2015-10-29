@@ -5,6 +5,7 @@ from django.db import models
 from engine.models import Game
 from engine_modules.corporation.models import AssetDelta
 
+
 class Market(models.Model):
 	class Meta:
 		unique_together = (("game", "name"),)
