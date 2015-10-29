@@ -20,6 +20,10 @@ class FirstLastEffectsTask(ResolutionTask):
 		last_corporation = ladder[-1]
 
 		first_corporation.on_first_effect(ladder)
-		last_corporation.on_last_effect(ladder)
+		ladder = game.get_ladder()
+		new_last_corporation = ladder[-1]
+		# We apply last effect only if no corporation will crash this turn
+		if new_last_corporation.assets > 0:
+			last_corporation.on_last_effect(ladder)
 
 tasks = (FirstLastEffectsTask, )
