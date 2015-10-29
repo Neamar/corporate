@@ -12,8 +12,8 @@
 		<span class="corporation-index">{{ forloop.counter }}</span>
 		<span class="corporation-name">{{ entry.corporation.base_corporation.name }}</span>
 		<span class="current-assets">{{ entry.corporation.assets }}
-			<span class="assets-delta{{ entry.corporation.asset_delta_is_positive|yesno:" positive, negative,"}}">
-			{{ entry.corporation.asset_delta|default:"-" }}
+			<span class="assets-delta{{ entry.delta|yesno:" positive, negative,"}}">
+			{{ entry.delta|default:"0000" }}
 			</span>
 		</span>
 	</h2>

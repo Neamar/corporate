@@ -28,7 +28,11 @@ def wallstreet(request, game, player, turn):
 	for corporation in corporations:
 		corporation_markets = corporation.get_corporation_markets(turn - 1).order_by('market__name')
 		events = Log.objects.for_corporation(corporation, player, turn)
-		ranking.append({"corporation": corporation, "corporation_market": corporation_markets, "events": events})
+		delta = 0
+		if turn > 0:
+			prev_corporation = game.all_corporation_set.get(base_corporation_slug=corporation.base_corporation_slug)
+		ranking.append({"corporation": corporation, "delta":delta, "corporation_market": corporation_markets, "events": events})
+
 
 	return {
 		"ranking": ranking,
