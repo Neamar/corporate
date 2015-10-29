@@ -13,7 +13,7 @@ class AssetHistory(models.Model):
 		unique_together = (("corporation", "turn"),)
 
 	corporation = models.ForeignKey(Corporation)
-	assets = models.PositiveSmallIntegerField()
+	assets = models.SmallIntegerField()
 	turn = models.PositiveSmallIntegerField()
 
 	def __unicode__(self):
