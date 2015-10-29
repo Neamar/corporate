@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.conf import settings
 from django.template import Template, Context
 from engine.models import Game
-from utils.read_markdown import read_markdown
+from utils.read_markdown import read_file_from_path, parse_markdown
 
 
 class LogManager(models.Manager):
@@ -107,13 +107,19 @@ class Log(models.Model):
 			path_personal = 'personal'
 		else:
 			path_personal = 'not_personal'
+
+		# Read file data
 		file_name = self.event_type
-		context = Context(json.loads(self.data))
 		path = '%s/logs/templates/logs/%s/%s/%s.md' % (settings.BASE_DIR, path_personal, display_context, file_name.lower())
-		raw_template, _ = read_markdown(path)
+		raw_template = read_file_from_path(path)
+
+		# Parse template
+		context = Context(json.loads(self.data))
 		template = Template(raw_template)
 		text = template.render(context)
-		return text
+
+		html, _ = parse_markdown(text)
+		return html
 
 
 class ConcernedPlayer(models.Model):
