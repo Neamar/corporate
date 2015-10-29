@@ -2,6 +2,7 @@
 from engine.models import Game
 from engine.tasks import ResolutionTask
 from engine_modules.corporation.models import AssetDelta
+from engine_modules.market.models import CorporationMarket
 
 
 class InvisibleHandTask(ResolutionTask):
@@ -15,20 +16,16 @@ class InvisibleHandTask(ResolutionTask):
 		if game.disable_side_effects and not hasattr(game, 'force_invisible_hand'):
 			return
 
-		corpos = game.corporation_set.all().order_by('?')[0:2]
+		corporation_market = CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn).order_by('?')[0]
+		corporation_market.corporation.update_assets(1, category=AssetDelta.INVISIBLE_HAND, corporation_market=corporation_market)
+		game.add_event(event_type=Game.MARKET_HAND_UP, data={"market": corporation_market.market.name, "corporation": corporation_market.corporation.base_corporation.name}, delta=1, corporation=corporation_market.corporation, corporation_market=corporation_market)
 
-		# Probably a useless test, but may happen in some situations
-		if len(corpos) == 0:
-			return
-
-		corporation_market = corpos[0].get_random_corporation_market()
-		corpos[0].update_assets(1, category=AssetDelta.INVISIBLE_HAND, corporation_market=corporation_market)
-		game.add_event(event_type=Game.MARKET_HAND_UP, data={"market": corporation_market.market.name, "corporation": corpos[0].base_corporation.name}, delta=1, corporation=corpos[0], corporation_market=corporation_market)
-
-		if len(corpos) >= 2:
-			corporation_market = corpos[1].get_random_corporation_market()
-			corpos[1].update_assets(-1, category=AssetDelta.INVISIBLE_HAND, corporation_market=corporation_market)
-			game.add_event(event_type=Game.MARKET_HAND_DOWN, data={"market": corporation_market.market.name, "corporation": corpos[1].base_corporation.name}, delta=-1, corporation=corpos[1], corporation_market=corporation_market)
-
-
+		# Only get cm above 0
+		try:
+			corporation_market = CorporationMarket.objects.filter(corporation__game=game, value__gt=0, turn=game.current_turn).exclude(corporation=corporation_market.corporation).order_by('?')[0]
+			corporation_market.corporation.update_assets(-1, category=AssetDelta.INVISIBLE_HAND, corporation_market=corporation_market)
+			game.add_event(event_type=Game.MARKET_HAND_DOWN, data={"market": corporation_market.market.name, "corporation": corporation_market.corporation.base_corporation.name}, delta=-1, corporation=corporation_market.corporation, corporation_market=corporation_market)
+		except IndexError:
+			# Only one corporation
+			pass
 tasks = (InvisibleHandTask,)
