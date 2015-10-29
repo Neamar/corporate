@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models, transaction
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.conf import settings
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
@@ -97,6 +97,10 @@ class Game(models.Model):
 		# Increment current turn and terminate.
 		self.current_turn += 1
 		self.save()
+
+	@property
+	def corporation_set(self):
+		return self.all_corporation_set.filter(game=self).filter(Q(crash_turn=self.current_turn) | Q(crash_turn__isnull=True))
 
 	def __unicode__(self):
 		return u"Corporate Game: %s" % self.city

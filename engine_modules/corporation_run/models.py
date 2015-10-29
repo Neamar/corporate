@@ -36,7 +36,8 @@ class CorporationRunOrder(RunOrder):
 
 	def get_form(self, data=None):
 		form = super(CorporationRunOrder, self).get_form(data)
-		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn)
+		# We get all the corporationMarket of uncrashed corporations
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn)
 		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		return form
@@ -133,6 +134,13 @@ class SabotageOrder(CorporationRunOrder):
 
 	def description(self):
 		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name)
+
+	def get_form(self, data=None):
+		form = super(SabotageOrder, self).get_form(data)
+		# we can't make a sabotage on a negative or null corporationMarket
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn, value__gt=0)
+
+		return form
 
 
 class ProtectionOrder(RunOrder):
