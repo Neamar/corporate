@@ -50,6 +50,7 @@ Une fois que les effets premiers/derniers sont appliqués, si des corporations s
 
 * Si au moins une corporation crashe, aucun effet dernier ne s'applique ce tour-ci.
 * Tous les **effet crash** s'appliquent simultanément
+* Une corporation qui a crashé ce tour-ci n'est plus éligible aux **actifs de domination**
 * Les corporations qui crashent ne sont pas affectées par **l'effet crash** des autres corporations
 * Les corporations qui crashent sont retirées du jeu dès la fin du tour.
 * Pas de remboursement pour les parts investies.
