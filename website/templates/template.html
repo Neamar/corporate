@@ -79,9 +79,19 @@
 		<div class="current-player">
 			<div class="player">
 				<span class="player-avatar">
-					<img title="Avatar de Golan Trévize" src="/static/img/players/01.png" class="tooltip"/>
+					{% if player %}
+						<img title="Avatar de {{ player.name }}" src="/static/img/players/01.png" class="tooltip"/>
+					{% endif %}
 				</span>
-				<span class="player-name">Golan Trévize</span>
+				<span class="player-name">
+				{% if player %}
+					{{ player.name }}
+				{% elif is_authenticated %}
+					<a href="{% url 'website.views.index.index' %}">Sélectionnez une partie&hellip;</a>
+				{% else %}
+					<a href="{% url 'django.contrib.auth.views.login' %}">Connexion</a>
+				{% endif %}
+				</span>
 			</div>
 			<span class="icon-messaging icon-medium icon-red">
 				<span class="messaging-count">2</span>
