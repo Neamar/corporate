@@ -6,37 +6,31 @@
 
 {% block content %}
 
+{% for entry in ranking %}
+<section class="corporation-row">
+	<h2>
+		<span class="corporation-index">{{ forloop.counter }}</span>
+		<span class="corporation-name">{{ entry.corporation.base_corporation.name }}</span>
+		<span class="current-assets">{{ entry.corporation.assets }}
+			<span class="assets-delta{{ entry.corporation.asset_delta_is_positive|yesno:" positive, negative,"}}">
+			{{ entry.corporation.asset_delta|default:"-" }}
+			</span>
+		</span>
+	</h2>
 
-<table class="prop_table slanted_head">
-<thead>
-<tr>
-	<th></th>
-	<th><div><span>Actifs</span></div></th>
-{% if corporations.0.last_assets %}
-	<th title="Actifs du tour précédent"><div><span>Précédents</span></div></th>
-{% endif %}
-{% for category in delta_categories.values %}
-	<th><div><span>{{ category }}</span></div></th>
+	<div class="corporation-markets">
+	{% for corporation_market in entry.corporation_market %}
+		<div class="corporation-market">
+			<h3><svg role="img" class="svg-rules svg--small svg--white" title="{{ corporation_market.market.name }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg> {{ corporation_market.market.name }}</h3>
+<!--			<img src="{{ STATIC_URL }}{{ CITY }}/markets/{{ corporation_market.market.name}}.png" title={{ corporation_market.market.name }} />
+-->			<span class="corporation-market-value">{{ corporation_market.value }}</span>
+			<span class="corporation-market-bubble">{{ corporation_market.bubble_value }}</span>
+		</div>
+	{% endfor %}
+	</div>
+	{% include "logs/advanced.html" with events=entry.events %}
+</section>
 {% endfor %}
-</tr>
-</thead>
-<tbody>
-{% for corporation in corporations %}
-<tr>
-	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
-	<td class="important"><strong style="color:{% if corporation.current_assets > corporation.last_assets %}green{% elif corporation.current_assets < corporation.last_assets %}red{% endif %}">{{ corporation.current_assets }}</strong></td>
-{% if corporation.last_assets %}
-	<td>{{ corporation.last_assets }}</td>
-{% endif %}
-{% for category in delta_categories.keys %}
-    <td>{{ corporation|get_item:category }}</td>
-{% endfor %}
-</tr>
-{% endfor %}
-</tbody>
-</table>
-
-<div id="chart_div" style="width: 99%; height: 300px; margin:15px auto;"></div>
 
 {% endblock content %}
 

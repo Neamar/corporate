@@ -23,12 +23,17 @@ def wallstreet(request, game, player, turn):
 	"""
 
 	ranking = []
+	# Table data
 	corporations = game.get_ladder(turn=turn - 1)
 	for corporation in corporations:
 		corporation_markets = corporation.get_corporation_markets(turn - 1).order_by('market__name')
-		ranking.append((corporation, corporation_markets))
+		events = Log.objects.for_corporation(corporation, player, turn)
+		ranking.append({"corporation": corporation, "corporation_market": corporation_markets, "events": events})
 
 	return {
+		"ranking": ranking,
+		"pods": ['turn_spinner', 'd_inc', 'current_player', 'players', ],
+		"turn": turn,
 		"corporations": corporations,
 		"request": request,
 	}

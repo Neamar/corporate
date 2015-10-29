@@ -17,7 +17,7 @@ class LogManager(models.Manager):
 		return Log.objects.filter(corporation_market=corporation_market).filter(Q(players=asking_player) | Q(public=True)).distinct()
 
 	def for_corporation(self, corporation, asking_player, turn):
-		return Logs.objects.filter(turn=turn - 1).filter(corporationmarket__corporation=corporation).filter(Q(players=asking_player) | Q(public=True)).distinct()
+		return Log.objects.filter(turn=turn - 1).filter(corporation_market__corporation=corporation).filter(Q(players=asking_player) | Q(public=True)).distinct()
 
 
 class Log(models.Model):

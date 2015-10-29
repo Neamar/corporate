@@ -10,7 +10,6 @@ def make_link_active(context, keyword):
 	Return "active" if that is the case, "" if not.
 	The criterion here is whether the URL contains the keyword, not necessarily very robust.
 	"""
-
 	request = context['request']
 
 	if request.path.find(keyword) != -1:
