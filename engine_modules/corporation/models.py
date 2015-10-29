@@ -151,8 +151,8 @@ class Corporation(models.Model):
 		If there are som ex-aequo, pick at random among them
 		"""
 		cms = list(self.corporation_markets.order_by('-value'))
-		max_value = cms[0]
-		
+		max_value = cms[0].value
+
 		return random.choice([cm for cm in cms if cm.value == max_value])
 
 	def get_random_market(self):
