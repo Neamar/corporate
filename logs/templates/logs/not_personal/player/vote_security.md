@@ -1,1 +1,1 @@
-A voté Réforme de la sécurité à Detroit Inc.
+A voté **Réforme de la sécurité** à Detroit Inc.

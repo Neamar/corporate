@@ -1,1 +1,1 @@
-Dispose de {{ money }} pour le tour suivant
+Dispose de **{{ money }}₵** pour le tour suivant

@@ -27,7 +27,7 @@
 <thead>
 <td></td>
 {% for market in markets %}
-	<td> <h3><svg role="img" class="svg--medium svg--white" title="{{ market.name }}"><use xlink:href="/static/img/sprite.svg#{{ market.name|lower }}"></use></svg></h3></td>
+	<td> <h3><svg role="img" class="svg--medium svg--white" title="{{ market.name|capfirst }}"><use xlink:href="/static/img/sprite.svg#{{ market.name|lower }}"></use></svg></h3></td>
 {% endfor %}
 	<td> &Sigma; </td>
 	<td> Joueurs </td>
@@ -40,7 +40,7 @@
 	<td> {{ value|default:"-" }}</td>
 {% endfor %}
 	<td> {{ entry.corporation.assets }}</td>
-	<td>{% for holder in entry.holders %} <a href="{% url "website.views.data.player" game_id=game.pk player_id=holder.pk %}" title="Parts de {{ holder.name }}"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" width="32" height="32" /></a> {% endfor %}</td>
+	<td>{% for holder in entry.holders %} <a href="{% url "website.views.data.player" game_id=game.pk player_id=holder.pk %}" title="Parts de {{ holder.name }}" class="tooltip"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" width="32" height="32" /></a> {% endfor %}</td>
 </tr>
 {% endfor %}
 </tbody>

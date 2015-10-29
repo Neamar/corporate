@@ -1,5 +1,6 @@
+{% load display_log %}
 <ul class="icons-list">
-{% for event in events %}
-	<li><svg role="img" class="svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#{{ event.event_type|lower }}" title="{{ event.event_type|lower|capfirst }} {{ event.data }}"></use></svg></li>
+{% for log in events %}
+	<li>{% display_log log "player" %}</li>
 {% endfor %}
 </ul>
