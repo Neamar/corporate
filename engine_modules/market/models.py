@@ -3,7 +3,7 @@
 from django.db import models
 
 from engine.models import Game
-
+from engine_modules.corporation.models import AssetDelta
 
 class Market(models.Model):
 	class Meta:
@@ -62,7 +62,10 @@ class CorporationMarket(models.Model):
 			self.value -= 1
 			self.bubble_value -= 1
 		self.save()
-		return self.bubble_value - previous_bubble_value
+
+		delta = self.bubble_value - previous_bubble_value
+		self.corporation.assetdelta_set.create(category=AssetDelta.BUBBLE, delta=delta, turn=self.turn)
+		return delta
 
 	def __unicode__(self):
 		return u"%s de %s" % (self.market, self.corporation)
