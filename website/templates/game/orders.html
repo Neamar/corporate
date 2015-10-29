@@ -24,7 +24,7 @@
 {% for order in existing_orders %}
 <tr>
 	<td class="order-delete"><a href="{% url "website.views.orders.delete_order" game_id=game.pk order_id=order.pk %}" title="Supprimer cet ordre">✗</a></td>
-	<td class="order-name"><svg role="img" class="svg-rules svg--medium svg--white" title="{{ order.title }}"><use xlink:href="/static/img/sprite.svg#{{ order.name }}"></use></svg>
+	<td class="order-name"><svg role="img" class="svg--medium svg--white" title="{{ order.title }}"><use xlink:href="/static/img/sprite.svg#{{ order.name }}"></use></svg>
 	{% if order.custom_description|length == 0 %}
 	<td colspan="2" class="order-description">{{ order.description }}</td>
 	{% else %}
@@ -43,7 +43,7 @@
 <ul class="content-order-list">
 {% for order in available_orders %}
 	<li{% if order.available == False %} class="disabled" title="{{order.reason }}"{% endif %}>
-		<svg role="img" class="svg-rules svg--large svg--white" title="{{ order.title }}"><use xlink:href="/static/img/sprite.svg#{{ order.name }}"></use></svg>
+		<svg role="img" class="svg--large svg--white" title="{{ order.title }}"><use xlink:href="/static/img/sprite.svg#{{ order.name }}"></use></svg>
 		<h2>{{ order.title }}</h2>
 	</li>
 {% endfor %}

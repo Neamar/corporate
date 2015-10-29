@@ -9,6 +9,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	{% compress css %}
 	<link rel="stylesheet" type="text/less" media="all" href="{% static 'style.less' %}" />
+	<link rel="stylesheet" type="text/css" media="all" href="{% static 'vendor/tipped.css' %}" />
+	<link rel="stylesheet" type="text/less" media="all" href="{% static 'style.less' %}" />
 	{% endcompress %}
 	<link rel="icon" href="{% block favicon %}{{ STATIC_URL }}favicon.gif{% endblock %}" type="image/x-icon" />
 
@@ -94,5 +96,7 @@
 
 	</aside>
 </div>
+
+<script type="text/javascript" src="{% static 'vendor/tipped.js"></script>
 </body>
 </html>

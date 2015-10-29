@@ -19,9 +19,6 @@ class Command(StubGame):
 	def handle(self, *args, **options):
 		super(Command, self).handle(*args, **options)
 
-		self.g.disable_side_effects = True
-		self.g.save()
-
 		# Lets players do a lot of stuff
 		self.g.player_set.all().update(money=10000)
 		corporations = self.g.corporation_set.all()
