@@ -60,8 +60,8 @@ Ces corporations sont réparties de la façon suivante dans les différents marc
 
 Les actifs d’une corporation sont égaux à la somme des actifs de ses marchés… à deux petites exceptions près :
 
-* Si une corporation a plus d'actifs que toutes les autres sur un marché, elle domine ce marché et gagne un actif. Attention cependant, cet **actif de domination** est perdu dès que la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine. Ces actifs sont en jaune dans la table.
-* *A contrario*, une corporation qui tombe à 0 sur un de ses marchés perd un actif. Cet **actif de perte sèche** disparaît dès que la corporation récupère au moins un actif sur ce marché. À noter : le nombre d'actifs ne peut pas descendre en dessous de zéro. Si plusieurs corporations ont 0 actifs sur le même marché, elles ont toutes l'actif de perte sèche. Ces actifs sont en rouge dans la table.
+* Si une corporation a plus d'actifs que toutes les autres sur un marché, elle domine ce marché et gagne un actif. Attention cependant, cet **actif de domination** est perdu dès que la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine. Ces actifs sont en jaune dans le tableau.
+* *A contrario*, une corporation qui tombe à 0 ou moins sur un de ses marchés perd un actif. Cet **actif de perte sèche** disparaît dès que la corporation récupère au moins un actif sur ce marché. Si plusieurs corporations ont 0 actifs ou moins sur le même marché, elles ont toutes l'actif de perte sèche. Ces actifs sont en rouge dans le tableau.
 
 ## Main invisible
 > Même la plus corrompue des corpos est victime des modes des consommateurs. Ça a été une déception pour moi aussi : personne ne décide quel produit de merde le public va s'arracher cette année.
@@ -83,7 +83,7 @@ En tant qu'acteur majeur du marché, chaque joueur applique sa **Voix au chapitr
 * Un marché d'une corpo qui gagne 1 actif.
 * Un marché d'une corpo qui perd 1 actif.
 
-Si un marché est dans le négatif une fois tous les ordres appliqués, on le ramène à 0 actif avant que les effets premier/dernier/crash s'appliquent.
+Vous ne pouvez pas cibler un marché à 0 ou dans le négatif avec le second choix.
 
 ### Opérations clandestines
 > Le capitalisme a créé ce père Noël payant. Des fois tu as ce que tu veux et c'est la fête. D'autres fois tu pleures devant un vieux pull moche.
@@ -92,7 +92,8 @@ Les opérations clandestines, ou **opé**, sont des missions illégales réalis�
 
 #### Les opés classiques
 ##### Sabotage
-Le commanditaire choisit une corpo cible, ainsi qu'un Marché associé à cette corpo. S'il réussit, le sabotage fait perdre 2 actifs au marché sélectionné.
+Le commanditaire choisit une corpo cible, ainsi qu'un Marché associé à cette corpo. S'il réussit, le sabotage fait perdre 2 actifs au marché sélectionné. 
+Vous ne pouvez pas cibler un marché à 0 ou dans le négatif avec un sabotage.
 
 ##### Datasteal
 Le commanditaire choisit un marché, une corpo cible et une corpo bénéficiaire. En cas de réussite, le marché de la corpo bénéficiaire gagne +1 actif grâce aux précieuses informations dérobées à la concurrence.
@@ -141,7 +142,7 @@ Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voi
 ### Les points de parts
 >Comment tu veux être pris au sérieux si tu n’as que des parts dans des corpos que les investisseurs fuient comme la peste ?
 
-À la fin de la partie, tu as :
+À la fin de la partie, vous gagnez :
 
 * 5 Points de Victoire pour chaque part dans la corpo en tête du classement
 * 4 Points de Victoire par part dans la deuxième corpo
@@ -157,6 +158,7 @@ La **citoyenneté corpo** est très importante puisque votre image dépend du r�
 * À la fin de la partie, chaque corporation rapporte `20 – 2 × rang` points de victoire à ces citoyens. Donc 18 points pour la première corpo et 0 pour la dernière. Attention, ces points sont à partager entre tous les citoyens de la corporation arrondis à l’inférieur. Donc si 3 joueurs sont citoyens de la 3eme corpos, ils ne gagnent que 4 points chacun !
 * Vous pouvez changer de citoyenneté corpo contre X points de victoire, X étant le tour en cours. Vous devez avoir au moins une part dans une corporation pour en acquérir la nationalité.
 * Vous pouvez choisir de commencer la partie en tant que citoyen d’une corporation. Vous serez alors contraint d’acheter votre première part dans cette corporation au premier tour de jeu.
+* Si vous n'avez pas de ciroyenneté à la fin de la partie, vous perdez 7 points.
 
 ### Les Backgrounds
 >Tu veux laisser ta trace à Detroit ? Choisis ton style, fais en plus que les autres et prends le pouvoir avec. Moi je sabote les corpos de mes ennemis. Entre potes, un conseil en or comme ça vaut bien 100 000 ₵.

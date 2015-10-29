@@ -38,9 +38,7 @@ Des opérations de presse et des réunions avec les citoyens permettent à certa
 
 ## L'Effet premier et l'Effet dernier
 
-Une fois que tous les ordres ont été résolus, un nouveau classement est établi. La première corpo applique son **effet premier** ; la dernière corpo applique son **effet dernier**. 
-
-Le classement n'est pas recalculé entre les deux donc l'effet premier ne peut jamais changer la corpo qui effectuera son effet dernier.
+Une fois que tous les ordres ont été résolus, un nouveau classement est établi. La première corpo applique son **effet premier** et la dernière corpo applique son **effet dernier** simultanément.
 
 Ces effets font perdre ou gagner des actifs à d'autres corporations.
 Voir la page des corporations pour une description individuelle de chaque corpo et leurs effets premiers / derniers.
@@ -48,12 +46,18 @@ Voir la page des corporations pour une description individuelle de chaque corpo 
 Certains effets modifient les actifs de certaines corporations sans préciser le marché. Dans ce cas il s'agit du marché ayant le plus d'actifs (tiré au hasard parmi les ex-æquo s'il y en a).
 
 ## L'Effet Crash
-Au cours de la résolution du tour, une corpo peut descendre à 0 actif ou moins avec les actifs de perte sèche. Son effet dernier peut tout de même s'appliquer, mais si elle n'est pas remontée à au moins 1 actif à la fin de la résolution, elle Crashe. Son **effet crash** est appliqué et elle est définitivement retirée du classement. Pas de remboursement pour les parts investies.
+Une fois que les effets premiers/derniers sont appliqués, si des corporations sont à 0 actifs ou moins, elles crashent. Un crash n'arrivera pas à toutes les parties mais a beaucoup de conséquences :
+
+* Si au moins une corporation crashe, aucun effet dernier ne s'applique ce tour-ci.
+* Tous les **effet crash** s'appliquent simultanément
+* Les corporations qui crashent ne sont pas affectées par **l'effet crash** des autres corporations
+* Les corporations qui crashent sont retirées du jeu dès la fin du tour.
+* Pas de remboursement pour les parts investies.
 
 Une fois tous ces effets résolus, on obtient le nouveau classement des corpos qui compte pour le gain de crédits énergétiques du tour suivant ainsi que pour les spéculations.
 
 ## Spéculation 
->Spéculer, c'est à la fois le meilleur moyen de gagner et le meilleur moyen de perdre. Et la différence entre les deux n'est pas de croire en un divinité quelconque.
+>Spéculer, c'est à la fois le meilleur moyen de gagner et le meilleur moyen de perdre.
 
 Dès que l’on commence à influer sur les marchés, on peut faire fructifier son argent. Chaque joueur peut miser jusqu’à `200 000 ₵ × (IC du spéculateur)` qu’il peut répartir entre autant de **spéculations** qu’il le souhaite.
 
