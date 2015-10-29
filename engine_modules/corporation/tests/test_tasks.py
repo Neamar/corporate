@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import Corporation, AssetDelta
+from engine_modules.corporation.models import AssetDelta
 
 
 class CrashCorporationTaskTest(EngineTestCase):
@@ -14,7 +14,8 @@ class CrashCorporationTaskTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 
-		self.assertRaises(Corporation.DoesNotExist, lambda: self.reload(self.c))
+		corporation = self.reload(self.c)
+		self.assertEqual(corporation.crash_turn, self.g.current_turn - 1)
 
 	def test_corporation_deleted_when_assets_drop_to_zero(self):
 		"""
@@ -34,7 +35,8 @@ class CrashCorporationTaskTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 
-		self.assertRaises(Corporation.DoesNotExist, lambda: self.reload(self.c))
+		corporation = self.reload(self.c)
+		self.assertEqual(corporation.crash_turn, self.g.current_turn - 1)
 
 	def test_corporation_not_deleted_when_assets_not_zero(self):
 		"""

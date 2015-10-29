@@ -25,6 +25,7 @@ def get_ladder(self, turn=None):
 	Order corporation in a game by assets
 	If ex-aequo order by assets the turn before and the turn even before until turn 1
 	If ex-aequo again, order by the first in the sql request. DB should always send them in the same order
+	May cause sporadical error if we have several nodes in database engine though
 	"""
 	if turn is None:
 		turn = self.current_turn + 1
@@ -34,9 +35,9 @@ def get_ladder(self, turn=None):
 	for element in previous:
 		ranking[element.corporation] += element.assets * pow(10, 2 * element.turn)
 
-	# We're asking for a ladder on a turn where the AssetHistory have not been written yet
+	# We're asking for a ladder on a turn where the AssetHistory have not been written yet.
 	if turn > self.current_turn:
-		actual = Corporation.objects.filter(game=self)
+		actual = self.corporation_set.all()
 		for element in actual:
 			ranking[element] += element.assets * pow(10, 2 * self.current_turn)
 
