@@ -153,7 +153,7 @@ class Corporation(models.Model):
 		cms = list(self.corporation_markets.order_by('-value'))
 		max_value = cms[0]
 		
-		return random.choice([cm for cm in cms if cm.value = max_value])
+		return random.choice([cm for cm in cms if cm.value == max_value])
 
 	def get_random_market(self):
 		"""
