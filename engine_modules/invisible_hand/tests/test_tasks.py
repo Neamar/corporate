@@ -23,3 +23,11 @@ class TaskTest(EngineTestCase):
 		self.assertNotEqual(self.c.assets, begin_assets_1)
 		self.assertNotEqual(self.c2.assets, begin_assets_2)
 		self.assertEqual(self.c.assets + self.c2.assets, begin_assets_sum)
+
+	def test_invisible_hand_with_one_corporation(self):
+		begin_assets = self.c.assets
+
+		self.c2.delete()
+		self.g.resolve_current_turn()
+
+		self.assertEqual(self.reload(self.c).assets, begin_assets + 1)
