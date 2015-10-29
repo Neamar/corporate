@@ -152,11 +152,8 @@ class Corporation(models.Model):
 		"""
 		cms = list(self.corporation_markets.order_by('-value'))
 		max_value = cms[0]
-		for cm in cms:
-			if cm.value < max_value:
-				cms.remove(cm)
-
-		return random.choice(cms)
+		
+		return random.choice([cm for cm in cms if cm.value = max_value])
 
 	def get_random_market(self):
 		"""
