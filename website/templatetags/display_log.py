@@ -12,5 +12,14 @@ def display_log(log, display_context, size="medium", color="white"):
 	The criterion here is whether the URL contains the keyword, not necessarily very robust.
 	"""
 
-	print "AHOY THERE"
-	return """<svg role="img" class="svg--%s svg--%s" title="%s"><use xlink:href="/static/img/sprite.svg#%s"></use></svg>""" % (size, color, escape(log.get_display(display_context)), log.event_type.lower())
+	r = """<svg role="img" class="svg--%s svg--%s" title="%s"><use xlink:href="/static/img/sprite.svg#%s"></use></svg>""" % (size, color, escape(log.get_display(display_context)), log.event_type.lower())
+
+	if display_context != "player":
+		delta_type = ""
+		if log.delta > 0:
+			delta_type = "positive"
+		else:
+			delta_type = "negative"
+
+		r += '<span class="%s">%s</span>' % (delta_type, log.delta)
+	return r

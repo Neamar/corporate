@@ -12,7 +12,7 @@
 	<li>
 		<h3><svg role="img" class="svg--medium svg--white" title="{{ corporation_market.market.name }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg> {{ corporation_market.market.name }}</h3>
 
-		{% include "logs/advanced.html" with events=corporation_market.events %}
+		{% include "logs/corporation.html" with events=corporation_market.events %}
 	</li>
 {% endfor %}
 </ul>
