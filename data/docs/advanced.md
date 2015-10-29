@@ -38,7 +38,7 @@ Des opérations de presse et des réunions avec les citoyens permettent à certa
 
 ## L'Effet premier et l'Effet dernier
 
-Une fois que tous les ordres ont été résolus, un nouveau classement est établi. La première corpo applique son **effet premier** et la dernière corpo applique son **effet dernier** simultanément.
+Une fois que tous les ordres et que la main du marché aient été résolus, un nouveau classement est établi. La première corpo applique son **effet premier** et la dernière corpo applique son **effet dernier** simultanément.
 
 Ces effets font perdre ou gagner des actifs à d'autres corporations.
 Voir la page des corporations pour une description individuelle de chaque corpo et leurs effets premiers / derniers.

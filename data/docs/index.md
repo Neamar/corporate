@@ -32,6 +32,7 @@ Acheter une part dans une corpo prend du temps, des ressources et beaucoup de n�
 
 * L'Influence Corporatiste, ou **IC**, commence à 1 pour tous les joueurs.
 * Le nombre de parts qu’un joueur peut acheter par tour est limité à hauteur de l'IC.
+* Le prix des X premières opés est réduite, voir plus bas.
 * On peut augmenter son IC en payant `750 000 ₵ × indice actuel`. 
 
 <!-- -->
