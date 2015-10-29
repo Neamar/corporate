@@ -55,9 +55,9 @@ def d_inc_pod_hover(session, orders):
 				member_string += " (%s)" % (", ".join(unicode(c.base_corporation.name) for c in member['corporations']))
 			siders.append(member_string)
 
-		siders = ", ".join(siders)
+		siders = " ".join(["<li>%s" % s for s in siders])
 
-		content = u"La coalition *%s* a reçu %s voix : %s" % (coalition, count, siders)
+		content = u"<strong>%s</strong> a reçu <strong>%s</strong> voix : <ul>%s</ul>" % (coalition, count, siders)
 
 		coalition_breakdown.append(content)
 
@@ -74,7 +74,7 @@ def d_inc_pod(context):
 		current_coalition = 'None'
 		display = 'None'
 	else:
-		display = string.join(d_inc_pod_hover(current_coalition, orders), '\n')
+		display = string.join(d_inc_pod_hover(current_coalition, orders), '')
 	return {
 		'd_inc_line': current_coalition,
 		'd_inc_line_display': display

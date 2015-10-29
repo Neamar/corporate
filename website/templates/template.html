@@ -64,7 +64,7 @@
 		{% else %}
 			<li><a href="{% url 'website.views.index.index' %}">Accueil</a></li>
 		{% endif %}
-			<li class="rules"><a title="Les règles du jeu" href="{% url 'docs.views.index' page='' %}"><svg role="img" class="svg-rules svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#rules"></use></svg><span class="visually-hidden">Les règles du jeu</span></a></li>
+			<li class="rules"><a title="Les règles du jeu" class="tooltip" href="{% url 'docs.views.index' page='' %}"><svg role="img" class="svg-rules svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#rules"></use></svg><span class="visually-hidden">Les règles du jeu</span></a></li>
 		</ul>
 
 		<article class="content">
@@ -79,7 +79,7 @@
 		<div class="current-player">
 			<div class="player">
 				<span class="player-avatar">
-					<img title="Avatar de Golan Trévize" src="/static/img/players/01.png" />
+					<img title="Avatar de Golan Trévize" src="/static/img/players/01.png" class="tooltip"/>
 				</span>
 				<span class="player-name">Golan Trévize</span>
 			</div>
@@ -97,6 +97,12 @@
 	</aside>
 </div>
 
-<script type="text/javascript" src="{% static 'vendor/tipped.js"></script>
+<script type="text/javascript" src="{% static 'vendor/jquery-2.1.4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tipped.js' %}"></script>
+<script type='text/javascript'>
+$(function() {
+  Tipped.create('svg, .tooltip');
+});
+</script>
 </body>
 </html>

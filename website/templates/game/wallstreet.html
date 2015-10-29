@@ -23,7 +23,7 @@
 	<div class="corporation-markets">
 	{% for corporation_market in entry.corporation_market %}
 		<div class="corporation-market">
-			<svg role="img" class="svg--small svg--{% if corporation_market.bubble_value == -1 %}red{% elif corporation_market.bubble_value == 1 %}green{% else %}white{% endif %}" title="{{ corporation_market.market.name }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg>
+			<svg role="img" class="svg--small svg--{% if corporation_market.bubble_value == -1 %}red{% elif corporation_market.bubble_value == 1 %}green{% else %}white{% endif %}" title="{{ corporation_market.market.name|capfirst }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg>
 			<span class="corporation-market-value">{{ corporation_market.value }}</span>
 		</div>
 	{% endfor %}
