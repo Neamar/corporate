@@ -10,16 +10,16 @@
 <section class="corporation-row">
 	<h2>
 		<span class="corporation-index">{{ forloop.counter }}</span>
-		<span class="corporation-name">{{ entry.0.base_corporation.name }}</span>
-		<span class="current-assets">{{ entry.0.assets }}
-			<span class="assets-delta{{ entry.0.asset_delta_is_positive|yesno:" positive, negative,"}}">
-			{{ entry.0.asset_delta|default:"-" }}
+		<span class="corporation-name">{{ entry.corporation.base_corporation.name }}</span>
+		<span class="current-assets">{{ entry.corporation.assets }}
+			<span class="assets-delta{{ entry.corporation.asset_delta_is_positive|yesno:" positive, negative,"}}">
+			{{ entry.corporation.asset_delta|default:"-" }}
 			</span>
 		</span>
 	</h2>
 
 	<div class="corporation-markets">
-	{% for corporation_market in entry.1 %}
+	{% for corporation_market in entry.corporation_market %}
 		<div class="corporation-market">
 			<h3><svg role="img" class="svg-rules svg--small svg--white" title="{{ corporation_market.market.name }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg> {{ corporation_market.market.name }}</h3>
 <!--			<img src="{{ STATIC_URL }}{{ CITY }}/markets/{{ corporation_market.market.name}}.png" title={{ corporation_market.market.name }} />
@@ -28,7 +28,7 @@
 		</div>
 	{% endfor %}
 	</div>
-	{% include "logs/advanced.html" with events=entry.2 %}
+	{% include "logs/advanced.html" with events=entry.events %}
 </section>
 {% endfor %}
 
