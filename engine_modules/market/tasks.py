@@ -18,14 +18,10 @@ class AbstractBubblesTask(ResolutionTask):
 			return
 
 		# This uses an underlying assumption: that a CorporationMarket with a value at 0 is NOT eligible to a domination bubble,
-		# even if other Corporations were to have even lower assets on this Market. This might seem redundant because Markets are not supposed to have negative values,
-		# but if that changes (unlikely), this'll be ready. It means '0' CANNOT be a superposed state for 'bubble_value', so we don't need 2 fields (for positive and negative bubbles)
-		# get all negative bubbles, in alphabetical order of the name of the Market on which they apply
-		# Turn everything to list, because QuerySets don't have a 'remove' method
+		# even if other Corporations were to have even lower assets on this Market.
+		# It means '0' CANNOT be a superposed state for 'bubble_value', so we don't need 2 fields (for positive and negative bubbles)
 
 		# We let negative bubbles on corporations crashed this turn
-		negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, value__lte=0).order_by('market__name'))
-		previous_negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=-1).order_by('market__name'))
 
 		# Now get all positive bubbles. We annotate the CorporationMarkets with the field 'maxval', containing the maximal value across all
 		positive_bubbles = {}
@@ -42,66 +38,37 @@ class AbstractBubblesTask(ResolutionTask):
 					pass
 		previous_positive_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=1))
 
-		modifiers = {}
-		for corporation in Corporation.objects.filter(game=game):
-			modifiers[corporation] = 0
-
-		for nb in negative_bubbles:
-			# This test differentiates corporations descending to 0, from the ones ascending to 0. The former should get a negative bubble, the latter shouldn't,
-			# because the negative bubble are an incentive to get that market back up. If you get it back up to 0, your previous bubble is erased and you don't get a new one.
-			# Ascending corporations have a bubble value of -1 because they had a negative bubble last turn, the others do not
-			if nb.bubble_value >= 0 or nb.value < 0:
-				# The following must absolutely be executed in the 'if' and not the 'else', because although the bubbles in the 'else'
-				# have been categorized as negative bubbles, they are actually popping this turn because they came back up to 0
-				for pnb in previous_negative_bubbles:
-					if (pnb.corporation == nb.corporation) and (pnb.market == nb.market):
-						# This is not a new bubble
-						previous_negative_bubbles.remove(pnb)
-						break
-				else:
-					modifiers[nb.corporation] += nb.update_bubble(CorporationMarket.NEGATIVE_BUBBLE)
-			else:
-				# This CorporationMarket had a negative bubble, and came back up: don't shoot the ambulance, actually, help it a bit
-				# We do not have to log the bubble popping, it will be logged later, because we haven't removed it from previous_negative_bubbles
-				modifiers[nb.corporation] += nb.update_bubble(CorporationMarket.NO_BUBBLE)
-
-				# We have to check whether that corporation has a domination bubble by getting back up to 1 because a negative bubble disappeared.
-				# That is only possible if the max_val for this market is None, because the query calculating it has a .exclude(value__lte=0) clause.
-				# However, if the max_val value is 1, we have to remove the possible CorporationMarket in positive_bubbles, because it no longer has a domination
-				if max_vals[nb.market.name] is None:
-					max_vals[nb.market.name] = nb.value
-					# We have to do it here, because if we do it in the previous_negative_bubbles loop, we won't have a handle on nb:
-					# We'll have one on the corresponding pnb object, which will not have been updated in this loop, so the value from update_bubble will be wrong
-					positive_bubbles[nb.market.name] = nb
-				elif max_vals[nb.market.name] == 1 and nb.market.name in positive_bubbles.keys():
-					# This corporation used to have the highest value with 1, but now there are 2 of them
-					max_vals[nb.market.name] = None
-					del positive_bubbles[nb.market.name]
-
-		# We still have to handle the deletion of the bubbles that burst: We have to log them and update bubble_value
-		for pnb in previous_negative_bubbles:
-			if pnb.value > 0 and pnb.value != max_vals[pnb.market.name]:
-				# We handled the other cases in the negative_bubbles loop or we will handle it in the positive_bubble loop
-				modifiers[pnb.corporation] += pnb.update_bubble(CorporationMarket.NO_BUBBLE)
-				pnb.save()
-
+		# We find the positive bubbles that will stay
+		common_old_and_new_positive_bubble = []
 		for pb in positive_bubbles.values():
 			for ppb in previous_positive_bubbles:
 				if (ppb.corporation == pb.corporation) and (ppb.market == pb.market):
-					# This is not a new bubble
-					previous_positive_bubbles.remove(ppb)
-					break
-			else:
-				modifiers[pb.corporation] += pb.update_bubble(CorporationMarket.DOMINATION_BUBBLE)
+					# We add the key
+					common_old_and_new_positive_bubble.append("%s%s" % (pb.corporation, pb.market))
 
+		# We remove the old positive bubble
 		for ppb in previous_positive_bubbles:
-			if ppb.value > 0:
-				# We already handled the other cases in the negative_bubble loop
-				modifiers[ppb.corporation] += ppb.update_bubble(CorporationMarket.NO_BUBBLE)
-				ppb.save()
+			if ppb.value <= 0 or "%s%s" % (ppb.corporation, ppb.market) not in common_old_and_new_positive_bubble:
+				ppb.update_bubble(CorporationMarket.NO_BUBBLE)
 
-		for corporation in modifiers.keys():
-			corporation.update_modifier(modifiers[corporation])
+		previous_negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=-1))
+		negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, value__lte=0))
+		
+		# We still have to handle the previous negative bubbles
+		for pnb in previous_negative_bubbles:
+			if pnb.value > 0:
+				# We handled the other cases in the negative_bubbles loop or we will handle it in the positive_bubble loop
+				pnb.update_bubble(CorporationMarket.NO_BUBBLE)
+
+		# We add negative bubbles on corporation which doesn't already have one
+		for nb in negative_bubbles:
+			if nb.bubble_value != CorporationMarket.NEGATIVE_BUBBLE:
+				nb.update_bubble(CorporationMarket.NEGATIVE_BUBBLE)
+
+		# We add the new postitive bubbles if it's a new bubble and if this market doesn't have a negative bubble
+		for pb in positive_bubbles.values():
+			if pb.value > 0 and "%s%s" % (pb.corporation, pb.market) not in common_old_and_new_positive_bubble:
+				pb.update_bubble(CorporationMarket.DOMINATION_BUBBLE)
 
 
 class UpdateBubblesTask(AbstractBubblesTask):
@@ -156,7 +123,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 					# This is not a new bubble
 					break
 			else:
-				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, delta=-1, corporation=nb.corporation, corporation_market=nb)
+				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, delta=-1, corporation=nb.corporation)
 
 		for pnb in previous_negative_bubbles:
 			for nb in negative_bubbles:
@@ -165,7 +132,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 					negative_bubbles.remove(nb)
 					break
 			else:
-				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, delta=1, corporation=pnb.corporation, corporation_market=pnb)
+				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, delta=1, corporation=pnb.corporation)
 
 		for pb in positive_bubbles:
 			for ppb in previous_positive_bubbles:
@@ -173,7 +140,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 					# This is not a new bubble
 					break
 			else:
-				game.add_event(event_type=game.GAIN_DOMINATION_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, delta=1, corporation=pb.corporation, corporation_market=pb)
+				game.add_event(event_type=game.GAIN_DOMINATION_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, delta=1, corporation=pb.corporation)
 
 		for ppb in previous_positive_bubbles:
 			for pb in positive_bubbles:
@@ -182,7 +149,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 					positive_bubbles.remove(pb)
 					break
 			else:
-				game.add_event(event_type=game.LOSE_DOMINATION_BUBBLE, data={"market": ppb.market.name, "corporation": ppb.corporation.base_corporation.name}, delta=-1, corporation=ppb.corporation, corporation_market=ppb)
+				game.add_event(event_type=game.LOSE_DOMINATION_BUBBLE, data={"market": ppb.market.name, "corporation": ppb.corporation.base_corporation.name}, delta=-1, corporation=ppb.corporation)
 
 			return
 

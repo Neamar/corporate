@@ -7,7 +7,7 @@ class SaveCorporationAssetTask(ResolutionTask):
 	"""
 	Save the assets of all corporations after the turn resolution
 	"""
-	RESOLUTION_ORDER = 650
+	RESOLUTION_ORDER = 871
 
 	def run(self, game):
 		# We save corporation asset, even for the corporations which have crashed this turn
