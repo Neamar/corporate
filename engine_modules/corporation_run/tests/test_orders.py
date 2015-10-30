@@ -5,23 +5,7 @@ from engine_modules.corporation_run.decorators import override_max_protection
 
 
 class RunOrdersTest(EngineTestCase):
-	def set_to_zero(self, corporation):
-		"""
-		Set corporation protection values to 0, to ease testing.
-		"""
-		bc = corporation.base_corporation
-		self._values = (bc.extraction, bc.sabotage, bc.datasteal)
-
-		bc.extraction = bc.sabotage = bc.datasteal = 0
-
-	def set_to_original(self, corporation):
-		"""
-		Set corporation protection values back to original values, to ease testing.
-		"""
-		bc = corporation.base_corporation
-		bc.extraction = self._values[0]
-		bc.sabotage = self._values[0]
-		bc.datasteal = self._values[0]
+	pass
 
 
 class CorporationRunOrderTest(RunOrdersTest):
@@ -57,11 +41,6 @@ class DatastealRunOrderTest(RunOrdersTest):
 		)
 		self.dso.clean()
 		self.dso.save()
-
-		self.set_to_zero(self.dso.target_corporation)
-
-	def tearDown(self):
-		self.set_to_original(self.dso.target_corporation)
 
 	def test_datasteal_success(self):
 		"""
@@ -129,11 +108,6 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.so.clean()
 		self.so.save()
 
-		self.set_to_zero(self.so.target_corporation)
-
-	def tearDown(self):
-		self.set_to_original(self.so.target_corporation)
-
 	def test_sabotage_success(self):
 		"""
 		Sabotage doesn't benefit anyone, but costs the sabotaged 2 assets
@@ -200,11 +174,6 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		)
 		self.eo.clean()
 		self.eo.save()
-
-		self.set_to_zero(self.eo.target_corporation)
-
-	def tearDown(self):
-		self.set_to_original(self.eo.target_corporation)
 
 	def test_extraction_success(self):
 		"""
@@ -278,8 +247,3 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		)
 		self.so.clean()
 		self.so.save()
-
-		self.set_to_zero(self.so.target_corporation)
-
-	def tearDown(self):
-		self.set_to_original(self.so.target_corporation)

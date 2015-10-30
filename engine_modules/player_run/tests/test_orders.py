@@ -15,7 +15,7 @@ class InformationRunOrderTest(RunOrdersTest):
 
 		from engine_modules.influence.models import BuyInfluenceOrder
 
-		# Initial setup, create a resolution sheet we'll use later.
+		# Initial setup, create logs we'll use later.
 		o = BuyInfluenceOrder(
 			player=self.p2
 		)
