@@ -1,9 +1,9 @@
 name: Tlaloc
 markets:
-    agroalimentaire: 3
-    énergie: 2
-    transport: 2
-    pharmaceutique: 2
+    agroalimentaire: -1
+    énergie: 4
+    transport: 3
+    pharmaceutique: 3
 datasteal: 10
 sabotage: 20
 extraction: 20

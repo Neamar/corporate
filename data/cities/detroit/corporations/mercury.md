@@ -1,6 +1,6 @@
 name: Mercury
 markets:
-    télécom: 3
+    télécom: 2
     agroalimentaire: 3
     transport: 3
 datasteal: 10

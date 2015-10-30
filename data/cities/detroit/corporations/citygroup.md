@@ -1,8 +1,8 @@
 name: CityGroup
 markets:
-    BTP: 2
-    télécom: 3
-    énergie: 3
+    BTP: 5
+    télécom: 1
+    énergie: 0
     transport: 2
 datasteal: 10
 sabotage: 10
@@ -16,7 +16,7 @@ on_last:
     update('citygroup', 1)
 on_crash:
     update(ladder[1], -1)
-    update('taurus', -3)
+    update('Tlaloc', -3)
     update('iris', 2)
     
 > *Construire aujourd’hui les villes de demain*

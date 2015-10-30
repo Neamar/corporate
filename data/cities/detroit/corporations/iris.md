@@ -1,7 +1,7 @@
 name: Iris
 markets:
-    médias: 3
-    aérospatiale: 3
+    médias: 4
+    aérospatiale: 2
     pharmaceutique: 1
     télécom: 2
 datasteal: 20
@@ -10,7 +10,7 @@ extraction: 10
 detection: 30
 on_first:
     update('citygroup', 1)
-    update(ladder[-1], -1)
+    update('pure', -1)
 on_last:
     update('taurus', -1)
     update('mercury', 1)

@@ -1,8 +1,8 @@
 name: Bastion
 markets:
     militaire: 2
-    médias: 2
-    énergie: 2
+    médias: 3
+    énergie: 3
     transport: 2
 datasteal: 10
 sabotage: 10

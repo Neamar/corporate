@@ -1,22 +1,22 @@
 name: EnerCore
 markets:
-    énergie: 3
-    BTP: 2
-    médias: 2
-    agroalimentaire: 0
+    énergie: 5
+    BTP: 3
+    médias: 1
+    agroalimentaire: 2
 datasteal: 20
 sabotage: 10
 extraction: 20
 detection: 30
 on_first:
     update('taurus', 1)
-    update(ladder[1], 1)
+    update('citygroup', 1)
 on_last:
     update('shinsekai', 1)
     update('pure', 1)
 on_crash:
     update('mercury', -2)
-    update('citygroup', -2)
+    update('bastion', -2)
     update('iris', 2)
 
 > *Triompher par l’énergie, pour l’énergie*
