@@ -86,10 +86,10 @@ class RunOrder(Order):
 			cost -= RunOrder.INFLUENCE_BONUS
 		return cost
 
-	def get_form(self, data=None):
-		form = super(RunOrder, self).get_form(data)
+	# def get_form(self, data=None):
+		# form = super(RunOrder, self).get_form(data)
 		# We remove has_influence_bonus because we ant to handle it automatically
-		form.fields.pop('has_influence_bonus')
+		# form.fields.pop('has_influence_bonus')
 		
 	def custom_description(self):
 		return "%s%%" % self.get_raw_probability()
