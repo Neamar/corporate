@@ -1,1 +1,1 @@
-A acheté une part dans {{ corporation }}
+A acheté une part dans **{{ corporation }}**

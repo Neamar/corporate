@@ -3,14 +3,14 @@
 	<ul class="pod-players-list">
 	{% for player in players %}
 		<li class="pod-players-list-item">
-			<img class="player-avatar" title="Avatar {{ player.name }}" src="{{ STATIC_URL }}img/players/{% cycle '01' '02' '03' %}.png"/>
+			<img class="player-avatar tooltip" title="{{ player.name }}" src="{{ STATIC_URL }}img/players/{% cycle '01' '02' '03' %}.png"/>
 
 			<div class="content-player">
 				<span class="player-name">{{ player.name }}</span>
 				<span class="icon-ic">{{ player.influence.level }}</span>
 				<span class="icon-messaging"></span>
 
-				{% include "logs/simple.html" with events=player.events %}
+				{% include "logs/player.html" with events=player.events %}
 			</div>
 		</li>
 	{% endfor %}

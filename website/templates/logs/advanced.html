@@ -1,5 +1,0 @@
-<ul class="icons-list">
-{% for event in events %}
-	<li><svg role="img" class="svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#{{ event.event_type|lower }}" title="{{ event.event_type|lower|capfirst }} {{ event.data }}"></use></svg><span class="{% if event.delta > 0 %}positive{% endif %}{% if event.delta < 0 %}negative{% endif %}">{{ event.delta }}</span></li>
-{% endfor %}
-</ul>

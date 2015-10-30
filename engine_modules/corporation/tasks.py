@@ -24,6 +24,7 @@ class CrashCorporationTask(ResolutionTask):
 		# Then, we apply the crashed effects only on alives corporations
 		for corporation in corporations_to_crash:
 			corporation.on_crash_effect(ladder)
+			game.add_event(event_type=game.CORPORATION_CRASHED, data={"corporation": corporation.base_corporation.name}, corporation=corporation)
 
 		# get citizenship to delete
 		citizenship_to_delete = Citizenship.objects.filter(corporation__in=corporations_to_crash)

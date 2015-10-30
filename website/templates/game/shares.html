@@ -11,7 +11,7 @@
 	{% for player in players %}
 	<!-- should be replaced with the player's image when -->
 	<th>
-		<a href="{% url 'website.views.data.player' game_id=game.id player_id=player.id %}" title="{{ player.name|title }}"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" /></a>
+		<a href="{% url 'website.views.data.player' game_id=game.id player_id=player.id %}"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png"  title="{{ player.name|title }}" class="tooltip" /></a>
 	</th>
 	{% endfor %}
 </tr>
@@ -24,13 +24,13 @@
 	{% for share in corporation_shares.shares %}
 
 	{% if share.top %}
-	<td class="main-shareholder">
+	<td class="main-shareholder tooltip" title="Actionnaire majoritaire">
 	{% else %}
 	<td>
 	{% endif %}
 	{% if share.count != 0 %}
 	{% if share.top %}
-		<strong title="Actionnaire majoritaire">{{ share.count }}</strong>
+		<strong>{{ share.count }}</strong>
 	{% else %}
 		{{ share.count }}
 	{% endif %}

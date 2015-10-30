@@ -38,6 +38,7 @@ def wallstreet(request, game, player, turn):
 		for asset_delta in corporation.assetdelta_set.filter(turn=turn - 1):
 			delta += asset_delta.delta
 
+		events = Log.objects.for_corporation(corporation, player, turn).exclude(delta=0)
 		ranking.append({"corporation": corporation, "assets": assets, "delta": delta, "corporation_market": corporation_markets, "events": events})
 
 	return {
@@ -83,6 +84,8 @@ def corporation(request, player, game, corporation_slug, turn):
 	for corporation_market in previous_corporation_markets:
 		corporation_market.events = Log.objects.for_corporation_market(corporation_market, player)
 
+	logs = Log.objects.for_corporation(corporation, asking_player=player, turn=turn).filter(delta=0)
+
 	return {
 		"corporation": corporation,
 		"share_holders": share_holders,
@@ -93,6 +96,7 @@ def corporation(request, player, game, corporation_slug, turn):
 		# Turn_spinner doesn't work, because the URL with e turn isn't allowed, which makes sense, because for this description, the turn doesn't matter
 		"pods": ['d_inc', 'current_player', 'players', ],
 		"turn": game.current_turn,
+		"logs": logs,
 		"request": request,
 	}
 
