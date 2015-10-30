@@ -294,7 +294,7 @@ class AssetDelta(models.Model):
 	RUN_EXTRACTION = 'extraction'
 	RUN_DATASTEAL = 'datasteal'
 	DINC = 'detroit-inc'
-	BUBBLE = 'market*bubble'
+	BUBBLE = 'market-bubble'
 	INVISIBLE_HAND = 'invisible-hand'
 	VOTES = 'votes'
 
