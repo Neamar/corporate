@@ -67,3 +67,7 @@ class InformationRunOrderTest(RunOrdersTest):
 
 	def test_informations_on_corporations_gives_logs(self):
 		self.io.corporation_targets.add(self.c)
+
+		self.g.resolve_current_turn()
+
+		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 1)
