@@ -3,7 +3,7 @@
 	<ul class="pod-players-list">
 	{% for player in players %}
 		<li class="pod-players-list-item">
-			<img class="player-avatar tooltip" title="{{ player.name }}" src="{{ STATIC_URL }}img/players/{% cycle '01' '02' '03' %}.png"/>
+			<a href="{% url 'website.views.data.player' game_id=game.id player_id=player.id %}"><img class="player-avatar tooltip" title="{{ player.name }}" src="{{ STATIC_URL }}img/players/{% cycle '01' '02' '03' %}.png"/></a>
 
 			<div class="content-player">
 				<span class="player-name">{{ player.name }}</span>

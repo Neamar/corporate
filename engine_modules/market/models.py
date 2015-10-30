@@ -68,4 +68,4 @@ class CorporationMarket(models.Model):
 		return delta
 
 	def __unicode__(self):
-		return u"%s , marché %s (tour %s)" % (self.corporation.base_corporation.name, self.market.name, self.corporation.game.current_turn)
+		return u"%s , marché %s (tour %s)" % (self.corporation.base_corporation.name, self.market.name, self.turn)
