@@ -323,7 +323,7 @@ class TaskTest(EngineTestCase):
 		corporation_markets = self.c.corporation_markets
 		corporation_markets_2 = self.c2.corporation_markets
 		target_corporation_market = None
-		# Both target_corporation_market_1 and _2 must be corporation-specific, let there also be a positive bubble on this market when there should only be a negative on another
+		# Both target_corporation_market_1 and _2 must be corporation-specific, lest there also be a positive bubble on this market when there should only be a negative on another
 		for corporation_market in corporation_markets:
 			if corporation_market.market not in [cm.market for cm in corporation_markets_2]:
 				target_corporation_market = corporation_market
