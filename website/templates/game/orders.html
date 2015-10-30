@@ -52,7 +52,8 @@
 {% for order in available_orders %}
 	<div class="order-form-content">
 		<div class="content-title">
-			<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">
+<!--			<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">
+-->			<h3 style="background-image: /static/img/sprite.svg#{{ order.name }}" class="order">
 				<span>{{ order.title }}</span>
 			</h3>
 		</div>
