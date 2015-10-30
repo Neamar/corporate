@@ -148,7 +148,7 @@ class Corporation(models.Model):
 	def get_random_corporation_market_among_bests(self):
 		"""
 		Return the CorporationMarket with the higher asset among corporationMarket of this corporation.
-		If there are som ex-aequo, pick at random among them
+		If there are some ex-aequo, pick at random among them
 		"""
 		cms = list(self.corporation_markets.order_by('-value'))
 		max_value = cms[0].value

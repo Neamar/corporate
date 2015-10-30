@@ -48,23 +48,18 @@ class CorporationMarket(models.Model):
 	def update_bubble(self, value):
 		"""
 		update the bubble_value field and keep the value field consistent
-		We'll internalize some of the considerations when you cross the 0 threshold in a direction or the other
-		Because of that, we have to return the amount by which self.bubble_value actually changed, which may be different from the amount requested
 		"""
 
 		previous_bubble_value = self.bubble_value
-		# We have to specially handle the case where the resulting value would be 0
-		self.value += (value - self.bubble_value)
-		# You can't go into negative values unless you have a negative bubble
-		if value > -1:
-			self.value = max(self.value, 0)
+		# We save the bubble value on the corporation market bubble_value field with no impact on the value field
 		self.bubble_value = value
-		if self.value == 0 and previous_bubble_value != 0:
-			self.value -= 1
-			self.bubble_value -= 1
 		self.save()
 
-		delta = self.bubble_value - previous_bubble_value
+		delta = value - previous_bubble_value
+
+		# On ajoute la bulle sur les actifs de la corpo
+		self.corporation.update_modifier(delta)
+
 		self.corporation.assetdelta_set.create(category=AssetDelta.BUBBLE, delta=delta, turn=self.turn)
 		return delta
 
