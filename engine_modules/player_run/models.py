@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.db import models
+from django.db import models, IntegrityError
 
 from engine_modules.run.models import RunOrder
 from engine.models import Player
@@ -48,12 +48,13 @@ class InformationOrder(RunOrder):
 		logs = Log.objects.for_player(self.target, self.target, self.player.game.current_turn + 1).exclude(public=True)
 
 		for log in logs:
-			cp = ConcernedPlayer(
-				player=self.player,
-				log=log,
-				transmittable=False,
-				personal=False
-			)
-			cp.save()
+			if not log.concernedplayer_set.filter(player=self.player).exists():
+				cp = ConcernedPlayer(
+					player=self.player,
+					log=log,
+					transmittable=False,
+					personal=False
+				)
+				cp.save()
 
 orders = (InformationOrder, )
