@@ -30,14 +30,14 @@ def get_ladder(self, turn=None):
 	if turn is None:
 		turn = self.current_turn + 1
 
-	previous = AssetHistory.objects.filter(corporation__game=self, turn__lte=turn).select_related('corporation')
+	previous = AssetHistory.objects.filter(corporation__game=self, turn__lte=turn).exclude(corporation__crash_turn__lte=turn).select_related('corporation')
 	ranking = defaultdict(lambda: 0)
 	for element in previous:
 		ranking[element.corporation] += element.assets * pow(10, 2 * element.turn)
 
 	# We're asking for a ladder on a turn where the AssetHistory have not been written yet.
 	if turn > self.current_turn:
-		actual = self.corporation_set.all()
+		actual = self.corporation_set.exclude(corporation__crash_turn__lte=turn)
 		for element in actual:
 			ranking[element] += element.assets * pow(10, 2 * self.current_turn)
 
