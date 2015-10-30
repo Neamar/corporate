@@ -27,8 +27,19 @@ def wallstreet(request, game, player, turn):
 	corporations = game.get_ladder(turn=turn - 1)
 	for corporation in corporations:
 		corporation_markets = corporation.get_corporation_markets(turn - 1).order_by('market__name')
+		events = Log.objects.for_corporation(corporation, player, turn)
+		if turn == game.current_turn:
+			assets = corporation.assets
+		else:
+			assets = 0
+			for market in corporation_markets:
+				assets += market.value
+		delta = 0
+		for asset_delta in corporation.assetdelta_set.filter(turn=turn - 1):
+			delta += asset_delta.delta
+
 		events = Log.objects.for_corporation(corporation, player, turn).exclude(delta=0)
-		ranking.append({"corporation": corporation, "corporation_market": corporation_markets, "events": events})
+		ranking.append({"corporation": corporation, "assets": assets, "delta": delta, "corporation_market": corporation_markets, "events": events})
 
 	return {
 		"ranking": ranking,

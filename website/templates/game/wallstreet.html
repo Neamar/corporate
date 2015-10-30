@@ -11,9 +11,9 @@
 	<h2>
 		<span class="corporation-index">{{ forloop.counter }}</span>
 		<a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=entry.corporation.base_corporation.slug %}" class="corporation-name">{{ entry.corporation.base_corporation.name }}</a>
-		<span class="current-assets">{{ entry.corporation.assets }}
-			<span class="assets-delta{{ entry.corporation.asset_delta_is_positive|yesno:" positive, negative,"}}">
-			{{ entry.corporation.asset_delta|default:"-" }}
+		<span class="current-assets">{{ entry.assets }}
+			<span class="assets-delta{{ entry.delta|yesno:" positive, negative,"}}">
+			{{ entry.delta|default:"0000" }}
 			</span>
 		</span>
 	</h2>
@@ -24,7 +24,7 @@
 	{% for corporation_market in entry.corporation_market %}
 		<div class="corporation-market">
 			<svg role="img" class="svg--small svg--{% if corporation_market.bubble_value == -1 %}red{% elif corporation_market.bubble_value == 1 %}green{% else %}white{% endif %}" title="{{ corporation_market.market.name|capfirst }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg>
-			<span class="corporation-market-value">{{ corporation_market.value }}</span>
+			<span class="corporation-market-value">{{ corporation_market.value }} ( {{ corporation_market.bubble_value }} )</span>
 		</div>
 	{% endfor %}
 	</div>

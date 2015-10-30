@@ -304,7 +304,7 @@ class AssetDelta(models.Model):
 	RUN_EXTRACTION = 'extraction'
 	RUN_DATASTEAL = 'datasteal'
 	DINC = 'detroit-inc'
-	BUBBLE = 'market*bubble'
+	BUBBLE = 'market-bubble'
 	INVISIBLE_HAND = 'invisible-hand'
 	VOTES = 'votes'
 
@@ -336,3 +336,6 @@ class AssetDelta(models.Model):
 	corporation = models.ForeignKey(Corporation)
 	delta = models.SmallIntegerField()
 	turn = models.SmallIntegerField(default=0)
+
+	def __unicode__(self):
+		return u"%i (%s) [%s]" % (self.delta, self.corporation, self.category)
