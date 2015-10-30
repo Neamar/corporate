@@ -2,7 +2,6 @@
 from django.db.models import Max
 
 from engine.tasks import ResolutionTask
-from engine_modules.corporation.models import Corporation
 from engine_modules.market.models import Market, CorporationMarket
 
 
