@@ -3,6 +3,8 @@ from django.db import models
 
 from engine_modules.run.models import RunOrder
 from engine.models import Player
+from logs.models import Log, ConcernedPlayer
+
 
 information_messages = {
 	'success': {
@@ -41,6 +43,17 @@ class InformationOrder(RunOrder):
 		return "Lancer une run d'information sur %s (%s%%)" % (self.target, self.get_raw_probability())
 
 	def resolve_successful(self):
-		pass
+		# Retrieve all event the target could see for himself
+		# We need to ask on turn +1 cause we cant events related to this turn, right now.
+		logs = Log.objects.for_player(self.target, self.target, self.player.game.current_turn + 1).exclude(public=True)
+
+		for log in logs:
+			cp = ConcernedPlayer(
+				player=self.player,
+				log=log,
+				transmittable=False,
+				personal=False
+			)
+			cp.save()
 
 orders = (InformationOrder, )
