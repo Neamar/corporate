@@ -4,13 +4,27 @@ from django.db import models
 from django.conf import settings
 from django.template import Template, Context
 from engine.models import Game
+from django.db.models import Q
 from utils.read_markdown import read_markdown
+
+
+class LogManager(models.Manager):
+	def for_player(self, player, asking_player, turn):
+		# turn=now AND players__player=target AND personal_event AND (players__player=myself OR (public)
+		return Log.objects.filter(turn=turn - 1, hide_for_players=False).filter(concernedplayer__player=player, concernedplayer__personal=True).filter(Q(players=asking_player) | Q(public=True)).distinct()
+
+	def for_corporation_market(self, corporation_market, asking_player):
+		return Log.objects.filter(corporation_market=corporation_market).filter(Q(players=asking_player) | Q(public=True)).distinct()
+
+	def for_corporation(self, corporation, asking_player, turn):
+		return Log.objects.filter(turn=turn - 1).filter(corporation=corporation).filter(Q(players=asking_player) | Q(public=True)).distinct()
 
 
 class Log(models.Model):
 	"""
 	We log every action in the game in a single table
 	"""
+	objects = LogManager()
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
 

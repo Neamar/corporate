@@ -1,6 +1,7 @@
 from engine_modules.corporation_run.tests.test_orders import RunOrdersTest
 from engine.models import Player
 from engine_modules.player_run.models import InformationOrder
+from logs.models import Log
 
 
 class InformationRunOrderTest(RunOrdersTest):
@@ -13,25 +14,32 @@ class InformationRunOrderTest(RunOrdersTest):
 		citizenship.corporation = self.c
 		citizenship.save()
 
-		from engine_modules.influence.models import BuyInfluenceOrder
+		from engine_modules.corporation_run.models import SabotageOrder
 
 		# Initial setup, create logs we'll use later.
-		o = BuyInfluenceOrder(
-			player=self.p2
+		o = SabotageOrder(
+			player=self.p2,
+			target_corporation_market=self.c.get_random_corporation_market_among_bests()
 		)
 		o.save()
-
-		self.g.resolve_current_turn()
 
 		self.io = InformationOrder(
 			target=self.p2,
 			player=self.p,
-			additional_percents=0,
+			additional_percents=10,
 		)
 		self.io.clean()
 		self.io.save()
 
-		self.set_to_zero(self.io.target.citizenship.corporation)
+	def test_no_information_gives_no_logs(self):
+		self.io.delete()
 
-	def tearDown(self):
-		self.set_to_original(self.io.target.citizenship.corporation)
+		self.g.resolve_current_turn()
+
+		# Sanity check: no information run, no knownloedge on player 2 action
+		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 0)
+
+	def test_information_gives_logs(self):
+		self.g.resolve_current_turn()
+
+		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 1)
