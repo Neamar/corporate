@@ -32,6 +32,10 @@ class InformationRunOrderTest(RunOrdersTest):
 		self.io.save()
 
 	def test_no_information_gives_no_logs(self):
+		"""
+		No information run == no lgos for target player.
+		Just a sanity check
+		"""
 		self.io.delete()
 
 		self.g.resolve_current_turn()
@@ -40,6 +44,25 @@ class InformationRunOrderTest(RunOrdersTest):
 		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 0)
 
 	def test_information_gives_logs(self):
+		"""
+		Information run gives information about the sabotage
+		"""
+		self.g.resolve_current_turn()
+
+		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 1)
+
+	def test_double_information_gives_logs(self):
+		"""
+		Sending the same information run twice should not crash (not add concernedplayer twice)
+		"""
+		self.io2 = InformationOrder(
+			target=self.p2,
+			player=self.p,
+			additional_percents=10,
+		)
+		self.io2.clean()
+		self.io2.save()
+
 		self.g.resolve_current_turn()
 
 		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 1)
