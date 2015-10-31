@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation_run.models import SabotageOrder
+from engine_modules.corporation_run.models import SabotageOrder, ExtractionOrder
 
 
 class OffensiveRunTaskTest(EngineTestCase):
@@ -39,32 +39,42 @@ class OffensiveRunTaskTest(EngineTestCase):
 	def test_offensive_resolve_order(self):
 		"""
 		Check that offensive runs are resolved in order of raw_probability
-		And that only the first one has been resolved
+		And that only the first one has been resolved on the same market
 		"""
 
-		begin_sabotaged_assets = self.so.target_corporation.assets
+		# We find a common corporationmarket on c with a market shared by c,c2 and c3
+		c2_markets = self.c2.markets
+		c3_markets = self.c3.markets
+		common_corporation_markets = [cm for cm in self.c.corporation_markets if cm.market in c2_markets and cm.market in c3_markets]
+		common_corporation_market = common_corporation_markets[0]
 
-		so2 = SabotageOrder(
+		assets_c_before = self.c.assets
+		assets_c3_before = self.c3.assets
+		assets_c2_before = self.c2.assets
+
+		# We order an extraction run for c2 and c3 on this market
+		so2 = ExtractionOrder(
 			player=self.p,
-			target_corporation_market=self.c2.get_random_corporation_market(),
+			target_corporation_market=common_corporation_market,
+			stealer_corporation=self.c2,
 			additional_percents=4,
 		)
 
 		so2.clean()
 		so2.save()
-		begin_sabotaged_assets_2 = so2.target_corporation.assets
-
-		so3 = SabotageOrder(
+		
+		so3 = ExtractionOrder(
 			player=self.p,
-			target_corporation_market=self.c3.get_random_corporation_market(),
+			target_corporation_market=common_corporation_market,
+			stealer_corporation=self.c3,
 			additional_percents=8,
 		)
 
 		so3.clean()
 		so3.save()
-		begin_sabotaged_assets_3 = so3.target_corporation.assets
-
+		
 		self.g.resolve_current_turn()
-		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets)
-		self.assertEqual(self.reload(so2.target_corporation).assets, begin_sabotaged_assets_2)
-		self.assertEqual(self.reload(so3.target_corporation).assets, begin_sabotaged_assets_3 - 2)
+
+		self.assertEqual(self.reload(self.c).assets, assets_c_before - 2 - 1)  # SaborageOrder of the setUp succeeded + 1 ExtractionOrder Succeeded
+		self.assertEqual(self.reload(self.c2).assets, assets_c3_before)  # ExtractionOrder Failed
+		self.assertEqual(self.reload(self.c3).assets, assets_c2_before + 1)  # ExtractionOrder Succeded
