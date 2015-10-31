@@ -33,4 +33,9 @@ class ProtectionRunTask(OrderResolutionTask):
 	RESOLUTION_ORDER = 349
 	ORDER_TYPE = ProtectionOrder
 
+	def run(self, game):
+		orders = self.ORDER_TYPE.objects.filter(player__game=game, turn=game.current_turn)
+		for order in orders:
+			order.resolve()
+
 tasks = (OffensiveRunTask, ProtectionRunTask)
