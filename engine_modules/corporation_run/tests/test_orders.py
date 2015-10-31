@@ -264,11 +264,9 @@ class DefensiveRunOrderTest(RunOrdersTest):
 		super(DefensiveRunOrderTest, self).setUp()
 
 		corporationmarket = self.c.get_random_corporation_market()
-		self.dso = DataStealOrder(
-			stealer_corporation=self.c2,
+		self.dso = ProtectionOrder(
 			player=self.p,
-			target_corporation_market=corporationmarket,
-			additional_percents=0,
+			protected_corporation_market=corporationmarket,
 		)
 		self.dso.clean()
 		self.dso.save()
