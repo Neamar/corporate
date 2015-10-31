@@ -61,8 +61,8 @@ Ces corporations sont réparties de la façon suivante dans les différents marc
 
 Les actifs d’une corporation sont égaux à la somme des actifs de ses marchés… à deux petites exceptions près :
 
-* Si une corporation a plus d'actifs que toutes les autres sur un marché, elle domine ce marché et gagne un actif. Attention cependant, cet **actif de domination** est perdu dès que la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine. Ces actifs sont en rouge dans le tableau.
-* *A contrario*, une corporation qui tombe à 0 ou moins sur un de ses marchés perd un actif. Cet **actif de perte sèche** disparaît dès que la corporation récupère au moins un actif sur ce marché. Si plusieurs corporations ont 0 actifs ou moins sur le même marché, elles ont toutes l'actif de perte sèche. Ces actifs sont en rouge dans le tableau.
+* Si une corporation a plus d'actifs que toutes les autres sur un marché, elle domine ce marché et gagne un actif. Attention cependant, cet **actif de domination** est perdu dès que la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine. Ces actifs sont en <span style=color:green>vert</span> dans le tableau.
+* *A contrario*, une corporation qui tombe à 0 ou moins sur un de ses marchés perd un actif. Cet **actif de perte sèche** disparaît dès que la corporation récupère au moins un actif sur ce marché. Si plusieurs corporations ont 0 actifs ou moins sur le même marché, elles ont toutes l'actif de perte sèche. Ces actifs sont en <span style=color:red>rouge</span> dans le tableau.
 
 ## Main invisible
 > Même la plus corrompue des corpos est victime des modes des consommateurs. Ça a été une déception pour moi aussi : personne ne décide quel produit de merde le public va s'arracher cette année.
