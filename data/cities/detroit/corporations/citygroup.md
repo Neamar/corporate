@@ -16,7 +16,7 @@ on_last:
     update('citygroup', 1)
 on_crash:
     update(ladder[1], -1)
-    update('Tlaloc', -3)
+    update('tlaloc', -3)
     update('iris', 2)
     
 > *Construire aujourd’hui les villes de demain*
