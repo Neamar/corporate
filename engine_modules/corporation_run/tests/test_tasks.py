@@ -42,6 +42,9 @@ class OffensiveRunTaskTest(EngineTestCase):
 		And that only the first one has been resolved on the same market
 		"""
 
+		# We don't want the setUp order to interfere :
+		self.so.delete()
+
 		# We find a common corporationmarket on c with a market shared by c,c2 and c3
 		c2_markets = self.c2.markets
 		c3_markets = self.c3.markets
@@ -75,6 +78,6 @@ class OffensiveRunTaskTest(EngineTestCase):
 		
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.reload(self.c).assets, assets_c_before - 2 - 1)  # SaborageOrder of the setUp succeeded + 1 ExtractionOrder Succeeded
+		self.assertEqual(self.reload(self.c).assets, assets_c_before - 1)  # SaborageOrder of the setUp succeeded + 1 ExtractionOrder Succeeded
 		self.assertEqual(self.reload(self.c2).assets, assets_c3_before)  # ExtractionOrder Failed
 		self.assertEqual(self.reload(self.c3).assets, assets_c2_before + 1)  # ExtractionOrder Succeded
