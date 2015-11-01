@@ -36,8 +36,8 @@ class CrashCorporationTask(ResolutionTask):
 
 		# We apply the crashed state on each corporation
 		for corporation in corporations_to_crash:
-				corporation.crash_turn = game.current_turn
-				corporation.save()
+			corporation.crash_turn = game.current_turn
+			corporation.save()
 
 		ladder = game.get_ladder()
 		# Then, we apply the crashed effects only on alives corporations

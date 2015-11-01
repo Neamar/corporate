@@ -11,7 +11,7 @@ detection: 0
 on_first:
     update('c', -1)
 on_last:
-    update('taurus', 0)
+    update('taurus', -1)
 on_crash:
     update('taurus', 6, 'magie')
 
