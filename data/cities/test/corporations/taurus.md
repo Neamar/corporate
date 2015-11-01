@@ -11,8 +11,8 @@ detection: 0
 on_first:
     update('c', -1)
 on_last:
-    update('c3', -1)
+    update('taurus', -1)
 on_crash:
-    update(ladder[0], 1)
+    update('taurus', 6)
 
 Test corporation #3

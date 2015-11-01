@@ -1,10 +1,11 @@
 from engine.testcases import EngineTestCase
 from engine_modules.corporation.models import AssetDelta
+from engine_modules.market.models import CorporationMarket
 
 
 class CrashCorporationTaskTest(EngineTestCase):
 
-	def test_corporation_deleted_when_market_assets_drop_to_zero(self):
+	def test_corporation_crashed_when_market_assets_drop_to_zero(self):
 		"""
 		Corporations should crash when their market assets drop to 0
 		"""
@@ -17,7 +18,7 @@ class CrashCorporationTaskTest(EngineTestCase):
 		corporation = self.reload(self.c)
 		self.assertEqual(corporation.crash_turn, self.g.current_turn - 1)
 
-	def test_corporation_deleted_when_assets_drop_to_zero(self):
+	def test_corporation_crashedd_when_assets_drop_to_zero(self):
 		"""
 		Corporations should actually crash as soon as their assets drop to 0
 		This is a different test from test_corporation_deleted_when_market_assets_drop_to_zero, because we have to take the MarketBubbles into account
@@ -55,3 +56,92 @@ class CrashCorporationTaskTest(EngineTestCase):
 		negative_corporation_market.save()
 
 		self.reload(self.c)
+
+	def test_taurus_crash(self):
+		"""
+		Test that Taurus crash the first time applying it's first_effect and crash the second time without appling it
+		corporation c3 is taurus (file named in date/cities/test/taurus.md)
+		"""
+
+		self.g.disable_side_effects = False
+		self.g.save()
+
+		# test that corporation assets are correct
+		print 'test'
+		for cm in CorporationMarket.objects.filter(corporation__pk=self.c.pk, turn=self.g.current_turn - 1):
+			print cm.market
+			print cm.value
+
+		for cm in CorporationMarket.objects.filter(corporation__pk=self.c2.pk, turn=self.g.current_turn - 1):
+			print cm.market
+			print cm.value
+
+		for cm in CorporationMarket.objects.filter(corporation__pk=self.c3.pk, turn=self.g.current_turn - 1):
+			print cm.market
+			print cm.value
+
+		# We force corporation c to be first because in some cases the -1 first effect of c2 makes dominant a market of taurus, braking the tests
+		self.c.set_market_assets(13)
+		self.c3.set_market_assets(0)
+		self.c3.save()
+
+		self.g.resolve_current_turn()
+
+		# test that corporation assets are correct
+		print 'test'
+		for cm in CorporationMarket.objects.filter(corporation__pk=self.c.pk, turn=self.g.current_turn - 1):
+			print cm.market
+			print cm.value
+
+		for cm in CorporationMarket.objects.filter(corporation__pk=self.c2.pk, turn=self.g.current_turn - 1):
+			print cm.market
+			print cm.value
+
+		for cm in CorporationMarket.objects.filter(corporation__pk=self.c3.pk, turn=self.g.current_turn - 1):
+			print cm.market
+			print cm.value
+
+		# test that corporation disn't crash the first time
+		# self.assertEqual(self.reload(self.c3).crash_turn, None)
+		# test that corporation assets are correct
+		# self.assertEqual(self.reload(self.c3).assets, 7)  # 0 (base) + 6 (crash effect) +1 (bubble on market where the +6 comes)
+
+		self.c3.set_market_assets(0)
+		self.c3.save()
+
+		self.g.resolve_current_turn()
+
+		# test that corporation disn't crash the second time time
+		self.assertEqual(self.reload(self.c3).crash_turn, self.g.current_turn - 1)
+		# test that corporation assets are correct
+		print 'test'
+		for cm in CorporationMarket.objects.filter(corporation__pk=self.c.pk, turn=self.g.current_turn - 1):
+			print cm.market
+			print cm.value
+
+		for cm in CorporationMarket.objects.filter(corporation__pk=self.c2.pk, turn=self.g.current_turn - 1):
+			print cm.market
+			print cm.value
+
+		for cm in CorporationMarket.objects.filter(corporation__pk=self.c3.pk, turn=self.g.current_turn - 1):
+			print cm.market
+			print cm.value
+
+		self.assertEqual(self.reload(self.c3).assets, -1)  # 0 (base) + 0 (crash effect does not occurs) -1 ()
+
+	def test_taurus_violent_crash(self):
+		"""
+		test that Taurus will crash if the +6 bonus is not enough
+		"""
+
+		self.g.disable_side_effects = False
+		self.g.save()
+		self.c3.set_market_assets(-7)
+		self.c3.save()
+
+		self.g.resolve_current_turn()
+
+		# test that corporation disn't crash the first time
+		self.assertEqual(self.reload(self.c3).crash_turn, self.g.current_turn - 1)
+		# test that corporation assets are correct
+		self.assertEqual(self.reload(self.c3).assets, -1)

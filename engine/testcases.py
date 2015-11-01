@@ -40,7 +40,7 @@ class EngineTestCase(TestCase):
 
 		self.c = self.g.corporations['c']
 		self.c2 = self.g.corporations['c2']
-		self.c3 = self.g.corporations['c3']
+		self.c3 = self.g.corporations['taurus']
 
 		# TODO: move to another place, in engine_modules/runs/testcases?
 		# TODO : add test for 90% restriction

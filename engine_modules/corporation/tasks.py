@@ -2,6 +2,7 @@
 from engine.tasks import ResolutionTask
 from engine_modules.citizenship.models import Citizenship
 from logs.models import Log
+from engine_modules.corporation.models import Corporation
 
 
 class CrashCorporationTask(ResolutionTask):
@@ -16,6 +17,7 @@ class CrashCorporationTask(ResolutionTask):
 		if not corporations_to_crash:
 			return
 
+		print corporations_to_crash
 		first_crash_taurus = False
 		# Handle the case of Taurus Part 1
 		for corporation in corporations_to_crash:
@@ -24,14 +26,16 @@ class CrashCorporationTask(ResolutionTask):
 				corporation.crash_turn = game.current_turn
 				corporation.save()
 				# search if a crashed takes place before
-				previous_crash = Log.object.filter(game=self.game, event_type=game.CORPORATION_CRASHED, corporation=corporation)
+				previous_crash = Log.objects.filter(game=game, event_type=game.CORPORATION_CRASHED, corporation=corporation)
 				if not previous_crash:
+					print 'not previous crash'
 					first_crash_taurus = True
 					taurus = corporation
 				# create an event
 				game.add_event(event_type=game.CORPORATION_CRASHED, data={"corporation": corporation.base_corporation.name}, corporation=corporation)
 				# remove Taurus of classic processs for crash
 				corporations_to_crash.remove(corporation)
+				print corporations_to_crash
 
 		# We apply the crashed state on each corporation
 		for corporation in corporations_to_crash:
@@ -45,15 +49,18 @@ class CrashCorporationTask(ResolutionTask):
 			# We create the event
 			game.add_event(event_type=game.CORPORATION_CRASHED, data={"corporation": corporation.base_corporation.name}, corporation=corporation)
 
+		print first_crash_taurus
 		# Handle the case of Taurus Part 2
 		if first_crash_taurus:
 			# We remove the crashed state on Taurus. We need that because Taurus applies an effect on itself and effects don't apply on crashed corporations
+			print taurus
 			taurus.crash_turn = None
-			taurus.corporation.save()
+			taurus.save()
 			# We apply crashed effect
 			taurus.on_crash_effect(ladder)
 			# get the new assets of taurus. If <= 0, we apply the crashed state again
-			if self.reload(taurus).assets <= 0:
+			if Corporation.objects.get(pk=taurus.pk).assets <= 0:
+				print Corporation.objects.get(pk=taurus.pk).assets
 				# Remove crashed effect. We put it in the first place to avoid others crashed effects to appy on Taurus
 				corporation.crash_turn = game.current_turn
 				corporation.save()
@@ -67,5 +74,5 @@ class CrashCorporationTask(ResolutionTask):
 			citizenship.corporation = None
 			citizenship.save()
 
-		
+
 tasks = (CrashCorporationTask,)
