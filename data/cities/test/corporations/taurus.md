@@ -11,8 +11,8 @@ detection: 0
 on_first:
     update('c', -1)
 on_last:
-    update('taurus', -1)
+    update('taurus', 0)
 on_crash:
-    update('taurus', 6)
+    update('taurus', 6, 'magie')
 
 Test corporation #3

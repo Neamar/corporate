@@ -237,10 +237,6 @@ class Corporation(models.Model):
 			else:
 				raise Exception("Unknown category of effect : %s" % (delta_category))
 
-			print event_type
-			print corporation_market
-			print delta
-
 			self.game.add_event(event_type=event_type, data={"triggered_corporation": self.base_corporation.name, "delta": delta, "abs_delta": abs(delta), "market": corporation_market.market.name, "corporation": corporation.base_corporation.name}, delta=delta, corporation=corporation, corporation_market=corporation_market)
 
 		context = {

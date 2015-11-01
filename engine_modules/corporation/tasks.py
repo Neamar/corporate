@@ -17,7 +17,6 @@ class CrashCorporationTask(ResolutionTask):
 		if not corporations_to_crash:
 			return
 
-		print corporations_to_crash
 		first_crash_taurus = False
 		# Handle the case of Taurus Part 1
 		for corporation in corporations_to_crash:
@@ -28,14 +27,12 @@ class CrashCorporationTask(ResolutionTask):
 				# search if a crashed takes place before
 				previous_crash = Log.objects.filter(game=game, event_type=game.CORPORATION_CRASHED, corporation=corporation)
 				if not previous_crash:
-					print 'not previous crash'
 					first_crash_taurus = True
 					taurus = corporation
 				# create an event
 				game.add_event(event_type=game.CORPORATION_CRASHED, data={"corporation": corporation.base_corporation.name}, corporation=corporation)
 				# remove Taurus of classic processs for crash
 				corporations_to_crash.remove(corporation)
-				print corporations_to_crash
 
 		# We apply the crashed state on each corporation
 		for corporation in corporations_to_crash:
@@ -49,21 +46,19 @@ class CrashCorporationTask(ResolutionTask):
 			# We create the event
 			game.add_event(event_type=game.CORPORATION_CRASHED, data={"corporation": corporation.base_corporation.name}, corporation=corporation)
 
-		print first_crash_taurus
 		# Handle the case of Taurus Part 2
 		if first_crash_taurus:
 			# We remove the crashed state on Taurus. We need that because Taurus applies an effect on itself and effects don't apply on crashed corporations
-			print taurus
 			taurus.crash_turn = None
 			taurus.save()
 			# We apply crashed effect
 			taurus.on_crash_effect(ladder)
 			# get the new assets of taurus. If <= 0, we apply the crashed state again
-			if Corporation.objects.get(pk=taurus.pk).assets <= 0:
-				print Corporation.objects.get(pk=taurus.pk).assets
+			taurus = Corporation.objects.get(pk=taurus.pk)
+			if taurus.assets <= 0:
 				# Remove crashed effect. We put it in the first place to avoid others crashed effects to appy on Taurus
-				corporation.crash_turn = game.current_turn
-				corporation.save()
+				taurus.crash_turn = game.current_turn
+				taurus.save()
 
 		# get citizenship to delete
 		citizenship_to_delete = Citizenship.objects.filter(corporation__crash_turn=game.current_turn, turn=game.current_turn)
