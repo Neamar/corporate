@@ -1,5 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.corporation.models import AssetDelta, Corporation
+from engine_modules.corporation.models import AssetDelta
 
 
 class CrashCorporationTaskTest(EngineTestCase):
@@ -17,7 +17,7 @@ class CrashCorporationTaskTest(EngineTestCase):
 		corporation = self.reload(self.c)
 		self.assertEqual(corporation.crash_turn, self.g.current_turn - 1)
 
-	def test_corporation_crashedd_when_assets_drop_to_zero(self):
+	def test_corporation_crashed_when_assets_drop_to_zero(self):
 		"""
 		Corporations should actually crash as soon as their assets drop to 0
 		This is a different test from test_corporation_deleted_when_market_assets_drop_to_zero, because we have to take the MarketBubbles into account
