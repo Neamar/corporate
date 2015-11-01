@@ -151,7 +151,7 @@ Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voi
 * 4 Points de Victoire par part dans la deuxième corpo
 * 3 Points de Victoire par part dans la troisième corpo
 * 2 Points de Victoire par part dans la quatrième corpo
-* 1 Points de Victoire par part dans la cinquième corpo
+* 1 Point de Victoire par part dans la cinquième corpo
 
 ### Les points de citoyenneté corpo
 >Changer de nationalité c’est un peu comme enfiler le maillot de l’autre équipe au milieu du  match. Si ta nouvelle équipe gagne, tu es seulement un traître.
@@ -159,9 +159,9 @@ Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voi
 La **citoyenneté corpo** est très importante puisque votre image dépend du résultat de votre corpo.
 
 * À la fin de la partie, chaque corporation rapporte `20 – 2 × rang` points de victoire à ces citoyens. Donc 18 points pour la première corpo et 0 pour la dernière. Attention, ces points sont à partager entre tous les citoyens de la corporation arrondis à l’inférieur. Donc si 3 joueurs sont citoyens de la 3eme corpos, ils ne gagnent que 4 points chacun !
-* Vous pouvez changer de citoyenneté corpo contre X points de victoire, X étant le tour en cours. Vous devez avoir au moins une part dans une corporation pour en acquérir la nationalité.
+* Vous pouvez changer de citoyenneté corpo contre X Points de Victoire, X étant le tour en cours. Vous devez avoir au moins une part dans une corporation pour en acquérir la nationalité.
 * Vous pouvez choisir de commencer la partie en tant que citoyen d’une corporation. Vous serez alors contraint d’acheter votre première part dans cette corporation au premier tour de jeu.
-* Si vous n'avez pas de ciroyenneté à la fin de la partie, vous perdez 7 points.
+* Si vous n'avez pas de ciroyenneté à la fin de la partie, vous perdez 7 Points de Victoire.
 
 ### Les Backgrounds
 >Tu veux laisser ta trace à Detroit ? Choisis ton style, fais en plus que les autres et prends le pouvoir avec. Moi je sabote les corpos de mes ennemis. Entre potes, un conseil en or comme ça vaut bien 100 000 ₵.
