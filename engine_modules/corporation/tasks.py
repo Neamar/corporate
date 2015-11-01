@@ -27,7 +27,7 @@ class CrashCorporationTask(ResolutionTask):
 			game.add_event(event_type=game.CORPORATION_CRASHED, data={"corporation": corporation.base_corporation.name}, corporation=corporation)
 
 		# get citizenship to delete
-		citizenship_to_delete = Citizenship.objects.filter(corporation__in=corporations_to_crash)
+		citizenship_to_delete = Citizenship.objects.filter(corporation__in=corporations_to_crash, turn=game.current_turn)
 		for citizenship in citizenship_to_delete:
 			# create a game_event for each removed citizenship
 			game.add_event(event_type=game.REMOVE_CITIZENSHIP, data={"player": citizenship.player.name, "corporation": citizenship.corporation.base_corporation.name}, corporation=citizenship.corporation, players=[citizenship.player])
