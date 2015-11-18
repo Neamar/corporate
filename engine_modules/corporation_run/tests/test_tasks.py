@@ -78,6 +78,6 @@ class OffensiveRunTaskTest(EngineTestCase):
 		
 		self.g.resolve_current_turn()
 
-		self.assertEqual(self.reload(self.c).assets, assets_c_before - 1)  # SaborageOrder of the setUp succeeded + 1 ExtractionOrder Succeeded
-		self.assertEqual(self.reload(self.c2).assets, assets_c3_before)  # ExtractionOrder Failed
-		self.assertEqual(self.reload(self.c3).assets, assets_c2_before + 1)  # ExtractionOrder Succeded
+		self.assertEqual(self.reload(self.c).assets, assets_c_before - 1)  # SabotageOrder of the setUp succeeded + 1 ExtractionOrder succeeded
+		self.assertEqual(self.reload(self.c2).assets, assets_c3_before)  # ExtractionOrder failed
+		self.assertEqual(self.reload(self.c3).assets, assets_c2_before + 1)  # ExtractionOrder succeeded

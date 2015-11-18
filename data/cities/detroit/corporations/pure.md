@@ -9,6 +9,7 @@ datasteal: 30
 sabotage: 10
 extraction: 10
 detection: 30
+phoenix: 0
 on_first:
     update('impulse', 1)
     update('shinsekai', -1)

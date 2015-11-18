@@ -8,6 +8,7 @@ datasteal: 20
 sabotage: 10
 extraction: 10
 detection: 60
+phoenix: 0
 on_first:
     update("shinsekai", -1)
     update("pure", -1)

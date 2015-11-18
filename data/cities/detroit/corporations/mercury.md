@@ -7,6 +7,7 @@ datasteal: 10
 sabotage: 10
 extraction: 20
 detection: 60
+phoenix: 0
 on_first:
     update('enercore', 1)
     update(ladder[-1], 1)

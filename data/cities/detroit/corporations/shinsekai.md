@@ -9,6 +9,7 @@ datasteal: 10
 sabotage: 20
 extraction: 10
 detection: 60
+phoenix: 0
 on_first:
     update('impulse', 1)
     update('pure', -1)

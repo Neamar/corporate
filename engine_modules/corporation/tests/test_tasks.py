@@ -56,7 +56,7 @@ class CrashCorporationTaskTest(EngineTestCase):
 
 		self.reload(self.c)
 
-	def test_taurus_crash(self):
+	def test_phoenix_crash(self):
 		"""
 		Test that Taurus crash the first time applying it's first_effect and crash the second time without appling it
 		corporation c3 is taurus (file named in date/cities/test/taurus.md)
@@ -81,7 +81,7 @@ class CrashCorporationTaskTest(EngineTestCase):
 		# test that corporation assets are correct
 		self.assertEqual(self.reload(self.c3).assets, 0)
 
-	def test_taurus_violent_crash(self):
+	def test_phoenix_violent_crash(self):
 		"""
 		test that Taurus will crash if the +6 bonus is not enough
 		"""

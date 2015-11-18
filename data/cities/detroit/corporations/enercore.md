@@ -8,6 +8,7 @@ datasteal: 20
 sabotage: 10
 extraction: 20
 detection: 30
+phoenix: 0
 on_first:
     update('taurus', 1)
     update('citygroup', 1)

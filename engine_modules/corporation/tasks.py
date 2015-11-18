@@ -17,21 +17,21 @@ class CrashCorporationTask(ResolutionTask):
 		if not corporations_to_crash:
 			return
 
-		first_crash_taurus = False
-		# Handle the case of Taurus Part 1
+		first_crash_phoenix = False
+		# Handle the case of phoenix part 1
 		for corporation in corporations_to_crash:
-			if corporation.base_corporation.slug == 'taurus':
-				# avoid others crashed effects to appy on Taurus
+			if corporation.base_corporation.phoenix == 1:
+				# avoid others crashed effects to appy on Phoenix
 				corporation.crash_turn = game.current_turn
 				corporation.save()
 				# search if a crashed takes place before
 				previous_crash = Log.objects.filter(game=game, event_type=game.CORPORATION_CRASHED, corporation=corporation)
 				if not previous_crash:
-					first_crash_taurus = True
-					taurus = corporation
+					first_crash_phoenix = True
+					phoenix = corporation
 				# create an event
 				game.add_event(event_type=game.CORPORATION_CRASHED, data={"corporation": corporation.base_corporation.name}, corporation=corporation)
-				# remove Taurus of classic processs for crash
+				# remove Phoenix of classic processs for crash
 				corporations_to_crash.remove(corporation)
 
 		# We apply the crashed state on each corporation
@@ -46,19 +46,19 @@ class CrashCorporationTask(ResolutionTask):
 			# We create the event
 			game.add_event(event_type=game.CORPORATION_CRASHED, data={"corporation": corporation.base_corporation.name}, corporation=corporation)
 
-		# Handle the case of Taurus Part 2
-		if first_crash_taurus:
-			# We remove the crashed state on Taurus. We need that because Taurus applies an effect on itself and effects don't apply on crashed corporations
-			taurus.crash_turn = None
-			taurus.save()
+		# Handle the case of phoenix part 2
+		if first_crash_phoenix:
+			# We remove the crashed state on Phoenix. We need that because Phoenix applies an effect on itself and effects don't apply on crashed corporations
+			phoenix.crash_turn = None
+			phoenix.save()
 			# We apply crashed effect
-			taurus.on_crash_effect(ladder)
-			# get the new assets of taurus. If <= 0, we apply the crashed state again
-			taurus = Corporation.objects.get(pk=taurus.pk)
-			if taurus.assets <= 0:
-				# Remove crashed effect. We put it in the first place to avoid others crashed effects to appy on Taurus
-				taurus.crash_turn = game.current_turn
-				taurus.save()
+			phoenix.on_crash_effect(ladder)
+			# get the new assets of Phoenix. If <= 0, we apply the crashed state again
+			phoenix = Corporation.objects.get(pk=phoenix.pk)
+			if phoenix.assets <= 0:
+				# Remove crashed effect. We put it in the first place to avoid others crashed effects to appy on Phoenix
+				phoenix.crash_turn = game.current_turn
+				phoenix.save()
 
 		# get citizenship to delete
 		citizenship_to_delete = Citizenship.objects.filter(corporation__crash_turn=game.current_turn, turn=game.current_turn)
