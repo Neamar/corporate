@@ -21,10 +21,10 @@ class CrashCorporationTask(ResolutionTask):
 		# Handle the case of phoenix part 1
 		for corporation in corporations_to_crash:
 			if corporation.base_corporation.phoenix == 1:
-				# avoid others crashed effects to appy on Phoenix
+				# avoid others crashed effects to apply on Phoenix
 				corporation.crash_turn = game.current_turn
 				corporation.save()
-				# search if a crashed takes place before
+				# search if a crashed took place before
 				previous_crash = Log.objects.filter(game=game, event_type=game.CORPORATION_CRASHED, corporation=corporation)
 				if not previous_crash:
 					first_crash_phoenix = True
