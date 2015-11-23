@@ -46,23 +46,23 @@ Regardons en détail comment sont calculés les actifs. Chaque corporation est d
 
 Ces corporations sont réparties de la façon suivante dans les différents marchés :
 
-|           | Agroalimentaire | Aérospatiale | BTP | Militaire | Médias | Pharmaceutique | Robotique | Transport | Télécom | Énergie |
-|-----------|-----------------|--------------|-----|-----------|--------|----------------|-----------|-----------|---------|---------|
-| Tlaloc  |                 |              |     |           |        |                |           |           |         |         |
-| Bastion   |                 |              |     |           |        |                |           |           |         |         |
-| Citygroup |                 |              |     |           |        |                |           |           |         |         |
-| Enercore  |                 |              |     |           |        |                |           |           |         |         |
-| Impulse   |                 |              |     |           |        |                |           |           |         |         |
-| Iris      |                 |              |     |           |        |                |           |           |         |         |
-| Mercury   |                 |              |     |           |        |                |           |           |         |         |
-| Pure      |                 |              |     |           |        |                |           |           |         |         |
-| Shinsekai |                 |              |     |           |        |                |           |           |         |         |
-| Taurus    |                 |              |     |           |        |                |           |           |         |         |
+|           | Militaire | Médias | Energie | Transport | BTP | Télécom | agroalimentaire | aérospatiale | robotique | pharmaceutique | actif de domination | actif de perte sèche | Actifs |
+|-----------|-----------|--------|---------|-----------|-----|---------|-----------------|--------------|-----------|----------------|---------------------|----------------------|--------|
+| Taurus    | <span style=color:green>3</span>         |        |         | 2         | 1   |         | <span style=color:green>4</span>               | 1            | <span style=color:red>0</span>         |                | 2                   | -1                   | 12     |
+| Enercore  |           | 1      | <span style=color:green>5</span>       |           | 3   |         | 2               |              |           |                | 1                   |                      | 12     |
+| Shinsekai | 2         |        |         |           |     | 2       | 2               |              | <span style=color:green>3</span>         | 1              | 2                   |                      | 12     |
+| Impulse   |           |        | 3       |           |     | 1       |                 | <span style=color:green>3</span>            | 2         |                | 1                   |                      | 10     |
+| Pure      |           | 2      |         | 2         | 2   |         |                 |              | 1         | <span style=color:green>2</span>              | 1                   |                      | 10     |
+| Iris      |           | <span style=color:green>4</span>      |         |           |     | 2       |                 | 2            |           | 1              | 1                   |                      | 10     |
+| Bastion   | 2         | 3      | 3       | 2         |     |         |                 |              |           |                |                     |                      | 10     |
+| Mercury   |           |        |         | 3         |     | 2       | 3               |              |           |                |                     |                      | 8      |
+| CityGroup |           |        | <span style=color:red>0</span>       | 2         | <span style=color:green>5</span>   | 1       |                 |              |           |                | 1                   | -1                   | 8      |
+| Tlaloc    |           |        | 4       | 3         |     |         | <span style=color:red>-1</span>              |              |           | 3              |                     | -1                   | 8      |
 
 Les actifs d’une corporation sont égaux à la somme des actifs de ses marchés… à deux petites exceptions près :
 
-* Si une corporation a plus d'actifs que toutes les autres sur un marché, elle domine ce marché et gagne un actif. Attention cependant, cet **actif de domination** est perdu dès que la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine. Ces actifs sont en jaune dans le tableau.
-* *A contrario*, une corporation qui tombe à 0 ou moins sur un de ses marchés perd un actif. Cet **actif de perte sèche** disparaît dès que la corporation récupère au moins un actif sur ce marché. Si plusieurs corporations ont 0 actifs ou moins sur le même marché, elles ont toutes l'actif de perte sèche. Ces actifs sont en rouge dans le tableau.
+* Si une corporation a plus d'actifs que toutes les autres sur un marché, elle domine ce marché et gagne un actif. Attention cependant, cet **actif de domination** est perdu dès que la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine. Ces actifs sont en <span style=color:green>vert</span> dans le tableau.
+* *A contrario*, une corporation qui tombe à 0 ou moins sur un de ses marchés perd un actif. Cet **actif de perte sèche** disparaît dès que la corporation récupère au moins un actif sur ce marché. Si plusieurs corporations ont 0 actifs ou moins sur le même marché, elles ont toutes l'actif de perte sèche. Ces actifs sont en <span style=color:red>rouge</span> dans le tableau.
 
 ## Main invisible
 > Même la plus corrompue des corpos est victime des modes des consommateurs. Ça a été une déception pour moi aussi : personne ne décide quel produit de merde le public va s'arracher cette année.
@@ -123,7 +123,9 @@ Vous pouvez utiliser la réduction du prix de base de l'opé à 50 000 ₵ avec 
 
 ##### Information
 Le commanditaire choisit des joueurs cibles et des corpos cibles
-Il recevra un message contenant toutes les actions faites par les joueurs cibles ce tour-ci ainsi que leur Background (cf. Background). Vous recevrez en détail toutes les actions réussies et échouées sur les corpos cibles.
+Il recevra des informations en fonction de la cible :
+-Sur un joueur : toutes les actions faites par les joueurs cibles ce tour-ci ainsi que leur Background (cf. Background). 
+-Sur une corpo : Le détail de tous les effets du tour ayant ciblé la corporation
 Cette opé d'Information a un coût :
 
 * 150 000 ₵ par joueur sélectionné
@@ -149,7 +151,7 @@ Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voi
 * 4 Points de Victoire par part dans la deuxième corpo
 * 3 Points de Victoire par part dans la troisième corpo
 * 2 Points de Victoire par part dans la quatrième corpo
-* 1 Points de Victoire par part dans la cinquième corpo
+* 1 Point de Victoire par part dans la cinquième corpo
 
 ### Les points de citoyenneté corpo
 >Changer de nationalité c’est un peu comme enfiler le maillot de l’autre équipe au milieu du  match. Si ta nouvelle équipe gagne, tu es seulement un traître.
@@ -157,9 +159,9 @@ Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voi
 La **citoyenneté corpo** est très importante puisque votre image dépend du résultat de votre corpo.
 
 * À la fin de la partie, chaque corporation rapporte `20 – 2 × rang` points de victoire à ces citoyens. Donc 18 points pour la première corpo et 0 pour la dernière. Attention, ces points sont à partager entre tous les citoyens de la corporation arrondis à l’inférieur. Donc si 3 joueurs sont citoyens de la 3eme corpos, ils ne gagnent que 4 points chacun !
-* Vous pouvez changer de citoyenneté corpo contre X points de victoire, X étant le tour en cours. Vous devez avoir au moins une part dans une corporation pour en acquérir la nationalité.
+* Vous pouvez changer de citoyenneté corpo contre X Points de Victoire, X étant le tour en cours. Vous devez avoir au moins une part dans une corporation pour en acquérir la nationalité.
 * Vous pouvez choisir de commencer la partie en tant que citoyen d’une corporation. Vous serez alors contraint d’acheter votre première part dans cette corporation au premier tour de jeu.
-* Si vous n'avez pas de ciroyenneté à la fin de la partie, vous perdez 7 points.
+* Si vous n'avez pas de ciroyenneté à la fin de la partie, vous perdez 7 Points de Victoire.
 
 ### Les Backgrounds
 >Tu veux laisser ta trace à Detroit ? Choisis ton style, fais en plus que les autres et prends le pouvoir avec. Moi je sabote les corpos de mes ennemis. Entre potes, un conseil en or comme ça vaut bien 100 000 ₵.

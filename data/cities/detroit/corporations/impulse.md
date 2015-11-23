@@ -1,13 +1,14 @@
 name: Impulse
 markets:
-    aérospatiale: 1
-    robotique: 3
-    télécom: 2
-    énergie: 2
+    aérospatiale: 3
+    robotique: 2
+    télécom: 1
+    énergie: 3
 datasteal: 20
 sabotage: 10
 extraction: 10
 detection: 60
+phoenix: 0
 on_first:
     update("shinsekai", -1)
     update("pure", -1)
@@ -16,7 +17,7 @@ on_last:
     update(ladder[0], -1)
 on_crash:
     update('mercury', -2)
-    update('iris', -2)
+    update('shinsekai', -2)
     update(ladder[0], 2)
 
 > *La Terre n'est que le début*

@@ -1,14 +1,15 @@
 name: Pure
 markets:
     pharmaceutique: 2
-    BTP: 3
+    BTP: 1
     robotique: 2
-    médias: 3
-    transport: 3
+    médias: 2
+    transport: 2
 datasteal: 30
 sabotage: 10
 extraction: 10
 detection: 30
+phoenix: 0
 on_first:
     update('impulse', 1)
     update('shinsekai', -1)

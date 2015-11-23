@@ -49,4 +49,4 @@ class EngineTestCase(TestCase):
 		RunOrder.MAX_PERCENTS = 100
 
 		from engine_modules.corporation_run.models import ProtectionOrder
-		ProtectionOrder.MAX_PERCENTS = 100
+		ProtectionOrder.MAX_PERCENTS = 0

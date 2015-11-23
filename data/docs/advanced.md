@@ -76,3 +76,6 @@ Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la 
     Il mise 100 000 ₵ sur la position d'Iris, dont il pense qu'elle sera deuxième à la fin du trimestre.
 
     Iris finit en seconde position. Il garde ses 100 000 ₵ et en touche 400 000 ₵ de plus. Si Iris avait fini troisième, il aurait perdu ses 100 000 ₵.
+
+## Les Transferts
+Les transferts permettent de donner de l'argent à un autre joueur. Ce transfert d'argent est immédiat et permet de sceller des alliances ou de céder à un chantage.
