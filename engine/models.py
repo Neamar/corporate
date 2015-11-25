@@ -99,6 +99,16 @@ class Game(models.Model):
 		self.current_turn += 1
 		self.save()
 
+	@transaction.atomic
+	def initialise_game(self):
+		"""
+		Resolve all the tasks that must be solved at initialisation
+		"""
+		from engine.modules import initialisation_tasks_list
+		for Task in initialisation_tasks_list:
+			t = Task()
+			t.run(self)
+
 	@property
 	def corporation_set(self):
 		return self.all_corporation_set.filter(game=self).filter(Q(crash_turn=self.current_turn) | Q(crash_turn__isnull=True))

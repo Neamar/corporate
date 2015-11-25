@@ -18,6 +18,15 @@ def send_post_create_signal(sender, instance, created, **kwargs):
 		post_create.send(sender=sender, instance=instance, **kwargs)
 
 
+@receiver(post_save, sender=Game)
+def game_initialisation(sender, instance, created, **kwargs):
+	"""
+	Start the tasks once the game is created
+	"""
+	if created:
+		instance.initialise_game()
+
+
 @receiver(pre_save, sender=Game)
 def check_current_turn_less_or_equal_total_turn(sender, instance, **kwargs):
 	"""

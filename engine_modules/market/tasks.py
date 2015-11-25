@@ -176,3 +176,5 @@ class ReplicateCorporationMarketsTask(ResolutionTask):
 		CorporationMarket.objects.bulk_create(new_corporation_markets)
 
 tasks = (UpdateBubblesTask, UpdateBubblesAfterEffectsTask, UpdateBubblesAfterCrashTask, ReplicateCorporationMarketsTask, )
+
+initialisation_tasks = (UpdateBubblesTask, )
