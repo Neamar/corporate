@@ -149,7 +149,7 @@ class ProtectionOrder(RunOrder):
 	"""
 	ORDER = 850
 	title = "Lancer une run de Protection"
-	MAX_PERCENTS = 50
+	MAX_PERCENTS = 40
 
 	protected_corporation_market = models.ForeignKey(CorporationMarket, related_name="protectors")
 

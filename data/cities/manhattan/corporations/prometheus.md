@@ -8,6 +8,7 @@ datasteal: 20
 sabotage: 20
 extraction: 10
 detection: 30
+phoenix: 0
 on_first:
     update('prometheus', 1)
     update(ladder[1], 1)

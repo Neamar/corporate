@@ -45,6 +45,8 @@ class BaseCorporation:
 		self.name = meta['name'][0]
 		self.description = mark_safe(content)
 
+		self.phoenix = int(meta['phoenix'][0])
+
 		code = "\n".join(meta['on_first'])
 		self.on_first = self.compile_effect(code, "on_first")
 

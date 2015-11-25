@@ -8,6 +8,7 @@ datasteal: 20
 sabotage: 10
 extraction: 20
 detection: 30
+phoenix: 0
 on_first:
     update('neonet', -1)
     update('shiawase', -1)

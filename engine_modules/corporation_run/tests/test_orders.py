@@ -226,19 +226,26 @@ class ExtractionRunOrderTest(EngineTestCase):
 class DefensiveRunOrderTest(EngineTestCase):
 	def setUp(self):
 		super(DefensiveRunOrderTest, self).setUp()
-		self.dso = DataStealOrder(
-			stealer_corporation=self.c2,
+
+		corporationmarket = self.c.get_random_corporation_market()
+		self.dso = ProtectionOrder(
 			player=self.p,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
-			additional_percents=0,
+			protected_corporation_market=corporationmarket,
 		)
 		self.dso.clean()
 		self.dso.save()
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation_market=self.dso.target_corporation_market,
-			additional_percents=0,
+			target_corporation_market=corporationmarket,
+			additional_percents=10,
 		)
 		self.so.clean()
 		self.so.save()
+
+	def test_protection_stops_runs(self):
+		# this test only purpose is to test that the run is stopped when run has 100% chances of success and protection drop it to 0%
+		# these parameters are defined in engine/testcases.py
+		begin_assets = self.c2.assets
+		self.g.resolve_current_turn()
+		self.assertEqual(self.reload(self.c2).assets, begin_assets)

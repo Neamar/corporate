@@ -61,6 +61,16 @@ class RunOrder(Order):
 			self.resolve_failure()
 		return result
 
+	def resolve_to_fail(self):
+		"""
+		Used to force a run to fail
+		"""
+		self.player.money -= self.get_cost()
+		self.player.save()
+
+		self.resolve_failure()
+		return False
+
 	def resolve_successful(self):
 		"""
 		This function is called when the run has succeeded

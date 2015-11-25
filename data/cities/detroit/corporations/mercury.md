@@ -1,8 +1,9 @@
 name: Mercury
 markets:
-    télécom: 3
+    télécom: 2
     agroalimentaire: 3
     transport: 3
+phoenix: 0
 on_first:
     update('enercore', 1)
     update(ladder[-1], 1)

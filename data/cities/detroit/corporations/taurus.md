@@ -1,14 +1,15 @@
 name: Taurus Industries
 markets:
-    transport: 3
+    transport: 2
     militaire: 3
-    aérospatiale: 3
-    BTP: 3
-    robotique: 3
-    agroalimentaire: 3
+    aérospatiale: 1
+    BTP: 1
+    robotique: 0
+    agroalimentaire: 4
+phoenix: 1
 on_first:
     update(ladder[1], -1)
-    update('enercore', -1)
+    update('shinsekai', -1)
 on_last:
     update('tlaloc', -1)
     update('bastion', -1)

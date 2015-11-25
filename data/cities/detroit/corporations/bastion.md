@@ -1,9 +1,10 @@
 name: Bastion
 markets:
     militaire: 2
-    médias: 2
-    énergie: 2
+    médias: 3
+    énergie: 3
     transport: 2
+phoenix: 0
 on_first:
     update('bastion', 1)
     update('tlaloc', -1)

@@ -1,12 +1,13 @@
 name: Iris
 markets:
-    médias: 3
-    aérospatiale: 3
+    médias: 4
+    aérospatiale: 2
     pharmaceutique: 1
     télécom: 2
+phoenix: 0
 on_first:
     update('citygroup', 1)
-    update(ladder[-1], -1)
+    update('pure', -1)
 on_last:
     update('taurus', -1)
     update('mercury', 1)

@@ -1,9 +1,10 @@
 name: Tlaloc
 markets:
-    agroalimentaire: 3
-    énergie: 2
-    transport: 2
-    pharmaceutique: 2
+    agroalimentaire: -1
+    énergie: 4
+    transport: 3
+    pharmaceutique: 3
+phoenix: 0
 on_first:
     update('tlaloc', 1)
     update('bastion', -1)

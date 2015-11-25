@@ -8,6 +8,7 @@ datasteal: 10
 sabotage: 20
 extraction: 20
 detection: 30
+phoenix: 0
 on_first:
     update('spinrad', 2)
 on_last:
