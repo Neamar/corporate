@@ -164,10 +164,7 @@ class CreateBubblesAfterGameCreationTask(AbstractBubblesTask):
 		if not hasattr(game, 'disable_bubble_reevaluation'):
 			super(CreateBubblesAfterGameCreationTask, self).run(game, after_effects=True)
 
-		# We build the logs. We need to calculate the difference bewtween the end on last turn and now to create events
-		# We don't do it in AbstractBubblesTask because we don't want to sent the temporaty states.
-
-		# We let negative bubbles on corporations crashed this turn
+		# We create the log to create color on bubbles
 		negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=-1))
 		positive_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=1))
 
