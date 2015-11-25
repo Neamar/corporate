@@ -3,7 +3,7 @@ markets:
     robotique: 3
     militaire: 2
     pharmaceutique: 1
-    agroalimentaire: 2
+    agroalimentaire: 3
     télécom: 2
 phoenix: 0
 on_first:

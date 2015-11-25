@@ -177,4 +177,4 @@ class ReplicateCorporationMarketsTask(ResolutionTask):
 
 tasks = (UpdateBubblesTask, UpdateBubblesAfterEffectsTask, UpdateBubblesAfterCrashTask, ReplicateCorporationMarketsTask, )
 
-initialisation_tasks = (UpdateBubblesTask, )
+initialisation_tasks = (UpdateBubblesAfterCrashTask, )  # We need to have logs on bubbles to mak them on red or green on Wallstreet
