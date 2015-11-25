@@ -153,6 +153,31 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 			return
 
 
+class CreateBubblesAfterGameCreationTask(AbstractBubblesTask):
+	"""
+	Update the bubble value on the CorporationMarket objects after the Crash effects have been applied
+	"""
+	# Be careful: this task must be resolved before ReplicateCorporationMarketTask
+	RESOLUTION_ORDER = 100
+
+	def run(self, game):
+		if not hasattr(game, 'disable_bubble_reevaluation'):
+			super(CreateBubblesAfterGameCreationTask, self).run(game, after_effects=True)
+
+		# We build the logs. We need to calculate the difference bewtween the end on last turn and now to create events
+		# We don't do it in AbstractBubblesTask because we don't want to sent the temporaty states.
+
+		# We let negative bubbles on corporations crashed this turn
+		negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=-1))
+		positive_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=1))
+
+		for nb in negative_bubbles:
+				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, delta=-1, corporation=nb.corporation)
+
+		for pb in positive_bubbles:
+				game.add_event(event_type=game.GAIN_DOMINATION_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, delta=1, corporation=pb.corporation)
+
+
 class ReplicateCorporationMarketsTask(ResolutionTask):
 	"""
 	Copy the CorporationMarket objects from current turn for next turn
@@ -177,4 +202,4 @@ class ReplicateCorporationMarketsTask(ResolutionTask):
 
 tasks = (UpdateBubblesTask, UpdateBubblesAfterEffectsTask, UpdateBubblesAfterCrashTask, ReplicateCorporationMarketsTask, )
 
-initialisation_tasks = (UpdateBubblesTask, )
+initialisation_tasks = (CreateBubblesAfterGameCreationTask, )
