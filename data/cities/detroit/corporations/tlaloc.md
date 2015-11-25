@@ -2,7 +2,7 @@ name: Tlaloc
 markets:
     agroalimentaire: 1
     énergie: 4
-    transport: 3
+    transport: 2
     pharmaceutique: 1
 phoenix: 0
 on_first:
