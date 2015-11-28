@@ -14,12 +14,12 @@
 		{% if entry.corporation.crash_turn == turn %}
 			CRASHED
 		{% endif %}
-		<span class="current-assets">{{ entry.assets }}
-			<span class="assets-delta{{ entry.delta|yesno:" positive, negative,"}}">
+		<span class="current-assets">{{ entry.assets }}</span>
+	</h2>
+
+				<span class="assets-delta{{ entry.delta|yesno:" positive, negative,"}}">
 			{{ entry.delta|default:"0000" }}
 			</span>
-		</span>
-	</h2>
 
 	{% include "logs/corporation.html" with events=entry.events %}
 
