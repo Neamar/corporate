@@ -16,21 +16,22 @@
 		{% endif %}
 		<span class="current-assets">{{ entry.assets }}</span>
 	</h2>
-
-				<span class="assets-delta{{ entry.delta|yesno:" positive, negative,"}}">
-			{{ entry.delta|default:"0000" }}
-			</span>
-
-	{% include "logs/corporation.html" with events=entry.events %}
-
-	<div class="corporation-markets">
-	{% for corporation_market in entry.corporation_market %}
-		<div class="corporation-market">
-			<svg role="img" class="svg--small svg--{% if corporation_market.bubble_value == -1 %}red{% elif corporation_market.bubble_value == 1 %}green{% else %}white{% endif %}" title="{{ corporation_market.market.name|capfirst }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg>
-			<span class="corporation-market-value">{{ corporation_market.value }} ( {{ corporation_market.bubble_value }} )</span>
-		</div>
-	{% endfor %}
+		
+	<div class="icon-content">
+		<span class="assets-delta{{ entry.delta|yesno:" positive, negative,"}}">
+			<i>{{ entry.delta|default:"0000" }}</i>
+		</span>
+		{% include "logs/corporation.html" with events=entry.events %}
 	</div>
+	
+	<ul class="corporation-markets">
+	{% for corporation_market in entry.corporation_market %}
+		<li class="corporation-market {% if corporation_market.bubble_value == -1 %}negative{% elif corporation_market.bubble_value == 1 %}positive{% else %}white{% endif %}">
+			<svg role="img" class="svg--medium svg--white" title="{{ corporation_market.market.name|capfirst }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg>
+			<!-- <span class="corporation-market-value">{{ corporation_market.value }} ( {{ corporation_market.bubble_value }} )</span> -->
+		</li>
+	{% endfor %}
+	</ul>
 </section>
 {% endfor %}
 

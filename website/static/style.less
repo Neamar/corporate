@@ -124,8 +124,8 @@ svg use {
 	display: inline-block;
 }
 .svg--medium {
-	height: 32px;
-	width: 32px;
+	height: 28px;
+	width: 28px;
 }
 .svg--small {
 	height: 16px;
@@ -158,13 +158,13 @@ svg use {
     margin-bottom: 20px;
 
     &:nth-child(odd) {
-    	float: right;
-    	padding-left: 2%;
+    	//float: right;
+    	//padding-left: 2%;
     }
 
     &:nth-child(even) {
-    	float: left;
-    	padding-right: 2%;
+    	//float: left;
+    	//padding-right: 2%;
     }
 
 	h2 {
@@ -197,7 +197,7 @@ svg use {
 		}
 		.current-assets {
 			height: inherit;
-			background: url("/static/img/wallstreet/head-delta.png") repeat-y scroll right top rgba(0, 0, 0, 0);
+			background: url("/static/img/wallstreet/head-delta.png") no-repeat scroll right top rgba(0, 0, 0, 0);
 			max-width: 56px;
 			min-width: 56px;
 			width: 18%;
@@ -209,7 +209,102 @@ svg use {
 			top: 0;
 			letter-spacing: -1px;
 		}
-	}
+	}//h2
+	.icon-content {
+		position: relative;
+
+		.assets-delta {
+			position: absolute;
+			top: 0;
+			right: 0;
+			background: url("/static/img/wallstreet/delta-base.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			display: block;
+			width: 54px;
+			height: 54px;
+
+				i {
+					top: 50%;
+					-webkit-transform: translateY(-50%);
+					-ms-transform: translateY(-50%);
+					transform: translateY(-50%);
+					display: inline;
+				    font-style: normal;
+				    margin: auto;
+				    position: absolute;
+				    text-align: center;
+				    width: 100%;
+				    font-size: 22px;
+				    font-weight: bold;
+				    text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+				}
+
+
+			&.positive {
+				background: url("/static/img/wallstreet/delta-positif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			}
+			&.negative {
+				background: url("/static/img/wallstreet/delta-negatif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			}
+		}
+
+		.icons-list {
+			background: url("/static/img/wallstreet/content-wall.png") repeat-y scroll right top rgba(0, 0, 0, 0);
+			list-style-type: none;
+			overflow: hidden;
+			margin: 0;
+			padding: 0;
+
+			li {
+				float: left;
+				width: 50px;
+				height: 50px;
+				display: block;
+				text-align: center;
+				line-height: 72px;
+				padding-bottom: 4px;
+
+				&:nth-child(5) {
+			    	padding-right: 56px;
+			    }
+			}
+		}//icons-list
+	}//icon-content
+
+	.corporation-markets {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+
+		.corporation-market {
+			float: left;
+			width: 58px;
+			height: 58px;
+			display: block;
+			background: url("/static/img/wallstreet/market-base.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			margin-right: 7.5px;
+    		margin-top: 10px;
+    		line-height: 72px;
+    		text-align: center;
+
+
+    			svg {
+    				-webkit-filter: drop-shadow( 0 0 4px rgba(255, 255, 255, 0.3));
+            		filter: drop-shadow( 0 0 4px rgba(255, 255, 255, 0.3)); /* Same syntax as box-shadow */
+    			}
+
+			&:nth-child(5) {
+		    	margin-right: 0;
+		    }
+
+			&.negative {
+				background: url("/static/img/wallstreet/market-negatif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			}
+			&.positive {
+				background: url("/static/img/wallstreet/market-positif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			}
+		}
+	}//corporation-markets
 }//corporation-row
 
 @import "less/menu.less";
