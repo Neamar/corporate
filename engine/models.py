@@ -104,6 +104,7 @@ class Game(models.Model):
 		"""
 		Resolve all the tasks that must be solved at initialisation
 		We must go back on turn 0 to update bubbles
+		We set back current turn to 1 afterwards to start the game as the turn 0 is finished
 		"""
 		self.current_turn = 0
 		self.save()
