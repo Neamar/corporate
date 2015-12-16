@@ -149,6 +149,10 @@ svg use {
 }
 
 
+.content {
+	overflow: hidden;
+	background: url("/static/img/wallstreet/motif-bg.png") repeat-y scroll left top rgba(0, 0, 0, 0);
+}
 //Wallstreet
 .corporation-row {
 	font-family: 'Roboto', sans-serif;
@@ -157,14 +161,19 @@ svg use {
     box-sizing: border-box;
     margin-bottom: 20px;
 
+    float: left;
+
     &:nth-child(odd) {
     	//float: right;
     	//padding-left: 2%;
+    	margin-top: 200px;
     }
 
     &:nth-child(even) {
     	//float: left;
     	//padding-right: 2%;
+    	margin-right: 6px;
+
     }
 
 	h2 {
@@ -174,6 +183,13 @@ svg use {
 		width: 100%;
 		position: relative;
 
+		    &:hover a {
+    		color: #fff;
+    		text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    		-webkit-transition: all 0.25s ease-in-out;
+			transition:all 0.25s ease-in-out;
+    		}
+
 		.corporation-index {
 			height: inherit;
 			font-size: 18px;
@@ -181,6 +197,8 @@ svg use {
 			position: absolute;
 			left: 3px;
 			top: 2px;
+			-webkit-transition: all 0.25s ease-in-out;
+			transition:all 0.25s ease-in-out;
 		}
 		.corporation-name {
 			float: left;
@@ -212,6 +230,8 @@ svg use {
 	}//h2
 	.icon-content {
 		position: relative;
+		background: url("/static/img/wallstreet/bottom-wall.png") no-repeat scroll bottom rgba(0, 0, 0, 0);
+		padding-bottom: 8px;
 
 		.assets-delta {
 			position: absolute;
@@ -284,8 +304,16 @@ svg use {
 			background: url("/static/img/wallstreet/market-base.png") no-repeat scroll right top rgba(0, 0, 0, 0);
 			margin-right: 7.5px;
     		margin-top: 10px;
-    		line-height: 72px;
-    		text-align: center;
+    		line-height: 60px;
+    		text-indent: 10px;
+    		position: relative;
+
+    		.corporation-market-value {
+    			position: absolute;
+    			bottom: 7px;
+    			right: 8px;
+    			line-height: 16px;
+    		}
 
 
     			svg {

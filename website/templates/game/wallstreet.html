@@ -28,7 +28,7 @@
 	{% for corporation_market in entry.corporation_market %}
 		<li class="corporation-market {% if corporation_market.bubble_value == -1 %}negative{% elif corporation_market.bubble_value == 1 %}positive{% else %}white{% endif %}">
 			<svg role="img" class="svg--medium svg--white" title="{{ corporation_market.market.name|capfirst }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg>
-			<!-- <span class="corporation-market-value">{{ corporation_market.value }} ( {{ corporation_market.bubble_value }} )</span> -->
+			<span class="corporation-market-value">{{ corporation_market.value }} <!-- ( {{ corporation_market.bubble_value }} ) --></span>
 		</li>
 	{% endfor %}
 	</ul>
@@ -74,5 +74,4 @@ function drawChart() {
 window.onresize = drawChart;
 </script>
 {% endblock scripts %}
-
 

@@ -109,6 +109,25 @@
 
 <script type="text/javascript" src="{% static 'vendor/jquery-2.1.4.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'vendor/tipped.js' %}"></script>
+<script type="text/javascript">
+$( document ).ready(function() {
+    $( ".corporation-row" ).each(function( index ) {
+      
+      var $that = $(this);
+
+      if (index % 2 === 0) { 
+        var heightEven = $that.height() + 15;
+        $that.next().css( "margin-top", heightEven );
+      }
+      else { 
+
+        //console.log( index + ": " + $( this ).height() );
+      }
+
+
+    });
+});
+</script>
 <script type='text/javascript'>
 $(function() {
   Tipped.create('svg, .tooltip');
