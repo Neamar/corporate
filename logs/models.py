@@ -10,7 +10,7 @@ from utils.read_markdown import read_file_from_path, parse_markdown
 
 class LogManager(models.Manager):
 	def for_player(self, player, asking_player, turn):
-		# turn=now AND players__player=target AND personal_event AND (players__player=myself OR (public)
+		# turn=now AND players__player=target AND personal_event AND (players__player=myself OR public)
 		return Log.objects.filter(turn=turn - 1, hide_for_players=False).filter(concernedplayer__player=player, concernedplayer__personal=True).filter(Q(players=asking_player) | Q(public=True)).distinct()
 
 	def for_corporation_market(self, corporation_market, asking_player):
@@ -18,6 +18,10 @@ class LogManager(models.Manager):
 
 	def for_corporation(self, corporation, asking_player, turn):
 		return Log.objects.filter(turn=turn - 1).filter(corporation=corporation).filter(Q(players=asking_player) | Q(public=True)).distinct()
+
+	def for_delta(self, corporation, turn):
+		# retreive all events to calculate delta between previous turn t-1 and turn t
+		return Log.objects.filter(turn=turn - 1).filter(corporation=corporation).distinct()
 
 
 class Log(models.Model):
