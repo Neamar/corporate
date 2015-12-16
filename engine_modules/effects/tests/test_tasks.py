@@ -71,21 +71,6 @@ class TasksTest(EngineTestCase):
 		self.assertEqual(self.reload(target_corporation_market).value, initial_target_assets + 3)
 
 	@override_base_corporations
-	def test_update_create_assetdelta(self):
-		"""
-		Using update() function in code creates AssetDelta
-		"""
-		# Change the default code
-		self.update_effect(self.last_corporation, 'on_last', "update('%s', -3)" % self.last_corporation.base_corporation_slug)
-		self.update_effect(self.first_corporation, 'on_first', "")
-
-		self.g.resolve_current_turn()
-		asset_delta = self.last_corporation.assetdelta_set.get()
-		self.assertEqual(asset_delta.category, asset_delta.EFFECT_LAST)
-		self.assertEqual(asset_delta.delta, -3)
-		self.assertEqual(asset_delta.corporation, self.last_corporation)
-
-	@override_base_corporations
 	def test_crashed_corporations(self):
 		"""
 		Test errors are gracefully handled when the corporation to affect does not exist anymore

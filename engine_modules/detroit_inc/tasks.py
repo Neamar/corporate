@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from collections import Counter
 from engine.tasks import ResolutionTask
-from engine_modules.corporation.models import AssetDelta
 from engine_modules.detroit_inc.models import DIncVoteSession, DIncVoteOrder
 from engine.models import Game
 
@@ -107,7 +106,7 @@ class DIncLineCPUBTask(ResolutionTask):
 			for c in o.get_friendly_corporations():
 				# increase a market by 1 asset at random
 				corporation_market = c.get_random_corporation_market()
-				c.update_assets(1, category=AssetDelta.DINC, corporation_market=corporation_market)
+				c.update_assets(1, corporation_market=corporation_market)
 				game.add_event(event_type=Game.EFFECT_CONTRAT_UP, data={"market": corporation_market.market.name}, delta=1, corporation=c, corporation_market=corporation_market)
 
 		loss_votes = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=DIncVoteOrder.RSEC)
@@ -115,7 +114,7 @@ class DIncLineCPUBTask(ResolutionTask):
 			for c in o.get_friendly_corporations():
 				# decrease a market by 1 asset at random
 				corporation_market = c.get_random_corporation_market()
-				c.update_assets(-1, category=AssetDelta.DINC, corporation_market=c.get_random_corporation_market())
+				c.update_assets(-1, corporation_market=c.get_random_corporation_market())
 				game.add_event(event_type=Game.EFFECT_CONTRAT_DOWN, data={"market": corporation_market.market.name}, delta=-1, corporation=c, corporation_market=corporation_market)
 
 tasks = (DIncVoteTask, DIncLineCPUBTask)
