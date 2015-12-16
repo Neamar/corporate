@@ -58,8 +58,8 @@ Ces corporations sont réparties de la façon suivante dans les différents marc
 |          aérospatiale            |          1                                   |                                              |                                             |       <span   style=color:green>3</span>    |                                              |       2                                     |                  |                  |                                              |                                            |
 |          robotique               |          <span style=color:red>0</span>      |                                              |       <span   style=color:green>3</span>    |          2                                  |       1                                      |                                             |                  |                  |                                              |                                            |
 |          pharmaceutique          |                                              |                                              |          1                                  |                                             |          <span style=color:green>2</span>    |       1                                     |                  |                  |                                              |       3                                    |
-|          actif de domination     |       2                                      |       1                                      |          2                                  |       1                                     |          1                                   |          1                                  |                  |                  |       1                                      |                                            |
-|          actif de perte sèche    |          -1                                  |                                              |                                             |                                             |                                              |                                             |                  |                  |          -1                                  |       -1                                   |
+|          domination     |       2                                      |       1                                      |          2                                  |       1                                     |          1                                   |          1                                  |                  |                  |       1                                      |                                            |
+|          perte sèche    |          -1                                  |                                              |                                             |                                             |                                              |                                             |                  |                  |          -1                                  |       -1                                   |
 |          Actifs                  |          12                                  |       12                                     |       12                                    |       10                                    |       10                                     |       10                                    |       10         |       8          |          8                                   |          8                                 |
 
 Les actifs d’une corporation sont égaux à la somme des actifs de ses marchés… à deux petites exceptions près :
@@ -169,7 +169,9 @@ La **citoyenneté corpo** est très importante puisque votre image dépend du r�
 ### Les Backgrounds
 >Tu veux laisser ta trace à Detroit ? Choisis ton style, fais en plus que les autres et prends le pouvoir avec. Moi je sabote les corpos de mes ennemis. Entre potes, un conseil en or comme ça vaut bien 100 000 ₵.
 
-Au début du jeu, vous pouvez choisir un background. Il vous rapportera des Points de Victoire à chaque tour si vous en remplissez les conditions. Vous pouvez aussi choisir de ne prendre aucun background, vous gagnez alors 5 Points de Victoire.
+Au début du jeu, vous pouvez choisir un background. Il vous rapportera des Points de Victoire à chaque tour si vous en remplissez les conditions. Il y a maximum 10 points à se faire avec.
+
+[Les backgrounds](/docs/backgrounds) sont décrits ici.
 
 ## Mise en place du jeu
 Avant de commencer la partie, chaque joueur peut choisir un background et une citoyenneté corpo.
@@ -180,3 +182,4 @@ Bravo, vous avez enfin lu ce dont vous aviez besoin pour commencer à jouer !
 Il reste quelques points de règles avancées, mais il est conseillé d'attendre le tour 2 ou 3 avant d'aller les lire. Ne pas connaître les règles avancées ne vous fera pas perdre la partie si vous ne les lisez pas pour les premiers tours, mais elles peuvent vous donner un avantage si vous prenez le temps de les lire.
 
 [La page des règles avancées](/docs/advanced) contient les règles sur Detroit Incorporated, les effets premiers, les effets derniers, les effets crash et la spéculation.
+
