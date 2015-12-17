@@ -2,8 +2,15 @@ body {
 	font-family: 'Roboto', sans-serif;
 	font-weight: normal;
 	color: #fff;
-	background: url("/static/img/bg.jpg") repeat scroll center top rgba(0, 0, 0, 0);
+	//background: url("/static/img/bg.jpg") repeat scroll center top rgba(0, 0, 0, 0);
 	overflow-x: hidden;
+
+
+
+
+background-image: url("/static/img/content/bg-global.png"), url("/static/img/content/bg-global-2.png"), url("/static/img/bg.jpg"); 
+background-position: top left, top center, center top;
+background-repeat: no-repeat, no-repeat, repeat; 
 
 	&:before {
 		background: url("/static/img/bg-triangle.png") repeat scroll center top rgba(0, 0, 0, 0);
@@ -68,11 +75,12 @@ body {
 position: relative;
 z-index: 5;
 text-indent: -5555em;
-margin: 50px auto auto;
+margin: 40px auto auto;
 max-width: 1045px;
+top: 15px;
 
 	a {
-		background: url("/static/img/logo-corporate-game.png") repeat scroll center top rgba(0, 0, 0, 0);
+		background: url("/static/img/logo-corporate-game-v2.png") repeat scroll center top rgba(0, 0, 0, 0);
 		width: 530px;
 		height: 103px;
 		display: block;
@@ -149,9 +157,14 @@ svg use {
 }
 
 
-.content {
+.corporate-wallstreet {
+
+	.content {
 	overflow: hidden;
-	background: url("/static/img/wallstreet/motif-bg.png") repeat-y scroll left top rgba(0, 0, 0, 0);
+	padding: 0 2%;
+    width: 96%;
+    background: url("/static/img/wallstreet/motif-bg.png") repeat-y scroll left top rgba(0, 0, 0, 0);
+	}
 }
 //Wallstreet
 .corporation-row {
