@@ -1,1 +1,1 @@
-{% If giver == current_player %}Vous avez {% Else %}{{ giver }} {% If receiver == current_player %}vous {%Endif %}a{% Endif %} donné {{ money }}{% If receiver != current_player %} à {{receiver }}{%Endif %}
+message temporaire 2

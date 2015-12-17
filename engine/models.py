@@ -103,11 +103,18 @@ class Game(models.Model):
 	def initialise_game(self):
 		"""
 		Resolve all the tasks that must be solved at initialisation
+		We must go back on turn 0 to update bubbles
+		We set back current turn to 1 afterwards to start the game as the turn 0 is finished
 		"""
+		self.current_turn = 0
+		self.save()
 		from engine.modules import initialisation_tasks_list
 		for Task in initialisation_tasks_list:
 			t = Task()
 			t.run(self)
+
+		self.current_turn = 1
+		self.save()
 
 	@property
 	def corporation_set(self):

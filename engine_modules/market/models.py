@@ -3,7 +3,6 @@
 from django.db import models
 
 from engine.models import Game
-from engine_modules.corporation.models import AssetDelta
 
 
 class Market(models.Model):
@@ -58,8 +57,6 @@ class CorporationMarket(models.Model):
 
 		# On ajoute la bulle sur les actifs de la corpo
 		self.corporation.update_modifier(delta)
-
-		self.corporation.assetdelta_set.create(category=AssetDelta.BUBBLE, delta=delta, turn=self.turn)
 		return delta
 
 	def __unicode__(self):

@@ -164,16 +164,6 @@ class CreateBubblesAfterGameCreationTask(AbstractBubblesTask):
 		if not hasattr(game, 'disable_bubble_reevaluation'):
 			super(CreateBubblesAfterGameCreationTask, self).run(game, after_effects=True)
 
-		# We create the log to create color on bubbles
-		negative_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=-1))
-		positive_bubbles = list(CorporationMarket.objects.filter(corporation__game=game, turn=game.current_turn, bubble_value=1))
-
-		for nb in negative_bubbles:
-				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, delta=-1, corporation=nb.corporation)
-
-		for pb in positive_bubbles:
-				game.add_event(event_type=game.GAIN_DOMINATION_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, delta=1, corporation=pb.corporation)
-
 
 class ReplicateCorporationMarketsTask(ResolutionTask):
 	"""
