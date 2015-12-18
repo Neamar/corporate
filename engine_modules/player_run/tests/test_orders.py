@@ -2,6 +2,8 @@ from engine.testcases import EngineTestCase
 from engine.models import Player
 from engine_modules.player_run.models import InformationOrder
 from logs.models import Log
+from engine_modules.share.models import Share
+from engine_modules.citizenship.models import CitizenshipOrder
 
 
 class InformationRunOrderTest(EngineTestCase):
@@ -69,3 +71,33 @@ class InformationRunOrderTest(EngineTestCase):
 		self.io.corporation_targets.add(self.c)
 
 		self.g.resolve_current_turn()
+
+	def test_information_on_corporation_give_logs(self):
+		"""
+		We get information about the corporation
+		"""
+		self.io.corporation_targets.add(self.c)
+		self.g.resolve_current_turn()
+
+		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 1)
+
+	# def test_information_on_citizenship_auto(self):
+	# 	"""
+
+	# 	"""
+	# 	s = Share(
+	# 		player=self.p,
+	# 		corporation=self.c
+	# 	)
+	# 	s.save()
+
+	# 	o = CitizenshipOrder(
+	# 		player=self.p,
+	# 		corporation=self.c
+	# 	)
+	# 	o.clean()
+	# 	o.save()
+
+	# 	self.g.resolve_current_turn()
+
+	# 	self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 1)

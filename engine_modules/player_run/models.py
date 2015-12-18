@@ -17,8 +17,8 @@ class InformationOrder(RunOrder):
 	PLAYER_COST = 150
 	CORPORATION_COST = 50
 
-	player_targets = models.ManyToManyField(Player)
-	corporation_targets = models.ManyToManyField(Corporation)
+	player_targets = models.ManyToManyField(Player, blank=True)
+	corporation_targets = models.ManyToManyField(Corporation, blank=True)
 
 	def get_form(self, data=None):
 		form = super(InformationOrder, self).get_form(data)
@@ -29,7 +29,24 @@ class InformationOrder(RunOrder):
 		return form
 
 	def description(self):
-		return "Lancer une run d'information sur %s (%s%%)" % (self.target, self.get_raw_probability())
+		players = self.player_targets.all()
+		corporations = self.corporation_targets.all()
+		player_part = ""
+		corporation_part = ""
+
+		if len(players) > 1:
+			player_part = "les joueurs %s" % (", ".join([p.name for p in players]))
+		elif len(players) == 1:
+			player_part = "le joueur %s" % players[0].name
+
+		if len(corporations) > 1:
+			corporation_part = "les corporations %s" % (", ".join([c.base_corporation.name for c in corporations]))
+		elif len(corporations) == 1:
+			corporation_part = "la corporation %s" % corporations[0].base_corporation.name
+
+		if player_part != "" and corporation_part != "":
+			return "Lancer une run d'information sur %s et %s" % (player_part, corporation_part)
+		return "Lancer une run d'information sur %s" % (player_part + corporation_part)
 
 	def is_successful(self):
 		"""
@@ -42,6 +59,7 @@ class InformationOrder(RunOrder):
 		corpos = list(self.corporation_targets.all())
 
 		if self.player.citizenship.corporation is not None:
+			print "LOLILOL"
 			corpos.append(self.player.citizenship.corporation)
 
 		self.player.game.add_event(event_type=Game.OPE_INFORMATION, data={"players_list": [p.name for p in players], "corpos_list": [c.base_corporation.name for c in corpos]}, players=[self.player])
