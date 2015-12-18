@@ -39,7 +39,10 @@ class InformationOrder(RunOrder):
 
 	def resolve_successful(self):
 		players = self.player_targets.all()
-		corpos = self.corporation_targets.all()
+		corpos = list(self.corporation_targets.all())
+
+		if self.player.citizenship is not None:
+			corpos.append(self.player.citizenship.corporation)
 
 		self.player.game.add_event(event_type=Game.OPE_INFORMATION, data={"players_list": [p.name for p in players], "corpos_list": [c.base_corporation.name for c in corpos]}, players=[self.player])
 
