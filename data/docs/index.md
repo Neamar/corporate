@@ -32,6 +32,7 @@ Acheter une part dans une corpo prend du temps, des ressources et beaucoup de n�
 
 * L'Influence Corporatiste, ou **IC**, commence à 1 pour tous les joueurs.
 * Le nombre de parts qu’un joueur peut acheter par tour est limité à hauteur de l'IC.
+* Le prix des X premières opés est réduit, voir plus bas.
 * On peut augmenter son IC en payant `750 000 ₵ × indice actuel`. 
 
 <!-- -->
@@ -45,23 +46,26 @@ Regardons en détail comment sont calculés les actifs. Chaque corporation est d
 
 Ces corporations sont réparties de la façon suivante dans les différents marchés :
 
-|           | Agroalimentaire | Aérospatiale | BTP | Militaire | Médias | Pharmaceutique | Robotique | Transport | Télécom | Énergie |
-|-----------|-----------------|--------------|-----|-----------|--------|----------------|-----------|-----------|---------|---------|
-| Tlaloc  |                 |              |     |           |        |                |           |           |         |         |
-| Bastion   |                 |              |     |           |        |                |           |           |         |         |
-| Citygroup |                 |              |     |           |        |                |           |           |         |         |
-| Enercore  |                 |              |     |           |        |                |           |           |         |         |
-| Impulse   |                 |              |     |           |        |                |           |           |         |         |
-| Iris      |                 |              |     |           |        |                |           |           |         |         |
-| Mercury   |                 |              |     |           |        |                |           |           |         |         |
-| Pure      |                 |              |     |           |        |                |           |           |         |         |
-| Shinsekai |                 |              |     |           |        |                |           |           |         |         |
-| Taurus    |                 |              |     |           |        |                |           |           |         |         |
+|                                  |       Taurus                                 |       Enercore                               |       Shinsekai                             |       Impulse                               |       Pure                                   |       Iris                                  |       Bastion    |       Mercury    |       CityGroup                              |       Tlaloc                               |
+|----------------------------------|----------------------------------------------|----------------------------------------------|---------------------------------------------|---------------------------------------------|----------------------------------------------|---------------------------------------------|------------------|------------------|----------------------------------------------|--------------------------------------------|
+|       Militaire                  |          <span style=color:green>3</span>    |                                              |          2                                  |                                             |                                              |                                             |          2       |                  |                                              |                                            |
+|          Médias                  |                                              |       1                                      |                                             |                                             |       2                                      |       <span   style=color:green>4</span>    |          3       |                  |                                              |                                            |
+|          Energie                 |                                              |          <span style=color:green>5</span>    |                                             |       3                                     |                                              |                                             |          3       |                  |       <span   style=color:red>0</span>       |       4                                    |
+|          Transport               |       2                                      |                                              |                                             |                                             |       2                                      |                                             |          2       |       3          |          2                                   |          3                                 |
+|          BTP                     |          1                                   |       3                                      |                                             |                                             |          2                                   |                                             |                  |                  |          <span style=color:green>5</span>    |                                            |
+|          Télécom                 |                                              |                                              |       2                                     |       1                                     |                                              |       2                                     |                  |       2          |          1                                   |                                            |
+|          agroalimentaire         |       <span   style=color:green>4</span>     |       2                                      |          2                                  |                                             |                                              |                                             |                  |          3       |                                              |       <span   style=color:red>-1</span>    |
+|          aérospatiale            |          1                                   |                                              |                                             |       <span   style=color:green>3</span>    |                                              |       2                                     |                  |                  |                                              |                                            |
+|          robotique               |          <span style=color:red>0</span>      |                                              |       <span   style=color:green>3</span>    |          2                                  |       1                                      |                                             |                  |                  |                                              |                                            |
+|          pharmaceutique          |                                              |                                              |          1                                  |                                             |          <span style=color:green>2</span>    |       1                                     |                  |                  |                                              |       3                                    |
+|          domination     |       2                                      |       1                                      |          2                                  |       1                                     |          1                                   |          1                                  |                  |                  |       1                                      |                                            |
+|          perte sèche    |          -1                                  |                                              |                                             |                                             |                                              |                                             |                  |                  |          -1                                  |       -1                                   |
+|          Actifs                  |          12                                  |       12                                     |       12                                    |       10                                    |       10                                     |       10                                    |       10         |       8          |          8                                   |          8                                 |
 
 Les actifs d’une corporation sont égaux à la somme des actifs de ses marchés… à deux petites exceptions près :
 
-* Si une corporation a plus d'actifs que toutes les autres sur un marché, elle domine ce marché et gagne un actif. Attention cependant, cet **actif de domination** est perdu dès que la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine. Ces actifs sont en jaune dans le tableau.
-* *A contrario*, une corporation qui tombe à 0 ou moins sur un de ses marchés perd un actif. Cet **actif de perte sèche** disparaît dès que la corporation récupère au moins un actif sur ce marché. Si plusieurs corporations ont 0 actifs ou moins sur le même marché, elles ont toutes l'actif de perte sèche. Ces actifs sont en rouge dans le tableau.
+* Si une corporation a plus d'actifs que toutes les autres sur un marché, elle domine ce marché et gagne un actif. Attention cependant, cet **actif de domination** est perdu dès que la corporation cesse de dominer le marché. En cas d'égalité, aucune corpo ne domine. Ces actifs sont en <span style=color:green>vert</span> dans le tableau.
+* *A contrario*, une corporation qui tombe à 0 ou moins sur un de ses marchés perd un actif. Cet **actif de perte sèche** disparaît dès que la corporation récupère au moins un actif sur ce marché. Si plusieurs corporations ont 0 actifs ou moins sur le même marché, elles ont toutes l'actif de perte sèche. Ces actifs sont en <span style=color:red>rouge</span> dans le tableau.
 
 ## Main invisible
 > Même la plus corrompue des corpos est victime des modes des consommateurs. Ça a été une déception pour moi aussi : personne ne décide quel produit de merde le public va s'arracher cette année.
@@ -122,7 +126,9 @@ Vous pouvez utiliser la réduction du prix de base de l'opé à 50 000 ₵ avec 
 
 ##### Information
 Le commanditaire choisit des joueurs cibles et des corpos cibles
-Il recevra un message contenant toutes les actions faites par les joueurs cibles ce tour-ci ainsi que leur Background (cf. Background). Vous recevrez en détail toutes les actions réussies et échouées sur les corpos cibles.
+Il recevra des informations en fonction de la cible :
+-Sur un joueur : toutes les actions faites par les joueurs cibles ce tour-ci ainsi que leur Background (cf. Background). 
+-Sur une corpo : Le détail de tous les effets du tour ayant ciblé la corporation
 Cette opé d'Information a un coût :
 
 * 150 000 ₵ par joueur sélectionné
@@ -148,7 +154,7 @@ Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voi
 * 4 Points de Victoire par part dans la deuxième corpo
 * 3 Points de Victoire par part dans la troisième corpo
 * 2 Points de Victoire par part dans la quatrième corpo
-* 1 Points de Victoire par part dans la cinquième corpo
+* 1 Point de Victoire par part dans la cinquième corpo
 
 ### Les points de citoyenneté corpo
 >Changer de nationalité c’est un peu comme enfiler le maillot de l’autre équipe au milieu du  match. Si ta nouvelle équipe gagne, tu es seulement un traître.
@@ -156,14 +162,16 @@ Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voi
 La **citoyenneté corpo** est très importante puisque votre image dépend du résultat de votre corpo.
 
 * À la fin de la partie, chaque corporation rapporte `20 – 2 × rang` points de victoire à ces citoyens. Donc 18 points pour la première corpo et 0 pour la dernière. Attention, ces points sont à partager entre tous les citoyens de la corporation arrondis à l’inférieur. Donc si 3 joueurs sont citoyens de la 3eme corpos, ils ne gagnent que 4 points chacun !
-* Vous pouvez changer de citoyenneté corpo contre X points de victoire, X étant le tour en cours. Vous devez avoir au moins une part dans une corporation pour en acquérir la nationalité.
+* Vous pouvez changer de citoyenneté corpo contre X Points de Victoire, X étant le tour en cours. Vous devez avoir au moins une part dans une corporation pour en acquérir la nationalité.
 * Vous pouvez choisir de commencer la partie en tant que citoyen d’une corporation. Vous serez alors contraint d’acheter votre première part dans cette corporation au premier tour de jeu.
-* Si vous n'avez pas de ciroyenneté à la fin de la partie, vous perdez 7 points.
+* Si vous n'avez pas de ciroyenneté à la fin de la partie, vous perdez 7 Points de Victoire.
 
 ### Les Backgrounds
 >Tu veux laisser ta trace à Detroit ? Choisis ton style, fais en plus que les autres et prends le pouvoir avec. Moi je sabote les corpos de mes ennemis. Entre potes, un conseil en or comme ça vaut bien 100 000 ₵.
 
-Au début du jeu, vous pouvez choisir un background. Il vous rapportera des Points de Victoire à chaque tour si vous en remplissez les conditions. Vous pouvez aussi choisir de ne prendre aucun background, vous gagnez alors 5 Points de Victoire.
+Au début du jeu, vous pouvez choisir un background. Il vous rapportera des Points de Victoire à chaque tour si vous en remplissez les conditions. Il y a maximum 10 points à se faire avec.
+
+[Les backgrounds](/docs/backgrounds) sont décrits ici.
 
 ## Mise en place du jeu
 Avant de commencer la partie, chaque joueur peut choisir un background et une citoyenneté corpo.
@@ -171,6 +179,7 @@ Avant de commencer la partie, chaque joueur peut choisir un background et une ci
 ## Règles avancées
 Bravo, vous avez enfin lu ce dont vous aviez besoin pour commencer à jouer !
 
-Il reste quelques points de règles avancées, mais il est conseillé d'attendre le tour 2 ou 3 avant d'aller les lire. Ne pas connaître les règles avancées ne vous fera pas perdre la partie, mais elles peuvent vous donner un léger avantage si vous prenez le temps de les lire.
+Il reste quelques points de règles avancées, mais il est conseillé d'attendre le tour 2 ou 3 avant d'aller les lire. Ne pas connaître les règles avancées ne vous fera pas perdre la partie si vous ne les lisez pas pour les premiers tours, mais elles peuvent vous donner un avantage si vous prenez le temps de les lire.
 
 [La page des règles avancées](/docs/advanced) contient les règles sur Detroit Incorporated, les effets premiers, les effets derniers, les effets crash et la spéculation.
+

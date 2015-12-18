@@ -3,7 +3,6 @@
 from django.db import models
 
 from engine.models import Game
-from engine_modules.corporation.models import AssetDelta
 
 
 class Market(models.Model):
@@ -38,35 +37,27 @@ class CorporationMarket(models.Model):
 	# whereas the one with turn n-1 has the values at beginning of turn.
 	# This is why we have default turn 0 and we need to initialize both for turn 0 and 1
 	turn = models.PositiveSmallIntegerField(default=0)
-	# The meaning of 'value' and 'bubble_value' changed: value is now the market assets + the bubble modifier.
-	# bubble_value is only here as a token for the bubble: 0 -> no bubble, 1 -> domination, -1 -> 'dry' bubble
-	# This should greatly simplify the DB requests for the CorporationMarkets that have a bubble
+	# value is the market assets + the bubble modifier.
 	value = models.SmallIntegerField()
+	# bubble_value is only here as a token for the bubble: 0 -> no bubble, 1 -> domination, -1 -> 'dry' bubble
 	# bubble_value should only be modified through the update_bubble() method
 	bubble_value = models.SmallIntegerField(choices=BUBBLE_VALUES, default=NO_BUBBLE)
 
 	def update_bubble(self, value):
 		"""
 		update the bubble_value field and keep the value field consistent
-		We'll internalize some of the considerations when you cross the 0 threshold in a direction or the other
-		Because of that, we have to return the amount by which self.bubble_value actually changed, which may be different from the amount requested
 		"""
 
 		previous_bubble_value = self.bubble_value
-		# We have to specially handle the case where the resulting value would be 0
-		self.value += (value - self.bubble_value)
-		# You can't go into negative values unless you have a negative bubble
-		if value > -1:
-			self.value = max(self.value, 0)
+		# We save the bubble value on the corporation market bubble_value field with no impact on the value field
 		self.bubble_value = value
-		if self.value == 0 and previous_bubble_value != 0:
-			self.value -= 1
-			self.bubble_value -= 1
 		self.save()
 
-		delta = self.bubble_value - previous_bubble_value
-		self.corporation.assetdelta_set.create(category=AssetDelta.BUBBLE, delta=delta, turn=self.turn)
+		delta = value - previous_bubble_value
+
+		# On ajoute la bulle sur les actifs de la corpo
+		self.corporation.update_modifier(delta)
 		return delta
 
 	def __unicode__(self):
-		return u"%s de %s" % (self.market, self.corporation)
+		return u"%s , marché %s (tour %s)" % (self.corporation.base_corporation.name, self.market.name, self.turn)

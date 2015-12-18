@@ -1,0 +1,357 @@
+body {
+	font-family: 'Roboto', sans-serif;
+	font-weight: normal;
+	color: #fff;
+	//background: url("/static/img/bg.jpg") repeat scroll center top rgba(0, 0, 0, 0);
+	overflow-x: hidden;
+
+
+
+
+background-image: url("/static/img/content/bg-global.png"), url("/static/img/content/bg-global-2.png"), url("/static/img/bg.jpg"); 
+background-position: top left, top center, center top;
+background-repeat: no-repeat, no-repeat, repeat; 
+
+	&:before {
+		background: url("/static/img/bg-triangle.png") repeat scroll center top rgba(0, 0, 0, 0);
+		width: 1107px;
+		min-height: 398px;
+		position: absolute;
+		top: 0;
+		right:  calc(0 - 20%);
+		content: "";
+		z-index: -1;
+	}
+
+	a {
+		color: #fff;
+
+		&:hover {
+			color: #ec0707;
+		}
+	}
+
+	a.link {
+		color: #fff;
+		text-decoration: none;
+		border-bottom: 1px solid #ccc;
+		-webkit-transition: all 0.25s ease-in-out;
+		transition:all 0.25s ease-in-out;
+
+		&:hover {
+			border-bottom: 1px dashed #ec0707;
+			color: #ec0707;
+			-webkit-transition: all 0.25s ease-in-out;
+			transition:all 0.25s ease-in-out;
+		}
+	}
+}
+
+.main-h1-title {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	font-size: 36px;
+	color: #fff;
+	text-align: center;
+	text-transform: uppercase;
+	margin-top: 20px;
+	overflow: hidden;
+
+    display: table;
+    white-space: nowrap;
+    &:before, &:after {
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
+      content: '';
+      display: table-cell;
+      position: relative;
+      top: 0.5em;
+      width: 45%;
+    }
+    &:before { right: 1.5%; }
+    &:after { left: 1.5%; }
+}
+
+.main-logo {
+position: relative;
+z-index: 5;
+text-indent: -5555em;
+margin: 40px auto auto;
+max-width: 1045px;
+top: 15px;
+
+	a {
+		background: url("/static/img/logo-corporate-game-v2.png") repeat scroll center top rgba(0, 0, 0, 0);
+		width: 530px;
+		height: 103px;
+		display: block;
+	}
+}
+
+.grid-container {
+	max-width: 1045px;
+	width: 96%;
+	margin: auto;
+	overflow: hidden;
+	padding: 0 2%;
+	display: table;
+
+	&.main-container {
+		padding-bottom: 25px;
+	}
+
+	.content-container {
+		display: table-cell;
+		vertical-align: top;
+		max-width: 703px;
+		background: url("/static/img/content/content-bg-r.png") repeat-y scroll right top rgba(0, 0, 0, 0);
+
+		.content {
+			padding: 0 4%;
+			width: 92%;
+		}
+	}
+}
+
+.visually-hidden {
+	position:absolute;
+	left:-10000px;
+	top:auto;
+	width:1px;
+	height:1px;
+	overflow:hidden;
+}
+
+svg:not(:root) { overflow: hidden }
+
+svg use {
+	width: inherit;
+	height: inherit;
+	display: inline-block;
+}
+.svg--medium, .svg--small, .svg--large {
+	display: inline-block;
+}
+.svg--medium {
+	height: 28px;
+	width: 28px;
+}
+.svg--small {
+	height: 16px;
+	width: 16px;
+}
+
+.svg--large {
+	height: 48px;
+	width: 48px;
+}
+.svg--medium, .svg--small  {
+}
+.svg--white {
+	fill: white;
+}
+.svg--red {
+	fill: red;
+}
+.svg--green {
+	fill: green;
+}
+
+
+.corporate-wallstreet {
+
+	.content {
+	overflow: hidden;
+	padding: 0 2%;
+    width: 96%;
+    background: url("/static/img/wallstreet/motif-bg.png") repeat-y scroll left top rgba(0, 0, 0, 0);
+	}
+}
+//Wallstreet
+.corporation-row {
+	font-family: 'Roboto', sans-serif;
+	max-width: 320px;
+    width: 50%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+
+    float: left;
+
+    &:nth-child(odd) {
+    	//float: right;
+    	//padding-left: 2%;
+    	margin-top: 200px;
+    }
+
+    &:nth-child(even) {
+    	//float: left;
+    	//padding-right: 2%;
+    	margin-right: 6px;
+
+    }
+
+	h2 {
+		display: table;
+		height: 48px;
+		margin: 0;
+		width: 100%;
+		position: relative;
+
+		    &:hover a {
+    		color: #fff;
+    		text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    		-webkit-transition: all 0.25s ease-in-out;
+			transition:all 0.25s ease-in-out;
+    		}
+
+		.corporation-index {
+			height: inherit;
+			font-size: 18px;
+			text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+			position: absolute;
+			left: 3px;
+			top: 2px;
+			-webkit-transition: all 0.25s ease-in-out;
+			transition:all 0.25s ease-in-out;
+		}
+		.corporation-name {
+			float: left;
+    		width: 89%;
+			background: url("/static/img/wallstreet/head-title-full.png") repeat-y scroll left top rgba(0, 0, 0, 0);
+			text-transform: uppercase;
+			text-decoration: none;
+			font-size: 22px;
+			text-align: center;
+			text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+			height: inherit;
+			line-height: 44px;
+
+		}
+		.current-assets {
+			height: inherit;
+			background: url("/static/img/wallstreet/head-delta.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			max-width: 56px;
+			min-width: 56px;
+			width: 18%;
+			line-height: 60px;
+			text-indent: 16px;
+			font-size: 18px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			letter-spacing: -1px;
+		}
+	}//h2
+	.icon-content {
+		position: relative;
+		background: url("/static/img/wallstreet/bottom-wall.png") no-repeat scroll bottom rgba(0, 0, 0, 0);
+		padding-bottom: 8px;
+
+		.assets-delta {
+			position: absolute;
+			top: 0;
+			right: 0;
+			background: url("/static/img/wallstreet/delta-base.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			display: block;
+			width: 54px;
+			height: 54px;
+
+				i {
+					top: 50%;
+					-webkit-transform: translateY(-50%);
+					-ms-transform: translateY(-50%);
+					transform: translateY(-50%);
+					display: inline;
+				    font-style: normal;
+				    margin: auto;
+				    position: absolute;
+				    text-align: center;
+				    width: 100%;
+				    font-size: 22px;
+				    font-weight: bold;
+				    text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+				}
+
+
+			&.positive {
+				background: url("/static/img/wallstreet/delta-positif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			}
+			&.negative {
+				background: url("/static/img/wallstreet/delta-negatif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			}
+		}
+
+		.icons-list {
+			background: url("/static/img/wallstreet/content-wall.png") repeat-y scroll right top rgba(0, 0, 0, 0);
+			list-style-type: none;
+			overflow: hidden;
+			margin: 0;
+			padding: 0;
+
+			li {
+				float: left;
+				width: 50px;
+				height: 50px;
+				display: block;
+				text-align: center;
+				line-height: 72px;
+				padding-bottom: 4px;
+
+				&:nth-child(5) {
+			    	padding-right: 56px;
+			    }
+			}
+		}//icons-list
+	}//icon-content
+
+	.corporation-markets {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+
+		.corporation-market {
+			float: left;
+			width: 58px;
+			height: 58px;
+			display: block;
+			background: url("/static/img/wallstreet/market-base.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			margin-right: 7.5px;
+    		margin-top: 10px;
+    		line-height: 60px;
+    		text-indent: 10px;
+    		position: relative;
+
+    		.corporation-market-value {
+    			position: absolute;
+    			bottom: 7px;
+    			right: 8px;
+    			line-height: 16px;
+    		}
+
+
+    			svg {
+    				-webkit-filter: drop-shadow( 0 0 4px rgba(255, 255, 255, 0.3));
+            		filter: drop-shadow( 0 0 4px rgba(255, 255, 255, 0.3)); /* Same syntax as box-shadow */
+    			}
+
+			&:nth-child(5) {
+		    	margin-right: 0;
+		    }
+
+			&.negative {
+				background: url("/static/img/wallstreet/market-negatif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			}
+			&.positive {
+				background: url("/static/img/wallstreet/market-positif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			}
+		}
+	}//corporation-markets
+}//corporation-row
+
+@import "less/menu.less";
+@import "less/sidebar.less";
+@import "less/pages/rules.less";
+@import "less/pages/player.less";
+@import "less/pages/shares.less";
+@import "less/pages/order.less";
+@import "less/pages/wallstreet.less";

@@ -61,6 +61,16 @@ class RunOrder(Order):
 			self.resolve_failure()
 		return result
 
+	def resolve_to_fail(self):
+		"""
+		Used to force a run to fail
+		"""
+		self.player.money -= self.get_cost()
+		self.player.save()
+
+		self.resolve_failure()
+		return False
+
 	def resolve_successful(self):
 		"""
 		This function is called when the run has succeeded
@@ -85,3 +95,11 @@ class RunOrder(Order):
 		if self.has_influence_bonus:
 			cost -= RunOrder.INFLUENCE_BONUS
 		return cost
+
+	# def get_form(self, data=None):
+		# form = super(RunOrder, self).get_form(data)
+		# We remove has_influence_bonus because we ant to handle it automatically
+		# form.fields.pop('has_influence_bonus')
+		
+	def custom_description(self):
+		return "%s%%" % self.get_raw_probability()

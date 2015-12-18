@@ -18,7 +18,7 @@ class OrdersTest(EngineTestCase):
 		Money should be reduced
 		"""
 		self.g.resolve_current_turn()
-		self.assertEqual(self.reload(self.p).money, self.initial_money - BuyInfluenceOrder.BASE_COST * 2)
+		self.assertEqual(self.reload(self.p).money, self.initial_money - BuyInfluenceOrder.BASE_COST)
 
 	def test_order_increment_influence(self):
 		"""

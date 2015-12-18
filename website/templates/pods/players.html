@@ -1,0 +1,18 @@
+<div class="pod pod-players last-pod">
+	<h2 class="pod-title">Joueurs</h2>
+	<ul class="pod-players-list">
+	{% for player in players %}
+		<li class="pod-players-list-item">
+			<a href="{% url 'website.views.data.player' game_id=game.id player_id=player.id %}"><img class="player-avatar tooltip" title="{{ player.name }}" src="{{ STATIC_URL }}img/players/{% cycle '01' '02' '03' %}.png"/></a>
+
+			<div class="content-player">
+				<span class="player-name">{{ player.name }}</span>
+				<span class="icon-ic">{{ player.influence.level }}</span>
+				<span class="icon-messaging"></span>
+
+				{% include "logs/player.html" with events=player.events %}
+			</div>
+		</li>
+	{% endfor %}
+	</ul>
+</div>

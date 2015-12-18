@@ -4,11 +4,7 @@ from engine_modules.corporation_run.models import DataStealOrder, ProtectionOrde
 from engine_modules.corporation_run.decorators import override_max_protection
 
 
-class RunOrdersTest(EngineTestCase):
-	pass
-
-
-class CorporationRunOrderTest(RunOrdersTest):
+class CorporationRunOrderTest(EngineTestCase):
 	def test_get_raw_probability(self):
 		"""
 		Check raw probability values
@@ -27,7 +23,7 @@ class CorporationRunOrderTest(RunOrdersTest):
 		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.hidden_percents * 10 + dso.BASE_SUCCESS_PROBABILITY)
 
 
-class DatastealRunOrderTest(RunOrdersTest):
+class DatastealRunOrderTest(EngineTestCase):
 	def setUp(self):
 		super(DatastealRunOrderTest, self).setUp()
 
@@ -92,14 +88,13 @@ class DatastealRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.dso.stealer_corporation).assets, begin_assets_stealer)
 
 
-class SabotageRunOrderTest(RunOrdersTest):
+class SabotageRunOrderTest(EngineTestCase):
 	def setUp(self):
 
-		super(RunOrdersTest, self).setUp()
+		super(SabotageRunOrderTest, self).setUp()
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
 
-		super(SabotageRunOrderTest, self).setUp()
 		self.so = SabotageOrder(
 			player=self.p,
 			target_corporation_market=common_corporation_market,
@@ -161,7 +156,7 @@ class SabotageRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_assets)
 
 
-class ExtractionRunOrderTest(RunOrdersTest):
+class ExtractionRunOrderTest(EngineTestCase):
 	def setUp(self):
 		super(ExtractionRunOrderTest, self).setUp()
 
@@ -228,22 +223,29 @@ class ExtractionRunOrderTest(RunOrdersTest):
 		self.assertEqual(self.reload(self.eo.stealer_corporation).assets, begin_assets_kidnapper)
 
 
-class DefensiveRunOrderTest(RunOrdersTest):
+class DefensiveRunOrderTest(EngineTestCase):
 	def setUp(self):
 		super(DefensiveRunOrderTest, self).setUp()
-		self.dso = DataStealOrder(
-			stealer_corporation=self.c2,
+
+		corporationmarket = self.c.get_random_corporation_market()
+		self.dso = ProtectionOrder(
 			player=self.p,
-			target_corporation_market=self.c.corporationmarket_set.get(market__name=self.c.base_corporation.markets.keys()[0]),
-			additional_percents=0,
+			protected_corporation_market=corporationmarket,
 		)
 		self.dso.clean()
 		self.dso.save()
 
 		self.so = SabotageOrder(
 			player=self.p,
-			target_corporation_market=self.dso.target_corporation_market,
-			additional_percents=0,
+			target_corporation_market=corporationmarket,
+			additional_percents=10,
 		)
 		self.so.clean()
 		self.so.save()
+
+	def test_protection_stops_runs(self):
+		# this test only purpose is to test that the run is stopped when run has 100% chances of success and protection drop it to 0%
+		# these parameters are defined in engine/testcases.py
+		begin_assets = self.c2.assets
+		self.g.resolve_current_turn()
+		self.assertEqual(self.reload(self.c2).assets, begin_assets)

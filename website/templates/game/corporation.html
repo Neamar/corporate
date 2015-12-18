@@ -1,3 +1,4 @@
+
 {% extends "template.html" %}
 
 {% block title %}{{ corporation.base_corporation.name }}{% endblock %}
@@ -5,88 +6,47 @@
 {% block favicon %}{{ STATIC_URL }}corporations/{{corporation.base_corporation.slug}}.png{% endblock %}
 
 {% block content %}
-<table class="prop_table">
+
+<ul>
+{% for corporation_market in corporation_markets %}
+	<li>
+		<h3><svg role="img" class="svg--medium svg--white" title="{{ corporation_market.market.name|capfirst }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg> {{ corporation_market.value }}</h3>
+
+		{% include "logs/corporation_market.html" with events=corporation_market.events %}
+	</li>
+{% endfor %}
+</ul>
+
+<ul>
+{% for player in share_holders %}
+	<li class="{% if player.citizenship.corporation_id == corporation.pk %}citizen {% endif %}"><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}" title="Parts de {{ player.name }}"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" /><span>{{ player.qty_share }}</span></a></li>
+{% endfor %}
+</ul>
+
+{% include "logs/corporation.html" with events=logs delta_display=False %}
+
+<table>
 <thead>
-<tr>
-	<th></th>
-	<th>Actif</th>
-	<th>DS</th>
-	<th>S</th>
-	<th>E</th>
-	<th>D</th>
-	<th>Coalition</th>
-</tr>
+<td></td>
+{% for market in markets %}
+	<td> <h3><svg role="img" class="svg--medium svg--white" title="{{ market.name|capfirst }}"><use xlink:href="/static/img/sprite.svg#{{ market.name|lower }}"></use></svg></h3></td>
+{% endfor %}
+	<td> &Sigma; </td>
+	<td> Joueurs </td>
 </thead>
 <tbody>
+{% for entry in summary %}
 <tr>
-	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
-	<td class="important">{{ corporation.assets }}</td>
-	<td>{{ corporation.base_corporation.datasteal }}</td>
-	<td>{{ corporation.base_corporation.sabotage }}</td>
-	<td>{{ corporation.base_corporation.extraction }}</td>
-	<td>{{ corporation.base_corporation.detection }}</td>
-	<td> TBD </td>
-</tr>
-</tbody>
-</table>
-
-<div id="chart_div" style="width: 530px; height: 300px; margin:15px auto;"></div>
-
-{% if players %}
-<h2>Parts possédées</h2>
-<table class="prop_table">
-<thead>
-<tr>
-	<th></th>
-	<th>Parts</th>
-</tr>
-</thead>
-<tbody>
-{% for player in players %}
-<tr>
-	<td><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}">{{ player.name }}</a></td>
-	{% if player.citizenship.corporation_id == corporation.pk %}
-	<td><strong>{{ player.qty_share }}</strong></td>
-	{% else %}
-	<td>{{ player.qty_share }}</td>
-	{% endif %}
+	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=entry.corporation.base_corporation.slug %}" class="corporation-name">{{ entry.corporation.base_corporation.name }}</a></td>
+{% for value in entry.assets %}
+	<td> {{ value|default:"-" }}</td>
+{% endfor %}
+	<td> {{ entry.corporation.assets }}</td>
+	<td>{% for holder in entry.holders %} <a href="{% url "website.views.data.player" game_id=game.pk player_id=holder.pk %}" title="Parts de {{ holder.name }}" class="tooltip"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" width="32" height="32" /></a> {% endfor %}</td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
-{% endif %}
+<a href="{% url "docs.views.corporation" corporation_slug=corporation.base_corporation.slug %}">voir la documentation de la corporation</a>
 
-<h2>Description</h2>
-<img src="{{ STATIC_URL }}corporations/{{corporation.base_corporation.slug}}.png" alt="{{ corporation.base_corporation.name" style="float:right; margin:0 30px"/>
-{{ corporation.base_corporation.description }}
 {% endblock content %}
-
-{% block scripts %}
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawChart);
-function drawChart() {
-	var data = google.visualization.arrayToDataTable([
-		['Tour', 'Actifs'],
-		{% for asset_history in assets_history %}
-			[{{ asset_history.turn }}, {{ asset_history.assets }}],
-		{% endfor %}
-	]);
-
-	var options = {
-		title: 'Actifs',
-		backgroundColor: 'transparent',
-		theme: 'maximized',
-		pointSize: 4,
-		legend: 'none',
-		vAxis: {minValue:0, format:'#'},
-	};
-
-	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-	chart.draw(data, options);
-}
-</script>
-{% endblock scripts %}
-
-

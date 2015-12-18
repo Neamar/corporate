@@ -45,10 +45,7 @@ class BaseCorporation:
 		self.name = meta['name'][0]
 		self.description = mark_safe(content)
 
-		self.datasteal = int(meta['datasteal'][0])
-		self.sabotage = int(meta['sabotage'][0])
-		self.extraction = int(meta['extraction'][0])
-		self.detection = int(meta['detection'][0])
+		self.phoenix = int(meta['phoenix'][0])
 
 		code = "\n".join(meta['on_first'])
 		self.on_first = self.compile_effect(code, "on_first")
@@ -148,12 +145,22 @@ class Corporation(models.Model):
 	def get_random_corporation_market_among_bests(self):
 		"""
 		Return the CorporationMarket with the higher asset among corporationMarket of this corporation.
-		If there are som ex-aequo, pick at random among them
+		If there are some ex-aequo, pick at random among them
 		"""
 		cms = list(self.corporation_markets.order_by('-value'))
 		max_value = cms[0].value
 
 		return random.choice([cm for cm in cms if cm.value == max_value])
+
+	def get_random_corporation_market_among_worths(self):
+		"""
+		Return the CorporationMarket with the lower asset among corporationMarket of this corporation.
+		If there are some ex-aequo, pick at random among them
+		"""
+		cms = list(self.corporation_markets.order_by('value'))
+		min_value = cms[0].value
+
+		return random.choice([cm for cm in cms if cm.value == min_value])
 
 	def get_random_market(self):
 		"""
@@ -201,7 +208,7 @@ class Corporation(models.Model):
 	def base_corporation(self):
 		return BaseCorporation.base_corporations[self.base_corporation_slug]
 
-	def apply_effect(self, code, delta_category, ladder):
+	def apply_effect(self, code, event_type, ladder):
 		"""
 		Applies the effect described in code with respect to the ladder, in category delta_category
 		"""
@@ -217,23 +224,18 @@ class Corporation(models.Model):
 					return
 
 			if market is None:
-				# By default, the higher market is impacted
-				corporation_market = corporation.get_random_corporation_market_among_bests()
+				# By default, the higher market is impacted if the delta is positive
+				if delta < 0:
+					corporation_market = corporation.get_random_corporation_market_among_bests()
+				# or the worst market is impacted if the delta is negative
+				else:
+					corporation_market = corporation.get_random_corporation_market_among_worths()
 			else:
 				corporation_market = corporation.corporationmarket_set.get(market__name=market, turn=self.game.current_turn)
 
-			corporation.update_assets(delta, category=delta_category, corporation_market=corporation_market)
+			corporation.update_assets(delta, corporation_market=corporation_market)
 
 			# create a event_type
-			if delta_category == AssetDelta.EFFECT_FIRST:
-				event_type = Game.FIRST_EFFECT
-			elif delta_category == AssetDelta.EFFECT_LAST:
-				event_type = Game.LAST_EFFECT
-			elif delta_category == AssetDelta.EFFECT_CRASH:
-				event_type = Game.CRASH_EFFECT
-			else:
-				raise Exception("Unknown category of effect : %s" % (delta_category))
-
 			self.game.add_event(event_type=event_type, data={"triggered_corporation": self.base_corporation.name, "delta": delta, "abs_delta": abs(delta), "market": corporation_market.market.name, "corporation": corporation.base_corporation.name}, delta=delta, corporation=corporation, corporation_market=corporation_market)
 
 		context = {
@@ -245,13 +247,13 @@ class Corporation(models.Model):
 		exec code in {}, context
 
 	def on_first_effect(self, ladder):
-		self.apply_effect(self.base_corporation.on_first, AssetDelta.EFFECT_FIRST, ladder)
+		self.apply_effect(self.base_corporation.on_first, Game.FIRST_EFFECT, ladder)
 
 	def on_last_effect(self, ladder):
-		self.apply_effect(self.base_corporation.on_last, AssetDelta.EFFECT_LAST, ladder)
+		self.apply_effect(self.base_corporation.on_last, Game.LAST_EFFECT, ladder)
 
 	def on_crash_effect(self, ladder):
-		self.apply_effect(self.base_corporation.on_crash, AssetDelta.EFFECT_CRASH, ladder)
+		self.apply_effect(self.base_corporation.on_crash, Game.CRASH_EFFECT, ladder)
 
 	def update_modifier(self, delta=0):
 		"""
@@ -279,65 +281,16 @@ class Corporation(models.Model):
 		self.assets = self.market_assets + self.assets_modifier
 		self.save()
 
-	def update_assets(self, delta, category, corporation_market):
+	def update_assets(self, delta, corporation_market):
 		"""
 		Updates market assets values, and saves the model
 		Does not actually change "assets", but changes on market_assets will be reflected on assets via increase_market_assets
 		"""
-		turn = self.game.current_turn
 		corporation_market.value += delta
 		corporation_market.save()
 
 		# Mirror changes on market assets
 		self.increase_market_assets(delta)
 
-		# And register assetdelta for logging purposes
-		self.assetdelta_set.create(category=category, delta=delta, turn=turn)
-
 	def __unicode__(self):
 		return u"%s (%s)" % (self.base_corporation.name, self.assets)
-
-
-class AssetDelta(models.Model):
-	"""
-	Store delta for assets
-	"""
-	EFFECT_FIRST = 'effect-first'
-	EFFECT_LAST = 'effect-last'
-	EFFECT_CRASH = 'effect-crash'
-	RUN_SABOTAGE = 'sabotage'
-	RUN_EXTRACTION = 'extraction'
-	RUN_DATASTEAL = 'datasteal'
-	DINC = 'detroit-inc'
-	BUBBLE = 'market*bubble'
-	INVISIBLE_HAND = 'invisible-hand'
-	VOTES = 'votes'
-
-	CATEGORY_CHOICES = (
-		(EFFECT_FIRST, 'Eff. premier'),
-		(EFFECT_LAST, 'Eff. dernier'),
-		(EFFECT_CRASH, 'Eff. crash'),
-		(DINC, 'Detroit, Inc.'),
-		(RUN_SABOTAGE, 'Sabotage'),
-		(RUN_EXTRACTION, 'Extraction'),
-		(RUN_DATASTEAL, 'Datasteal'),
-		(BUBBLE, 'Domination/Perte sèche'),
-		(INVISIBLE_HAND, 'Main Invisible'),
-		(VOTES, 'Votes'),
-	)
-
-	"""
-	Data to be publicly displayed at any time.
-	"""
-	PUBLIC_DELTA = (
-		EFFECT_FIRST,
-		EFFECT_LAST,
-		EFFECT_CRASH,
-		RUN_SABOTAGE,
-		DINC
-	)
-
-	category = models.CharField(max_length=15, choices=CATEGORY_CHOICES)
-	corporation = models.ForeignKey(Corporation)
-	delta = models.SmallIntegerField()
-	turn = models.SmallIntegerField(default=0)

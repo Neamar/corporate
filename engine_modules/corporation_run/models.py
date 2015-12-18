@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from engine_modules.run.models import RunOrder
-from engine_modules.corporation.models import Corporation, AssetDelta
+from engine_modules.corporation.models import Corporation
 from website.widgets import PlainTextField
 from engine_modules.market.models import CorporationMarket
 from engine.models import Game
@@ -72,7 +72,7 @@ class DataStealOrder(CorporationRunOrderWithStealer):
 	title = "Lancer une run de Datasteal"
 
 	def resolve_successful(self):
-		self.stealer_corporation.update_assets(+1, corporation_market=self.stealer_corporation_market, category=AssetDelta.RUN_DATASTEAL)
+		self.stealer_corporation.update_assets(+1, corporation_market=self.stealer_corporation_market)
 
 		# create a game_event on the stealer
 		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_UP, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, delta=1, corporation=self.stealer_corporation, corporation_market=self.stealer_corporation_market, players=[self.player])
@@ -86,7 +86,7 @@ class DataStealOrder(CorporationRunOrderWithStealer):
 		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_FAIL_DOWN, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Envoyer une équipe voler des données de %s (%s) pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Envoyer une équipe voler des données de %s (%s) pour le compte de %s" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name)
 
 
 class ExtractionOrder(CorporationRunOrderWithStealer):
@@ -97,8 +97,8 @@ class ExtractionOrder(CorporationRunOrderWithStealer):
 	title = "Lancer une run d'Extraction"
 
 	def resolve_successful(self):
-		self.target_corporation.update_assets(-1, corporation_market=self.target_corporation_market, category=AssetDelta.RUN_EXTRACTION)
-		self.stealer_corporation.update_assets(1, corporation_market=self.stealer_corporation_market, category=AssetDelta.RUN_EXTRACTION)
+		self.target_corporation.update_assets(-1, corporation_market=self.target_corporation_market)
+		self.stealer_corporation.update_assets(1, corporation_market=self.stealer_corporation_market)
 
 		# create a game_event on the stealer
 		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_UP, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, delta=1, corporation=self.stealer_corporation, corporation_market=self.stealer_corporation_market, players=[self.player])
@@ -112,7 +112,7 @@ class ExtractionOrder(CorporationRunOrderWithStealer):
 		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_FAIL_DOWN, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Réaliser une extraction de %s (%s) vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Réaliser une extraction de %s (%s) vers %s" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name)
 
 
 class SabotageOrder(CorporationRunOrder):
@@ -123,7 +123,7 @@ class SabotageOrder(CorporationRunOrder):
 	title = "Lancer une run de Sabotage"
 
 	def resolve_successful(self):
-		self.target_corporation.update_assets(-2, corporation_market=self.target_corporation_market, category=AssetDelta.RUN_SABOTAGE)
+		self.target_corporation.update_assets(-2, corporation_market=self.target_corporation_market)
 
 		# create a game event on the target
 		self.player.game.add_event(event_type=Game.OPE_SABOTAGE, delta=-2, data={"player": self.player.name, "market": self.target_corporation_market.market.name, "corporation": self.target_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
@@ -133,7 +133,7 @@ class SabotageOrder(CorporationRunOrder):
 		self.player.game.add_event(event_type=Game.OPE_SABOTAGE_FAIL, data={"player": self.player.name, "market": self.target_corporation_market.market.name, "corporation": self.target_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s) (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.get_raw_probability())
+		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name)
 
 	def get_form(self, data=None):
 		form = super(SabotageOrder, self).get_form(data)
@@ -149,7 +149,7 @@ class ProtectionOrder(RunOrder):
 	"""
 	ORDER = 850
 	title = "Lancer une run de Protection"
-	MAX_PERCENTS = 50
+	MAX_PERCENTS = 40
 
 	protected_corporation_market = models.ForeignKey(CorporationMarket, related_name="protectors")
 
@@ -168,7 +168,7 @@ class ProtectionOrder(RunOrder):
 		self.player.game.add_event(event_type=Game.OPE_PROTECTION, data={"player": self.player.name, "market": self.protected_corporation_market.market.name, "corporation": self.protected_corporation.base_corporation.name}, corporation=self.protected_corporation, corporation_market=self.protected_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Envoyer une équipe protéger %s (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_success_probability())
+		return u"Envoyer une équipe protéger %s" % (self.protected_corporation.base_corporation.name)
 
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)

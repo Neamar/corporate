@@ -8,6 +8,7 @@ datasteal: 10
 sabotage: 10
 extraction: 30
 detection: 30
+phoenix: 0
 on_first:
     update('renraku', -1)
     update('sony', 1)

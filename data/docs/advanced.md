@@ -38,12 +38,14 @@ Des opérations de presse et des réunions avec les citoyens permettent à certa
 
 ## L'Effet premier et l'Effet dernier
 
-Une fois que tous les ordres ont été résolus, un nouveau classement est établi. La première corpo applique son **effet premier** et la dernière corpo applique son **effet dernier** simultanément.
+Une fois que tous les ordres et que la main du marché aient été résolus, un nouveau classement est établi. La première corpo applique son **effet premier** et la dernière corpo applique son **effet dernier** simultanément.
 
 Ces effets font perdre ou gagner des actifs à d'autres corporations.
 Voir la page des corporations pour une description individuelle de chaque corpo et leurs effets premiers / derniers.
 
-Certains effets modifient les actifs de certaines corporations sans préciser le marché. Dans ce cas il s'agit du marché ayant le plus d'actifs (tiré au hasard parmi les ex-æquo s'il y en a).
+Certains effets modifient les actifs de certaines corporations sans préciser le marché. Dans ce cas il s'agit :
+* du marché ayant le plus d'actifs s'il s'agit d'un malus (tiré au hasard parmi les ex-æquo s'il y en a).
+* du marché ayant le moins d'actif s'il s'agit d'un bonus (tiré au hasard parmi les ex-æquo s'il y en a).
 
 ## L'Effet Crash
 Une fois que les effets premiers/derniers sont appliqués, si des corporations sont à 0 actifs ou moins, elles crashent. Un crash n'arrivera pas à toutes les parties mais a beaucoup de conséquences :
@@ -76,3 +78,6 @@ Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la 
     Il mise 100 000 ₵ sur la position d'Iris, dont il pense qu'elle sera deuxième à la fin du trimestre.
 
     Iris finit en seconde position. Il garde ses 100 000 ₵ et en touche 400 000 ₵ de plus. Si Iris avait fini troisième, il aurait perdu ses 100 000 ₵.
+
+## Les Transferts
+Les transferts permettent de donner de l'argent à un autre joueur. Ce transfert d'argent est immédiat et permet de sceller des alliances ou de céder à un chantage.

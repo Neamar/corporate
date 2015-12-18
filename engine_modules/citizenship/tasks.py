@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from engine.tasks import InitTask, OrderResolutionTask
+from engine.tasks import ResolutionTask, OrderResolutionTask
 from engine_modules.citizenship.models import Citizenship, CitizenshipOrder
 
 
-class CreateCitizenshipTask(InitTask):
+class CreateCitizenshipTask(ResolutionTask):
 	"""
 	Create the Citizenship object for the turn
 	"""

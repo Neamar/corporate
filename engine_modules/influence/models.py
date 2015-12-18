@@ -20,11 +20,11 @@ class BuyInfluenceOrder(Order):
 	Order to increase Player Influence
 	"""
 	ORDER = 300
-	BASE_COST = 400
+	BASE_COST = 750
 	title = "Acheter un point d'Influence Corporatiste"
 
 	def get_cost(self):
-		return BuyInfluenceOrder.BASE_COST * (self.player.influence.level + 1)
+		return BuyInfluenceOrder.BASE_COST * self.player.influence.level
 
 	def resolve(self):
 		# Pay.

@@ -21,7 +21,7 @@ class Command(BaseCommand):
 	def handle(self, *args, **options):
 		# Create admin user
 		self.stdout.write("Creating admin...")
-		self.create_user(username="admin", is_staff=True, is_superuser=True)
+		admin = self.create_user(username="admin", is_staff=True, is_superuser=True)
 
 		# Create other users
 		self.stdout.write("Creating users...")
@@ -37,5 +37,6 @@ class Command(BaseCommand):
 		self.p2 = self.create_player(game=self.g, user=user2, name="player2", background="Player 2 background")
 		self.p3 = self.create_player(game=self.g, user=user3, name="player3", background="Player 3 background")
 		self.p4 = self.create_player(game=self.g, user=user4, name="player4", background="Player 4 background")
+		self.p5 = self.create_player(game=self.g, user=admin, name="player5-admin", background="Player 5 background")
 
 		self.stdout.write("Created game #%s, connect with username `player1` and password `player1`" % self.g.pk)

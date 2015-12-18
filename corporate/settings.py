@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import sys
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -38,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'compressor',
     'website',
     'docs',
     'engine',
@@ -99,11 +101,26 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Security
+ALLOWED_HOSTS = ["corporategame.me"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+COMPRESS_OUTPUT_DIR = "cache"
+COMPRESS_ENABLED = True
+
+
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
 )
@@ -137,6 +154,9 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
     )
+
+    # Compress less file on deployment
+    COMPRESS_OFFLINE = True
 
 
 if "OPBEAT_ORGANIZATION_ID" in os.environ:

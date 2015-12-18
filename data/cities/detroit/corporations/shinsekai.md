@@ -1,14 +1,11 @@
 name: Shinsekai
 markets:
     robotique: 3
-    militaire: 3
-    pharmaceutique: 3
+    militaire: 2
+    pharmaceutique: 1
     agroalimentaire: 3
-    télécom: 3
-datasteal: 10
-sabotage: 20
-extraction: 10
-detection: 60
+    télécom: 2
+phoenix: 0
 on_first:
     update('impulse', 1)
     update('pure', -1)

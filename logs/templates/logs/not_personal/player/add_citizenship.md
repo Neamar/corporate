@@ -1,1 +1,1 @@
-Est maintenant citoyen de {{ corporation }}
+Est maintenant citoyen de **{{ corporation }}**

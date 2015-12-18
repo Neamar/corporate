@@ -1,10 +1,10 @@
-from engine_modules.corporation_run.tests.test_orders import RunOrdersTest
+from engine.testcases import EngineTestCase
 from engine.models import Player
 from engine_modules.player_run.models import InformationOrder
 from logs.models import Log
 
 
-class InformationRunOrderTest(RunOrdersTest):
+class InformationRunOrderTest(EngineTestCase):
 	def setUp(self):
 		super(InformationRunOrderTest, self).setUp()
 
@@ -69,5 +69,3 @@ class InformationRunOrderTest(RunOrdersTest):
 		self.io.corporation_targets.add(self.c)
 
 		self.g.resolve_current_turn()
-
-		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 1)

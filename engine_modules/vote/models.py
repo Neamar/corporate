@@ -2,7 +2,6 @@
 from django.db import models
 
 from engine.models import Order, Game
-from engine_modules.corporation.models import AssetDelta
 from engine_modules.market.models import CorporationMarket
 
 
@@ -18,12 +17,12 @@ class VoteOrder(Order):
 
 	def resolve(self):
 		# apply the effect voice up
-		self.corporation_market_up.corporation.update_assets(1, corporation_market=self.corporation_market_up, category=AssetDelta.VOTES)
+		self.corporation_market_up.corporation.update_assets(1, corporation_market=self.corporation_market_up)
 		# Create the game event
 		self.corporation_market_up.corporation.game.add_event(event_type=Game.VOICE_UP, data={"player": self.player.name, "corporation": self.corporation_market_up.corporation.base_corporation.name, "market": self.corporation_market_up.market.name}, delta=1, corporation=self.corporation_market_up.corporation, corporation_market=self.corporation_market_up, players=[self.player])
 
 		# apply the effect voice down
-		self.corporation_market_down.corporation.update_assets(-1, corporation_market=self.corporation_market_down, category=AssetDelta.VOTES)
+		self.corporation_market_down.corporation.update_assets(-1, corporation_market=self.corporation_market_down)
 		# Create the game event
 		self.corporation_market_up.corporation.game.add_event(event_type=Game.VOICE_DOWN, data={"player": self.player.name, "corporation": self.corporation_market_down.corporation.base_corporation.name, "market": self.corporation_market_down.market.name}, delta=-1, corporation=self.corporation_market_down.corporation, corporation_market=self.corporation_market_down, players=[self.player])
 
@@ -33,7 +32,7 @@ class VoteOrder(Order):
 	def get_form(self, data=None):
 		form = super(VoteOrder, self).get_form(data)
 		form.fields['corporation_market_up'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn)
-		form.fields['corporation_market_down'].queryset = form.fields['corporation_market_up'].queryset
+		form.fields['corporation_market_down'].queryset = form.fields['corporation_market_up'].queryset.filter(value__gte=0)
 
 		return form
 

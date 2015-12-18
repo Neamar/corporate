@@ -52,9 +52,9 @@ class ViewsTest(EngineTestCase):
 			reverse('website.views.data.wallstreet', args=[self.g.id]),
 			reverse('website.views.data.wallstreet', args=[self.g.id, self.g.current_turn - 1]),
 			reverse('website.views.data.corporation', args=[self.g.id]),
-			reverse('website.views.data.players', args=[self.g.id]),
+			# reverse('website.views.data.player', args=[self.g.id]),
 			reverse('website.views.data.shares', args=[self.g.id]),
-			reverse('website.views.data.shares', args=[self.g.id, self.g.current_turn - 1]),
+			reverse('website.views.data.player', args=[self.g.id, self.p.id]),
 		]
 
 		for page in pages:
@@ -67,14 +67,11 @@ class ViewsTest(EngineTestCase):
 		"""
 		pages = [
 			reverse('website.views.orders.orders', args=[self.g.id]),
-			reverse('website.views.orders.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
+			# reverse('website.views.orders.add_order', args=[self.g.id, 'BuyInfluenceOrder']),
 			reverse('website.views.data.wallstreet', args=[self.g.id]),
-			reverse('website.views.data.wallstreet', args=[self.g.id, self.g.current_turn - 1]),
 			reverse('website.views.data.corporation', args=[self.g.id, self.c.base_corporation_slug]),
-			reverse('website.views.data.players', args=[self.g.id]),
-			reverse('website.views.data.player', args=[self.g.id, self.p.id]),
 			reverse('website.views.data.shares', args=[self.g.id]),
-			reverse('website.views.data.shares', args=[self.g.id, self.g.current_turn - 1]),
+			# reverse('website.views.data.player', args=[self.g.id, self.p.id]),
 		]
 
 		for page in pages:

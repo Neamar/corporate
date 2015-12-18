@@ -1,27 +1,34 @@
 from __future__ import absolute_import
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render as django_render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from engine.models import Order
 from website.utils import get_player, get_orders_availability, get_order_by_name
+from website.decorators import render, inject_game_and_player_into_response, find_player_from_game_id
 
 
 @login_required
-def orders(request, game_id):
-	player = get_player(request, game_id)
-
+@render('game/orders.html')
+@find_player_from_game_id
+@inject_game_and_player_into_response
+def orders(request, game, player):
 	existing_orders = [order.to_child() for order in player.order_set.filter(turn=player.game.current_turn)]
+	for existing_order in existing_orders:
+		existing_order.name = existing_order.__class__.__name__
+
 	existing_orders_cost = sum(o.cost for o in existing_orders)
 
 	available_orders = get_orders_availability(player)
 
-	return render(request, 'game/orders.html', {
-		"game": player.game,
+	return {
 		"available_orders": available_orders,
 		"existing_orders": existing_orders,
 		"existing_orders_cost": existing_orders_cost,
 		"remaining_money": player.money - existing_orders_cost,
-	})
+		"pods": ['d_inc', 'current_player', 'players', ],
+		"turn": game.current_turn,
+		"request": request,
+	}
 
 
 @login_required
@@ -48,10 +55,17 @@ def add_order(request, game_id, order_type):
 		"game": player.game,
 		"title": instance.title,
 		"name": SubOrder.__name__,
-		"form": form
+		"form": form,
 	}
 
-	return render(request, 'game/add_order.html', {"game": player.game, "order": order})
+	return django_render(request, 'game/add_order.html', {
+		"game": player.game,
+		"player": player,
+		"order": order,
+		"pods": ['d_inc', 'current_player', 'players', ],
+		"request": request,
+		"turn": player.game.current_turn,
+	})
 
 
 @login_required

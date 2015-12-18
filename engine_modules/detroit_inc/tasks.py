@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from collections import Counter
 from engine.tasks import ResolutionTask
-from engine_modules.corporation.models import AssetDelta
 from engine_modules.detroit_inc.models import DIncVoteSession, DIncVoteOrder
 from engine.models import Game
 
@@ -26,8 +25,6 @@ class DIncVoteTask(ResolutionTask):
 		)
 		s.save()
 
-		self.send_newsfeed(orders, s)
-
 		if official_line is not None:
 			# We create a game_event for each winner
 			winners = [order.player for order in orders if order.coalition == official_line]
@@ -42,9 +39,10 @@ class DIncVoteTask(ResolutionTask):
 
 			# We create a game_event for each loser
 			losers = [order.player for order in orders if order.coalition == DIncVoteOrder.DINC_OPPOSITIONS[official_line]]
-			if DIncVoteOrder.DINC_OPPOSITIONS[official_line] == DIncVoteOrder.RSEC:
+			event_type = None
+			if official_line == DIncVoteOrder.RSEC:
 				event_type = Game.EFFECT_SECURITY_DOWN
-			elif DIncVoteOrder.DINC_OPPOSITIONS[official_line] == DIncVoteOrder.CONS:
+			elif official_line == DIncVoteOrder.CONS:
 				event_type = Game.EFFECT_CONSOLIDATION_DOWN
 			if event_type is not None:
 				game.add_event(event_type=event_type, data=None, players=losers)
@@ -87,54 +85,6 @@ class DIncVoteTask(ResolutionTask):
 			if event_type is not None:
 				order.player.game.add_event(event_type=event_type, data=None, players=[order.player])
 
-	def send_newsfeed(self, orders, dinc_vote_session):
-		"""
-		Build newsfeed message. Contains official line, and breakdown for each coalition.
-		"""
-
-		# TODO : replace by game events
-		# if dinc_vote_session.coalition is not None:
-		# dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"La coalition *%s* a été votée par Detroit Inc." % dinc_vote_session.get_coalition_display())
-
-		votes_details = {}
-
-		# Build global dict
-		coalition_breakdown = []
-		for order in orders:
-			if(order.coalition not in votes_details):
-				votes_details[order.coalition] = {
-					"display": order.get_coalition_display(),
-					"members": [],
-					"count": 0
-				}
-			votes_details[order.coalition]["members"].append({
-				'player':
-				order.player,
-				'corporations': order.get_friendly_corporations(),
-			})
-			votes_details[order.coalition]["count"] += order.get_weight()
-
-		for vote in votes_details.values():
-			coalition = vote["display"]
-			count = vote["count"]
-
-			siders = []
-			for member in vote["members"]:
-				member_string = unicode(member['player'])
-				if len(member['corporations']) > 0:
-					member_string += " (%s)" % (", ".join(unicode(c.base_corporation.name) for c in member['corporations']))
-				siders.append(member_string)
-
-			siders = ", ".join(siders)
-
-			content = u"La coalition *%s* a reçu %s voix : %s" % (coalition, count, siders)
-
-			coalition_breakdown.append(content)
-
-		# TODO : replace by game events
-		# if len(coalition_breakdown) > 0:
-		# dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"Répartition des coalitions :\n\n  * %s" % ("\n  * ".join(coalition_breakdown)))
-
 
 class DIncLineCPUBTask(ResolutionTask):
 	"""
@@ -156,7 +106,7 @@ class DIncLineCPUBTask(ResolutionTask):
 			for c in o.get_friendly_corporations():
 				# increase a market by 1 asset at random
 				corporation_market = c.get_random_corporation_market()
-				c.update_assets(1, category=AssetDelta.DINC, corporation_market=corporation_market)
+				c.update_assets(1, corporation_market=corporation_market)
 				game.add_event(event_type=Game.EFFECT_CONTRAT_UP, data={"market": corporation_market.market.name}, delta=1, corporation=c, corporation_market=corporation_market)
 
 		loss_votes = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=DIncVoteOrder.RSEC)
@@ -164,7 +114,7 @@ class DIncLineCPUBTask(ResolutionTask):
 			for c in o.get_friendly_corporations():
 				# decrease a market by 1 asset at random
 				corporation_market = c.get_random_corporation_market()
-				c.update_assets(-1, category=AssetDelta.DINC, corporation_market=c.get_random_corporation_market())
+				c.update_assets(-1, corporation_market=c.get_random_corporation_market())
 				game.add_event(event_type=Game.EFFECT_CONTRAT_DOWN, data={"market": corporation_market.market.name}, delta=-1, corporation=c, corporation_market=corporation_market)
 
 tasks = (DIncVoteTask, DIncLineCPUBTask)

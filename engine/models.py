@@ -91,12 +91,26 @@ class Game(models.Model):
 			t = Task()
 			t.run(self)
 
-		# Build resolution messages for each player
-		for player in self.player_set.all().select_related('game'):
-			player.build_resolution_message()
-
 		# Increment current turn and terminate.
 		self.current_turn += 1
+		self.save()
+
+	@transaction.atomic
+	def initialise_game(self):
+		"""
+		Resolve all the tasks that must be solved at initialisation
+		We must go back on turn 0 to update bubbles
+		We set back current turn to 1 afterwards to start the game as the turn 0 is finished
+		"""
+		self.current_turn = 0
+		self.save()
+		from engine.modules import initialisation_tasks_list
+		for Task in initialisation_tasks_list:
+			# print "* [%s] **%s** : %s" % (Task.RESOLUTION_ORDER, Task.__name__, Task.__doc__.strip())
+			t = Task()
+			t.run(self)
+
+		self.current_turn = 1
 		self.save()
 
 	@property
@@ -127,6 +141,20 @@ class Player(models.Model):
 		"""
 		# Influence for the turn is on preceding turn's Influence object
 		influence = self.influence_set.get(turn=self.game.current_turn - 1)
+		return influence
+
+	def get_influence(self, turn=None):
+		"""
+		Return player's influence at specified turn
+		Yes, this is a little redundant, but I need to have it for any arbitrary turn, and
+		I thought it would be good to discuss it before breaking the "influence" property
+		"""
+
+		if turn is None:
+			turn = self.game.current_turn
+
+		# Influence for the turn is on preceding turn's Influence object
+		influence = self.influence_set.get(turn=turn - 1)
 		return influence
 
 	@property
@@ -253,6 +281,11 @@ class Order(models.Model):
 
 		raise LookupError("No orders subclass match this base: %s" % self.type)
 
+	def custom_description(self):
+		"""
+		A custom description, that may be displayed in some places (for instance, orders list page)
+		"""
+		return ""
 
 # Import data for all engine_modules
 from engine.modules import *

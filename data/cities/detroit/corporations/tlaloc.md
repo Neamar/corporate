@@ -1,13 +1,10 @@
 name: Tlaloc
 markets:
-    agroalimentaire: 3
-    énergie: 2
-    transport: 2
-    pharmaceutique: 2
-datasteal: 10
-sabotage: 20
-extraction: 20
-detection: 30
+    agroalimentaire: 1
+    énergie: 3
+    transport: 3
+    pharmaceutique: 1
+phoenix: 0
 on_first:
     update('tlaloc', 1)
     update('bastion', -1)

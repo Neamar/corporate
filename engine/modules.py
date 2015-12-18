@@ -14,6 +14,11 @@ List of available orders
 """
 orders_list = []
 
+"""
+List of tasks to call for game initialisation
+"""
+initialisation_tasks_list = []
+
 
 def try_import(package, name, default=None):
 	"""
@@ -40,6 +45,7 @@ for app in settings.INSTALLED_APPS:
 
 	orders_list += try_import("%s.models" % app, 'orders', [])
 	tasks_list += try_import("%s.tasks" % app, 'tasks', [])
+	initialisation_tasks_list += try_import("%s.tasks" % app, 'initialisation_tasks', [])
 
 	# Autoload signals as a convenience
 	# (will try to import 'none' function, fail but register signals.)
@@ -48,3 +54,4 @@ for app in settings.INSTALLED_APPS:
 
 # Sort tasks in place, by resolution_order
 tasks_list.sort(key=lambda t: t.RESOLUTION_ORDER)
+initialisation_tasks_list.sort(key=lambda t: t.RESOLUTION_ORDER)

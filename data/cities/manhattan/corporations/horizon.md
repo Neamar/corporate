@@ -8,6 +8,7 @@ datasteal: 10
 sabotage: 10
 extraction: 10
 detection: 90
+phoenix: 0
 on_first:
     update(ladder[-1], -2)
 on_last:
