@@ -21,7 +21,7 @@ class OffensiveRunTask(OrderResolutionTask):
 				next_run_failed = False
 				for order in sorted_orders:
 					if next_run_failed:
-						order.resolve_to_fail
+						order.resolve_to_fail()
 					elif order.resolve():
 						next_run_failed = True
 

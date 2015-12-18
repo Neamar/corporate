@@ -91,10 +91,6 @@ class Game(models.Model):
 			t = Task()
 			t.run(self)
 
-		# Build resolution messages for each player
-		for player in self.player_set.all().select_related('game'):
-			player.build_resolution_message()
-
 		# Increment current turn and terminate.
 		self.current_turn += 1
 		self.save()
@@ -110,6 +106,7 @@ class Game(models.Model):
 		self.save()
 		from engine.modules import initialisation_tasks_list
 		for Task in initialisation_tasks_list:
+			# print "* [%s] **%s** : %s" % (Task.RESOLUTION_ORDER, Task.__name__, Task.__doc__.strip())
 			t = Task()
 			t.run(self)
 
