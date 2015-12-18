@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django import forms
 
 from engine_modules.run.models import RunOrder
 from engine.models import Player, Game
@@ -25,7 +24,7 @@ class InformationOrder(RunOrder):
 		form = super(InformationOrder, self).get_form(data)
 
 		form.fields['player_targets'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
-		form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.pk)
+		form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation if self.player.citizenship is not None else -1)
 
 		return form
 
