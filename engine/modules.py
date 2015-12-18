@@ -54,3 +54,4 @@ for app in settings.INSTALLED_APPS:
 
 # Sort tasks in place, by resolution_order
 tasks_list.sort(key=lambda t: t.RESOLUTION_ORDER)
+initialisation_tasks_list.sort(key=lambda t: t.RESOLUTION_ORDER)
