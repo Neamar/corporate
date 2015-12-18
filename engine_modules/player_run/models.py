@@ -34,6 +34,12 @@ class InformationOrder(RunOrder):
 	def description(self):
 		return "Lancer une run d'information sur %s (%s%%)" % (self.target, self.get_raw_probability())
 
+	def is_successful(self):
+		"""
+		Information run always succeed
+		"""
+		return True
+
 	def resolve_successful(self):
 		players = self.player_targets.all()
 		corpos = self.corporation_targets.all()
