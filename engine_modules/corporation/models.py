@@ -152,6 +152,16 @@ class Corporation(models.Model):
 
 		return random.choice([cm for cm in cms if cm.value == max_value])
 
+	def get_random_corporation_market_among_worths(self):
+		"""
+		Return the CorporationMarket with the lower asset among corporationMarket of this corporation.
+		If there are some ex-aequo, pick at random among them
+		"""
+		cms = list(self.corporation_markets.order_by('value'))
+		min_value = cms[0].value
+
+		return random.choice([cm for cm in cms if cm.value == min_value])
+
 	def get_random_market(self):
 		"""
 		Returns one object at random among the Market objects associated with the Corporation
@@ -214,8 +224,12 @@ class Corporation(models.Model):
 					return
 
 			if market is None:
-				# By default, the higher market is impacted
-				corporation_market = corporation.get_random_corporation_market_among_bests()
+				# By default, the higher market is impacted if the delta is positive
+				if delta > 0:
+					corporation_market = corporation.get_random_corporation_market_among_bests()
+				# or the worst market is impacted if the delta is negative
+				else:
+					corporation_market = corporation.get_random_corporation_market_among_worths()
 			else:
 				corporation_market = corporation.corporationmarket_set.get(market__name=market, turn=self.game.current_turn)
 
