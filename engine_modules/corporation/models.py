@@ -225,7 +225,7 @@ class Corporation(models.Model):
 
 			if market is None:
 				# By default, the higher market is impacted if the delta is positive
-				if delta > 0:
+				if delta < 0:
 					corporation_market = corporation.get_random_corporation_market_among_bests()
 				# or the worst market is impacted if the delta is negative
 				else:
