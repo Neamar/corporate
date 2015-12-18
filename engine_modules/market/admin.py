@@ -9,10 +9,7 @@ admin.site.register(Market, MarketAdmin)
 
 
 class CorporationMarketAdmin(admin.ModelAdmin):
-	list_display = ('game', 'corporation', 'market', 'turn', 'value')
-	list_filter = ('game', 'corporation', 'market', 'turn', )
-
-	def game(self, instance):
-		return self.corporation.game
+	list_display = ('corporation__game', 'corporation', 'market', 'turn', 'value')
+	list_filter = ('corporation__game', 'corporation', 'market', 'turn', )
 
 admin.site.register(CorporationMarket, CorporationMarketAdmin)

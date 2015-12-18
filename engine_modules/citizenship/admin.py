@@ -5,7 +5,7 @@ from engine_modules.citizenship.models import Citizenship, CitizenshipOrder
 
 class CitizenshipAdmin(admin.ModelAdmin):
 	list_display = ('player', 'corporation', 'turn', 'game')
-	list_filter = ('game',)
+	list_filter = ('corporation__game',)
 
 	def corporation(self, instance):
 		return self.corporation.base_corporation.name
