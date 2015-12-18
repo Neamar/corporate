@@ -7,6 +7,6 @@ class CitizenshipAdmin(admin.ModelAdmin):
 	list_filter = ('corporation__game',)
 
 	def game(self, instance):
-		return instance.corporation.game
+		return instance.player.game
 admin.site.register(Citizenship, CitizenshipAdmin)
 admin.site.register(CitizenshipOrder)
