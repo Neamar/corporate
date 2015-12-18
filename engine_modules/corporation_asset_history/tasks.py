@@ -22,3 +22,5 @@ class SaveCorporationAssetTask(ResolutionTask):
 		AssetHistory.objects.bulk_create(ahs)
 
 tasks = (SaveCorporationAssetTask, )
+
+initialisation_tasks = (SaveCorporationAssetTask, )

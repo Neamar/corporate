@@ -121,8 +121,8 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 				if (pnb.corporation == nb.corporation) and (pnb.market == nb.market):
 					# This is not a new bubble
 					break
-			else:
-				game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, delta=-1, corporation=nb.corporation)
+				else:
+					game.add_event(event_type=game.GAIN_NEGATIVE_BUBBLE, data={"market": nb.market.name, "corporation": nb.corporation.base_corporation.name}, delta=-1, corporation=nb.corporation)
 
 		for pnb in previous_negative_bubbles:
 			for nb in negative_bubbles:
@@ -130,16 +130,16 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 					# This is not a new bubble
 					negative_bubbles.remove(nb)
 					break
-			else:
-				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, delta=1, corporation=pnb.corporation)
+				else:
+					game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, delta=1, corporation=pnb.corporation)
 
 		for pb in positive_bubbles:
 			for ppb in previous_positive_bubbles:
 				if (ppb.corporation == pb.corporation) and (ppb.market == pb.market):
 					# This is not a new bubble
 					break
-			else:
-				game.add_event(event_type=game.GAIN_DOMINATION_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, delta=1, corporation=pb.corporation)
+				else:
+					game.add_event(event_type=game.GAIN_DOMINATION_BUBBLE, data={"market": pb.market.name, "corporation": pb.corporation.base_corporation.name}, delta=1, corporation=pb.corporation)
 
 		for ppb in previous_positive_bubbles:
 			for pb in positive_bubbles:
@@ -147,8 +147,8 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 					# This is not a new bubble
 					positive_bubbles.remove(pb)
 					break
-			else:
-				game.add_event(event_type=game.LOSE_DOMINATION_BUBBLE, data={"market": ppb.market.name, "corporation": ppb.corporation.base_corporation.name}, delta=-1, corporation=ppb.corporation)
+				else:
+					game.add_event(event_type=game.LOSE_DOMINATION_BUBBLE, data={"market": ppb.market.name, "corporation": ppb.corporation.base_corporation.name}, delta=-1, corporation=ppb.corporation)
 
 			return
 
@@ -189,4 +189,4 @@ class ReplicateCorporationMarketsTask(ResolutionTask):
 
 tasks = (UpdateBubblesTask, UpdateBubblesAfterEffectsTask, UpdateBubblesAfterCrashTask, ReplicateCorporationMarketsTask, )
 
-initialisation_tasks = (CreateBubblesAfterGameCreationTask, )
+initialisation_tasks = (CreateBubblesAfterGameCreationTask, ReplicateCorporationMarketsTask, )
