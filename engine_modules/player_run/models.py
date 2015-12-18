@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django import forms
 
 from engine_modules.run.models import RunOrder
 from engine.models import Player, Game
@@ -14,14 +15,11 @@ class InformationOrder(RunOrder):
 	ORDER = 800
 	title = "Lancer une run d'Information"
 
-	PROTECTION_TYPE = "datasteal"
+	PLAYER_COST = 150
+	CORPORATION_COST = 50
 
 	player_targets = models.ManyToManyField(Player)
 	corporation_targets = models.ManyToManyField(Corporation)
-
-	# TODO def resolve_successful(self):
-
-	# TODO def resolve_failure(self):
 
 	def get_form(self, data=None):
 		form = super(InformationOrder, self).get_form(data)
@@ -74,5 +72,8 @@ class InformationOrder(RunOrder):
 						personal=False
 					)
 					cp.save()
+
+	def get_cost(self):
+		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST if self.pk is not None else self.CORPORATION_COST
 
 orders = (InformationOrder, )
