@@ -44,19 +44,13 @@ Récompense : 9 Points de Victoire -3 Points de Victoire par tour où cette cond
 Limites : minimum 0 Points de Victoire
 
 ####Paranoïaque
-Condition : Avoir lancé une opération de sabotage sur chaque joueur avant la fin de la partie.
+Condition : Avoir lancé une opération d'information sur chaque joueur avant la fin de la partie.
 Récompense : 8 Points de Victoire si la condition est réalisée
 
 ####Oligarque
 Condition : La corporation dont tu es citoyen est première à la fin du tour.
 Récompense : 1 Points de Victoire +3 Points de Victoire par tour où cette condition est vraie
 Limites : maximum 10 Points de Victoire
-
-####Ambitieux : 1 point à chaque fois que sa corpo est dans le top 3 + 3pt.
-Condition : 
-Récompense : 9 Points de Victoire -3 Points de Victoire par tour où cette condition n'est pas vraie
-Limites : minimum 0 Points de Victoire
-Cas particulier : 
 
 ####Dévoué
 Condition : Miser la moitié de ce que l'on peut miser par tour sur la position de la corpo dont on est citoyen.
@@ -80,7 +74,7 @@ Récompense : 9 Points de Victoire -3 Points de Victoire par tour où cette cond
 Limites : minimum 0 Points de Victoire
 
 ####Corrupteur
-Condition : Donner 100k par point d'Influence Corporatiste que vous avez à d'autres joueurs par transferts. Cet argent peut être réparti comme vous l'entendez entre ces joueurs.
+Condition : Donner 150k par point d'Influence Corporatiste que vous avez à d'autres joueurs par transferts. Cet argent peut être réparti comme vous l'entendez entre ces joueurs.
 Récompense : 9 Points de Victoire -3 Points de Victoire par tour où cette condition n'est pas vraie
 Limites : minimum 0 Points de Victoire
 
