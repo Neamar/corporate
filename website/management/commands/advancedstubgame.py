@@ -20,7 +20,13 @@ class Command(StubGame):
 		super(Command, self).handle(*args, **options)
 
 		# Lets players do a lot of stuff
-		self.g.player_set.all().update(money=25000)
+		self.p1.money = 25000
+		self.p1.save()
+		self.p2.money = 25000
+		self.p2.save()
+		self.p3.money = 25000
+		self.p3.save()
+
 		corporations = self.g.corporation_set.all()
 		c1 = corporations[1]
 		c1_market = c1.corporation_markets.first()
