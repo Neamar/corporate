@@ -24,7 +24,7 @@ class InformationOrder(RunOrder):
 		form = super(InformationOrder, self).get_form(data)
 
 		form.fields['player_targets'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
-		form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation if self.player.citizenship is not None else -1)
+		form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation if self.player.citizenship.corporation is not None else -1)
 
 		return form
 
@@ -41,7 +41,7 @@ class InformationOrder(RunOrder):
 		players = self.player_targets.all()
 		corpos = list(self.corporation_targets.all())
 
-		if self.player.citizenship is not None:
+		if self.player.citizenship.corporation is not None:
 			corpos.append(self.player.citizenship.corporation)
 
 		self.player.game.add_event(event_type=Game.OPE_INFORMATION, data={"players_list": [p.name for p in players], "corpos_list": [c.base_corporation.name for c in corpos]}, players=[self.player])
