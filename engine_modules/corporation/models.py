@@ -260,9 +260,11 @@ class Corporation(models.Model):
 		Updates assets_modifier value, in/decreasing it by given delta and saves the model
 		Must be used for all modifications on assets_modifier, because it enforces assets = market_assets + asset_modifier
 		"""
-		self.assets_modifier += delta
-		self.assets = self.market_assets + self.assets_modifier
-		self.save()
+		# The corporation in parameters is not always up to date. That's why we reload it
+		corporation = Corporation.objects.get(pk=self.pk)
+		corporation.assets_modifier += delta
+		corporation.assets = corporation.market_assets + corporation.assets_modifier
+		corporation.save()
 
 	def set_market_assets(self, value=0):
 		"""

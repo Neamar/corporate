@@ -14,6 +14,7 @@ class SaveCorporationAssetTask(ResolutionTask):
 		corporations = game.corporation_set.all()
 		ahs = []
 		for corporation in corporations:
+			print '%s - %s' % (corporation, corporation.assets)
 			ah = AssetHistory(
 				corporation=corporation,
 				assets=corporation.assets,

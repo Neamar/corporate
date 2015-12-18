@@ -33,7 +33,7 @@ def wallstreet(request, game, player, turn):
 		else:
 			assets = 0
 			for market in corporation_markets:
-				assets += market.value
+				assets += market.value + market.bubble_value
 		delta = 0
 		for event_delta in Log.objects.for_delta(corporation, turn):
 			delta += event_delta.delta

@@ -47,11 +47,13 @@ class CorporationMarket(models.Model):
 		"""
 		update the bubble_value field and keep the value field consistent
 		"""
+		# We have to reload the corporation_market to have the object un to date
+		corporation_market = CorporationMarket.objects.get(pk=self.pk)
 
-		previous_bubble_value = self.bubble_value
+		previous_bubble_value = corporation_market.bubble_value
 		# We save the bubble value on the corporation market bubble_value field with no impact on the value field
-		self.bubble_value = value
-		self.save()
+		corporation_market.bubble_value = value
+		corporation_market.save()
 
 		delta = value - previous_bubble_value
 
