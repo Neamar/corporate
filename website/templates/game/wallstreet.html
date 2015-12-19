@@ -18,14 +18,14 @@
 		<span class="current-assets">{{ entry.assets }}</span>
 	</h2>
 
-	{% if entry.delta != 0 %}
 	<div class="icon-content">
+		{% if entry.delta != 0 %}
 		<span class="assets-delta {% if entry.delta >= 0 %}positive{% else %}negative{% endif %}">
 			<i>{{ entry.delta }}</i>
 		</span>
+		{% endif %}
 		{% include "logs/corporation.html" with events=entry.events %}
 	</div>
-	{% endif %}
 
 	<ul class="corporation-markets">
 	{% for corporation_market in entry.corporation_market %}
