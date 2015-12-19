@@ -13,7 +13,7 @@ class Game(models.Model):
 	city = models.CharField(max_length=50)
 
 	current_turn = models.PositiveSmallIntegerField(default=1)
-	total_turn = models.PositiveSmallIntegerField(default=8)
+	total_turn = models.PositiveSmallIntegerField(default=7)
 
 	# Useful for testing, ensure results can be reproduced and understood easily.
 	disable_side_effects = models.BooleanField(default=False, help_text="Disable all side effects (invisible hand, first and last effects, ...)")
@@ -131,7 +131,7 @@ class Player(models.Model):
 	name = models.CharField(max_length=64)
 	money = models.PositiveIntegerField(default=2000)
 	background = models.CharField(max_length=50)
-	rp = models.TextField(default="", blank=True)
+	rp = models.TextField(default="Anonyme", blank=True)
 	secrets = models.TextField(default="", blank=True)
 
 	@property
