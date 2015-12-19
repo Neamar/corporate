@@ -128,7 +128,6 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 			for nb in negative_bubbles:
 				if (pnb.corporation == nb.corporation) and (pnb.market == nb.market):
 					# This is not a new bubble
-					negative_bubbles.remove(nb)
 					break
 			else:
 				game.add_event(event_type=game.LOSE_NEGATIVE_BUBBLE, data={"market": pnb.market.name, "corporation": pnb.corporation.base_corporation.name}, delta=1, corporation=pnb.corporation)
@@ -145,7 +144,6 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 			for pb in positive_bubbles:
 				if (ppb.corporation == pb.corporation) and (ppb.market == pb.market):
 					# This is not a new bubble
-					positive_bubbles.remove(pb)
 					break
 			else:
 				game.add_event(event_type=game.LOSE_DOMINATION_BUBBLE, data={"market": ppb.market.name, "corporation": ppb.corporation.base_corporation.name}, delta=-1, corporation=ppb.corporation)
