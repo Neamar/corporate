@@ -130,8 +130,8 @@ class Player(models.Model):
 
 	name = models.CharField(max_length=64)
 	money = models.PositiveIntegerField(default=2000)
-	background = models.CharField(max_length=50)
-	rp = models.TextField(default="Anonyme", blank=True)
+	background = models.CharField(default="Anonyme", max_length=50)
+	rp = models.TextField(default="", blank=True)
 	secrets = models.TextField(default="", blank=True)
 
 	@property

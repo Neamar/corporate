@@ -148,7 +148,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 			else:
 				game.add_event(event_type=game.LOSE_DOMINATION_BUBBLE, data={"market": ppb.market.name, "corporation": ppb.corporation.base_corporation.name}, delta=-1, corporation=ppb.corporation)
 
-			return
+		return
 
 
 class CreateBubblesAfterGameCreationTask(AbstractBubblesTask):
