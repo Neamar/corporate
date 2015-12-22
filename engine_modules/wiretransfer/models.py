@@ -29,4 +29,8 @@ class WiretransferOrder(Order):
 		# or 1: avoid displaying the order without money
 		return self.amount or 1
 
+	def get_form(self, data=None):
+		form = super(WiretransferOrder, self).get_form(data)
+		form.fields['recipient'].queryset = Player.objects.filter(game=self.player.game).exclude(pk=self.player.pk)
+
 orders = (WiretransferOrder,)
