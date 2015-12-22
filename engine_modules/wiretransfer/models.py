@@ -2,7 +2,6 @@
 from django.db import models
 
 from engine.models import Order, Player, Game
-from django.forms import DecimalField
 
 
 class WiretransferOrder(Order):
@@ -32,7 +31,7 @@ class WiretransferOrder(Order):
 
 	def get_form(self, data=None):
 		form = super(WiretransferOrder, self).get_form(data)
-		form.fields['recipient'].queryset = Player.objects.filter(game=self.player.game)
-		form.fields['amount'] = DecimalField()
+		form.fields['recipient'].queryset = Player.objects.filter(game=self.player.game).exclude(pk=self.player.pk)
+		return form
 
 orders = (WiretransferOrder,)
