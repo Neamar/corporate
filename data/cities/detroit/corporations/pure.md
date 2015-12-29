@@ -1,6 +1,6 @@
 name: Pure
 markets:
-    energie: 3
+    énergie: 2
     agroalimentaire: 3
     pharmaceutique: 3
     transport: 3

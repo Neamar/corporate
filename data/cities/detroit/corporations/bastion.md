@@ -1,9 +1,9 @@
 name: Bastion
 markets:
-    militaire: 4
+    militaire: 3
     énergie: 2
     agroalimentaire: 2
-    télécom: 1
+    télécom: 3
 phoenix: 0
 on_first:
     update('bastion', 1)
