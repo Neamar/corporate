@@ -1,9 +1,9 @@
 name: Bastion
 markets:
-    militaire: 2
-    médias: 3
-    énergie: 3
-    transport: 2
+    militaire: 4
+    énergie: 2
+    agroalimentaire: 2
+    télécom: 1
 phoenix: 0
 on_first:
     update('bastion', 1)
@@ -21,7 +21,7 @@ on_crash:
 
 Bastion est issue d’une union unique entre un fond d’investissement et plusieurs sociétés privées de sécurité. Corporation à la réputation sordide, Bastion est probablement l’une des mégas les moins soucieuses de son image auprès du public. 
 
-Que vous l'aimiez ou que vous la haïssiez, Bastion sait que lorsque les choses tourneront mal, vous la supplierez d’intervenir. De son QG de Washington DC, le conseil de Bastion impose une vision du monde basée sur un interventionnisme assumé et la mise en place de la solution la plus pragmatique. Ses activités varient de la production d’énergie à bas coût faisant fi des normes environnementales à la diffusion de propagande dans les pays instables en passant par la fabrication d’armes chimiques par des usines aux conditions déplorables ou la production de véhicule de hautes sécurité (transports de troupe ou de fonds). 
+Que vous l'aimiez ou que vous la haïssiez, Bastion sait que lorsque les choses tourneront mal, vous la supplierez d’intervenir. De son QG de Washington DC, le conseil de Bastion impose une vision du monde basée sur un interventionnisme assumé et la mise en place de la solution la plus pragmatique. Ses activités varient de la production d’énergie à bas coût faisant fi des normes environnementales à la diffusion de propagande dans les pays instables en passant par la fabrication d’armes chimiques par des usines aux conditions déplorables. 
 
 De manière générale, Bastion est réputée pour mettre régulièrement l’éthique de côté et de ne laisser parler que les résultats. Déployant la force armée privée la plus puissante du monde, Bastion peut compter à la fois sur des forces spéciales d’élite augmentées, une multitude de milices armées à travers le monde et même son propre porte-avion : l’Alexandre. Cette présence permanente et sa capacité à agir sans compromis font de Bastion une puissance que nul ne peut regarder de haut.
 

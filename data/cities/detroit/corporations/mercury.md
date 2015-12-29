@@ -1,8 +1,9 @@
 name: Mercury
 markets:
-    télécom: 2
-    agroalimentaire: 3
-    transport: 3
+    télécom: 5
+    BTP: 2
+    pharmaceutique: 2
+    aérospatiale: 2
 phoenix: 0
 on_first:
     update('enercore', 1)
@@ -18,7 +19,7 @@ on_crash:
 Alan « Mercury » Rhode était un *whitehat* excentrique, un hacker de génie qui offrait ses services aux corporations naissantes, montrant les failles dans leurs systèmes de communication. Véritable justicier du net pour certains, hacker à gage bipolaire pour d’autres, il pourchassait les criminels et/ou agissaient comme homme de main pour les corporations. Il savait sentir la température d’un réseau avant de se faire prendre, s’infiltrer inexorablement au sein d’un système et rendre n’importe qui fou de rage. 
 
 
-Son surnom de Mercury devint une légende : s’entourant rapidement d’une équipe toujours grandissante, Alan créa sa propre entreprise basée sur la création de programme de défense et de traque sur internet. Bientôt, Mercury était le principal vendeur de munitions pour une cyberguerre qui devint de plus en plus intense entre les corporations et même chez les particuliers. Personne ne s’inquiétait vraiment de Mercury, une entreprise principalement digitale, avant qu’elle ne révèle comme par magie plusieurs programmes innovants dans le domaine des transports et de l’agroalimentaire dont la fabrication de viande par culture cellulaire ou des systèmes de pilotage automatique pour tout type de véhicule. Ces nombreux développements permirent la conquête immédiate et substantielle de parts de marchés, faisant de Mercury une toute nouvelle Mégacorporation au portfolio hétérogène. 
+Son surnom de Mercury devint une légende : s’entourant rapidement d’une équipe toujours grandissante, Alan créa sa propre entreprise basée sur la création de programme de défense et de traque sur internet. Bientôt, Mercury était le principal vendeur de munitions pour une cyberguerre qui devint de plus en plus intense entre les corporations et même chez les particuliers. Personne ne s’inquiétait vraiment de Mercury, une entreprise principalement digitale, avant qu’elle ne révèle comme par magie plusieurs programmes innovants dans le domaine de la pharmaceutique et de l'aérospatiale dont une cure de longévité par micromachines ou un ascenceur spatial. Ces nombreux développements permirent la conquête immédiate et substantielle de parts de marchés, faisant de Mercury une toute nouvelle Mégacorporation au portfolio hétérogène. 
 
 
 Nombreux sont ceux qui ont grincé des dents, persuadés que ces projets avaient été développé par d’autres corporations puis volés lors d’attaques cybernétiques… Que cela soit vrai ou non, Mercury est une jeune corporation aux dents longues qui compte bien se faire une place dans la cour des grands avec une arme de taille : l’information. 

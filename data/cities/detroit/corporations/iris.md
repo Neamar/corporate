@@ -1,8 +1,8 @@
 name: Iris
 markets:
     médias: 4
-    aérospatiale: 2
-    pharmaceutique: 1
+    robotique: 2
+    transport: 2
     télécom: 2
 phoenix: 0
 on_first:
