@@ -1,9 +1,8 @@
 name: EnerCore
 markets:
-    énergie: 5
     BTP: 3
-    médias: 1
-    agroalimentaire: 2
+    énergie: 6
+    médias: 0
 phoenix: 0
 on_first:
     update('taurus', 1)

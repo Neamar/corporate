@@ -1,9 +1,8 @@
 name: Tlaloc
 markets:
-    agroalimentaire: 1
-    énergie: 3
-    transport: 3
-    pharmaceutique: 1
+    aérospatiale: 2
+    médias: 3
+    agroalimentaire: 5
 phoenix: 0
 on_first:
     update('tlaloc', 1)
@@ -19,10 +18,10 @@ on_crash:
 
 > *Grandir vers le soleil*
 
-Issu des magnats du riz en Asie du Sud-Est et du soja au Brésil, Tlaloc est une entreprise à l’image presque idéale. Dôtée d'une énergie presque végétale, elle est opportuniste et surfe sur une nouvelle vague de l’alimentation bio et de l’énergie renouvelable. Médecine préventive, réseaux de transports collaboratifs, satellites de focalisation solaire et agriculture biologique, Tlaloc promet tout simplement une vie plus saine, plus proche de la nature, s’impliquant notamment dans de nombreuses organisations de défenses. 
+Issu des magnats du riz en Asie du Sud-Est et du soja au Brésil, Tlaloc est une entreprise à l’image presque idéale. Dôtée d'une énergie presque végétale, elle est opportuniste et surfe sur une nouvelle vague de l’alimentation bio et de l’aérospatiale. Satellites de focalisation solaire et agriculture biologique, Tlaloc promet tout simplement une vie plus saine, plus proche de la nature, s’impliquant notamment dans de nombreuses organisations de défenses. 
 
 
-Si l’on parvient à voir au-delà de cette image (qu’elle soigne néanmoins avec une attention particulière), on voit rapidement que Tlaloc est une corporation tout ce qu'il y a de plus carnivore et prédatrice usant de moyens détournés pour arriver à ses fins sans détériorer son image publique. Par l’intermédiaire de coopératives agricoles, de groupes éco terroristes ou d’associations de soutien aux malades, Tlaloc possède un réseau à sa disposition d’agents désespérés, déterminés et protéiformes qui font avancer ses intérêts à moindre coût. 
+Si l’on parvient à voir au-delà de cette image (qu’elle soigne néanmoins avec une attention particulière), on voit rapidement que Tlaloc est une corporation tout ce qu'il y a de plus carnivore et prédatrice usant de moyens détournés pour arriver à ses fins sans détériorer son image publique. Par l’intermédiaire de coopératives agricoles, de groupes éco terroristes ou d’associations de soutien, Tlaloc possède un réseau à sa disposition d’agents désespérés, déterminés et protéiformes qui font avancer ses intérêts à moindre coût. 
 
 
 Peu savent à quel point les racines de cette corporation s’étendent, mais une chose est sûre : Tlaloc rayonne maintenant mondialement.

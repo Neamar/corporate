@@ -1,10 +1,9 @@
 name: Shinsekai
 markets:
-    robotique: 3
     militaire: 2
-    pharmaceutique: 1
-    agroalimentaire: 3
-    télécom: 2
+    robotique: 3
+    médias: 2
+    pharmaceutique: 2
 phoenix: 0
 on_first:
     update('impulse', 1)

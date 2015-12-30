@@ -1,11 +1,9 @@
 name: Taurus Industries
 markets:
-    transport: 2
-    militaire: 3
+    transport: 4
+    militaire: 4
     aérospatiale: 1
-    BTP: 1
-    robotique: 0
-    agroalimentaire: 4
+    BTP: 2
 phoenix: 1
 on_first:
     update(ladder[1], -1)
@@ -18,7 +16,7 @@ on_crash:
 
 > *Se rendre au-delà du progrès*
 
-Taurus Industries est la plus grosse mégacorpo. Elle est la plus emblèmatique du renversement des rôles enre gouvernements et sociétés privées. Elle est une des plus anciennes et des plus  ancrées. Taurus est un géant de l'infrastructure, et fabrique tout se qui roule, vole, lévite, et une bonne partie de ce qui marche. Son secteur le plus important est le transport: ses réseaux de trains magnétiques relient Pékin à Paris en quelques heures, ses robots-ouvriers produisent ses hélicoptères furtifs à la chaîne et elle parvient à rivaliser avec Impulse sur son propre terrain. Si ses robots n'ont pas la complexité ou la perfection technique des mécaniques de précision de Shinsekai, leur durabilité reste à ce jour loin d'être égalée.
+Taurus Industries est la plus grosse mégacorpo. Elle est la plus emblèmatique du renversement des rôles enre gouvernements et sociétés privées. Elle est une des plus anciennes et des plus  ancrées. Taurus est un géant de l'infrastructure, et fabrique tout se qui roule, vole, lévite, et une bonne partie de ce qui marche. Son secteur le plus important est le transport: ses réseaux de trains magnétiques relient Pékin à Paris en quelques heures, ses batiments ne sont pas les plus innovants mais les plus bon marché et elle détient une flotte respactable de satellites.
 
 Ses avantages concurrentiels sont avant tout son efficience en termes de coût, la fiabilité de la totalité de ses produits, son implantation mondiale et sa position de plus puissante mégacorporation mondiale. Jamais a court de ressources, elle a une influence notable sur le marché et profite de sa position multi-sectorielle pour garder une compétitivité à toute épreuve.
 
