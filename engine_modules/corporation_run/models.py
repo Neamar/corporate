@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.db import models
 from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
@@ -58,8 +59,8 @@ class CorporationRunOrderWithStealer(CorporationRunOrder):
 
 	def get_form(self, data=None):
 		form = super(CorporationRunOrderWithStealer, self).get_form(data)
+		form.fields['stealer_corporation'].widget = forms.Select(attrs={'onchange':'get_targets(this);'})
 		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
-
 		return form
 
 

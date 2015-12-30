@@ -103,8 +103,8 @@ class Corporation(models.Model):
 	market_assets = models.SmallIntegerField()
 	assets_modifier = models.SmallIntegerField(default=0)
 	# We do a logical delete rather than a real one to avoid reference problems to a crashed corporation
-	# Furthermore, we save the turn a corporation have crashed in order to continue seeing it at a turn
-	# In the game, corporation_set will be overwrite to filter on corporation that hasn't crashed yet plus coproration that crashed this turn
+	# Furthermore, we save the turn a corporation has crashed in order to continue seeing it at a turn
+	# In the game, corporation_set will be overwritten to filter on corporation that hasn't crashed yet plus coproration that crashed this turn
 	crash_turn = models.SmallIntegerField(null=True, blank=True)
 
 	@property

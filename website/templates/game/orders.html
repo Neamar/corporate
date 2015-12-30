@@ -1,9 +1,63 @@
 {% extends "template.html" %}
-
 {% block title %}Ordres du tour{% endblock %}
 {% block h1 %}Ordres du tour{% endblock %}
 
 {% block content %}
+
+<script type="text/javascript">
+function get_ttttttargets(){
+	new Ajax.Request('/game/1/orders/get_targets', { 
+		method: 'post',
+		parameters: 1,
+		onSuccess: function(transport) {
+			var e = $('id_color')
+			if(transport.responseText)
+				e.update(transport.responseText)
+		}
+	}); // end new Ajax.Request
+}
+// set up a new XMLHttpRequest variable
+var request = false;
+request = new XMLHttpRequest();
+ 
+if (!request)
+	alert("Error initializing XMLHttpRequest!");
+ 
+function get_targets(sel) {
+	var stealer_corporation = sel.value;
+	var url = "http://127.0.0.1:8000/game/1/orders/get_targets/" + escape(stealer_corporation);
+	request.open("GET", url, true);
+	request.onreadystatechange = updatePage;
+	request.send(null);
+} 
+ 
+// what to do when http ready state changes
+function updatePage() { 
+	if (request.readyState == 4) {
+		if (request.status == 200) {
+  
+			// get response array
+			var data = JSON.parse(request.responseText); 
+			update_select($('select[name=target_corporation_market]'), data);
+		}
+		// some error checking
+		else if (request.status == 404) {
+			alert("Request url does not exist");
+		}
+		else {
+			alert("Error: status code is " + request.status);
+		}
+	}
+}
+
+function update_select(select, data) {
+	select.find('option').remove();
+	select.append('<option value="" selected="selected">---------</option>')
+	for (var k in data) {
+		select.append($('<option value="'+k+'">'+data[k]+'</option>'));
+	}
+}
+</script>
 
 {% if existing_orders|length > 0 %}
 <table class="order-launched">
@@ -74,7 +128,7 @@
 	</form>
 	{% else %}
 	<div class="order-form-container">
-		{{order.reason }}
+		{{ order.reason }}
 	</div>
 	{% endif %}
 	</div>

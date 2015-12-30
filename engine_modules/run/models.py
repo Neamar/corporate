@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from random import randint
@@ -96,10 +97,12 @@ class RunOrder(Order):
 			cost -= RunOrder.INFLUENCE_BONUS
 		return cost
 
-	# def get_form(self, data=None):
-		# form = super(RunOrder, self).get_form(data)
-		# We remove has_influence_bonus because we ant to handle it automatically
+	def get_form(self, data=None):
+		form = super(RunOrder, self).get_form(data)
+		# We remove has_influence_bonus because we want to handle it automatically
 		# form.fields.pop('has_influence_bonus')
+		# form.fields.add
+		return form
 		
 	def custom_description(self):
 		return "%s%%" % self.get_raw_probability()

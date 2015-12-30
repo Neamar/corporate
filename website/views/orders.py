@@ -1,11 +1,13 @@
 from __future__ import absolute_import
 from django.shortcuts import render as django_render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from engine.models import Order
 from website.utils import get_player, get_orders_availability, get_order_by_name
 from website.decorators import render, inject_game_and_player_into_response, find_player_from_game_id
 
+import json
+from itertools import chain
 
 @login_required
 @render('game/orders.html')
@@ -30,6 +32,17 @@ def orders(request, game, player):
 		"request": request,
 	}
 
+@login_required
+@find_player_from_game_id
+@inject_game_and_player_into_response
+def get_targets(request, game, player, stealer_corporation_id, qs=None):
+
+	stealer_corporation = game.corporation_set.get(id=stealer_corporation_id)
+	results = {}
+	for m in stealer_corporation.corporation_markets:
+		for cm in m.market.corporationmarket_set.filter(turn=game.current_turn, value__gte=m.value).exclude(corporation__id=stealer_corporation_id):
+			results[cm.id] = str(cm)
+	return HttpResponse(json.dumps(results))
 
 @login_required
 def add_order(request, game_id, order_type):

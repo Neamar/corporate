@@ -27,4 +27,5 @@ urlpatterns += patterns('',
 	url(r'^game/(?P<game_id>[0-9]+)/orders$', orders.orders),
 	url(r'^game/(?P<game_id>[0-9]+)/orders/new/(?P<order_type>\w+)$', orders.add_order),
 	url(r'^game/(?P<game_id>[0-9]+)/orders/delete/(?P<order_id>\w+)$', orders.delete_order),
+	url(r'^game/(?P<game_id>[0-9]+)/orders/get_targets/(?P<stealer_corporation_id>[0-9]+)$', orders.get_targets),
 )
