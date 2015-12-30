@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django import forms
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from random import randint
@@ -100,8 +99,7 @@ class RunOrder(Order):
 	def get_form(self, data=None):
 		form = super(RunOrder, self).get_form(data)
 		# We remove has_influence_bonus because we want to handle it automatically
-		# form.fields.pop('has_influence_bonus')
-		# form.fields.add
+		# form.fields['additional_percents'].widget = forms.Select(choices=((i, "{0} percents".format(i * 10)) for i in range(10)))
 		return form
 		
 	def custom_description(self):

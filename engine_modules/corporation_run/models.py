@@ -61,7 +61,7 @@ class CorporationRunOrderWithStealer(CorporationRunOrder):
 
 	def get_form(self, data=None):
 		form = super(CorporationRunOrderWithStealer, self).get_form(data)
-		form.fields['stealer_corporation'].widget = forms.Select(attrs={'onchange':'get_targets(this);'})
+		form.fields['stealer_corporation'].widget = forms.Select(attrs={'onchange': 'get_targets(this);'})
 		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
 		# We have to reverse the fields to go from more specific to less specific
 		# This ensures that stealer_corporation will be above target_corporation_market

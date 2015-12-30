@@ -7,7 +7,7 @@ from website.utils import get_player, get_orders_availability, get_order_by_name
 from website.decorators import render, inject_game_and_player_into_response, find_player_from_game_id
 
 import json
-from itertools import chain
+
 
 @login_required
 @render('game/orders.html')
@@ -32,17 +32,22 @@ def orders(request, game, player):
 		"request": request,
 	}
 
+
 @login_required
 @find_player_from_game_id
 @inject_game_and_player_into_response
 def get_targets(request, game, player, stealer_corporation_id, qs=None):
 
 	stealer_corporation = game.corporation_set.get(id=stealer_corporation_id)
+	print stealer_corporation
 	results = {}
 	for m in stealer_corporation.corporation_markets:
+		print m
 		for cm in m.market.corporationmarket_set.filter(turn=game.current_turn, value__gte=m.value).exclude(corporation__id=stealer_corporation_id):
+			print cm
 			results[cm.id] = str(cm)
 	return HttpResponse(json.dumps(results))
+
 
 @login_required
 def add_order(request, game_id, order_type):
