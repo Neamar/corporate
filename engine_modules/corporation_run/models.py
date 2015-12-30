@@ -7,6 +7,8 @@ from website.widgets import PlainTextField
 from engine_modules.market.models import CorporationMarket
 from engine.models import Game
 
+from collections import OrderedDict
+
 
 class CorporationRunOrder(RunOrder):
 	"""
@@ -61,6 +63,12 @@ class CorporationRunOrderWithStealer(CorporationRunOrder):
 		form = super(CorporationRunOrderWithStealer, self).get_form(data)
 		form.fields['stealer_corporation'].widget = forms.Select(attrs={'onchange':'get_targets(this);'})
 		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
+		# We have to reverse the fields to go from more specific to less specific
+		# This ensures that stealer_corporation will be above target_corporation_market
+		items = form.fields.items()
+		items.reverse()
+		form.fields = OrderedDict(items)
+		print form.fields
 		return form
 
 
