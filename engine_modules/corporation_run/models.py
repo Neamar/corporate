@@ -68,7 +68,6 @@ class CorporationRunOrderWithStealer(CorporationRunOrder):
 		items = form.fields.items()
 		items.reverse()
 		form.fields = OrderedDict(items)
-		print form.fields
 		return form
 
 

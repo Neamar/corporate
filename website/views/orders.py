@@ -39,12 +39,9 @@ def orders(request, game, player):
 def get_targets(request, game, player, stealer_corporation_id, qs=None):
 
 	stealer_corporation = game.corporation_set.get(id=stealer_corporation_id)
-	print stealer_corporation
 	results = {}
 	for m in stealer_corporation.corporation_markets:
-		print m
 		for cm in m.market.corporationmarket_set.filter(turn=game.current_turn, value__gte=m.value).exclude(corporation__id=stealer_corporation_id):
-			print cm
 			results[cm.id] = str(cm)
 	return HttpResponse(json.dumps(results))
 
