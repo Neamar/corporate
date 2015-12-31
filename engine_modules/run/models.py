@@ -2,9 +2,11 @@
 from django import forms
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+
 from random import randint
 
 from engine.models import Order
+from engine_modules.detroit_inc.models import DIncVoteOrder
 
 
 class RunOrder(Order):
@@ -117,8 +119,15 @@ class RunOrder(Order):
 		form = super(RunOrder, self).get_form(data)
 		# We remove has_influence_bonus because we want to handle it automatically
 		max_additional_percents = self.MAX_PERCENTS - self.BASE_SUCCESS_PROBABILITY
-		values = range(0, (max_additional_percents / 10) + 1)
-		form.fields['additional_percents'].widget = forms.Select(choices=((i, "{0} percents - {1}".format(i * 10, self.calc_cost(i))) for i in values))
+		modifier = 0
+		if self.player.game.get_dinc_coalition() == DIncVoteOrder.RSEC:
+			if self.player.get_last_dinc_coalition() == DIncVoteOrder.RSEC:
+				modifier = 20
+			elif self.player.get_last_dinc_coalition() == DIncVoteOrder.DINC_OPPOSITIONS[DIncVoteOrder.RSEC]:
+				modifier = -20
+
+		values = range(0, ((max_additional_percents) / 10) + 1)
+		form.fields['additional_percents'].widget = forms.Select(choices=((i, "{0} percents - {1}".format(self.BASE_SUCCESS_PROBABILITY + i * 10 + modifier, self.calc_cost(i))) for i in values))
 		return form
 		
 	def custom_description(self):
