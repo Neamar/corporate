@@ -28,16 +28,11 @@ class RunOrder(Order):
 		# so we can know if it is possible to have another one with an influence bonus
 		# I have not investigated much, but it looks like this has a big impact
 		# performance-wise
-		bonuses = []
-		orders = self.player.order_set.all().exclude(id=self.id)
-		for order in orders:
-			try:
-				if order.runorder.has_influence_bonus:
-					bonuses.append(order)
-			except:
-				pass
+		# OK, this is less than ideal, but the other way REALLY had poor performance
+		RunOrderTypes = ['SabotageOrder', 'ExtractionOrder', 'DataStealOrder', 'ProtectionOrder']
+		orders = self.player.order_set.filter(type__in=RunOrderTypes, runorder__has_influence_bonus=True).exclude(id=self.id)
 
-		if len(bonuses) < self.player.influence.level:
+		if len(orders) < self.player.influence.level:
 			self.has_influence_bonus = True
 
 	def clean(self):

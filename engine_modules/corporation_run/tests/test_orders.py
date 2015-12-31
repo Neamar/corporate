@@ -244,7 +244,7 @@ class DefensiveRunOrderTest(EngineTestCase):
 		self.so.save()
 
 	def test_protection_stops_runs(self):
-		# this test only purpose is to test that the run is stopped when run has 100% chances of success and protection drop it to 0%
+		# this test's only purpose is to test that the run is stopped when it has 100% chance of success and protection drops it to 0%
 		# these parameters are defined in engine/testcases.py
 		begin_assets = self.c2.assets
 		self.g.resolve_current_turn()

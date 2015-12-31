@@ -10,7 +10,9 @@ class OrdersTest(EngineTestCase):
 			player=self.p,
 			additional_percents=0,
 		)
+		# Because orders are now given the influence bonus by default, we have to manually take it away
 		self.o.clean()
+		self.o.has_influence_bonus = False
 		self.o.save()
 
 	def test_resolve_successful_abstract(self):
