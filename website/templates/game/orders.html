@@ -5,17 +5,6 @@
 {% block content %}
 
 <script type="text/javascript">
-function get_ttttttargets(){
-	new Ajax.Request('/game/1/orders/get_targets', { 
-		method: 'post',
-		parameters: 1,
-		onSuccess: function(transport) {
-			var e = $('id_color')
-			if(transport.responseText)
-				e.update(transport.responseText)
-		}
-	}); // end new Ajax.Request
-}
 // set up a new XMLHttpRequest variable
 var request = false;
 request = new XMLHttpRequest();
@@ -24,6 +13,7 @@ if (!request)
 	alert("Error initializing XMLHttpRequest!");
  
 function get_targets(sel) {
+	alert("In function get_targets !!!!");
 	var stealer_corporation = sel.value;
 	var url = "http://127.0.0.1/game/1/orders/get_targets/" + escape(stealer_corporation);
 	request.open("GET", url, true);
@@ -33,6 +23,7 @@ function get_targets(sel) {
  
 // what to do when http ready state changes
 function updatePage() { 
+	alert("In function updatePage !");
 	if (request.readyState == 4) {
 		if (request.status == 200) {
   
@@ -51,9 +42,11 @@ function updatePage() {
 }
 
 function update_select(select, data) {
+	alert("In function update_select");
 	select.find('option').remove();
 	select.append('<option value="" selected="selected">---------</option>')
 	for (var k in data) {
+		alert("select: " + k + " " + data[k]);
 		select.append($('<option value="'+k+'">'+data[k]+'</option>'));
 	}
 }
