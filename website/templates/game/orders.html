@@ -15,7 +15,8 @@ if (!request)
 function get_targets(sel) {
 	alert("In function get_targets !!!!");
 	var stealer_corporation = sel.value;
-	var url = "https://corporate-game-pr-131.herokuapp.com/game/16/orders/get_targets/" + escape(stealer_corporation);
+	var url = window.location.href + "/get_targets/" + escape(stealer_corporation);
+	alert("URL: " + url);
 	request.open("GET", url, true);
 	request.onreadystatechange = updatePage;
 	request.send(null);
