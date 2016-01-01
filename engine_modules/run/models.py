@@ -20,7 +20,7 @@ class RunOrder(Order):
 	BASE_SUCCESS_PROBABILITY = 50
 	INFLUENCE_BONUS = 300
 
-	has_influence_bonus = models.BooleanField(default=False, help_text="Accorder à cette run une remise de 300k", editable=False)
+	has_influence_bonus = models.BooleanField(default=False, help_text="Accorder à cette run une remise de 300k", editable=True)
 	additional_percents = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)], help_text="Palier de 10% supplémentaires.")
 	hidden_percents = models.SmallIntegerField(default=0, editable=False)
 
