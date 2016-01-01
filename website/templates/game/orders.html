@@ -13,10 +13,8 @@ if (!request)
 	alert("Error initializing XMLHttpRequest!");
  
 function get_targets(sel) {
-	alert("In function get_targets !!!!");
 	var stealer_corporation = sel.value;
 	var url = window.location.href + "/get_targets/" + escape(stealer_corporation);
-	alert("URL: " + url);
 	request.open("GET", url, true);
 	request.onreadystatechange = updatePage;
 	request.send(null);
@@ -24,7 +22,6 @@ function get_targets(sel) {
  
 // what to do when http ready state changes
 function updatePage() { 
-	alert("In function updatePage !");
 	if (request.readyState == 4) {
 		if (request.status == 200) {
   
@@ -43,11 +40,9 @@ function updatePage() {
 }
 
 function update_select(select, data) {
-	alert("In function update_select");
 	select.find('option').remove();
 	select.append('<option value="" selected="selected">---------</option>')
 	for (var k in data) {
-		alert("select: " + k + " " + data[k]);
 		select.append($('<option value="'+k+'">'+data[k]+'</option>'));
 	}
 }
