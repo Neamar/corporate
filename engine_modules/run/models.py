@@ -33,7 +33,7 @@ class RunOrder(Order):
 		# OK, this is less than ideal, but the other way REALLY had poor performance
 		RunOrderTypes = ['SabotageOrder', 'ExtractionOrder', 'DataStealOrder', 'ProtectionOrder']
 		orders = self.player.order_set.filter(type__in=RunOrderTypes, runorder__has_influence_bonus=True).exclude(id=self.id)
-
+		print "ORDER SIZE: %s" % len(orders)
 		if len(orders) < self.player.influence.level:
 			self.has_influence_bonus = True
 
@@ -129,6 +129,6 @@ class RunOrder(Order):
 		values = range(0, ((max_additional_percents) / 10) + 1)
 		form.fields['additional_percents'].widget = forms.Select(choices=((i, "{0} percents - {1}".format(self.BASE_SUCCESS_PROBABILITY + i * 10 + modifier, self.calc_cost(i))) for i in values))
 		return form
-		
+
 	def custom_description(self):
 		return "%s%%" % self.get_raw_probability()
