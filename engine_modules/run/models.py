@@ -129,6 +129,6 @@ class RunOrder(Order):
 		values = range(0, ((max_additional_percents) / 10) + 1)
 		form.fields['additional_percents'].widget = forms.Select(choices=((i, "{0} percents - {1}".format(self.BASE_SUCCESS_PROBABILITY + i * 10 + modifier, self.calc_cost(i))) for i in values))
 		return form
-		
+
 	def custom_description(self):
 		return "%s%%" % self.get_raw_probability()
