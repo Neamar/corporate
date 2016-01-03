@@ -32,7 +32,7 @@ class RunOrder(Order):
 		# performance-wise
 		# OK, this is less than ideal, but the other way REALLY had poor performance
 		RunOrderTypes = ['SabotageOrder', 'ExtractionOrder', 'DataStealOrder', 'ProtectionOrder']
-		orders = self.player.order_set.filter(type__in=RunOrderTypes, runorder__has_influence_bonus=True).exclude(id=self.id)
+		orders = self.player.order_set.filter(type__in=RunOrderTypes, runorder__has_influence_bonus=True, turn=self.player.game.current_turn)
 
 		if len(orders) < self.player.influence.level:
 			self.has_influence_bonus = True
