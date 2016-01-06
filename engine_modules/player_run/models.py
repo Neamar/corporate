@@ -2,19 +2,9 @@
 from django.db import models
 
 from engine_modules.run.models import RunOrder
-from engine.models import Player
-from website.widgets import PlainTextField
-
-information_messages = {
-	'success': {
-		'sponsor': u"Votre équipe a *réussi* une run d'**Information** sur %s",
-		'citizens': u"Une run d'**Information**, commanditée par %s, a *réussi* sur %s avec %s%% chances de réussite",
-	},
-	'fail': {
-		'sponsor': u"Votre équipe a *échoué* sa run d'**Information** sur %s",
-		'citizens': u"Une run d'**Information**, commanditée par %s, a *échoué* sur %s avec %s%% chances de réussite",
-	},
-}
+from engine.models import Player, Game
+from engine_modules.corporation.models import Corporation
+from logs.models import Log, ConcernedPlayer
 
 
 class InformationOrder(RunOrder):
@@ -24,23 +14,86 @@ class InformationOrder(RunOrder):
 	ORDER = 800
 	title = "Lancer une run d'Information"
 
-	PROTECTION_TYPE = "datasteal"
-	BASE_SUCCESS_PROBABILITY = 60
+	PLAYER_COST = 150
+	CORPORATION_COST = 50
 
-	target = models.ForeignKey(Player)
-
-	# TODO def resolve_successful(self):
-
-	# TODO def resolve_failure(self):
+	player_targets = models.ManyToManyField(Player, blank=True)
+	corporation_targets = models.ManyToManyField(Corporation, blank=True)
 
 	def get_form(self, data=None):
 		form = super(InformationOrder, self).get_form(data)
-		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
-		form.fields['target'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
+		form.fields['player_targets'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
+		form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation if self.player.citizenship.corporation is not None else -1)
+
 		return form
 
 	def description(self):
-		return "Lancer une run d'information sur %s (%s%%)" % (self.target, self.get_raw_probability())
+		players = self.player_targets.all()
+		corporations = self.corporation_targets.all()
+		player_part = ""
+		corporation_part = ""
+
+		if len(players) > 1:
+			player_part = "les joueurs %s" % (", ".join([p.name for p in players]))
+		elif len(players) == 1:
+			player_part = "le joueur %s" % players[0].name
+
+		if len(corporations) > 1:
+			corporation_part = "les corporations %s" % (", ".join([c.base_corporation.name for c in corporations]))
+		elif len(corporations) == 1:
+			corporation_part = "la corporation %s" % corporations[0].base_corporation.name
+
+		if player_part != "" and corporation_part != "":
+			return "Lancer une run d'information sur %s et %s" % (player_part, corporation_part)
+		return "Lancer une run d'information sur %s" % (player_part + corporation_part)
+
+	def is_successful(self):
+		"""
+		Information run always succeed
+		"""
+		return True
+
+	def resolve_successful(self):
+		players = self.player_targets.all()
+		corpos = list(self.corporation_targets.all())
+
+		if self.player.citizenship.corporation is not None:
+			print "LOLILOL"
+			corpos.append(self.player.citizenship.corporation)
+
+		self.player.game.add_event(event_type=Game.OPE_INFORMATION, data={"players_list": [p.name for p in players], "corpos_list": [c.base_corporation.name for c in corpos]}, players=[self.player])
+
+		for target in players:
+			# Retrieve all event the target could see for himself
+			# We need to ask on turn +1 cause we want events related to this turn, right now.
+			logs = Log.objects.for_player(target, target, self.player.game.current_turn + 1).exclude(public=True)
+
+			for log in logs:
+				if not log.concernedplayer_set.filter(player=self.player).exists():
+					cp = ConcernedPlayer(
+						player=self.player,
+						log=log,
+						transmittable=False,
+						personal=False
+					)
+					cp.save()
+
+		for target in corpos:
+			# Retrieve all event on the corporation
+			logs = Log.objects.filter(turn=self.player.game.current_turn, corporation=target).distinct()
+
+			for log in logs:
+				if not log.concernedplayer_set.filter(player=self.player).exists():
+					cp = ConcernedPlayer(
+						player=self.player,
+						log=log,
+						transmittable=False,
+						personal=False
+					)
+					cp.save()
+
+	def get_cost(self):
+		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST if self.pk is not None else self.CORPORATION_COST
 
 orders = (InformationOrder, )
