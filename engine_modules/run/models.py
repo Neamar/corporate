@@ -22,7 +22,7 @@ class RunOrder(Order):
 	INFLUENCE_BONUS = 300
 
 	has_influence_bonus = models.BooleanField(default=False, help_text="Accorder à cette run une remise de 300k", editable=False)
-	additional_percents = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)], help_text="Palier de 10% supplémentaires.")
+	additional_percents = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)])
 	hidden_percents = models.SmallIntegerField(default=0, editable=False)
 
 	def __init__(self, *args, **kwargs):
