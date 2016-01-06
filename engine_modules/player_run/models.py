@@ -5,17 +5,6 @@ from engine_modules.run.models import RunOrder
 from engine.models import Player
 from website.widgets import PlainTextField
 
-information_messages = {
-	'success': {
-		'sponsor': u"Votre équipe a *réussi* une run d'**Information** sur %s",
-		'citizens': u"Une run d'**Information**, commanditée par %s, a *réussi* sur %s avec %s%% chances de réussite",
-	},
-	'fail': {
-		'sponsor': u"Votre équipe a *échoué* sa run d'**Information** sur %s",
-		'citizens': u"Une run d'**Information**, commanditée par %s, a *échoué* sur %s avec %s%% chances de réussite",
-	},
-}
-
 
 class InformationOrder(RunOrder):
 	"""
