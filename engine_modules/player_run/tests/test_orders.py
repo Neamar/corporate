@@ -2,8 +2,6 @@ from engine.testcases import EngineTestCase
 from engine.models import Player
 from engine_modules.player_run.models import InformationOrder
 from logs.models import Log
-from engine_modules.share.models import Share
-from engine_modules.citizenship.models import CitizenshipOrder
 
 
 class InformationRunOrderTest(EngineTestCase):
