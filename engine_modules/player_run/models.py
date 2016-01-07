@@ -20,6 +20,11 @@ class InformationOrder(RunOrder):
 	player_targets = models.ManyToManyField(Player, blank=True)
 	corporation_targets = models.ManyToManyField(Corporation, blank=True)
 
+	def __init__(self, *args, **kwargs):
+		super(InformationOrder, self).__init__(*args, **kwargs)
+		# InformationOrder should not have influence bonus. So we remove it here
+		self.has_influence_bonus = False
+
 	def get_form(self, data=None):
 		form = super(InformationOrder, self).get_form(data)
 

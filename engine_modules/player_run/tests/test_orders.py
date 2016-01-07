@@ -22,7 +22,6 @@ class InformationRunOrderTest(EngineTestCase):
 
 		self.io = InformationOrder(
 			player=self.p,
-			additional_percents=10,
 		)
 		self.io.clean()
 		self.io.save()
