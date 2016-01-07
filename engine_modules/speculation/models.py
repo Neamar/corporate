@@ -64,7 +64,7 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 			self.player.game.add_event(event_type=Game.SPECULATION_LOST, data={"player": self.player.name, "mise": self.investment, "corporation": self.corporation.base_corporation.name, "position": self.rank}, players=[self.player])
 
 	def description(self):
-		return u"Miser sur la position %s de la corporation %s (gain : %sk¥, perte : %sk¥)" % (self.rank, self.corporation.base_corporation.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
+		return u"Miser sur la position %s de la corporation %s (gain : %sk₵, perte : %sk₵)" % (self.rank, self.corporation.base_corporation.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
 
 
 orders = (CorporationSpeculationOrder, )
