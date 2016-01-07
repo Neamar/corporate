@@ -74,7 +74,7 @@ function update_select(select, data) {
 	<td class="order-description">{{ order.description }}</td>
 	<td class="order-custom">{{ order.custom_description }}</td>
 	{% endif %}
-	<td class="order-cost">{{ order.get_cost }}k&nbsp;₵</td>
+	<td class="order-cost">{% if order.get_cost > 0 %}{{ order.get_cost }}k&nbsp;₵{% else %}-{% end %}</td>
 </tr>
 {% endfor %}
 </tbody>

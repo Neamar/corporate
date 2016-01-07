@@ -13,7 +13,7 @@ class WiretransferOrder(Order):
 	title = "Envoyer de l'argent à un joueur"
 
 	recipient = models.ForeignKey(Player)
-	amount = models.PositiveIntegerField(help_text="En milliers de nuyens")
+	amount = models.PositiveIntegerField(help_text="En k₵")
 
 	def save(self, *args):
 		# Override save: apply immediately and return

@@ -14,7 +14,7 @@ class AbstractSpeculation(Order):
 	MAX_AMOUNT_SPECULATION = 200
 	BASE_COST = 1
 
-	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
+	investment = models.PositiveIntegerField(help_text="En k₵")
 	on_win_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 
