@@ -28,7 +28,7 @@ class InformationOrder(RunOrder):
 	def get_form(self, data=None):
 		form = super(InformationOrder, self).get_form(data)
 		form.fields['player_targets'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
-		form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation if self.player.citizenship.corporation is not None else -1)
+		form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation.pk if self.player.citizenship.corporation is not None else -1)
 		# Remove the additional percent field
 		form.fields.pop('additional_percents')
 		return form
