@@ -1,3 +1,56 @@
+.dropdown {
+	a {
+		display: block;
+		padding: 5px 15px;
+		color: #000;
+	}
+	ul {
+		padding: 0;
+		margin: 0;
+		float: left;
+		-webkit-transition: .5s;
+		transition: .5s;
+		list-style: none;
+	}
+	li {
+		float: left;
+		position: relative;
+		width: 150px;
+		background: white;
+		-webkit-transition: .5s;
+		transition: .5s;
+	}
+	.dropdown > ul > li > a, h1 {
+		text-transform: uppercase;
+	}
+	ul ul {
+		position: absolute;
+		display: none;
+		visibility: hidden;
+		opacity: 0;
+		left: 100%;
+		top: 0;
+	}
+	ul ul ul {
+		left: 100%,
+		top: 0;
+	}
+	li:hover, li:hover li {
+		background: #ddd;
+	}
+	li li:hover, li li:hover li {
+		background: #bbb;
+	}
+	li li li:hover {
+		background: #999;
+	}
+	li:hover > ul {
+		display: block;
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
 .order-launched {
 	border-spacing: 0 5px;
 
