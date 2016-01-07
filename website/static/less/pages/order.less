@@ -80,9 +80,9 @@
 				-webkit-transition: all 0.25s ease-in-out;
 				transition:all 0.25s ease-in-out;
 			}
-			
+
 			//first
-			&:nth-child(odd) { 
+			&:nth-child(odd) {
 				//background-color: #646462;
 				//border-top: 1px solid #8f8f8d;
 				.order-name, .order-description, .order-custom {
@@ -98,7 +98,7 @@
 					background-color: #858584;
 				}
 			}//odd
-			&:nth-child(even) { 
+			&:nth-child(even) {
 				//background-color: #50504e;
 				//border-top: 1px solid #727271;
 				.order-name, .order-description, .order-custom {
@@ -210,7 +210,7 @@
 		}
 		&:nth-child(odd) {
 			background-color: #30363c;
-		}		
+		}
 		&:nth-child(5n-5) {
 			margin-right: 0px;
 		}
@@ -319,6 +319,10 @@
 				height: 26px;
 			}
 
+			select[multiple] {
+				height: auto;
+			}
+
 			tbody {
 				tr {
 					th {
@@ -335,7 +339,7 @@
 							margin: 0;
 						}
 					}
-				}				
+				}
 			}
 
 			.submit-order {

@@ -14,6 +14,7 @@ class RunOrder(Order):
 	Base model for all runs
 	"""
 	MAX_PERCENTS = 90
+	MAX_SELECTABLE = 100
 
 	LAUNCH_COST = 350
 	BASE_COST = 50
@@ -21,7 +22,7 @@ class RunOrder(Order):
 	INFLUENCE_BONUS = 300
 
 	has_influence_bonus = models.BooleanField(default=False, help_text="Accorder à cette run une remise de 300k", editable=False)
-	additional_percents = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)], help_text="Palier de 10% supplémentaires.")
+	additional_percents = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)])
 	hidden_percents = models.SmallIntegerField(default=0, editable=False)
 
 	def __init__(self, *args, **kwargs):
@@ -118,7 +119,7 @@ class RunOrder(Order):
 	def get_form(self, data=None):
 		form = super(RunOrder, self).get_form(data)
 		# We remove has_influence_bonus because we want to handle it automatically
-		max_additional_percents = self.MAX_PERCENTS - self.BASE_SUCCESS_PROBABILITY
+		max_additional_percents = self.MAX_SELECTABLE - self.BASE_SUCCESS_PROBABILITY
 		modifier = 0
 		if self.player.game.get_dinc_coalition() == DIncVoteOrder.RSEC:
 			if self.player.get_last_dinc_coalition() == DIncVoteOrder.RSEC:
@@ -127,7 +128,7 @@ class RunOrder(Order):
 				modifier = -20
 
 		values = range(0, ((max_additional_percents) / 10) + 1)
-		form.fields['additional_percents'].widget = forms.Select(choices=((i, "{0} percents - {1}".format(self.BASE_SUCCESS_PROBABILITY + i * 10 + modifier, self.calc_cost(i))) for i in values))
+		form.fields['additional_percents'].widget = forms.Select(choices=((i, "{0} % - {1} 000 C".format(self.BASE_SUCCESS_PROBABILITY + i * 10 + modifier, self.calc_cost(i))) for i in values))
 		return form
 
 	def custom_description(self):

@@ -3,7 +3,6 @@ from django import forms
 from django.db import models
 from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
-from website.widgets import PlainTextField
 from engine_modules.market.models import CorporationMarket
 from engine.models import Game
 
@@ -41,7 +40,6 @@ class CorporationRunOrder(RunOrder):
 		form = super(CorporationRunOrder, self).get_form(data)
 		# We get all the corporationMarket of uncrashed corporations
 		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn)
-		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
 
 		return form
 

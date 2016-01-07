@@ -128,6 +128,9 @@ class Log(models.Model):
 
 
 class ConcernedPlayer(models.Model):
+	class Meta:
+		unique_together = (("player", "log"),)
+
 	player = models.ForeignKey('engine.Player')
 	log = models.ForeignKey('logs.Log')
 	# When an information run targetting a player is started, we have to gather every Log connected to
