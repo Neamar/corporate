@@ -101,4 +101,7 @@ class InformationOrder(RunOrder):
 	def get_cost(self):
 		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST if self.pk is not None else self.CORPORATION_COST
 
+	def custom_description(self):
+		return ""
+
 orders = (InformationOrder, )
