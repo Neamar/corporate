@@ -68,7 +68,7 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 
 	def get_form(self, data=None):
 		form = super(CorporationSpeculationOrder, self).get_form(data)
-		form.fields['recipient'].queryset = Corporation.objects.filter(game=self.player.game)
+		form.fields['corporation'].queryset = Corporation.objects.filter(game=self.player.game)
 		return form
 
 orders = (CorporationSpeculationOrder, )
