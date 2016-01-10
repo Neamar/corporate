@@ -62,7 +62,6 @@ digraph g{
 	pure -> citygroup [color="blue"];
 	pure -> second [color="blue"];
 
-	
 	iris -> pure [color="blue"];
 	iris -> impulse [color="green"];
 	iris -> citygroup [color="black"];
