@@ -72,7 +72,7 @@ def d_inc_pod(context):
 
 	if current_coalition is None:
 		current_coalition = 'None'
-		display = 'None'
+		display = 'Aucune coalition n''a obtenu la majoritée ce tour-ci.'
 	else:
 		display = string.join(d_inc_pod_hover(current_coalition, orders), '')
 	return {
