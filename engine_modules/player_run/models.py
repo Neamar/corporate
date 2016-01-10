@@ -107,7 +107,7 @@ class InformationOrder(RunOrder):
 		# before the order is created. So for the first time, we save it and we calculate the cost and save it after this
 		if self.pk is None:
 			super(InformationOrder, self).save(**kwargs)
-			self.update_cost()
+			self.update_cost(self.get_cost())
 		else:
 			super(InformationOrder, self).save(**kwargs)
 
