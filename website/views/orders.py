@@ -18,7 +18,7 @@ def orders(request, game, player):
 	for existing_order in existing_orders:
 		existing_order.name = existing_order.__class__.__name__
 
-	existing_orders_cost = sum(o.cost for o in existing_orders)
+	existing_orders_cost = sum(o.get_cost() for o in existing_orders)
 
 	available_orders = get_orders_availability(player)
 

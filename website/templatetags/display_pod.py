@@ -83,7 +83,7 @@ def d_inc_pod(context):
 
 def current_player_pod(context):
 	existing_orders = [order.to_child() for order in context['player'].order_set.filter(turn=context['turn'])]
-	existing_orders_cost = sum(o.cost for o in existing_orders)
+	existing_orders_cost = sum(o.get_cost() for o in existing_orders)
 
 	money_left = context['player'].money - existing_orders_cost
 

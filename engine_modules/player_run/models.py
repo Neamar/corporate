@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django import forms
 
 from engine_modules.run.models import RunOrder
 from engine.models import Player, Game
@@ -27,7 +28,7 @@ class InformationOrder(RunOrder):
 
 	def get_form(self, data=None):
 		form = super(InformationOrder, self).get_form(data)
-		form.fields['player_targets'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
+		form.fields['player_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.player_set.all().exclude(pk=self.player.pk))
 		form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation.pk if self.player.citizenship.corporation is not None else -1)
 		# Remove the additional percent field
 		form.fields.pop('additional_percents')
@@ -99,21 +100,13 @@ class InformationOrder(RunOrder):
 					cp.save()
 
 	def get_cost(self):
-		# The case without pk is detailed in the save method below
+		# We cannot calculate the real cost when we save it for the first time. This is beacause We cannot access corporations_taget and player targets
+		# before the order is created. So for the first time we give the minimum and then we use the get_cost() function and not the oreder.cost value
 		dumb_result = 50
 		return self.get_real_cost() if self.pk is not None else dumb_result
 
 	def get_real_cost(self):
 		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST
-
-	def save(self, **kwargs):
-		# We cannot calculate the real cost when we save it for the first time. This is beacause We cannot access corporations_taget and player targets
-		# before the order is created. So for the first time, we save it and we calculate the cost and save it after this
-		if self.pk is None:
-			super(InformationOrder, self).save(**kwargs)
-			self.update_cost(self.get_real_cost())
-		else:
-			super(InformationOrder, self).save(**kwargs)
 
 	def custom_description(self):
 		return ""
