@@ -50,7 +50,6 @@ Certains effets modifient les actifs de certaines corporations sans préciser le
 ## L'Effet Crash
 Une fois que les effets premiers/derniers sont appliqués, si des corporations sont à 0 actifs ou moins, elles crashent. Un crash n'arrivera pas à toutes les parties mais a beaucoup de conséquences :
 
-* Si au moins une corporation crashe, aucun effet dernier ne s'applique ce tour-ci.
 * Tous les **effet crash** s'appliquent simultanément
 * Une corporation qui a crashé ce tour-ci n'est plus éligible aux **actifs de domination**
 * Les corporations qui crashent ne sont pas affectées par **l'effet crash** des autres corporations

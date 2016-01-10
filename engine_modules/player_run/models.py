@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django import forms
 
 from engine_modules.run.models import RunOrder
 from engine.models import Player, Game
@@ -17,8 +18,8 @@ class InformationOrder(RunOrder):
 	PLAYER_COST = 150
 	CORPORATION_COST = 50
 
-	player_targets = models.ManyToManyField(Player, blank=True)
-	corporation_targets = models.ManyToManyField(Corporation, blank=True)
+	player_targets = models.ManyToManyField(Player, blank=True, help_text='150 k₵ per player')
+	corporation_targets = models.ManyToManyField(Corporation, blank=True, help_text='50 k₵ per corporation')
 
 	def __init__(self, *args, **kwargs):
 		super(InformationOrder, self).__init__(*args, **kwargs)
@@ -27,9 +28,12 @@ class InformationOrder(RunOrder):
 
 	def get_form(self, data=None):
 		form = super(InformationOrder, self).get_form(data)
-		form.fields['player_targets'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
-		form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation.pk if self.player.citizenship.corporation is not None else -1)
+#		form.fields['player_targets'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
+#		form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation.pk if self.player.citizenship.corporation is not None else -1)
 		# Remove the additional percents field
+		form.fields['player_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.player_set.all().exclude(pk=self.player.pk), required=False, help_text='150 k₵ per player')
+		form.fields['corporation_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation.pk if self.player.citizenship.corporation is not None else -1), required=False, help_text='50 k₵ per corporation')
+		# Remove the additional percent field
 		form.fields.pop('additional_percents')
 		return form
 
@@ -99,6 +103,15 @@ class InformationOrder(RunOrder):
 					cp.save()
 
 	def get_cost(self):
-		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST if self.pk is not None else self.CORPORATION_COST
+		# We cannot calculate the real cost when we save it for the first time. This is beacause We cannot access corporations_taget and player targets
+		# before the order is created. So for the first time we give the minimum and then we use the get_cost() function and not the oreder.cost value
+		dumb_result = 50
+		return self.get_real_cost() if self.pk is not None else dumb_result
+
+	def get_real_cost(self):
+		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST
+
+	def custom_description(self):
+		return ""
 
 orders = (InformationOrder, )

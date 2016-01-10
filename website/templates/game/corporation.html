@@ -39,7 +39,7 @@
 <tr>
 	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=entry.corporation.base_corporation.slug %}" class="corporation-name">{{ entry.corporation.base_corporation.name }}</a></td>
 {% for value in entry.assets %}
-	<td> {{ value|default:"-" }}</td>
+	<td> {{ value|default_if_none:"-" }}</td>
 {% endfor %}
 	<td> {{ entry.corporation.assets }}</td>
 	<td>{% for holder in entry.holders %} <a href="{% url "website.views.data.player" game_id=game.pk player_id=holder.pk %}" title="Parts de {{ holder.name }}" class="tooltip"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" width="32" height="32" /></a> {% endfor %}</td>

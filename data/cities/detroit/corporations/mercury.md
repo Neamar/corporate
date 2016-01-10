@@ -11,8 +11,9 @@ on_first:
 on_last:
     update(ladder[0], 2)
 on_crash:
-    update(ladder[0], -5)
-    update(ladder[1], -1)
+    update(ladder[0], -6)
+    update(ladder[1], -2)
+    update('enercore', 2)
 
 > *Quick and Brilliant*
 

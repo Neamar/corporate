@@ -72,7 +72,7 @@ def d_inc_pod(context):
 
 	if current_coalition is None:
 		current_coalition = 'None'
-		display = 'None'
+		display = 'Aucune coalition n\'a obtenu la majorité ce tour-ci.'
 	else:
 		display = string.join(d_inc_pod_hover(current_coalition, orders), '')
 	return {
@@ -82,9 +82,14 @@ def d_inc_pod(context):
 
 
 def current_player_pod(context):
+	existing_orders = [order.to_child() for order in context['player'].order_set.filter(turn=context['turn'])]
+	existing_orders_cost = sum(o.get_cost() for o in existing_orders)
+
+	money_left = context['player'].money - existing_orders_cost
+
 	return {
 		'ic': context['player'].get_influence(turn=context['turn']).level,
-		'money': context['player'].money,
+		'money': money_left,
 		'display_turn': context['turn'],
 	}
 

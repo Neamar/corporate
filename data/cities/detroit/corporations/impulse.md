@@ -13,7 +13,7 @@ on_last:
 on_crash:
     update('mercury', -2)
     update('shinsekai', -2)
-    update(ladder[0], 2)
+    update(ladder[0], 4)
 
 > *La Terre n'est que le début*
 

@@ -14,7 +14,7 @@ class AbstractSpeculation(Order):
 	MAX_AMOUNT_SPECULATION = 200
 	BASE_COST = 1
 
-	investment = models.PositiveIntegerField(help_text="En milliers de nuyens.")
+	investment = models.PositiveIntegerField(help_text="En k₵")
 	on_win_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 	on_loss_ratio = models.PositiveSmallIntegerField(default=1, editable=False)
 
@@ -64,7 +64,11 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 			self.player.game.add_event(event_type=Game.SPECULATION_LOST, data={"player": self.player.name, "mise": self.investment, "corporation": self.corporation.base_corporation.name, "position": self.rank}, players=[self.player])
 
 	def description(self):
-		return u"Miser sur la position %s de la corporation %s (gain : %sk¥, perte : %sk¥)" % (self.rank, self.corporation.base_corporation.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
+		return u"Miser sur la position %s de la corporation %s (gain : %s k₵, perte : %s k₵)" % (self.rank, self.corporation.base_corporation.name, (self.on_win_money() + self.get_cost()), self.on_loss_money())
 
+	def get_form(self, data=None):
+		form = super(CorporationSpeculationOrder, self).get_form(data)
+		form.fields['corporation'].queryset = Corporation.objects.filter(game=self.player.game)
+		return form
 
 orders = (CorporationSpeculationOrder, )

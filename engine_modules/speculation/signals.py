@@ -9,7 +9,7 @@ from engine_modules.speculation.models import CorporationSpeculationOrder
 @receiver(validate_order, sender=CorporationSpeculationOrder)
 def limit_speculation_amount_by_influence(sender, instance, **kwargs):
 	"""
-	Total speculation amount can't be more than {{influence}} * MAX_AMOUNT_SPECULATION ¥ per turn
+	Total speculation amount can't be more than {{influence}} * MAX_AMOUNT_SPECULATION ₵ per turn
 	"""
 	if instance.investment is None:
 		return
