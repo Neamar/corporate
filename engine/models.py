@@ -258,6 +258,7 @@ class Order(models.Model):
 
 	def update_cost(self, new_cost):
 		self.cost = new_cost
+		print new_cost
 		self.save()
 
 	def get_form_meta(self):

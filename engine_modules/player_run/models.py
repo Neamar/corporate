@@ -100,14 +100,18 @@ class InformationOrder(RunOrder):
 
 	def get_cost(self):
 		# The case without pk is detailed in the save method below
-		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST if self.pk is not None else self.CORPORATION_COST
+		dumb_result = 50
+		return self.get_real_cost() if self.pk is not None else dumb_result
+
+	def get_real_cost(self):
+		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST
 
 	def save(self, **kwargs):
 		# We cannot calculate the real cost when we save it for the first time. This is beacause We cannot access corporations_taget and player targets
 		# before the order is created. So for the first time, we save it and we calculate the cost and save it after this
 		if self.pk is None:
 			super(InformationOrder, self).save(**kwargs)
-			self.update_cost(self.get_cost())
+			self.update_cost(self.get_real_cost())
 		else:
 			super(InformationOrder, self).save(**kwargs)
 
