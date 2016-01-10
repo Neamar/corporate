@@ -256,6 +256,10 @@ class Order(models.Model):
 
 		return OrderForm
 
+	def update_cost(self):
+		self.cost = self.get_cost()
+		self.save()
+
 	def get_form_meta(self):
 		"""
 		Meta class to use for get_form()

@@ -99,7 +99,17 @@ class InformationOrder(RunOrder):
 					cp.save()
 
 	def get_cost(self):
+		# The case without pk is detailed in the save method below
 		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST if self.pk is not None else self.CORPORATION_COST
+
+	def save(self, **kwargs):
+		# We cannot calculate the real cost when we save it for the first time. This is beacause We cannot access corporations_taget and player targets
+		# before the order is created. So for the first time, we save it and we calculate the cost and save it after this
+		if self.pk is None:
+			super(InformationOrder, self).save(**kwargs)
+			self.update_cost()
+		else:
+			super(InformationOrder, self).save(**kwargs)
 
 	def custom_description(self):
 		return ""
