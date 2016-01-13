@@ -1,1 +1,1 @@
-Vous avez découvert son passé : {{ background }}
+Vous avez découvert son passé : **{{ background }}**

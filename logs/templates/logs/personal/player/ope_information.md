@@ -1,1 +1,1 @@
-vous avez lancé une run d'information sur {{ players_list }}{% if players_list != None and corpos_list != None %} et {% endif %} {{ corpos_list }}
+vous avez une opé d'information sur {% if players_list|length > 0 %}{{ players_list|join }}{% endif %}{% if players_list|length > 0 and corpos_list|length > 0 %} et {% endif %} {% if corpos_list|length > 0 %}{{ corpos_list|join }}{% endif %}
