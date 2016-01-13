@@ -1,1 +1,1 @@
-vous avez lancé une run d'information sur {{ player_targets }}{% if player_targets != None and corporation_targets != None %} et {% endif %} {{ corporation_targets }}
+vous avez lancé une run d'information sur {{ players_list }}{% if players_list != None and corpos_list != None %} et {% endif %} {{ corpos_list }}
