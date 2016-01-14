@@ -2,6 +2,7 @@ from engine.testcases import EngineTestCase
 from engine.models import Player
 from engine_modules.player_run.models import InformationOrder
 from logs.models import Log
+from django.db.models import Q
 
 
 class InformationRunOrderTest(EngineTestCase):
@@ -45,7 +46,7 @@ class InformationRunOrderTest(EngineTestCase):
 		self.io.player_targets.add(self.p2)
 		self.g.resolve_current_turn()
 
-		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 1)
+		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn).filter(Q(event_type=self.g.OPE_SABOTAGE) | Q(event_type=self.g.OPE_SABOTAGE_FAIL))), 1)
 
 	def test_double_information_gives_logs(self):
 		"""
@@ -62,7 +63,7 @@ class InformationRunOrderTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 
-		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn)), 1)
+		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn).filter(Q(event_type=self.g.OPE_SABOTAGE) | Q(event_type=self.g.OPE_SABOTAGE_FAIL))), 1)
 
 	def test_informations_on_corporations_gives_logs(self):
 		self.io.corporation_targets.add(self.c)

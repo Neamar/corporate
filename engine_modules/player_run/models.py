@@ -3,7 +3,7 @@ from django.db import models
 from django import forms
 
 from engine_modules.run.models import RunOrder
-from engine.models import Player, Game
+from engine.models import Player
 from engine_modules.corporation.models import Corporation
 from logs.models import Log, ConcernedPlayer
 
@@ -68,10 +68,7 @@ class InformationOrder(RunOrder):
 		corpos = list(self.corporation_targets.all())
 
 		if self.player.citizenship.corporation is not None:
-			print "LOLILOL"
 			corpos.append(self.player.citizenship.corporation)
-
-		self.player.game.add_event(event_type=Game.OPE_INFORMATION, data={"players_list": [p.name for p in players], "corpos_list": [c.base_corporation.name for c in corpos]}, players=[self.player])
 
 		for target in players:
 			# Retrieve all event the target could see for himself
