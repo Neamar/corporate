@@ -1,12 +1,54 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.db import models
+from django.forms import widgets
+
 from engine_modules.run.models import RunOrder
 from engine_modules.corporation.models import Corporation
 from engine_modules.market.models import CorporationMarket
 from engine.models import Game
 
 from collections import OrderedDict
+import string
+
+
+class DropdownWidget(widgets.Widget):
+	"""
+	Widget to be used in Run classes so that we have a list of lists by Corporation then Market
+	every time we have to chose a CorporationMarket.
+	"""
+
+	def __init__(self, *args, **kwargs):
+		super(DropdownWidget, self).__init__(*args, **kwargs)
+		self.data = args[0]
+
+	def render(self, name, value, attrs=None, choices=()):
+
+		# # print 'name: {0}'.format(name)
+		# print 'value: {0}'.format(value)
+		# print 'attrs: {0}'.format(attrs)
+		# print 'choices: {0}'.format(choices)
+
+		html = '<div class="dropdown">\n<ul>\n    <li>\n        <a href="">Corporations</a>\n' + ' ' * 8 + '<ul>\n'
+		for key in self.data.keys():
+			html += ' ' * 12 + '<li>\n' + ' ' * 16 + '<a href="">{0}</a>\n'.format(str(key)) + ' ' * 16 + '<ul>\n'
+			html += ' ' * 16 + '<select id="{0}" name="{1}" onchange="{1}">\n'.format(attrs['id'], name, '')
+			for value in self.data[key]:
+				# html += ' ' * 20 + '<li>{0}</li>\n'.format(j)
+				html += ' ' * 20 + '<option value="{0}">{1}</option>\n'.format(value.id, str(value))
+			html += ' ' * 16 + '</select>\n' + ' ' * 16 + '</ul>\n' + ' ' * 12 + '</li>\n'
+		html += '        </ul>\n    </li>\n</ul>\n</div>'
+		print "in render: {0}".format(html)
+		return html
+
+	def value_from_datadict(self, data, files, name):
+		# print 'data: {0}'.format(data)
+		# print 'files: {0}'.format(files)
+		# print 'name; {0}'.format(name)
+
+		for i in dict(data.iterlists())['target_corporation_market']:
+			if i != u'':
+				return string.atoi(i)
 
 
 class CorporationRunOrder(RunOrder):
@@ -40,6 +82,13 @@ class CorporationRunOrder(RunOrder):
 		form = super(CorporationRunOrder, self).get_form(data)
 		# We get all the corporationMarket of uncrashed corporations
 		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn)
+		corporation_markets = {}
+		for cm in form.fields['target_corporation_market'].queryset:
+			if cm.corporation not in corporation_markets.keys():
+				corporation_markets[cm.corporation] = []
+			corporation_markets[cm.corporation].append(cm)
+
+		form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets)
 
 		return form
 
