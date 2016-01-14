@@ -73,7 +73,7 @@ class InformationOrder(RunOrder):
 		for target in players:
 			# Retrieve all event the target could see for himself
 			# We need to ask on turn +1 cause we want events related to this turn, right now.
-			logs = Log.objects.for_player(target, target, self.player.game.current_turn + 1).exclude(public=True, concernedplayer__transmittable=False)
+			logs = Log.objects.for_player(target, target, self.player.game.current_turn + 1).exclude(public=True, concernedplayer__transmittable=True)
 
 			for log in logs:
 				if not log.concernedplayer_set.filter(player=self.player).exists():
