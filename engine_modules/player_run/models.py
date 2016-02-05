@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django import forms
+from django.core.exceptions import ValidationError
 
 from engine_modules.run.models import RunOrder
 from engine.models import Player
@@ -18,8 +19,8 @@ class InformationOrder(RunOrder):
 	PLAYER_COST = 150
 	CORPORATION_COST = 50
 
-	player_targets = models.ManyToManyField(Player, blank=True, help_text='150 k₵ per player')
-	corporation_targets = models.ManyToManyField(Corporation, blank=True, help_text='50 k₵ per corporation')
+	player_targets = models.ManyToManyField(Player, blank=True, help_text='150 k₵ par player')
+	corporation_targets = models.ManyToManyField(Corporation, blank=True, help_text='50 k₵ par corporation')
 
 	def __init__(self, *args, **kwargs):
 		super(InformationOrder, self).__init__(*args, **kwargs)
@@ -102,11 +103,18 @@ class InformationOrder(RunOrder):
 	def get_cost(self):
 		# We cannot calculate the real cost when we save it for the first time. This is beacause We cannot access corporations_taget and player targets
 		# before the order is created. So for the first time we give the minimum and then we use the get_cost() function and not the oreder.cost value
-		dumb_result = 50
+		dumb_result = 0
 		return self.get_real_cost() if self.pk is not None else dumb_result
 
 	def get_real_cost(self):
 		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST
+
+	def clean(self):
+		super(InformationOrder, self).clean()
+		self.save()
+		if (self.get_real_cost() > self.player.money):
+			raise ValidationError("You don't have enough money")
+			self.delete()
 
 	def custom_description(self):
 		return ""
