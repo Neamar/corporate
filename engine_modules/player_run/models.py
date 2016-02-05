@@ -32,8 +32,8 @@ class InformationOrder(RunOrder):
 		# form.fields['player_targets'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
 		# form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation.pk if self.player.citizenship.corporation is not None else -1)
 		# Remove the additional percents field
-		form.fields['player_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.player_set.all().exclude(pk=self.player.pk), required=False, help_text='150 k₵ per player')
-		form.fields['corporation_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation.pk if self.player.citizenship.corporation is not None else -1), required=False, help_text='50 k₵ per corporation')
+		form.fields['player_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.player_set.all().exclude(pk=self.player.pk), required=False, help_text='150 k₵ par player')
+		form.fields['corporation_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.corporation_set.all(), required=False, help_text='50 k₵ par corporation')
 		# Remove the additional percent field
 		form.fields.pop('additional_percents')
 		return form
@@ -67,9 +67,6 @@ class InformationOrder(RunOrder):
 	def resolve_successful(self):
 		players = self.player_targets.all()
 		corpos = list(self.corporation_targets.all())
-
-		if self.player.citizenship.corporation is not None:
-			corpos.append(self.player.citizenship.corporation)
 
 		for target in players:
 			# Retrieve all event the target could see for himself
@@ -108,26 +105,6 @@ class InformationOrder(RunOrder):
 
 	def get_real_cost(self):
 		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST
-
-	def save(self, **kwargs):
-		# We save the object the first time
-		# the run cost will we wrong this time
-		super(InformationOrder, self).save(**kwargs)
-
-		if (self.get_real_cost() > self.player.money):
-			# Now we have access to the real cost. If too much, there should be an error
-			raise ValidationError("You don't have enough money")
-			self.delete()
-		else:
-			# If cost is OK, update cost
-			self.cost = self.get_cost()
-			super(InformationOrder, self).save(**kwargs)
-
-	def save_related(self, **kwargs):
-		# here is the place for pre_save actions - nothing has been written to the database, yet
-		super(InformationOrder, self).save_related(**kwargs)
-		print ("into !")
-		# now you have all objects in the database
 
 	def custom_description(self):
 		return ""
