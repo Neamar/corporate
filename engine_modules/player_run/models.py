@@ -110,11 +110,17 @@ class InformationOrder(RunOrder):
 		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST
 
 	def clean(self):
+		print self.get_cost()
 		super(InformationOrder, self).clean()
-		self.save()
+		create = False
+		if self.pk is None:
+			self.save()
+			create = True
+		print self.get_cost()
 		if (self.get_real_cost() > self.player.money):
 			raise ValidationError("You don't have enough money")
-			self.delete()
+			if create is True:
+				self.delete()
 
 	def custom_description(self):
 		return ""
