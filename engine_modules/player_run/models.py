@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django import forms
-from django.core.exceptions import ValidationError
 
 from engine_modules.run.models import RunOrder
 from engine.models import Player

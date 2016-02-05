@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
+from django.core.exceptions import ValidationError
+from django.db.models.signals import m2m_changed
+from django.db.models import Sum
+
 from engine.models import Player, Order
 from engine_modules.corporation.models import Corporation
-from django.db.models.signals import m2m_changed
 from engine_modules.player_run.models import InformationOrder
-from django.core.exceptions import ValidationError
-from django.db.models import Sum
 
 
 @receiver(m2m_changed)
@@ -16,9 +17,10 @@ def information_m2m_changed(action, instance, model, **kwargs):
 		if model == Player:
 			if price_all_orders + instance.cost + InformationOrder.PLAYER_COST > instance.player.money:
 				raise ValidationError(u"Vous n'avez pas assez d'argent pour lancer cette opération dans son intégralité")
+			else:
+				instance.cost += InformationOrder.PLAYER_COST
 		elif model == Corporation:
 			if price_all_orders + instance.cost + InformationOrder.CORPORATION_COST > instance.player.money:
 				raise ValidationError(u"Vous n'avez pas assez d'argent pour lancer cette opération dans son intégralité")
-		else:
-			instance.cost = instance.get_cost()
-			instance.save()
+			else:
+				instance.cost += InformationOrder.CORPORATION_COST
