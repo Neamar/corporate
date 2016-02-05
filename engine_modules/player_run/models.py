@@ -44,17 +44,17 @@ class InformationOrder(RunOrder):
 		corporation_part = ""
 
 		if len(players) > 1:
-			player_part = "\r\n-les joueurs %s" % (", ".join([p.name for p in players]))
+			player_part = "<br>-les joueurs %s" % (", ".join([p.name for p in players]))
 		elif len(players) == 1:
 			player_part = "le joueur %s" % players[0].name
 
 		if len(corporations) > 1:
-			corporation_part = "\r\n-les corporations %s" % (", ".join([c.base_corporation.name for c in corporations]))
+			corporation_part = "<br>-les corporations %s" % (", ".join([c.base_corporation.name for c in corporations]))
 		elif len(corporations) == 1:
 			corporation_part = "la corporation %s" % corporations[0].base_corporation.name
 
 		if player_part != "" and corporation_part != "":
-			return "Lancer une run d'information sur %s et %s" % (player_part, corporation_part)
+			return "Lancer une run d'information sur %s %s" % (player_part, corporation_part)
 		return "Lancer une run d'information sur %s" % (player_part + corporation_part)
 
 	def resolve(self):
