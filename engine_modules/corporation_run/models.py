@@ -38,7 +38,7 @@ class DropdownWidget(widgets.Widget):
 				html += ' ' * 20 + '<option value="{0}">{1}</option>\n'.format(value.id, str(value))
 			html += ' ' * 16 + '</select>\n' + ' ' * 16 + '</ul>\n' + ' ' * 12 + '</li>\n'
 		html += '        </ul>\n    </li>\n</ul>\n</div>'
-		print "in render: {0}".format(html)
+		# print "in render: {0}".format(html)
 		return html
 
 	def value_from_datadict(self, data, files, name):

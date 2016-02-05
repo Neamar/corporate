@@ -112,9 +112,7 @@ class InformationOrder(RunOrder):
 	def save(self, **kwargs):
 		# We save the object the first time
 		# the run cost will we wrong this time
-		print self.get_cost()
 		super(InformationOrder, self).save(**kwargs)
-		print self.get_cost()
 
 		if (self.get_real_cost() > self.player.money):
 			# Now we have access to the real cost. If too much, there should be an error
@@ -124,6 +122,12 @@ class InformationOrder(RunOrder):
 			# If cost is OK, update cost
 			self.cost = self.get_cost()
 			super(InformationOrder, self).save(**kwargs)
+
+	def save_related(self, **kwargs):
+		# here is the place for pre_save actions - nothing has been written to the database, yet
+		super(InformationOrder, self).save_related(**kwargs)
+		print ("into !")
+		# now you have all objects in the database
 
 	def custom_description(self):
 		return ""
