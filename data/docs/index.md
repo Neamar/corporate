@@ -135,8 +135,6 @@ Cette opé d'Information a un coût :
 * 150 000 ₵ par joueur sélectionné
 * 50 000 ₵ par corporation sélectionnée
 
-Vous recevez gratuitement et à chaque tour le journal interne de la corpo dont vous êtes citoyen, qui contient exactement la même chose qu'une opé d'information sur cette corporation.
-
 #### Résolution
 Le pourcentage de chances maximal qu'une opé peut atteindre est de 90%. Ce nombre peut être baissé par les opés de Protection.
 Les opés sont résolues par pourcentage de réussite décroissant. Une seule opé de chaque type peut être réussie par cible et par marché. À partir du moment où une opé est passé, les suivantes échouent automatiquement.

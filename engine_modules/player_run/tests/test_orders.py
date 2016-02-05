@@ -61,6 +61,8 @@ class InformationRunOrderTest(EngineTestCase):
 		self.io2.save()
 		self.io2.player_targets.add(self.p2)
 
+		print self.io2.player_targets.count()
+
 		self.g.resolve_current_turn()
 
 		self.assertEqual(len(Log.objects.for_player(self.p2, self.p, self.g.current_turn).filter(Q(event_type=self.g.OPE_SABOTAGE) | Q(event_type=self.g.OPE_SABOTAGE_FAIL))), 1)
