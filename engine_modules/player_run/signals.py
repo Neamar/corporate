@@ -12,15 +12,16 @@ from engine_modules.player_run.models import InformationOrder
 @receiver(m2m_changed)
 def information_m2m_changed(action, instance, model, **kwargs):
 	if action == "pre_add":
-
 		price_all_orders = Order.objects.filter(player=instance.player, turn=instance.player.game.current_turn).annotate(total_price=Sum('cost'))[0].total_price
 		if model == Player:
 			if price_all_orders + instance.cost + InformationOrder.PLAYER_COST > instance.player.money:
 				raise ValidationError(u"Vous n'avez pas assez d'argent pour lancer cette opération dans son intégralité")
 			else:
 				instance.cost += InformationOrder.PLAYER_COST
+				instance.save()
 		elif model == Corporation:
 			if price_all_orders + instance.cost + InformationOrder.CORPORATION_COST > instance.player.money:
 				raise ValidationError(u"Vous n'avez pas assez d'argent pour lancer cette opération dans son intégralité")
 			else:
 				instance.cost += InformationOrder.CORPORATION_COST
+				instance.save()
