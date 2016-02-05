@@ -109,18 +109,21 @@ class InformationOrder(RunOrder):
 	def get_real_cost(self):
 		return self.player_targets.count() * self.PLAYER_COST + self.corporation_targets.count() * self.CORPORATION_COST
 
-	def clean(self):
+	def save(self, **kwargs):
+		# We save the object the first time
+		# the run cost will we wrong this time
 		print self.get_cost()
-		super(InformationOrder, self).clean()
-		create = False
-		if self.pk is None:
-			self.save()
-			create = True
+		super(InformationOrder, self).save(**kwargs)
 		print self.get_cost()
+
 		if (self.get_real_cost() > self.player.money):
+			# Now we have access to the real cost. If too much, there should be an error
 			raise ValidationError("You don't have enough money")
-			if create is True:
-				self.delete()
+			self.delete()
+		else:
+			# If cost is OK, update cost
+			self.cost = self.get_cost()
+			super(InformationOrder, self).save(**kwargs)
 
 	def custom_description(self):
 		return ""
