@@ -57,6 +57,14 @@ class InformationOrder(RunOrder):
 			return "Lancer une run d'information sur %s et %s" % (player_part, corporation_part)
 		return "Lancer une run d'information sur %s" % (player_part + corporation_part)
 
+	def resolve(self):
+		# We override this function to avoid to pay the cost
+		self.resolve_successful()
+
+	def pay_cost(self):
+		self.player.money -= self.cost
+		self.player.save()
+
 	def is_successful(self):
 		"""
 		Information run always succeed
