@@ -20,7 +20,7 @@ def orders(request, game, player):
 	for existing_order in existing_orders:
 		existing_order.name = existing_order.__class__.__name__
 		path = '%s/data/order_description/InformationOrder.md' % (settings.BASE_DIR)
-		existing_order.info = read_markdown(path)
+		existing_order.info, _ = read_markdown(path)
 
 	existing_orders_cost = sum(o.get_cost() for o in existing_orders)
 

@@ -11,7 +11,9 @@
 	</div>
 <form class="order-form-container" method="post" action="{% url "website.views.orders.add_order" game_id=game.pk order_type=order.name %}">
 	<table>
-	{{ order.info }}
+	<tr class="submit-order">
+		{{ order.info }}
+	</tr>
 	{{ order.form.as_table }}
 	<tr class="submit-order">
 		<td colspan="2">
