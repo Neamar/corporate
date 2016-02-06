@@ -10,6 +10,17 @@ def read_markdown(path):
 	return parse_markdown(raw)
 
 
+def read_markdown_nullable(path):
+
+	try:
+		raw = read_file_from_path(path)
+		html, _ = parse_markdown(raw)
+	except IOError:
+		html = ""
+	
+	return html
+
+
 def parse_markdown(text):
 	"""
 	Convert markdown to html
