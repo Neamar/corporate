@@ -19,12 +19,13 @@ def orders(request, game, player):
 	existing_orders = [order.to_child() for order in player.order_set.filter(turn=player.game.current_turn)]
 	for existing_order in existing_orders:
 		existing_order.name = existing_order.__class__.__name__
-		path = '%s/data/order_description/%s.md' % (settings.BASE_DIR, existing_order.name)
-		existing_order.info = read_markdown_nullable(path)
 
 	existing_orders_cost = sum(o.get_cost() for o in existing_orders)
 
 	available_orders = get_orders_availability(player)
+	for available_order in available_orders:
+		path = '%s/data/order_description/%s.md' % (settings.BASE_DIR, available_order.__class__.__name__)
+		available_order.info = read_markdown_nullable(path)
 
 	return {
 		"available_orders": available_orders,
