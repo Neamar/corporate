@@ -91,17 +91,6 @@ function update_select(select, data) {
 </table>
 {% endif %}
 
-<h1 class="main-h1-title">Passer un ordre</h1>
-
-<ul class="content-order-list">
-{% for order in available_orders %}
-	<li{% if order.available == False %} class="disabled" title="{{order.reason }}" {% else %} onclick="toggle_order_display(this.id);" {% endif %} id={{ order.name }}>
-		<svg role="img" class="svg--large svg--white" title="{{ order.title }}"><use xlink:href="/static/img/sprite.svg#{{ order.name }}"></use></svg>
-		<h2>{{ order.title }}</h2>
-	</li>
-{% endfor %}
-</ul>
-
 {% for order in available_orders %}
 	<div class="order-form-content" id={{ order.name }}123>
 		<div class="content-title">
@@ -132,5 +121,16 @@ function update_select(select, data) {
 	{% endif %}
 	</div>
 {% endfor %}
+
+<h1 class="main-h1-title">Passer un ordre</h1>
+
+<ul class="content-order-list">
+{% for order in available_orders %}
+	<li{% if order.available == False %} class="disabled" title="{{order.reason }}" {% else %} onclick="toggle_order_display(this.id);" {% endif %} id={{ order.name }}>
+		<svg role="img" class="svg--large svg--white" title="{{ order.title }}"><use xlink:href="/static/img/sprite.svg#{{ order.name }}"></use></svg>
+		<h2>{{ order.title }}</h2>
+	</li>
+{% endfor %}
+</ul>
 
 {% endblock content %}
