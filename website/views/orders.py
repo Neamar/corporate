@@ -7,6 +7,7 @@ from engine.models import Order
 from website.utils import get_player, get_orders_availability, get_order_by_name
 from website.decorators import render, inject_game_and_player_into_response, find_player_from_game_id
 from utils.read_markdown import read_markdown_nullable
+from django.utils.safestring import mark_safe
 
 import json
 
@@ -25,7 +26,8 @@ def orders(request, game, player):
 	available_orders = get_orders_availability(player)
 	for available_order in available_orders:
 		path = '%s/data/order_description/%s.md' % (settings.BASE_DIR, available_order['name'])
-		available_order['info'] = read_markdown_nullable(path)
+		contents = read_markdown_nullable(path)
+		available_order['info'] = mark_safe(contents)
 
 	return {
 		"available_orders": available_orders,

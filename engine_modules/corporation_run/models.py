@@ -12,7 +12,7 @@ from collections import OrderedDict
 import string
 
 
-class DropdownWidget(widgets.Widget):
+class DropdownWidget(widgets.Select):
 	"""
 	Widget to be used in Run classes so that we have a list of lists by Corporation then Market
 	every time we have to chose a CorporationMarket.
@@ -39,6 +39,7 @@ class DropdownWidget(widgets.Widget):
 			html += ' ' * 16 + '</select>\n' + ' ' * 16 + '</ul>\n' + ' ' * 12 + '</li>\n'
 		html += '        </ul>\n    </li>\n</ul>\n</div>'
 		# print "in render: {0}".format(html)
+		html = super(DropdownWidget, self).render(name, value, attrs, choices)
 		return html
 
 	def value_from_datadict(self, data, files, name):
@@ -88,7 +89,8 @@ class CorporationRunOrder(RunOrder):
 				corporation_markets[cm.corporation] = []
 			corporation_markets[cm.corporation].append(cm)
 
-		# form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets)
+		# choices = [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
+		# form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets, choices=choices)
 
 		return form
 
