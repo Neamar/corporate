@@ -24,7 +24,7 @@ def orders(request, game, player):
 
 	available_orders = get_orders_availability(player)
 	for available_order in available_orders:
-		path = '%s/data/order_description/%s.md' % (settings.BASE_DIR, available_order.__class__.__name__)
+		path = '%s/data/order_description/%s.md' % (settings.BASE_DIR, available_order['name'])
 		available_order['info'] = read_markdown_nullable(path)
 
 	return {
