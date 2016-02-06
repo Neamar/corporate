@@ -18,7 +18,7 @@ class InformationOrder(RunOrder):
 	PLAYER_COST = 150
 	CORPORATION_COST = 50
 
-	player_targets = models.ManyToManyField(Player, blank=True, help_text='150 k₵ par player')
+	player_targets = models.ManyToManyField(Player, blank=True, help_text='150 k₵ par joueur')
 	corporation_targets = models.ManyToManyField(Corporation, blank=True, help_text='50 k₵ par corporation')
 
 	def __init__(self, *args, **kwargs):
@@ -31,7 +31,7 @@ class InformationOrder(RunOrder):
 		# form.fields['player_targets'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
 		# form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation.pk if self.player.citizenship.corporation is not None else -1)
 		# Remove the additional percents field
-		form.fields['player_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.player_set.all().exclude(pk=self.player.pk), required=False, help_text='150 k₵ par player')
+		form.fields['player_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.player_set.all().exclude(pk=self.player.pk), required=False, help_text='150 k₵ par joueur')
 		form.fields['corporation_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.corporation_set.all(), required=False, help_text='50 k₵ par corporation')
 		# Remove the additional percent field
 		form.fields.pop('additional_percents')
@@ -44,17 +44,17 @@ class InformationOrder(RunOrder):
 		corporation_part = ""
 
 		if len(players) > 1:
-			player_part = "<br>-les joueurs %s" % (", ".join([p.name for p in players]))
+			player_part = "les joueurs %s" % (", ".join([p.name for p in players]))
 		elif len(players) == 1:
 			player_part = "le joueur %s" % players[0].name
 
 		if len(corporations) > 1:
-			corporation_part = "<br>-les corporations %s" % (", ".join([c.base_corporation.name for c in corporations]))
+			corporation_part = "les corporations %s" % (", ".join([c.base_corporation.name for c in corporations]))
 		elif len(corporations) == 1:
 			corporation_part = "la corporation %s" % corporations[0].base_corporation.name
 
 		if player_part != "" and corporation_part != "":
-			return "Lancer une run d'information sur %s %s" % (player_part, corporation_part)
+			return "Lancer une run d'information sur %s et %s" % (player_part, corporation_part)
 		return "Lancer une run d'information sur %s" % (player_part + corporation_part)
 
 	def resolve(self):
