@@ -150,10 +150,10 @@ svg use {
 	fill: white;
 }
 .svg--red {
-	fill: red;
+	fill: #f10606;
 }
 .svg--green {
-	fill: green;
+	fill: #18ff00;
 }
 
 
@@ -302,51 +302,271 @@ svg use {
 			}
 		}//icons-list
 	}//icon-content
+}//corporation-row
 
-	.corporation-markets {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		overflow: hidden;
+.corporation-markets {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
 
-		.corporation-market {
-			float: left;
-			width: 58px;
-			height: 58px;
-			display: block;
-			background: url("/static/img/wallstreet/market-base.png") no-repeat scroll right top rgba(0, 0, 0, 0);
-			margin-right: 7.5px;
-    		margin-top: 10px;
-    		line-height: 60px;
-    		text-indent: 10px;
-    		position: relative;
+	&.details {
+		width: 85%;
+		margin: auto;
 
-    		.corporation-market-value {
-    			position: absolute;
-    			bottom: 7px;
-    			right: 8px;
-    			line-height: 16px;
-    		}
+		& > li {
+			overflow: hidden;
+			border-bottom: 1px solid #333;
+			display: table;
+			width: 100%;
+			padding: 5px 0;
 
+			.icons-list {
+				overflow: hidden;
+				list-style-type: none;
+				margin: 0;
+				padding-left: 10px;
+				display: table-cell;
+				vertical-align: middle;
 
-    			svg {
-    				-webkit-filter: drop-shadow( 0 0 4px rgba(255, 255, 255, 0.3));
-            		filter: drop-shadow( 0 0 4px rgba(255, 255, 255, 0.3)); /* Same syntax as box-shadow */
-    			}
+				li {
+					float: left;
+					margin-right: 10px;
 
-			&:nth-child(5) {
-		    	margin-right: 0;
-		    }
-
-			&.negative {
-				background: url("/static/img/wallstreet/market-negatif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+					.positive {
+						color: #18ff00;
+						position: relative;
+						left: -2px;
+						&:before {
+							content: "+";
+						}
+					}
+					.negative {
+						color: #f10606;
+						position: relative;
+						left: -2px;
+						&:before {
+							content: "-";
+						}
+					}
+				}
 			}
-			&.positive {
-				background: url("/static/img/wallstreet/market-positif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+			.corporation-market {
+				display: table-cell;
+				vertical-align: middle;
+				float: none;
 			}
 		}
-	}//corporation-markets
-}//corporation-row
+	}
+
+	.corporation-market {
+		float: left;
+		width: 58px;
+		height: 58px;
+		display: block;
+		background: url("/static/img/wallstreet/market-base.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+		margin-right: 7.5px;
+		margin-top: 10px;
+		line-height: 60px;
+		text-indent: 10px;
+		position: relative;
+
+		.corporation-market-value {
+			position: absolute;
+			bottom: 7px;
+			right: 8px;
+			line-height: 16px;
+		}
+
+
+			svg {
+				-webkit-filter: drop-shadow( 0 0 4px rgba(255, 255, 255, 0.3));
+        		filter: drop-shadow( 0 0 4px rgba(255, 255, 255, 0.3)); /* Same syntax as box-shadow */
+			}
+
+		&:nth-child(5) {
+	    	margin-right: 0;
+	    }
+
+		&.negative {
+			background: url("/static/img/wallstreet/market-negatif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+		}
+		&.positive {
+			background: url("/static/img/wallstreet/market-positif.png") no-repeat scroll right top rgba(0, 0, 0, 0);
+		}
+	}
+}//corporation-markets
+
+//Used to hover table
+body:not(.nohover) .corporation-market--table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.content-table {
+	background-color: rgba(7, 9, 14, 0.5);
+	padding: 20px;
+	padding: 3%;
+    width: 98.5%;
+}
+
+.corporation-market--table {
+    border-collapse: collapse;
+    overflow: hidden;
+    width: 100%;
+
+	//table Overlay
+	td, th {
+	  position: relative;
+	  outline: 0;
+	}
+    td:hover::after,
+	thead th:not(:empty):hover::after,
+	td:focus::after,
+	thead th:not(:empty):focus::after { 
+	  content: '';  
+	  height: 10000px;
+	  left: 0;
+	  position: absolute;  
+	  top: -5000px;
+	  width: 100%;
+	  z-index: -1;
+	}
+
+	td:hover::after,
+	th:hover::after {
+	  background-color: rgba(0, 0, 0, 0.3);
+	}
+
+    thead {
+    	text-align: center;
+    	text-transform: uppercase;
+    	tr {
+    		td {
+    			border-left: 1px solid #424448;
+    			color: #eeefef;
+    			font-size: 12px;
+    			    &:first-child {
+    				border-left: none;
+    				}
+    		}
+    	}
+    }
+
+    tbody {
+    	border-collapse: collapse;
+
+    	tr {
+    		td {
+    			font-size: 13px;
+    			color: #eeefef;
+    			border-top: 1px solid #424448;
+    			border-left: 1px solid #424448;
+    			text-align: center;
+    			text-transform: uppercase;
+    			height: 38px;
+    			min-width: 30px;
+
+    			&.icon--players {
+    				padding-left: 7px;
+    				text-align: left;
+
+    				a {
+    				    display: inline-block;
+					    height: 26px;
+					    overflow: hidden;
+					    vertical-align: middle;
+					    width: 26px;		
+    				}
+    			}
+
+    			a {
+    				text-decoration: none;
+    			}
+
+    			&:first-child {
+    				padding-left: 10px;
+    				border-left: none;
+    				text-align: left;
+    			}
+    		}  
+    	}
+    }
+}//corporation-markets--content
+
+.doc-link-market {
+    display: block;
+    font-size: 13px;
+    padding: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #adadad;
+}
+
+.corporation-players--detail {
+	list-style-type: none;
+	padding: 10px 0;
+	overflow: hidden;
+	margin: auto;
+    width: 85%;
+
+	li {
+		float: left;
+		margin-right: 13px;
+		margin-top: 7px;
+
+		a {
+			display: block;
+			position: relative;
+			padding: 5px;
+			-webkit-transition: all 0.25s ease-in-out;
+			transition:all 0.25s ease-in-out;
+
+				&:hover {
+					color: #fff;
+					opacity: 0.8;
+					-webkit-transition: all 0.25s ease-in-out;
+					transition:all 0.25s ease-in-out;
+				}
+
+			&:before {
+				content: "";
+				background-color: #fff;
+				border-radius: 50%;
+				width: 55px;
+				height: 55px;
+				position: absolute;
+				right: 4px;
+				bottom: 8px;
+				display: block;
+				z-index: -1;
+			}
+
+			span {
+				position: absolute;
+				display: block;
+				right: 0;
+				bottom: 4px;
+				width: 25px;
+				height: 25px;
+				text-align: center;
+				text-decoration: none;
+				line-height: 25px;
+				background-color: #7f7e7e;
+				border-radius: 50%;
+				font-size: 13px;
+			}
+		}
+	}
+}//corporation-players--detail
+
+.content-player {
+	.icons-list {
+		padding: 7px 0 0;
+		li {
+			margin-right: 5px;
+		}
+	}
+}
 
 @import "less/menu.less";
 @import "less/sidebar.less";

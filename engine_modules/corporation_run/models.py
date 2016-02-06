@@ -38,7 +38,7 @@ class DropdownWidget(widgets.Widget):
 				html += ' ' * 20 + '<option value="{0}">{1}</option>\n'.format(value.id, str(value))
 			html += ' ' * 16 + '</select>\n' + ' ' * 16 + '</ul>\n' + ' ' * 12 + '</li>\n'
 		html += '        </ul>\n    </li>\n</ul>\n</div>'
-		print "in render: {0}".format(html)
+		# print "in render: {0}".format(html)
 		return html
 
 	def value_from_datadict(self, data, files, name):
@@ -124,7 +124,7 @@ class DataStealOrder(CorporationRunOrderWithStealer):
 	"""
 	ORDER = 500
 
-	title = "Lancer une run de Datasteal"
+	title = "Lancer une opération de Datasteal"
 
 	def resolve_successful(self):
 		self.stealer_corporation.update_assets(+1, corporation_market=self.stealer_corporation_market)
@@ -149,7 +149,7 @@ class ExtractionOrder(CorporationRunOrderWithStealer):
 	Order for Extraction runs
 	"""
 	ORDER = 700
-	title = "Lancer une run d'Extraction"
+	title = "Lancer une opération d'Extraction"
 
 	def resolve_successful(self):
 		self.target_corporation.update_assets(-1, corporation_market=self.target_corporation_market)
@@ -175,7 +175,7 @@ class SabotageOrder(CorporationRunOrder):
 	Order for Sabotage runs
 	"""
 	ORDER = 600
-	title = "Lancer une run de Sabotage"
+	title = "Lancer une opération de Sabotage"
 
 	def resolve_successful(self):
 		self.target_corporation.update_assets(-2, corporation_market=self.target_corporation_market)
@@ -203,7 +203,7 @@ class ProtectionOrder(RunOrder):
 	Order for Protection runs
 	"""
 	ORDER = 850
-	title = "Lancer une run de Protection"
+	title = "Lancer une opération de Protection"
 	MAX_PERCENTS = 40
 
 	protected_corporation_market = models.ForeignKey(CorporationMarket, related_name="protectors")

@@ -83,15 +83,3 @@ class OrdersTest(EngineTestCase):
 
 		# assertNoRaises
 		o2.clean()
-
-	def test_no_more_than_90(self):
-		"""
-		User can't have more than 90% chance of success
-		"""
-
-		self.o.additional_percents = 5
-		self.assertRaises(OrderNotAvailable, self.o.clean)
-
-		self.o.additional_percents = 4
-		# assertNoRaises
-		self.o.clean()

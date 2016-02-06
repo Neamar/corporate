@@ -29,7 +29,7 @@ admin.site.register(Player, PlayerAdmin)
 
 
 class OrderAdmin(admin.ModelAdmin):
-	list_display = ('type', 'player', 'turn')
+	list_display = ('type', 'player', 'cost', 'turn')
 	readonly_fields = ('turn',)
 	list_filter = ('player__game',)
 	ordering = ('player',)

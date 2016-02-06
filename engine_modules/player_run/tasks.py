@@ -19,12 +19,29 @@ class InformationRunTask(OrderResolutionTask):
 			if order.player.citizenship.corporation is not None:
 				corpos.append(order.player.citizenship.corporation)
 			# add event on player
-			order.player.game.add_event(event_type=game.OPE_INFORMATION, data={"players_list": [p.name for p in players], "corpos_list": [c.base_corporation.name for c in corpos]}, players=[order.player])
+			game.add_event(event_type=game.OPE_INFORMATION, data={"players_list": [p.name for p in players], "corpos_list": [c.base_corporation.name for c in corpos]}, players=[order.player])
 			# send the background information on targets players
 			for player in players:
-				order.player.game.add_event(event_type=game.BACKGROUND, data={"background": player.background}, players=[order.player])
+				game.add_event(event_type=game.BACKGROUND, data={"background": player.background, "player": player.name}, players=[order.player])
 
 		for order in orders:
-			order.resolve()
+			order.resolve_successful()
 
-tasks = (InformationRunTask,)
+
+class InformationPayTask(OrderResolutionTask):
+	"""
+	As MoneyInformationTask is at RESOLUTION_ORDER 1100 and need both things to be right
+	-To be start before InformationRunTask
+	-All the payments must be payed before this task
+	So we pay information at 1000 and we start it at 1200
+	"""
+	RESOLUTION_ORDER = 1000
+	ORDER_TYPE = InformationOrder
+
+	def run(self, game):
+		orders = self.ORDER_TYPE.objects.filter(player__game=game, turn=game.current_turn)
+		for order in orders:
+			order.pay_cost()
+
+
+tasks = (InformationRunTask, InformationPayTask)
