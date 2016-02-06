@@ -12,6 +12,16 @@ request = new XMLHttpRequest();
 if (!request)
 	alert("Error initializing XMLHttpRequest!");
  
+function toggle_order_display(id) {
+	var elmt = document.getElementById(id + '123');
+	var disp = elmt.style.display
+	if (disp == '' || disp == 'none') {
+		elmt.style.display = 'block';
+	} else {
+		elmt.style.display = 'none';
+	}
+}
+
 function get_targets(sel) {
 	var stealer_corporation = sel.value;
 	var url = window.location.href + "/get_targets/" + escape(stealer_corporation);
@@ -85,70 +95,15 @@ function update_select(select, data) {
 
 <ul class="content-order-list">
 {% for order in available_orders %}
-	<li{% if order.available == False %} class="disabled" title="{{order.reason }}"{% endif %}>
+	<li{% if order.available == False %} class="disabled" title="{{order.reason }}" {% else %} onclick="toggle_order_display(this.id);" {% endif %} id={{ order.name }}>
 		<svg role="img" class="svg--large svg--white" title="{{ order.title }}"><use xlink:href="/static/img/sprite.svg#{{ order.name }}"></use></svg>
 		<h2>{{ order.title }}</h2>
 	</li>
 {% endfor %}
 </ul>
 
-<div class="dropdown">
-<ul>
-	<li>
-		<a href="">Corporations</a>
-		<ul>
-			<li>
-				<a href="">Bastion</a>
-				<ul>
-					<li><a href="">Télécom</a></li>
-					<li><a href="">Énergie</a></li>
-					<li><a href="">Agroalimentaire</a></li>
-					<li><a href="">Militaire</a></li>
-				</ul>
-			</li>
-			<li>
-				<a href="">CityGroup</a>
-				<ul>
-					<li><a href="">BTP</a></li>
-					<li><a href="">Robotique</a></li>
-					<li><a href="">Agroalimentaire</a></li>
-				</ul>
-			</li>
-			<li>
-				<a href="">EnerCore</a>
-				<ul>
-					<li><a href="">BTP</a></li>
-					<li><a href="">Médias</a></li>
-					<li><a href="">Énergie</a></li>
-				</ul>
-			</li>
-		</ul>
-	</li>
-</ul>
-</div>
-<!--
-	<li>
-		<a href="">Reptiles</a>
-		<ul>
-			<li><a href="">Lizards and snakes</a></li>
-			<li><a href="">Tortoises and turtles</a></li>
-			<li><a href="">Crocodilians</a></li>
-			<li><a href="">Tuatara</a></li>
-		</ul>
-	</li>
-	<li>
-		<a href="">Amphibians</a>
-		<ul>
-			<li><a href="">Frogs and toads</a></li>
-			<li><a href="">Salamanders and newts</a></li>
-			<li><a href="">Caecilians</a></li>
-		</ul>
-	</li>
-</ul>
-</div>
--->
 {% for order in available_orders %}
-	<div class="order-form-content">
+	<div class="order-form-content" id={{ order.name }}123>
 		<div class="content-title">
 <!--			<h3 style="background-image: url('{{STATIC_URL }}orders/{{ order.name }}.png')" class="order">
 -->			<h3 style="background-image: /static/img/sprite.svg#{{ order.name }}" class="order">
