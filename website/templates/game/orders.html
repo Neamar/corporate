@@ -105,7 +105,11 @@ function update_select(select, data) {
 	<form class="order-form-container" method="post" action="{% url "website.views.orders.add_order" game_id=game.pk order_type=order.name %}">
 		<table>
 		<tr class="submit-order">
+		{% block content %}
+		<div class="rules-content">
 			{{ order.info }}
+		</div>
+		{% endblock %}
 		</tr>
 		{{ order.form.as_table }}
 		<tr class="submit-order" type="hidden">
