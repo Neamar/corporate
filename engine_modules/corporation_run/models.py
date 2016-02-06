@@ -88,7 +88,7 @@ class CorporationRunOrder(RunOrder):
 				corporation_markets[cm.corporation] = []
 			corporation_markets[cm.corporation].append(cm)
 
-		form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets)
+#		form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets)
 
 		return form
 
