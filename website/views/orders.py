@@ -2,9 +2,11 @@ from __future__ import absolute_import
 from django.shortcuts import render as django_render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
+from django.conf import settings
 from engine.models import Order
 from website.utils import get_player, get_orders_availability, get_order_by_name
 from website.decorators import render, inject_game_and_player_into_response, find_player_from_game_id
+from utils.read_markdown import read_markdown
 
 import json
 
@@ -17,6 +19,8 @@ def orders(request, game, player):
 	existing_orders = [order.to_child() for order in player.order_set.filter(turn=player.game.current_turn)]
 	for existing_order in existing_orders:
 		existing_order.name = existing_order.__class__.__name__
+		path = '%s/data/order_description/InformationOrder.md' % (settings.BASE_DIR)
+		existing_order.info = read_markdown(path)
 
 	existing_orders_cost = sum(o.get_cost() for o in existing_orders)
 
@@ -66,9 +70,11 @@ def add_order(request, game_id, order_type):
 	else:
 		form = instance.get_form()
 
+	path = '%s/data/order_description/InformationOrder.md' % (settings.BASE_DIR)
 	order = {
 		"game": player.game,
 		"title": instance.title,
+		"info": read_markdown(path),
 		"name": SubOrder.__name__,
 		"form": form,
 	}
