@@ -4,6 +4,7 @@ Chaque part dans la première corpo rapporte actifs × 75 000 ₵ à la fin du t
 Chaque part dans une autre corpo rapporte actifs × 50 000 ₵ à la fin du tour.
 
 à la fin du tour 7 vous gagnez :
+
 * 5 Points de Victoire pour chaque part dans la corpo en tête du classement
 * 4 Points de Victoire par part dans la deuxième corpo
 * 3 Points de Victoire par part dans la troisième corpo
