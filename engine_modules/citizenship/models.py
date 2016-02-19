@@ -6,7 +6,7 @@ from engine_modules.corporation.models import Corporation
 
 class Citizenship(models.Model):
 	player = models.ForeignKey(Player)
-	corporation = models.ForeignKey(Corporation, null=True, on_delete=models.SET_NULL)
+	corporation = models.ForeignKey(Corporation, null=True, on_delete=models.SET_NULL, label="test")
 	turn = models.PositiveSmallIntegerField(default=0)
 
 	def __unicode__(self):
