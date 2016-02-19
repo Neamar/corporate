@@ -60,7 +60,6 @@ class BuyShareOrder(Order):
 	def get_form(self, data=None):
 		form = super(BuyShareOrder, self).get_form(data)
 		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
-		form.fields['corporation'].label = "test"
 
 		return form
 
