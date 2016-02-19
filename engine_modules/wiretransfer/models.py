@@ -32,8 +32,8 @@ class WiretransferOrder(Order):
 	def get_form(self, data=None):
 		form = super(WiretransferOrder, self).get_form(data)
 		form.fields['recipient'].queryset = Player.objects.filter(game=self.player.game).exclude(pk=self.player.pk)
-		form.fields['recipient'].label = u'Joueur : '
-		form.fields['amount'].label = u'Montant : '
+		form.fields['recipient'].label = u'Joueur'
+		form.fields['amount'].label = u'Montant'
 
 		return form
 
