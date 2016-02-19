@@ -6,7 +6,7 @@ from engine_modules.corporation.models import Corporation
 
 class Citizenship(models.Model):
 	player = models.ForeignKey(Player)
-	corporation = models.ForeignKey(Corporation, null=True, on_delete=models.SET_NULL, label="test")
+	corporation = models.ForeignKey(Corporation, null=True, on_delete=models.SET_NULL)
 	turn = models.PositiveSmallIntegerField(default=0)
 
 	def __unicode__(self):
@@ -42,6 +42,7 @@ class CitizenshipOrder(Order):
 		form = super(CitizenshipOrder, self).get_form(data)
 		inner_qs = self.player.share_set.all().values("corporation")
 		form.fields['corporation'].queryset = self.player.game.corporation_set.filter(pk__in=inner_qs)
+		form.fields['corporation'].label = "test"
 		return form
 
 orders = (CitizenshipOrder,)
