@@ -4,6 +4,7 @@ hidden {
 
 .dropdown {
 	position: relative;
+	z-index:9999;
 
 	a {
 		display: block;
@@ -260,6 +261,7 @@ hidden {
 	display: none;
 
 	&.form-errored {
+		display: inline-block;
 		.order {
 			background-color: rgba(236, 7, 7, 0.5);
 		}
@@ -307,6 +309,9 @@ hidden {
 	}
 	form {
 	padding: 20px 20px 0!important;
+		.hidden {
+			display: none;
+		}
 
 		table {
 			max-width: 450px;

@@ -10,6 +10,7 @@ from engine.models import Game
 
 from collections import OrderedDict
 import string
+import random
 
 
 class DropdownWidget(widgets.Select):
@@ -19,27 +20,41 @@ class DropdownWidget(widgets.Select):
 	"""
 
 	def __init__(self, *args, **kwargs):
+		container_id = "None"
+		if 'container_id' in kwargs:
+			container_id = kwargs['container_id']
+			del(kwargs['container_id'])
+
 		super(DropdownWidget, self).__init__(*args, **kwargs)
 		self.data = args[0]
+		self.container_id = container_id
 
 	def render(self, name, value, attrs=None, choices=()):
 
-		# # print 'name: {0}'.format(name)
+		# print 'name: {0}'.format(name)
 		# print 'value: {0}'.format(value)
 		# print 'attrs: {0}'.format(attrs)
 		# print 'choices: {0}'.format(choices)
 
-		html = '<div class="dropdown">\n<ul>\n    <li>\n        <a href="">Corporations</a>\n' + ' ' * 8 + '<ul>\n'
+		tmpid = ''
+		for i in range(20):
+			tmpid += random.choice(string.lowercase)
+		print tmpid
+
+		html = '<div class=hidden id=' + tmpid + '>\n' + super(DropdownWidget, self).render(name, value, attrs, choices=choices) + '\n</div>'
+		html += '<div class="dropdown">\n<ul>\n    <li>\n        <a href="">Corporations</a>\n' + ' ' * 8 + '<ul>\n'
 		for key in self.data.keys():
 			html += ' ' * 12 + '<li>\n' + ' ' * 16 + '<a href="">{0}</a>\n'.format(str(key)) + ' ' * 16 + '<ul>\n'
-			html += ' ' * 16 + '<select id="{0}" name="{1}" onchange="{1}">\n'.format(attrs['id'], name, '')
+#			html += ' ' * 16 + '<select id="{0}" name="{1}" onchange="{1}">\n'.format(attrs['id'], name, '')
 			for value in self.data[key]:
-				# html += ' ' * 20 + '<li>{0}</li>\n'.format(j)
-				html += ' ' * 20 + '<option value="{0}">{1}</option>\n'.format(value.id, str(value))
-			html += ' ' * 16 + '</select>\n' + ' ' * 16 + '</ul>\n' + ' ' * 12 + '</li>\n'
+				try:
+					html += u' ' * 20 + u'<li onclick="{0}">\n'.format('dropdown_select(\'' + tmpid + '\', ' + str(value.id) + ');') + u' ' * 24 + u'{0}\n'.format(value.market.name) + u' ' * 20 + u'</li>\n'
+#				html += ' ' * 20 + '<option value="{0}">{1}</option>\n'.format(value.id, str(value))
+				except Exception,e:
+					print str(e)
+			html += ' ' * 16 + '</ul>\n' + ' ' * 12 + '</li>\n'
 		html += '        </ul>\n    </li>\n</ul>\n</div>'
 		# print "in render: {0}".format(html)
-		html = super(DropdownWidget, self).render(name, value, attrs, choices)
 		return html
 
 	def value_from_datadict(self, data, files, name):
@@ -89,8 +104,9 @@ class CorporationRunOrder(RunOrder):
 				corporation_markets[cm.corporation] = []
 			corporation_markets[cm.corporation].append(cm)
 
-		# choices = [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
-		# form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets, choices=choices)
+		print 'type: %s' % self.type
+		choices = [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
+		form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets, container_id="lol", choices=choices)
 
 		return form
 

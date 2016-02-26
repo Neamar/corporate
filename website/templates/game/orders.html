@@ -11,14 +11,23 @@ request = new XMLHttpRequest();
  
 if (!request)
 	alert("Error initializing XMLHttpRequest!");
- 
+
 function toggle_order_display(id) {
+	// Make all other order forms invisible
+	reset_order_display();
 	var elmt = document.getElementById(id + '123');
 	var disp = elmt.style.display
 	if (disp == '' || disp == 'none') {
 		elmt.style.display = 'block';
 	} else {
 		elmt.style.display = 'none';
+	}
+}
+
+function reset_order_display() {
+	var orders = document.getElementsByClassName("order-form-content");
+	for(i = 0; i < orders.length; i++) {
+		orders[i].style.display = 'none';
 	}
 }
 
@@ -49,11 +58,30 @@ function updatePage() {
 	}
 }
 
+function dropdown_select(container_id, value) {
+	var containers = document.getElementsByClassName("order-form-container");
+	alert('container_id: ' + container_id);
+	alert('value: ' + value);
+	// we should check the length of that list
+	var sel_list = document.getElementById(container_id).getElementsByTagName("select");
+	var target_CM_sel;
+	for(i = 0; i < sel_list.length; i++) {
+		if(sel_list[i].name == "target_corporation_market")
+		{
+			target_CM_sel = sel_list[i];
+		}
+	}
+	alert("target_CM_sel.id: " + target_CM_sel.id);
+//.getElementsByName("target_corporation_market")[0];
+	target_CM_sel.value = value;
+//	alert("target_CM_sel.value: " + target_CM_sel.value);
+}
+
 function update_select(select, data) {
 	select.find('option').remove();
 	select.append('<option value="" selected="selected">---------</option>')
 	for (var k in data) {
-		select.append($('<option value="'+k+'">'+data[k]+'</option>'));
+		select.append($('<option value="' + k + '">' + data[k] + '</option>'));
 	}
 }
 </script>
