@@ -51,8 +51,8 @@ function gen_dropdown(sel_id, data) {
 		html += '</ul></li>';
 	}
 	html += '</ul></li></ul>';
-	alert(html);
-	return(html);
+//	alert(html);
+	return html;
 }
 
 // what to do when http ready state changes
@@ -64,7 +64,6 @@ function updatePage() {
 			var data = JSON.parse(request.responseText); 
 			var dropdowns = document.getElementsByClassName("dropdown");
 			for(i = 0; i < dropdowns.length; i++) {
-				alert('i: ' + i);
 				sel_id = '';
 				for(j = 'dd_'.length; j < dropdowns[i].id.length; j++) {
 					sel_id += dropdowns[i].id[j];
@@ -84,8 +83,8 @@ function updatePage() {
 
 function dropdown_select(container_id, value) {
 	var containers = document.getElementsByClassName("order-form-container");
-	alert('container_id: ' + container_id);
-	alert('value: ' + value);
+//	alert('container_id: ' + container_id);
+//	alert('value: ' + value);
 	// we should check the length of that list
 	var sel_list = document.getElementById(container_id).getElementsByTagName("select");
 	var target_CM_sel;
@@ -95,10 +94,7 @@ function dropdown_select(container_id, value) {
 			target_CM_sel = sel_list[i];
 		}
 	}
-	alert("target_CM_sel.id: " + target_CM_sel.id);
-//.getElementsByName("target_corporation_market")[0];
 	target_CM_sel.value = value;
-//	alert("target_CM_sel.value: " + target_CM_sel.value);
 }
 
 function update_dropdown(dropdown, data) {

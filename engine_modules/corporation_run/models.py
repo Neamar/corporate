@@ -39,7 +39,6 @@ class DropdownWidget(widgets.Select):
 		tmpid = ''
 		for i in range(20):
 			tmpid += random.choice(string.lowercase)
-		print tmpid
 
 		html = '<div class=hidden id=' + tmpid + '>\n' + super(DropdownWidget, self).render(name, value, attrs, choices=choices) + '\n</div>'
 		html += '<div class="dropdown" id=dd_' + tmpid + '>\n<ul>\n    <li>\n Corporations\n' + ' ' * 8 + '<ul>\n'
@@ -104,7 +103,6 @@ class CorporationRunOrder(RunOrder):
 				corporation_markets[cm.corporation] = []
 			corporation_markets[cm.corporation].append(cm)
 
-		print 'type: %s' % self.type
 		choices = [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
 		form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets, container_id="lol", choices=choices)
 
