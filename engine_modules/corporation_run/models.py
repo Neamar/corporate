@@ -42,9 +42,9 @@ class DropdownWidget(widgets.Select):
 		print tmpid
 
 		html = '<div class=hidden id=' + tmpid + '>\n' + super(DropdownWidget, self).render(name, value, attrs, choices=choices) + '\n</div>'
-		html += '<div class="dropdown">\n<ul>\n    <li>\n        <a href="">Corporations</a>\n' + ' ' * 8 + '<ul>\n'
+		html += '<div class="dropdown" id=dd_' + tmpid + '>\n<ul>\n    <li>\n Corporations\n' + ' ' * 8 + '<ul>\n'
 		for key in self.data.keys():
-			html += ' ' * 12 + '<li>\n' + ' ' * 16 + '<a href="">{0}</a>\n'.format(str(key)) + ' ' * 16 + '<ul>\n'
+			html += ' ' * 12 + '<li>\n' + ' ' * 16 + '{0}\n'.format(str(key)) + ' ' * 16 + '<ul>\n'
 #			html += ' ' * 16 + '<select id="{0}" name="{1}" onchange="{1}">\n'.format(attrs['id'], name, '')
 			for value in self.data[key]:
 				try:

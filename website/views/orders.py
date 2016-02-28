@@ -46,10 +46,18 @@ def orders(request, game, player):
 def get_targets(request, game, player, stealer_corporation_id, qs=None):
 
 	stealer_corporation = game.corporation_set.get(id=stealer_corporation_id)
-	results = {}
+	results = {'corporation': {}, 'market': {}}
 	for m in stealer_corporation.corporation_markets:
 		for cm in m.market.corporationmarket_set.filter(turn=game.current_turn, value__gte=m.value).exclude(corporation__id=stealer_corporation_id):
-			results[cm.id] = str(cm)
+			corporation_slug = cm.corporation.base_corporation_slug
+			if corporation_slug not in results['corporation'].keys():
+				results['corporation'][corporation_slug] = []
+			results['corporation'][corporation_slug].append((cm.market.name, cm.id))
+
+			if cm.market.name not in results['market'].keys():
+				results['market'][cm.market.name] = []
+			results['market'][cm.market.name].append((corporation_slug, cm.id))
+
 	return HttpResponse(json.dumps(results))
 
 

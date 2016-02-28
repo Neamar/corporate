@@ -39,6 +39,22 @@ function get_targets(sel) {
 	request.send(null);
 } 
  
+function gen_dropdown(sel_id, data) {
+	html  = '<ul><li>Corporations<ul>';
+	for (var k in data['corporation']) {
+		html += '<li><a href="">' + k + '</a><ul>';
+		for (var l in data['corporation'][k]) {
+			html += '<li onclick="dropdown_select(\'' + sel_id + '\', ';
+			html += data['corporation'][k][l][1] + ');">';
+			html += data['corporation'][k][l][0] + '</li>';
+		}
+		html += '</ul></li>';
+	}
+	html += '</ul></li></ul>';
+	alert(html);
+	return(html);
+}
+
 // what to do when http ready state changes
 function updatePage() { 
 	if (request.readyState == 4) {
@@ -46,7 +62,15 @@ function updatePage() {
   
 			// get response array
 			var data = JSON.parse(request.responseText); 
-			update_select($('select[name=target_corporation_market]'), data);
+			var dropdowns = document.getElementsByClassName("dropdown");
+			for(i = 0; i < dropdowns.length; i++) {
+				alert('i: ' + i);
+				sel_id = '';
+				for(j = 'dd_'.length; j < dropdowns[i].id.length; j++) {
+					sel_id += dropdowns[i].id[j];
+				}
+				dropdowns[i].innerHTML = gen_dropdown(sel_id, data);
+			}
 		}
 		// some error checking
 		else if (request.status == 404) {
@@ -77,9 +101,13 @@ function dropdown_select(container_id, value) {
 //	alert("target_CM_sel.value: " + target_CM_sel.value);
 }
 
+function update_dropdown(dropdown, data) {
+	dropdown.find('ul').remove();
+}
+
 function update_select(select, data) {
 	select.find('option').remove();
-	select.append('<option value="" selected="selected">---------</option>')
+	select.append('<option value="" selected="selected">---------</option>');
 	for (var k in data) {
 		select.append($('<option value="' + k + '">' + data[k] + '</option>'));
 	}
