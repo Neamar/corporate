@@ -44,16 +44,14 @@ class DropdownWidget(widgets.Select):
 		html += '<div class="dropdown" id=dd_' + tmpid + '>\n<ul>\n    <li>\n Corporations\n' + ' ' * 8 + '<ul>\n'
 		for key in self.data.keys():
 			html += ' ' * 12 + '<li>\n' + ' ' * 16 + '{0}\n'.format(str(key)) + ' ' * 16 + '<ul>\n'
-#			html += ' ' * 16 + '<select id="{0}" name="{1}" onchange="{1}">\n'.format(attrs['id'], name, '')
 			for value in self.data[key]:
 				try:
 					html += u' ' * 20 + u'<li onclick="{0}">\n'.format('dropdown_select(\'' + tmpid + '\', ' + str(value.id) + ');') + u' ' * 24 + u'{0}\n'.format(value.market.name) + u' ' * 20 + u'</li>\n'
-#				html += ' ' * 20 + '<option value="{0}">{1}</option>\n'.format(value.id, str(value))
-				except Exception,e:
+				except Exception, e:
 					print str(e)
 			html += ' ' * 16 + '</ul>\n' + ' ' * 12 + '</li>\n'
 		html += '        </ul>\n    </li>\n</ul>\n</div>'
-		# print "in render: {0}".format(html)
+
 		return html
 
 	def value_from_datadict(self, data, files, name):
