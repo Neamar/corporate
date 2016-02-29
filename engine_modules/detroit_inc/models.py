@@ -76,6 +76,7 @@ class DIncVoteOrder(Order):
 	def get_form(self, data=None):
 		form = super(DIncVoteOrder, self).get_form(data)
 		form.fields['coalition_weight'] = PlainTextField(initial=str(self.get_weight()))
+		form.fields['coalition_weight'].label = u'Votre poids'
 
 		return form
 

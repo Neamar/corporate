@@ -128,7 +128,8 @@ class RunOrder(Order):
 				modifier = -20
 
 		values = range(0, ((max_additional_percents) / 10) + 1)
-		form.fields['additional_percents'].widget = forms.Select(choices=((i, "{0} % - {1} k₵".format(self.BASE_SUCCESS_PROBABILITY + i * 10 + modifier, self.calc_cost(i))) for i in values))
+		form.fields['additional_percents'].widget = forms.Select(choices=((i, u"{1} k₵ - précision {0}".format(self.BASE_SUCCESS_PROBABILITY + i * 10 + modifier, self.calc_cost(i))) for i in values))
+		form.fields['additional_percents'].label = u'Prix'
 		return form
 
 	def custom_description(self):

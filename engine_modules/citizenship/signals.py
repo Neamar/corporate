@@ -26,6 +26,15 @@ def limit_citizenship_order(sender, instance, **kwargs):
 
 
 @receiver(validate_order, sender=CitizenshipOrder)
+def stop_when_no_shares(sender, instance, **kwargs):
+	"""
+	Order should not be available when player has no shares at all
+	"""
+	if not instance.player.share_set.exists():
+		raise OrderNotAvailable("Vous devez avoir une part dans une corporation pour en prendre la nationnalité.")
+
+
+@receiver(validate_order, sender=CitizenshipOrder)
 def citizenship_need_one_share(sender, instance, **kwargs):
 	"""
 	You need at least one share to get a citizenship

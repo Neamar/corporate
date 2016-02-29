@@ -40,7 +40,9 @@ class CitizenshipOrder(Order):
 
 	def get_form(self, data=None):
 		form = super(CitizenshipOrder, self).get_form(data)
-		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
+		inner_qs = self.player.share_set.all().values("corporation")
+		form.fields['corporation'].queryset = self.player.game.corporation_set.filter(pk__in=inner_qs)
+		
 		return form
 
 orders = (CitizenshipOrder,)
