@@ -244,7 +244,7 @@ class ProtectionOrder(RunOrder):
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)
 		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn)
-		form.fields['protected_corporation_market'].label = u'Marché'
+		form.fields['protected_corporation_market'].label = u'Cible'
 		# Remove the additional percent field
 		form.fields.pop('additional_percents')
 

@@ -31,10 +31,10 @@ class InformationOrder(RunOrder):
 		# form.fields['player_targets'].queryset = self.player.game.player_set.all().exclude(pk=self.player.pk)
 		# form.fields['corporation_targets'].queryset = self.player.game.corporation_set.all().exclude(pk=self.player.citizenship.corporation.pk if self.player.citizenship.corporation is not None else -1)
 		# Remove the additional percents field
-		form.fields['player_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.player_set.all().exclude(pk=self.player.pk), required=False, help_text='150 k₵ par joueur')
+		form.fields['player_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.player_set.all().exclude(pk=self.player.pk), required=False)
 		form.fields['player_targets'].label = u'150 k₵ par joueur'
-		form.fields['corporation_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.corporation_set.all(), required=False, help_text='50 k₵ par corporation')
-		form.fields['player_targets'].label = u'50 k₵ par corporation'
+		form.fields['corporation_targets'] = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=self.player.game.corporation_set.all(), required=False)
+		form.fields['corporation_targets'].label = u'50 k₵ par corporation'
 		# Remove the additional percent field
 		form.fields.pop('additional_percents')
 		return form
