@@ -59,7 +59,7 @@ class DIncVoteOrder(Order):
 			vote_registry[p] = []
 
 		# For each corporation, get the 2 players that have the most shares
-		for c in corporations:
+		for c in corporations.prefetch_related('share_set'):
 			# Filter to shares bought up to the turn this order was passed
 			shareholders = (s.player for s in c.share_set.filter(turn__lte=self.player.game.current_turn).prefetch_related('player'))
 			top_holders = Counter(shareholders).most_common(2)
