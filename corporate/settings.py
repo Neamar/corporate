@@ -33,7 +33,7 @@ def show_toolbar(request):
 
 DEBUG_TOOLBAR_CONFIG = {
     # ...
-    'SHOW_TOOLBAR_CALLBACK': 'project.settings.show_toolbar',
+    'SHOW_TOOLBAR_CALLBACK': 'corporate.settings.show_toolbar',
 }
 
 # Application definition
