@@ -47,7 +47,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
-    'debug_toolbar',
     'compressor',
     'website',
     'docs',
@@ -69,6 +68,7 @@ INSTALLED_APPS = (
     'engine_modules.wiretransfer',
     'engine_modules.market',
     'engine_modules.end_turn',
+    # 'debug_toolbar',
 )
 
 

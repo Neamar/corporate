@@ -26,7 +26,7 @@ def wallstreet(request, game, player, turn):
 	# Table data
 	corporations = game.get_ladder(turn=turn - 1)
 	for corporation in corporations:
-		corporation_markets = corporation.get_corporation_markets(turn - 1).order_by('market__name')
+		corporation_markets = corporation.get_corporation_markets(turn - 1).order_by('market__name').select_related('market')
 		events = Log.objects.for_corporation(corporation, player, turn)
 		if turn == game.current_turn:
 			assets = corporation.assets

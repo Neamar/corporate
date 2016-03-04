@@ -94,7 +94,7 @@ class CorporationRunOrder(RunOrder):
 	def get_form(self, data=None):
 		form = super(CorporationRunOrder, self).get_form(data)
 		# We get all the corporationMarket of uncrashed corporations
-		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn)
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn).select_related('market', 'corporation')
 		form.fields['target_corporation_market'].label = u'Cible : '
 		corporation_markets = {}
 		for cm in form.fields['target_corporation_market'].queryset.select_related('corporation'):
@@ -209,7 +209,7 @@ class SabotageOrder(CorporationRunOrder):
 	def get_form(self, data=None):
 		form = super(SabotageOrder, self).get_form(data)
 		# we can't make a sabotage on a negative or null corporationMarket
-		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn, value__gt=0)
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn, value__gt=0).select_related('market', 'corporation')
 
 		return form
 
@@ -243,7 +243,7 @@ class ProtectionOrder(RunOrder):
 
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)
-		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn)
+		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn).select_related('market', 'corporation')
 		form.fields['protected_corporation_market'].label = u'Cible'
 		# Remove the additional percent field
 		form.fields.pop('additional_percents')
