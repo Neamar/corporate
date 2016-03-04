@@ -97,7 +97,7 @@ class CorporationRunOrder(RunOrder):
 		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn)
 		form.fields['target_corporation_market'].label = u'Cible : '
 		corporation_markets = {}
-		for cm in form.fields['target_corporation_market'].queryset:
+		for cm in form.fields['target_corporation_market'].queryset.select_related('corporation'):
 			if cm.corporation not in corporation_markets.keys():
 				corporation_markets[cm.corporation] = []
 			corporation_markets[cm.corporation].append(cm)
