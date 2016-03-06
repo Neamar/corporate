@@ -11,9 +11,32 @@ hidden {
 		padding: 5px 15px;
 		color: #000;
 	}
+
+	//first level Container
+	& > ul > li > ul {
+		margin-top: 32px;
+
+		& > li {
+			&:hover {
+				cursor: default;
+			}
+		}
+	}
+
+	//Sec level Container
+	& > ul > li > ul > li > ul {
+		& > li {
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+	& > ul > li:hover > ul > li > ul{
+		left: 262px;
+	}
+
 	ul {
-		padding-right: 300%;
-		margin-right: 300%;
+		padding: 0;
 		float: left;
 		-webkit-transition: .10s;
 		transition: .10s;
@@ -23,10 +46,11 @@ hidden {
 	li {
 		float: left;
 		position: relative;
-		width: 150px;
+		width: 250px;
 		background: white;
 		-webkit-transition: .10s;
 		transition: .10s;
+		padding: 6px;
 	}
 	.dropdown > ul > li > a, h1 {
 		text-transform: uppercase;
@@ -37,10 +61,6 @@ hidden {
 		visibility: hidden;
 		opacity: 0;
 		left: 100%;
-		top: 0;
-	}
-	ul ul ul {
-		left: 100%,
 		top: 0;
 	}
 	li:hover, li:hover li {
@@ -56,6 +76,7 @@ hidden {
 		display: block;
 		visibility: visible;
 		opacity: 1;
+		left: 0;
 	}
 }
 
@@ -188,6 +209,7 @@ hidden {
 	margin: 0;
 	width: 100%;
 	margin-bottom: 35px;
+	text-align: center;
 
 	li {
 
@@ -223,6 +245,10 @@ hidden {
 			margin-right: 0px;
 		}
 
+		&#BuyInfluenceOrder h2 {
+			font-size: 12px;
+		}
+
 		&.disabled {
 			background: url("/static/img/content/order-vote-disabled.jpg") center top no-repeat;
 
@@ -243,7 +269,7 @@ hidden {
 		}
 
 		h2 {
-			font-size: 14px;
+			font-size: 13px;
 			text-transform: uppercase;
 			color: #fff;
 			text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
@@ -253,6 +279,10 @@ hidden {
 			bottom: 0;
 			width: 100%;
 			line-height: 15px;
+			margin-bottom: 5px;
+		}
+		svg {
+			margin-top: 5px;
 		}
 	}
 }

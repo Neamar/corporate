@@ -119,12 +119,12 @@ $( document ).ready(function() {
         var heightEven = $that.height() + 15;
         $that.next().css( "margin-top", heightEven );
       }
-      else { 
-
-        //console.log( index + ": " + $( this ).height() );
-      }
+    });
 
 
+    $('.dropdown').on('click', 'ul > li > ul > li > ul > li', function () {
+    	var text = $(this).text()
+    	$('.dropdown > ul > li span').text(text);
     });
 });
 </script>

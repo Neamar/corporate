@@ -40,7 +40,7 @@ function get_targets(sel) {
 } 
  
 function gen_dropdown(sel_id, data) {
-	html  = '<ul><li>Corporations<ul>';
+	html  = '<ul><li><span>Corporations</span><ul>';
 	for (var k in data['corporation']) {
 		html += '<li><a href="">' + k + '</a><ul>';
 		for (var l in data['corporation'][k]) {

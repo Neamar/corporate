@@ -28,10 +28,18 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
+def show_toolbar(request):
+    return True
+
+DEBUG_TOOLBAR_CONFIG = {
+    # ...
+    'SHOW_TOOLBAR_CALLBACK': 'corporate.settings.show_toolbar',
+}
+
 # Application definition
 
 INSTALLED_APPS = (
-    # 'debug_toolbar',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,6 +68,7 @@ INSTALLED_APPS = (
     'engine_modules.wiretransfer',
     'engine_modules.market',
     'engine_modules.end_turn',
+    # 'debug_toolbar',
 )
 
 
