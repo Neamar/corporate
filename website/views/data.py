@@ -111,7 +111,7 @@ def shares(request, game, player, turn):
 	Shares data
 	"""
 
-	players = game.player_set.all().order_by('pk')
+	players = game.player_set.all().order_by('name')
 	corporations = list(game.corporation_set.all().order_by('pk'))
 	shares = Share.objects.filter(player__game=game, turn__lte=turn).select_related('corporation', 'player')
 	corporations_shares = []
