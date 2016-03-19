@@ -109,7 +109,7 @@ class InformationOrder(RunOrder):
 	def get_cost(self):
 		# We cannot calculate the real cost when we save it for the first time. This is beacause We cannot access corporations_taget and player targets
 		# before the order is created. So for the first time we give the minimum and then we use the get_cost() function and not the oreder.cost value
-		dumb_result = 0
+		dumb_result = 50
 		return self.get_real_cost() if self.pk is not None else dumb_result
 
 	def get_real_cost(self):
