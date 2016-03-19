@@ -31,7 +31,7 @@ def stop_when_no_shares(sender, instance, **kwargs):
 	Order should not be available when player has no shares at all
 	"""
 	if not instance.player.share_set.exists():
-		raise OrderNotAvailable("Vous devez avoir une part dans une corporation pour en prendre la nationnalité.")
+		raise OrderNotAvailable("Vous devez avoir une part dans une corporation pour en prendre la nationalité.")
 
 
 @receiver(validate_order, sender=CitizenshipOrder)
