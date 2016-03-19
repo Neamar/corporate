@@ -7,7 +7,7 @@ class BuyShareTask(OrderResolutionTask):
 	"""
 	Buy all shares for all players
 	"""
-	RESOLUTION_ORDER = 0
+	RESOLUTION_ORDER = 25
 	ORDER_TYPE = BuyShareOrder
 
 
