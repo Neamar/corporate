@@ -162,7 +162,7 @@ def get_dinc_explaination_text(self, turn=None):
 		return self.dincvotesession_set.get(turn=turn).explaination_text
 	except DIncVoteSession.DoesNotExist:
 		# No vote
-		return None
+		return 'Ici apparaitra le détail des coalitions pour les prochains tours.'
 
 Game.get_dinc_coalition = get_dinc_coalition
 Game.get_dinc_explaination_text = get_dinc_explaination_text

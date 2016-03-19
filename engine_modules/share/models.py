@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django import forms
 from engine.models import Player, Order, Game
 from engine_modules.corporation.models import Corporation
 
@@ -31,7 +32,7 @@ class BuyShareOrder(Order):
 	def get_cost(self):
 		if not hasattr(self, "corporation"):
 			# 1: avoid displaying the order when the player has no money left
-			return 1
+			return self.player.game.get_ladder()[-1].assets * BuyShareOrder.BASE_COST
 		elif self.corporation == self.player.game.get_ladder()[0]:
 			if self.player.citizenship.corporation != self.corporation:
 				return BuyShareOrder.FIRST_COST * self.corporation.assets
@@ -59,7 +60,7 @@ class BuyShareOrder(Order):
 
 	def get_form(self, data=None):
 		form = super(BuyShareOrder, self).get_form(data)
-		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
+		form.fields['corporation'].widget = forms.Select(choices=((i, u"{0} ({2} actifs) - {1} k₵".format(i.base_corporation.name, i.assets, BuyShareOrder.BASE_COST * i.assets)) for i in self.player.game.corporation_set.all()))
 
 		return form
 
