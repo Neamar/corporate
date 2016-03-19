@@ -239,7 +239,7 @@ class ProtectionOrder(RunOrder):
 		self.player.game.add_event(event_type=Game.OPE_PROTECTION, data={"player": self.player.name, "market": self.protected_corporation_market.market.name, "corporation": self.protected_corporation.base_corporation.name}, corporation=self.protected_corporation, corporation_market=self.protected_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Envoyer une équipe protéger le marxhé %s de %s" % (self.protected_corporation_market.market.name, self.protected_corporation.base_corporation.name)
+		return u"Envoyer une équipe protéger %s (%s)" % (self.protected_corporation.base_corporation.name, self.protected_corporation_market.market.name)
 
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)
