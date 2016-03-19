@@ -31,7 +31,7 @@ class BuyShareOrder(Order):
 
 	def get_cost(self):
 		if not hasattr(self, "corporation"):
-			# 1: avoid displaying the order when the player has no money left
+			# avoid displaying the order when the player can't affort the cheapest
 			return self.player.game.get_ladder()[-1].assets * BuyShareOrder.BASE_COST
 		elif self.corporation == self.player.game.get_ladder()[0]:
 			if self.player.citizenship.corporation != self.corporation:
@@ -40,6 +40,20 @@ class BuyShareOrder(Order):
 				return BuyShareOrder.FIRST_AND_CITIZEN_COST * self.corporation.assets
 		else:
 			return BuyShareOrder.BASE_COST * self.corporation.assets
+
+	def get_priced_list(self):
+		dropdownchoices = self.player.game.get_ladder()
+		first = True
+		for corporation in dropdownchoices:
+			if first:
+				if self.player.citizenship.corporation != corporation:
+					corporation.text = u"{0} ({1} actifs) - {2} k₵".format(corporation.base_corporation.name, corporation.assets, BuyShareOrder.FIRST_COST * corporation.assets)
+				else:
+					corporation.text = u"{0} ({1} actifs) - {2} k₵".format(corporation.base_corporation.name, corporation.assets, BuyShareOrder.FIRST_AND_CITIZEN_COST * corporation.assets)
+			else:
+				corporation.text = u"{0} ({1} actifs) - {2} k₵".format(corporation.base_corporation.name, corporation.assets, BuyShareOrder.BASE_COST * corporation.assets)
+			first = False
+		return dropdownchoices
 
 	def resolve(self):
 		# Pay.
@@ -60,7 +74,7 @@ class BuyShareOrder(Order):
 
 	def get_form(self, data=None):
 		form = super(BuyShareOrder, self).get_form(data)
-		form.fields['corporation'].widget = forms.Select(choices=((i, u"{0} ({2} actifs) - {1} k₵".format(i.base_corporation.name, i.assets, BuyShareOrder.BASE_COST * i.assets)) for i in self.player.game.corporation_set.all()))
+		form.fields['corporation'].widget = forms.Select(choices=((corporation.id, corporation.text) for corporation in self.get_priced_list()))
 
 		return form
 
