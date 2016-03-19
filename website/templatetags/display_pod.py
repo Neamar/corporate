@@ -12,7 +12,7 @@ NO_CONTEXT_REQUIRED = "__no_context"
 
 
 def players_pod(context):
-	players = context['game'].player_set.all()
+	players = context['game'].player_set.all().order_by('name')
 
 	for player in players:
 		player.events = Log.objects.for_player(player=player, asking_player=context['player'], turn=context['turn'])
