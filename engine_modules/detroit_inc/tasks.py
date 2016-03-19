@@ -114,6 +114,9 @@ class DIncVoteTask(ResolutionTask):
 
 			coalition_breakdown.append(content)
 
+		if not coalition_breakdown:
+			return u"Personne n'a choisi de coalition ce tour-ci"
+
 		return string.join(coalition_breakdown, '')
 
 	def create_logs(self, orders):

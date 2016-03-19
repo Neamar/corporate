@@ -25,12 +25,11 @@ def d_inc_pod(context):
 
 	game = context['game']
 	current_coalition = game.get_dinc_coalition(turn=context['turn'])
+	display = game.get_dinc_explaination_text(turn=context['turn'])
 
 	if current_coalition is None:
 		current_coalition = 'None'
-		display = 'Aucune coalition n\'a obtenu la majorité ce tour-ci.'
-	else:
-		display = game.get_dinc_explaination_text(turn=context['turn'])
+		
 	return {
 		'd_inc_line': current_coalition,
 		'd_inc_line_display': display
