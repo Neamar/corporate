@@ -57,7 +57,8 @@ class BuyShareOrder(Order):
 
 	def resolve(self):
 		# Pay.
-		self.player.money -= self.get_cost()
+		price = self.get_cost()
+		self.player.money -= price
 		self.player.save()
 
 		# Add a share to the player
@@ -67,7 +68,7 @@ class BuyShareOrder(Order):
 		).save()
 
 		# Create game_event
-		self.player.game.add_event(event_type=Game.BUY_SHARE, data={"player": self.player.name, "corporation": self.corporation.base_corporation.name}, corporation=self.corporation, players=[self.player])
+		self.player.game.add_event(event_type=Game.BUY_SHARE, data={"player": self.player.name, "corporation": self.corporation.base_corporation.name, 'cost': price}, corporation=self.corporation, players=[self.player])
 
 	def description(self):
 		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)

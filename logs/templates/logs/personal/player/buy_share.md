@@ -1,1 +1,1 @@
-Vous avez acheté une part dans {{ corporation }}
+Vous avez acheté une part dans {{ corporation }} pour **{{ cost }} k₵**

@@ -131,7 +131,7 @@ class DIncVoteTask(ResolutionTask):
 			elif order.coalition == DIncVoteOrder.CONS:
 				event_type = Game.VOTE_CONSOLIDATION
 			if event_type is not None:
-				order.player.game.add_event(event_type=event_type, data=None, players=[order.player])
+				order.player.game.add_event(event_type=event_type, data={'weight': order.get_weight()}, players=[order.player])
 
 
 class DIncLineCPUBTask(ResolutionTask):
