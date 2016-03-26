@@ -159,23 +159,32 @@ def player(request, player, game, player_id, turn):
 
 	events = Log.objects.for_player(player=player_profile, asking_player=player, turn=turn)
 
+	if player == player_profile:
+		money = get_current_money(player_profile, turn)
+	else:
+		log = Log.objects.filter(event_type=game.MONEY_NEXT_TURN, game=game, turn=turn, ConcernedPlayer__player=player).filter(ConcernedPlayer__player=player_profile, ConcernedPlayer__personal=True)
+		if log.count() == 1:
+			money = log.data
+		else:
+			money = '?'
+
 	# We do not display the background as long as the viewer doesn't used an information opération to see it
 	# The targeted player is saved in database as a string in the data field which is a json serialized
 	# We will rebuild the piece of string we need and find if it exists in the string stored in database
 	piece_of_string = u'"player": "' + player_profile.name + u'"'
-	if player == player_profile or Log.objects.filter(event_type=game.BACKGROUND, game=game, data__contains=piece_of_string, players=player).count() > 0:
+	if player == player_profile or Log.objects.filter(event_type=game.BACKGROUND, game=game, data__contains=piece_of_string, ConcernedPlayer__player=player).count() > 0:
 		background = player_profile.background
 	else:
 		background = u"Vous devez lancer une opération d'information contre ce joueur pour connaitre son background"
 
 	return {
 		"player_profile": player_profile,
-		"money": get_current_money(player_profile, turn),
+		"money": money,
 		"rp": rp,
 		"corporations": corporations,
 		"qty_shares": sum([corporation.qty_share for corporation in corporations]),
 		"events": events,
 		"request": request,
-		"citizenship": player.citizenship.corporation,
+		"citizenship": player_profile.citizenship.corporation,
 		"background": background,
 	}
