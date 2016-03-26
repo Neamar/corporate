@@ -23,22 +23,30 @@
 	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation_shares.corporation.base_corporation.slug %}">{{ corporation_shares.corporation.base_corporation.slug }}</a></td>
 	{% for share in corporation_shares.shares %}
 
-	{% if share.top %}
-	<td class="main-shareholder tooltip" title="Actionnaire majoritaire">
-	{% else %}
-	<td>
-	{% endif %}
-	{% if share.count != 0 %}
-	{% if share.top %}
-		<strong>{{ share.count }}</strong>
-	{% else %}
-		{{ share.count }}
-	{% endif %}
-	{% if share.citizen %}
-		<svg role="img" class="svg--small svg--white" title="citoyen"><use xlink:href="/static/img/sprite.svg#add_citizenship"></use></svg>
-	{% endif %}
-	{% endif %}
-	</td>
+		{% if share.top %}
+			{% if share.citizen %}
+				<td class="main-shareholder tooltip" title="Actionnaire majoritaire et citoyen">
+			{% else %}
+				<td class="main-shareholder tooltip" title="Actionnaire majoritaire">
+			{% endif %}
+		{% else %}
+			<td>
+		{% endif %}
+		{% if share.count != 0 %}
+			{% if share.top %}
+				<strong>{{ share.count }}</strong>
+			{% else %}
+				{{ share.count }}
+			{% endif %}
+			{% if share.citizen %}
+				{% if share.top %}
+					<svg role="img" class="svg--small svg--white"><use xlink:href="/static/img/sprite.svg#CitizenshipOrder"></use></svg>
+				{% else %}
+					<svg role="img" class="svg--small svg--white" title="citoyen"><use xlink:href="/static/img/sprite.svg#CitizenshipOrder"></use></svg>
+				{% endif %}
+			{% endif %}
+		{% endif %}
+		</td>
 	{% endfor %}
 </tr>
 {% endfor %}
