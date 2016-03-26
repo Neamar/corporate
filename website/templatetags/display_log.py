@@ -14,7 +14,7 @@ def display_log(log, display_context, delta_display=True, size="medium", color="
 
 	r = """<svg role="img" class="svg--%s svg--%s" title="%s"><use xlink:href="/static/img/sprite.svg#%s"></use></svg>""" % (size, color, escape(log.get_display(display_context)), log.event_type.lower())
 
-	if delta_display:
+	if delta_display and log.delta != 0:
 		delta_type = ""
 		if log.delta > 0:
 			delta_type = "positive"
