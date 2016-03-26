@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count
+import json
 
 from engine_modules.corporation.models import Corporation
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
@@ -10,7 +11,7 @@ from engine.models import Player
 from engine_modules.share.models import Share
 from website.utils import get_shares_count, is_top_shareholder, is_citizen, get_current_money
 from utils.read_markdown import parse_markdown
-from logs.models import Log
+from logs.models import Log, ConcernedPlayer
 
 
 @login_required
@@ -160,11 +161,22 @@ def player(request, player, game, player_id, turn):
 	events = Log.objects.for_player(player=player_profile, asking_player=player, turn=turn)
 
 	if player == player_profile:
-		money = get_current_money(player_profile, turn)
+		money = get_current_money(player_profile, turn) + u" k"
 	else:
-		log = Log.objects.filter(event_type=game.MONEY_NEXT_TURN, game=game, turn=turn, ConcernedPlayer__player=player).filter(ConcernedPlayer__player=player_profile, ConcernedPlayer__personal=True)
-		if log.count() == 1:
-			money = log.data
+		concernedPlayer = ConcernedPlayer.objects.filter(Log__event_type=game.MONEY_NEXT_TURN, Log__game=game, Log__turn=turn)
+		
+		is_target = False
+		is_spy = False
+		for m2m in concernedPlayer:
+			if m2m.player == player:
+				is_spy = True
+			if m2m.player == player_profile and m2m.personal:
+				is_target = True
+
+		if is_target and is_spy:
+			data = Log.objects.filter(event_type=game.MONEY_NEXT_TURN, game=game, turn=turn, concerned_player__player=player_profile, concerned_player__personal=True)[0].data
+			context = json.loads(data)
+			money = context['money'] + u" k"
 		else:
 			money = '?'
 
