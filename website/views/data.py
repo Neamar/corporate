@@ -164,10 +164,12 @@ def player(request, player, game, player_id, turn):
 		money = unicode(get_current_money(player_profile, turn)) + u" k"
 		help_text_money = u"Argent disponible"
 	else:
-		# The money is supposed to be a personal information. You can
+		# The money is supposed to be a personal information.
+		# If you have used a information  operation to get the money next turn on a player you are supposed to see it
+		# But only the money at start of the turn, not the money left on player right now
 		help_text_money = u"Argent disponible pour le tour"
+		# We have to find a log that is linked to both players
 		concernedPlayer = ConcernedPlayer.objects.filter(log__event_type=game.MONEY_NEXT_TURN, log__game=game, log__turn=turn - 1).order_by('log')
-		
 		is_target = False
 		is_spy = False
 		last_log = None
