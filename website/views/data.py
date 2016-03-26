@@ -160,7 +160,7 @@ def player(request, player, game, player_id, turn):
 	events = Log.objects.for_player(player=player_profile, asking_player=player, turn=turn)
 
 	# We do not display the background as long as the viewer doesn't used an information opération to see it
-	if player == player_profile or Log.object.filter(event_type=game.BACKGROUND, game=game, player=player, players=player_profile).count() > 0:
+	if player == player_profile or Log.objects.filter(event_type=game.BACKGROUND, game=game, player=player, players=player_profile).count() > 0:
 		background = player_profile.background
 	else:
 		background = u"Vous devez lancer une opération d'information contre ce joueur pour connaitre son background"
