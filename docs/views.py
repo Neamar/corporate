@@ -17,7 +17,12 @@ def get_base_data():
 
 def index(request, page):
 
-	game = request.session['game']
+	# On récupère le game id si on l'a en session pour accéder aux onglets de la session en cours
+	gameid = None
+	try:
+		gameid = request.session['gameid']
+	except:
+		pass
 
 	if page == '':
 		page = 'index'
@@ -46,7 +51,7 @@ def index(request, page):
 	content = mark_safe(content)
 
 	data = get_base_data()
-	data.update({"content": content, "title": title, "game": game})
+	data.update({"content": content, "title": title, "gameid": gameid})
 	return render(request, 'docs/index.html', data)
 
 
@@ -62,7 +67,12 @@ def corporation(request, corporation_slug):
 	Corporation pages
 	"""
 
-	game = request.session['game']
+	# On récupère le game id si on l'a en session pour accéder aux onglets de la session en cours
+	gameid = None
+	try:
+		gameid = request.session['gameid']
+	except:
+		pass
 
 	try:
 		base_corporation = BaseCorporation.base_corporations[corporation_slug]
@@ -73,6 +83,6 @@ def corporation(request, corporation_slug):
 
 	data = get_base_data()
 	data.update({
-		"base_corporation": base_corporation, "game": game
+		"base_corporation": base_corporation, "gameid": gameid
 	})
 	return render(request, 'docs/corporation.html', data)

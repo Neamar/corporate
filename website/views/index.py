@@ -11,6 +11,12 @@ def index(request):
 	"""
 	Welcome to the Corporate Game!
 	"""
+	# On récupère le game id si on l'a en session pour accéder aux onglets de la session en cours
+	gameid = None
+	try:
+		gameid = request.session['gameid']
+	except:
+		pass
 
 	players = []
 
@@ -20,7 +26,8 @@ def index(request):
 	return {
 		"is_authenticated": request.user.is_authenticated(),
 		"user": request.user,
-		"players": players
+		"players": players,
+		"gameid": gameid,
 	}
 
 
