@@ -99,7 +99,8 @@ class Log(models.Model):
 		Game.VOTE_CONSOLIDATION,
 		Game.VOTE_SECURITY,
 		Game.VOTE_CONTRAT,
-		Game.BACKGROUND]
+		Game.BACKGROUND,
+		Game.BACKGROUND_REMINDER]
 
 	CONTEXT_CORPORATION = "corporation"
 	CONTEXT_CORPORATION_MARKET = "corporation_market"
