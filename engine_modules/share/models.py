@@ -75,7 +75,6 @@ class BuyShareOrder(Order):
 
 	def get_form(self, data=None):
 		form = super(BuyShareOrder, self).get_form(data)
-		#form.fields['corporation'].widget = forms.Select(choices=((corporation.id, corporation.text) for corporation in self.get_priced_list()))
 		form.fields['corporation'].widget = forms.Select(choices=[('', '---------')] + [(corporation.id, corporation.text) for corporation in self.get_priced_list()])
 		form.initial['corporation'] = ''
 
