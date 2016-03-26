@@ -174,7 +174,7 @@ def player(request, player, game, player_id, turn):
 				is_target = True
 
 		if is_target and is_spy:
-			data = Log.objects.filter(event_type=game.MONEY_NEXT_TURN, game=game, turn=turn, concerned_player__player=player_profile, concerned_player__personal=True)[0].data
+			data = Log.objects.filter(event_type=game.MONEY_NEXT_TURN, game=game, turn=turn, concernedplayer__player=player_profile, concernedplayer__personal=True)[0].data
 			context = json.loads(data)
 			money = context['money'] + u" k"
 		else:
@@ -184,7 +184,7 @@ def player(request, player, game, player_id, turn):
 	# The targeted player is saved in database as a string in the data field which is a json serialized
 	# We will rebuild the piece of string we need and find if it exists in the string stored in database
 	piece_of_string = u'"player": "' + player_profile.name + u'"'
-	if player == player_profile or Log.objects.filter(event_type=game.BACKGROUND, game=game, data__contains=piece_of_string, ConcernedPlayer__player=player).count() > 0:
+	if player == player_profile or Log.objects.filter(event_type=game.BACKGROUND, game=game, data__contains=piece_of_string, concernedplayer__player=player).count() > 0:
 		background = player_profile.background
 	else:
 		background = u"Vous devez lancer une opération d'information contre ce joueur pour connaitre son background"
