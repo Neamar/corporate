@@ -102,8 +102,9 @@ class CorporationRunOrder(RunOrder):
 				corporation_markets[cm.corporation] = []
 			corporation_markets[cm.corporation].append(cm)
 
-		choices = [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
+		choices = [('', '---------')] + [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
 		form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets, container_id="lol", choices=choices)
+		form.initial['target_corporation_market'] = ''
 
 		return form
 
