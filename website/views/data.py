@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
@@ -162,7 +163,7 @@ def player(request, player, game, player_id, turn):
 	if player == player_profile or Log.object.filter(event_type=game.BACKGROUND, game=game, player=player, players=player_profile).count() > 0:
 		background = player_profile.background
 	else:
-		background = "Vous devez lancer une opération d'information contre ce joueur pour connaitre son background"
+		background = u"Vous devez lancer une opération d'information contre ce joueur pour connaitre son background"
 
 	return {
 		"player_profile": player_profile,
