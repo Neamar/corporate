@@ -29,6 +29,7 @@ def index(request):
 		"user": request.user,
 		"players": players,
 		"gameid": gameid,
+		"request": request,
 	}
 
 

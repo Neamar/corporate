@@ -52,7 +52,7 @@ def index(request, page):
 	content = mark_safe(content)
 
 	data = get_base_data()
-	data.update({"content": content, "title": title, "gameid": gameid})
+	data.update({"content": content, "title": title, "gameid": gameid, "request": request})
 	return render(request, 'docs/index.html', data)
 
 
@@ -84,6 +84,6 @@ def corporation(request, corporation_slug):
 
 	data = get_base_data()
 	data.update({
-		"base_corporation": base_corporation, "gameid": gameid
+		"base_corporation": base_corporation, "gameid": gameid, "request": request
 	})
 	return render(request, 'docs/corporation.html', data)
