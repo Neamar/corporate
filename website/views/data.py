@@ -166,4 +166,5 @@ def player(request, player, game, player_id, turn):
 		"qty_shares": sum([corporation.qty_share for corporation in corporations]),
 		"events": events,
 		"request": request,
+		"citizenship": player.citizenship.corporation
 	}

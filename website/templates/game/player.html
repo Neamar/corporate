@@ -22,7 +22,11 @@
 <h2>Parts dans les corporations</h2>
 <ul class="corporation">
 {% for corporation in corporations %}
-<li><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation.base_corporation.slug %}" title="Parts dans {{ corporation.base_corporation.name }}"><span class="share-value" title="Nombre de parts">{{ corporation.qty_share }}</span><span class="cityzenship-img" title="Citoyen de {{ corporation.base_corporation.name }}"><svg role="img" class="svg--small svg--white"><use xlink:href="/static/img/sprite.svg#citizenship"></use></svg></span></a></li>
+<li><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation.base_corporation.slug %}" title="Parts dans {{ corporation.base_corporation.name }}"><span class="share-value" title="Nombre de parts">{{ corporation.qty_share }}</span>
+{% if corporation == citizenship %}
+<span class="cityzenship-img" title="Citoyen de {{ corporation.base_corporation.name }}"><svg role="img" class="svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#citizenship"></use></svg></span>
+{% endif %}
+</a></li>
 {% endfor %}
 </ul>
 
