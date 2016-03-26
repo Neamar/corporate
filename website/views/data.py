@@ -161,7 +161,7 @@ def player(request, player, game, player_id, turn):
 	events = Log.objects.for_player(player=player_profile, asking_player=player, turn=turn)
 
 	if player == player_profile:
-		money = unicode(get_current_money(player_profile, turn)) + u" k"
+		money = str(get_current_money(player_profile, turn)) + u" k"
 	else:
 		concernedPlayer = ConcernedPlayer.objects.filter(log__event_type=game.MONEY_NEXT_TURN, log__game=game, log__turn=turn - 1)
 		
@@ -176,7 +176,7 @@ def player(request, player, game, player_id, turn):
 		if is_target and is_spy:
 			data = Log.objects.filter(event_type=game.MONEY_NEXT_TURN, game=game, turn=turn - 1, concernedplayer__player=player_profile, concernedplayer__personal=True)[0].data
 			context = json.loads(data)
-			money = unicode(context['money']) + u" k"
+			money = str(context['money']) + u" k"
 		else:
 			money = '?'
 
