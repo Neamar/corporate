@@ -42,18 +42,4 @@ class InformationPayTask(OrderResolutionTask):
 			order.pay_cost()
 
 
-class ReminderSecretTask(OrderResolutionTask):
-	"""
-	Send an event on each player to remind him what is his secret at the start of the game
-	"""
-	RESOLUTION_ORDER = 1000
-
-	def run(self, game):
-		players = game.player_set.all()
-		for player in players:
-			game.add_event(event_type=game.BACKGROUND_REMINDER, data={"background": player.background, "player": player.name}, players=player)
-
-
 tasks = (InformationRunTask, InformationPayTask)
-
-initialisation_tasks = (ReminderSecretTask, )
