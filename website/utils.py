@@ -101,9 +101,18 @@ def is_top_shareholder(corporation, player, shares):
 
 
 def get_current_money(player, turn):
-
+	"""
+	Return the player's current money for turn.
+	"""
 	existing_orders = [order.to_child() for order in player.order_set.filter(turn=turn)]
 	existing_orders_cost = sum(o.get_cost() for o in existing_orders)
 	current_money = player.money - existing_orders_cost
 
 	return current_money
+
+
+def is_citizen(corporation, player):
+	"""
+	Return true if player is citizen of this corporation
+	"""
+	return player.citizenship.corporation == corporation
