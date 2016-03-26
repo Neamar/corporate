@@ -1,1 +1,1 @@
-Votre background est **{{ background }}**
+Votre background est : **{{ background }}**
