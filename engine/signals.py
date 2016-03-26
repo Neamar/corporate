@@ -32,7 +32,7 @@ def add_player_on_game(sender, instance, **kwargs):
 	"""
 	Send an event on each player to remind him what is his secret at the start of the game
 	"""
-	instance.game.add_event(event_type=Game.BACKGROUND_REMINDER, data={"background": instance.background, "player": instance.name}, players=[instance])
+	instance.game.add_event(event_type=Game.BACKGROUND_REMINDER, data={"background": instance.background, "player": instance.name}, players=[instance], turn=0)
 
 
 @receiver(pre_save, sender=Game)
