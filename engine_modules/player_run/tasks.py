@@ -16,8 +16,6 @@ class InformationRunTask(OrderResolutionTask):
 		for order in orders:
 			players = order.player_targets.all()
 			corpos = list(order.corporation_targets.all())
-			if order.player.citizenship.corporation is not None:
-				corpos.append(order.player.citizenship.corporation)
 			# add event on player
 			game.add_event(event_type=game.OPE_INFORMATION, data={"players_list": [p.name for p in players], "corpos_list": [c.base_corporation.name for c in corpos]}, players=[order.player])
 			# send the background information on targets players

@@ -59,9 +59,9 @@ class DIncVoteOrder(Order):
 			vote_registry[p] = []
 
 		# For each corporation, get the 2 players that have the most shares
-		for c in corporations:
+		for c in corporations.prefetch_related('share_set'):
 			# Filter to shares bought up to the turn this order was passed
-			shareholders = (s.player for s in c.share_set.filter(turn__lte=self.player.game.current_turn))
+			shareholders = (s.player for s in c.share_set.filter(turn__lte=self.player.game.current_turn).prefetch_related('player'))
 			top_holders = Counter(shareholders).most_common(2)
 			try:
 				# if they don't have the same number of shares, the first one gets a vote
@@ -105,6 +105,7 @@ class DIncVoteSession(models.Model):
 		choices=DIncVoteOrder.DINC_COALITION_CHOICES, blank=True, null=True, default=None)
 	game = models.ForeignKey(Game)
 	turn = models.PositiveSmallIntegerField(editable=False)
+	explaination_text = models.TextField(editable=False, null=True)
 
 	def __unicode__(self):
 		return u"%s line for %s on turn %s" % (self.coalition, self.game, self.turn)
@@ -149,7 +150,22 @@ def get_last_dinc_coalition(self):
 	else:
 		return None
 
+
+def get_dinc_explaination_text(self, turn=None):
+	"""
+	Get the explaination texte for what happened at a turn for the mdc
+	"""
+	if turn is None:
+		turn = self.current_turn
+
+	try:
+		return self.dincvotesession_set.get(turn=turn).explaination_text
+	except DIncVoteSession.DoesNotExist:
+		# No vote
+		return 'Ici apparaitra le détail des coalitions pour les prochains tours.'
+
 Game.get_dinc_coalition = get_dinc_coalition
+Game.get_dinc_explaination_text = get_dinc_explaination_text
 Player.get_last_dinc_vote = get_last_dinc_vote
 Player.get_last_dinc_coalition = get_last_dinc_coalition
 

@@ -4,24 +4,28 @@ from engine.tasks import ResolutionTask
 from engine_modules.detroit_inc.models import DIncVoteSession, DIncVoteOrder
 from engine.models import Game
 
+import string
+
 
 class DIncVoteTask(ResolutionTask):
 	"""
 	Choose the Detroit, Inc. party line, and save it in a DIncVoteSession
 	"""
-	RESOLUTION_ORDER = 100
+	RESOLUTION_ORDER = 10
 	ORDER_TYPE = DIncVoteOrder
 
 	def run(self, game):
 		orders = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
 
-		self.send_resolution_message(orders)
+		self.create_logs(orders)
 		official_line = self.get_official_line(orders)
+		explaination_text = self.get_explaination_text(orders)
 
 		s = DIncVoteSession(
 			coalition=official_line,
 			game=game,
-			turn=game.current_turn + 1
+			turn=game.current_turn + 1,
+			explaination_text=explaination_text
 		)
 		s.save()
 
@@ -71,9 +75,53 @@ class DIncVoteTask(ResolutionTask):
 				official_line = top_line[0][0]
 		return official_line
 
-	def send_resolution_message(self, orders):
+	def get_explaination_text(self, orders):
 		"""
-		Send a note to each player, to remember his choice.
+		Write a peace of text to explain what just happens in detroit inc
+		"""
+		votes_details = {}
+
+		# Build global dict
+		coalition_breakdown = []
+		for order in orders:
+			if(order.coalition not in votes_details):
+				votes_details[order.coalition] = {
+					"display": order.get_coalition_display(),
+					"members": [],
+					"count": 0
+				}
+			votes_details[order.coalition]["members"].append({
+				'player':
+				order.player,
+				'corporations': order.get_friendly_corporations(),
+			})
+			votes_details[order.coalition]["count"] += order.get_weight()
+
+		for vote in votes_details.values():
+			coalition = vote["display"]
+			count = vote["count"]
+
+			siders = []
+			for member in vote["members"]:
+				member_string = unicode(member['player'])
+				if len(member['corporations']) > 0:
+					member_string += " (%s)" % (", ".join(unicode(c.base_corporation.name) for c in member['corporations']))
+				siders.append(member_string)
+
+			siders = " ".join(["<li>%s" % s for s in siders])
+
+			content = u"<strong>%s</strong> a reçu <strong>%s</strong> voix : <ul>%s</ul>" % (coalition, count, siders)
+
+			coalition_breakdown.append(content)
+
+		if not coalition_breakdown:
+			return u"Personne n'a choisi de coalition ce tour-ci"
+
+		return string.join(coalition_breakdown, '')
+
+	def create_logs(self, orders):
+		"""
+		Create logs for votes
 		"""
 		for order in orders:
 			if order.coalition == DIncVoteOrder.CPUB:
@@ -83,7 +131,7 @@ class DIncVoteTask(ResolutionTask):
 			elif order.coalition == DIncVoteOrder.CONS:
 				event_type = Game.VOTE_CONSOLIDATION
 			if event_type is not None:
-				order.player.game.add_event(event_type=event_type, data=None, players=[order.player])
+				order.player.game.add_event(event_type=event_type, data={'weight': order.get_weight()}, players=[order.player])
 
 
 class DIncLineCPUBTask(ResolutionTask):

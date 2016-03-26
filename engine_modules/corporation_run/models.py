@@ -94,10 +94,10 @@ class CorporationRunOrder(RunOrder):
 	def get_form(self, data=None):
 		form = super(CorporationRunOrder, self).get_form(data)
 		# We get all the corporationMarket of uncrashed corporations
-		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn)
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn).select_related('market', 'corporation')
 		form.fields['target_corporation_market'].label = u'Cible : '
 		corporation_markets = {}
-		for cm in form.fields['target_corporation_market'].queryset:
+		for cm in form.fields['target_corporation_market'].queryset.select_related('corporation'):
 			if cm.corporation not in corporation_markets.keys():
 				corporation_markets[cm.corporation] = []
 			corporation_markets[cm.corporation].append(cm)
@@ -209,7 +209,7 @@ class SabotageOrder(CorporationRunOrder):
 	def get_form(self, data=None):
 		form = super(SabotageOrder, self).get_form(data)
 		# we can't make a sabotage on a negative or null corporationMarket
-		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn, value__gt=0)
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn, value__gt=0).select_related('market', 'corporation')
 
 		return form
 
@@ -239,12 +239,12 @@ class ProtectionOrder(RunOrder):
 		self.player.game.add_event(event_type=Game.OPE_PROTECTION, data={"player": self.player.name, "market": self.protected_corporation_market.market.name, "corporation": self.protected_corporation.base_corporation.name}, corporation=self.protected_corporation, corporation_market=self.protected_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Envoyer une équipe protéger %s" % (self.protected_corporation.base_corporation.name)
+		return u"Envoyer une équipe protéger %s (%s)" % (self.protected_corporation.base_corporation.name, self.protected_corporation_market.market.name)
 
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)
-		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn)
-		form.fields['protected_corporation_market'].label = u'Marché'
+		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn).select_related('market', 'corporation')
+		form.fields['protected_corporation_market'].label = u'Cible'
 		# Remove the additional percent field
 		form.fields.pop('additional_percents')
 

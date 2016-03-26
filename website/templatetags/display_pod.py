@@ -4,10 +4,7 @@ from django.template.loader import get_template
 from logs.models import Log
 from django.conf import settings
 
-from engine_modules.detroit_inc.models import DIncVoteOrder
-
 import re
-import string
 
 register = template.Library()
 
@@ -15,7 +12,7 @@ NO_CONTEXT_REQUIRED = "__no_context"
 
 
 def players_pod(context):
-	players = context['game'].player_set.all()
+	players = context['game'].player_set.all().order_by('name')
 
 	for player in players:
 		player.events = Log.objects.for_player(player=player, asking_player=context['player'], turn=context['turn'])
@@ -24,57 +21,15 @@ def players_pod(context):
 	}
 
 
-def d_inc_pod_hover(session, orders):
-
-	votes_details = {}
-
-	# Build global dict
-	coalition_breakdown = []
-	for order in orders:
-		if(order.coalition not in votes_details):
-			votes_details[order.coalition] = {
-				"display": order.get_coalition_display(),
-				"members": [],
-				"count": 0
-			}
-		votes_details[order.coalition]["members"].append({
-			'player':
-			order.player,
-			'corporations': order.get_friendly_corporations(),
-		})
-		votes_details[order.coalition]["count"] += order.get_weight()
-
-	for vote in votes_details.values():
-		coalition = vote["display"]
-		count = vote["count"]
-
-		siders = []
-		for member in vote["members"]:
-			member_string = unicode(member['player'])
-			if len(member['corporations']) > 0:
-				member_string += " (%s)" % (", ".join(unicode(c.base_corporation.name) for c in member['corporations']))
-			siders.append(member_string)
-
-		siders = " ".join(["<li>%s" % s for s in siders])
-
-		content = u"<strong>%s</strong> a reçu <strong>%s</strong> voix : <ul>%s</ul>" % (coalition, count, siders)
-
-		coalition_breakdown.append(content)
-
-	return coalition_breakdown
-
-
 def d_inc_pod(context):
 
 	game = context['game']
 	current_coalition = game.get_dinc_coalition(turn=context['turn'])
-	orders = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn - 1)
+	display = game.get_dinc_explaination_text(turn=context['turn'])
 
 	if current_coalition is None:
 		current_coalition = 'None'
-		display = 'Aucune coalition n\'a obtenu la majorité ce tour-ci.'
-	else:
-		display = string.join(d_inc_pod_hover(current_coalition, orders), '')
+		
 	return {
 		'd_inc_line': current_coalition,
 		'd_inc_line_display': display
