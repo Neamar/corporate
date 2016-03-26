@@ -57,12 +57,11 @@
 {% endcomment %}
 	<section class="content-container">
 		<ul class="menu">
+		<li><a href="{% url 'website.views.index.index' %}">Accueil</a></li>
 		{% if game.id != None %}
 			<li><a class={% make_link_active "orders" %} href="{% url 'website.views.orders.orders' game_id=game.id %}">Ordres</a></li>
 			<li><a class={% make_link_active "wallstreet" %} href="{% url 'website.views.data.wallstreet' game_id=game.id %}">Wallstreet</a></li>
 			<li><a class={% make_link_active "shares" %} href="{% url 'website.views.data.shares' game_id=game.id %}">Parts</a></li>
-		{% else %}
-			<li><a href="{% url 'website.views.index.index' %}">Accueil</a></li>
 		{% endif %}
 			<li class="rules"><a title="Les règles du jeu" class="tooltip" href="{% url 'docs.views.index' page='' %}"><svg role="img" class="svg-rules svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#rules"></use></svg><span class="visually-hidden">Les règles du jeu</span></a></li>
 		</ul>
