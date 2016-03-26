@@ -74,8 +74,6 @@ def add_order(request, game_id, order_type):
 	instance = SubOrder(player=player)
 
 	if request.method == 'POST':
-		print "REQUEST"
-		print request
 		form = instance.get_form(request.POST)
 		if form.is_valid():
 			form.save()

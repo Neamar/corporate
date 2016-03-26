@@ -67,7 +67,6 @@
 			<li><a class={% make_link_active "wallstreet" %} href="{% url 'website.views.data.wallstreet' game_id=gameid %}">Wallstreet</a></li>
 			<li><a class={% make_link_active "shares" %} href="{% url 'website.views.data.shares' game_id=gameid %}">Parts</a></li>
 		{% endif %}
-		{% endif %}
 			<li class="rules"><a title="Les règles du jeu" class="tooltip" href="{% url 'docs.views.index' page='' %}"><svg role="img" class="svg-rules svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#rules"></use></svg><span class="visually-hidden">Les règles du jeu</span></a></li>
 		</ul>
 

@@ -25,7 +25,7 @@ def wallstreet(request, game, player, turn):
 	"""
 
 	# Set the game_id in session to always display all tabs
-	request.session['game'] = game
+	request.session['gameid'] = game.pk
 
 	ranking = []
 	# Table data
