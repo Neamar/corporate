@@ -3,6 +3,7 @@ from django import template
 from django.template.loader import get_template
 from logs.models import Log
 from django.conf import settings
+from website.utils import get_current_money
 
 import re
 
@@ -37,14 +38,10 @@ def d_inc_pod(context):
 
 
 def current_player_pod(context):
-	existing_orders = [order.to_child() for order in context['player'].order_set.filter(turn=context['turn'])]
-	existing_orders_cost = sum(o.get_cost() for o in existing_orders)
-
-	money_left = context['player'].money - existing_orders_cost
 
 	return {
 		'ic': context['player'].get_influence(turn=context['turn']).level,
-		'money': money_left,
+		'money': get_current_money(context['player'], context['turn']),
 		'display_turn': context['turn'],
 	}
 

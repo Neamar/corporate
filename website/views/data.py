@@ -7,7 +7,7 @@ from engine_modules.corporation.models import Corporation
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
 from engine.models import Player
 from engine_modules.share.models import Share
-from website.utils import get_shares_count, is_top_shareholder
+from website.utils import get_shares_count, is_top_shareholder, get_current_money
 from utils.read_markdown import parse_markdown
 from logs.models import Log
 
@@ -160,6 +160,7 @@ def player(request, player, game, player_id, turn):
 
 	return {
 		"player_profile": player_profile,
+		"money": get_current_money(player_profile, turn),
 		"rp": rp,
 		"corporations": corporations,
 		"qty_shares": sum([corporation.qty_share for corporation in corporations]),

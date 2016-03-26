@@ -98,3 +98,12 @@ def is_top_shareholder(corporation, player, shares):
 			is_alone = True
 
 	return is_alone and get_shares_count(corporation, player, shares) == max_share_count
+
+
+def get_current_money(player, turn):
+
+	existing_orders = [order.to_child() for order in player.order_set.filter(turn=turn)]
+	existing_orders_cost = sum(o.get_cost() for o in existing_orders)
+	current_money = player.money - existing_orders_cost
+
+	return current_money
