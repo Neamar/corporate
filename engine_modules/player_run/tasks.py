@@ -21,7 +21,7 @@ class InformationRunTask(OrderResolutionTask):
 			# send the background information on targets players
 			for player in players:
 				# We need th id for check if a player has the background inforation on an other one
-				game.add_event(event_type=game.BACKGROUND, data={"background": player.background, "player": player.name, "player": player.id}, players=[order.player])
+				game.add_event(event_type=game.BACKGROUND, data={"background": player.background, "player": player.name, "player_id": player.id}, players=[order.player])
 
 		for order in orders:
 			order.resolve_successful()

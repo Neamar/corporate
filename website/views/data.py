@@ -161,9 +161,9 @@ def player(request, player, game, player_id, turn):
 	events = Log.objects.for_player(player=player_profile, asking_player=player, turn=turn)
 
 	if player == player_profile:
-		money = get_current_money(player_profile, turn) + u" k"
+		money = unicode(get_current_money(player_profile, turn)) + u" k"
 	else:
-		concernedPlayer = ConcernedPlayer.objects.filter(log__event_type=game.MONEY_NEXT_TURN, log__game=game, log__turn=turn)
+		concernedPlayer = ConcernedPlayer.objects.filter(log__event_type=game.MONEY_NEXT_TURN, log__game=game, log__turn=turn - 1)
 		
 		is_target = False
 		is_spy = False
@@ -174,16 +174,16 @@ def player(request, player, game, player_id, turn):
 				is_target = True
 
 		if is_target and is_spy:
-			data = Log.objects.filter(event_type=game.MONEY_NEXT_TURN, game=game, turn=turn, concernedplayer__player=player_profile, concernedplayer__personal=True)[0].data
+			data = Log.objects.filter(event_type=game.MONEY_NEXT_TURN, game=game, turn=turn - 1, concernedplayer__player=player_profile, concernedplayer__personal=True)[0].data
 			context = json.loads(data)
-			money = context['money'] + u" k"
+			money = unicode(context['money']) + u" k"
 		else:
 			money = '?'
 
 	# We do not display the background as long as the viewer doesn't used an information opération to see it
 	# The targeted player is saved in database as a string in the data field which is a json serialized
 	# We will rebuild the piece of string we need and find if it exists in the string stored in database
-	piece_of_string = u'"player": "' + player_profile.name + u'"'
+	piece_of_string = u'"player_id": "' + player_profile.id + u'"'
 	if player == player_profile or Log.objects.filter(event_type=game.BACKGROUND, game=game, data__contains=piece_of_string, concernedplayer__player=player).count() > 0:
 		background = player_profile.background
 	else:
