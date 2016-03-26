@@ -164,16 +164,24 @@ def player(request, player, game, player_id, turn):
 		money = unicode(get_current_money(player_profile, turn)) + u" k"
 		help_text_money = u"Argent disponible"
 	else:
+		# The money is supposed to be a personal information. You can
 		help_text_money = u"Argent disponible pour le tour"
-		concernedPlayer = ConcernedPlayer.objects.filter(log__event_type=game.MONEY_NEXT_TURN, log__game=game, log__turn=turn - 1)
+		concernedPlayer = ConcernedPlayer.objects.filter(log__event_type=game.MONEY_NEXT_TURN, log__game=game, log__turn=turn - 1).order_by('log')
 		
 		is_target = False
 		is_spy = False
+		last_log = None
 		for m2m in concernedPlayer:
+			if last_log != m2m.log:
+				is_target = False
+				is_spy = False
+				last_log = m2m.log
 			if m2m.player == player:
 				is_spy = True
 			if m2m.player == player_profile and m2m.personal:
 				is_target = True
+			if is_target and is_spy:
+				break
 
 		if is_target and is_spy:
 			data = Log.objects.filter(event_type=game.MONEY_NEXT_TURN, game=game, turn=turn - 1, concernedplayer__player=player_profile, concernedplayer__personal=True)[0].data
