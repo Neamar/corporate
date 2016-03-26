@@ -64,6 +64,9 @@ def corporation(request, player, game, corporation_slug, turn):
 	"""
 	Corporation data
 	"""
+	# Set the game_id in session to always display all tabs
+	request.session['gameid'] = game.pk
+
 	corporation = Corporation.objects.get(base_corporation_slug=corporation_slug, game_id=game.pk)
 	share_holders = game.player_set.filter(game_id=game.pk, share__corporation=corporation).annotate(qty_share=Count('share')).order_by('-qty_share')
 	previous_corporation_markets = corporation.get_corporation_markets(turn=turn - 1)
@@ -115,6 +118,8 @@ def shares(request, game, player, turn):
 	"""
 	Shares data
 	"""
+	# Set the game_id in session to always display all tabs
+	request.session['gameid'] = game.pk
 
 	players = game.player_set.all().order_by('name')
 	corporations = list(game.corporation_set.all().order_by('pk'))
@@ -154,6 +159,9 @@ def player(request, player, game, player_id, turn):
 	"""
 	Player data
 	"""
+
+	# Set the game_id in session to always display all tabs
+	request.session['gameid'] = game.pk
 
 	player_profile = Player.objects.get(pk=player_id, game_id=game.pk)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player_profile).annotate(qty_share=Count('share')).order_by('-qty_share')
