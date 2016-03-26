@@ -183,7 +183,7 @@ def player(request, player, game, player_id, turn):
 	# We do not display the background as long as the viewer doesn't used an information opération to see it
 	# The targeted player is saved in database as a string in the data field which is a json serialized
 	# We will rebuild the piece of string we need and find if it exists in the string stored in database
-	piece_of_string = u'"player_id": "' + unicode(player_profile.id) + u'"'
+	piece_of_string = u'"player_id": ' + unicode(player_profile.id)
 	if player == player_profile or Log.objects.filter(event_type=game.BACKGROUND, game=game, data__contains=piece_of_string, concernedplayer__player=player).count() > 0:
 		background = player_profile.background
 	else:
