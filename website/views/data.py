@@ -151,12 +151,18 @@ def player(request, player, game, player_id, turn):
 	"""
 
 	player_profile = Player.objects.get(pk=player_id, game_id=game.pk)
-	corporations = Corporation.objects.filter(game=player.game, share__player=player).annotate(qty_share=Count('share')).order_by('-qty_share')
+	corporations = Corporation.objects.filter(game=player.game, share__player=player_profile).annotate(qty_share=Count('share')).order_by('-qty_share')
 
 	rp, _ = parse_markdown(player.rp)
 	rp = mark_safe(rp)
 
 	events = Log.objects.for_player(player=player_profile, asking_player=player, turn=turn)
+
+	# We do not display the background as long as the viewer doesn't used an information opération to see it
+	if player == player_profile or Log.object.filter(event_type=game.BACKGROUND, game=game, player=player, players=player_profile).count() > 0:
+		background = player_profile.background
+	else:
+		background = "Vous devez lancer une opération d'information contre ce joueur pour connaitre son background"
 
 	return {
 		"player_profile": player_profile,
@@ -166,5 +172,6 @@ def player(request, player, game, player_id, turn):
 		"qty_shares": sum([corporation.qty_share for corporation in corporations]),
 		"events": events,
 		"request": request,
-		"citizenship": player.citizenship.corporation
+		"citizenship": player.citizenship.corporation,
+		"background": background,
 	}
