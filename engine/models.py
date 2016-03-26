@@ -180,14 +180,6 @@ class Player(models.Model):
 		"""
 		return self.get_current_orders().aggregate(Sum('cost'))['cost__sum'] or 0
 
-	def build_resolution_message(self):
-		"""
-		Retrieve all notes addressed to the player for this turn, and build a message to remember them.
-		"""
-		# Start by adding the final note
-		m = "TODO"
-		return m
-
 	def __unicode__(self):
 		return self.name
 

@@ -34,6 +34,9 @@
 	{% else %}
 		{{ share.count }}
 	{% endif %}
+	{% if share.citizen %}
+		<svg role="img" class="svg--small svg--white" title="citoyen"><use xlink:href="/static/img/sprite.svg#add_citizenship"></use></svg>
+	{% endif %}
 	{% endif %}
 	</td>
 	{% endfor %}

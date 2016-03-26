@@ -98,3 +98,10 @@ def is_top_shareholder(corporation, player, shares):
 			is_alone = True
 
 	return is_alone and get_shares_count(corporation, player, shares) == max_share_count
+
+
+def is_citizen(corporation, player):
+	"""
+	Return true if player is citizen of this corporation
+	"""
+	return player.citizenship.corporation == corporation

@@ -7,7 +7,7 @@ from engine_modules.corporation.models import Corporation
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
 from engine.models import Player
 from engine_modules.share.models import Share
-from website.utils import get_shares_count, is_top_shareholder
+from website.utils import get_shares_count, is_top_shareholder, is_citizen
 from utils.read_markdown import parse_markdown
 from logs.models import Log
 
@@ -124,7 +124,7 @@ def shares(request, game, player, turn):
 	for corporation in corporations:
 		corporation_shares = {
 			"corporation": corporation,
-			"shares": [{"count": get_shares_count(corporation, player, shares), "top": is_top_shareholder(corporation, player, shares)} for player in players]
+			"shares": [{"count": get_shares_count(corporation, player, shares), "top": is_top_shareholder(corporation, player, shares), "citizen": is_citizen(corporation, player)} for player in players]
 		}
 		corporations_shares.append(corporation_shares)
 	players = game.player_set.all().annotate(Count('share')).select_related('user').order_by('name')
