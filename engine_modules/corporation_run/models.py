@@ -95,7 +95,7 @@ class CorporationRunOrder(RunOrder):
 		form = super(CorporationRunOrder, self).get_form(data)
 		# We get all the corporationMarket of uncrashed corporations
 		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn).select_related('market', 'corporation')
-		form.fields['target_corporation_market'].label = u'Cible : '
+		form.fields['target_corporation_market'].label = u'Cible'
 		corporation_markets = {}
 		for cm in form.fields['target_corporation_market'].queryset.select_related('corporation'):
 			if cm.corporation not in corporation_markets.keys():
@@ -125,7 +125,7 @@ class CorporationRunOrderWithStealer(CorporationRunOrder):
 		form = super(CorporationRunOrderWithStealer, self).get_form(data)
 		form.fields['stealer_corporation'].widget = forms.Select(attrs={'onchange': 'get_targets(this);'})
 		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
-		form.fields['stealer_corporation'].label = u'Bénéficiaire : '
+		form.fields['stealer_corporation'].label = u'Bénéficiaire'
 		# We have to reverse the fields to go from more specific to less specific
 		# This ensures that stealer_corporation will be above target_corporation_market
 		items = form.fields.items()
