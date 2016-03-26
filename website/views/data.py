@@ -163,7 +163,7 @@ def player(request, player, game, player_id, turn):
 	# The targeted player is saved in database as a string in the data field which is a json serialized
 	# We will rebuild the piece of string we need and find if it exists in the string stored in database
 	piece_of_string = u'"player": "' + player_profile.name + u'"'
-	if player == player_profile or Log.objects.filter(event_type=game.BACKGROUND, game=game, data__contain=piece_of_string, players=player).count() > 0:
+	if player == player_profile or Log.objects.filter(event_type=game.BACKGROUND, game=game, data__contains=piece_of_string, players=player).count() > 0:
 		background = player_profile.background
 	else:
 		background = u"Vous devez lancer une opération d'information contre ce joueur pour connaitre son background"

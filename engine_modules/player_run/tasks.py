@@ -20,7 +20,8 @@ class InformationRunTask(OrderResolutionTask):
 			game.add_event(event_type=game.OPE_INFORMATION, data={"players_list": [p.name for p in players], "corpos_list": [c.base_corporation.name for c in corpos]}, players=[order.player])
 			# send the background information on targets players
 			for player in players:
-				game.add_event(event_type=game.BACKGROUND, data={"background": player.background, "player": player.name}, players=[order.player])
+				# We need th id for check if a player has the background inforation on an other one
+				game.add_event(event_type=game.BACKGROUND, data={"background": player.background, "player": player.name, "player": player.id}, players=[order.player])
 
 		for order in orders:
 			order.resolve_successful()
