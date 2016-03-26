@@ -163,7 +163,7 @@ def player(request, player, game, player_id, turn):
 	if player == player_profile:
 		money = get_current_money(player_profile, turn) + u" k"
 	else:
-		concernedPlayer = ConcernedPlayer.objects.filter(Log__event_type=game.MONEY_NEXT_TURN, Log__game=game, Log__turn=turn)
+		concernedPlayer = ConcernedPlayer.objects.filter(log__event_type=game.MONEY_NEXT_TURN, log__game=game, log__turn=turn)
 		
 		is_target = False
 		is_spy = False
