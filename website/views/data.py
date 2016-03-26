@@ -24,6 +24,9 @@ def wallstreet(request, game, player, turn):
 	Wallstreet data
 	"""
 
+	# Set the game_id in session to always display all tabs
+	request.session['game'] = game
+
 	ranking = []
 	# Table data
 	corporations = game.get_ladder(turn=turn - 1)
