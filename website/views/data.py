@@ -162,7 +162,9 @@ def player(request, player, game, player_id, turn):
 
 	if player == player_profile:
 		money = unicode(get_current_money(player_profile, turn)) + u" k"
+		help_text_money = u"Argent disponible"
 	else:
+		help_text_money = u"Argent disponible pour le tour"
 		concernedPlayer = ConcernedPlayer.objects.filter(log__event_type=game.MONEY_NEXT_TURN, log__game=game, log__turn=turn - 1)
 		
 		is_target = False
@@ -199,4 +201,5 @@ def player(request, player, game, player_id, turn):
 		"request": request,
 		"citizenship": player_profile.citizenship.corporation,
 		"background": background,
+		"help_text_money": help_text_money,
 	}
