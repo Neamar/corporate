@@ -10,12 +10,12 @@
 {% for entry in ranking %}
 <section class="corporation-row">
 	<h2>
-		<span class="corporation-index">{{ forloop.counter }}</span>
+		<span class="corporation-index" title="classement sur nombre d'actifs">{{ forloop.counter }}</span>
 		<a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=entry.corporation.base_corporation.slug %}" class="corporation-name">{{ entry.corporation.base_corporation.name }}</a>
 		{% if entry.corporation.crash_turn == turn|add:-1 %}
 			CRASHED
 		{% endif %}
-		<span class="current-assets">{{ entry.assets }}</span>
+		<span class="current-assets" title="actifs corpo = somme actifs des marchés + nombre de marchés en domination - nombre de marchés en perte">{{ entry.assets }}</span>
 	</h2>
 
 	<div class="icon-content">
@@ -29,9 +29,9 @@
 
 	<ul class="corporation-markets">
 	{% for corporation_market in entry.corporation_market %}
-		<li class="corporation-market {% if corporation_market.bubble_value == -1 %}negative{% elif corporation_market.bubble_value == 1 %}positive{% else %}white{% endif %}">
-			<svg role="img" class="svg--medium svg--white" title="{{ corporation_market.market.name|capfirst }}"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg>
-			<span class="corporation-market-value">{{ corporation_market.value }} <!-- ( {{ corporation_market.bubble_value }} ) --></span>
+		<li class="corporation-market {% if corporation_market.bubble_value == -1 %}negative{% elif corporation_market.bubble_value == 1 %}positive{% else %}white{% endif %}"  title="{{ corporation_market.market.name|capfirst }}">
+			<svg role="img" class="svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg>
+			<span class="corporation-market-value">{{ corporation_market.value }} </span>
 		</li>
 	{% endfor %}
 	</ul>
