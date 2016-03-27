@@ -1,3 +1,5 @@
+{% load inspace %}
+
 {% extends "template.html" %}
 {% block title %}Ordres du tour{% endblock %}
 {% block h1 %}Ordres du tour{% endblock %}
@@ -122,7 +124,7 @@ function update_select(select, data) {
 <tfoot>
 	<tr>
 		<td class="total-text" colspan="4">TOTAL</td>
-		<td class="total-total">{{ existing_orders_cost }}k&nbsp;₵</td>
+		<td class="total-total">{{ existing_orders_cost|inspace }}k&nbsp;₵</td>
 	</tr>
 </tfoot>
 <tbody>
@@ -136,7 +138,7 @@ function update_select(select, data) {
 	<td class="order-description">{{ order.description }}</td>
 	<td class="order-custom">{{ order.custom_description }}</td>
 	{% endif %}
-	<td class="order-cost">{% if order.get_cost > 0 %}{{ order.get_cost }}k&nbsp;₵{% else %}-{% endif %}</td>
+	<td class="order-cost">{% if order.get_cost > 0 %}{{ order.get_cost|inspace }}k&nbsp;₵{% else %}-{% endif %}</td>
 </tr>
 {% endfor %}
 </tbody>
