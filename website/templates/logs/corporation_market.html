@@ -1,6 +1,6 @@
 {% load display_log %}
 <ul class="icons-list">
 {% for log in events %}
-	<li>{% display_log log "corporation_market" %}</li>
+	<li title="{% display_log_title log "corporation_market" %}" class="tooltip">{% display_log log "corporation_market" %}</li>
 {% endfor %}
 </ul>
