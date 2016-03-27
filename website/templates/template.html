@@ -114,17 +114,6 @@
 <script type="text/javascript" src="{% static 'vendor/tipped.js' %}"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
-    $( ".corporation-row" ).each(function( index ) {
-      
-      var $that = $(this);
-
-      if (index % 2 === 0) { 
-        var heightEven = $that.height() + 15;
-        $that.next().css( "margin-top", heightEven );
-      }
-    });
-
-
     $('.dropdown').on('click', 'ul > li > ul > li > ul > li', function () {
     	var text = $(this).text()
     	$('.dropdown > ul > li span').text(text);
