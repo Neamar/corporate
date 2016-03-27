@@ -14,7 +14,6 @@ def display_log(log, display_context, delta_display=True, size="medium", color="
 
 	r = """<svg role="img" class="svg--%s svg--%s"><use xlink:href="/static/img/sprite.svg#%s"></use></svg>""" % (size, color, log.event_type.lower())
 
-	title = escape(log.get_display(display_context))
 	if delta_display and log.delta != 0:
 		delta_type = ""
 		if log.delta > 0:
@@ -23,4 +22,17 @@ def display_log(log, display_context, delta_display=True, size="medium", color="
 			delta_type = "negative"
 
 		r += '<span class="%s">%s</span>' % (delta_type, log.delta)
-	return {'svg': r, 'tooltip': title}
+	return r
+
+
+@register.simple_tag(name="display_log_title")
+def display_log_title(log, display_context):
+	"""
+	Handle whether the menu item should be the active one.
+	Return "active" if that is the case, "" if not.
+	The criterion here is whether the URL contains the keyword, not necessarily very robust.
+	"""
+
+	title = escape(log.get_display(display_context))
+
+	return title

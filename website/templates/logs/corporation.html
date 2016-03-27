@@ -1,6 +1,6 @@
 {% load display_log %}
 <ul class="icons-list">
 {% for log in events %}
-	<li>{% (display_log log "corporation" delta_display=delta_display|default_if_none:True).svg %}</li>
+	<li title="{% display_log_title log "corporation" %}" class="tooltip">{% display_log log "corporation" delta_display=delta_display|default_if_none:True %}</li>
 {% endfor %}
 </ul>
