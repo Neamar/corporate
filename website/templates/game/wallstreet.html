@@ -20,7 +20,7 @@
 
 	<div class="icon-content">
 		{% if entry.delta != 0 %}
-		<span class="assets-delta {% if entry.delta >= 0 %}positive{% else %}negative{% endif %}">
+		<span class="assets-delta {% if entry.delta >= 0 %}positive{% else %}negative{% endif %}" title="évolution par rapport au tour précédent">
 			<i>{{ entry.delta }}</i>
 		</span>
 		{% endif %}
