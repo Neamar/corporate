@@ -1,5 +1,4 @@
 from django import template
-from django.utils.html import escape
 
 register = template.Library()
 
