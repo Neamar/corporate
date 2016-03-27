@@ -119,11 +119,21 @@ $( document ).ready(function() {
       var $that = $(this);
 
       if (index % 2 === 0) { 
-        var heightEven = $that.height()/2;
+        var heightEven = $that.height() + 15;
+        $that.next().css( "margin-top", heightEven );
+      }
+    });
+
+    $( ".corporation-row" ).each(function( index ) {
+      
+      var $that = $(this);
+
+      if (index % 2 === 0) { 
+        var heightEven = $that.height() / 2;
         $that.next().css( "margin-top", heightEven );
 
 	  if (index % 2 === 1) { 
-	    var heightOdd = $that.height()/2*(-1);
+	    var heightOdd = $that.height() / 2 * ( - 1 );
 	    $that.next().css( "margin-top", heightOdd );
       }
     });
