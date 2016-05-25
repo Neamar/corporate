@@ -11,7 +11,7 @@
 <section class="corporation-row">
 	<h2>
 		<span class="corporation-index" title="classement sur nombre d'actifs">{{ forloop.counter }}</span>
-		<a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=entry.corporation.base_corporation.slug %}" class="corporation-name"><img src="{{ STATIC_URL }}{{ city }}/corporations/{{ entry.corporation.base_corporation.slug}}.png"  width="28" height="28"/>{{ entry.corporation.base_corporation.name }}</a>
+		<a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=entry.corporation.base_corporation.slug %}" class="corporation-name"><img src="{{ STATIC_URL }}{{ city }}/corporations/{{ entry.corporation.base_corporation.slug}}.png"  width="28" height="28"/>{{ entry.corporation.base_corporation.slug }}</a>
 		{% if entry.corporation.crash_turn == turn|add:-1 %}
 			CRASHED
 		{% endif %}
