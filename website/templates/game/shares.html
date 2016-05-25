@@ -20,7 +20,7 @@
 <tbody>
 {% for corporation_shares in corporations_shares %}
 <tr>
-	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation_shares.corporation.base_corporation.slug %}"><img src="{{ STATIC_URL }}{{ city }}/corporations/{{ corporation.base_corporation.slug}}.png"  width="28" height="28"/>{{ corporation_shares.corporation.base_corporation.slug }}</a></td>
+	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation_shares.corporation.base_corporation.slug %}"><img src="{{ STATIC_URL }}{{ city }}/corporations/{{ corporation_shares.corporation.base_corporation.slug}}.png"  width="28" height="28"/>{{ corporation_shares.corporation.base_corporation.slug }}</a></td>
 	{% for share in corporation_shares.shares %}
 
 		{% if share.top %}
