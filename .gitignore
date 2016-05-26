@@ -34,3 +34,6 @@ htmlcov/*
 
 # Project specific
 *.sqlite3
+
+
+static/cache
