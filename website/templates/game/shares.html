@@ -11,7 +11,7 @@
 	{% for player in players %}
 	<!-- should be replaced with the player's image when -->
 	<th>
-		<a href="{% url 'website.views.data.player' game_id=game.id player_id=player.id %}"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png"  title="{{ player.name|title }}" class="tooltip" /></a>
+		<a href="{% url 'website.views.data.player' game_id=game.id player_id=player.id %}"><img src="{{ player.avatar.thumbnail.url }}"  title="{{ player.name|title }}" class="tooltip" /></a>
 	</th>
 	{% endfor %}
 </tr>

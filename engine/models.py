@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.db import models, transaction
 from django.db.models import Sum, Q
 from django.conf import settings
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from engine.dispatchs import validate_order, game_event
+from stdimage.models import StdImageField
+from stdimage.utils import UploadToUUID
+from utils.image_treatment import preprocess
 
 
 class Game(models.Model):
@@ -18,7 +23,11 @@ class Game(models.Model):
 	# Useful for testing, ensure results can be reproduced and understood easily.
 	disable_side_effects = models.BooleanField(default=False, help_text="Disable all side effects (invisible hand, first and last effects, ...)")
 
-	started = models.DateTimeField(auto_now_add=True)
+	created = models.DateTimeField(auto_now_add=True)
+	started = models.BooleanField(default=False)
+	last_update = models.DateTimeField(default=None, blank=True, null=True)
+	owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)  # The creator who can start the game and resolve turns
+	password = models.CharField(max_length=128, blank=True, null=True)  # to filter the game to people you want in
 
 	# List of possible events
 	VOICE_UP = 'VOICE_UP'
@@ -95,6 +104,7 @@ class Game(models.Model):
 
 		# Increment current turn and terminate.
 		self.current_turn += 1
+		self.last_update = timezone.now()
 		self.save()
 
 	@transaction.atomic
@@ -115,6 +125,13 @@ class Game(models.Model):
 		self.current_turn = 1
 		self.save()
 
+	def start_game(self):
+		"""
+		Once a game is started, new players can't join it and players can't update their basic informations profile anymore
+		"""
+		self.started = True
+		self.save()
+
 	@property
 	def corporation_set(self):
 		return self.all_corporation_set.filter(game=self).filter(Q(crash_turn=self.current_turn) | Q(crash_turn__isnull=True))
@@ -123,18 +140,48 @@ class Game(models.Model):
 		return u"Corporate Game: %s" % self.city
 
 
+class GameForm(ModelForm):
+	class Meta:
+		model = Game
+		fields = ['city', 'password']
+
+
 class Player(models.Model):
 	class Meta:
 		unique_together = (("game", "user"),)
+
+	# Enumerate the party lines and their meanings
+	BACKGROUNDS = (
+		(u'Anonyme', u'Anonyme'),
+		(u'Acharné', u'Acharné'),
+		(u'Analyste', u'Analyste'),
+		(u'Altruisite', u'Altruisite'),
+		(u'Corrupteur', u'Corrupteur'),
+		(u'Dévoué', u'Dévoué'),
+		(u'Flambeur', u'Flambeur'),
+		(u'Grande geule', u'Grande geule'),
+		(u'Oligarque', u'Oligarque'),
+		(u'Pacifiste', u'Pacifiste'),
+		(u'Paranoïaque', u'Paranoïaque'),
+		(u'Protecteur', u'Protecteur'),
+		(u'Pyromane', u'Pyromane'),
+		(u'Traître', u'Traître'),
+		(u'Violent', u'Violent'),
+		(u'Vénal', u'Vénal'),
+	)
 
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
 	game = models.ForeignKey(Game)
 
 	name = models.CharField(max_length=64)
 	money = models.PositiveIntegerField(default=2000)
-	background = models.CharField(default="Anonyme", max_length=50)
+	background = models.CharField(default="Anonyme", choices=BACKGROUNDS, max_length=50)
 	rp = models.TextField(default="", blank=True)
 	secrets = models.TextField(default="", blank=True)
+
+	avatar = StdImageField(upload_to=UploadToUUID(path='avatars'), variations={
+		'thumbnail': {"width": 55, "height": 55, "crop": True}
+	}, render_variations=preprocess)
 
 	@property
 	def influence(self):
@@ -183,6 +230,56 @@ class Player(models.Model):
 	def __unicode__(self):
 		return self.name
 
+
+class PlayerForm(ModelForm):
+	password = forms.CharField(max_length=128)
+
+	class Meta:
+		model = Player
+		fields = ['password', 'name', 'background', 'rp', 'avatar']
+
+	def __init__(self, *args, **kwargs):
+		self.game_password = kwargs.pop('game_password', None)
+		super(PlayerForm, self).__init__(*args, **kwargs)
+		instance = getattr(self, 'instance', None)
+		# On n'a pas à rentrer de mot de passe si on est déjà inscrit sur la partie ou que le mot de passe sur la game est vide
+		if instance and (instance.pk or self.game_password is None):
+			del self.fields['password']
+		if instance and instance.pk and instance.game.started is True:
+				self.fields['name'].widget.attrs['readonly'] = True
+				self.fields['background'].widget.attrs['readonly'] = True
+				self.fields['avatar'].widget.attrs['disabled'] = True
+
+	def clean_password(self):
+		instance = getattr(self, 'instance', None)
+		if instance and instance.pk:
+			return ''
+		else:
+			data = self.cleaned_data['password']
+			if data != self.game_password:
+				raise forms.ValidationError("Le mot de passe est incorrect")
+
+	def clean_name(self):
+		instance = getattr(self, 'instance', None)
+		if instance and instance.pk and instance.game.started is True:
+			return instance.name
+		else:
+			return self.cleaned_data['name']
+
+	def clean_background(self):
+		instance = getattr(self, 'instance', None)
+		if instance and instance.pk and instance.game.started is True:
+			return instance.background
+		else:
+			return self.cleaned_data['background']
+
+	def clean_avatar(self):
+		instance = getattr(self, 'instance', None)
+		if instance and instance.pk and instance.game.started is True:
+			return instance.avatar
+		else:
+			return self.cleaned_data['avatar']
+	
 
 class Order(models.Model):
 	title = "Ordre"

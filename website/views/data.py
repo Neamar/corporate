@@ -1,17 +1,66 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+from django.shortcuts import render as django_render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
-from django.db.models import Count
+from django.db.models import Count, Case, When, IntegerField
+from django.http import Http404, HttpResponseRedirect
 import json
 
 from engine_modules.corporation.models import Corporation
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
-from engine.models import Player
+from engine.models import Player, PlayerForm, Game
+from player_messages.models import Message, MessageForm
 from engine_modules.share.models import Share
 from website.utils import get_shares_count, is_top_shareholder, is_citizen, get_current_money
 from utils.read_markdown import parse_markdown
 from logs.models import Log, ConcernedPlayer
+
+
+@login_required
+@render('game/add_player.html')
+def add_player(request, game_id):
+	"""
+	Join the game by adding a player
+	"""
+	# if gameid is not null, we display the menu.
+	# We dont want to display the menu for creation but we want to display it for modification.
+	game = None
+
+	# If playeryer exists we will change it, else it's a creation
+	try:
+		player = Player.objects.select_related('game').get(user=request.user, game=game_id)
+	except:
+		player = None
+
+	if request.method == 'POST':
+		game = Game.objects.get(pk=game_id)
+		form = PlayerForm(request.POST, request.FILES, instance=player, game_password=game.password)
+		if form.is_valid():
+			# We add the user and the game (they are not in the form)
+			player = form.save(commit=False)
+			player.user = request.user
+			player.game = game
+			player.save()
+			form.save_m2m()
+			return redirect('website.views.data.add_player', game_id=game_id)
+	else:
+		if player is None:
+			# creation form
+			form = PlayerForm()
+		else:
+			# display game menu
+			game = player.game
+			# edit form
+			form = PlayerForm(instance=player)
+
+	return django_render(request, 'game/add_player.html', {
+		"game_id": game_id,
+		"form": form,
+		"game": game,
+		"request": request,
+		"player": player
+	})
 
 
 @login_required
@@ -23,7 +72,6 @@ def wallstreet(request, game, player, turn):
 	"""
 	Wallstreet data
 	"""
-
 	# Set the game_id in session to always display all tabs
 	request.session['gameid'] = game.pk
 
@@ -53,6 +101,86 @@ def wallstreet(request, game, player, turn):
 		"corporations": corporations,
 		"request": request,
 	}
+
+
+@login_required
+@render('game/game_panel.html')
+@find_player_from_game_id
+@inject_game_and_player_into_response
+@turn_by_turn_view
+def game_panel(request, game, player, turn):
+	"""
+	Game panel to resolve turn and start the game
+	"""
+
+	# If you are not the owner, you have nothing to do here
+	if game.owner != request.user:
+		raise Http404("Only the owner of a game can resole turns")
+
+	# Set the game_id in session to always display all tabs
+	request.session['gameid'] = game.pk
+
+	players = game.player_set.all().annotate(
+			numordre=Count(Case(
+				When(order__turn=game.current_turn, then=1),
+				delfault=0,
+				output_field=IntegerField(),
+			))
+		).filter(numordre=0)
+
+	if(request.GET.get('resolve_turn')):
+		game.resolve_current_turn()
+
+	if(request.GET.get('start_game')):
+		game.start_game()
+
+	return django_render(request, 'game/game_panel.html', {
+		"game": game,
+		"request": request,
+		"players": players,
+		"pods": ['d_inc', 'current_player', 'players', ],
+		"turn": game.current_turn,
+		"player": player,
+	})
+
+
+@login_required
+@render('game/discussion.html')
+@find_player_from_game_id
+@inject_game_and_player_into_response
+def discussion(request, game, player, sender_id):
+	"""
+	Game panel to resolve turn and start the game
+	"""
+	# Set the game_id in session to always display all tabs
+	request.session['gameid'] = game.pk
+
+	sender = Player.objects.get(pk=sender_id)
+
+	if request.method == 'POST':
+		if player.game != sender.game:
+			raise Http404("Seul les joueurs appartenant à la même partie peuvent discuter entre eux")
+		form = MessageForm(request.POST)
+		if form.is_valid():
+			# We add the sender and the receiver (they are not in the form)
+			message = form.save(commit=False)
+			message.sender = player
+			message.receiver = sender
+			message.save()
+			return HttpResponseRedirect('')
+	else:
+		# creation form
+		form = MessageForm()
+
+	messages = Message.objects.get_discussion(player, sender)
+
+	return django_render(request, 'game/discussion.html', {
+		"game": game,
+		"sender": sender,
+		"messages": messages,
+		"form": form,
+		"request": request,
+	})
 
 
 @login_required
@@ -166,7 +294,7 @@ def player(request, player, game, player_id, turn):
 	player_profile = Player.objects.get(pk=player_id, game_id=game.pk)
 	corporations = Corporation.objects.filter(game=player.game, share__player=player_profile).annotate(qty_share=Count('share')).order_by('-qty_share')
 
-	rp, _ = parse_markdown(player.rp)
+	rp, _ = parse_markdown(player_profile.rp)
 	rp = mark_safe(rp)
 
 	events = Log.objects.for_player(player=player_profile, asking_player=player, turn=turn)
@@ -221,6 +349,8 @@ def player(request, player, game, player_id, turn):
 		"events": events,
 		"request": request,
 		"citizenship": player_profile.citizenship.corporation,
+		"pods": ['d_inc', 'current_player', 'players', ],
+		"turn": game.current_turn,
 		"background": background,
 		"help_text_money": help_text_money,
 	}

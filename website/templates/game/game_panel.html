@@ -1,0 +1,25 @@
+{% extends "template.html" %}
+
+{% block content %}
+ <h2>{{ game.city }}</h2>
+<p>Attention, les actions que vous pouvez faire sur cette page sont définitives ! Pas de retour arrière possible.</p>
+<hr />
+
+<form action="#" method="get">
+	{% if game.started == False %}
+		<p>Lorsque la partie est démarrée, plus aucun joueur ne peut rejoindre la partie. De plus tous les joueurs ne peuvent plus modifier ni leur avatar, ni leur nom, ni leur background</p>
+		<input type="submit" class="btn" value="Démarrer la partie" name="start_game">
+	{% else %}
+		<p>Tour actuel : {{ game.current_turn }}</p>
+		{% if players %}
+			<p>Attention : ces joueurs n'ont pas effectué un seul ordre :</p>
+			<ul>
+			{% for player in players %}
+				<li>{{ player.name }}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+		<input type="submit" class="btn" value="Résoudre le tour en cours" name="resolve_turn">
+	{% endif %}
+</form>
+{% endblock content %}

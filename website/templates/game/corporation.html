@@ -24,7 +24,7 @@
 
 <ul class="corporation-players--detail">
 {% for player in share_holders %}
-	<li class="{% if player.citizenship.corporation_id == corporation.pk %}citizen {% endif %}"><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}" title="Parts de {{ player.name }}"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" /><span>{{ player.qty_share }}</span></a></li>
+	<li class="{% if player.citizenship.corporation_id == corporation.pk %}citizen {% endif %}"><a href="{% url "website.views.data.player" game_id=game.pk player_id=player.pk %}" title="Parts de {{ player.name }}"><img src="{{ player.avatar.thumbnail.url }}"/><span>{{ player.qty_share }}</span></a></li>
 {% endfor %}
 </ul>
 
@@ -50,7 +50,7 @@
 	<td> {{ value|default_if_none:"-" }}</td>
 {% endfor %}
 	<td> {{ entry.corporation.assets }}</td>
-	<td class="icon--players">{% for holder in entry.holders %} <a href="{% url "website.views.data.player" game_id=game.pk player_id=holder.pk %}" title="Parts de {{ holder.name }}" class="tooltip"><img src="/static/img/players/{% cycle '01' '02' '03' %}.png" width="26" height="26" /></a> {% endfor %}</td>
+	<td class="icon--players">{% for holder in entry.holders %} <a href="{% url "website.views.data.player" game_id=game.pk player_id=holder.pk %}" title="Parts de {{ holder.name }}" class="tooltip"><img src="{{ holder.avatar.thumbnail.url }}" width="26" height="26" /></a> {% endfor %}</td>
 </tr>
 {% endfor %}
 </tbody>

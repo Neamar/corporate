@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'docs',
     'engine',
     'logs',
+    'player_messages',
     'engine_modules.influence',
     'engine_modules.corporation',
     'engine_modules.invisible_hand',
@@ -68,6 +69,8 @@ INSTALLED_APPS = (
     'engine_modules.wiretransfer',
     'engine_modules.market',
     'engine_modules.end_turn',
+    'storages',  # to store avatar on AWS
+    'stdimage',  # standard image field to resize avatars and use bd id for names
     # 'debug_toolbar',
 )
 
@@ -89,6 +92,18 @@ WSGI_APPLICATION = 'corporate.wsgi.application'
 AUTH_USER_MODEL = 'website.User'
 LOGIN_REDIRECT_URL = 'website.views.index.index'
 LOGIN_URL = 'django.contrib.auth.views.login'
+
+# avatar storage is on AWS
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_SECURE_URLS = False       # use http instead of https
+AWS_QUERYSTRING_AUTH = False     # don't add complex authentication-related query parameters for requests
+
+# SHOULD NOT BE ON THE INTERNET, I care about my money
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+MEDIA_URL = 'http://%s.s3.amazonaws.com/avatars/' % AWS_STORAGE_BUCKET_NAME
+
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from django import template
 from django.template.loader import get_template
-from logs.models import Log
 from django.conf import settings
-from website.utils import get_current_money
-
+from django.db.models import Count, Case, When, IntegerField
 import re
+
+from website.utils import get_current_money
+from logs.models import Log
 
 register = template.Library()
 
@@ -13,7 +14,13 @@ NO_CONTEXT_REQUIRED = "__no_context"
 
 
 def players_pod(context):
-	players = context['game'].player_set.all().order_by('name')
+	players = context['game'].player_set.all().annotate(
+			nb_unread_messages=Count(Case(
+				When(sender__read=False, sender__receiver=context['player'], then=1),
+				delfault=0,
+				output_field=IntegerField(),
+			))
+		).order_by('name')
 
 	for player in players:
 		player.events = Log.objects.for_player(player=player, asking_player=context['player'], turn=context['turn'])

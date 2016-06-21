@@ -2,9 +2,13 @@
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login
 from django.db import transaction
+from django.shortcuts import render as django_render
+from django.http import Http404
 
 from website.forms import UserCreationForm
 from website.decorators import render
+from django.db.models import Count
+from engine.models import Game, GameForm
 
 
 @render('index.html')
@@ -31,6 +35,60 @@ def index(request):
 		"gameid": gameid,
 		"request": request,
 	}
+
+
+@render('join_game.html')
+def join_game(request):
+	"""
+	Join a game
+	"""
+	# On récupère le game id si on l'a en session pour accéder aux onglets de la session en cours
+	gameid = None
+	try:
+		gameid = request.session['gameid']
+	except:
+		pass
+
+	games = []
+	MAX_PLAYER = 8
+
+	if request.user.is_authenticated():
+		# We get every game that is not started and with a number of players < max players
+		games = Game.objects.exclude(player__user=request.user).filter(started=False).annotate(num_player=Count('player')).filter(num_player__lte=MAX_PLAYER)
+
+	return {
+		"is_authenticated": request.user.is_authenticated(),
+		"user": request.user,
+		"games": games,
+		"gameid": gameid,
+		"request": request,
+	}
+
+
+@render('create_game.html')
+def create_game(request):
+	"""
+	Create a game
+	"""
+	if not request.user.is_authenticated():
+		raise Http404("You need to be logged in to create a game")
+
+	if request.method == 'POST':
+		form = GameForm(request.POST)
+		if form.is_valid():
+			# We add the user and the game (they are not in the form)
+			game = form.save(commit=False)
+			game.owner = request.user
+			game.save()
+			return redirect('website.views.data.add_player', game_id=game.pk)
+	else:
+		# creation form
+		form = GameForm()
+
+	return django_render(request, 'create_game.html', {
+		"form": form,
+		"request": request,
+	})
 
 
 @render('signup.html')

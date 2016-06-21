@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+
+{% block content %}
+{% if games %}
+<p>Cliquez sur une partie pour la rejoindre :</p>
+<hr />
+<ul>
+{% for game in games %}
+	<li><a href="{% url "website.views.data.add_player" game_id=game.pk %}">{{ game.city }} ({{ game.num_player }} joueurs) {% if game.password %}[Mot de passe requis]{% endif %}</a></li>
+	
+{% endfor %}
+</ul>
+{% else %}
+<p>Aucune partie disponible</p>
+{% endif %}
+<hr />
+<a href="{% url "website.views.index.create_game" %}">Créer une partie</a>
+
+{% endblock content %}

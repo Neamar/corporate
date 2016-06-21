@@ -62,6 +62,9 @@
 			<li><a class={% make_link_active "orders" %} href="{% url 'website.views.orders.orders' game_id=game.id %}">Ordres</a></li>
 			<li><a class={% make_link_active "wallstreet" %} href="{% url 'website.views.data.wallstreet' game_id=game.id %}">Wallstreet</a></li>
 			<li><a class={% make_link_active "shares" %} href="{% url 'website.views.data.shares' game_id=game.id %}">Parts</a></li>
+			{% if game.owner == request.user %}
+				<li><a class={% make_link_active "game_panel" %} href="{% url 'website.views.data.game_panel' game_id=game.id %}">Partie</a></li>
+			{% endif %}
 		{% elif gameid != None %}
 			<li><a class={% make_link_active "orders" %} href="{% url 'website.views.orders.orders' game_id=gameid %}">Ordres</a></li>
 			<li><a class={% make_link_active "wallstreet" %} href="{% url 'website.views.data.wallstreet' game_id=gameid %}">Wallstreet</a></li>
@@ -83,12 +86,12 @@
 			<div class="player">
 				<span class="player-avatar">
 					{% if player %}
-						<img title="Avatar de {{ player.name }}" src="/static/img/players/01.png" class="tooltip"/>
+						<img title="Avatar de {{ player.name }}" src="{{ player.avatar.thumbnail.url }}" class="tooltip"/>
 					{% endif %}
 				</span>
 				<span class="player-name">
 				{% if player %}
-					{{ player.name }}
+					<a href="{% url 'website.views.data.add_player' game_id=player.game_id %}" title="Modifier votre personnage">{{ player.name }}</a>
 				{% elif is_authenticated %}
 					<a href="{% url 'website.views.index.index' %}">Sélectionnez une partie&hellip;</a>
 				{% else %}
@@ -143,6 +146,15 @@ $( document ).ready(function() {
 $(function() {
   Tipped.create('svg, .tooltip');
 });
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		window.onload = function() {
+		$("#id_content").focus();
+		$("#chatbox").prop({ scrollTop: $("#chatbox").prop("scrollHeight") });
+		//  setting focus to a textbox which added to template page direcltly using html tag the focus() method works well
+		};
+	});
 </script>
 </body>
 </html>
