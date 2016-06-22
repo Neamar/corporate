@@ -126,7 +126,7 @@ USE_TZ = True
 
 
 # Security
-ALLOWED_HOSTS = ["corporategame.me"]
+ALLOWED_HOSTS = ["corporategame.me", "corporate-game-pr-131.herokuapp.com"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
