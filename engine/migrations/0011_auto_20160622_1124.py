@@ -11,10 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='game',
-            name='started',
-        ),
         migrations.AddField(
             model_name='game',
             name='status',

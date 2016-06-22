@@ -19,9 +19,8 @@ class Migration(migrations.Migration):
             field=models.DateTimeField(default=datetime.datetime(2016, 6, 15, 17, 48, 56, 82696, tzinfo=utc), auto_now_add=True),
             preserve_default=False,
         ),
-        migrations.AlterField(
+        migrations.RemoveField(
             model_name='game',
             name='started',
-            field=models.BooleanField(default=False),
         ),
     ]
