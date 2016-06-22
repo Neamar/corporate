@@ -146,7 +146,7 @@ class Game(models.Model):
 
 	@property
 	def started(self):
-		if game.status == 'created':
+		if self.status == 'created':
 			return False
 		else:
 			return True
@@ -247,7 +247,7 @@ class Player(models.Model):
 
 
 class PlayerForm(ModelForm):
-	password = forms.CharField(max_length=128)
+	password = forms.CharField(max_length=128, required=False)
 
 	class Meta:
 		model = Player
