@@ -6,7 +6,7 @@
 <hr />
 
 <form action="#" method="get">
-	{% if game.started == False %}
+	{% if game.status == game.started %}
 		<p>Lorsque la partie est démarrée, plus aucun joueur ne peut rejoindre la partie. De plus tous les joueurs ne peuvent plus modifier ni leur avatar, ni leur nom, ni leur background</p>
 		<input type="submit" class="btn" value="Démarrer la partie" name="start_game">
 	{% else %}

@@ -54,7 +54,7 @@ def join_game(request):
 
 	if request.user.is_authenticated():
 		# We get every game that is not started and with a number of players < max players
-		games = Game.objects.exclude(player__user=request.user).filter(started=False).annotate(num_player=Count('player')).filter(num_player__lte=MAX_PLAYER)
+		games = Game.objects.exclude(player__user=request.user).filter(status='created').annotate(num_player=Count('player')).filter(num_player__lte=MAX_PLAYER)
 
 	return {
 		"is_authenticated": request.user.is_authenticated(),

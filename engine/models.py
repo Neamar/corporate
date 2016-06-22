@@ -15,6 +15,13 @@ from utils.image_treatment import preprocess
 
 class Game(models.Model):
 	# City name
+
+	STATUS = (
+		(u'created', u'created'),
+		(u'started', u'started'),
+		(u'ended', u'ended'),
+	)
+
 	city = models.CharField(max_length=50)
 
 	current_turn = models.PositiveSmallIntegerField(default=1)
@@ -24,7 +31,7 @@ class Game(models.Model):
 	disable_side_effects = models.BooleanField(default=False, help_text="Disable all side effects (invisible hand, first and last effects, ...)")
 
 	created = models.DateTimeField(auto_now_add=True)
-	started = models.BooleanField(default=False)
+	status = models.CharField(default="created", choices=STATUS, max_length=50)
 	last_update = models.DateTimeField(default=None, blank=True, null=True)
 	owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)  # The creator who can start the game and resolve turns
 	password = models.CharField(max_length=128, blank=True, null=True)  # to filter the game to people you want in
@@ -129,12 +136,20 @@ class Game(models.Model):
 		"""
 		Once a game is started, new players can't join it and players can't update their basic informations profile anymore
 		"""
-		self.started = True
-		self.save()
+		if self.status == 'created':
+			self.status = 'started'
+			self.save()
 
 	@property
 	def corporation_set(self):
 		return self.all_corporation_set.filter(game=self).filter(Q(crash_turn=self.current_turn) | Q(crash_turn__isnull=True))
+
+	@property
+	def started(self):
+		if game.status == 'created':
+			return False
+		else:
+			return True
 
 	def __unicode__(self):
 		return u"Corporate Game: %s" % self.city
