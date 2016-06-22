@@ -14,7 +14,7 @@ class MessageManager(models.Manager):
 			if message.receiver == receiver and message.read is False:
 				message.read = True
 				message.save()
-		return messages, erreur
+		return messages
 
 
 class Message(models.Model):
