@@ -115,7 +115,7 @@ def game_panel(request, game, player, turn):
 
 	# If you are not the owner, you have nothing to do here
 	if game.owner != request.user:
-		raise Http404("Only the owner of a game can resole turns")
+		raise Http404("Only the owner of a game can manage the game")
 
 	# Set the game_id in session to always display all tabs
 	request.session['gameid'] = game.pk
@@ -133,6 +133,9 @@ def game_panel(request, game, player, turn):
 
 	if(request.GET.get('start_game')):
 		game.start_game()
+
+	if(request.GET.get('end_game')):
+		game.end_game()
 
 	return django_render(request, 'game/game_panel.html', {
 		"game": game,

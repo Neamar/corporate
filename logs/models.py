@@ -11,13 +11,22 @@ from utils.read_markdown import read_file_from_path, parse_markdown
 class LogManager(models.Manager):
 	def for_player(self, player, asking_player, turn):
 		# turn=now AND players__player=target AND personal_event AND (players__player=myself OR public)
-		return Log.objects.filter(turn=turn - 1, hide_for_players=False).filter(concernedplayer__player=player, concernedplayer__personal=True).filter(Q(players=asking_player) | Q(public=True)).distinct()
+		if player.game.ended:
+			return Log.objects.filter(turn=turn - 1, hide_for_players=False).filter(concernedplayer__player=player, concernedplayer__personal=True).distinct()
+		else:
+			return Log.objects.filter(turn=turn - 1, hide_for_players=False).filter(concernedplayer__player=player, concernedplayer__personal=True).filter(Q(players=asking_player) | Q(public=True)).distinct()
 
 	def for_corporation_market(self, corporation_market, asking_player):
-		return Log.objects.filter(corporation_market=corporation_market).filter(Q(players=asking_player) | Q(public=True)).distinct()
+		if corporation_market.corporation.game.ended:
+			return Log.objects.filter(corporation_market=corporation_market).distinct()
+		else:
+			return Log.objects.filter(corporation_market=corporation_market).filter(Q(players=asking_player) | Q(public=True)).distinct()
 
 	def for_corporation(self, corporation, asking_player, turn):
-		return Log.objects.filter(turn=turn - 1).filter(corporation=corporation).filter(Q(players=asking_player) | Q(public=True)).distinct()
+		if corporation.game.ended:
+			return Log.objects.filter(turn=turn - 1).filter(corporation=corporation).distinct()
+		else:
+			return Log.objects.filter(turn=turn - 1).filter(corporation=corporation).filter(Q(players=asking_player) | Q(public=True)).distinct()
 
 	def for_delta(self, corporation, turn):
 		# retreive all events to calculate delta between previous turn t-1 and turn t

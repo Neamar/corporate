@@ -9,6 +9,9 @@
 	{% if game.started = False %}
 		<p>Lorsque la partie est démarrée, plus aucun joueur ne peut rejoindre la partie. De plus tous les joueurs ne peuvent plus modifier ni leur avatar, ni leur nom, ni leur background</p>
 		<input type="submit" class="btn" value="Démarrer la partie" name="start_game">
+	{% elif game.current_turn = game.total_turn %}
+		<p>Lorsque la partie est terminée, toutes les actions qu'on fait les joueurs dans la partie deviennent publiques. Le calcul des points est effectué pour afficher le gagnant</p>
+		<input type="submit" class="btn" value="Finir la partie" name="end_game">
 	{% else %}
 		<p>Tour actuel : {{ game.current_turn }}</p>
 		{% if players %}

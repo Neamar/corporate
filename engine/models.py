@@ -140,6 +140,14 @@ class Game(models.Model):
 			self.status = 'started'
 			self.save()
 
+	def end_game(self):
+		"""
+		Once a game is ended, all informations on the game becomes public and we shoud count points right there
+		"""
+		if self.status == 'started' and self.current_turn == self.total_turn:
+			self.status = 'ended'
+			self.save()
+
 	@property
 	def corporation_set(self):
 		return self.all_corporation_set.filter(game=self).filter(Q(crash_turn=self.current_turn) | Q(crash_turn__isnull=True))
@@ -150,6 +158,13 @@ class Game(models.Model):
 			return False
 		else:
 			return True
+
+	@property
+	def ended(self):
+		if self.status == 'ended':
+			return True
+		else:
+			return False
 
 	def __unicode__(self):
 		return u"Corporate Game: %s" % self.city
@@ -258,7 +273,7 @@ class PlayerForm(ModelForm):
 		super(PlayerForm, self).__init__(*args, **kwargs)
 		instance = getattr(self, 'instance', None)
 		# On n'a pas à rentrer de mot de passe si on est déjà inscrit sur la partie ou que le mot de passe sur la game est vide
-		if instance and (instance.pk or self.game_password is None):
+		if (instance and instance.pk) or self.game_password is None:
 			del self.fields['password']
 		if instance and instance.pk and instance.game.started is True:
 				self.fields['name'].widget.attrs['readonly'] = True
