@@ -43,7 +43,7 @@ def add_player(request, game_id):
 			player.game = game
 			player.save()
 			form.save_m2m()
-			return redirect('website.views.data.add_player', game_id=game_id)
+			return redirect('website.views.data.wallstreet', game_id=game_id)
 	else:
 		if player is None:
 			# creation form

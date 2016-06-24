@@ -2,31 +2,33 @@ title: Comment jouer ?
 
 Dans le Corporate Game, vous incarnez une pointure dans l’univers de la finance dans un futur où le capitalisme a fini par dissoudre les pays. Vous jouez à Detroit, la première ville libérée du contrôle des États. Bienvenue dans le Disneyland des traders !
 
-Le jeu se déroule en 7 tours de 24h. Chaque tour, vous devez remplir une fiche d'ordres contenant tout ce que vous voulez faire. À 13h chaque jour, les fiches d'ordres de chaque joueur sont résolues en même temps et un nouveau tour peut commencer. La personnalité la plus respectée de Detroit sera sacrée à la fin du 7<sup>ème</sup> tour, les autres sombreront dans l’oubli.
+Le jeu se déroule en 7 tours de 24h. Chaque tour, vous devez remplir une fiche d'ordres contenant tout ce que vous voulez faire. À 13h chaque jour, les fiches d'ordres de chaque joueur sont résolues en même temps et un nouveau tour peut commencer. Le meilleur sera sacré à la fin du 7<sup>ème</sup> tour, les autres sombreront dans l’oubli.
 
-Votre objectif est de devenir la personnalité la plus respectée de Detroit **tout seul**. Le truc important à retenir, c’est qu’il n’y a pas de victoire en équipe. Il y aura celui qui a réussi et ceux qui ont échoué. Et commencez pas à parler de chance, personne n’aime les pleurnichards !
+Votre objectif est de devenir le meilleur **tout seul**. Le truc important à retenir, c’est qu’il n’y a pas de victoire en équipe. Il y aura celui qui a réussi et ceux qui ont échoué. Et ne commencez pas à parler de chance, personne n’aime les pleurnichards !
  
 [TOC]
 
 ## Le classement corporatiste
 > Pourquoi je ne mise que sur 10 corpos parmi des centaines ? Tu m’as bien regardé ? J’ai l’air d’un hippie qui laisse traîner son fric dans une boîte réglo ?
 
-Votre champ de bataille, c’est 10 énormes entreprises cotées à Détroit. On les appelle des corporations, ou **corpos**. Chaque corpo commence avec un certain nombre d’actifs ; ce nombre va évoluer au cours de la partie. Au début du jeu, 3 corpos commencent avec 12 actifs, 4 corpos commencent avec 10 et 3 corpos commencent avec 8.
+Votre champ de bataille, c’est 10 énormes entreprises cotées à Détroit. On les appelle des corporations, ou **corpos**. Chaque corpo commence avec un certain nombre d’actifs ; ce nombre va évoluer au cours de la partie. Au début du jeu il est compris entre 8 et 13. 
+
+Dans chacune de ces corpos, vous pourrez acheter des parts qui vous rapporteront des dividendes à chaque tour.
 
 Les corporations sont classées par ordre d'actifs décroissants. C'est à dire que la première corpo est celle qui a le plus d'actifs. En cas d'ex-æquo, celle qui était la mieux classée au tour d'avant reste en tête.
 
 Les règles de l’économie sont simples :
 
 * Vous commencez la partie avec deux millions de crédits énergétiques. Ou 2 000 000 ₵.
-* Acheter une **part** dans la première corpo coûte `actifs × 125 000 ₵`.
-* Acheter une part dans une autre corpo coûte `actifs × 100 000 ₵`.
-* Chaque part dans la première corpo rapporte des dividendes d'un montant de `actifs × 75 000 ₵` à la fin du tour.
-* Chaque part dans une autre corpo rapporte des dividendes d'un montant de `actifs × 50 000 ₵` à la fin du tour.
+* Acheter une **part** dans la corpo n°1 au classement coûte `(125 000 ₵ x actifs de la corpo)`.
+* Acheter une **part** dans une autre corpo coûte `(100 000 ₵ x actifs de la corpo)`.
+* Chaque part dans la corpo n°1 au classement rapporte des dividendes d'un montant de `(75 000 ₵ x actifs de la corpo)` à la fin du tour.
+* Chaque part dans une autre corpo rapporte des dividendes d'un montant de `(50 000 ₵ x actifs de la corpo)` à la fin du tour.
 
 > Le crédit énergétique est une monnaie étalon comme le fut l'or à son époque. Il n'y a que les types pétés de thunes qui l'utilisent.
 
 ## Influence corporatiste 
-> Pourquoi je te mets des bâtons dans les roues ? Mes convictions m’interdisent de laisser le pouvoir à un égoïste. Mais un don m’aidera à me débarrasser de mes doutes. L'association est à mon nom.
+> Mes convictions personnelles m’interdisent de laisser le pouvoir à un égoïste. Quelle meilleur preuve de générosité qu'un chèque a une association ? Si si, l'ordre est à mon nom.
 
 Acheter une part dans une corpo prend du temps, des ressources et beaucoup de négociations. Tant que l’on n’a pas les bons contacts, on ne peut pas en acheter autant qu’on veut. Cette capacité est représentée par l'Influence Corporatiste.
 
@@ -40,28 +42,10 @@ Acheter une part dans une corpo prend du temps, des ressources et beaucoup de n�
     John souhaite augmenter son IC de 2 à 3, ce qui lui coûtera donc 1 500 000 ₵
  
 ## Les Marchés
-Regardons en détail comment sont calculés les actifs. Chaque corporation est définie par ses **marchés** qui ne changeront pas au cours de la partie. Voici la liste des corporations :
+Regardons en détail comment sont calculés les actifs. 
+Chaque corporation est définie par ses **marchés** qui ne changeront pas au cours de la partie. 
 
-{{ corporations }}
-
-Ces corporations sont réparties de la façon suivante dans les différents marchés :
-
-|                 | Taurus                           | Pure                             | Mercury                          | Tlaloc                           | Iris | Bastion | Shinsekaï                        | Enercore                         | Impulse                          | CityGroup                        |
-|-----------------|----------------------------------|----------------------------------|----------------------------------|----------------------------------|------|---------|----------------------------------|----------------------------------|----------------------------------|----------------------------------|
-| Militaire       | <span style=color:green>4</span> |                                  |                                  |                                  |      | 3       | 2                                |                                  |                                  |                                  |
-| BTP             | 2                                |                                  | 2                                |                                  |      |         |                                  | 3                                |                                  | <span style=color:green>4</span> |
-| Robotique       |                                  |                                  |                                  |                                  | 2    |         | <span style=color:green>3</span> |                                  | 2                                | 1                                |
-| Energie         |                                  | 2                                |                                  |                                  |      | 2       |                                  | <span style=color:green>6</span> | 3                                |                                  |
-| Aerospatiale    | 1                                |                                  | 2                                | 2                                |      |         |                                  |                                  | <span style=color:green>3</span> |                                  |
-| Médias          |                                  |                                  |                                  | 3                                | 3    |         | 2                                | <span style=color:red>0</span>   |                                  |                                  |
-| Agroalimentaire |                                  | 3                                |                                  | <span style=color:green>5</span> |      | 2       |                                  |                                  |                                  | 2                                |
-| Transport       | <span style=color:green>4</span> | 3                                |                                  |                                  | 3    |         |                                  |                                  |                                  |                                  |
-| Télécom         |                                  |                                  | <span style=color:green>5</span> |                                  | 3    | 3       |                                  |                                  |                                  |                                  |
-| Pharmaceutique  |                                  | <span style=color:green>3</span> | 2                                |                                  |      |         | 2                                |                                  |                                  |                                  |
-| domination      | 2                                | 1                                | 1                                | 1                                | 0    | 0       | 1                                | 1                                | 1                                | 1                                |
-| perte sèche     | 0                                | 0                                | 0                                | 0                                | 0    | 0       | 0                                | 1                                | 0                                | 0                                |
-| Actifs          | 13                               | 12                               | 12                               | 11                               | 11   | 10      | 10                               | 9                                | 9                                | 8                                |
- 
+![](/static/Rules/exemple_actifs.png)
 
 Les actifs d’une corporation sont égaux à la somme des actifs de ses marchés… à deux petites exceptions près :
 
@@ -76,12 +60,14 @@ Les actifs d’une corporation sont égaux à la somme des actifs de ses marché
 * Un marché d'une corpo qui gagne 1 actif.
 * Un marché d'une corpo qui perd 1 actif.
 
+Il ne s'agit pas forcément de la même corpo ni du même marché.
+
 
 ## Les Ordres
 Évidemment, le jeu serait un peu fade si vous ne pouviez pas maîtriser un peu les cours de la bourse ! Vous disposez de 3 leviers : votre voix au chapitre sur les marchés, les opés et Detroit Incorporated.
 
 ### Voix au chapitre
-> Il y a un paquet de gens qui suivent mes conseils pour placer leur argent sans avoir conscience du pouvoir que ça me donne. C’est tellement plus efficace que le viagra !
+> Quand je dis sur le réseau que je suis sur à 200% qu'un investissement sera rentable, une énorme masse d'argent se met en mouvement fait bouger le marché. Mais où étaient ils tous le jour du cours sur les statistiques ?
 
 En tant qu'acteur majeur du marché, chaque joueur applique sa **Voix au chapitre** sur les marchés à chaque tour. Il choisit :
 
@@ -156,17 +142,17 @@ Pour gagner il faut avoir plus de Points de Victoire que les autres joueurs, voi
 * 1 Point de Victoire par part dans la cinquième corpo
 
 ### Les points de citoyenneté corpo
->Changer de nationalité c’est un peu comme enfiler le maillot de l’autre équipe au milieu du  match. Si ta nouvelle équipe gagne, tu es seulement un traître.
+>Changer de nationalité c’est un peu comme enfiler le maillot de l’autre équipe au milieu du match. Si ta nouvelle équipe gagne, tu es seulement un traître.
 
 La **citoyenneté corpo** est très importante puisque votre image dépend du résultat de votre corpo.
 
-* À la fin de la partie, chaque corporation rapporte `20 – 2 × rang` points de victoire à ces citoyens. Donc 18 points pour la première corpo et 0 pour la dernière. Attention, ces points sont à partager entre tous les citoyens de la corporation arrondis à l’inférieur. Donc si 3 joueurs sont citoyens de la 3eme corpos, ils ne gagnent que 4 points chacun !
+* À la fin de la partie, chaque corporation rapporte des points de victoire à ces citoyens en fonction du classement. 18 points pour la première corpo, 16 pour la deuxième, 14 pour la troisième... et 0 pour la dernière. Attention, ces points sont à partager entre tous les citoyens de la corporation arrondis à l’inférieur. Donc si 3 joueurs sont citoyens de la 3eme corpos, ils ne gagnent que 4 points chacun !
 * Vous pouvez changer de citoyenneté corpo contre X Points de Victoire, X étant le tour en cours. Vous devez avoir au moins une part dans une corporation pour en acquérir la nationalité.
 * Vous pouvez choisir de commencer la partie en tant que citoyen d’une corporation. Vous serez alors contraint d’acheter votre première part dans cette corporation au premier tour de jeu.
 * Si vous n'avez pas de ciroyenneté à la fin de la partie, vous perdez 7 Points de Victoire.
 
 ### Les Backgrounds
->Tu veux laisser ta trace à Detroit ? Choisis ton style, fais en plus que les autres et prends le pouvoir avec. Moi je sabote les corpos de mes ennemis. Entre potes, un conseil en or comme ça vaut bien 100 000 ₵.
+>Tu veux laisser ta trace à Detroit ? Choisis ton style, fais en plus que les autres et prends le pouvoir avec. Moi par exemple je sabote les corpos de mes ennemis. Entre potes, un conseil en or comme ça vaut bien 100 000 ₵.
 
 Au début du jeu, vous pouvez choisir un background. Il vous rapportera des Points de Victoire à chaque tour si vous en remplissez les conditions. Il y a maximum 10 points à se faire avec.
 
