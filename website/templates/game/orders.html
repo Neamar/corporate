@@ -131,7 +131,11 @@ function update_select(select, data) {
 <tbody>
 {% for order in existing_orders %}
 <tr>
-	<td class="order-delete"><a href="{% url "website.views.orders.delete_order" game_id=game.pk order_id=order.pk %}" title="Supprimer cet ordre">✗</a></td>
+	<td class="order-delete">
+		{% if order.cancellable %}
+		<a href="{% url "website.views.orders.delete_order" game_id=game.pk order_id=order.pk %}" title="Supprimer cet ordre">✗</a>
+		{% endif %}
+	</td>
 	<td class="order-name"><svg role="img" class="svg--medium svg--white" title="{{ order.title }}"><use xlink:href="/static/img/sprite.svg#{{ order.name }}"></use></svg>
 	{% if order.custom_description|length == 0 %}
 	<td colspan="2" class="order-description">{{ order.description }}</td>

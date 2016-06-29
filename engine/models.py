@@ -3,11 +3,11 @@ from django import forms
 from django.db import models, transaction
 from django.db.models import Sum, Q
 from django.conf import settings
-from django.forms import ModelForm
+from django.forms import ModelForm, ChoiceField
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
-from engine.dispatchs import validate_order, game_event
+from engine.dispatchs import validate_order, game_event, start_event
 from stdimage.models import StdImageField
 from stdimage.utils import UploadToUUID
 from utils.image_treatment import preprocess
@@ -139,6 +139,12 @@ class Game(models.Model):
 		if self.status == 'created':
 			self.status = 'started'
 			self.save()
+			print "start_game"
+			print self
+			start_event.send(
+				sender=self.__class__,
+				instance=self
+			)
 
 	def end_game(self):
 		"""
@@ -180,12 +186,12 @@ class Player(models.Model):
 	class Meta:
 		unique_together = (("game", "user"),)
 
-	# Enumerate the party lines and their meanings
+	# Enumerate the backgrounds
 	BACKGROUNDS = (
 		(u'Anonyme', u'Anonyme'),
 		(u'Acharné', u'Acharné'),
 		(u'Analyste', u'Analyste'),
-		(u'Altruisite', u'Altruisite'),
+		(u'Altruiste', u'Altruiste'),
 		(u'Corrupteur', u'Corrupteur'),
 		(u'Dévoué', u'Dévoué'),
 		(u'Flambeur', u'Flambeur'),
@@ -207,6 +213,9 @@ class Player(models.Model):
 	money = models.PositiveIntegerField(default=2000)
 	background = models.CharField(default="Anonyme", choices=BACKGROUNDS, max_length=50)
 	rp = models.TextField(default="", blank=True)
+
+	# Players can chose a citizenship at the start of the game. We store the base_corporation slug
+	starting_citizenship = models.CharField(blank=True, null=True, max_length=50)
 
 	avatar = StdImageField(upload_to=UploadToUUID(path='avatars'), variations={
 		'thumbnail': {"width": 55, "height": 55, "crop": True}
@@ -265,19 +274,26 @@ class PlayerForm(ModelForm):
 
 	class Meta:
 		model = Player
-		fields = ['password', 'name', 'background', 'rp', 'avatar']
+		fields = ['password', 'name', 'background', 'rp', 'avatar', 'starting_citizenship']
 
 	def __init__(self, *args, **kwargs):
-		self.game_password = kwargs.pop('game_password', None)
+		self.game = kwargs.pop('game', None)
 		super(PlayerForm, self).__init__(*args, **kwargs)
 		instance = getattr(self, 'instance', None)
+
+		# Handle the dropdown list for startinf citizenship
+		self.fields['starting_citizenship'] = ChoiceField(required=False)
+		choices = [('', '---------')] + [(i.id, str(i)) for i in self.game.corporation_set]
+		self.fields['starting_citizenship'].choices = choices
+
 		# On n'a pas à rentrer de mot de passe si on est déjà inscrit sur la partie ou que le mot de passe sur la game est vide
-		if (instance and instance.pk) or self.game_password is None:
+		if (instance and instance.pk) or not self.game.password:
 			del self.fields['password']
 		if instance and instance.pk and instance.game.started is True:
-				self.fields['name'].widget.attrs['readonly'] = True
-				self.fields['background'].widget.attrs['readonly'] = True
+				self.fields['name'].widget.attrs['disabled'] = True
+				self.fields['background'].widget.attrs['disabled'] = True
 				self.fields['avatar'].widget.attrs['disabled'] = True
+				self.fields['starting_citizenship'].widget.attrs['disabled'] = True
 
 	def clean_password(self):
 		instance = getattr(self, 'instance', None)
@@ -285,7 +301,7 @@ class PlayerForm(ModelForm):
 			return ''
 		else:
 			data = self.cleaned_data['password']
-			if data != self.game_password:
+			if data != self.game.password:
 				raise forms.ValidationError("Le mot de passe est incorrect")
 
 	def clean_name(self):
@@ -318,6 +334,8 @@ class Order(models.Model):
 	turn = models.PositiveSmallIntegerField(editable=False)
 	cost = models.PositiveSmallIntegerField(editable=False)
 	type = models.CharField(max_length=40, blank=True, editable=False)
+	# Some order must be done and cannot be cancelled
+	cancellable = models.BooleanField(default=True, editable=False)
 
 	def save(self, **kwargs):
 		# Save the current type to inflate later (model inheritance can be tricky)

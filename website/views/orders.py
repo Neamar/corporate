@@ -105,6 +105,10 @@ def delete_order(request, game_id, order_id):
 	player = get_player(request, game_id)
 
 	order = get_object_or_404(Order, pk=order_id, player=player)
+	
+	if not order.cancellable:
+		raise Http404("Cet ordre n'est pas annulable")
+
 	order.delete()
 
 	return redirect('website.views.orders.orders', game_id=game_id)

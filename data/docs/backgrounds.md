@@ -68,7 +68,7 @@ Condition : un joueur est dans la coalition perdante et vous êtes dans la coali
 Récompense : 2 Points de victoire à chaque fois que la condition se réalise (elle se réalise plusieurs fois s'il y a plusieurs joueurs dans la coalition perdante)
 Limites : maximum 10 Points de Victoire
 
-####Altruisite
+####Altruiste
 Condition : Ne pas mettre son vote positif sur une corporation dans laquelle vous avez des parts
 Récompense : 9 Points de Victoire -3 Points de Victoire par tour où cette condition n'est pas vraie
 Limites : minimum 0 Points de Victoire

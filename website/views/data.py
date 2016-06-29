@@ -25,7 +25,7 @@ def add_player(request, game_id):
 	"""
 	# if gameid is not null, we display the menu.
 	# We dont want to display the menu for creation but we want to display it for modification.
-	game = None
+	game = Game.objects.get(pk=game_id)
 
 	# If playeryer exists we will change it, else it's a creation
 	try:
@@ -34,8 +34,7 @@ def add_player(request, game_id):
 		player = None
 
 	if request.method == 'POST':
-		game = Game.objects.get(pk=game_id)
-		form = PlayerForm(request.POST, request.FILES, instance=player, game_password=game.password)
+		form = PlayerForm(request.POST, request.FILES, instance=player, game=game)
 		if form.is_valid():
 			# We add the user and the game (they are not in the form)
 			player = form.save(commit=False)
@@ -47,12 +46,14 @@ def add_player(request, game_id):
 	else:
 		if player is None:
 			# creation form
-			form = PlayerForm()
+			form = PlayerForm(game=game)
+			# We disable the game to hide the menu on this screen
+			game = None
 		else:
 			# display game menu
 			game = player.game
 			# edit form
-			form = PlayerForm(instance=player)
+			form = PlayerForm(instance=player, game=game)
 
 	return django_render(request, 'game/add_player.html', {
 		"game_id": game_id,

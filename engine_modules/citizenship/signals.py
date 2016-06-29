@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
 
-from engine.dispatchs import post_create, validate_order
+from engine.dispatchs import post_create, validate_order, start_event
 from engine.exceptions import OrderNotAvailable
 
 from engine_modules.citizenship.models import Citizenship, CitizenshipOrder
 from engine.models import Player
+from engine_modules.corporation.models import Corporation
 
 
 @receiver(post_create, sender=Player)
@@ -44,3 +45,18 @@ def citizenship_need_one_share(sender, instance, **kwargs):
 
 	if not instance.player.share_set.filter(corporation=instance.corporation).exists():
 		raise OrderNotAvailable("Vous devez avoir au moins une part dans la corporation dont vous souhaitez devenir citoyen.")
+
+
+@receiver(start_event)
+def add_citizenship_at_start(sender, instance, **kwargs):
+	"""
+	Create citizenship model for new player
+	"""
+	for player in instance.player_set.all():
+		if player.starting_citizenship:
+			# Créer la citoyenneté
+			corporation = Corporation.objects.get(pk=player.starting_citizenship)
+			instance.add_event(event_type=instance.ADD_CITIZENSHIP, turn=instance.current_turn - 1, data={"player": player.name, "corporation": corporation.base_corporation.name}, corporation=corporation, players=[player])
+			citizenship = player.citizenship_set.get(turn=instance.current_turn - 1)
+			citizenship.corporation = corporation
+			citizenship.save()
