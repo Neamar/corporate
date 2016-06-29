@@ -207,7 +207,6 @@ class Player(models.Model):
 	money = models.PositiveIntegerField(default=2000)
 	background = models.CharField(default="Anonyme", choices=BACKGROUNDS, max_length=50)
 	rp = models.TextField(default="", blank=True)
-	secrets = models.TextField(default="", blank=True)
 
 	avatar = StdImageField(upload_to=UploadToUUID(path='avatars'), variations={
 		'thumbnail': {"width": 55, "height": 55, "crop": True}

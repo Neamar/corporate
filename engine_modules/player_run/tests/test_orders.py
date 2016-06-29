@@ -9,7 +9,7 @@ class InformationRunOrderTest(EngineTestCase):
 	def setUp(self):
 		super(InformationRunOrderTest, self).setUp()
 
-		self.p2 = Player(game=self.g, secrets="Some nasty sfuff")
+		self.p2 = Player(game=self.g)
 		self.p2.save()
 
 		from engine_modules.corporation_run.models import SabotageOrder
