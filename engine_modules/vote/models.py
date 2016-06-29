@@ -9,7 +9,7 @@ class VoteOrder(Order):
 	"""
 	Order to vote for a Corporation market and increase or decrease it
 	"""
-	title = "Voter"
+	title = "Voix au chapitre"
 	ORDER = 0
 
 	corporation_market_up = models.ForeignKey(CorporationMarket, related_name="+")

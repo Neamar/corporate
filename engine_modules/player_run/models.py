@@ -13,7 +13,7 @@ class InformationOrder(RunOrder):
 	Order for Information runs
 	"""
 	ORDER = 800
-	title = "Lancer une opération d'Information"
+	title = "Opé d'Information"
 
 	PLAYER_COST = 150
 	CORPORATION_COST = 50

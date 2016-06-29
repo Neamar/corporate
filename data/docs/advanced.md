@@ -4,7 +4,7 @@ Nous vous conseillons de lire ces règles après le premier ou second tour, une 
 
 [TOC]
 
-## Detroit Incorporated
+## Choisir une coalition
 > C’est comme jouer à pierre-feuille-ciseau pour savoir qui va filmer l’autre en train de lécher une bouse. Le plus sage c’est clairement de ne pas jouer. MAIS PUTAIN IMAGINE SI TU GAGNES !
 
 **Detroit Inc.** est l’entreprise qui dirige la ville. Elle a le pouvoir de décider la ligne politique de la ville. Chaque tour, les joueurs peuvent s'y intéresser en rejoignant une coalition défendant une cause particulière. Ces causes, détaillées plus bas, peuvent être une redistribution des **Contrats publics**, une **Réforme de la sécurité** ou des **Consolidations**.

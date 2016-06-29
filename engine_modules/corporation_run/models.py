@@ -141,7 +141,7 @@ class DataStealOrder(CorporationRunOrderWithStealer):
 	"""
 	ORDER = 500
 
-	title = "Lancer une opération de Datasteal"
+	title = "Opé de Datasteal"
 
 	def resolve_successful(self):
 		self.stealer_corporation.update_assets(+1, corporation_market=self.stealer_corporation_market)
@@ -166,7 +166,7 @@ class ExtractionOrder(CorporationRunOrderWithStealer):
 	Order for Extraction runs
 	"""
 	ORDER = 700
-	title = "Lancer une opération d'Extraction"
+	title = "Opé d'Extraction"
 
 	def resolve_successful(self):
 		self.target_corporation.update_assets(-1, corporation_market=self.target_corporation_market)
@@ -192,7 +192,7 @@ class SabotageOrder(CorporationRunOrder):
 	Order for Sabotage runs
 	"""
 	ORDER = 600
-	title = "Lancer une opération de Sabotage"
+	title = "Opé de Sabotage"
 
 	def resolve_successful(self):
 		self.target_corporation.update_assets(-2, corporation_market=self.target_corporation_market)
@@ -220,7 +220,7 @@ class ProtectionOrder(RunOrder):
 	Order for Protection runs
 	"""
 	ORDER = 850
-	title = "Lancer une opération de Protection"
+	title = "Opé de Protection"
 	MAX_PERCENTS = 40
 
 	protected_corporation_market = models.ForeignKey(CorporationMarket, related_name="protectors")

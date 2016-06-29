@@ -67,7 +67,7 @@ Il ne s'agit pas forcément de la même corpo ni du même marché.
 Évidemment, le jeu serait un peu fade si vous ne pouviez pas maîtriser un peu les cours de la bourse ! Vous disposez de 3 leviers : votre voix au chapitre sur les marchés, les opés et Detroit Incorporated.
 
 ### Voix au chapitre
-> Quand je dis sur le réseau que je suis sur à 200% qu'un investissement sera rentable, une énorme masse d'argent se met en mouvement fait bouger le marché. Mais où étaient ils tous le jour du cours sur les statistiques ?
+> Quand je dis sur le réseau que je suis sur à 200% qu'un investissement sera rentable, une énorme masse d'argent se met en mouvement et fait bouger le marché. Mais où étaient ils tous le jour du cours sur les statistiques ?
 
 En tant qu'acteur majeur du marché, chaque joueur applique sa **Voix au chapitre** sur les marchés à chaque tour. Il choisit :
 
@@ -82,16 +82,16 @@ Vous ne pouvez pas cibler un marché à 0 ou dans le négatif avec le second cho
 Les opérations clandestines, ou **opé**, sont des missions illégales réalisées par un regroupement de diverses organisations criminelles ou d’indépendants contre une rétribution financière.
 
 #### Les opés classiques
-##### Sabotage
+##### Opé de Sabotage
 Le commanditaire choisit une corpo cible, ainsi qu'un Marché associé à cette corpo. S'il réussit, le sabotage fait perdre 2 actifs au marché sélectionné. 
 Vous ne pouvez pas cibler un marché à 0 ou dans le négatif avec un sabotage.
 
-##### Datasteal
+##### Opé de Datasteal
 Le commanditaire choisit un marché, une corpo cible et une corpo bénéficiaire. En cas de réussite, le marché de la corpo bénéficiaire gagne +1 actif grâce aux précieuses informations dérobées à la concurrence.
 Vous pouvez lancer cette opé uniquement si la corporation bénéficiaire et la corporation cible partagent le marché cible.
 Vous ne pouvez pas lancer cette opé si la corpo bénéficiaire possède strictement plus d'actifs dans le marché que la corpo cible.
 
-##### Extraction
+##### Opé d'Extraction
 Le commanditaire choisit un marché, une corpo cible et une corpo bénéficiaire. En cas de réussite, un employé crucial est kidnappé des locaux de la corpo cible, qui perd 1 actif sur ce marché, et rejoint la corpo bénéficiaire, lui faisant gagner +1 actif sur ce même marché.
 Vous pouvez lancer cette opé uniquement si la corporation bénéficiaire et la corporation cible partagent le même marché cible.
 Vous ne pouvez pas lancer cette opé si la corpo bénéficiaire possède strictement plus d'actifs dans le marché que la corpo cible.
@@ -104,14 +104,14 @@ Chaque opé coûte 350 000 ₵ et a 50% de chances de réussir. Le joueur comman
 Autant de fois qu'il a d'IC, un joueur peut réduire le coût de base d'une opé à 50 000 ₵ au lieu de 350 000 ₵. Il paye normalement les augmentations de réussite apportées.
 
 #### Les opés spéciales
-##### Protection
+##### Opé de Protection
 > Les corpos payent déjà une fortune en sécurité et ça suffit pour tous les cas "standards". Mais tu es quasi obligé de payer un supplément pour empêcher des types comme toi de parvenir à leurs fins.
 
 Vous pouvez lancer une opé de protection sur un marché d'une corporation pour réduire le pourcentage de réussite maximale des opés qui le ciblent à 40%. Son coût est fixe : 350 000 ₵.
 
 Vous pouvez utiliser la réduction du prix de base de l'opé à 50 000 ₵ avec l'IC comme pour les autres opés. 
 
-##### Information
+##### Opé d'Information
 Le commanditaire choisit des joueurs cibles et des corpos cibles
 Il recevra des informations en fonction de la cible :
 -Sur un joueur : toutes les actions faites par les joueurs cibles ce tour-ci ainsi que leur Background (cf. Background). 
@@ -166,5 +166,4 @@ Bravo, vous avez enfin lu ce dont vous aviez besoin pour commencer à jouer !
 
 Il reste quelques points de règles avancées, mais il est conseillé d'attendre le tour 2 ou 3 avant d'aller les lire. Ne pas connaître les règles avancées ne vous fera pas perdre la partie si vous ne les lisez pas pour les premiers tours, mais elles peuvent vous donner un avantage si vous prenez le temps de les lire.
 
-[La page des règles avancées](/docs/advanced) contient les règles sur Detroit Incorporated, les effets premiers, les effets derniers, les effets crash et la spéculation.
-
+[La page des règles avancées](/docs/advanced) contient les règles pour choisir une coalition (Detroit incorporated), spéculer sur une corporation et comprendre les effets premiers, les effets derniers et les effets crash.

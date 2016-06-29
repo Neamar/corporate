@@ -24,12 +24,12 @@ Récompense : 1 Points de Victoire à chaque fois que cette condition est réali
 Limites : maximum 10 Points de Victoire
 
 ####Pyromane
-Condition : Une coprporation a crashé avant la fin de la partie
+Condition : Une corporation a crashé avant la fin de la partie
 Récompense : 5 Points de Victoire à chaque fois que cette condition est réalisée
 Limites : maximum 10 Points de Victoire
 
 ####Acharné
-Condition : Faire crasher une coporation qui t'est désignée au début de la partie.
+Condition : Faire crasher une corporation qui t'est désignée au début de la partie.
 Récompense : 7 Points de victoire si la condition est remplie + 3 Points de Victoire si au moins un joueur a été citoyen de cette corpo
 Prérequis : une corporation est choisie au hasard au début de le partie et ajoutée au background du joueur. C'est à dire que le joueur ayant choisi ce background ainsi que tous les joueurs ayant lancé une opération d'information sur lui auront l'information de la cible.
 
@@ -58,7 +58,7 @@ Récompense : 10 Points de Victoire -3 Points de Victoire par tour où cette con
 Limites : minimum 0 Points de Victoire
 Prérequis : Vous devez commencer la partie citoyen d'une corpo pour prendre ce background
 
-####Grande geule
+####Grande gueule
 Condition : Choisir une coalition à chaque tour.
 Récompense : 9 Points de Victoire -3 Points de Victoire par tour où cette condition n'est pas vraie
 Limites : minimum 0 Points de Victoire
