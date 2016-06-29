@@ -280,6 +280,8 @@ class PlayerForm(ModelForm):
 		self.game = kwargs.pop('game', None)
 		super(PlayerForm, self).__init__(*args, **kwargs)
 		instance = getattr(self, 'instance', None)
+		self.fields['starting_citizenship'].label = "nationnalité"
+		self.fields['rp'].label = "description"
 
 		# Handle the dropdown list for startinf citizenship
 		self.fields['starting_citizenship'] = ChoiceField(required=False)
