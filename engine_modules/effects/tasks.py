@@ -6,7 +6,7 @@ class FirstLastEffectsTask(ResolutionTask):
 	Apply first and last corporations effects
 	"""
 
-	RESOLUTION_ORDER = 600
+	RESOLUTION_ORDER = 66
 
 	def run(self, game):
 		# We can force the first and last effects using the force_first_last_effects flag

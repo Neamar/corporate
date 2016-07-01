@@ -200,10 +200,6 @@ class TaskTest(EngineTestCase):
 		You then get a 2-increment boost instead of 1
 		"""
 
-		# Reevalutaion of the bubbles after the first/last effects should not have an effect but it could mask errors, so let's disable it
-		self.g.disable_bubble_reevaluation = True
-		self.g.save()
-
 		corporation_markets = self.reload(self.c).corporation_markets
 		markets_2 = self.c2.markets
 		# The Market at 0 must be the one that is Corporation-specific, or there is also going to be a positive bubble
@@ -234,10 +230,6 @@ class TaskTest(EngineTestCase):
 		A corporation with a dominaion that then loses all its assets on the market, dropping it to 0
 		should get a negative bubble and end up with a value of -1
 		"""
-
-		# Reevalutaion of the bubbles after the first/last effects should not have an effect but it could mask errors, so let's disable it
-		self.g.disable_bubble_reevaluation = True
-		self.g.save()
 
 		corporation_markets = self.c.corporation_markets
 		markets_2 = self.c2.markets
@@ -270,10 +262,6 @@ class TaskTest(EngineTestCase):
 		If a corporation gets back up to 0 on a turn xhere another Corporation was dominating with a value of 1, these two corporations are tied.
 		So none of them should get the domination bubble.
 		"""
-
-		# Reevalutaion of the bubbles after the first/last effects should not have an effect but it could mask errors, so let's disable it
-		self.g.disable_bubble_reevaluation = True
-		self.g.save()
 
 		cm = self.reload(self.c).get_common_corporation_market(self.reload(self.c2))
 		differential = cm.value
