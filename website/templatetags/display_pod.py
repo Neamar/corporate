@@ -24,8 +24,10 @@ def players_pod(context):
 
 	for player in players:
 		player.events = Log.objects.for_player(player=player, asking_player=context['player'], turn=context['turn'])
+		
 	return {
-		'players': players
+		'players': players,
+		'asking_player': context['player'].pk
 	}
 
 

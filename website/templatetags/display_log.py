@@ -26,13 +26,12 @@ def display_log(log, display_context, delta_display=True, size="medium", color="
 
 
 @register.simple_tag(name="display_log_title")
-def display_log_title(log, display_context):
+def display_log_title(log, display_context, is_personal=False):
 	"""
 	Handle whether the menu item should be the active one.
 	Return "active" if that is the case, "" if not.
 	The criterion here is whether the URL contains the keyword, not necessarily very robust.
 	"""
-
-	title = escape(log.get_display(display_context))
+	title = escape(log.get_display(display_context, is_personal))
 
 	return title

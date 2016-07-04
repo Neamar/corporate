@@ -13,7 +13,11 @@
 				{% else %}
 					<span class="icon-messaging"><a href="{% url 'website.views.data.discussion' game_id=game.id sender_id=player.id %}"><img src="/static/messages/get_messages.png"></a></span>
 				{% endif %}
-				{% include "logs/player.html" with events=player.events %}
+				{% if player.pk = asking_player %}
+					{% include "logs/player.html" with events=player.events is_personal=True %}
+				{% else %}
+					{% include "logs/player.html" with events=player.events is_personal=False %}
+				{% endif %}
 			</div>
 		</li>
 	{% endfor %}
