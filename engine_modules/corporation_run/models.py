@@ -211,6 +211,9 @@ class SabotageOrder(CorporationRunOrder):
 		form = super(SabotageOrder, self).get_form(data)
 		# we can't make a sabotage on a negative or null corporationMarket
 		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn, value__gt=0).select_related('market', 'corporation')
+		choices = [('', '---------')] + [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
+		form.fields['target_corporation_market'].widget = forms.Select(choices=choices)
+		form.initial['target_corporation_market'] = ''
 
 		return form
 
