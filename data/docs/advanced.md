@@ -55,6 +55,7 @@ Une fois que les effets premiers/derniers sont appliqués, si des corporations s
 * Les corporations qui crashent ne sont pas affectées par **l'effet crash** des autres corporations
 * Les corporations qui crashent sont retirées du jeu dès la fin du tour.
 * Pas de remboursement pour les parts investies.
+* Les spéculations sur les corpos qui crashent sont forcément perdues.
 
 Une fois tous ces effets résolus, on obtient le nouveau classement des corpos qui compte pour le gain de crédits énergétiques du tour suivant ainsi que pour les spéculations.
 
@@ -70,7 +71,7 @@ Pour chaque spéculation, le joueur choisit une corporation et mise sur son clas
     * 2 fois sa mise s’il a parié que la corpo serait première ou dernière.
     * 4 fois sa mise s’il a parié sur un autre rang.
 
-Si deux corpos ont des actifs négatifs (et crasheront donc en fin de tour), la corpo étant le plus loin dans le négatif est considéré dernière.
+Les spéculations sur les corpos qui crashent sont forcément perdues.
 
     Jack Finn a la ferme intention de faire travailler son argent. Ayant une IC de 2, il peut miser jusqu'à 400 000 ₵ :
 

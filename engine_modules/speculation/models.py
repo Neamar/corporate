@@ -51,8 +51,7 @@ class CorporationSpeculationOrder(AbstractSpeculation):
 
 	def resolve(self):
 		ladder = self.player.game.get_ladder()
-
-		if ladder.index(self.corporation) + 1 == self.rank:
+		if self.corporation in ladder and ladder.index(self.corporation) + 1 == self.rank:
 			# Well done!
 			self.player.money += self.on_win_money()
 			self.player.save()
