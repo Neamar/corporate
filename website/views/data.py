@@ -254,8 +254,8 @@ def shares(request, game, player, turn):
 	request.session['gameid'] = game.pk
 
 	players = game.player_set.all().order_by('name')
-	corporations = list(game.corporation_set.all().order_by('pk'))
-	shares = Share.objects.filter(player__game=game, turn__lte=turn).select_related('corporation', 'player')
+	corporations = list(game.get_ladder(turn=turn - 1))
+	shares = Share.objects.filter(player__game=game, turn__lte=turn - 1).select_related('corporation', 'player')
 	corporations_shares = []
 	totals = []
 	for player in players:
@@ -264,8 +264,11 @@ def shares(request, game, player, turn):
 			total += get_shares_count(corporation, player, shares)
 		totals.append(total)
 	for corporation in corporations:
+		assets = corporation.assethistory_set.get(turn=turn - 1).assets
+
 		corporation_shares = {
 			"corporation": corporation,
+			"assets": assets,
 			"shares": [{"count": get_shares_count(corporation, player, shares), "top": is_top_shareholder(corporation, player, shares), "citizen": is_citizen(corporation, player)} for player in players]
 		}
 		corporations_shares.append(corporation_shares)

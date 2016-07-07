@@ -39,7 +39,7 @@ Récompense : 9 Points de Victoire -3 Points de Victoire par tour où cette cond
 Limites : minimum 0 Points de Victoire
 
 ####Analyste
-Condition : Dépenser au moins 150k en run d'information à chaque tour.
+Condition : Dépenser au moins 150k en opé d'information à chaque tour.
 Récompense : 9 Points de Victoire -3 Points de Victoire par tour où cette condition n'est pas vraie
 Limites : minimum 0 Points de Victoire
 

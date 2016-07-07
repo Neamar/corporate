@@ -56,8 +56,8 @@ class InformationOrder(RunOrder):
 			corporation_part = "la corporation %s" % corporations[0].base_corporation.name
 
 		if player_part != "" and corporation_part != "":
-			return "Lancer une run d'information sur %s et %s" % (player_part, corporation_part)
-		return "Lancer une run d'information sur %s" % (player_part + corporation_part)
+			return "Lancer une opé d'information sur %s et %s" % (player_part, corporation_part)
+		return "Lancer une opé d'information sur %s" % (player_part + corporation_part)
 
 	def resolve(self):
 		# We override this function to avoid to pay the cost
