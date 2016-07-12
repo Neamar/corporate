@@ -2,6 +2,7 @@
 import random
 from os import listdir
 from collections import OrderedDict
+import re
 
 from django.db import models
 from django.conf import settings
@@ -49,12 +50,20 @@ class BaseCorporation:
 
 		code = "\n".join(meta['on_first'])
 		self.on_first = self.compile_effect(code, "on_first")
+		
+		self.first_effect = self.create_description(code)
 
 		code = "\n".join(meta['on_last'])
 		self.on_last = self.compile_effect(code, "on_last")
 
+		self.last_effect = self.create_description(code)
+
 		code = "\n".join(meta['on_crash'])
 		self.on_crash = self.compile_effect(code, "on_crash")
+
+		self.crash_effect = self.create_description(code)
+
+		self.description = self.format_effects()
 
 		self.initials_assets = 0
 		self.markets = OrderedDict()
@@ -69,6 +78,28 @@ class BaseCorporation:
 		Compile specified code. Second parameter is a string that will be used for stacktrace reports.
 		"""
 		return compile(code, "%s.%s()" % (self.slug, effect), 'exec')
+
+	def create_description(self, code):
+		"""
+		Create the description of the effects.
+		"""
+		pattern = re.compile(r'[ ]*update\(([^),]*),[ ]*([^)]*)\)', re.VERBOSE)
+		description = pattern.sub(r'+\2 sur \1', code)
+		pattern = re.compile(r'\+-', re.VERBOSE)
+		description = pattern.sub(u'-', description)
+		pattern = re.compile(r'ladder\[1\]', re.VERBOSE)
+		description = pattern.sub(u'la deuxième corpo', description)
+		pattern = re.compile(r'ladder\[0\]', re.VERBOSE)
+		description = pattern.sub(u'la première corpo', description)
+		pattern = re.compile(r'ladder\[-1\]', re.VERBOSE)
+		description = pattern.sub(u'la dernière corpo', description)
+		return description
+
+	def format_effects(self):
+		"""
+		format effects' description
+		"""
+		return 'effet premier :%s\n\neffet dernier :%s\n\neffet crash :%s' % (self.first_effect, self.last_effect, self.crash_effect)
 
 	@classmethod
 	def retrieve_all(cls):
