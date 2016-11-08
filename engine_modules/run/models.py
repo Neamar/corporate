@@ -19,7 +19,7 @@ class RunOrder(Order):
 	LAUNCH_COST = 350
 	BASE_COST = 50
 	BASE_SUCCESS_PROBABILITY = 50
-	INFLUENCE_BONUS = 0
+	INFLUENCE_BONUS = 350
 
 	has_influence_bonus = models.BooleanField(default=False, editable=False)
 	additional_percents = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)])
@@ -27,20 +27,9 @@ class RunOrder(Order):
 
 	def __init__(self, *args, **kwargs):
 		super(RunOrder, self).__init__(*args, **kwargs)
-		# We have to check for other RunOrders with has_influence_bonus set to True,
-		# so we can know if it is possible to have another one with an influence bonus
-		# I have not investigated much, but it looks like this has a big impact
-		# performance-wise
-		# OK, this is less than ideal, but the other way REALLY had poor performance
-		RunOrderTypes = ['SabotageOrder', 'ExtractionOrder', 'DataStealOrder', 'ProtectionOrder']
-		orders = self.player.order_set.filter(type__in=RunOrderTypes, runorder__has_influence_bonus=True, turn=self.player.game.current_turn)
 
-		if len(orders) < self.player.influence.level:
-			self.has_influence_bonus = True
-			# self.save()
-
-	def clean(self):
-		super(RunOrder, self).clean()
+	def save(self):
+		super(RunOrder, self).save()
 
 	def get_raw_probability(self):
 		"""
@@ -106,6 +95,22 @@ class RunOrder(Order):
 		pass
 
 	def calc_cost(self, additional_percents):
+		# base cost = 0 for the first run if you vote RSEC and this coalition succeeded
+		if self.player.game.get_dinc_coalition() == DIncVoteOrder.RSEC:
+			if self.player.get_last_dinc_coalition() == DIncVoteOrder.RSEC:
+				# We have to check for other RunOrders with has_influence_bonus set to True,
+				# so we can know if it is possible to have another one with an influence bonus
+				# I have not investigated much, but it looks like this has a big impact
+				# performance-wise
+				# OK, this is less than ideal, but the other way REALLY had poor performance
+				RunOrderTypes = ['SabotageOrder', 'ExtractionOrder', 'DataStealOrder', 'ProtectionOrder']
+				orders = self.player.order_set.filter(type__in=RunOrderTypes, runorder__has_influence_bonus=True, turn=self.player.game.current_turn)
+
+				if len(orders) < 1:
+					self.has_influence_bonus = True
+					# We have an infite loop in the save function in case a cost is not defined
+					if self.cost:
+						self.save()
 		cost = RunOrder.LAUNCH_COST
 		cost += RunOrder.BASE_COST * additional_percents
 
@@ -121,15 +126,8 @@ class RunOrder(Order):
 		form = super(RunOrder, self).get_form(data)
 		# We remove has_influence_bonus because we want to handle it automatically
 		max_additional_percents = self.MAX_SELECTABLE - self.BASE_SUCCESS_PROBABILITY
-		modifier = 0
-		if self.player.game.get_dinc_coalition() == DIncVoteOrder.RSEC:
-			if self.player.get_last_dinc_coalition() == DIncVoteOrder.RSEC:
-				modifier = 20
-			elif self.player.get_last_dinc_coalition() == DIncVoteOrder.DINC_OPPOSITIONS[DIncVoteOrder.RSEC]:
-				modifier = -20
-
 		values = range(0, ((max_additional_percents) / 10) + 1)
-		form.fields['additional_percents'].widget = forms.Select(choices=((i, u"{1} k₵ - précision {0}".format(self.BASE_SUCCESS_PROBABILITY + i * 10 + modifier, self.calc_cost(i))) for i in values))
+		form.fields['additional_percents'].widget = forms.Select(choices=((i, u"{1} k₵ - précision {0}".format(self.BASE_SUCCESS_PROBABILITY + i * 10, self.calc_cost(i))) for i in values))
 		form.fields['additional_percents'].label = u'Prix'
 		return form
 

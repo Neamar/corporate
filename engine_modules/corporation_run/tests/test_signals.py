@@ -161,7 +161,7 @@ class SignalsTest(EngineTestCase):
 		Only one run is allowed by target. allow_several_runs_on_one_target is set on True on the test_models.py of corporation_run
 		We used this variable because there are a lot of randoms corporations in the targets for testing
 		"""
-		self.g.allow_several_runs_on_one_target = False
+		self.p.game.allow_several_runs_on_one_target = False
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
 		self.so2 = SabotageOrder(

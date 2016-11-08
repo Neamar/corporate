@@ -47,7 +47,6 @@ def target_market_unique(sender, instance, **kwargs):
 
 	if not hasattr(instance, 'target_corporation_market'):
 		return
-
 	if RunOrder.objects.filter(player=instance.player, turn=instance.player.game.current_turn, corporationrunorder__target_corporation_market=instance.target_corporation_market).count() > 0:
 		raise OrderNotAvailable(u"Vous avez déjà une opération en cours sur le même marché et la même corporation.")
 

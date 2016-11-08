@@ -80,33 +80,3 @@ class DIncPartyLineTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c).assets, initial_assets + 1)
 		self.assertEqual(self.reload(self.c2).assets, initial_assets2 + 1)
 		self.assertEqual(self.reload(self.c3).assets, initial_assets3 - 1)
-
-	def test_dinc_RSEC_line_effects(self):
-		"""
-		Test what happens when the RSEC party line is chosen
-		"""
-
-		self.set_turn_line(DIncVoteOrder.CONS, DIncVoteOrder.RSEC, DIncVoteOrder.RSEC)
-		self.g.resolve_current_turn()
-
-		dso = DataStealOrder(
-			stealer_corporation=self.c2,
-			player=self.p,
-			target_corporation_market=self.c.corporation_markets.first(),
-			additional_percents=5,
-		)
-		dso.save()
-
-		# 20% bonus
-		self.assertEqual(dso.get_raw_probability(), dso.additional_percents * 10 + dso.BASE_SUCCESS_PROBABILITY - 20)
-
-		dso2 = DataStealOrder(
-			stealer_corporation=self.c2,
-			player=self.p2,
-			target_corporation_market=self.c.corporation_markets.first(),
-			additional_percents=5,
-		)
-		dso2.save()
-
-		# 20% malus
-		self.assertEqual(dso2.get_raw_probability(), dso2.additional_percents * 10 + dso2.BASE_SUCCESS_PROBABILITY + 20)
