@@ -7,6 +7,9 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		super(OffensiveRunTaskTest, self).setUp()
 
+		# We disable the test that stop you from start more than one run on the same target
+		self.g.allow_several_runs_on_one_target = True
+
 		self.so = SabotageOrder(
 			player=self.p,
 			target_corporation_market=self.c.get_random_corporation_market(),

@@ -9,6 +9,9 @@ class SignalsTest(EngineTestCase):
 	def setUp(self):
 		super(SignalsTest, self).setUp()
 
+		# We disable the test that stop you from start more than one run on the same target
+		self.g.allow_several_runs_on_one_target = True
+
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
 
 		self.dso = DataStealOrder(
@@ -151,4 +154,20 @@ class SignalsTest(EngineTestCase):
 		target_corporation_market = self.po.protected_corporation_market
 		target_corporation_market.value = -1
 		target_corporation_market.save()
+		self.assertRaises(OrderNotAvailable, self.po.clean)
+
+	def test_several_run_on_same_target_fail(self):
+		"""
+		Only one run is allowed by target. allow_several_runs_on_one_target is set on True on the test_models.py of corporation_run
+		We used this variable because there are a lot of randoms corporations in the targets for testing
+		"""
+		self.g.allow_several_runs_on_one_target = False
+
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+		self.so2 = SabotageOrder(
+			player=self.p,
+			target_corporation_market=common_corporation_market,
+			additional_percents=0,
+		)
+		self.so2.save()
 		self.assertRaises(OrderNotAvailable, self.po.clean)

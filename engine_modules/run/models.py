@@ -14,14 +14,14 @@ class RunOrder(Order):
 	Base model for all runs
 	"""
 	MAX_PERCENTS = 90
-	MAX_SELECTABLE = 100
+	MAX_SELECTABLE = 90
 
 	LAUNCH_COST = 350
 	BASE_COST = 50
 	BASE_SUCCESS_PROBABILITY = 50
-	INFLUENCE_BONUS = 300
+	INFLUENCE_BONUS = 0
 
-	has_influence_bonus = models.BooleanField(default=False, help_text="Accorder à cette run une remise de 300k", editable=False)
+	has_influence_bonus = models.BooleanField(default=False, editable=False)
 	additional_percents = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)])
 	hidden_percents = models.SmallIntegerField(default=0, editable=False)
 
@@ -37,6 +37,7 @@ class RunOrder(Order):
 
 		if len(orders) < self.player.influence.level:
 			self.has_influence_bonus = True
+			# self.save()
 
 	def clean(self):
 		super(RunOrder, self).clean()

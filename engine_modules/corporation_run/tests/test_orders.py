@@ -9,6 +9,9 @@ class CorporationRunOrderTest(EngineTestCase):
 		"""
 		Check raw probability values
 		"""
+		
+		# We disable the test that stop you from start more than one run on the same target
+		self.g.allow_several_runs_on_one_target = True
 
 		common_corporation_market = self.c.get_common_corporation_market(self.c2)
 

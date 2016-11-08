@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import receiver
+from django.core.exceptions import ValidationError
 
 from engine.decorators import sender_instance_of
 from engine.dispatchs import validate_order
 from engine.exceptions import OrderNotAvailable
-
+from engine_modules.run.models import RunOrder
 from engine_modules.corporation_run.models import CorporationRunOrder, CorporationRunOrderWithStealer, ProtectionOrder
-from django.core.exceptions import ValidationError
 
 
 @receiver(validate_order)
@@ -32,7 +32,24 @@ def target_market_positive(sender, instance, **kwargs):
 		return
 
 	if instance.target_corporation_market.value < 0:
-		raise OrderNotAvailable(u"Le marché «%s»est déjà dans le négatif pour la corpo %s, il ne lui reste que des dettes.")
+		raise OrderNotAvailable(u"Le marché «%s» est déjà dans le négatif pour la corpo %s, il ne lui reste que des dettes.")
+
+
+@receiver(validate_order)
+@sender_instance_of(CorporationRunOrder)
+def target_market_unique(sender, instance, **kwargs):
+	"""
+	Only one run is allowed by target
+	"""
+	if hasattr(instance.player.game, 'allow_several_runs_on_one_target'):
+		if instance.player.game.allow_several_runs_on_one_target:
+			return
+
+	if not hasattr(instance, 'target_corporation_market'):
+		return
+
+	if RunOrder.objects.filter(player=instance.player, turn=instance.player.game.current_turn, corporationrunorder__target_corporation_market=instance.target_corporation_market).count() > 0:
+		raise OrderNotAvailable(u"Vous avez déjà une opération en cours sur le même marché et la même corporation.")
 
 
 @receiver(validate_order)
