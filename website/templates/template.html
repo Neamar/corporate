@@ -62,9 +62,7 @@
 			<li><a class={% make_link_active "orders" %} href="{% url 'website.views.orders.orders' game_id=game.id %}">Ordres</a></li>
 			<li><a class={% make_link_active "wallstreet" %} href="{% url 'website.views.data.wallstreet' game_id=game.id %}">Wallstreet</a></li>
 			<li><a class={% make_link_active "shares" %} href="{% url 'website.views.data.shares' game_id=game.id %}">Parts</a></li>
-			{% if game.owner == request.user %}
-				<li><a class={% make_link_active "game_panel" %} href="{% url 'website.views.data.game_panel' game_id=game.id %}">Partie</a></li>
-			{% endif %}
+			<li><a class={% make_link_active "game_panel" %} href="{% url 'website.views.data.game_panel' game_id=game.id %}">Partie</a></li>
 		{% elif gameid != None %}
 			<li><a class={% make_link_active "orders" %} href="{% url 'website.views.orders.orders' game_id=gameid %}">Ordres</a></li>
 			<li><a class={% make_link_active "wallstreet" %} href="{% url 'website.views.data.wallstreet' game_id=gameid %}">Wallstreet</a></li>

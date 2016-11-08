@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+
 from engine.models import Player, Order, Game
 from engine_modules.corporation.models import Corporation
 

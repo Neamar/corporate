@@ -152,7 +152,88 @@ class Game(models.Model):
 		"""
 		if self.status == 'started' and self.current_turn == self.total_turn:
 			self.status = 'ended'
+			# We start the calculation of points, so that the PlayerPoints are generated
+			self.calc_total_points()
 			self.save()
+
+	def calc_total_points(self, turn=None):
+		"""
+		Calculate every player's points
+		"""
+
+		from engine_modules.player_points.models import PlayerPoints
+
+		if turn is None:
+			turn = self.current_turn
+
+		ladder = self.get_ladder(turn)
+		players = self.player_set.all()
+		for player in players:
+			share_points = self.calc_player_share_points(player, ladder, turn)
+			citizenship_points = self.calc_player_citizenship_points(player, ladder, turn)
+			background_points = self.calc_player_background_points(player, turn)
+			total_points = share_points + citizenship_points + background_points
+			points = PlayerPoints(player=player,
+						turn=turn,
+						total_points=total_points,
+						share_points=share_points,
+						citizenship_points=citizenship_points,
+						background_points=background_points,
+						)
+			points.save()
+
+	def calc_player_share_points(self, player, ladder, turn=None):
+		"""
+		Calculate a specific player's share points for a specific turn
+		"""
+
+		if turn is None:
+			turn = self.current_turn
+
+		points = 0
+		shares = player.share_set.filter(turn=turn)
+
+		for share in shares:
+			if share.corporation in ladder[:5]:
+				# first is 5 points, second 4, etc...
+				points += 5 - ladder.index(share.corporation)
+
+		return points
+
+	def calc_player_citizenship_points(self, player, ladder, turn=None):
+		"""
+		Calculate a specific player's citizenship points for a specific turn
+		"""
+
+		if turn is None:
+			turn = self.current_turn
+
+		points = 0
+
+		citizenship = player.get_citizenship(turn)
+		corporation = citizenship.corporation
+
+		if corporation in ladder:
+			shareholders = [s.player for s in corporation.share_set.filter(turn__lte=turn).prefetch_related('player')]
+			# This is an integer division, so using math.floor() is unnecessary
+			points += (18 - (2 * ladder.index(corporation))) / len(shareholders)
+		else:
+			# The player is a citizen of a corporation that has crashed, -7 points
+			points -= 7
+
+		from logs.models import Log
+
+		citizenship_changes = Log.objects.filter(concernedplayer__player=player, concernedplayer__personal=True, turn__lte=turn, event_type=Game.ADD_CITIZENSHIP)
+		for change in citizenship_changes:
+			points -= change.turn
+
+		return points
+
+	def calc_player_background_points(self, player, turn=None):
+		"""
+		Calculate a specific player's background points
+		"""
+		return 0
 
 	@property
 	def corporation_set(self):
@@ -251,6 +332,17 @@ class Player(models.Model):
 		"""
 		# Citizenship for the turn is on preceding turn's Citizenship object
 		citizenship = self.citizenship_set.get(turn=self.game.current_turn - 1)
+		return citizenship
+
+	def get_citizenship(self, turn=None):
+		"""
+		Return player's citizenship at specified turn
+		"""
+		if turn is None:
+			turn = self.game.current_turn
+
+		# Citizenship for the turn is on preceding turn's Citizenship object
+		citizenship = self.citizenship_set.get(turn=turn - 1)
 		return citizenship
 
 	def get_current_orders(self):

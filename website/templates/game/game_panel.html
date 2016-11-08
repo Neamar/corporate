@@ -10,8 +10,41 @@
 		<p>Lorsque la partie est démarrée, plus aucun joueur ne peut rejoindre la partie. De plus tous les joueurs ne peuvent plus modifier ni leur avatar, ni leur nom, ni leur background</p>
 		<input type="submit" class="btn" value="Démarrer la partie" name="start_game">
 	{% elif game.current_turn = game.total_turn %}
-		<p>Lorsque la partie est terminée, toutes les actions qu'on fait les joueurs dans la partie deviennent publiques. Le calcul des points est effectué pour afficher le gagnant</p>
-		<input type="submit" class="btn" value="Finir la partie" name="end_game">
+		{% if game.ended %}
+			<p>La partie est terminée. Voici un récapitulatif des points:</p>
+			{% if ranking %}
+				<table class="table shares-table">
+				<thead>
+				<tr>
+					<th></th>
+					<th>Points de parts</th>
+					<th>Points de citoyenneté corpo</th>
+					<th>Points de background</th>
+					<th>Total</th>
+					<th>Rang</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for x in ranking %}
+					<tr><td><a href="{% url 'website.views.data.player' game_id=game.id player_id=x.player.id %}"><img class="player-avatar tooltip" title="{{ x.player.name }}" src="{{ x.player.avatar.thumbnail.url }}"/></a>{{ x.player.name }}</td>
+						<td>{{ x.share_points }}</td>
+						<td>{{ x.citizenship_points }}</td>
+						<td>{{ x.background_points }}</td>
+						<td>{{ x.total_points }}</td>
+					{% if x.win %}
+						<td>Premier</td>
+					{% else %}
+						<td>Dernier ex-aequo</td>
+					{% endif %}
+					</tr>
+				{% endfor %}
+				</tbody>
+				</table>
+			{% endif %}
+		{% else %}
+			<p>Lorsque la partie est terminée, toutes les actions qu'on fait les joueurs dans la partie deviennent publiques. Le calcul des points est effectué pour afficher le gagnant</p>
+			<input type="submit" class="btn" value="Finir la partie" name="end_game">
+		{% endif %}
 	{% else %}
 		<p>Tour actuel : {{ game.current_turn }}</p>
 		{% if players %}
