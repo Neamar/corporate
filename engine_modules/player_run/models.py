@@ -24,7 +24,7 @@ class InformationOrder(RunOrder):
 	def __init__(self, *args, **kwargs):
 		super(InformationOrder, self).__init__(*args, **kwargs)
 		# InformationOrder should not have influence bonus. So we remove it here
-		self.has_influence_bonus = False
+		self.has_RSEC_bonus = False
 
 	def get_form(self, data=None):
 		form = super(InformationOrder, self).get_form(data)

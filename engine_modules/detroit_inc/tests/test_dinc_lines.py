@@ -80,3 +80,39 @@ class DIncPartyLineTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c).assets, initial_assets + 1)
 		self.assertEqual(self.reload(self.c2).assets, initial_assets2 + 1)
 		self.assertEqual(self.reload(self.c3).assets, initial_assets3 - 1)
+
+	def test_dinc_RSEC_line_effects(self):
+		"""
+		Test what happens when the RSEC party line is chosen
+		"""
+
+		self.set_turn_line(DIncVoteOrder.CONS, DIncVoteOrder.RSEC, DIncVoteOrder.RSEC)
+		self.g.resolve_current_turn()
+
+		dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p2,
+			target_corporation_market=self.c.corporation_markets.first(),
+			additional_percents=5,
+		)
+		dso.save()
+
+		# Reduction on first run
+		self.assertEqual(dso.get_cost(), dso.LAUNCH_COST + dso.BASE_COST * dso.additional_percents - dso.INFLUENCE_BONUS)
+
+		dso2 = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p2,
+			target_corporation_market=self.c.corporation_markets.first(),
+			additional_percents=5,
+		)
+		dso2.save()
+
+		# No reduction on second run
+		self.assertEqual(dso2.get_cost(), dso2.LAUNCH_COST + dso2.BASE_COST * dso2.additional_percents)
+
+	def test_dinc_RSEC_last_turn(self):
+		"""
+		Should not reduce price of a run
+		"""
+		# TODO

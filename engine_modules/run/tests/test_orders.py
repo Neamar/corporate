@@ -12,7 +12,7 @@ class OrdersTest(EngineTestCase):
 		)
 		# Because orders are now given the influence bonus by default, we have to manually take it away
 		self.o.clean()
-		self.o.has_influence_bonus = False
+		self.o.has_RSEC_bonus = False
 		self.o.save()
 
 	def test_resolve_successful_abstract(self):
@@ -36,7 +36,7 @@ class OrdersTest(EngineTestCase):
 		self.assertEqual(self.reload(self.p).money, self.initial_money - RunOrder.LAUNCH_COST)
 
 		current_player_money = self.reload(self.p).money
-		self.o.has_influence_bonus = True
+		self.o.has_RSEC_bonus = True
 
 		resolve(self.o)
 
@@ -52,7 +52,7 @@ class OrdersTest(EngineTestCase):
 	def test_run_probability(self):
 		self.assertEqual(self.o.get_success_probability(), RunOrder.BASE_SUCCESS_PROBABILITY)
 
-		self.o.has_influence_bonus = True
+		self.o.has_RSEC_bonus = True
 		self.assertEqual(self.o.get_success_probability(), RunOrder.BASE_SUCCESS_PROBABILITY)
 
 		self.o.additional_percents = 2
@@ -62,24 +62,3 @@ class OrdersTest(EngineTestCase):
 		# We can have 100% probability, but only in test env.
 		self.o.additional_percents = 5
 		self.assertEqual(self.o.get_success_probability(), 100)
-
-	def test_only_influence_run_has_bonus(self):
-		"""
-		Influence bonus can only be given to as much run as your current influence level
-		"""
-
-		self.o.has_influence_bonus = True
-		self.o.save()
-
-		o2 = RunOrder(
-			player=self.p,
-			has_influence_bonus=True
-		)
-		self.assertRaises(OrderNotAvailable, o2.clean)
-
-		influence = self.p.influence
-		influence.level = 2
-		influence.save()
-
-		# assertNoRaises
-		o2.clean()
