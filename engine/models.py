@@ -198,14 +198,14 @@ class Game(models.Model):
 
 		votes = Log.objects.filter(concernedplayer__player=player, concernedplayer__personal=True, turn__lte=turn).filter(Q(event_type=Game.VOTE_SECURITY) | Q(event_type=Game.VOTE_CONSOLIDATION) | Q(event_type=Game.VOTE_CONTRAT))
 		for vote in votes:
-			if player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.CONS and event_type == Game.VOTE_CONSOLIDATION:
+			if player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_CONSOLIDATION:
 				points += 3
-			elif player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and event_type == Game.VOTE_CONTRAT:
+			elif player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_CONTRAT:
 				points -= 3
 			elif vote.turn == player.game.total_turn:
-				if player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and event_type == Game.VOTE_SECURITY:
+				if player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_SECURITY:
 					points += 2
-				elif player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and event_type == Game.VOTE_CONSOLIDATION:
+				elif player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_CONSOLIDATION:
 					points -= 2
 		return points
 
