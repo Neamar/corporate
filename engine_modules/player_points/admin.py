@@ -9,4 +9,4 @@ class PlayerPontsAdmin(admin.ModelAdmin):
 	list_filter = ('player',)
 
 
-admin.site.register(PlayerPontsAdmin)
+admin.site.register(PlayerPoints, PlayerPontsAdmin)
