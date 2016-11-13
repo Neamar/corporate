@@ -167,7 +167,7 @@ class Game(models.Model):
 			turn = self.current_turn
 
 		ladder = self.get_ladder(turn)
-		players = self.player_set.filter(game=self)
+		players = self.player_set.filter()
 		for player in players:
 			share_points = self.calc_player_share_points(player, ladder, turn)
 			citizenship_points = self.calc_player_citizenship_points(player, ladder, turn)
