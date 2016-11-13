@@ -167,7 +167,7 @@ class Game(models.Model):
 			turn = self.current_turn
 
 		ladder = self.get_ladder(turn)
-		players = self.player_set.all()
+		players = self.player_set.filter(game=self)
 		for player in players:
 			share_points = self.calc_player_share_points(player, ladder, turn)
 			citizenship_points = self.calc_player_citizenship_points(player, ladder, turn)
@@ -196,7 +196,7 @@ class Game(models.Model):
 		from logs.models import Log
 		from engine_modules.detroit_inc.models import DIncVoteOrder
 
-		votes = Log.objects.filter(concernedplayer__player=player, concernedplayer__personal=True, turn__lte=turn).filter(Q(event_type=Game.VOTE_SECURITY) | Q(event_type=Game.VOTE_CONSOLIDATION) | Q(event_type=Game.VOTE_CONTRAT))
+		votes = Log.objects.filter(concernedplayer__player=player, concernedplayer__personal=True, turn__lte=turn, game=player.Game).filter(Q(event_type=Game.VOTE_SECURITY) | Q(event_type=Game.VOTE_CONSOLIDATION) | Q(event_type=Game.VOTE_CONTRAT))
 		for vote in votes:
 			if player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_CONSOLIDATION:
 				points += 3
