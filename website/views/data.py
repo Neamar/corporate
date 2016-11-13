@@ -5,17 +5,19 @@ from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.db.models import Count, Case, When, IntegerField
 from django.http import Http404, HttpResponseRedirect
-import json
 
-from engine_modules.corporation.models import Corporation
-from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
-from engine.models import Player, PlayerForm, Game
-from player_messages.models import Message, MessageForm
-from engine_modules.share.models import Share
-from website.utils import get_shares_count, is_top_shareholder, is_citizen, get_current_money
 from utils.read_markdown import parse_markdown
+from engine.models import Player, PlayerForm, Game
+from engine_modules.corporation.models import Corporation
+from engine_modules.player_points.models import PlayerPoints
+from engine_modules.share.models import Share
+from player_messages.models import Message, MessageForm
+from website.utils import get_shares_count, is_top_shareholder, is_citizen, get_current_money
+from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
 from logs.models import Log, ConcernedPlayer
 
+from collections import OrderedDict
+import json
 
 @login_required
 @render('game/add_player.html')
@@ -115,28 +117,38 @@ def game_panel(request, game, player, turn):
 	"""
 
 	# If you are not the owner, you have nothing to do here
-	if game.owner != request.user:
-		raise Http404("Only the owner of a game can manage the game")
+#	if game.owner != request.user:
+#		raise Http404("Only the owner of a game can manage the game")
 
 	# Set the game_id in session to always display all tabs
 	request.session['gameid'] = game.pk
 
-	players = game.player_set.all().annotate(
-			numordre=Count(Case(
-				When(order__turn=game.current_turn, then=1),
-				delfault=0,
-				output_field=IntegerField(),
-			))
-		).filter(numordre=0)
+	if game.ended:
+		ranking = PlayerPoints.objects.filter(player__game=game, turn=turn).order_by('-total_points')
+		for pp in ranking:
+			if pp == ranking[0]:
+				pp.win = True
+			else:
+				pp.win = False
+		players = game.player_set.all()
+	else:
+		ranking = None
+		players = game.player_set.all().annotate(
+				numordre=Count(Case(
+					When(order__turn=game.current_turn, then=1),
+					delfault=0,
+					output_field=IntegerField(),
+				))
+			).filter(numordre=0)
 
-	if(request.GET.get('resolve_turn')):
-		game.resolve_current_turn()
+		if(request.GET.get('resolve_turn')):
+			game.resolve_current_turn()
 
-	if(request.GET.get('start_game')):
-		game.start_game()
+		if(request.GET.get('start_game')):
+			game.start_game()
 
-	if(request.GET.get('end_game')):
-		game.end_game()
+		if(request.GET.get('end_game')):
+			game.end_game()
 
 	return django_render(request, 'game/game_panel.html', {
 		"game": game,
@@ -145,6 +157,7 @@ def game_panel(request, game, player, turn):
 		"pods": ['d_inc', 'current_player', 'players', ],
 		"turn": game.current_turn,
 		"player": player,
+		"ranking":ranking,
 	})
 
 
@@ -154,7 +167,7 @@ def game_panel(request, game, player, turn):
 @inject_game_and_player_into_response
 def discussion(request, game, player, sender_id):
 	"""
-	Game panel to resolve turn and start the game
+	Panel to show discussions with other players
 	"""
 	# Set the game_id in session to always display all tabs
 	request.session['gameid'] = game.pk

@@ -69,6 +69,7 @@ INSTALLED_APPS = (
     'engine_modules.wiretransfer',
     'engine_modules.market',
     'engine_modules.end_turn',
+    'engine_modules.player_points',
     'storages',  # to store avatar on AWS
     'stdimage',  # standard image field to resize avatars and use bd id for names
     # 'debug_toolbar',
