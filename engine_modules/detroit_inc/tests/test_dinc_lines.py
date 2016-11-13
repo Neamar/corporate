@@ -115,4 +115,18 @@ class DIncPartyLineTest(EngineTestCase):
 		"""
 		Should not reduce price of a run
 		"""
-		# TODO
+		while self.g.current_turn < self.g.total_turn - 1:
+			self.g.resolve_current_turn()
+		self.set_turn_line(DIncVoteOrder.CONS, DIncVoteOrder.RSEC, DIncVoteOrder.RSEC)
+		self.g.resolve_current_turn()
+
+		dso3 = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p2,
+			target_corporation_market=self.c.corporation_markets.first(),
+			additional_percents=5,
+		)
+		dso3.save()
+
+		# Reduction on first run
+		self.assertEqual(dso3.get_cost(), dso3.LAUNCH_COST + dso3.BASE_COST * dso3.additional_percents)
