@@ -15,5 +15,6 @@ class PlayerPoints(models.Model):
 	total_points = models.SmallIntegerField(default=0)
 	share_points = models.SmallIntegerField(default=0)
 	citizenship_points = models.SmallIntegerField(default=0)
-	dinc_points = models.SmallIntegerField(default=0)
 	background_points = models.SmallIntegerField(default=0)
+
+	dinc_points = models.SmallIntegerField(default=0)
