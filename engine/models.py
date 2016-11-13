@@ -218,10 +218,11 @@ class Game(models.Model):
 			turn = self.current_turn
 
 		points = 0
-		shares = player.share_set.filter(turn=turn)
-
+		shares = player.share_set.filter(turn_lte=turn)
+		print shares
 		for share in shares:
 			if share.corporation in ladder[:5]:
+				print ladder.index(share.corporation)
 				# first is 5 points, second 4, etc...
 				points += 5 - ladder.index(share.corporation)
 
