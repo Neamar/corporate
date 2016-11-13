@@ -172,15 +172,42 @@ class Game(models.Model):
 			share_points = self.calc_player_share_points(player, ladder, turn)
 			citizenship_points = self.calc_player_citizenship_points(player, ladder, turn)
 			background_points = self.calc_player_background_points(player, turn)
-			total_points = share_points + citizenship_points + background_points
+			dinc_points = self.calc_player_dinc_points(player, turn)
+			total_points = share_points + citizenship_points + background_points + dinc_points
 			points = PlayerPoints(player=player,
 						turn=turn,
 						total_points=total_points,
 						share_points=share_points,
+						dinc_points=dinc_points,
 						citizenship_points=citizenship_points,
-						background_points=background_points,
-						)
+						background_points=background_points)
 			points.save()
+
+	def calc_player_dinc_points(self, player, turn=None):
+		"""
+		Calculate a specific player's d_inc points for a specific turn
+		"""
+
+		if turn is None:
+			turn = self.current_turn
+
+		points = 0
+
+		from logs.models import Log
+		from engine_modules.detroit_inc.models import DIncVoteOrder
+
+		votes = Log.objects.filter(concernedplayer__player=player, concernedplayer__personal=True, turn__lte=turn).filter(Q(event_type=Game.VOTE_SECURITY) | Q(event_type=Game.VOTE_CONSOLIDATION) | Q(event_type=Game.VOTE_CONTRAT))
+		for vote in votes:
+			if player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.CONS and event_type == Game.VOTE_CONSOLIDATION:
+				points += 3
+			elif player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and event_type == Game.VOTE_CONTRAT:
+				points -= 3
+			elif vote.turn == player.game.total_turn:
+				if player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and event_type == Game.VOTE_SECURITY:
+					points += 2
+				elif player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and event_type == Game.VOTE_CONSOLIDATION:
+					points -= 2
+		return points
 
 	def calc_player_share_points(self, player, ladder, turn=None):
 		"""
