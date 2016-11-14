@@ -200,12 +200,12 @@ class Game(models.Model):
 		for vote in votes:
 			if player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_CONSOLIDATION:
 				points += 3
-			elif player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.CPUB and vote.event_type == Game.VOTE_CONTRAT:
+			elif player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.CPUB and vote.event_type == Game.VOTE_CONSOLIDATION:
 				points -= 3
 			elif vote.turn == player.game.total_turn:
 				if player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_SECURITY:
 					points += 2
-				elif player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_CONSOLIDATION:
+				elif player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_SECURITY:
 					points -= 2
 		return points
 
