@@ -126,7 +126,7 @@ def game_panel(request, game, player, turn):
 	if game.ended:
 		ranking = PlayerPoints.objects.filter(player__game=game, turn=turn).order_by('-total_points')
 		for pp in ranking:
-			if pp.total_points == ranking[0].total_ponts:
+			if pp.total_points == ranking[0].total_points:
 				pp.win = True
 			else:
 				pp.win = False
