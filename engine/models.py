@@ -197,8 +197,9 @@ class Game(models.Model):
 		from engine_modules.detroit_inc.models import DIncVoteOrder
 
 		votes = Log.objects.filter(turn__lte=turn, game=player.game).filter(concernedplayer__player=player, concernedplayer__personal=True).filter(Q(event_type=Game.VOTE_SECURITY) | Q(event_type=Game.VOTE_CONSOLIDATION) | Q(event_type=Game.VOTE_CONTRAT))
-		print votes
 		for vote in votes:
+			print player
+			print vote.event_type + ' ' + vote.turn
 			if player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_CONSOLIDATION:
 				points += 3
 			elif player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_CONTRAT:
@@ -220,10 +221,8 @@ class Game(models.Model):
 
 		points = 0
 		shares = player.share_set.filter(turn__lte=turn)
-		print shares
 		for share in shares:
 			if share.corporation in ladder[:5]:
-				print ladder.index(share.corporation)
 				# first is 5 points, second 4, etc...
 				points += 5 - ladder.index(share.corporation)
 
