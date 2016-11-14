@@ -201,13 +201,17 @@ class Game(models.Model):
 			print player
 			print '%s %s' % (vote.event_type, vote.turn)
 			if player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_CONSOLIDATION:
+				print '+3'
 				points += 3
 			elif player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_CONTRAT:
+				print '-3'
 				points -= 3
 			elif vote.turn == player.game.total_turn:
 				if player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_SECURITY:
+					print '+2'
 					points += 2
 				elif player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_CONSOLIDATION:
+					print '-2'
 					points -= 2
 		return points
 
