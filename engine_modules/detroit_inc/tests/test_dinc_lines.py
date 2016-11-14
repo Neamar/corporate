@@ -81,7 +81,7 @@ class DIncPartyLineTest(EngineTestCase):
 		self.assertEqual(self.reload(self.c2).assets, initial_assets2 + 1)
 		self.assertEqual(self.reload(self.c3).assets, initial_assets3 - 1)
 
-	def test_dinc_RSEC_line_effects(self):
+	def test_dinc_RSEC_good_effects(self):
 		"""
 		Test what happens when the RSEC party line is chosen
 		"""
@@ -130,3 +130,72 @@ class DIncPartyLineTest(EngineTestCase):
 
 		# Reduction on first run
 		self.assertEqual(dso3.get_cost(), dso3.LAUNCH_COST + dso3.BASE_COST * dso3.additional_percents)
+
+	def test_dinc_RSEC_bad_effects_apply_on_CONS(self):
+		"""
+		Test what happens when the RSEC party line is chosen
+		"""
+
+		self.set_turn_line(DIncVoteOrder.CONS, DIncVoteOrder.RSEC, DIncVoteOrder.RSEC)
+		self.g.resolve_current_turn()
+
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+
+		dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation_market=common_corporation_market,
+			additional_percents=5,
+		)
+		dso.save()
+		begin_assets_stealer = dso.stealer_corporation.assets
+
+		self.g.resolve_current_turn()
+		# Test that the run fail
+		self.assertEqual(self.reload(dso.stealer_corporation).assets, begin_assets_stealer)
+
+	def test_dinc_RSEC_bad_effects_do_not_apply_on_CPUB(self):
+		"""
+		Test what happens when the RSEC party line is chosen
+		"""
+
+		self.set_turn_line(DIncVoteOrder.CPUB, DIncVoteOrder.RSEC, DIncVoteOrder.RSEC)
+		self.g.resolve_current_turn()
+
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+
+		dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p,
+			target_corporation_market=common_corporation_market,
+			additional_percents=5,
+		)
+		dso.save()
+		begin_assets_stealer = dso.stealer_corporation.assets
+
+		self.g.resolve_current_turn()
+		# Test that the run fail
+		self.assertNotEqual(self.reload(dso.stealer_corporation).assets, begin_assets_stealer)
+
+	def test_dinc_RSEC_bad_effects_do_not_apply_on_RSEC(self):
+		"""
+		Test what happens when the RSEC party line is chosen
+		"""
+
+		self.set_turn_line(DIncVoteOrder.CPUB, DIncVoteOrder.RSEC, DIncVoteOrder.RSEC)
+		self.g.resolve_current_turn()
+
+		common_corporation_market = self.c.get_common_corporation_market(self.c2)
+
+		dso = DataStealOrder(
+			stealer_corporation=self.c2,
+			player=self.p2,
+			target_corporation_market=common_corporation_market,
+			additional_percents=5,
+		)
+		dso.save()
+		begin_assets_stealer = dso.stealer_corporation.assets
+
+		self.g.resolve_current_turn()
+		# Test that the run fail
+		self.assertNotEqual(self.reload(dso.stealer_corporation).assets, begin_assets_stealer)
