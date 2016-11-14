@@ -198,14 +198,14 @@ class Game(models.Model):
 
 		votes = Log.objects.filter(concernedplayer__player=player, concernedplayer__personal=True, turn__lte=turn, game=player.game).filter(Q(event_type=Game.VOTE_SECURITY) | Q(event_type=Game.VOTE_CONSOLIDATION) | Q(event_type=Game.VOTE_CONTRAT))
 		for vote in votes:
-			if player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_CONSOLIDATION:
+			if player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_CONSOLIDATION:
 				points += 3
-			elif player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_CONTRAT:
+			elif player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_CONTRAT:
 				points -= 3
 			elif vote.turn == player.game.total_turn:
-				if player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_SECURITY:
+				if player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_SECURITY:
 					points += 2
-				elif player.game.get_dinc_coalition(turn=vote.turn) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_CONSOLIDATION:
+				elif player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_CONSOLIDATION:
 					points -= 2
 		return points
 
@@ -242,9 +242,9 @@ class Game(models.Model):
 		corporation = citizenship.corporation
 
 		if corporation in ladder:
-			shareholders = [s.player for s in corporation.share_set.filter(turn__lte=turn).prefetch_related('player')]
+			citizens = corporation.citizenship_set.filter(turn=turn)
 			# This is an integer division, so using math.floor() is unnecessary
-			points += (18 - (2 * ladder.index(corporation))) / len(shareholders)
+			points += (18 - (2 * ladder.index(corporation))) / len(citizens)
 		else:
 			# The player is a citizen of a corporation that has crashed, -7 points
 			points -= 7
