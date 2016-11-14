@@ -199,7 +199,7 @@ class Game(models.Model):
 		votes = Log.objects.filter(turn__lte=turn, game=player.game).filter(concernedplayer__player=player, concernedplayer__personal=True).filter(Q(event_type=Game.VOTE_SECURITY) | Q(event_type=Game.VOTE_CONSOLIDATION) | Q(event_type=Game.VOTE_CONTRAT))
 		for vote in votes:
 			print player
-			print '%s %S' % (vote.event_type, vote.turn)
+			print '%s %s' % (vote.event_type, vote.turn)
 			if player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_CONSOLIDATION:
 				points += 3
 			elif player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.RSEC and vote.event_type == Game.VOTE_CONTRAT:
