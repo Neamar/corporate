@@ -16,8 +16,8 @@ from website.utils import get_shares_count, is_top_shareholder, is_citizen, get_
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
 from logs.models import Log, ConcernedPlayer
 
-from collections import OrderedDict
 import json
+
 
 @login_required
 @render('game/add_player.html')
@@ -117,8 +117,8 @@ def game_panel(request, game, player, turn):
 	"""
 
 	# If you are not the owner, you have nothing to do here
-#	if game.owner != request.user:
-#		raise Http404("Only the owner of a game can manage the game")
+	# if game.owner != request.user:
+	# raise Http404("Only the owner of a game can manage the game")
 
 	# Set the game_id in session to always display all tabs
 	request.session['gameid'] = game.pk
@@ -126,7 +126,7 @@ def game_panel(request, game, player, turn):
 	if game.ended:
 		ranking = PlayerPoints.objects.filter(player__game=game, turn=turn).order_by('-total_points')
 		for pp in ranking:
-			if pp == ranking[0]:
+			if pp.total_points == ranking[0].total_ponts:
 				pp.win = True
 			else:
 				pp.win = False
