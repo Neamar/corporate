@@ -242,7 +242,7 @@ class Game(models.Model):
 		corporation = citizenship.corporation
 
 		if corporation in ladder:
-			citizens = corporation.citizenship_set.filter(turn=turn)
+			citizens = corporation.citizenship_set.filter(turn=turn - 1)
 			# This is an integer division, so using math.floor() is unnecessary
 			points += (18 - (2 * ladder.index(corporation))) / len(citizens)
 		else:
