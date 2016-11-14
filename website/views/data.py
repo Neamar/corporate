@@ -157,7 +157,7 @@ def game_panel(request, game, player, turn):
 		"pods": ['d_inc', 'current_player', 'players', ],
 		"turn": game.current_turn,
 		"player": player,
-		"ranking":ranking,
+		"ranking": ranking,
 	})
 
 
