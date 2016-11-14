@@ -196,7 +196,7 @@ class Game(models.Model):
 		from logs.models import Log
 		from engine_modules.detroit_inc.models import DIncVoteOrder
 
-		votes = Log.objects.filter(concernedplayer__player=player, turn__lte=turn, game=player.game).filter(concernedplayer__personal=True).filter(Q(event_type=Game.VOTE_SECURITY) | Q(event_type=Game.VOTE_CONSOLIDATION) | Q(event_type=Game.VOTE_CONTRAT))
+		votes = Log.objects.filter(turn__lte=turn, game=player.game).filter(concernedplayer__player=player, concernedplayer__personal=True).filter(Q(event_type=Game.VOTE_SECURITY) | Q(event_type=Game.VOTE_CONSOLIDATION) | Q(event_type=Game.VOTE_CONTRAT))
 		for vote in votes:
 			if player.game.get_dinc_coalition(turn=vote.turn + 1) == DIncVoteOrder.CONS and vote.event_type == Game.VOTE_CONSOLIDATION:
 				points += 3
