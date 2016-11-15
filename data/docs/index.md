@@ -28,6 +28,7 @@ Les règles de l’économie sont simples :
     John achète une part au tour 1 dans une corpo à 9 actifs. Il paye 900 000 ₵. Pendant la résoltion du tour la corpo passe à 10 actifs. A la fin du tour la corporation lui rapport 500 000 ₵ de dividendes.
 
 Il y a une exception pour la première corpo du classement :
+
 * Acheter une **part** dans la corpo n°1 au classement coûte 125 000 ₵ par actifs de la corpo
 * Chaque part dans la corpo n°1 au classement rapporte des dividendes : 75 000 ₵ par actifs de la corpo
 
