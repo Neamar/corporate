@@ -1,6 +1,5 @@
 from engine.testcases import EngineTestCase
 from engine_modules.run.models import RunOrder
-from engine.exceptions import OrderNotAvailable
 
 
 class OrdersTest(EngineTestCase):
