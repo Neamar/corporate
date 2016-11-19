@@ -141,13 +141,13 @@ def game_panel(request, game, player, turn):
 				))
 			).filter(numordre=0)
 
-		if(request.GET.get('resolve_turn')):
+		if(request.GET.get('resolve_turn') and player.user == game.owner):
 			game.resolve_current_turn()
 
-		if(request.GET.get('start_game')):
+		if(request.GET.get('start_game') and player.user == game.owner):
 			game.start_game()
 
-		if(request.GET.get('end_game')):
+		if(request.GET.get('end_game') and player.user == game.owner):
 			game.end_game()
 
 	return django_render(request, 'game/game_panel.html', {

@@ -397,13 +397,13 @@ class PlayerForm(ModelForm):
 		self.game = kwargs.pop('game', None)
 		super(PlayerForm, self).__init__(*args, **kwargs)
 		instance = getattr(self, 'instance', None)
-		self.fields['starting_citizenship'].label = "nationnalité"
-		self.fields['rp'].label = "description"
+		self.fields['rp'].label = "Description"
 
 		# Handle the dropdown list for startinf citizenship
 		self.fields['starting_citizenship'] = ChoiceField(required=False)
 		choices = [('', '---------')] + [(i.id, str(i)) for i in self.game.corporation_set]
 		self.fields['starting_citizenship'].choices = choices
+		self.fields['starting_citizenship'].label = "Nationnalité"
 
 		# On n'a pas à rentrer de mot de passe si on est déjà inscrit sur la partie ou que le mot de passe sur la game est vide
 		if (instance and instance.pk) or not self.game.password:
