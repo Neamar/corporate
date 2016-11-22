@@ -15,7 +15,7 @@ La coalition rejointe par le plus de joueurs + corpos appliquer sa ligne politiq
         * Impulse et Iris perdent un actif dans l'un de leurs marchés.
 
 ### Contrats publics
-De gros contrats d'entretien et de sécurité sont redistribués entre les corpos de Detroit.
+De gros contrats d'entretien et de sécurité sont redistribués entre les corpos
 
 * Les corpos appartenant à la coalition Contrats publics gagnent immédiatement `+1` actif dans un de leurs marchés au hasard.
 * Les corpos appartenant à la coalition Réforme de la sécurité subissent `-1` actif dans un de leurs marchés au hasard ayant au moins un actif.
@@ -25,7 +25,7 @@ De nouvelles lois sont votées, renforçant les contrôles sur certaines zones a
 
 A tous les tours sauf le dernier :
 
-* Au prochain tour, les joueurs appartenant à la coalition Réforme de la sécurité auront une réduction de 350 000 ₵ sur leur première opération de sabotage, de datasteal ou de sabotage.
+* Au prochain tour, les joueurs appartenant à la coalition Réforme de la sécurité auront une réduction de 500 000 ₵ sur leur première opération de sabotage, de datasteal ou de sabotage.
 * Au prochain tour, les joueurs appartenant à la coalition Consolidation verront une de leurs opérations au hasard échouer.
 
 Au dernier tour :

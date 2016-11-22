@@ -19,7 +19,7 @@ class RunOrder(Order):
 	LAUNCH_COST = 350
 	BASE_COST = 50
 	BASE_SUCCESS_PROBABILITY = 50
-	INFLUENCE_BONUS = 350
+	INFLUENCE_BONUS = 500
 
 	has_RSEC_bonus = models.BooleanField(default=False, editable=False)
 	additional_percents = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)])
@@ -118,7 +118,7 @@ class RunOrder(Order):
 		# Do not pay for the influence bonus
 		if self.has_RSEC_bonus:
 			cost -= RunOrder.INFLUENCE_BONUS
-		return cost
+		return max(cost, 0)
 
 	def get_cost(self):
 		return self.calc_cost(self.additional_percents)

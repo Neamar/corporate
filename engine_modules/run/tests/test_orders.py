@@ -39,14 +39,14 @@ class OrdersTest(EngineTestCase):
 
 		resolve(self.o)
 
-		self.assertEqual(self.reload(self.p).money, current_player_money - RunOrder.LAUNCH_COST + RunOrder.INFLUENCE_BONUS)
+		self.assertEqual(self.reload(self.p).money, current_player_money - RunOrder.LAUNCH_COST + min(RunOrder.INFLUENCE_BONUS, RunOrder.LAUNCH_COST))
 
 		current_player_money = self.reload(self.p).money
 		self.o.additional_percents = 2
 
 		resolve(self.o)
 
-		self.assertEqual(self.reload(self.p).money, current_player_money - RunOrder.LAUNCH_COST + RunOrder.INFLUENCE_BONUS - RunOrder.BASE_COST * 2)
+		self.assertEqual(self.reload(self.p).money, current_player_money - RunOrder.LAUNCH_COST + min(RunOrder.INFLUENCE_BONUS, RunOrder.LAUNCH_COST + RunOrder.BASE_COST * 2) - RunOrder.BASE_COST * 2)
 
 	def test_run_probability(self):
 		self.assertEqual(self.o.get_success_probability(), RunOrder.BASE_SUCCESS_PROBABILITY)

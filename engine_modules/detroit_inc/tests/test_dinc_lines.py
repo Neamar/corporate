@@ -98,7 +98,7 @@ class DIncPartyLineTest(EngineTestCase):
 		dso.save()
 
 		# Reduction on first run
-		self.assertEqual(dso.get_cost(), dso.LAUNCH_COST + dso.BASE_COST * dso.additional_percents - dso.INFLUENCE_BONUS)
+		self.assertEqual(dso.get_cost(), max(0, dso.LAUNCH_COST + dso.BASE_COST * dso.additional_percents - dso.INFLUENCE_BONUS))
 
 		dso2 = DataStealOrder(
 			stealer_corporation=self.c2,
@@ -109,7 +109,7 @@ class DIncPartyLineTest(EngineTestCase):
 		dso2.save()
 
 		# No reduction on second run
-		self.assertEqual(dso2.get_cost(), dso2.LAUNCH_COST + dso2.BASE_COST * dso2.additional_percents)
+		self.assertEqual(dso2.get_cost(), max(0, dso2.LAUNCH_COST + dso2.BASE_COST * dso2.additional_percents))
 
 	def test_dinc_RSEC_last_turn(self):
 		"""
