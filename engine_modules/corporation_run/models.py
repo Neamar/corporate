@@ -245,6 +245,9 @@ class ProtectionOrder(RunOrder):
 	def description(self):
 		return u"Envoyer une équipe protéger %s (%s)" % (self.protected_corporation.base_corporation.name, self.protected_corporation_market.market.name)
 
+	def custom_description(self):
+		return ""
+
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)
 		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn).select_related('market', 'corporation')
