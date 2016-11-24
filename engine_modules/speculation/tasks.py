@@ -6,7 +6,7 @@ class CorporationSpeculationTask(OrderResolutionTask):
 	"""
 	Resolve corporations speculations
 	"""
-	RESOLUTION_ORDER = 900
+	RESOLUTION_ORDER = 1500
 	ORDER_TYPE = CorporationSpeculationOrder
 
 

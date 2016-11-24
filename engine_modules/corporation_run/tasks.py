@@ -9,7 +9,7 @@ class OffensiveRunTask(OrderResolutionTask):
 	"""
 	Resolve Offensive corporations runs (DataSteal, Sabotage, Extraction)
 	"""
-	RESOLUTION_ORDER = 350
+	RESOLUTION_ORDER = 700
 	ORDER_TYPES = [DataStealOrder, SabotageOrder, ExtractionOrder]
 
 	def run(self, game):
@@ -41,7 +41,7 @@ class ProtectionRunTask(OrderResolutionTask):
 	"""
 	Debit Protection runs from players
 	"""
-	RESOLUTION_ORDER = 349
+	RESOLUTION_ORDER = 600
 	ORDER_TYPE = ProtectionOrder
 
 	def run(self, game):

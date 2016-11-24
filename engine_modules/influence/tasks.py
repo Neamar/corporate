@@ -23,7 +23,7 @@ class BuyInfluenceTask(OrderResolutionTask):
 	"""
 	Buy new Influence level
 	"""
-	RESOLUTION_ORDER = 1000
+	RESOLUTION_ORDER = 1700
 	ORDER_TYPE = BuyInfluenceOrder
 
 

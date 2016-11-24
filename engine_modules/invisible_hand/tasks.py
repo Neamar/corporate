@@ -8,7 +8,7 @@ class InvisibleHandTask(ResolutionTask):
 	"""
 	Give +1 and -1 asset for two random corporations
 	"""
-	RESOLUTION_ORDER = 400
+	RESOLUTION_ORDER = 800
 
 	def run(self, game):
 		# We can force the invisible hand using the force_invisible_hand flag

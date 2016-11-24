@@ -74,7 +74,7 @@ class UpdateBubblesAfterEffectsTask(AbstractBubblesTask):
 	"""
 	Update the bubble value on the CorporationMarket objects after the First/Last effects have been applied
 	"""
-	RESOLUTION_ORDER = 650
+	RESOLUTION_ORDER = 900
 
 	def run(self, game):
 
@@ -88,7 +88,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 	Update the bubble value on the CorporationMarket objects after the Crash effects have been applied
 	"""
 	# Be careful: this task must be resolved before ReplicateCorporationMarketTask
-	RESOLUTION_ORDER = 860
+	RESOLUTION_ORDER = 1100
 
 	def run(self, game):
 
@@ -141,7 +141,7 @@ class UpdateBubblesAfterCrashTask(AbstractBubblesTask):
 
 class CreateBubblesAfterGameCreationTask(AbstractBubblesTask):
 	"""
-	Update the bubble value on the CorporationMarket objects after the Crash effects have been applied
+	Update the bubble value on the CorporationMarket objects after the creation of the game
 	"""
 	# Be careful: this task must be resolved before ReplicateCorporationMarketTask
 	RESOLUTION_ORDER = 100
@@ -155,7 +155,7 @@ class ReplicateCorporationMarketsTask(ResolutionTask):
 	"""
 	Copy the CorporationMarket objects from current turn for next turn
 	"""
-	RESOLUTION_ORDER = 870
+	RESOLUTION_ORDER = 1200
 	
 	def run(self, game):
 

@@ -7,7 +7,7 @@ class BuyShareTask(OrderResolutionTask):
 	"""
 	Buy all shares for all players
 	"""
-	RESOLUTION_ORDER = 25
+	RESOLUTION_ORDER = 200
 	ORDER_TYPE = BuyShareOrder
 
 
@@ -20,7 +20,7 @@ class DividendTask(ResolutionTask):
 	# To avoid double penalty and to simplfy the game, we removed last bonus
 	LAST_BONUS = 1
 
-	RESOLUTION_ORDER = 800
+	RESOLUTION_ORDER = 1300
 
 	def run(self, game):
 		"""

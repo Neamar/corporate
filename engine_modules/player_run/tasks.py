@@ -8,7 +8,7 @@ class InformationRunTask(OrderResolutionTask):
 	First log all the InformationOrders in Logs. So informationOrders launched by other users are an available information
 	Then Resolve Information runs at the end
 	"""
-	RESOLUTION_ORDER = 1200
+	RESOLUTION_ORDER = 2000
 	ORDER_TYPE = InformationOrder
 
 	def run(self, game):
@@ -32,9 +32,9 @@ class InformationPayTask(OrderResolutionTask):
 	As MoneyInformationTask is at RESOLUTION_ORDER 1100 and need both things to be right
 	-To be start before InformationRunTask
 	-All the payments must be payed before this task
-	So we pay information at 1000 and we start it at 1200
+	So we pay information at 1800 and we start it at 2000
 	"""
-	RESOLUTION_ORDER = 1000
+	RESOLUTION_ORDER = 1800
 	ORDER_TYPE = InformationOrder
 
 	def run(self, game):

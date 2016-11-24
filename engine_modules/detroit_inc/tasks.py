@@ -11,7 +11,7 @@ class DIncVoteTask(ResolutionTask):
 	"""
 	Choose the Detroit, Inc. party line, and save it in a DIncVoteSession
 	"""
-	RESOLUTION_ORDER = 10
+	RESOLUTION_ORDER = 100
 	ORDER_TYPE = DIncVoteOrder
 
 	def run(self, game):
@@ -140,7 +140,7 @@ class DIncLineCPUBTask(ResolutionTask):
 	"""
 
 	# Resolve after DIncVoteTask
-	RESOLUTION_ORDER = 300
+	RESOLUTION_ORDER = 500
 
 	def run(self, game):
 		# Because this is run the turn of the vote, we have to ask for the next line, not the current one
