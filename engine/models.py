@@ -403,7 +403,7 @@ class PlayerForm(ModelForm):
 		self.fields['starting_citizenship'] = ChoiceField(required=False)
 		choices = [('', '---------')] + [(i.id, str(i)) for i in self.game.corporation_set]
 		self.fields['starting_citizenship'].choices = choices
-		self.fields['starting_citizenship'].label = "Nationnalité"
+		self.fields['starting_citizenship'].label = "Nationalité"
 
 		# On n'a pas à rentrer de mot de passe si on est déjà inscrit sur la partie ou que le mot de passe sur la game est vide
 		if (instance and instance.pk) or not self.game.password:
@@ -443,7 +443,7 @@ class PlayerForm(ModelForm):
 			return instance.avatar
 		else:
 			return self.cleaned_data['avatar']
-	
+
 
 class Order(models.Model):
 	title = "Ordre"
