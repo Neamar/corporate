@@ -1,34 +1,24 @@
 {
-  "name":"corporate",
+  "name":"Corporate Game",
+  "description": "This is not a game, this is the Game.",
+  "website": "http://corporategame.me",
+  "repository": "https://github.com/Neamar/corporate",
   "scripts":{
-    "postdeploy":"python manage.py migrate"
+    "postdeploy":"./bin/post_compile && python manage.py migrate && python manage.py loaddata website/fixtures/bootstrap.json "
   },
   "env":{
-    "DATABASE_URL":{
-      "required":true
-    },
-    "HEROKU_POSTGRESQL_BLACK_URL":{
-      "required":true
-    },
-    "HEROKU_POSTGRESQL_ORANGE_URL":{
-      "required":true
-    },
-    "OPBEAT_APP_ID":{
-      "required":true
-    },
-    "OPBEAT_ORGANIZATION_ID":{
-      "required":true
-    },
-    "OPBEAT_SECRET_TOKEN":{
-      "required":true
-    },
     "PYTHON_ENV":{
       "required":true
+    },
+    "SECRET_KEY":{
+      "required":true
+    },
+    "DEBUG":{
+      "required":false
     }
   },
   "addons":[
-    "deployhooks-http",
-    "heroku-postgresql-black",
-    "heroku-postgresql-orange"
+    "heroku-postgresql",
+    "newrelic"
   ]
 }

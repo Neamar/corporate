@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
-from engine.models import Order, Player
-from messaging.models import Message
+from engine.models import Order, Player, Game
 
 
 class WiretransferOrder(Order):
@@ -14,7 +13,7 @@ class WiretransferOrder(Order):
 	title = "Envoyer de l'argent à un joueur"
 
 	recipient = models.ForeignKey(Player)
-	amount = models.PositiveIntegerField(help_text="En milliers de nuyens")
+	amount = models.PositiveIntegerField(help_text="En k₵")
 
 	def save(self, *args):
 		# Override save: apply immediately and return
@@ -23,16 +22,19 @@ class WiretransferOrder(Order):
 		self.recipient.money += self.amount
 		self.recipient.save()
 
-		m = Message(
-			title="Transfert d'argent",
-			content="Un transfert de %s k¥ a été effectué de %s vers %s" % (self.amount, self.player, self.recipient),
-			turn=self.player.game.current_turn,
-			flag=Message.CASH_TRANSFER,
-		)
-		m.save()
-		m.recipient_set.add(self.player, self.recipient)
+		# Create the game_event
+		self.player.game.add_event(event_type=Game.WIRETRANSFER, data={"giver": self.player.name, "receiver": self.recipient.name, "money": self.amount}, players=[self.player, self.recipient])
 
 	def get_cost(self):
-		return self.amount or 0
+		# or 1: avoid displaying the order without money
+		return self.amount or 1
+
+	def get_form(self, data=None):
+		form = super(WiretransferOrder, self).get_form(data)
+		form.fields['recipient'].queryset = Player.objects.filter(game=self.player.game).exclude(pk=self.player.pk)
+		form.fields['recipient'].label = u'Joueur'
+		form.fields['amount'].label = u'Montant'
+
+		return form
 
 orders = (WiretransferOrder,)

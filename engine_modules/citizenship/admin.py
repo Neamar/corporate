@@ -1,7 +1,12 @@
 from django.contrib import admin
+from engine_modules.citizenship.models import Citizenship, CitizenshipOrder
 
-from engine_modules.citizenship.models import CitizenShip, CitizenShipOrder
 
+class CitizenshipAdmin(admin.ModelAdmin):
+	list_display = ('player', 'corporation', 'turn', 'game')
+	list_filter = ('corporation__game',)
 
-admin.site.register(CitizenShip)
-admin.site.register(CitizenShipOrder)
+	def game(self, instance):
+		return instance.player.game
+admin.site.register(Citizenship, CitizenshipAdmin)
+admin.site.register(CitizenshipOrder)

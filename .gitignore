@@ -7,7 +7,7 @@
 # Django specific
 collected-static/*
 media/*
-static/*
+!static/.gitkeep
 *.sqlite
 *.sqlite-journal
 local_settings.py
@@ -34,3 +34,6 @@ htmlcov/*
 
 # Project specific
 *.sqlite3
+
+
+static/cache

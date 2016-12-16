@@ -1,6 +1,5 @@
 from engine.testcases import EngineTestCase
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
-from engine_modules.derivative.models import Derivative
+from engine_modules.speculation.models import CorporationSpeculationOrder
 
 
 class TasksTest(EngineTestCase):
@@ -8,16 +7,11 @@ class TasksTest(EngineTestCase):
 
 		super(TasksTest, self).setUp()
 
-		self.d = Derivative(name="first and last", game=self.g)
-		self.d.save()
-		self.d.corporations.add(self.c, self.c2)
-
 	def test_corporation_speculation(self):
 		"""
 		Task should be called
 		"""
-		self.c.assets = 50
-		self.c.save()
+		self.c.set_market_assets(50)
 
 		cso = CorporationSpeculationOrder(
 			player=self.p,
@@ -30,24 +24,3 @@ class TasksTest(EngineTestCase):
 		self.g.resolve_current_turn()
 
 		self.assertEqual(self.reload(self.p).money, self.initial_money + cso.get_cost() * 2)
-
-	def test_derivative_speculation(self):
-		"""
-		Task should be called
-		"""
-		self.g.resolve_current_turn()
-
-		self.c.assets = 5
-		self.c.save()
-
-		dso = DerivativeSpeculationOrder(
-			player=self.p,
-			speculation=DerivativeSpeculationOrder.UP,
-			investment=5,
-			derivative=self.d
-		)
-		dso.save()
-
-		self.g.resolve_current_turn()
-
-		self.assertEqual(self.reload(self.p).money, self.initial_money - dso.get_cost())

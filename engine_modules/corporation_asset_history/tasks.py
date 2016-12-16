@@ -7,15 +7,20 @@ class SaveCorporationAssetTask(ResolutionTask):
 	"""
 	Save the assets of all corporations after the turn resolution
 	"""
-	RESOLUTION_ORDER = 650
+	RESOLUTION_ORDER = 1400
 
 	def run(self, game):
+		# We save corporation asset, even for the corporations which have crashed this turn
 		corporations = game.corporation_set.all()
+		ahs = []
 		for corporation in corporations:
 			ah = AssetHistory(
 				corporation=corporation,
 				assets=corporation.assets,
 				turn=game.current_turn)
-			ah.save()
+			ahs.append(ah)
+		AssetHistory.objects.bulk_create(ahs)
 
 tasks = (SaveCorporationAssetTask, )
+
+initialisation_tasks = (SaveCorporationAssetTask, )

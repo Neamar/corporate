@@ -1,0 +1,54 @@
+# dot -T svg data/cities/detroit/graphviz/first.dot > website/static/graphviz/detroit/first.svg
+digraph g{
+	graph [
+			rankdir = "LR"
+			bgcolor=transparent
+	];
+	// title
+	labelloc="t";
+	label="Effets premiers";
+
+	second [shape=square, fillcolor="#FCD975", style="filled", label="Seconde"];
+	dernier [shape=square, fillcolor="#FCD975", style="filled", label="Dernière"];
+
+	tlaloc [shape=ellipse, fillcolor="burlywood", style="filled", label="Tlaloc"];
+	bastion [shape=ellipse, fillcolor="burlywood", style="filled", label="Bastion"];
+	citygroup [shape=ellipse, fillcolor="burlywood", style="filled", label="Citygroup"];
+	enercore [shape=ellipse, fillcolor="burlywood", style="filled", label="Enercore"];
+	iris [shape=ellipse, fillcolor="burlywood",style="filled", label="Iris"];
+	mercury [shape=ellipse, fillcolor="burlywood", style="filled", label="Mercury"];
+	pure [shape=ellipse, fillcolor="burlywood", style="filled", label="Pure"];
+	impulse [shape=ellipse, fillcolor="burlywood", style="filled", label="Impulse"];
+	shinsekai [shape=ellipse, fillcolor="burlywood", style="filled", label="Shinsekai"];
+	taurus [shape=ellipse, fillcolor="burlywood", style="filled", label="Taurus"];
+
+	citygroup -> dernier [color="red"];
+	citygroup -> second [color="green"];
+
+	bastion -> tlaloc [color="red"];
+	bastion -> bastion [color="green"];
+
+	tlaloc -> tlaloc [color="green"];
+	tlaloc -> bastion [color="red"];
+
+	taurus-> enercore [color="red"];
+	taurus-> second [color="red"];
+
+	enercore -> taurus [color="green"];
+	enercore -> second [color="green"];
+
+	shinsekai -> pure [color="red"];
+	shinsekai -> impulse [color="green"];
+
+	impulse -> shinsekai [color="red"];
+	impulse -> pure [color="red"];
+
+	pure -> shinsekai [color="red"];
+	pure -> impulse [color="green"];
+
+	mercury -> enercore [color="green"];
+	mercury -> dernier [color="green"];
+
+	iris -> dernier [color="red"];
+	iris -> citygroup [color="green"];
+}

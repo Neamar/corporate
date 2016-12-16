@@ -17,43 +17,36 @@ class TestCase(DjangoTestCase):
 class EngineTestCase(TestCase):
 	"""
 	Base class for unittesting engine.
-	Add a game in self.g and a player in self.p
+	Add a game in self.g, a player in self.p
+	And three corporations in self.c, self.c2 and self.c3.
 	"""
 
 	def setUp(self):
 		"""
 		Setup initial configuration.
-		For faster tests, remove all BaseCorporation to avoid creating useless fixtures.
+		This is run on the test city, with few corporations, for faster tests.
 		"""
 
-		# Create a Game, without creating all default base corporations
-		from engine_modules.corporation.models import Corporation, BaseCorporation
-		original_base_corporations = BaseCorporation.base_corporations
-		BaseCorporation.base_corporations = {}
-		try:
-			self.g = Game()
-			# Disable all side effects for the game (first and last effects, invisible hand)
-			self.g.disable_side_effects = True
-			self.g.save()
-		except:
-			raise
-		finally:
-			BaseCorporation.base_corporations = original_base_corporations
+		self.g = Game()
+		# Disable all side effects for the game (first and last effects, invisible hand)
+		self.g.disable_side_effects = True
+		self.g.save()
 
-		# Create base corporations
-		self.c = Corporation(base_corporation_slug='shiawase', assets=10)
-		self.c2 = Corporation(base_corporation_slug='renraku', assets=10)
-		self.c3 = Corporation(base_corporation_slug='ares', assets=10)
-		self.g.corporation_set.add(self.c, self.c2, self.c3)
-
-		self.initial_money = Player._meta.get_field_by_name('money')[0].default
-		self.p = Player(game=self.g, money=self.initial_money)
+		self.p = Player(game=self.g)
 		self.p.save()
 
-		# TODO: move to another place, in engine_modules/runs
+		# Add a value storing default money, can be used read_only for comparisons
+		self.initial_money = self.p.money
+
+		self.c = self.g.corporations['c']
+		self.c2 = self.g.corporations['c2']
+		self.c3 = self.g.corporations['c3']
+
+		# TODO: move to another place, in engine_modules/runs/testcases?
 		# TODO : add test for 90% restriction
+		# Remove default 90% limitation, making test reliable
 		from engine_modules.run.models import RunOrder
 		RunOrder.MAX_PERCENTS = 100
 
 		from engine_modules.corporation_run.models import ProtectionOrder
-		ProtectionOrder.MAX_PERCENTS = 100
+		ProtectionOrder.MAX_PERCENTS = 0

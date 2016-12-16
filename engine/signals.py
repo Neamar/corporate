@@ -11,11 +11,20 @@ from engine.dispatchs import post_create
 @receiver(post_save)
 def send_post_create_signal(sender, instance, created, **kwargs):
 	"""
-	Send signal post_create when a model is created
+	Send signal post_create when a model is first created
 	"""
 	if created:
 		del kwargs['signal']
 		post_create.send(sender=sender, instance=instance, **kwargs)
+
+
+@receiver(post_save, sender=Game)
+def game_initialisation(sender, instance, created, **kwargs):
+	"""
+	Start the tasks once the game is created
+	"""
+	if created:
+		instance.initialise_game()
 
 
 @receiver(pre_save, sender=Game)

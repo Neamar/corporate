@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import sys
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -18,23 +19,27 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'hj9f%^kb5$!n_c@w(m8y)j4$*-zxli0+8aqwc0uoj5+@v&msir'
+SECRET_KEY = os.environ["SECRET_KEY"] if "SECRET_KEY" in os.environ else "test_key"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = "DEBUG" in os.environ and bool(os.environ["DEBUG"])
 
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-RAVEN_CONFIG = {
-    'dsn': 'https://e07c2d0b4b994a79b74dbfe78fe91629:a996f7f6c7c74a3cafcacdbe7d51411c@app.getsentry.com/21834',
+
+def show_toolbar(request):
+    return True
+
+DEBUG_TOOLBAR_CONFIG = {
+    # ...
+    'SHOW_TOOLBAR_CALLBACK': 'corporate.settings.show_toolbar',
 }
 
 # Application definition
 
 INSTALLED_APPS = (
-    #'debug_toolbar',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,10 +47,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'compressor',
     'website',
     'docs',
     'engine',
-    'messaging',
+    'logs',
+    'player_messages',
     'engine_modules.influence',
     'engine_modules.corporation',
     'engine_modules.invisible_hand',
@@ -55,17 +62,19 @@ INSTALLED_APPS = (
     'engine_modules.run',
     'engine_modules.corporation_run',
     'engine_modules.corporation_asset_history',
-    'engine_modules.derivative',
     'engine_modules.player_run',
     'engine_modules.speculation',
     'engine_modules.effects',
-    'engine_modules.mdc',
+    'engine_modules.detroit_inc',
     'engine_modules.wiretransfer',
+    'engine_modules.market',
+    'engine_modules.end_turn',
+    'engine_modules.player_points',
+    'storages',  # to store avatar on AWS
+    'stdimage',  # standard image field to resize avatars and use bd id for names
+    # 'debug_toolbar',
 )
 
-
-if 1 in sys.argv and sys.argv[1] != 'test':
-    INSTALLED_APPS += 'raven.contrib.django.raven_compat'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,6 +93,18 @@ WSGI_APPLICATION = 'corporate.wsgi.application'
 AUTH_USER_MODEL = 'website.User'
 LOGIN_REDIRECT_URL = 'website.views.index.index'
 LOGIN_URL = 'django.contrib.auth.views.login'
+
+# avatar storage is on AWS
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_SECURE_URLS = False       # use http instead of https
+AWS_QUERYSTRING_AUTH = False     # don't add complex authentication-related query parameters for requests
+
+# SHOULD NOT BE ON THE INTERNET, I care about my money
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+MEDIA_URL = 'http://%s.s3.amazonaws.com/avatars/' % AWS_STORAGE_BUCKET_NAME
+
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -105,11 +126,78 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Security
+ALLOWED_HOSTS = ["corporategame.me", "corporate-game-pr-131.herokuapp.com"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+COMPRESS_OUTPUT_DIR = "cache"
+COMPRESS_ENABLED = True
+
+
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
 )
+
+
+# Settings for the game
+if "test" in " ".join(sys.argv):
+    CITY = "Test"
+else:
+    CITY = "Detroit"
+
+CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())
+
+
+# Environment overrides
+if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
+    DEBUG = os.environ['DEBUG'] if 'DEBUG' in os.environ else False
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config()
+
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure()
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # Allow all host headers
+    ALLOWED_HOSTS = ['*']
+
+    # Static asset configuration
+    STATIC_ROOT = 'staticfiles'
+    STATIC_URL = '/static/'
+
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
+
+    # Compress less file on deployment
+    COMPRESS_OFFLINE = True
+
+
+if "OPBEAT_ORGANIZATION_ID" in os.environ:
+    INSTALLED_APPS += (
+        "opbeat.contrib.django",
+    )
+    OPBEAT = {
+        "ORGANIZATION_ID": os.environ['OPBEAT_ORGANIZATION_ID'],
+        "APP_ID": os.environ['OPBEAT_APP_ID'],
+        "SECRET_TOKEN": os.environ['OPBEAT_SECRET_TOKEN'],
+    }
+    MIDDLEWARE_CLASSES += (
+        'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
+    )
+
+if "CIRCLECI" in os.environ:
+    # We're running on circleci.com, toggle XML test output
+    TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
+    TEST_OUTPUT_DIR = os.environ['CIRCLE_TEST_REPORTS']

@@ -1,0 +1,7 @@
+dependencies:
+  pre:
+    - npm install -g less
+test:
+  post:
+    - pep8 .
+    - flake8 --exclude=.pyenv,nvm,virtualenvs,migrations .

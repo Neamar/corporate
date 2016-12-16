@@ -1,0 +1,40 @@
+{% extends "template.html" %}   
+
+{% block content %}
+<div class="discussion-form-content">
+	<div class="content-title">
+		<h3 style="background-image: /static/img/sprite.svg#{{ order.name }}" class="order">
+			<span>{{ sender.name}}</span>
+		</h3>
+	</div>
+
+	<form  class="discussion-form-container" method="post" action="{% url "website.views.data.discussion" game_id=game.id sender_id=sender.pk %}">
+		<table>
+		<tr>
+			<td colspan="2">
+				<div class="conversation" id="chatbox">
+					<ul> 
+					{% for message in messages %}
+						<li><span stype="font-weight:normal"><font size="2">[{{ message.creation|date:"j/m" }}-{{ message.creation|time:"H:i" }}]</font></span>&nbsp;&nbsp;&nbsp;{{ message.sender.name }} : <span stype="font-weight:normal">{{ message.content }}</span></li>
+					{% endfor %}
+					</ul>
+				</div>
+			</td>
+		</tr>
+		{{ form.as_table }}
+		<tr class="submit-order">
+			<td colspan="2">
+				<div class="button-content">
+					<div class="cornered-top"></div>
+					<input type="submit" value="Envoyer" />
+					<div class="cornered-bottom"></div>
+				</div>
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+<li style="list-style-type: none;top: -50px;position: relative;">Cette page ne se rafraichit pas tout seule :(.&nbsp;&nbsp;&nbsp;
+<a href="{% url "website.views.data.discussion" game_id=game.id sender_id=sender.pk %}">Rafraichir</a>
+</li>
+{% endblock content %}

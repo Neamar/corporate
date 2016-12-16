@@ -1,60 +1,44 @@
 {% extends "template.html" %}
 
-{% block title %}{{ player.name }}{% endblock %}
-{% block h1 %}{{ player.name }}{% endblock %}
+{% block title %}{{ player_profile.name }}{% endblock %}
 
 {% block content %}
-<table class="prop_table">
-<thead>
-<tr>
-	<th></th>
-	<th>Joueur</th>
-	<th>IC</th>
-	<th>Ligne</th>
-	<th>Citoyen</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-	<td>{{ player.name }}</td>
-	<td>{{ player.user.username }}</td>
-	<td class="important">{{ player.influence.level }}</td>
-	<td title="{{ player.get_last_mdc_vote.get_coalition_display }}">{{ player.get_last_mdc_coalition }}</td>
-	<td>{{ player.citizenship.corporation.base_corporation.slug|title }}</td>
-</tr>
-</tbody>
-</table>
 
-<ul>
-	{% if player.user.phone %}
-	<li>Téléphone : <a href="tel:{{ player.user.phone }}" title="Téléphoner">{{ player.user.phone }}</a></li>
-	{% endif %}
-	{% if player.user.skype %}
-	<li>Skype : <a href="skype:{{ player.user.skype }}?call" title="Appeler sur Skype">{{ player.user.skype }}</a></li>
-	{% endif %}
-	<li>Background : <strong>{{ player.background }}</strong></li>
+<div class="player-content">
+<h1><img title="" src="{{ player_profile.avatar.url }}" width="90" height="90" /><span>{{ player_profile.name }}</span></h1>
+
+<h2 class="h2-player-dinc">Vote à Detroit <sup>INC</sup></h2>
+<div class="dinc-player-content">
+<img class"dinc-player" title="{{ player_profile.get_last_dinc_vote.get_coalition_display }}" src="{{ STATIC_URL }}img/detroit-inc/{{ player_profile.get_last_dinc_coalition|lower }}.png" />
+</div>
+
+<h2>Informations sur le tour</h2>
+<div class="turn-info-content">
+	<span class="ic-value" title="Influence Corporatiste">{{ player_profile.influence.level }}</span>
+	<span class="money-value" title="{{ help_text_money }}">{{ money }}</span>
+	<span class="share-amount" title="Nombre de parts">{{ qty_shares }}</span>
+</div>
+
+<h2>Parts dans les corporations</h2>
+<ul class="corporation">
+{% for corporation in corporations %}
+<li><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation.base_corporation.slug %}" title="Parts dans {{ corporation.base_corporation.name }}"><img src="{{ STATIC_URL }}{{ city }}/corporations/{{ corporation.base_corporation.slug}}.png"  width="60" height="60" /><span class="share-value" title="Nombre de parts">{{ corporation.qty_share }}</span>
+{% if corporation == citizenship %}
+<span class="cityzenship-img" title="Citoyen de {{ corporation.base_corporation.name }}"><svg role="img" class="svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#citizenship"></use></svg></span>
+{% endif %}
+</a></li>
+{% endfor %}
 </ul>
 
-<p>{{ rp }}</p>
+<div class="corporation-logs--detail">
+{% include "logs/player.html" %}
+</div>
 
-<h2>Parts possédées</h2>
-<table class="prop_table">
-<thead>
-<tr>
-	<th></th>
-	<th>Parts</th>
-	<th>Actifs</th>
-</tr>
-</thead>
-<tbody>
-{% for corporation in corporations %}
-<tr>
-	<td><a href="{% url "website.views.datas.corporation" game_id=game.pk corporation_slug=corporation.base_corporation.slug %}">{{ corporation.base_corporation.name }}</a></td>
-	<td>{{ corporation.qty_share }}</td>
-	<td>{{ corporation.assets }}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
+Background : <strong>{{ background }}</strong>
 
+<h2>Mon histoire</h2>
+<div class="player-story">
+	<p>{{ rp }}</p>
+</div>
+</div>
 {% endblock content %}

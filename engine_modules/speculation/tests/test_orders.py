@@ -1,7 +1,6 @@
 from engine.exceptions import OrderNotAvailable
 from engine.testcases import EngineTestCase
-from engine_modules.speculation.models import CorporationSpeculationOrder, DerivativeSpeculationOrder
-from engine_modules.derivative.models import Derivative
+from engine_modules.speculation.models import CorporationSpeculationOrder
 
 
 class OrdersTest(EngineTestCase):
@@ -9,21 +8,14 @@ class OrdersTest(EngineTestCase):
 
 		super(OrdersTest, self).setUp()
 
-		self.c.assets = 100
-		self.c.save()
+		self.c.set_market_assets(100)
 		self.first_corporation = self.c
 
-		self.c2.assets = 10
-		self.c2.save()
+		self.c2.set_market_assets(10)
 		self.medium_corporation = self.c2
 
-		self.c3.assets = 1
-		self.c3.save()
+		self.c3.set_market_assets(1)
 		self.last_corporation = self.c3
-
-		self.d = Derivative(name="first and last", game=self.g)
-		self.d.save()
-		self.d.corporations.add(self.first_corporation, self.last_corporation)
 
 	def test_corporation_speculation_order_cost_money(self):
 		"""
@@ -101,43 +93,3 @@ class OrdersTest(EngineTestCase):
 		)
 
 		self.assertRaises(OrderNotAvailable, o.clean)
-
-	def test_derivative_failure_remove_money(self):
-		"""
-		Derivative speculation failure cost money
-		"""
-		self.g.resolve_current_turn()
-
-		self.first_corporation.update_assets(-5)
-
-		dso = DerivativeSpeculationOrder(
-			player=self.p,
-			speculation=DerivativeSpeculationOrder.UP,
-			investment=5,
-			derivative=self.d
-		)
-		dso.save()
-
-		self.g.resolve_current_turn()
-
-		self.assertEqual(self.reload(self.p).money, self.initial_money - dso.get_cost())
-
-	def test_derivative_success_give_money(self):
-		"""
-		Success when speculate on derivative should give money
-		"""
-		self.g.resolve_current_turn()
-
-		self.first_corporation.update_assets(5)
-
-		dso = DerivativeSpeculationOrder(
-			player=self.p,
-			speculation=DerivativeSpeculationOrder.UP,
-			investment=5,
-			derivative=self.d
-		)
-		dso.save()
-
-		self.g.resolve_current_turn()
-
-		self.assertEqual(self.reload(self.p).money, self.initial_money + dso.get_cost())

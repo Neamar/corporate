@@ -4,13 +4,14 @@ from engine.testcases import EngineTestCase
 class ModelsTest(EngineTestCase):
 	def test_corporation_crashing_removes_citizenship(self):
 		"""
-		Corporation should have been created alongside the game
+		Corporation crash should set citizenship to null
 		"""
 
-		self.p.citizenship.corporation = self.c
-		self.p.citizenship.save()
+		citizenship = self.p.citizenship
+		citizenship.corporation = self.c
+		citizenship.save()
 
-		self.c.assets = 0
+		self.c.set_market_assets(0)
 		self.c.save()
 
 		self.g.resolve_current_turn()

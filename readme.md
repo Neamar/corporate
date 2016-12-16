@@ -1,8 +1,7 @@
 Corporate game
 ===============
 
-[![Build Status](https://travis-ci.org/Neamar/corporate.png?branch=master)](https://travis-ci.org/Neamar/corporate)
-[![Coverage Status](https://coveralls.io/repos/Neamar/corporate/badge.png?branch=master)](https://coveralls.io/r/Neamar/corporate?branch=master)
+[![Circle CI](https://circleci.com/gh/Neamar/corporate.svg?style=svg)](https://circleci.com/gh/Neamar/corporate)
 
 > You think this is a game? This is not. This is only The Game.
 
@@ -15,8 +14,8 @@ This is a standard Django project. Check you meet all the requirements listed in
 Once you're done, run `./manage.py runserver` to get started on http://localhost:8000/.
 You'll need to create a game and add some players in it.
 
-## Game datas
-Rules can be found in [datas/docs/index.md](datas/docs/index.md).
+## Game data
+Rules can be found in [data/docs/index.md](data/docs/index.md).
 
 ### Tasks list
 > Number between [] is the resolution order.
@@ -25,24 +24,24 @@ Rules can be found in [datas/docs/index.md](datas/docs/index.md).
 * [100] **VoteTask** : Resolve player's corporation votes
 * [100] **MDCVoteTask** : Choose the MDC party line, and save it in an MDCVoteSession
 * [300] **MDCLineCPUBTask** : Enforce the effects of the MDC CPUB party line
-* [300] **MDCLineDEVETask** : Enforce the effects of the MDC DEVE party line
 * [349] **ProtectionRunTask** : Debit Protection runs from players
 * [350] **OffensiveRunTask** : Resolve Offensive corporations runs (DataSteal, Sabotage, Extraction)
 * [350] **InformationRunTask** : Resolve Information runs
 * [400] **InvisibleHandTask** : Give +1 and -1 asset for two random corporations
+* [500] **UpdateMarketBubblesTask** : Count the bubbles and apply them
 * [600] **FirstLastEffectsTask** : Apply first and last corporations effects
+* [625] **UpdateMarketBubblesAfterEffectsTask** : Recount the bubbles and apply them again, this time for good
 * [650] **SaveCorporationAssetTask** : Save the assets of all corporations after the turn resolution
 * [800] **DividendTask** : It's time to get money!
 * [900] **CitizenshipTask** : Update players citizenships
 * [900] **CorporationSpeculationTask** : Resolve corporations speculations
-* [900] **DerivativeSpeculationTask** : Resolve derivatives speculations
 * [1000] **BuyInfluenceTask** : Buy new Influence level
 * [1000] **CrashCorporationTask** : Let's crash corporations that didn't made it through the turn
 
 ### Orders list
 * **BuyInfluenceOrder** : Order to increase Player Influence
 * **VoteOrder** : Order to vote for a Corporation
-* **CitizenShipOrder** : Order to become citizen from a new corporation
+* **CitizenshipOrder** : Order to become citizen from a new corporation
 * **BuyShareOrder** : Order to buy a corporation share
 * **DataStealOrder** : Order for DataSteal runs
 * **ProtectionOrder** : Order for Protection runs
@@ -50,6 +49,5 @@ Rules can be found in [datas/docs/index.md](datas/docs/index.md).
 * **ExtractionOrder** : Order for Extraction runs
 * **InformationOrder** : Order for information runs
 * **CorporationSpeculationOrder** : Order to speculate on a corporation's rank
-* **DerivativeSpeculationOrder** : Order to speculate on a derivative up or down
 * **MDCVoteOrder** : Order to vote for the MDC coalition
 * **WiretransferOrder** : Send money to another player

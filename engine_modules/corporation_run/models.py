@@ -1,337 +1,219 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.db import models
-from random import randint
+from django.forms import widgets
+
 from engine_modules.run.models import RunOrder
-from messaging.models import Newsfeed, Note
-from engine_modules.corporation.models import Corporation, AssetDelta
-from engine.models import Player
-from website.widgets import PlainTextField
+from engine_modules.corporation.models import Corporation
+from engine_modules.market.models import CorporationMarket
+from engine.models import Game
+
+from collections import OrderedDict
+import string
+import random
 
 
-datasteal_messages = {
-	'success': {
-		'sponsor': u"Votre équipe a *réussi* un **Datasteal** de %s pour le compte de %s",
-		'newsfeed': u"Un **Datasteal** a *réussi* sur %s",
-		'citizens': u"Un **Datasteal**, commandité par %s, a *réussi* sur %s pour le compte de %s avec %s%% de chances de réussite",
-	},
-	'fail': {
-		'sponsor': u"Votre équipe a *échoué* son **Datasteal** sur %s pour %s",
-		'newsfeed': u"Un **Datasteal** a *échoué* sur %s",
-		'citizens': u"Un **Datasteal**, commandité par %s, a *échoué* sur %s pour le compte de %s avec %s%% de chances de réussite",
-	},
-}
-
-sabotage_messages = {
-	'success': {
-		'sponsor': u"Votre équipe a *réussi* un **Sabotage** sur les opérations de %s",
-		'newsfeed': u"Un **Sabotage** a *réussi* sur %s",
-		'citizens': u"Un **Sabotage**, commandité par %s, a *réussi* sur %s avec %s%% de chances de réussite",
-		'citizens_undetected': u"Un **Sabotage** a *réussi* sur %s.",
-	},
-	'fail': {
-		'sponsor': u"Votre équipe a *échoué* son **Sabotage** sur %s",
-		'newsfeed': u"Un **Sabotage** a *échoué* sur %s",
-		'citizens': u"Un **Sabotage**, commandité par %s, à *échoué* sur %s avec %s%% de chances de réussite",
-	},
-}
-
-extraction_messages = {
-	'success': {
-		'sponsor': u"Votre équipe a *réussi* une **Extraction** de %s pour le compte de %s",
-		'newsfeed': u"Une **Extraction** a *réussi* sur %s",
-		'citizens': u"Une **Extraction**, commanditée par %s, a *réussi* sur %s pour le compte de %s avec %s%% de chances de réussite",
-	},
-	'fail': {
-		'sponsor': u"Votre équipe a *échoué* son **Extraction** sur %s pour %s",
-		'newsfeed': u"Une **Extraction** a *échoué* sur %s",
-		'citizens': u"Une **Extraction**, commanditée par %s, a *échoué* sur %s pour le compte de %s avec %s%% de chances de réussite",
-	},
-}
-
-
-class OffensiveRunOrder(RunOrder):
+class DropdownWidget(widgets.Select):
 	"""
-	Model for offensive runs.
-
-	Require subclass to define a property target_corporation, whose values will be used for protection and defense.
-	Require constants to be defined:
-
-	* PROTECTION_TYPE : Will be used to find protection run and base default values.
-	* TIMING_MALUS_SIMILAR value to consider for the timing malus.
-	* BASE_SUCCESS_PROBABILITY base probability for resolution
-
-	Checks for Protection Runs.
-	Implements timing malus.
+	Widget to be used in Run classes so that we have a list of lists by Corporation then Market
+	every time we have to chose a CorporationMarket.
 	"""
-	class Meta:
-		abstract = True
 
-	def is_protected(self):
-		"""
-		Return True if the run is defended against
-		"""
-		for protection in self.get_protection_values():
-			if randint(1, 100) <= protection:
-				return True
-		return False
+	def __init__(self, *args, **kwargs):
+		container_id = "None"
+		if 'container_id' in kwargs:
+			container_id = kwargs['container_id']
+			del(kwargs['container_id'])
 
-	def is_detected(self):
-		"""
-		Rturn True if the run is detected
-		"""
-		if self.target_corporation is None:
-			return False
+		super(DropdownWidget, self).__init__(*args, **kwargs)
+		self.data = args[0]
+		self.container_id = container_id
 
-		if randint(1, 100) <= self.target_corporation.base_corporation.detection:
-			return True
-		return False
+	def render(self, name, value, attrs=None, choices=()):
 
-	def get_protection_values(self):
-		"""
-		Return a list of defenses probabilities
-		"""
-		values = []
-		if self.target_corporation is not None:
-			for protector in self.target_corporation.protectors.filter(defense=self.PROTECTION_TYPE):
-				values.append(protector.get_success_probability())
+		# print 'name: {0}'.format(name)
+		# print 'value: {0}'.format(value)
+		# print 'attrs: {0}'.format(attrs)
+		# print 'choices: {0}'.format(choices)
 
-			values.append(getattr(self.target_corporation.base_corporation, self.PROTECTION_TYPE))
-		return values
+		tmpid = ''
+		for i in range(20):
+			tmpid += random.choice(string.lowercase)
 
-	def get_raw_probability(self):
-		"""
-		Compute success probability, maxed by 90%
-		"""
-		proba = super(OffensiveRunOrder, self).get_success_probability()
-		proba += self.BASE_SUCCESS_PROBABILITY
-		return proba
+		html = '<div class=hidden id=' + tmpid + '>\n' + super(DropdownWidget, self).render(name, value, attrs, choices=choices) + '\n</div>'
+		html += '<div class="dropdown" id=dd_' + tmpid + '>\n<ul>\n    <li>\n Corporations\n' + ' ' * 8 + '<ul>\n'
+		for key in self.data.keys():
+			html += ' ' * 12 + '<li>\n' + ' ' * 16 + '{0}\n'.format(str(key)) + ' ' * 16 + '<ul>\n'
+			for value in self.data[key]:
+				try:
+					html += u' ' * 20 + u'<li onclick="{0}">\n'.format('dropdown_select(\'' + tmpid + '\', ' + str(value.id) + ');') + u' ' * 24 + u'{0}\n'.format(value.market.name) + u' ' * 20 + u'</li>\n'
+				except Exception, e:
+					print str(e)
+			html += ' ' * 16 + '</ul>\n' + ' ' * 12 + '</li>\n'
+		html += '        </ul>\n    </li>\n</ul>\n</div>'
 
-	def get_success_probability(self):
-		"""
-		Compute success probability, maxed by 90%. Add timing malus.
-		"""
-		raw_proba = self.get_raw_probability()
+		return html
 
-		kwargs = {
-			self.TIMING_MALUS_SIMILAR: getattr(self, self.TIMING_MALUS_SIMILAR),
-			"turn": self.player.game.current_turn
-		}
-		similar_runs = self.__class__.objects.filter(**kwargs).exclude(pk=self.pk)
-		better_runs = [run for run in similar_runs if run.get_raw_probability() >= raw_proba]
-		proba = raw_proba - 10 * len(better_runs)
-		return proba
+	def value_from_datadict(self, data, files, name):
+		# print 'data: {0}'.format(data)
+		# print 'files: {0}'.format(files)
+		# print 'name; {0}'.format(name)
 
-	def resolve(self):
-			self.player.money -= self.get_cost()
-			self.player.save()
-			if self.is_successful() and not self.is_protected():
-				self.resolve_success(self.is_detected())
-			else:
-				self.resolve_fail(self.is_detected())
-				# Repay the player
-				self.repay()
-
-	def notify_citizens(self, content):
-		"""
-		Send a message to target_corporation citizens
-		"""
-		n = Note(
-			category=Note.RUNS,
-			content=content,
-			turn=self.player.game.current_turn,
-		)
-		n.save()
-		n.recipient_set = Player.objects.filter(citizenship__corporation=self.target_corporation)
+		for i in dict(data.iterlists())['target_corporation_market']:
+			if i != u'':
+				return string.atoi(i)
 
 
-class OffensiveCorporationRunOrder(OffensiveRunOrder):
+class CorporationRunOrder(RunOrder):
 	"""
 	Model for offensive corporation runs.
 	"""
-	TIMING_MALUS_SIMILAR = 'target_corporation'
 
-	target_corporation = models.ForeignKey(Corporation, related_name="scoundrels")
+	target_corporation_market = models.ForeignKey(CorporationMarket, related_name="scoundrels")
 
-	def get_form(self, datas=None):
-		form = super(OffensiveRunOrder, self).get_form(datas)
-		form.fields['target_corporation'].queryset = self.player.game.corporation_set.all()
-		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
+	def get_success_probability(self):
+		"""
+		Compute success probability, eventually modified by protection runs
+		"""
+		base_value = super(CorporationRunOrder, self).get_success_probability()
+
+		protection = self.target_corporation_market.protectors.filter(
+			turn=self.turn
+		)
+		if protection.exists():
+			return min(base_value, ProtectionOrder.MAX_PERCENTS)
+		return base_value
+
+	@property
+	def target_corporation(self):
+		"""
+		Helper function to directly retrieve the corporation from its market
+		"""
+		return self.target_corporation_market.corporation
+
+	def get_form(self, data=None):
+		form = super(CorporationRunOrder, self).get_form(data)
+		# We get all the corporationMarket of uncrashed corporations
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn).select_related('market', 'corporation')
+		form.fields['target_corporation_market'].label = u'Cible'
+		corporation_markets = {}
+		for cm in form.fields['target_corporation_market'].queryset.select_related('corporation'):
+			if cm.corporation not in corporation_markets.keys():
+				corporation_markets[cm.corporation] = []
+			corporation_markets[cm.corporation].append(cm)
+
+		choices = [('', '---------')] + [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
+		form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets, container_id="lol", choices=choices)
+		form.initial['target_corporation_market'] = ''
 
 		return form
 
 
-class DataStealOrder(OffensiveCorporationRunOrder):
+class CorporationRunOrderWithStealer(CorporationRunOrder):
+	"""
+	Offensive run with a stealer (e.g. DataStealOrder / ExtractionOrder)
+	"""
+	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
+
+	@property
+	def stealer_corporation_market(self):
+		"""
+		Helper function to directly retrieve the market for the stealer
+		"""
+		return self.stealer_corporation.corporationmarket_set.get(market=self.target_corporation_market.market_id, turn=self.player.game.current_turn)
+
+	def get_form(self, data=None):
+		form = super(CorporationRunOrderWithStealer, self).get_form(data)
+		form.fields['stealer_corporation'].widget = forms.Select(attrs={'onchange': 'get_targets(this);'})
+		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
+		form.fields['stealer_corporation'].label = u'Bénéficiaire'
+		# We have to reverse the fields to go from more specific to less specific
+		# This ensures that stealer_corporation will be above target_corporation_market
+		items = form.fields.items()
+		items.reverse()
+		form.fields = OrderedDict(items)
+		return form
+
+
+class DataStealOrder(CorporationRunOrderWithStealer):
 	"""
 	Order for DataSteal runs
 	"""
 	ORDER = 500
-	BASE_SUCCESS_PROBABILITY = 30
-	PROTECTION_TYPE = "datasteal"
 
-	title = "Lancer une run de Datasteal"
-	stealer_corporation = models.ForeignKey(Corporation, related_name="+")
+	title = "Opé de Datasteal"
 
-	def resolve_success(self, detected):
-		self.stealer_corporation.update_assets(+1)
+	def resolve_successful(self):
+		self.stealer_corporation.update_assets(+1, corporation_market=self.stealer_corporation_market)
 
-		# Send a note to the one who ordered the DataSteal
-		content = datasteal_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		self.player.add_note(category=Note.RUNS, content=content)
+		# create a game_event on the stealer
+		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_UP, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, delta=1, corporation=self.stealer_corporation, corporation_market=self.stealer_corporation_market, players=[self.player])
+		# create a game event on the target
+		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_DOWN, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
 
-		if detected:
-			# Send a note to citizens
-			content = datasteal_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
-			# Send a note to everybody
-			content = datasteal_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
-
-			# And some RP
-			path = u'datasteal/%s/success' % self.target_corporation.base_corporation.slug
-			self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
-
-	def resolve_fail(self, detected):
-		# Send a note to the one who ordered the DataSteal
-		content = datasteal_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name)
-		self.player.add_note(category=Note.RUNS, content=content)
-
-		if detected:
-			# Send a note to citizens
-			content = datasteal_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
-
-			# Send a note to everybody
-			content = datasteal_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
-
-			# And some RP
-			path = u'datasteal/%s/failure' % self.target_corporation.base_corporation.slug
-			self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
+	def resolve_failure(self):
+		# create a game_event on the stealer
+		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_FAIL_UP, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.stealer_corporation, corporation_market=self.stealer_corporation_market, players=[self.player])
+		# create a game event on the target
+		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_FAIL_DOWN, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Envoyer une équipe voler des données de %s pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
-
-	def get_form(self, datas=None):
-		form = super(DataStealOrder, self).get_form(datas)
-		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
-
-		return form
+		return u"Envoyer une équipe voler des données de %s (%s) pour le compte de %s" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name)
 
 
-class SabotageOrder(OffensiveCorporationRunOrder):
-	"""
-	Order for Sabotage runs
-	"""
-	ORDER = 600
-	title = "Lancer une run de Sabotage"
-
-	BASE_SUCCESS_PROBABILITY = 30
-	PROTECTION_TYPE = "sabotage"
-
-	def resolve_success(self, detected):
-		self.target_corporation.update_assets(-2, category=AssetDelta.RUN_SABOTAGE)
-
-		# Send a note to the one who ordered the Sabotage
-		content = sabotage_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name)
-		self.player.add_note(category=Note.RUNS, content=content)
-
-		if detected:
-			# Send a note to citizens
-			content = sabotage_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
-		else:
-			# Sabotage are public, even when not detected.
-			# Send another note to citizens, with less details
-			content = sabotage_messages['success']['citizens_undetected'] % (self.target_corporation.base_corporation.name)
-			self.notify_citizens(content)
-
-		# Send a note to everybody
-		content = sabotage_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
-		self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
-
-		# And some RP
-		path = u'sabotage/%s/success' % self.target_corporation.base_corporation.slug
-		self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
-
-	def resolve_fail(self, detected):
-		# Send a note to the one who ordered the Sabotage
-		content = sabotage_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name)
-		self.player.add_note(category=Note.RUNS, content=content)
-
-		if detected:
-			# Send a note to citizens
-			content = sabotage_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
-
-			# Send a note to everybody
-			content = sabotage_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
-
-			# And some RP
-			path = u'sabotage/%s/failure' % self.target_corporation.base_corporation.slug
-			self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
-
-	def description(self):
-		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.get_raw_probability())
-
-
-class ExtractionOrder(OffensiveCorporationRunOrder):
+class ExtractionOrder(CorporationRunOrderWithStealer):
 	"""
 	Order for Extraction runs
 	"""
 	ORDER = 700
-	title = "Lancer une run d'Extraction"
+	title = "Opé d'Extraction"
 
-	BASE_SUCCESS_PROBABILITY = 10
-	PROTECTION_TYPE = "extraction"
+	def resolve_successful(self):
+		self.target_corporation.update_assets(-1, corporation_market=self.target_corporation_market)
+		self.stealer_corporation.update_assets(1, corporation_market=self.stealer_corporation_market)
 
-	kidnapper_corporation = models.ForeignKey(Corporation, related_name="+")
+		# create a game_event on the stealer
+		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_UP, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, delta=1, corporation=self.stealer_corporation, corporation_market=self.stealer_corporation_market, players=[self.player])
+		# create a game_event on the target
+		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_DOWN, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, delta=-1, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
 
-	def resolve_success(self, detected):
-		self.target_corporation.update_assets(-1, category=AssetDelta.RUN_EXTRACTION)
-		self.kidnapper_corporation.update_assets(1)
-
-		# Send a note to the one who ordered the Extraction
-		content = extraction_messages['success']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
-		self.player.add_note(category=Note.RUNS, content=content)
-
-		if detected:
-			# Send a note to citizens
-			content = extraction_messages['success']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
-
-			# Send a note to everybody
-			content = extraction_messages['success']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
-
-			# And some RP
-			path = u'extraction/%s/success' % self.target_corporation.base_corporation.slug
-			self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
-
-	def resolve_fail(self, detected):
-		# Send a note to the one who ordered the DataSteal
-		content = extraction_messages['fail']['sponsor'] % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name)
-		self.player.add_note(category=Note.RUNS, content=content)
-
-		if detected:
-			# Send a note to citizens
-			content = extraction_messages['fail']['citizens'] % (self.player, self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
-			self.notify_citizens(content)
-
-			# Send a note to everybody
-			content = extraction_messages['fail']['newsfeed'] % (self.target_corporation.base_corporation.name)
-			self.player.game.add_newsfeed(category=Newsfeed.MATRIX_BUZZ, content=content)
-
-			# And some RP
-			path = u'extraction/%s/failure' % self.target_corporation.base_corporation.slug
-			self.player.game.add_newsfeed_from_template(category=Newsfeed.MATRIX_BUZZ, path=path)
+	def resolve_failure(self):
+		# create a game_event on the stealer
+		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_FAIL_UP, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.stealer_corporation, corporation_market=self.stealer_corporation_market, players=[self.player])
+		# create a game event on the target
+		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_FAIL_DOWN, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Réaliser une extraction de %s vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.kidnapper_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Réaliser une extraction de %s (%s) vers %s" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name)
 
-	def get_form(self, datas=None):
-		form = super(ExtractionOrder, self).get_form(datas)
-		form.fields['kidnapper_corporation'].queryset = self.player.game.corporation_set.all()
+
+class SabotageOrder(CorporationRunOrder):
+	"""
+	Order for Sabotage runs
+	"""
+	ORDER = 600
+	title = "Opé de Sabotage"
+
+	def resolve_successful(self):
+		self.target_corporation.update_assets(-2, corporation_market=self.target_corporation_market)
+
+		# create a game event on the target
+		self.player.game.add_event(event_type=Game.OPE_SABOTAGE, delta=-2, data={"player": self.player.name, "market": self.target_corporation_market.market.name, "corporation": self.target_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
+
+	def resolve_failure(self):
+		# create a game event on the target
+		self.player.game.add_event(event_type=Game.OPE_SABOTAGE_FAIL, data={"player": self.player.name, "market": self.target_corporation_market.market.name, "corporation": self.target_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
+
+	def description(self):
+		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name)
+
+	def get_form(self, data=None):
+		form = super(SabotageOrder, self).get_form(data)
+		# we can't make a sabotage on a negative or null corporationMarket
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn, value__gt=0).select_related('market', 'corporation')
+		choices = [('', '---------')] + [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
+		form.fields['target_corporation_market'].widget = forms.Select(choices=choices)
+		form.initial['target_corporation_market'] = ''
 
 		return form
 
@@ -341,53 +223,37 @@ class ProtectionOrder(RunOrder):
 	Order for Protection runs
 	"""
 	ORDER = 850
-	title = "Lancer une run de Protection"
-	MAX_PERCENTS = 50
+	title = "Opé de Protection"
+	MAX_PERCENTS = 40
 
-	EXTRACTION = "extraction"
-	DATASTEAL = "datasteal"
-	SABOTAGE = "sabotage"
+	protected_corporation_market = models.ForeignKey(CorporationMarket, related_name="protectors")
 
-	PROBA_DATASTEAL_SUCCESS = 40
-	PROBA_EXTRACTION_SUCCESS = 10
-	PROBA_SABOTAGE_SUCCESS = 0
-
-	DEFENSE_CHOICES = (
-		(EXTRACTION, "Extraction"),
-		(DATASTEAL, "Datasteal"),
-		(SABOTAGE, "Sabotage")
-	)
-
-	BASE_SUCCESS_PROBABILITY = {
-		EXTRACTION: PROBA_EXTRACTION_SUCCESS,
-		DATASTEAL: PROBA_DATASTEAL_SUCCESS,
-		SABOTAGE: PROBA_SABOTAGE_SUCCESS,
-	}
-
-	defense = models.CharField(max_length=15, choices=DEFENSE_CHOICES)
-	protected_corporation = models.ForeignKey(Corporation, related_name="protectors")
-
-	def get_success_probability(self):
+	@property
+	def protected_corporation(self):
 		"""
-		Compute success probability, adding base values
+		Helper function to directly retrieve the corporation from its market
 		"""
-		proba = super(ProtectionOrder, self).get_success_probability()
-		proba += self.BASE_SUCCESS_PROBABILITY[self.defense]
-		return proba
+		return self.protected_corporation_market.corporation
 
 	def resolve(self):
 		self.player.money -= self.get_cost()
 		self.player.save()
 
-	def description(self):
-		return u"Envoyer une équipe protéger %s des %ss (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_defense_display(), self.get_success_probability())
+		# create a game event on the target
+		self.player.game.add_event(event_type=Game.OPE_PROTECTION, data={"player": self.player.name, "market": self.protected_corporation_market.market.name, "corporation": self.protected_corporation.base_corporation.name}, corporation=self.protected_corporation, corporation_market=self.protected_corporation_market, players=[self.player])
 
-	def get_form(self, datas=None):
-		form = super(ProtectionOrder, self).get_form(datas)
-		form.fields['protected_corporation'].queryset = self.player.game.corporation_set.all()
-		form.fields['base_extraction_percents'] = PlainTextField(initial="%s%%" % self.PROBA_EXTRACTION_SUCCESS)
-		form.fields['base_datasteal_percents'] = PlainTextField(initial="%s%%" % self.PROBA_DATASTEAL_SUCCESS)
-		form.fields['base_sabotage_percents'] = PlainTextField(initial="%s%%" % self.PROBA_SABOTAGE_SUCCESS)
+	def description(self):
+		return u"Envoyer une équipe protéger %s (%s)" % (self.protected_corporation.base_corporation.name, self.protected_corporation_market.market.name)
+
+	def custom_description(self):
+		return ""
+
+	def get_form(self, data=None):
+		form = super(ProtectionOrder, self).get_form(data)
+		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn).select_related('market', 'corporation')
+		form.fields['protected_corporation_market'].label = u'Cible'
+		# Remove the additional percent field
+		form.fields.pop('additional_percents')
 
 		return form
 

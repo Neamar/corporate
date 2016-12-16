@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 from engine.tasks import ResolutionTask, OrderResolutionTask
 from engine_modules.share.models import Share, BuyShareOrder
-from messaging.models import Note
 
 
 class BuyShareTask(OrderResolutionTask):
 	"""
 	Buy all shares for all players
 	"""
-	RESOLUTION_ORDER = 0
+	RESOLUTION_ORDER = 200
 	ORDER_TYPE = BuyShareOrder
 
 
@@ -16,11 +15,12 @@ class DividendTask(ResolutionTask):
 	"""
 	It's time to get money!
 	"""
-	SHARE_BASE_VALUE = 50
+	SHARE_BASE_VALUE = 25
 	FIRST_BONUS = 1.5
-	LAST_BONUS = 0.5
+	# To avoid double penalty and to simplfy the game, we removed last bonus
+	LAST_BONUS = 1
 
-	RESOLUTION_ORDER = 800
+	RESOLUTION_ORDER = 1300
 
 	def run(self, game):
 		"""
@@ -50,14 +50,10 @@ class DividendTask(ResolutionTask):
 			if share.corporation == ladder[-1]:
 				dividend *= self.LAST_BONUS
 
-			dividend = int(dividend)
-			share.player.money += dividend
-			share.player.save()
-
-			if share.count == 1:
-				content = u"Votre part dans %s vous rapporte %sk¥" % (share.corporation.base_corporation.name, dividend)
-			else:
-				content = u"Vos %s parts dans %s vous rapportent %sk¥" % (share.count, share.corporation.base_corporation.name, dividend)
-			share.player.add_note(category=Note.DIVIDEND, content=content)
+			# If the corporation hasn't crashed. We test it here because the corporation really collapse at resoltuion_order 1000. At this time, asset may be negative
+			if dividend > 0:
+				dividend = int(dividend)
+				share.player.money += dividend
+				share.player.save()
 
 tasks = (BuyShareTask, DividendTask)

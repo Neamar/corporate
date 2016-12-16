@@ -3,9 +3,28 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_save
 from django.db import IntegrityError
 
-from engine.dispatchs import validate_order
+from engine.dispatchs import validate_order, start_event
 from engine.exceptions import OrderNotAvailable
 from engine_modules.share.models import Share, BuyShareOrder
+from engine_modules.corporation.models import Corporation
+
+
+@receiver(start_event)
+def add_citizenship_at_start(sender, instance, **kwargs):
+	"""
+	Create citizenship model for new player
+	"""
+	print "citizenship"
+	for player in instance.player_set.all():
+		if player.starting_citizenship:
+			# Créer l'ordre d'achat de part non supprimable
+			corporation = Corporation.objects.get(pk=player.starting_citizenship)
+			order = BuyShareOrder(
+				player=player,
+				corporation=corporation
+			)
+			order.cancellable = False
+			order.save()
 
 
 @receiver(validate_order, sender=BuyShareOrder)

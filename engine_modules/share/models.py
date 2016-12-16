@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from engine.models import Player, Order
+from django import forms
+from engine.models import Player, Order, Game
 from engine_modules.corporation.models import Corporation
-from messaging.models import Newsfeed
 
 
 class Share(models.Model):
@@ -14,7 +14,7 @@ class Share(models.Model):
 	turn = models.PositiveSmallIntegerField()
 
 	def __unicode__(self):
-		return "%s share for %s" % (self.corporation, self.player)
+		return u"%s share for %s" % (self.corporation, self.player)
 
 
 class BuyShareOrder(Order):
@@ -23,15 +23,16 @@ class BuyShareOrder(Order):
 	"""
 	title = "Acheter une part dans une corporation"
 	ORDER = 100
-	BASE_COST = 100
-	FIRST_COST = 125
-	FIRST_AND_CITIZEN_COST = 100
+	BASE_COST = 50
+	FIRST_COST = 60
+	FIRST_AND_CITIZEN_COST = 50
 
 	corporation = models.ForeignKey(Corporation)
 
 	def get_cost(self):
 		if not hasattr(self, "corporation"):
-			return 0
+			# avoid displaying the order when the player can't affort the cheapest
+			return self.player.game.get_ladder()[-1].assets * BuyShareOrder.BASE_COST
 		elif self.corporation == self.player.game.get_ladder()[0]:
 			if self.player.citizenship.corporation != self.corporation:
 				return BuyShareOrder.FIRST_COST * self.corporation.assets
@@ -40,9 +41,24 @@ class BuyShareOrder(Order):
 		else:
 			return BuyShareOrder.BASE_COST * self.corporation.assets
 
+	def get_priced_list(self):
+		dropdownchoices = self.player.game.get_ladder()
+		first = True
+		for corporation in dropdownchoices:
+			if first:
+				if self.player.citizenship.corporation != corporation:
+					corporation.text = u"{0} ({1} actifs) - {2} k₵".format(corporation.base_corporation.name, corporation.assets, BuyShareOrder.FIRST_COST * corporation.assets)
+				else:
+					corporation.text = u"{0} ({1} actifs) - {2} k₵".format(corporation.base_corporation.name, corporation.assets, BuyShareOrder.FIRST_AND_CITIZEN_COST * corporation.assets)
+			else:
+				corporation.text = u"{0} ({1} actifs) - {2} k₵".format(corporation.base_corporation.name, corporation.assets, BuyShareOrder.BASE_COST * corporation.assets)
+			first = False
+		return dropdownchoices
+
 	def resolve(self):
 		# Pay.
-		self.player.money -= self.get_cost()
+		price = self.get_cost()
+		self.player.money -= price
 		self.player.save()
 
 		# Add a share to the player
@@ -51,23 +67,16 @@ class BuyShareOrder(Order):
 			player=self.player
 		).save()
 
-		# Send a note for final message
-		nb_shares = self.player.share_set.filter(corporation=self.corporation).count()
-		if nb_shares == 1:
-			content = u"Vous avez acheté votre première part dans %s." % self.corporation.base_corporation.name
-			newsfeed_content = u"%s a acheté sa première part dans %s." % (self.player, self.corporation.base_corporation.name)
-		else:
-			content = u"Vous avez acheté votre %i<sup>ème</sup> part dans %s." % (nb_shares, self.corporation.base_corporation.name)
-			newsfeed_content = u"%s a acheté sa %i<sup>ème</sup> part dans %s." % (self.player, nb_shares, self.corporation.base_corporation.name)
-		self.player.add_note(content=content)
-		self.player.game.add_newsfeed(category=Newsfeed.ECONOMY, content=newsfeed_content)
+		# Create game_event
+		self.player.game.add_event(event_type=Game.BUY_SHARE, data={"player": self.player.name, "corporation": self.corporation.base_corporation.name, 'cost': price}, corporation=self.corporation, players=[self.player])
 
 	def description(self):
 		return u"Acheter une part de la corporation %s (actifs actuels : %s)" % (self.corporation.base_corporation.name, self.corporation.assets)
 
-	def get_form(self, datas=None):
-		form = super(BuyShareOrder, self).get_form(datas)
-		form.fields['corporation'].queryset = self.player.game.corporation_set.all()
+	def get_form(self, data=None):
+		form = super(BuyShareOrder, self).get_form(data)
+		form.fields['corporation'].widget = forms.Select(choices=[('', '---------')] + [(corporation.id, corporation.text) for corporation in self.get_priced_list()])
+		form.initial['corporation'] = ''
 
 		return form
 

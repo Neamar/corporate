@@ -1,0 +1,1 @@
+A misé {{ mise }} k₵ sur **{{ corporation}}** en **{{ position }}{% if position == 1 %}ère{% else %}ème{% endif %}** position et a **gagné** son pari. Il empoche **{{ total_win }} k₵** en plus de garder sa mise.

@@ -1,0 +1,1 @@
+vous avez lancé une opé d'information sur {% if players_list|length > 0 %}{{ players_list|join:"," }}{% endif %}{% if players_list|length > 0 and corpos_list|length > 0 %} et {% endif %} {% if corpos_list|length > 0 %}{{ corpos_list|join:"," }}{% endif %}

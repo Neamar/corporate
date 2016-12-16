@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from engine.models import Player, Order
-from messaging.models import Newsfeed
+from engine.models import Player, Order, Game
 
 
 class Influence(models.Model):
 	"""
 	Player influence level
 	"""
-	player = models.OneToOneField(Player)
+	class Meta:
+		unique_together = (("player", "turn"),)
+
+	player = models.ForeignKey(Player)
+	turn = models.PositiveSmallIntegerField(default=1)
 	level = models.PositiveSmallIntegerField(default=1)
 
 
@@ -17,11 +20,11 @@ class BuyInfluenceOrder(Order):
 	Order to increase Player Influence
 	"""
 	ORDER = 300
-	BASE_COST = 400
+	BASE_COST = 750
 	title = "Acheter un point d'Influence Corporatiste"
 
 	def get_cost(self):
-		return BuyInfluenceOrder.BASE_COST * (self.player.influence.level + 1)
+		return BuyInfluenceOrder.BASE_COST * self.player.influence.level
 
 	def resolve(self):
 		# Pay.
@@ -29,14 +32,12 @@ class BuyInfluenceOrder(Order):
 		self.player.save()
 
 		# Increase player influence by one
-		self.player.influence.level += 1
-		self.player.influence.save()
+		influence = self.player.influence_set.get(turn=self.turn)
+		influence.level += 1
+		influence.save()
 
-		# Send a note for final message
-		content = u"Votre Influence dans le milieu corporatiste monte à %i." % self.player.influence.level
-		self.player.add_note(content=content)
-		newsfeed_content = u"L'Influence Corporatiste de %s monte à %i." % (self.player.name, self.player.influence.level)
-		self.player.game.add_newsfeed(category=Newsfeed.PEOPLE, content=newsfeed_content)
+		# Create game event
+		self.player.game.add_event(event_type=Game.IC_UP, data={"player": self.player.name}, players=[self.player])
 
 	def description(self):
 		return u"Augmenter mon Influence Corporatiste à %s" % (self.player.influence.level + 1)

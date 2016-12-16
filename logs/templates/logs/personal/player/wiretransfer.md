@@ -1,0 +1,1 @@
+{% if giver == current_player %}Vous avez {% else %}{{ giver }} {% if receiver == current_player %}vous {% endif %}a{% endif %} donné {{ money }} k₵{% if receiver != current_player %} à {{ receiver }}{% endif %} 
