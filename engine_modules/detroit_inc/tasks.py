@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from collections import Counter
 from engine.tasks import ResolutionTask
-from engine_modules.corporation.models import AssetDelta
 from engine_modules.detroit_inc.models import DIncVoteSession, DIncVoteOrder
 from engine.models import Game
+
+import string
 
 
 class DIncVoteTask(ResolutionTask):
@@ -16,17 +17,17 @@ class DIncVoteTask(ResolutionTask):
 	def run(self, game):
 		orders = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn)
 
-		self.send_resolution_message(orders)
+		self.create_logs(orders)
 		official_line = self.get_official_line(orders)
+		explaination_text = self.get_explaination_text(orders)
 
 		s = DIncVoteSession(
 			coalition=official_line,
 			game=game,
-			turn=game.current_turn + 1
+			turn=game.current_turn + 1,
+			explaination_text=explaination_text
 		)
 		s.save()
-
-		self.send_newsfeed(orders, s)
 
 		if official_line is not None:
 			# We create a game_event for each winner
@@ -42,9 +43,10 @@ class DIncVoteTask(ResolutionTask):
 
 			# We create a game_event for each loser
 			losers = [order.player for order in orders if order.coalition == DIncVoteOrder.DINC_OPPOSITIONS[official_line]]
-			if DIncVoteOrder.DINC_OPPOSITIONS[official_line] == DIncVoteOrder.RSEC:
+			event_type = None
+			if official_line == DIncVoteOrder.RSEC:
 				event_type = Game.EFFECT_SECURITY_DOWN
-			elif DIncVoteOrder.DINC_OPPOSITIONS[official_line] == DIncVoteOrder.CONS:
+			elif official_line == DIncVoteOrder.CONS:
 				event_type = Game.EFFECT_CONSOLIDATION_DOWN
 			if event_type is not None:
 				game.add_event(event_type=event_type, data=None, players=losers)
@@ -73,29 +75,10 @@ class DIncVoteTask(ResolutionTask):
 				official_line = top_line[0][0]
 		return official_line
 
-	def send_resolution_message(self, orders):
+	def get_explaination_text(self, orders):
 		"""
-		Send a note to each player, to remember his choice.
+		Write a peace of text to explain what just happens in detroit inc
 		"""
-		for order in orders:
-			if order.coalition == DIncVoteOrder.CPUB:
-				event_type = Game.VOTE_CONTRAT
-			elif order.coalition == DIncVoteOrder.RSEC:
-				event_type = Game.VOTE_SECURITY
-			elif order.coalition == DIncVoteOrder.CONS:
-				event_type = Game.VOTE_CONSOLIDATION
-			if event_type is not None:
-				order.player.game.add_event(event_type=event_type, data=None, players=[order.player])
-
-	def send_newsfeed(self, orders, dinc_vote_session):
-		"""
-		Build newsfeed message. Contains official line, and breakdown for each coalition.
-		"""
-
-		# TODO : replace by game events
-		# if dinc_vote_session.coalition is not None:
-		# dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"La coalition *%s* a été votée par Detroit Inc." % dinc_vote_session.get_coalition_display())
-
 		votes_details = {}
 
 		# Build global dict
@@ -125,15 +108,30 @@ class DIncVoteTask(ResolutionTask):
 					member_string += " (%s)" % (", ".join(unicode(c.base_corporation.name) for c in member['corporations']))
 				siders.append(member_string)
 
-			siders = ", ".join(siders)
+			siders = " ".join(["<li>%s" % s for s in siders])
 
-			content = u"La coalition *%s* a reçu %s voix : %s" % (coalition, count, siders)
+			content = u"<strong>%s</strong> a reçu <strong>%s</strong> voix : <ul>%s</ul>" % (coalition, count, siders)
 
 			coalition_breakdown.append(content)
 
-		# TODO : replace by game events
-		# if len(coalition_breakdown) > 0:
-		# dinc_vote_session.game.add_newsfeed(category=Newsfeed.DINC_REPORT, content=u"Répartition des coalitions :\n\n  * %s" % ("\n  * ".join(coalition_breakdown)))
+		if not coalition_breakdown:
+			return u"Personne n'a choisi de coalition ce tour-ci"
+
+		return string.join(coalition_breakdown, '')
+
+	def create_logs(self, orders):
+		"""
+		Create logs for votes
+		"""
+		for order in orders:
+			if order.coalition == DIncVoteOrder.CPUB:
+				event_type = Game.VOTE_CONTRAT
+			elif order.coalition == DIncVoteOrder.RSEC:
+				event_type = Game.VOTE_SECURITY
+			elif order.coalition == DIncVoteOrder.CONS:
+				event_type = Game.VOTE_CONSOLIDATION
+			if event_type is not None:
+				order.player.game.add_event(event_type=event_type, data={'weight': order.get_weight()}, players=[order.player])
 
 
 class DIncLineCPUBTask(ResolutionTask):
@@ -142,7 +140,7 @@ class DIncLineCPUBTask(ResolutionTask):
 	"""
 
 	# Resolve after DIncVoteTask
-	RESOLUTION_ORDER = 300
+	RESOLUTION_ORDER = 500
 
 	def run(self, game):
 		# Because this is run the turn of the vote, we have to ask for the next line, not the current one
@@ -156,7 +154,7 @@ class DIncLineCPUBTask(ResolutionTask):
 			for c in o.get_friendly_corporations():
 				# increase a market by 1 asset at random
 				corporation_market = c.get_random_corporation_market()
-				c.update_assets(1, category=AssetDelta.DINC, corporation_market=corporation_market)
+				c.update_assets(1, corporation_market=corporation_market)
 				game.add_event(event_type=Game.EFFECT_CONTRAT_UP, data={"market": corporation_market.market.name}, delta=1, corporation=c, corporation_market=corporation_market)
 
 		loss_votes = DIncVoteOrder.objects.filter(player__game=game, turn=game.current_turn, coalition=DIncVoteOrder.RSEC)
@@ -164,7 +162,7 @@ class DIncLineCPUBTask(ResolutionTask):
 			for c in o.get_friendly_corporations():
 				# decrease a market by 1 asset at random
 				corporation_market = c.get_random_corporation_market()
-				c.update_assets(-1, category=AssetDelta.DINC, corporation_market=c.get_random_corporation_market())
+				c.update_assets(-1, corporation_market=c.get_random_corporation_market())
 				game.add_event(event_type=Game.EFFECT_CONTRAT_DOWN, data={"market": corporation_market.market.name}, delta=-1, corporation=c, corporation_market=corporation_market)
 
 tasks = (DIncVoteTask, DIncLineCPUBTask)

@@ -13,7 +13,7 @@ class WiretransferOrder(Order):
 	title = "Envoyer de l'argent à un joueur"
 
 	recipient = models.ForeignKey(Player)
-	amount = models.PositiveIntegerField(help_text="En milliers de nuyens")
+	amount = models.PositiveIntegerField(help_text="En k₵")
 
 	def save(self, *args):
 		# Override save: apply immediately and return
@@ -28,5 +28,13 @@ class WiretransferOrder(Order):
 	def get_cost(self):
 		# or 1: avoid displaying the order without money
 		return self.amount or 1
+
+	def get_form(self, data=None):
+		form = super(WiretransferOrder, self).get_form(data)
+		form.fields['recipient'].queryset = Player.objects.filter(game=self.player.game).exclude(pk=self.player.pk)
+		form.fields['recipient'].label = u'Joueur'
+		form.fields['amount'].label = u'Montant'
+
+		return form
 
 orders = (WiretransferOrder,)

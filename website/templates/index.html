@@ -3,7 +3,7 @@
 {% block content %}
 <p>Depuis votre penthouse cinq étoiles, planifiez froidement votre ascension en contemplant les trottoirs sur lesquels celles de beaucoup avant vous ont connue une fin brutale.</p>
 
-<p>Le <strong>Corporate Game: Manhattan</strong> est un jeu par navigateur en tour par tour (un tour par jour, huit tours par partie).<br />
+<p>Le <strong>Corporate Game: Manhattan</strong> est un jeu par navigateur en tour par tour (un tour par jour, sept tours par partie).<br />
 Rejoignez la danse pour devenir le roi d'un instant !</p>
 
 {% if players %}
@@ -18,6 +18,11 @@ Rejoignez la danse pour devenir le roi d'un instant !</p>
 
 {% if is_authenticated %}
 <hr />
+<small><a href="{% url 'website.views.index.join_game' %}">Rejoindre une partie</a></small>.
+<hr />
 <small><a href="{% url 'django.contrib.auth.views.logout_then_login' %}">Déconnexion</a></small>.
+{% else %}
+<hr />
+<small><a href="{% url 'django.contrib.auth.views.login' %}">Connexion</a></small>.
 {% endif %}
 {% endblock content %}

@@ -1,13 +1,8 @@
 name: CityGroup
 markets:
-    BTP: 5
-    télécom: 1
-    énergie: 0
-    transport: 2
-datasteal: 10
-sabotage: 10
-extraction: 10
-detection: 90
+    BTP: 8
+    robotique: 2
+    agroalimentaire: 4
 phoenix: 0
 on_first:
     update(ladder[1], 1)

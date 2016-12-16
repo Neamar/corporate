@@ -6,7 +6,7 @@ class FirstLastEffectsTask(ResolutionTask):
 	Apply first and last corporations effects
 	"""
 
-	RESOLUTION_ORDER = 600
+	RESOLUTION_ORDER = 300
 
 	def run(self, game):
 		# We can force the first and last effects using the force_first_last_effects flag
@@ -21,9 +21,6 @@ class FirstLastEffectsTask(ResolutionTask):
 
 		first_corporation.on_first_effect(ladder)
 		ladder = game.get_ladder()
-		new_last_corporation = ladder[-1]
-		# We apply last effect only if no corporation will crash this turn
-		if new_last_corporation.assets > 0:
-			last_corporation.on_last_effect(ladder)
+		last_corporation.on_last_effect(ladder)
 
 tasks = (FirstLastEffectsTask, )

@@ -1,10 +1,67 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.db import models
+from django.forms import widgets
+
 from engine_modules.run.models import RunOrder
-from engine_modules.corporation.models import Corporation, AssetDelta
-from website.widgets import PlainTextField
+from engine_modules.corporation.models import Corporation
 from engine_modules.market.models import CorporationMarket
 from engine.models import Game
+
+from collections import OrderedDict
+import string
+import random
+
+
+class DropdownWidget(widgets.Select):
+	"""
+	Widget to be used in Run classes so that we have a list of lists by Corporation then Market
+	every time we have to chose a CorporationMarket.
+	"""
+
+	def __init__(self, *args, **kwargs):
+		container_id = "None"
+		if 'container_id' in kwargs:
+			container_id = kwargs['container_id']
+			del(kwargs['container_id'])
+
+		super(DropdownWidget, self).__init__(*args, **kwargs)
+		self.data = args[0]
+		self.container_id = container_id
+
+	def render(self, name, value, attrs=None, choices=()):
+
+		# print 'name: {0}'.format(name)
+		# print 'value: {0}'.format(value)
+		# print 'attrs: {0}'.format(attrs)
+		# print 'choices: {0}'.format(choices)
+
+		tmpid = ''
+		for i in range(20):
+			tmpid += random.choice(string.lowercase)
+
+		html = '<div class=hidden id=' + tmpid + '>\n' + super(DropdownWidget, self).render(name, value, attrs, choices=choices) + '\n</div>'
+		html += '<div class="dropdown" id=dd_' + tmpid + '>\n<ul>\n    <li>\n Corporations\n' + ' ' * 8 + '<ul>\n'
+		for key in self.data.keys():
+			html += ' ' * 12 + '<li>\n' + ' ' * 16 + '{0}\n'.format(str(key)) + ' ' * 16 + '<ul>\n'
+			for value in self.data[key]:
+				try:
+					html += u' ' * 20 + u'<li onclick="{0}">\n'.format('dropdown_select(\'' + tmpid + '\', ' + str(value.id) + ');') + u' ' * 24 + u'{0}\n'.format(value.market.name) + u' ' * 20 + u'</li>\n'
+				except Exception, e:
+					print str(e)
+			html += ' ' * 16 + '</ul>\n' + ' ' * 12 + '</li>\n'
+		html += '        </ul>\n    </li>\n</ul>\n</div>'
+
+		return html
+
+	def value_from_datadict(self, data, files, name):
+		# print 'data: {0}'.format(data)
+		# print 'files: {0}'.format(files)
+		# print 'name; {0}'.format(name)
+
+		for i in dict(data.iterlists())['target_corporation_market']:
+			if i != u'':
+				return string.atoi(i)
 
 
 class CorporationRunOrder(RunOrder):
@@ -37,8 +94,17 @@ class CorporationRunOrder(RunOrder):
 	def get_form(self, data=None):
 		form = super(CorporationRunOrder, self).get_form(data)
 		# We get all the corporationMarket of uncrashed corporations
-		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn)
-		form.fields['base_percents'] = PlainTextField(initial="%s%%" % self.BASE_SUCCESS_PROBABILITY)
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn).select_related('market', 'corporation')
+		form.fields['target_corporation_market'].label = u'Cible'
+		corporation_markets = {}
+		for cm in form.fields['target_corporation_market'].queryset.select_related('corporation'):
+			if cm.corporation not in corporation_markets.keys():
+				corporation_markets[cm.corporation] = []
+			corporation_markets[cm.corporation].append(cm)
+
+		choices = [('', '---------')] + [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
+		form.fields['target_corporation_market'].widget = DropdownWidget(corporation_markets, container_id="lol", choices=choices)
+		form.initial['target_corporation_market'] = ''
 
 		return form
 
@@ -58,8 +124,14 @@ class CorporationRunOrderWithStealer(CorporationRunOrder):
 
 	def get_form(self, data=None):
 		form = super(CorporationRunOrderWithStealer, self).get_form(data)
+		form.fields['stealer_corporation'].widget = forms.Select(attrs={'onchange': 'get_targets(this);'})
 		form.fields['stealer_corporation'].queryset = self.player.game.corporation_set.all()
-
+		form.fields['stealer_corporation'].label = u'Bénéficiaire'
+		# We have to reverse the fields to go from more specific to less specific
+		# This ensures that stealer_corporation will be above target_corporation_market
+		items = form.fields.items()
+		items.reverse()
+		form.fields = OrderedDict(items)
 		return form
 
 
@@ -69,10 +141,10 @@ class DataStealOrder(CorporationRunOrderWithStealer):
 	"""
 	ORDER = 500
 
-	title = "Lancer une run de Datasteal"
+	title = "Opé de Datasteal"
 
 	def resolve_successful(self):
-		self.stealer_corporation.update_assets(+1, corporation_market=self.stealer_corporation_market, category=AssetDelta.RUN_DATASTEAL)
+		self.stealer_corporation.update_assets(+1, corporation_market=self.stealer_corporation_market)
 
 		# create a game_event on the stealer
 		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_UP, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, delta=1, corporation=self.stealer_corporation, corporation_market=self.stealer_corporation_market, players=[self.player])
@@ -86,7 +158,7 @@ class DataStealOrder(CorporationRunOrderWithStealer):
 		self.player.game.add_event(event_type=Game.OPE_DATASTEAL_FAIL_DOWN, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Envoyer une équipe voler des données de %s (%s) pour le compte de %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Envoyer une équipe voler des données de %s (%s) pour le compte de %s" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name)
 
 
 class ExtractionOrder(CorporationRunOrderWithStealer):
@@ -94,11 +166,11 @@ class ExtractionOrder(CorporationRunOrderWithStealer):
 	Order for Extraction runs
 	"""
 	ORDER = 700
-	title = "Lancer une run d'Extraction"
+	title = "Opé d'Extraction"
 
 	def resolve_successful(self):
-		self.target_corporation.update_assets(-1, corporation_market=self.target_corporation_market, category=AssetDelta.RUN_EXTRACTION)
-		self.stealer_corporation.update_assets(1, corporation_market=self.stealer_corporation_market, category=AssetDelta.RUN_EXTRACTION)
+		self.target_corporation.update_assets(-1, corporation_market=self.target_corporation_market)
+		self.stealer_corporation.update_assets(1, corporation_market=self.stealer_corporation_market)
 
 		# create a game_event on the stealer
 		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_UP, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, delta=1, corporation=self.stealer_corporation, corporation_market=self.stealer_corporation_market, players=[self.player])
@@ -112,7 +184,7 @@ class ExtractionOrder(CorporationRunOrderWithStealer):
 		self.player.game.add_event(event_type=Game.OPE_EXTRACTION_FAIL_DOWN, data={"player": self.player.name, "market": self.stealer_corporation_market.market.name, "corporation_target": self.target_corporation.base_corporation.name, "corporation_stealer": self.stealer_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Réaliser une extraction de %s (%s) vers %s (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name, self.get_raw_probability())
+		return u"Réaliser une extraction de %s (%s) vers %s" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.stealer_corporation.base_corporation.name)
 
 
 class SabotageOrder(CorporationRunOrder):
@@ -120,10 +192,10 @@ class SabotageOrder(CorporationRunOrder):
 	Order for Sabotage runs
 	"""
 	ORDER = 600
-	title = "Lancer une run de Sabotage"
+	title = "Opé de Sabotage"
 
 	def resolve_successful(self):
-		self.target_corporation.update_assets(-2, corporation_market=self.target_corporation_market, category=AssetDelta.RUN_SABOTAGE)
+		self.target_corporation.update_assets(-2, corporation_market=self.target_corporation_market)
 
 		# create a game event on the target
 		self.player.game.add_event(event_type=Game.OPE_SABOTAGE, delta=-2, data={"player": self.player.name, "market": self.target_corporation_market.market.name, "corporation": self.target_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
@@ -133,12 +205,15 @@ class SabotageOrder(CorporationRunOrder):
 		self.player.game.add_event(event_type=Game.OPE_SABOTAGE_FAIL, data={"player": self.player.name, "market": self.target_corporation_market.market.name, "corporation": self.target_corporation.base_corporation.name, "chances": self.get_raw_probability()}, corporation=self.target_corporation, corporation_market=self.target_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s) (%s%%)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name, self.get_raw_probability())
+		return u"Envoyer une équipe saper les opérations et les résultats de %s (%s)" % (self.target_corporation.base_corporation.name, self.target_corporation_market.market.name)
 
 	def get_form(self, data=None):
 		form = super(SabotageOrder, self).get_form(data)
 		# we can't make a sabotage on a negative or null corporationMarket
-		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn, value__gt=0)
+		form.fields['target_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, corporation__crash_turn__isnull=True, turn=self.player.game.current_turn, value__gt=0).select_related('market', 'corporation')
+		choices = [('', '---------')] + [(i.id, str(i)) for i in form.fields['target_corporation_market'].queryset]
+		form.fields['target_corporation_market'].widget = forms.Select(choices=choices)
+		form.initial['target_corporation_market'] = ''
 
 		return form
 
@@ -148,7 +223,7 @@ class ProtectionOrder(RunOrder):
 	Order for Protection runs
 	"""
 	ORDER = 850
-	title = "Lancer une run de Protection"
+	title = "Opé de Protection"
 	MAX_PERCENTS = 40
 
 	protected_corporation_market = models.ForeignKey(CorporationMarket, related_name="protectors")
@@ -168,11 +243,17 @@ class ProtectionOrder(RunOrder):
 		self.player.game.add_event(event_type=Game.OPE_PROTECTION, data={"player": self.player.name, "market": self.protected_corporation_market.market.name, "corporation": self.protected_corporation.base_corporation.name}, corporation=self.protected_corporation, corporation_market=self.protected_corporation_market, players=[self.player])
 
 	def description(self):
-		return u"Envoyer une équipe protéger %s (%s%%)" % (self.protected_corporation.base_corporation.name, self.get_success_probability())
+		return u"Envoyer une équipe protéger %s (%s)" % (self.protected_corporation.base_corporation.name, self.protected_corporation_market.market.name)
+
+	def custom_description(self):
+		return ""
 
 	def get_form(self, data=None):
 		form = super(ProtectionOrder, self).get_form(data)
-		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn)
+		form.fields['protected_corporation_market'].queryset = CorporationMarket.objects.filter(corporation__game=self.player.game, turn=self.player.game.current_turn).select_related('market', 'corporation')
+		form.fields['protected_corporation_market'].label = u'Cible'
+		# Remove the additional percent field
+		form.fields.pop('additional_percents')
 
 		return form
 

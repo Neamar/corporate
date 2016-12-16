@@ -4,7 +4,6 @@ from engine.models import Game, Player, Order
 
 class PlayerInline(admin.TabularInline):
 	model = Player
-	exclude = ('secrets',)
 	extra = 1
 
 
@@ -29,7 +28,7 @@ admin.site.register(Player, PlayerAdmin)
 
 
 class OrderAdmin(admin.ModelAdmin):
-	list_display = ('type', 'player', 'turn')
+	list_display = ('type', 'player', 'cost', 'turn')
 	readonly_fields = ('turn',)
 	list_filter = ('player__game',)
 	ordering = ('player',)

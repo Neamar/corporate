@@ -7,6 +7,9 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		super(OffensiveRunTaskTest, self).setUp()
 
+		# We disable the test that stop you from start more than one run on the same target
+		self.g.allow_several_runs_on_one_target = True
+
 		self.so = SabotageOrder(
 			player=self.p,
 			target_corporation_market=self.c.get_random_corporation_market(),
@@ -20,8 +23,6 @@ class OffensiveRunTaskTest(EngineTestCase):
 		self.p.money = self.INITIAL_MONEY
 		self.p.save()
 
-		self.so_initial_extraction = self.so.target_corporation.base_corporation.sabotage
-
 	def test_offensive_run_task(self):
 		"""
 		Check the task solves the run
@@ -33,8 +34,6 @@ class OffensiveRunTaskTest(EngineTestCase):
 
 		self.g.resolve_current_turn()
 		self.assertEqual(self.reload(self.so.target_corporation).assets, begin_sabotaged_assets - 2)
-
-		self.so.target_corporation.base_corporation.sabotage = self.so_initial_extraction
 
 	def test_offensive_resolve_order(self):
 		"""

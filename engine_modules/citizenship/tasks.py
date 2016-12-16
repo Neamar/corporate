@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from engine.tasks import InitTask, OrderResolutionTask
+from engine.tasks import ResolutionTask, OrderResolutionTask
 from engine_modules.citizenship.models import Citizenship, CitizenshipOrder
 
 
-class CreateCitizenshipTask(InitTask):
+class CreateCitizenshipTask(ResolutionTask):
 	"""
 	Create the Citizenship object for the turn
 	"""
@@ -22,7 +22,7 @@ class CitizenshipTask(OrderResolutionTask):
 	"""
 	Update players citizenships
 	"""
-	RESOLUTION_ORDER = 900
+	RESOLUTION_ORDER = 1600
 	ORDER_TYPE = CitizenshipOrder
 
 tasks = (CreateCitizenshipTask, CitizenshipTask,)

@@ -1,0 +1,21 @@
+{% extends "template.html" %}
+
+{% block content %}
+<p>Vous pouvez ne pas mettre de mot de passe sur la partie pour qu'elle soit ouverte à tous</p>
+<div>
+<form method="post" action="{% url "website.views.index.create_game" %}">
+	<table>
+	{{ form.as_table }}
+	<tr class="submit-order">
+		<td colspan="2">
+			<div class="button-content">
+				<div class="cornered-top"></div>
+				<input type="submit" value="Créer la partie" />
+				<div class="cornered-bottom"></div>
+			</div>
+		</td>
+	</tr>
+	</table>
+</form>
+</div>
+{% endblock content %}

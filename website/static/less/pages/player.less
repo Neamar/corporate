@@ -1,0 +1,170 @@
+.player-content {
+	h1 {
+		background: url("/static/img/content/player-h1.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+		width: 346px;
+		height: 49px;
+		margin: auto;
+		position: relative;
+		z-index: 5;
+		text-align: center;
+		text-transform: uppercase;
+		font-size: 28px;
+		font-family: 'Oswald', sans-serif;
+		text-shadow: -1px 1px 0px rgba(255, 255, 255, 0.1), 1px -1px 8px rgba(255, 255, 255, 0.5);
+
+		span {
+			white-space: nowrap;
+		  	overflow: hidden;
+		  	display: block;
+		  	text-overflow: ellipsis;
+		  	width: 280px;
+		  	margin: auto;
+		  	text-indent: 10px;
+		}
+
+		img {
+			position: absolute;
+			left: -50px;
+			top: -22px;
+			border-radius: 50%;
+		}
+	}//h1
+
+	h2 {
+		text-transform: uppercase;
+		font-size: 15px;
+		margin-top: 30px;
+
+		&.h2-player-dinc {
+			margin-top: 45px;
+		}
+
+		sup {
+			font-size: 10px;
+		}
+	}
+
+	.dinc-player-content {
+    display: table;
+    white-space: nowrap;
+    overflow: hidden;
+
+    &:before, &:after {
+      border-top: 1px solid #333;
+      content: '';
+      display: table-cell;
+      position: relative;
+      top: 39px;
+      width: 39.5%;
+    }
+    &:before { right: 5%; }
+    &:after { left: 5%; }
+	}
+
+	.turn-info-content {
+		text-align: center;
+		overflow: hidden;
+		width: 255px;
+		margin: auto;
+
+		.ic-value, .money-value, .share-amount {
+			display: inline-block;
+			margin-right: 30px;
+			float: left;
+		}
+		.ic-value {
+			background: url("/static/img/content/player-ic.png") no-repeat;
+			width: 49px;
+			height: 49px;
+			line-height: 49px;
+			font-weight: bold;
+			font-size: 22px;
+			text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.7);
+			margin-top: 10px;
+		}
+		.money-value {
+			background: url("/static/img/content/player-money.png") no-repeat;
+			width: 58px;
+			height: 62px;
+			line-height: 85px;
+			font-weight: bold;
+			text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.7);
+		}
+		.share-amount {
+			background: url("/static/img/content/player-spec.png") no-repeat scroll 1px 0;
+			width: 79px;
+			height: 63px;
+			font-size: 18px;
+			color: #fff;
+			font-weight: bold;
+			line-height: 92px;
+			text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.9);
+			padding-right: 1px;	
+			margin-right: 0;
+		}
+	}//turn-info-content
+
+	.corporation {
+		overflow: hidden;
+		list-style-type: none;
+		padding: 10px 0;
+		padding-left: 10px;
+		margin-bottom: 10px;
+
+		li {
+			width: 60px;
+			height: 60px;
+			background-color: #a6a6a6;
+			float: left;
+			margin-right: 30px;
+			margin-bottom: 15px;
+
+			a {
+			display: block;
+			height: inherit;
+			width: inherit;
+			position: relative;
+
+				.share-value {
+					border-radius: 50%;
+					width: 25px;
+					height: 25px;
+					background-color: #7c7a7a;
+					position: absolute;
+					display: block;
+					color: #fff;
+					right: -5px;
+					bottom: -5px;
+					text-align: center;
+					line-height: 24px;
+					font-weight: bold;
+
+					&:before {
+						position: absolute;
+						content: "";
+						background-color: rgba(255, 255, 255, 0.7);
+						border-radius: 50%;
+						left: 1px;
+						top: 1px;
+						width: 25px;
+						height: 25px;
+						z-index: -1;
+					}
+				}
+
+				.cityzenship-img {
+					width: 25px;
+					height: 25px;
+					position: absolute;
+					display: block;
+					left: -7px;
+					top: -10px;
+				}
+			}
+		}//li
+	}
+
+	.player-story {
+		font-size: 13px;
+	}
+}

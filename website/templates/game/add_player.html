@@ -1,0 +1,34 @@
+{% extends "template.html" %}
+
+{% block content %}
+{% if player == None %}
+<p>Créer un personnage pour rejoindre la partie : </p>
+{% else %}
+<div class="player-content">
+<h1><img title="" src="{{ player.avatar.url }}" width="90" height="90" /><span>{{ player.name }}</span></h1>
+<br/>
+{% endif %}
+
+<hr />
+<p>Attention : le nom, le background et l'avatar ne sont plus modifiables une fois la partie commencée</p>
+<br\>
+<div>
+<form method="post" enctype="multipart/form-data" action="{% url "website.views.data.add_player" game_id=game_id %}">
+	<table>
+	{{ form.as_table }}
+	<tr class="submit-order">
+		<td colspan="2">
+			<div class="button-content">
+				<div class="cornered-top"></div>
+				<input type="submit" value="Sauvegarder" />
+				<div class="cornered-bottom"></div>
+			</div>
+		</td>
+	</tr>
+	</table>
+</form>
+</div>
+<hr />
+<p>Si vous choisissez de commencer avec une citoyenneté corporatiste, vous devrez forcément acheter une part dans cette corpo au tour 1. Par contre prendre cette citonetteté vous coute 0 points de victoire puisque le jeu n'a pas encore commencé.</p>
+<p>La liste des backgrounds est <a href="/docs/backgrounds">décrite ici</a></p>
+{% endblock content %}

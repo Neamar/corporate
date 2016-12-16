@@ -1,16 +1,44 @@
 # -*- coding: utf-8 -*-
 import json
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
 from django.template import Template, Context
 from engine.models import Game
-from utils.read_markdown import read_markdown
+from utils.read_markdown import read_file_from_path, parse_markdown
+
+
+class LogManager(models.Manager):
+	def for_player(self, player, asking_player, turn):
+		# turn=now AND players__player=target AND personal_event AND (players__player=myself OR public)
+		if asking_player.game.ended:
+			return Log.objects.filter(turn=turn - 1, hide_for_players=False).filter(concernedplayer__player=player, concernedplayer__personal=True).distinct()
+		else:
+			return Log.objects.filter(turn=turn - 1, hide_for_players=False).filter(concernedplayer__player=player, concernedplayer__personal=True).filter(Q(players=asking_player) | Q(public=True)).distinct()
+
+	def for_corporation_market(self, corporation_market, asking_player):
+		if asking_player.game.ended:
+			return Log.objects.filter(corporation_market=corporation_market).distinct()
+		else:
+			return Log.objects.filter(corporation_market=corporation_market).filter(Q(players=asking_player) | Q(public=True)).distinct()
+
+	def for_corporation(self, corporation, asking_player, turn):
+		if asking_player.game.ended:
+			return Log.objects.filter(turn=turn - 1).filter(corporation=corporation).distinct()
+		else:
+			return Log.objects.filter(turn=turn - 1).filter(corporation=corporation).filter(Q(players=asking_player) | Q(public=True)).distinct()
+
+	def for_delta(self, corporation, turn):
+		# retreive all events to calculate delta between previous turn t-1 and turn t
+		return Log.objects.filter(turn=turn - 1).filter(corporation=corporation).distinct()
 
 
 class Log(models.Model):
 	"""
 	We log every action in the game in a single table
 	"""
+	objects = LogManager()
+
 	turn = models.PositiveSmallIntegerField()
 	game = models.ForeignKey('engine.Game')
 
@@ -79,7 +107,9 @@ class Log(models.Model):
 		Game.EFFECT_SECURITY_DOWN,
 		Game.VOTE_CONSOLIDATION,
 		Game.VOTE_SECURITY,
-		Game.VOTE_CONTRAT]
+		Game.VOTE_CONTRAT,
+		Game.BACKGROUND,
+		Game.BACKGROUND_REMINDER]
 
 	CONTEXT_CORPORATION = "corporation"
 	CONTEXT_CORPORATION_MARKET = "corporation_market"
@@ -89,20 +119,30 @@ class Log(models.Model):
 		"""
 		Return a formatted string with the Log values, according to is_personal (are we displaying this for the player who triggered the action ?) and display_context (is the reader already aware of the corporation? The corporationmarket?)
 		"""
+
 		if is_personal:
 			path_personal = 'personal'
 		else:
 			path_personal = 'not_personal'
+
+		# Read file data
 		file_name = self.event_type
-		context = Context(json.loads(self.data))
 		path = '%s/logs/templates/logs/%s/%s/%s.md' % (settings.BASE_DIR, path_personal, display_context, file_name.lower())
-		raw_template, _ = read_markdown(path)
+		raw_template = read_file_from_path(path)
+
+		# Parse template
+		context = Context(json.loads(self.data))
 		template = Template(raw_template)
 		text = template.render(context)
-		return text
+
+		html, _ = parse_markdown(text)
+		return html
 
 
 class ConcernedPlayer(models.Model):
+	class Meta:
+		unique_together = (("player", "log"),)
+
 	player = models.ForeignKey('engine.Player')
 	log = models.ForeignKey('logs.Log')
 	# When an information run targetting a player is started, we have to gather every Log connected to

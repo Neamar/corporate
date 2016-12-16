@@ -9,7 +9,7 @@ from engine_modules.speculation.models import CorporationSpeculationOrder
 @receiver(validate_order, sender=CorporationSpeculationOrder)
 def limit_speculation_amount_by_influence(sender, instance, **kwargs):
 	"""
-	Total speculation amount can't be more than {{influence}} * MAX_AMOUNT_SPECULATION ¥ per turn
+	Total speculation amount can't be more than {{influence}} * MAX_AMOUNT_SPECULATION ₵ per turn
 	"""
 	if instance.investment is None:
 		return
@@ -18,7 +18,7 @@ def limit_speculation_amount_by_influence(sender, instance, **kwargs):
 	current_speculation_amount = sum([speculation.investment for speculation in current_speculations])
 
 	if instance.investment + current_speculation_amount > instance.player.influence.level * sender.MAX_AMOUNT_SPECULATION:
-		raise OrderNotAvailable("Pas assez d'influence pour spéculer un tel montant (montant max : %s)." % (instance.player.influence.level * instance.MAX_AMOUNT_SPECULATION - instance.investment))
+		raise OrderNotAvailable("Pas assez d'influence pour spéculer un tel montant (montant max : %s)." % (instance.player.influence.level * instance.MAX_AMOUNT_SPECULATION))
 
 
 @receiver(post_create, sender=CorporationSpeculationOrder)

@@ -1,0 +1,19 @@
+{% load intspace %}
+
+<div class="pod pod-current-player odd">
+	<div class="pod-current-player-ic">
+		<em class="current-info current-ic">Influence Corpo</em>
+		<span class="icon-ic icon-large">IC</span>
+		<span class="ic-value">{{ ic }}</span>
+	</div>
+
+	<div class="pod-current-player-money">
+		<em class="current-info current-money">Argent</em>
+		<span class="icon-money icon-large"></span>
+		{% if display_turn == game.current_turn%}
+			<span class="money-value">{{ money|intspace }}&nbsp;k</span>
+		{% else %}
+			<span class="money-value">&mdash;</span>
+		{% endif %}
+	</div>
+</div>

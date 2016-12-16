@@ -3,7 +3,6 @@
 from django.db import models
 
 from engine.models import Game
-from engine_modules.corporation.models import AssetDelta
 
 
 class Market(models.Model):
@@ -38,10 +37,9 @@ class CorporationMarket(models.Model):
 	# whereas the one with turn n-1 has the values at beginning of turn.
 	# This is why we have default turn 0 and we need to initialize both for turn 0 and 1
 	turn = models.PositiveSmallIntegerField(default=0)
-	# The meaning of 'value' and 'bubble_value' changed: value is now the market assets + the bubble modifier.
-	# bubble_value is only here as a token for the bubble: 0 -> no bubble, 1 -> domination, -1 -> 'dry' bubble
-	# This should greatly simplify the DB requests for the CorporationMarkets that have a bubble
+	# value is the market assets + the bubble modifier.
 	value = models.SmallIntegerField()
+	# bubble_value is only here as a token for the bubble: 0 -> no bubble, 1 -> domination, -1 -> 'dry' bubble
 	# bubble_value should only be modified through the update_bubble() method
 	bubble_value = models.SmallIntegerField(choices=BUBBLE_VALUES, default=NO_BUBBLE)
 
@@ -49,19 +47,19 @@ class CorporationMarket(models.Model):
 		"""
 		update the bubble_value field and keep the value field consistent
 		"""
+		# We have to reload the corporation_market to have the object un to date
+		corporation_market = CorporationMarket.objects.get(pk=self.pk)
 
-		previous_bubble_value = self.bubble_value
+		previous_bubble_value = corporation_market.bubble_value
 		# We save the bubble value on the corporation market bubble_value field with no impact on the value field
-		self.bubble_value = value
-		self.save()
+		corporation_market.bubble_value = value
+		corporation_market.save()
 
 		delta = value - previous_bubble_value
 
 		# On ajoute la bulle sur les actifs de la corpo
 		self.corporation.update_modifier(delta)
-
-		self.corporation.assetdelta_set.create(category=AssetDelta.BUBBLE, delta=delta, turn=self.turn)
 		return delta
 
 	def __unicode__(self):
-		return u"%s de %s" % (self.market, self.corporation)
+		return u"%s , marché %s (%s)" % (self.corporation.base_corporation.name, self.market.name, self.value)

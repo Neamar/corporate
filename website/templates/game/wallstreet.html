@@ -2,42 +2,41 @@
 {% load get_item %}
 
 {% block title %}Wallstreet{% endblock %}
+{% block body %}corporate-wallstreet{% endblock %}
 {% block h1 %}Wallstreet{% endblock %}
 
 {% block content %}
-{% include "_pager.html" with base_url="website.views.data.wallstreet" base_title="Consulter la bourse du tour" %}
 
+{% for entry in ranking %}
+<section class="corporation-row">
+	<h2>
+		<span class="corporation-index" title="classement sur nombre d'actifs">{{ forloop.counter }}</span>
+		<a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=entry.corporation.base_corporation.slug %}" class="corporation-name" title="{{ entry.corporation.base_corporation.description }}"><img src="{{ STATIC_URL }}{{ city }}/corporations/{{ entry.corporation.base_corporation.slug}}.png"/>{{ entry.corporation.base_corporation.slug }}</a>
+		{% if entry.corporation.crash_turn == turn|add:-1 %}
+			CRASHED
+		{% endif %}
+		<span class="current-assets" title="actifs corpo = somme actifs des marchés + nombre de marchés en domination - nombre de marchés en perte">{{ entry.assets }}</span>
+	</h2>
 
-<table class="prop_table slanted_head">
-<thead>
-<tr>
-	<th></th>
-	<th><div><span>Actifs</span></div></th>
-{% if corporations.0.last_assets %}
-	<th title="Actifs du tour précédent"><div><span>Précédents</span></div></th>
-{% endif %}
-{% for category in delta_categories.values %}
-	<th><div><span>{{ category }}</span></div></th>
-{% endfor %}
-</tr>
-</thead>
-<tbody>
-{% for corporation in corporations %}
-<tr>
-	<td><a href="{% url "website.views.data.corporation" game_id=game.pk corporation_slug=corporation.base_corporation_slug %}">{{ corporation.base_corporation.slug|title }}</a></td>
-	<td class="important"><strong style="color:{% if corporation.current_assets > corporation.last_assets %}green{% elif corporation.current_assets < corporation.last_assets %}red{% endif %}">{{ corporation.current_assets }}</strong></td>
-{% if corporation.last_assets %}
-	<td>{{ corporation.last_assets }}</td>
-{% endif %}
-{% for category in delta_categories.keys %}
-    <td>{{ corporation|get_item:category }}</td>
-{% endfor %}
-</tr>
-{% endfor %}
-</tbody>
-</table>
+	<div class="icon-content">
+		{% if entry.delta != 0 %}
+		<span class="assets-delta {% if entry.delta >= 0 %}positive{% else %}negative{% endif %}" title="évolution par rapport au tour précédent">
+			<i>{{ entry.delta }}</i>
+		</span>
+		{% endif %}
+		{% include "logs/corporation.html" with events=entry.events %}
+	</div>
 
-<div id="chart_div" style="width: 99%; height: 300px; margin:15px auto;"></div>
+	<ul class="corporation-markets">
+	{% for corporation_market in entry.corporation_market %}
+		<li class="corporation-market {% if corporation_market.bubble_value == -1 %}negative{% elif corporation_market.bubble_value == 1 %}positive{% else %}white{% endif %}"  title="{{ corporation_market.market.name|capfirst }}">
+			<svg role="img" class="svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#{{ corporation_market.market.name|lower }}"></use></svg>
+			<span class="corporation-market-value">{{ corporation_market.value }} </span>
+		</li>
+	{% endfor %}
+	</ul>
+</section>
+{% endfor %}
 
 {% endblock content %}
 
@@ -78,5 +77,4 @@ function drawChart() {
 window.onresize = drawChart;
 </script>
 {% endblock scripts %}
-
 

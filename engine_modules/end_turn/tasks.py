@@ -7,7 +7,7 @@ class MoneyInformationTask(ResolutionTask):
 	"""
 	Inform players for their money next turn
 	"""
-	RESOLUTION_ORDER = 1100
+	RESOLUTION_ORDER = 1900
 
 	def run(self, game):
 		"""

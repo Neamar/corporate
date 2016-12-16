@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from engine.tasks import InitTask, OrderResolutionTask
+from engine.tasks import ResolutionTask, OrderResolutionTask
 from engine_modules.influence.models import Influence, BuyInfluenceOrder
 
 
-class CreateInfluenceTask(InitTask):
+class CreateInfluenceTask(ResolutionTask):
 	"""
 	Create the Influence object for the turn
 	"""
@@ -23,7 +23,7 @@ class BuyInfluenceTask(OrderResolutionTask):
 	"""
 	Buy new Influence level
 	"""
-	RESOLUTION_ORDER = 1000
+	RESOLUTION_ORDER = 1700
 	ORDER_TYPE = BuyInfluenceOrder
 
 

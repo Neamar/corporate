@@ -1,16 +1,28 @@
+{% load staticfiles %}
+{% load compress %}
+{% load display_pod %}
+{% load make_link_active %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta name="viewport" content="width=device-width; initial-scale=1.0">
-	<link href='//fonts.googleapis.com/css?family=Audiowide|Syncopate' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{% compress css %}
+	<link rel="stylesheet" type="text/less" media="all" href="{% static 'style.less' %}" />
+	<link rel="stylesheet" type="text/css" media="all" href="{% static 'vendor/tipped.css' %}" />
+	<link rel="stylesheet" type="text/less" media="all" href="{% static 'style.less' %}" />
+	{% endcompress %}
 	<link rel="icon" href="{% block favicon %}{{ STATIC_URL }}favicon.gif{% endblock %}" type="image/x-icon" />
 
 	{% block head %}{% endblock %}
 	<title>{% block title %}Corporate game{% endblock %}</title>
+	<link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Oswald:400,700,300' rel='stylesheet' type='text/css'>
 </head>
 
-<body>
+<body class="{% block body %}corporate{% endblock %}">
+<h1 class="main-logo"><a href="/">Corporate Game</a></h1>
+<div class="grid-container main-container">
+{% comment %}
 	<div id="wrapper">
 		<div id="sidebar">
 			<ul class="general">
@@ -42,33 +54,102 @@
 			{% endif %}
 			{% endif %}
 		</div>
+{% endcomment %}
+	<section class="content-container">
+		<ul class="menu">
+		<li><a href="{% url 'website.views.index.index' %}">Accueil</a></li>
+		{% if game.id != None %}
+			<li><a class={% make_link_active "orders" %} href="{% url 'website.views.orders.orders' game_id=game.id %}">Ordres</a></li>
+			<li><a class={% make_link_active "wallstreet" %} href="{% url 'website.views.data.wallstreet' game_id=game.id %}">Wallstreet</a></li>
+			<li><a class={% make_link_active "shares" %} href="{% url 'website.views.data.shares' game_id=game.id %}">Parts</a></li>
+			<li><a class={% make_link_active "game_panel" %} href="{% url 'website.views.data.game_panel' game_id=game.id %}">Partie</a></li>
+		{% elif gameid != None %}
+			<li><a class={% make_link_active "orders" %} href="{% url 'website.views.orders.orders' game_id=gameid %}">Ordres</a></li>
+			<li><a class={% make_link_active "wallstreet" %} href="{% url 'website.views.data.wallstreet' game_id=gameid %}">Wallstreet</a></li>
+			<li><a class={% make_link_active "shares" %} href="{% url 'website.views.data.shares' game_id=gameid %}">Parts</a></li>
+		{% endif %}
+			<li class="rules"><a title="Les règles du jeu" class="tooltip" href="{% url 'docs.views.index' page='' %}"><svg role="img" class="svg-rules svg--medium svg--white"><use xlink:href="/static/img/sprite.svg#rules"></use></svg><span class="visually-hidden">Les règles du jeu</span></a></li>
+		</ul>
 
-
-		<div id="content">
-			<h1>{% block h1 %}Corporate game{% endblock %}</h1>
+		<article class="content">
+			<h1 class="main-h1-title">{% block h1 %}{% endblock %}</h1>
 
 			{% block content %}{% endblock %}
+		</article>
+	</section>
+
+	<aside class="sidebar" role="sidebar">
+		<div class="content-sidebar">
+		<div class="current-player">
+			<div class="player">
+				<span class="player-avatar">
+					{% if player %}
+						<img title="Avatar de {{ player.name }}" src="{{ player.avatar.thumbnail.url }}" class="tooltip"/>
+					{% endif %}
+				</span>
+				<span class="player-name">
+				{% if player %}
+					<a href="{% url 'website.views.data.add_player' game_id=player.game_id %}" title="Modifier votre personnage">{{ player.name }}</a>
+				{% elif is_authenticated %}
+					<a href="{% url 'website.views.index.index' %}">Sélectionnez une partie&hellip;</a>
+				{% else %}
+					<a href="{% url 'django.contrib.auth.views.login' %}">Connexion</a>
+				{% endif %}
+				</span>
+			</div>
+			<span class="icon-logout icon-medium">
+			</span>
 		</div>
 
-		<div id="end">
-			{% block end %}
-			<a href="#">&uarr;</a>
-			{% endblock %}
-		</div>
+		{% for pod in pods %}
+			{% display_pod pod %}
+		{% endfor %}
 
-		{% block scripts %}{% endblock %}
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	</aside>
+</div>
 
-			ga('create', 'UA-4257957-8', 'papiel.fr');
-			ga('send', 'pageview');
+<script type="text/javascript" src="{% static 'vendor/jquery-2.1.4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tipped.js' %}"></script>
+<script type="text/javascript">
+$( document ).ready(function() {
+    $( ".corporation-row" ).each(function( index ) {
+      
+      var $that = $(this);
 
-			var _gaq = _gaq || [];
-			_gaq.push(['_setCustomVar', 1, 'Username', '{{ user.username }}']);
-		</script>
-	</div>
+	  if (index === 0) { 
+        var heightEven = $that.height() * 2 / 3;
+        $that.next().css( "margin-top", heightEven );
+      }
+      else if (index % 2 === 0) { 
+        var heightEven = $that.height() / 3;
+        $that.next().css( "margin-top", heightEven );
+      }
+      else { 
+	    var heightOdd = $that.height() / 3 * ( - 1 );
+	    $that.next().css( "margin-top", heightOdd );
+      }
+    });
+
+
+    $('.dropdown').on('click', 'ul > li > ul > li > ul > li', function () {
+    	var text = $(this).text()
+    	$('.dropdown > ul > li span').text(text);
+    });
+});
+</script>
+<script type='text/javascript'>
+$(function() {
+  Tipped.create('svg, .tooltip');
+});
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		window.onload = function() {
+		$("#id_content").focus();
+		$("#chatbox").prop({ scrollTop: $("#chatbox").prop("scrollHeight") });
+		//  setting focus to a textbox which added to template page direcltly using html tag the focus() method works well
+		};
+	});
+</script>
 </body>
 </html>
