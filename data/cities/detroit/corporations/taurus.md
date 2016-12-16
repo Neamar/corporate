@@ -1,9 +1,9 @@
 name: Taurus Industries
 markets:
-    transport: 4
-    militaire: 4
-    aérospatiale: 1
-    BTP: 2
+    transport: 8
+    militaire: 8
+    aérospatiale: 2
+    BTP: 4
 phoenix: 1
 on_first:
     update(ladder[1], -1)

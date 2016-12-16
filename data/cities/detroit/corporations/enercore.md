@@ -1,7 +1,7 @@
 name: EnerCore
 markets:
-    BTP: 3
-    énergie: 6
+    BTP: 6
+    énergie: 12
     médias: 0
 phoenix: 0
 on_first:

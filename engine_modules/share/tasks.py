@@ -15,7 +15,7 @@ class DividendTask(ResolutionTask):
 	"""
 	It's time to get money!
 	"""
-	SHARE_BASE_VALUE = 50
+	SHARE_BASE_VALUE = 25
 	FIRST_BONUS = 1.5
 	# To avoid double penalty and to simplfy the game, we removed last bonus
 	LAST_BONUS = 1

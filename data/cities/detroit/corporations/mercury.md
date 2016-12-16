@@ -1,9 +1,9 @@
 name: Mercury
 markets:
-    télécom: 5
-    BTP: 2
-    pharmaceutique: 2
-    aérospatiale: 2
+    télécom: 10
+    BTP: 4
+    pharmaceutique: 4
+    aérospatiale: 4
 phoenix: 0
 on_first:
     update('enercore', 1)

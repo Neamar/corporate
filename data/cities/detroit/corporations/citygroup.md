@@ -1,8 +1,8 @@
 name: CityGroup
 markets:
-    BTP: 4
-    robotique: 1
-    agroalimentaire: 2
+    BTP: 8
+    robotique: 2
+    agroalimentaire: 4
 phoenix: 0
 on_first:
     update(ladder[1], 1)

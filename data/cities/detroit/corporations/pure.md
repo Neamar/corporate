@@ -1,9 +1,9 @@
 name: Pure
 markets:
-    énergie: 2
-    agroalimentaire: 3
-    pharmaceutique: 3
-    transport: 3
+    énergie: 4
+    agroalimentaire: 6
+    pharmaceutique: 6
+    transport: 6
 phoenix: 0
 on_first:
     update('impulse', 1)

@@ -1,9 +1,9 @@
 name: Iris
 markets:
-    médias: 3
-    robotique: 2
-    transport: 3
-    télécom: 3
+    médias: 6
+    robotique: 4
+    transport: 6
+    télécom: 6
 phoenix: 0
 on_first:
     update('citygroup', 1)

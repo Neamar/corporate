@@ -23,9 +23,9 @@ class BuyShareOrder(Order):
 	"""
 	title = "Acheter une part dans une corporation"
 	ORDER = 100
-	BASE_COST = 100
-	FIRST_COST = 125
-	FIRST_AND_CITIZEN_COST = 100
+	BASE_COST = 50
+	FIRST_COST = 60
+	FIRST_AND_CITIZEN_COST = 50
 
 	corporation = models.ForeignKey(Corporation)
 

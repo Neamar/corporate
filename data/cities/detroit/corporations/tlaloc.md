@@ -1,8 +1,8 @@
 name: Tlaloc
 markets:
-    aérospatiale: 2
-    médias: 3
-    agroalimentaire: 5
+    aérospatiale: 4
+    médias: 6
+    agroalimentaire: 10
 phoenix: 0
 on_first:
     update('tlaloc', 1)
