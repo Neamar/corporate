@@ -2,7 +2,7 @@
 from django.db import models
 from django.db.models import Q
 from django.forms import ModelForm, Textarea
-
+from engine.models import Player
 
 class MessageManager(models.Manager):
 	def get_discussion(self, receiver, sender):
@@ -16,19 +16,17 @@ class MessageManager(models.Manager):
 				message.save()
 		return messages
 
-
 class Message(models.Model):
 	"""
 	Messages from a player to an other player
 	"""
 	objects = MessageManager()
 
-	sender = models.ForeignKey('engine.Player', related_name='sender')
-	receiver = models.ForeignKey('engine.Player', related_name='receiver')
+	sender = models.ForeignKey(Player, related_name='sender')
+	receiver = models.ForeignKey(Player, related_name='receiver')
 	content = models.CharField(max_length=300)
 	read = models.BooleanField(default=False)
 	creation = models.DateTimeField(auto_now_add=True)
-
 
 class MessageForm(ModelForm):
 	class Meta:
