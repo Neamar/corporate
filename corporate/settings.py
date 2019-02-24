@@ -184,22 +184,3 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
 
     # Compress less file on deployment
     COMPRESS_OFFLINE = True
-
-
-if "OPBEAT_ORGANIZATION_ID" in os.environ:
-    INSTALLED_APPS += (
-        "opbeat.contrib.django",
-    )
-    OPBEAT = {
-        "ORGANIZATION_ID": os.environ['OPBEAT_ORGANIZATION_ID'],
-        "APP_ID": os.environ['OPBEAT_APP_ID'],
-        "SECRET_TOKEN": os.environ['OPBEAT_SECRET_TOKEN'],
-    }
-    MIDDLEWARE_CLASSES += (
-        'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
-    )
-
-if "CIRCLECI" in os.environ:
-    # We're running on circleci.com, toggle XML test output
-    TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
-    TEST_OUTPUT_DIR = os.environ['CIRCLE_TEST_REPORTS']
