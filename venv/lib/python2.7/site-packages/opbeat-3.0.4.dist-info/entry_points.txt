@@ -1,0 +1,3 @@
+[paste.filter_app_factory]
+opbeat = opbeat.contrib.paste:opbeat_filter_factory
+

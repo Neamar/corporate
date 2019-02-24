@@ -37,7 +37,7 @@ jobs:
           name: linting
           command: |
             . venv/bin/activate
-            pep8 .
+            pep8 --exclude='venv' .
             flake8 --exclude=.pyenv,nvm,virtualenvs,migrations,venv .
 
       - store_artifacts:

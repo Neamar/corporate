@@ -1,0 +1,175 @@
+"""
+opbeat.contrib.flask
+~~~~~~~~~~~~~~~~~~~
+
+:copyright: (c) 2011-2012 Opbeat
+
+Large portions are
+:copyright: (c) 2010 by the Sentry Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
+from __future__ import absolute_import
+
+import os
+import warnings
+
+from flask import request
+from flask.signals import got_request_exception
+from opbeat.conf import setup_logging
+from opbeat.base import Client
+from opbeat.contrib.flask.utils import get_data_from_request
+from opbeat.utils import disabled_due_to_debug
+from opbeat.handlers.logging import OpbeatHandler
+from opbeat.utils.deprecation import deprecated
+
+
+def make_client(client_cls, app, organization_id=None, app_id=None, secret_token=None):
+    opbeat_config = app.config.get('OPBEAT', {})
+    # raise a warning if OPBEAT_ORGANIZATION_ID is set in the config, but not
+    # ORGANIZATION_ID. Until 1.3.1, we erroneously checked only
+    # OPBEAT_ORGANIZATION_ID
+    if ('OPBEAT_ORGANIZATION_ID' in opbeat_config
+            and 'ORGANIZATION_ID' not in opbeat_config):
+        warnings.warn(
+            'Please use ORGANIZATION_ID to set the opbeat '
+            'organization id your configuration',
+            DeprecationWarning,
+        )
+    # raise a warning if APP_ID is set in the environment, but not OPBEAT_APP_ID
+    # Until 1.3.1, we erroneously checked only APP_ID
+    if 'APP_ID' in os.environ and 'OPBEAT_APP_ID' not in os.environ:
+        warnings.warn(
+            'Please use OPBEAT_APP_ID to set the opbeat '
+            'app id in the environment',
+            DeprecationWarning,
+        )
+    # raise a warning if SECRET_TOKEN is set in the environment, but not
+    # OPBEAT_SECRET_TOKEN. Until 1.3.1, we erroneously checked only SECRET_TOKEN
+    if 'SECRET_TOKEN' in os.environ and 'OPBEAT_SECRET_TOKEN' not in os.environ:
+        warnings.warn(
+            'Please use OPBEAT_SECRET_TOKEN to set the opbeat secret token '
+            'in the environment',
+            DeprecationWarning,
+        )
+    organization_id = (
+        organization_id
+        or opbeat_config.get('ORGANIZATION_ID')  # config
+        or os.environ.get('OPBEAT_ORGANIZATION_ID')  # environment
+        or opbeat_config.get('OPBEAT_ORGANIZATION_ID')  # deprecated fallback
+    )
+    app_id = (
+        app_id
+        or opbeat_config.get('APP_ID')  # config
+        or os.environ.get('OPBEAT_APP_ID')  # environment
+        or os.environ.get('APP_ID')  # deprecated fallback
+    )
+    secret_token = (
+        secret_token
+        or opbeat_config.get('SECRET_TOKEN')  # config
+        or os.environ.get('OPBEAT_SECRET_TOKEN')  # environment
+        or os.environ.get('SECRET_TOKEN')  # deprecated fallback
+    )
+    return client_cls(
+        include_paths=set(opbeat_config.get('INCLUDE_PATHS', [])) | set([app.import_name]),
+        exclude_paths=opbeat_config.get('EXCLUDE_PATHS'),
+        servers=opbeat_config.get('SERVERS'),
+        hostname=opbeat_config.get('HOSTNAME'),
+        timeout=opbeat_config.get('TIMEOUT'),
+        organization_id=organization_id,
+        app_id=app_id,
+        secret_token=secret_token,
+    )
+
+
+class Opbeat(object):
+    """
+    Flask application for Opbeat.
+
+    Look up configuration from ``os.environ['OPBEAT_ORGANIZATION_ID']``,
+    ``os.environ.get('OPBEAT_APP_ID')`` and
+    ``os.environ.get('OPBEAT_SECRET_TOKEN')``::
+
+    >>> opbeat = Opbeat(app)
+
+    Pass an arbitrary ORGANIZATION_ID, APP_ID and SECRET_TOKEN::
+
+    >>> opbeat = Opbeat(app, organiation_id='1', app_id='1', secret_token='asdasdasd')
+
+    Pass an explicit client::
+
+    >>> opbeat = Opbeat(app, client=client)
+
+    Automatically configure logging::
+
+    >>> opbeat = Opbeat(app, logging=True)
+
+    Capture an exception::
+
+    >>> try:
+    >>>     1 / 0
+    >>> except ZeroDivisionError:
+    >>>     opbeat.capture_exception()
+
+    Capture a message::
+
+    >>> opbeat.captureMessage('hello, world!')
+    """
+    def __init__(self, app=None, organization_id=None, app_id=None,
+                 secret_token=None, client=None,
+                 client_cls=Client, logging=False):
+        self.organization_id = organization_id
+        self.app_id = app_id
+        self.secret_token = secret_token
+        self.logging = logging
+        self.client_cls = client_cls
+        self.client = client
+
+        if app:
+            self.init_app(app)
+
+    def handle_exception(self, *args, **kwargs):
+        if not self.client:
+            return
+
+        if disabled_due_to_debug(
+            self.app.config.get('OPBEAT', {}),
+            self.app.config.get('DEBUG', False)
+        ):
+            return
+
+        self.client.capture('Exception', exc_info=kwargs.get('exc_info'),
+            data=get_data_from_request(request),
+            extra={
+                'app': self.app,
+            },
+        )
+
+    def init_app(self, app):
+        self.app = app
+        if not self.client:
+            self.client = make_client(
+                self.client_cls, app,
+                self.organization_id, self.app_id, self.secret_token
+            )
+
+        if self.logging:
+            setup_logging(OpbeatHandler(self.client))
+
+        got_request_exception.connect(self.handle_exception, sender=app, weak=False)
+
+    def capture_exception(self, *args, **kwargs):
+        assert self.client, 'capture_exception called before application configured'
+        return self.client.capture_exception(*args, **kwargs)
+
+    def capture_message(self, *args, **kwargs):
+        assert self.client, 'capture_message called before application configured'
+        return self.client.capture_message(*args, **kwargs)
+
+    @deprecated(alternative="capture_exception()")
+    def captureException(self, *args, **kwargs):
+        return self.capture_exception(*args, **kwargs)
+
+    @deprecated(alternative="capture_message()")
+    def captureMessage(self, *args, **kwargs):
+        return self.capture_message(*args, **kwargs)
