@@ -16,11 +16,12 @@ jobs:
             - v1-dependencies-
 
       - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
+            name: install dependencies
+            command: |
+              mkdir -p ./venv
+              virtualenv ./venv
+              . venv/bin/activate
+              pip install -r requirements.txt
 
       - save_cache:
           paths:
