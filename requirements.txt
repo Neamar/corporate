@@ -14,7 +14,7 @@ gunicorn==19.3.0
 newrelic==2.54.0.41
 opbeat==3.0.4
 pep8==1.6.2
-psycopg2==2.6.1
+psycopg2==2.7.7
 six==1.9.0
 sqlparse==0.1.16
 static3==0.6.1
