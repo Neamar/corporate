@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='runorder',
             name='additional_percents',
-            field=models.PositiveSmallIntegerField(default=0, help_text=b'Palier de 10% suppl\xc3\xa9mentaires.', validators=[django.core.validators.MaxValueValidator(20), django.core.validators.MinValueValidator(0)]),
+            field=models.SmallIntegerField(default=0, help_text=b'Palier de 10% suppl\xc3\xa9mentaires.', validators=[django.core.validators.MaxValueValidator(20), django.core.validators.MinValueValidator(0)]),
         ),
     ]

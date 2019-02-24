@@ -1,1 +1,0 @@
-alert("yellow");var ok="ok";obj={};

@@ -1,1 +1,0 @@
-alert("yellow");var ok="ok";var text="hello<br>world";obj={};
