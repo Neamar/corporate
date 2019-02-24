@@ -1,0 +1,51 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:2.7.15
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            python manage.py test
+      - run:
+          name: linting
+          command: |
+            pep8 .
+            flake8 --exclude=.pyenv,nvm,virtualenvs,migrations .
+
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
+
+      - deploy:
+          name: "Deploy to server when on master"
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ssh-keyscan neamar.fr >> ~/.ssh/known_hosts
+              git push dokku@neamar.fr:corporate master -f
+            fi
