@@ -52,7 +52,6 @@ INSTALLED_APPS = (
     'docs',
     'engine',
     'logs',
-    'player_messages',
     'engine_modules.influence',
     'engine_modules.corporation',
     'engine_modules.invisible_hand',
@@ -70,6 +69,7 @@ INSTALLED_APPS = (
     'engine_modules.market',
     'engine_modules.end_turn',
     'engine_modules.player_points',
+	'engine_modules.player_messages',
     'storages',  # to store avatar on AWS
     'stdimage',  # standard image field to resize avatars and use bd id for names
     # 'debug_toolbar',
