@@ -47,7 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
-    'compressor',
+    #'compressor',
     'website',
     'docs',
     'engine',
@@ -136,14 +136,14 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
+    #'compressor.finders.CompressorFinder',
 )
 
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
-)
-COMPRESS_OUTPUT_DIR = "cache"
-COMPRESS_ENABLED = True
+#COMPRESS_PRECOMPILERS = (
+#    ('text/less', 'lessc {infile} {outfile}'),
+#)
+#COMPRESS_OUTPUT_DIR = "cache"
+#COMPRESS_ENABLED = True
 
 
 TEMPLATE_DIRS = (
@@ -183,7 +183,7 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     # Compress less file on deployment
-    COMPRESS_OFFLINE = True
+    #COMPRESS_OFFLINE = True
 
 
 if "OPBEAT_ORGANIZATION_ID" in os.environ:
