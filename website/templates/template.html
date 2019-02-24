@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load compress %}
 {% load display_pod %}
 {% load make_link_active %}
 
@@ -7,11 +6,10 @@
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	{% compress css %}
-	<link rel="stylesheet" type="text/less" media="all" href="{% static 'style.less' %}" />
-	<link rel="stylesheet" type="text/css" media="all" href="{% static 'vendor/tipped.css' %}" />
-	<link rel="stylesheet" type="text/less" media="all" href="{% static 'style.less' %}" />
-	{% endcompress %}
+
+	<link rel="stylesheet" type="text/css" media="all" href="{% block style %}{{ STATIC_URL }}style.css{% endblock %}" />
+	<link rel="stylesheet" type="text/css" media="all" href="{% block tipped %}{{ STATIC_URL }}vendor/tipped.css{% endblock %}" />
+
 	<link rel="icon" href="{% block favicon %}{{ STATIC_URL }}favicon.gif{% endblock %}" type="image/x-icon" />
 
 	{% block head %}{% endblock %}

@@ -11,7 +11,7 @@ from engine.models import Player, PlayerForm, Game
 from engine_modules.corporation.models import Corporation
 from engine_modules.player_points.models import PlayerPoints
 from engine_modules.share.models import Share
-from player_messages.models import Message, MessageForm
+from engine_modules.player_messages.models import Message, MessageForm
 from website.utils import get_shares_count, is_top_shareholder, is_citizen, get_current_money
 from website.decorators import render, find_player_from_game_id, inject_game_and_player_into_response, turn_by_turn_view
 from logs.models import Log, ConcernedPlayer

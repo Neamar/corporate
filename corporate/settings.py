@@ -47,12 +47,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
-    'compressor',
+    #'compressor',
     'website',
     'docs',
     'engine',
     'logs',
-    'player_messages',
     'engine_modules.influence',
     'engine_modules.corporation',
     'engine_modules.invisible_hand',
@@ -70,6 +69,7 @@ INSTALLED_APPS = (
     'engine_modules.market',
     'engine_modules.end_turn',
     'engine_modules.player_points',
+    'engine_modules.player_messages',
     'storages',  # to store avatar on AWS
     'stdimage',  # standard image field to resize avatars and use bd id for names
     # 'debug_toolbar',
@@ -109,12 +109,23 @@ MEDIA_URL = 'http://%s.s3.amazonaws.com/avatars/' % AWS_STORAGE_BUCKET_NAME
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+#For Azure SQL server database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': os.environ.get('DATABASENAME'),
+        'USER': os.environ.get('DATABASEUSER'),
+        'PASSWORD': os.environ.get('DATABASEPASSWORD'),
+        'HOST': os.environ.get('DATABASEHOST'),
+    },
 }
+
+# for sqlLite database
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -136,14 +147,14 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
+    #'compressor.finders.CompressorFinder',
 )
 
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
-)
-COMPRESS_OUTPUT_DIR = "cache"
-COMPRESS_ENABLED = True
+#COMPRESS_PRECOMPILERS = (
+#    ('text/less', 'scss {infile} {outfile}'),
+#)
+#COMPRESS_OUTPUT_DIR = "cache"
+#COMPRESS_ENABLED = True
 
 
 TEMPLATE_DIRS = (
@@ -183,7 +194,7 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     # Compress less file on deployment
-    COMPRESS_OFFLINE = True
+    # COMPRESS_OFFLINE = True
 
 
 if "OPBEAT_ORGANIZATION_ID" in os.environ:

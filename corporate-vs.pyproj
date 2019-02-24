@@ -31,6 +31,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="corporate-vs20190223055327 - Web Deploy.pubxml" />
     <Content Include="data\cities\detroit\corporations\bastion.md" />
     <Content Include="data\cities\detroit\corporations\citygroup.md" />
     <Content Include="data\cities\detroit\corporations\enercore.md" />
@@ -474,15 +475,7 @@
     <Content Include="website\static\img\wallstreet\market-positif.png" />
     <Content Include="website\static\img\wallstreet\motif-bg.png" />
     <Content Include="website\static\img\wallstreet\position.png" />
-    <Content Include="website\static\less\menu.less" />
-    <Content Include="website\static\less\pages\discussion.less" />
-    <Content Include="website\static\less\pages\order.less" />
-    <Content Include="website\static\less\pages\player.less" />
-    <Content Include="website\static\less\pages\rules.less" />
-    <Content Include="website\static\less\pages\shares.less" />
-    <Content Include="website\static\less\pages\wallstreet.less" />
-    <Content Include="website\static\less\sidebar.less" />
-    <Content Include="website\static\style.less" />
+    <Content Include="website\static\style.css" />
     <Content Include="website\static\vendor\jquery-2.1.4.min.js" />
     <Content Include="website\static\vendor\tipped.css" />
     <Content Include="website\static\vendor\tipped.js" />
@@ -1013,8 +1006,6 @@
     <Folder Include="website\static\img\shares" />
     <Folder Include="website\static\img\sidebar" />
     <Folder Include="website\static\img\wallstreet" />
-    <Folder Include="website\static\less\" />
-    <Folder Include="website\static\less\pages\" />
     <Folder Include="website\static\vendor" />
     <Folder Include="website\templates" />
     <Folder Include="website\templates\game" />
