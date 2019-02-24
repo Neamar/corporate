@@ -31,10 +31,12 @@ jobs:
       - run:
           name: run tests
           command: |
+            . venv/bin/activate
             python manage.py test
       - run:
           name: linting
           command: |
+            . venv/bin/activate
             pep8 .
             flake8 --exclude=.pyenv,nvm,virtualenvs,migrations .
 
