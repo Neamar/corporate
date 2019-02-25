@@ -22,6 +22,7 @@ local_settings.py
 
 # Virtual env
 .v_env/*
+venv/
 
 # OS specific
 *.DS_Store
