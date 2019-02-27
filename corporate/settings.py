@@ -179,7 +179,7 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     STATIC_URL = '/static/'
 
     STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'staticfiles'),
+        os.path.join(BASE_DIR, 'static'),
     )
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
