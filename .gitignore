@@ -3,6 +3,7 @@
 *.pot
 *.pyc
 *.pyo
+venv/*
 
 # Django specific
 collected-static/*
