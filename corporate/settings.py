@@ -48,7 +48,7 @@ INSTALLED_APPS = (
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
-    # 'compressor',
+    'compressor',
     'website',
     'docs',
     'engine',
@@ -141,11 +141,11 @@ STATICFILES_FINDERS = (
     # 'compressor.finders.CompressorFinder',
 )
 
-# COMPRESS_PRECOMPILERS = (
-#    ('text/less', 'lessc {infile} {outfile}'),
-# )
-# COMPRESS_OUTPUT_DIR = "cache"
-# COMPRESS_ENABLED = True
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+COMPRESS_OUTPUT_DIR = "cache"
+COMPRESS_ENABLED = True
 
 
 TEMPLATE_DIRS = (
@@ -175,14 +175,14 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     ALLOWED_HOSTS = ['*']
 
     # Static asset configuration
-    STATIC_ROOT = 'staticfiles'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')'
     STATIC_URL = '/static/'
 
     STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
+        os.path.join(BASE_DIR, 'staticfiles'),
     )
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     # Compress less file on deployment
-    # COMPRESS_OFFLINE = True
+    COMPRESS_OFFLINE = True
