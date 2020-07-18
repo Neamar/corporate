@@ -9,10 +9,20 @@ Corporate game
 Corporate Game (CG) is a small, fun online game. Players compete to trade corporations assets, hoping to one day beat the market.
 
 ## Installation
-This is a standard Django project. Check you meet all the requirements listed in `requirements.txt`, then run `./manage.py syncdb` to create the database.
-
-Once you're done, run `./manage.py runserver` to get started on http://localhost:8000/.
-You'll need to create a game and add some players in it.
+Install python environment in visual studio and Python 2.7 64bits 
+Add folowing variables in windows environment variables : 
+- Debug = true
+- AWS_ACCESS_KEY_ID = xxxxxx
+- AWS_SECRET_ACCESS_KEY = xxxxxx
+- AWS_STORAGE_BUCKET_NAME = xxxxxx
+theses should point to read/write S3 instance with a folder named "avatar"
+Open corporate-vs.sln in visual studio
+Create Python env with python 2.7
+Install requirements with requirements.txt
+Right clic on project/Python :
+- Django Migrate ... (Django > 1.7)
+- Collect Static Files
+Start project
 
 ## Game data
 Rules can be found in [data/docs/index.md](data/docs/index.md).
