@@ -110,22 +110,23 @@ MEDIA_URL = 'http://%s.s3.amazonaws.com/avatars/' % AWS_STORAGE_BUCKET_NAME
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 #For Azure SQL server database
-DATABASES = {
-    'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': os.environ.get('DATABASENAME'),
-        'USER': os.environ.get('DATABASEUSER'),
-        'PASSWORD': os.environ.get('DATABASEPASSWORD'),
-        'HOST': os.environ.get('DATABASEHOST'),
-    },
-}
-
-# for sqlLite database
 #DATABASES = {
 #    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
+#        'ENGINE': 'sql_server.pyodbc',
+#        'NAME': os.environ.get('DATABASENAME'),
+#        'USER': os.environ.get('DATABASEUSER'),
+#        'PASSWORD': os.environ.get('DATABASEPASSWORD'),
+#        'HOST': os.environ.get('DATABASEHOST'),
+#    },
+#}
+
+# for sqlLite database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -142,8 +143,9 @@ ALLOWED_HOSTS = ["corporategame.me", "corporate-game-pr-131.herokuapp.com"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = ''
 STATIC_URL = '/static/'
+STATICFILES_DIRS = ( os.path.join('static'), )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -184,14 +186,11 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     ALLOWED_HOSTS = ['*']
 
     # Static asset configuration
-    STATIC_ROOT = 'staticfiles'
+    STATIC_ROOT = ''
     STATIC_URL = '/static/'
+    STATICFILES_DIRS = ( os.path.join('static'), )
 
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
-
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     # Compress less file on deployment
     # COMPRESS_OFFLINE = True
