@@ -131,7 +131,7 @@ ALLOWED_HOSTS = ["localhost", "corporategame.me", "corporate-game-pr-131.herokua
 
 STATIC_ROOT = '/opt/'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ( os.path.join(BASE_DIR, "static"), os.path.join(BASE_DIR, "smediatatic"))
+STATICFILES_DIRS = ( os.path.join(BASE_DIR, "static"),)
 for staticfile_dir in STATICFILES_DIRS:
     if not os.path.exists(staticfile_dir):
         os.mkdir(staticfile_dir)
