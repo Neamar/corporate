@@ -14,7 +14,6 @@ import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -25,8 +24,6 @@ SECRET_KEY = os.environ["SECRET_KEY"] if "SECRET_KEY" in os.environ else "test_k
 DEBUG = "DEBUG" in os.environ and bool(os.environ["DEBUG"])
 
 TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 def show_toolbar(request):
@@ -70,7 +67,7 @@ INSTALLED_APPS = (
     'engine_modules.end_turn',
     'engine_modules.player_points',
     'engine_modules.player_messages',
-    'storages',  # to store avatar on AWS
+    # 'storages',  # to store avatar on AWS
     'stdimage',  # standard image field to resize avatars and use bd id for names
     # 'debug_toolbar',
 )
@@ -93,17 +90,6 @@ WSGI_APPLICATION = 'corporate.wsgi.application'
 AUTH_USER_MODEL = 'website.User'
 LOGIN_REDIRECT_URL = 'website.views.index.index'
 LOGIN_URL = 'django.contrib.auth.views.login'
-
-# avatar storage is on AWS
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-AWS_SECURE_URLS = False       # use http instead of https
-AWS_QUERYSTRING_AUTH = False     # don't add complex authentication-related query parameters for requests
-
-# SHOULD NOT BE ON THE INTERNET, I care about my money
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-MEDIA_URL = 'http://%s.s3.amazonaws.com/avatars/' % AWS_STORAGE_BUCKET_NAME
 
 
 # Database
@@ -139,18 +125,27 @@ USE_TZ = True
 
 
 # Security
-ALLOWED_HOSTS = ["corporategame.me", "corporate-game-pr-131.herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", "corporategame.me", "corporate-game-pr-131.herokuapp.com"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_ROOT = ''
+STATIC_ROOT = '/opt/'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ( os.path.join('static'), )
+STATICFILES_DIRS = ( os.path.join(BASE_DIR, "static"), os.path.join(BASE_DIR, "smediatatic"))
+for staticfile_dir in STATICFILES_DIRS:
+    if not os.path.exists(staticfile_dir):
+        os.mkdir(staticfile_dir)
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #'compressor.finders.CompressorFinder',
 )
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+if not os.path.exists(MEDIA_ROOT):
+    os.mkdir(MEDIA_ROOT)
+MEDIA_URL = "/media/"
 
 #COMPRESS_PRECOMPILERS = (
 #    ('text/less', 'scss {infile} {outfile}'),
@@ -176,19 +171,12 @@ CITY_BASE_DIR = "%s/data/cities/%s" % (BASE_DIR, CITY.lower())
 # Environment overrides
 if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     DEBUG = os.environ['DEBUG'] if 'DEBUG' in os.environ else False
-    import dj_database_url
-    DATABASES['default'] = dj_database_url.config()
 
     # Honor the 'X-Forwarded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     # Allow all host headers
     ALLOWED_HOSTS = ['*']
-
-    # Static asset configuration
-    STATIC_ROOT = ''
-    STATIC_URL = '/static/'
-    STATICFILES_DIRS = ( os.path.join('static'), )
 
     #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
