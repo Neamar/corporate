@@ -9,8 +9,8 @@ Corporate game
 Corporate Game (CG) is a small, fun online game. Players compete to trade corporations assets, hoping to one day beat the market.
 
 ## Installation
-Install python environment in visual studio and Python 2.7 64bits 
-Add folowing variables in windows environment variables : 
+Install python environment in visual studio and Python 2.7 64bits
+Add folowing variables in windows environment variables :
 - Debug = true
 - AWS_ACCESS_KEY_ID = xxxxxx
 - AWS_SECRET_ACCESS_KEY = xxxxxx
@@ -61,3 +61,8 @@ Rules can be found in [data/docs/index.md](data/docs/index.md).
 * **CorporationSpeculationOrder** : Order to speculate on a corporation's rank
 * **MDCVoteOrder** : Order to vote for the MDC coalition
 * **WiretransferOrder** : Send money to another player
+
+### RUN WITH DOCKER
+```bash
+docker run -p 8000:8000 --name=corpo corporate bash -c "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn corporate.wsgi -w $(( 2 * `cat /proc/cpuinfo | grep 'core id' | wc -l` + 1 )) -b 0.0.0.0:8000 --timeout 1200 --access-logfile '-' --error-logfile '-' --worker-tmp-dir /dev/shm --log-level INFO"
+```
