@@ -27,10 +27,10 @@ if [ -f bin/run_collectstatic ]; then
     bin/run_collectstatic
 fi
 
-if [ -f bin/run_compress ]; then
-    echo "-----> Running run_compress"
-    chmod +x bin/run_compress
-    bin/run_compress
-fi
+# if [ -f bin/run_compress ]; then
+#     echo "-----> Running run_compress"
+#     chmod +x bin/run_compress
+#     bin/run_compress
+# fi
 
 echo "-----> Post-compile done"
