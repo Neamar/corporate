@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
-    #'compressor',
+    # 'compressor',
     'website',
     'docs',
     'engine',
@@ -96,12 +96,12 @@ LOGIN_URL = 'django.contrib.auth.views.login'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': os.environ.get('DATABASENAME'),
-       'USER': os.environ.get('DATABASEUSER'),
-       'PASSWORD': os.environ.get('DATABASEPASSWORD'),
-       'HOST': os.environ.get('DATABASEHOST'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DATABASENAME'),
+        'USER': os.environ.get('DATABASEUSER'),
+        'PASSWORD': os.environ.get('DATABASEPASSWORD'),
+        'HOST': os.environ.get('DATABASEHOST'),
    },
 }
 
@@ -139,7 +139,7 @@ for staticfile_dir in STATICFILES_DIRS:
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #'compressor.finders.CompressorFinder',
+    # 'compressor.finders.CompressorFinder',
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -147,11 +147,11 @@ if not os.path.exists(MEDIA_ROOT):
     os.mkdir(MEDIA_ROOT)
 MEDIA_URL = "/media/"
 
-#COMPRESS_PRECOMPILERS = (
+# COMPRESS_PRECOMPILERS = (
 #    ('text/less', 'scss {infile} {outfile}'),
-#)
-#COMPRESS_OUTPUT_DIR = "cache"
-#COMPRESS_ENABLED = True
+# )
+# COMPRESS_OUTPUT_DIR = "cache"
+# COMPRESS_ENABLED = True
 
 
 TEMPLATE_DIRS = (
