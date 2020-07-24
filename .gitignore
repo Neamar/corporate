@@ -19,6 +19,9 @@ local_settings.py
 *.kate-swp
 *.sublime-*
 *.swp
+*.pyproj
+*.pyproj.user
+*.sln
 obj/*
 env/*
 
@@ -36,6 +39,5 @@ htmlcov/*
 
 # Project specific
 *.sqlite3
-
 
 static/cache
