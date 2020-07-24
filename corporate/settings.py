@@ -95,24 +95,24 @@ LOGIN_URL = 'django.contrib.auth.views.login'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-#For Azure SQL server database
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'sql_server.pyodbc',
-#        'NAME': os.environ.get('DATABASENAME'),
-#        'USER': os.environ.get('DATABASEUSER'),
-#        'PASSWORD': os.environ.get('DATABASEPASSWORD'),
-#        'HOST': os.environ.get('DATABASEHOST'),
-#    },
-#}
-
-# for sqlLite database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+       'NAME': os.environ.get('DATABASENAME'),
+       'USER': os.environ.get('DATABASEUSER'),
+       'PASSWORD': os.environ.get('DATABASEPASSWORD'),
+       'HOST': os.environ.get('DATABASEHOST'),
+   },
 }
+
+
+# # for sqlLite database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -125,7 +125,7 @@ USE_TZ = True
 
 
 # Security
-ALLOWED_HOSTS = ["localhost", "corporategame.me", "corporate-game-pr-131.herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", "corporategame.me", "corporate-game-pr-131.herokuapp.com", "corporate.neamar.fr"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
