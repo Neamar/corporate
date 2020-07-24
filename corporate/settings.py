@@ -102,7 +102,7 @@ DATABASES = {
         'USER': os.environ.get('DATABASEUSER'),
         'PASSWORD': os.environ.get('DATABASEPASSWORD'),
         'HOST': os.environ.get('DATABASEHOST'),
-   },
+    },
 }
 
 
@@ -131,7 +131,7 @@ ALLOWED_HOSTS = ["localhost", "corporategame.me", "corporate-game-pr-131.herokua
 
 STATIC_ROOT = '/opt/'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ( os.path.join(BASE_DIR, "static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 for staticfile_dir in STATICFILES_DIRS:
     if not os.path.exists(staticfile_dir):
         os.mkdir(staticfile_dir)
@@ -178,7 +178,7 @@ if "PYTHON_ENV" in os.environ and os.environ["PYTHON_ENV"] == "production":
     # Allow all host headers
     ALLOWED_HOSTS = ['*']
 
-    #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     # Compress less file on deployment
     # COMPRESS_OFFLINE = True

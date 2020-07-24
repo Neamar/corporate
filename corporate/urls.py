@@ -1,12 +1,9 @@
 import re
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.views.static import serve
-
-from django.conf.urls import url
 from django.core.exceptions import ImproperlyConfigured
-from django.views.static import serve
 
 
 def static(prefix, view=serve, **kwargs):
